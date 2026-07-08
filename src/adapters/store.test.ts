@@ -100,4 +100,38 @@ describe('Zustand Store Actions & State Management', () => {
     expect(updatedState.validationResult.issues[0].path).toContain('nodeA');
     expect(updatedState.validationResult.issues[0].path).toContain('nodeB');
   });
+
+  it('should support showTests property and toggleShowTests action', () => {
+    const store = useBlueprintStore.getState();
+    expect(store.showTests).toBe(false);
+
+    store.toggleShowTests();
+    expect(useBlueprintStore.getState().showTests).toBe(true);
+
+    store.toggleShowTests();
+    expect(useBlueprintStore.getState().showTests).toBe(false);
+  });
+
+  it('should map isTest flag correctly from domain node to RF node data', () => {
+    const { initSchema } = useBlueprintStore.getState();
+    initSchema({
+      name: 'Test Project',
+      version: '1.0.0',
+      nodes: [
+        { id: 'app', type: 'rest-api', name: 'App Node', isTest: false },
+        { id: 'app-test', type: 'rest-api', name: 'App Test Node', isTest: true },
+      ],
+      dependencies: [],
+    });
+
+    const state = useBlueprintStore.getState();
+    const rfNodeApp = state.nodes.find(n => n.id === 'app');
+    const rfNodeAppTest = state.nodes.find(n => n.id === 'app-test');
+
+    expect(rfNodeApp?.data.isTest).toBe(false);
+    expect(rfNodeAppTest?.data.isTest).toBe(true);
+
+    // Verify it rebuilds correctly
+    expect(state.schema.nodes.find(n => n.id === 'app-test')?.isTest).toBe(true);
+  });
 });

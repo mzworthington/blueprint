@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Copy, Check, Upload, AlertCircle, FileCode } from 'lucide-react';
 import { useBlueprintStore } from './store';
-import { serializeSchemaToMermaid } from '../domain/graph';
+import { serializeSchemaToMermaid, serializeSchemaToYaml } from '../domain/graph';
+import { MermaidPreview } from './MermaidPreview';
 
 export const CodeViewer: React.FC = () => {
-  const { schema, yamlCode, importYaml, lastError, clearError, logger } = useBlueprintStore();
+  const { schema, yamlCode, importYaml, lastError, clearError, logger, showTests } =
+    useBlueprintStore();
   const [activeTab, setActiveTab] = useState<'yaml' | 'json' | 'mermaid' | 'import'>('yaml');
   const [copied, setCopied] = useState(false);
+  const [mermaidMode, setMermaidMode] = useState<'preview' | 'code'>('preview');
 
   // Local state for import textarea
   const [importText, setImportText] = useState('');
@@ -19,15 +22,32 @@ export const CodeViewer: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab, yamlCode]);
 
+  // Dynamically filter schema if we exclude test components
+  const filteredSchema = useMemo(() => {
+    if (showTests) return schema;
+
+    const nodes = schema.nodes.filter(n => !n.isTest);
+    const visibleNodeIds = new Set(nodes.map(n => n.id));
+    const dependencies = schema.dependencies.filter(
+      d => visibleNodeIds.has(d.from) && visibleNodeIds.has(d.to)
+    );
+
+    return {
+      ...schema,
+      nodes,
+      dependencies,
+    };
+  }, [schema, showTests]);
+
   const getCodeContent = () => {
     switch (activeTab) {
       case 'json':
-        return JSON.stringify(schema, null, 2);
+        return JSON.stringify(filteredSchema, null, 2);
       case 'mermaid':
-        return serializeSchemaToMermaid(schema);
+        return serializeSchemaToMermaid(filteredSchema);
       case 'yaml':
       default:
-        return yamlCode;
+        return showTests ? yamlCode : serializeSchemaToYaml(filteredSchema);
     }
   };
 
@@ -111,10 +131,36 @@ export const CodeViewer: React.FC = () => {
         ) : (
           // READ-ONLY VIEW MODE
           <div className="flex-1 flex flex-col overflow-hidden relative group">
+            {/* Mermaid Sub-toggle */}
+            {activeTab === 'mermaid' && (
+              <div className="flex bg-slate-950/60 p-0.5 rounded-lg border border-slate-900 mb-3 self-end shrink-0 z-20">
+                <button
+                  onClick={() => setMermaidMode('preview')}
+                  className={`px-3 py-1 text-[11px] font-semibold rounded-md transition cursor-pointer ${
+                    mermaidMode === 'preview'
+                      ? 'bg-brand-600/15 border border-brand-500/30 text-brand-100'
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  Preview
+                </button>
+                <button
+                  onClick={() => setMermaidMode('code')}
+                  className={`px-3 py-1 text-[11px] font-semibold rounded-md transition cursor-pointer ${
+                    mermaidMode === 'code'
+                      ? 'bg-brand-600/15 border border-brand-500/30 text-brand-100'
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  Code
+                </button>
+              </div>
+            )}
+
             {/* Copy button */}
             <button
               onClick={handleCopy}
-              className="absolute top-3 right-3 p-2 rounded-lg bg-slate-950 border border-slate-900 text-slate-400 hover:text-slate-200 hover:bg-slate-900 transition flex items-center gap-1.5 text-xs font-semibold z-10 shadow-md"
+              className="absolute top-3 right-3 p-2 rounded-lg bg-slate-950 border border-slate-900 text-slate-400 hover:text-slate-200 hover:bg-slate-900 transition flex items-center gap-1.5 text-xs font-semibold z-10 shadow-md cursor-pointer"
             >
               {copied ? (
                 <>
@@ -129,10 +175,14 @@ export const CodeViewer: React.FC = () => {
               )}
             </button>
 
-            {/* Code Box */}
-            <pre className="flex-1 bg-slate-900/40 border border-slate-900 rounded-xl p-4 overflow-auto text-xs font-mono text-slate-300 leading-relaxed select-all">
-              <code>{getCodeContent()}</code>
-            </pre>
+            {/* Content Area (Mermaid Preview or Code Box) */}
+            {activeTab === 'mermaid' && mermaidMode === 'preview' ? (
+              <MermaidPreview code={getCodeContent()} />
+            ) : (
+              <pre className="flex-1 bg-slate-900/40 border border-slate-900 rounded-xl p-4 overflow-auto text-xs font-mono text-slate-300 leading-relaxed select-all">
+                <code>{getCodeContent()}</code>
+              </pre>
+            )}
           </div>
         )}
       </div>

@@ -20,6 +20,7 @@ import { validateGraph, parseSchemaFromYaml, serializeSchemaToYaml } from '../do
 import type { FileSystemPort, LoggerPort } from '../domain/ports';
 import { BrowserFileSystemAdapter } from './fileSync';
 import { ConsoleLoggerAdapter } from './telemetry';
+import defaultYaml from '../../blueprint.yaml?raw';
 
 // Strict UI node/edge schemas to decouple React Flow interfaces from pure domain models
 export type ComponentNodeData = {
@@ -27,6 +28,7 @@ export type ComponentNodeData = {
   id: string;
   type: NodeType;
   name: string;
+  isTest?: boolean;
   properties: PropertyMap;
 };
 
@@ -82,6 +84,10 @@ interface BlueprintState {
 
   // Observability logging port
   logger: LoggerPort;
+
+  // Visual filters
+  showTests: boolean;
+  toggleShowTests: () => void;
 }
 
 // Helpers to map Domain Schema <-> React Flow Canvas
@@ -93,6 +99,7 @@ const mapDomainNodeToRFNode = (n: SystemNode): BlueprintRFNode => ({
     id: n.id,
     type: n.type,
     name: n.name,
+    isTest: n.isTest,
     properties: n.properties || {},
   },
 });
@@ -120,6 +127,7 @@ const rebuildSchemaFromCanvas = (
     id: rn.id,
     type: rn.data.type,
     name: rn.data.name,
+    isTest: rn.data.isTest,
     properties: rn.data.properties,
     x: rn.position.x,
     y: rn.position.y,
@@ -135,19 +143,24 @@ const rebuildSchemaFromCanvas = (
   return { name, version, nodes, dependencies };
 };
 
-const defaultInitialSchema: SystemSchema = {
-  name: 'New Cloud Workspace',
-  version: '1.0.0',
-  nodes: [
-    { id: 'gateway', type: 'rest-api', name: 'API Gateway', x: 100, y: 150 },
-    { id: 'auth-svc', type: 'grpc-service', name: 'Auth Service', x: 400, y: 100 },
-    { id: 'user-db', type: 'relational-database', name: 'User Relational DB', x: 700, y: 150 },
-  ],
-  dependencies: [
-    { from: 'gateway', to: 'auth-svc', type: 'direct-call', description: 'Validate tokens' },
-    { from: 'auth-svc', to: 'user-db', type: 'read-write', description: 'Fetch session records' },
-  ],
-};
+let defaultInitialSchema: SystemSchema;
+try {
+  defaultInitialSchema = parseSchemaFromYaml(defaultYaml);
+} catch {
+  defaultInitialSchema = {
+    name: 'New Cloud Workspace',
+    version: '1.0.0',
+    nodes: [
+      { id: 'gateway', type: 'rest-api', name: 'API Gateway', x: 100, y: 150 },
+      { id: 'auth-svc', type: 'grpc-service', name: 'Auth Service', x: 400, y: 100 },
+      { id: 'user-db', type: 'relational-database', name: 'User Relational DB', x: 700, y: 150 },
+    ],
+    dependencies: [
+      { from: 'gateway', to: 'auth-svc', type: 'direct-call', description: 'Validate tokens' },
+      { from: 'auth-svc', to: 'user-db', type: 'read-write', description: 'Fetch session records' },
+    ],
+  };
+}
 
 export const useBlueprintStore = create<BlueprintState>((set, get) => {
   const applyStateUpdates = (
@@ -222,6 +235,7 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
     validationResult: initialValidation,
     yamlCode: initialYaml,
     lastError: null,
+    showTests: false,
     fileSystemPort: BrowserFileSystemAdapter,
     logger: ConsoleLoggerAdapter,
 
@@ -446,6 +460,10 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
       const edgeId = `edge-${from}-${to}`;
       const nextEdges = get().edges.filter(e => e.id !== edgeId);
       applyStateUpdates(get().nodes, nextEdges);
+    },
+
+    toggleShowTests: () => {
+      set(state => ({ showTests: !state.showTests }));
     },
   };
 });

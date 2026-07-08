@@ -39,6 +39,8 @@ export const PropertyPanel: React.FC = () => {
     selectNode,
     updateDependency,
     deleteDependency,
+    showTests,
+    toggleShowTests,
   } = useBlueprintStore();
 
   const selectedRFNode = nodes.find(n => n.id === selectedNodeId);
@@ -315,6 +317,25 @@ export const PropertyPanel: React.FC = () => {
                 onChange={e => updateSchemaName(e.target.value)}
                 className="w-full bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition"
               />
+            </div>
+
+            {/* Test Component Filtering Toggle */}
+            <div className="flex items-center justify-between border-t border-slate-900 pt-4">
+              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Show Test Components
+              </span>
+              <button
+                onClick={toggleShowTests}
+                className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                  showTests ? 'bg-brand-600' : 'bg-slate-800'
+                }`}
+              >
+                <span
+                  className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                    showTests ? 'translate-x-5' : 'translate-x-0'
+                  }`}
+                />
+              </button>
             </div>
 
             {/* Quick-add Toolbox */}

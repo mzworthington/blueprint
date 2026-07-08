@@ -17,6 +17,7 @@ export interface SystemNode {
   type: NodeType;
   name: string;
   properties?: PropertyMap;
+  isTest?: boolean;
   x?: number;
   y?: number;
 }

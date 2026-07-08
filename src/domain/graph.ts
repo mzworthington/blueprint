@@ -102,6 +102,7 @@ const systemNodeSchema = z.object({
   type: nodeTypeSchema,
   name: z.string().min(1),
   properties: z.record(z.union([z.string(), z.number(), z.boolean()])).optional(),
+  isTest: z.boolean().optional(),
   x: z.number().optional(),
   y: z.number().optional(),
 });
@@ -143,6 +144,7 @@ export function parseSchemaFromYaml(yamlContent: string): SystemSchema {
         type: n.type,
         name: n.name,
         properties: n.properties || {},
+        isTest: n.isTest,
         x: n.x,
         y: n.y,
       })),
@@ -155,7 +157,7 @@ export function parseSchemaFromYaml(yamlContent: string): SystemSchema {
           }))
         : [],
     };
-  } catch (zodErr: any) {
+  } catch (zodErr) {
     if (zodErr instanceof z.ZodError) {
       const details = zodErr.issues
         .map(issue => {
@@ -180,7 +182,8 @@ export function serializeSchemaToYaml(schema: SystemSchema): string {
     name: schema.name,
     version: schema.version,
     nodes: schema.nodes.map(n => {
-      const cleaned: any = { id: n.id, type: n.type, name: n.name };
+      const cleaned: SystemSchema['nodes'][number] = { id: n.id, type: n.type, name: n.name };
+      if (n.isTest !== undefined) cleaned.isTest = n.isTest;
       if (n.properties && Object.keys(n.properties).length > 0) {
         cleaned.properties = n.properties;
       }
@@ -189,7 +192,11 @@ export function serializeSchemaToYaml(schema: SystemSchema): string {
       return cleaned;
     }),
     dependencies: schema.dependencies.map(d => {
-      const cleaned: any = { from: d.from, to: d.to, type: d.type };
+      const cleaned: SystemSchema['dependencies'][number] = {
+        from: d.from,
+        to: d.to,
+        type: d.type,
+      };
       if (d.description) cleaned.description = d.description;
       return cleaned;
     }),
@@ -208,6 +215,9 @@ export function serializeSchemaToYaml(schema: SystemSchema): string {
 export function serializeSchemaToMermaid(schema: SystemSchema): string {
   const lines = ['graph TD'];
 
+  // Helper to sanitize IDs for Mermaid to avoid reserved keyword conflicts (e.g. 'graph', 'subgraph', 'end')
+  const mId = (id: string) => `node_${id.replace(/[^a-zA-Z0-9]/g, '_')}`;
+
   for (const node of schema.nodes) {
     let label = `["${node.name}"]`;
     if (node.type === 'relational-database') {
@@ -219,13 +229,13 @@ export function serializeSchemaToMermaid(schema: SystemSchema): string {
     } else if (node.type === 'serverless-function') {
       label = `[["${node.name}"]]`;
     }
-    lines.push(`    ${node.id}${label}`);
+    lines.push(`    ${mId(node.id)}${label}`);
   }
 
   for (const dep of schema.dependencies) {
     const arrow = dep.type === 'publish-subscribe' ? '-.->' : '-->';
     const text = dep.description ? `|"${dep.description}"| ` : '';
-    lines.push(`    ${dep.from} ${arrow} ${text}${dep.to}`);
+    lines.push(`    ${mId(dep.from)} ${arrow} ${text}${mId(dep.to)}`);
   }
 
   return lines.join('\n');

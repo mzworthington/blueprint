@@ -58,11 +58,12 @@ function runAnalysis() {
     },
   });
 
-  // Scan files to identify architectures
+  // Pass 1: Identify all nodes
   for (const sourceFile of sourceFiles) {
     const relativePath = path.relative(process.cwd(), sourceFile.getFilePath());
     const fileBaseName = path.basename(relativePath, path.extname(relativePath));
     const cleanFileId = sanitizeId(fileBaseName);
+    const isTestFile = relativePath.includes('.test.') || relativePath.includes('setupTests');
 
     // Heuristics flags
     let isReactComponent = false;
@@ -116,32 +117,24 @@ function runAnalysis() {
 
     // Determine target node properties
     if (isReactComponent) {
-      // Connect React components to the general client
       if (cleanFileId !== 'app' && cleanFileId !== 'main') {
-        dependenciesList.push({
-          from: clientNodeId,
-          to: cleanFileId,
-          type: 'direct-call',
-          description: `Renders ${fileBaseName} layout component`,
-        });
         nodesMap.set(cleanFileId, {
           id: cleanFileId,
           type: 'gateway-api',
           name: `${fileBaseName} UI Component`,
+          isTest: isTestFile,
           properties: {
             filepath: relativePath,
             technology: 'React Component',
           },
         });
       }
-      continue; // Skip further server/DB checks for purely visual components
-    }
-
-    if (isDatabase) {
+    } else if (isDatabase) {
       nodesMap.set(cleanFileId, {
         id: cleanFileId,
         type: 'relational-database',
         name: `${fileBaseName} Database`,
+        isTest: isTestFile,
         properties: {
           filepath: relativePath,
           technology: 'Prisma / SQL Database Client',
@@ -152,6 +145,7 @@ function runAnalysis() {
         id: cleanFileId,
         type: 'event-broker',
         name: `${fileBaseName} Message Broker`,
+        isTest: isTestFile,
         properties: {
           filepath: relativePath,
           technology: 'Event Queue/Broker Client',
@@ -162,35 +156,58 @@ function runAnalysis() {
         id: cleanFileId,
         type: 'rest-api',
         name: `${fileBaseName} REST Endpoint`,
+        isTest: isTestFile,
         properties: {
           filepath: relativePath,
           technology: 'REST Controller / Router',
         },
       });
-      // Route connection from Client
+    } else {
+      nodesMap.set(cleanFileId, {
+        id: cleanFileId,
+        type: 'background-worker',
+        name: `${fileBaseName} Service`,
+        isTest: isTestFile,
+        properties: {
+          filepath: relativePath,
+          technology: 'TypeScript Domain Service',
+        },
+      });
+    }
+  }
+
+  // Pass 2: Establish dependencies now that all nodes are registered
+  for (const sourceFile of sourceFiles) {
+    const relativePath = path.relative(process.cwd(), sourceFile.getFilePath());
+    const fileBaseName = path.basename(relativePath, path.extname(relativePath));
+    const cleanFileId = sanitizeId(fileBaseName);
+    const isTestFile = relativePath.includes('.test.') || relativePath.includes('setupTests');
+
+    if (cleanFileId === 'app' || cleanFileId === 'main') {
+      continue;
+    }
+
+    const node = nodesMap.get(cleanFileId);
+    if (!node) continue;
+
+    // React components and APIs get triggered by frontend client/app if not test files
+    if (node.type === 'gateway-api' && !isTestFile) {
+      dependenciesList.push({
+        from: clientNodeId,
+        to: cleanFileId,
+        type: 'direct-call',
+        description: `Renders ${fileBaseName} layout component`,
+      });
+    } else if (node.type === 'rest-api' && !isTestFile) {
       dependenciesList.push({
         from: clientNodeId,
         to: cleanFileId,
         type: 'direct-call',
         description: 'Hits API routing gateway',
       });
-    } else {
-      // Generic component service (background-worker or backend service)
-      const isTestFile = relativePath.includes('.test.') || relativePath.includes('setupTests');
-      if (!isTestFile) {
-        nodesMap.set(cleanFileId, {
-          id: cleanFileId,
-          type: 'background-worker',
-          name: `${fileBaseName} Service`,
-          properties: {
-            filepath: relativePath,
-            technology: 'TypeScript Domain Service',
-          },
-        });
-      }
     }
 
-    // 3. Scan references/calls to determine edges
+    // Scan references/calls to determine edges
     sourceFile
       .getDescendantsOfKind(SyntaxKind.CallExpression)
       .forEach((callExpr: CallExpression) => {
@@ -208,57 +225,56 @@ function runAnalysis() {
             id: 'external-api-target',
             type: 'rest-api',
             name: 'External HTTP API Endpoint',
+            isTest: false,
             properties: {
               description: 'Generic outbound web integration endpoints.',
             },
           });
         }
-
-        // Check if it references other scanned files via class or call
-        const sourceImportFileNames = sourceFile
-          .getImportDeclarations()
-          .map(imp => {
-            try {
-              const mod = imp.getModuleSpecifierValue();
-              return sanitizeId(path.basename(mod));
-            } catch {
-              return '';
-            }
-          })
-          .filter(Boolean);
-
-        sourceImportFileNames.forEach(importId => {
-          if (importId && importId !== cleanFileId) {
-            // Verify we aren't creating duplicates
-            const alreadyExists = dependenciesList.some(
-              d => d.from === cleanFileId && d.to === importId
-            );
-            if (!alreadyExists && importId !== 'ports' && importId !== 'schema') {
-              let edgeType = 'direct-call';
-              let desc = 'Executes local class methods / functions';
-
-              // Custom descriptions based on target nodes
-              const targetNode = nodesMap.get(importId);
-              if (targetNode) {
-                if (targetNode.type === 'relational-database') {
-                  edgeType = 'read-write';
-                  desc = 'Queries database table records';
-                } else if (targetNode.type === 'event-broker') {
-                  edgeType = 'publish-subscribe';
-                  desc = 'Publishes / consumes messaging topics';
-                }
-
-                dependenciesList.push({
-                  from: cleanFileId,
-                  to: importId,
-                  type: edgeType,
-                  description: desc,
-                });
-              }
-            }
-          }
-        });
       });
+
+    // Check if it references other scanned files via imports
+    const sourceImportFileNames = sourceFile
+      .getImportDeclarations()
+      .map(imp => {
+        try {
+          const mod = imp.getModuleSpecifierValue();
+          return sanitizeId(path.basename(mod));
+        } catch {
+          return '';
+        }
+      })
+      .filter(Boolean);
+
+    sourceImportFileNames.forEach(importId => {
+      if (importId && importId !== cleanFileId) {
+        const alreadyExists = dependenciesList.some(
+          d => d.from === cleanFileId && d.to === importId
+        );
+        if (!alreadyExists && importId !== 'ports' && importId !== 'schema') {
+          let edgeType = 'direct-call';
+          let desc = 'Executes local class methods / functions';
+
+          const targetNode = nodesMap.get(importId);
+          if (targetNode) {
+            if (targetNode.type === 'relational-database') {
+              edgeType = 'read-write';
+              desc = 'Queries database table records';
+            } else if (targetNode.type === 'event-broker') {
+              edgeType = 'publish-subscribe';
+              desc = 'Publishes / consumes messaging topics';
+            }
+
+            dependenciesList.push({
+              from: cleanFileId,
+              to: importId,
+              type: edgeType,
+              description: desc,
+            });
+          }
+        }
+      }
+    });
   }
 
   // Fallback: If this is the blueprint project itself, let's make sure filesSync.ts is connected to standard ports!

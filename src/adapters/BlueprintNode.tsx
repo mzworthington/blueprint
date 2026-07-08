@@ -4,16 +4,9 @@ import type { NodeProps, Node } from '@xyflow/react';
 import { Database, Globe, Zap, Cpu, Layers, Share2, Trash2 } from 'lucide-react';
 import type { NodeType } from '../domain/schema';
 import { useBlueprintStore } from './store';
+import type { ComponentNodeData } from './store';
 
-type CustomNode = Node<
-  {
-    id: string;
-    type: NodeType;
-    name: string;
-    properties: Record<string, string | number | boolean>;
-  },
-  'blueprintNode'
->;
+type CustomNode = Node<ComponentNodeData, 'blueprintNode'>;
 
 const nodeTypeConfigs: Record<
   NodeType,
@@ -164,6 +157,11 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
       {/* Bottom Type Tag */}
       <div className="mt-4 flex items-center justify-between border-t border-slate-900 pt-2 text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
         <span>{config.label}</span>
+        {data.isTest && (
+          <span className="bg-red-500/10 text-red-400 px-1.5 py-0.5 rounded text-[9px] font-bold border border-red-500/20 tracking-normal normal-case">
+            TEST
+          </span>
+        )}
       </div>
     </div>
   );

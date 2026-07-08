@@ -19,6 +19,7 @@ export const Canvas: React.FC = () => {
     loadSchema,
     lastError,
     clearError,
+    showTests,
   } = useBlueprintStore();
 
   // Map custom node types
@@ -48,11 +49,23 @@ export const Canvas: React.FC = () => {
     }
   };
 
+  // Dynamically filter nodes and edges based on test flag and toggle selection
+  const filteredNodes = useMemo(() => {
+    if (showTests) return nodes;
+    return nodes.filter(n => !n.data.isTest);
+  }, [nodes, showTests]);
+
+  const filteredEdges = useMemo(() => {
+    if (showTests) return edges;
+    const visibleNodeIds = new Set(filteredNodes.map(n => n.id));
+    return edges.filter(e => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target));
+  }, [edges, filteredNodes, showTests]);
+
   return (
     <div className="flex-1 h-full relative" onClick={() => selectNode(null)}>
       <ReactFlow
-        nodes={nodes}
-        edges={edges}
+        nodes={filteredNodes}
+        edges={filteredEdges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}

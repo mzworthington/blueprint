@@ -161,21 +161,40 @@ nodes:
     expect(yamlContent).toContain('type: grpc-service');
   });
 
-  it('should serialize SystemSchema model to valid Mermaid code', () => {
+  it('should parse and serialize isTest flag', () => {
+    const yamlContent = `
+name: Test System
+version: 1.0.0
+nodes:
+  - id: ServiceTest
+    type: grpc-service
+    name: Service Test Component
+    isTest: true
+`;
+    const schema = parseSchemaFromYaml(yamlContent);
+    expect(schema.nodes[0].isTest).toBe(true);
+
+    const serialized = serializeSchemaToYaml(schema);
+    expect(serialized).toContain('isTest: true');
+  });
+
+  it('should serialize SystemSchema model to valid Mermaid code and handle keyword conflicts', () => {
     const schema: SystemSchema = {
       name: 'Demo System',
       version: '1.0.0',
       nodes: [
         { id: 'Gateway', type: 'rest-api', name: 'Gateway Node' },
         { id: 'DB', type: 'relational-database', name: 'DB Node' },
+        { id: 'graph', type: 'background-worker', name: 'graph Service' },
       ],
       dependencies: [{ from: 'Gateway', to: 'DB', type: 'direct-call', description: 'Query' }],
     };
 
     const mermaidContent = serializeSchemaToMermaid(schema);
     expect(mermaidContent).toContain('graph TD');
-    expect(mermaidContent).toContain('Gateway["Gateway Node"]');
-    expect(mermaidContent).toContain('DB[("DB Node")]');
-    expect(mermaidContent).toContain('Gateway --> |"Query"| DB');
+    expect(mermaidContent).toContain('node_Gateway["Gateway Node"]');
+    expect(mermaidContent).toContain('node_DB[("DB Node")]');
+    expect(mermaidContent).toContain('node_graph["graph Service"]');
+    expect(mermaidContent).toContain('node_Gateway --> |"Query"| node_DB');
   });
 });

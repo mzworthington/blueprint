@@ -7,145 +7,241 @@ nodes:
     properties:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
-    x: 1750
+    x: 1410
     'y': 50
   - id: setuptests
     type: gateway-api
     name: setupTests UI Component
+    isTest: true
     properties:
       filepath: src/setupTests.ts
       technology: React Component
-    x: 140
-    'y': 370
+    x: 1870
+    'y': 50
   - id: blueprintnode
     type: gateway-api
     name: BlueprintNode UI Component
+    isTest: false
     properties:
       filepath: src/adapters/BlueprintNode.tsx
       technology: React Component
-    x: 600
-    'y': 370
+    x: 2610
+    'y': 690
   - id: canvas
     type: gateway-api
     name: Canvas UI Component
+    isTest: false
     properties:
       filepath: src/adapters/Canvas.tsx
       technology: React Component
-    x: 1060
+    x: 2340
     'y': 370
   - id: codeviewer_test
     type: gateway-api
     name: CodeViewer.test UI Component
+    isTest: true
     properties:
       filepath: src/adapters/CodeViewer.test.tsx
       technology: React Component
-    x: 1520
+    x: 1880
     'y': 370
   - id: codeviewer
     type: gateway-api
     name: CodeViewer UI Component
+    isTest: false
     properties:
       filepath: src/adapters/CodeViewer.tsx
       technology: React Component
-    x: 1980
-    'y': 370
+    x: 1610
+    'y': 690
   - id: filesync
     type: background-worker
     name: fileSync Service
+    isTest: false
     properties:
       filepath: src/adapters/fileSync.ts
       technology: TypeScript Domain Service
-    x: 3820
-    'y': 50
+    x: 1045
+    'y': 1330
+  - id: mermaidpreview
+    type: gateway-api
+    name: MermaidPreview UI Component
+    isTest: false
+    properties:
+      filepath: src/adapters/MermaidPreview.tsx
+      technology: React Component
+    x: 140
+    'y': 1010
   - id: propertypanel_test
     type: gateway-api
     name: PropertyPanel.test UI Component
+    isTest: true
     properties:
       filepath: src/adapters/PropertyPanel.test.tsx
       technology: React Component
-    x: 2440
+    x: 1260
     'y': 370
   - id: propertypanel
     type: gateway-api
     name: PropertyPanel UI Component
+    isTest: false
     properties:
       filepath: src/adapters/PropertyPanel.tsx
       technology: React Component
-    x: 2900
-    'y': 370
+    x: 990
+    'y': 690
+  - id: store_test
+    type: background-worker
+    name: store.test Service
+    isTest: true
+    properties:
+      filepath: src/adapters/store.test.ts
+      technology: TypeScript Domain Service
+    x: 530
+    'y': 690
   - id: store
     type: gateway-api
     name: store UI Component
+    isTest: false
     properties:
       filepath: src/adapters/store.ts
       technology: React Component
-    x: 3360
-    'y': 370
+    x: 1380
+    'y': 1010
   - id: telemetry
     type: background-worker
     name: telemetry Service
+    isTest: false
     properties:
       filepath: src/adapters/telemetry.ts
       technology: TypeScript Domain Service
-    x: 4280
-    'y': 50
+    x: 1585
+    'y': 1330
+  - id: graph_test
+    type: background-worker
+    name: graph.test Service
+    isTest: true
+    properties:
+      filepath: src/domain/graph.test.ts
+      technology: TypeScript Domain Service
+    x: 2745
+    'y': 1010
   - id: graph
     type: background-worker
     name: graph Service
+    isTest: false
     properties:
       filepath: src/domain/graph.ts
       technology: TypeScript Domain Service
-    x: 4740
-    'y': 50
+    x: 2975
+    'y': 1330
   - id: ports
     type: background-worker
     name: ports Service
+    isTest: false
     properties:
       filepath: src/domain/ports.ts
       technology: TypeScript Domain Service
-    x: 3820
-    'y': 370
+    x: 1045
+    'y': 1650
   - id: schema
     type: background-worker
     name: schema Service
+    isTest: false
     properties:
       filepath: src/domain/schema.ts
       technology: TypeScript Domain Service
-    x: 5200
+    x: 2330
     'y': 50
 dependencies:
-  - from: frontend-client
-    to: setuptests
-    type: direct-call
-    description: Renders setupTests layout component
   - from: frontend-client
     to: blueprintnode
     type: direct-call
     description: Renders BlueprintNode layout component
+  - from: blueprintnode
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
   - from: frontend-client
     to: canvas
     type: direct-call
     description: Renders Canvas layout component
-  - from: frontend-client
-    to: codeviewer_test
+  - from: canvas
+    to: store
     type: direct-call
-    description: Renders CodeViewer.test layout component
+    description: Executes local class methods / functions
+  - from: canvas
+    to: blueprintnode
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: codeviewer_test
+    to: codeviewer
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: codeviewer_test
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
   - from: frontend-client
     to: codeviewer
     type: direct-call
     description: Renders CodeViewer layout component
-  - from: frontend-client
-    to: propertypanel_test
+  - from: codeviewer
+    to: store
     type: direct-call
-    description: Renders PropertyPanel.test layout component
+    description: Executes local class methods / functions
+  - from: codeviewer
+    to: graph
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: codeviewer
+    to: mermaidpreview
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: mermaidpreview
+    type: direct-call
+    description: Renders MermaidPreview layout component
+  - from: propertypanel_test
+    to: propertypanel
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: propertypanel_test
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
   - from: frontend-client
     to: propertypanel
     type: direct-call
     description: Renders PropertyPanel layout component
+  - from: propertypanel
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: store_test
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
   - from: frontend-client
     to: store
     type: direct-call
     description: Renders store layout component
+  - from: store
+    to: graph
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: store
+    to: filesync
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: store
+    to: telemetry
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: graph_test
+    to: graph
+    type: direct-call
+    description: Executes local class methods / functions
   - from: filesync
     to: ports
     type: direct-call

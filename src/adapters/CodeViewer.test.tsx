@@ -1,7 +1,14 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { CodeViewer } from './CodeViewer';
 import { useBlueprintStore } from './store';
+
+vi.mock('mermaid', () => ({
+  default: {
+    initialize: vi.fn(),
+    render: vi.fn().mockResolvedValue({ svg: '<svg>Mocked Mermaid SVG</svg>' }),
+  },
+}));
 
 describe('CodeViewer UI Component', () => {
   beforeEach(() => {
@@ -88,5 +95,66 @@ nodes:
 
     // Verification warning message is displayed
     expect(screen.getByText(/Invalid schema YAML/i)).toBeInTheDocument();
+  });
+
+  it('should support Mermaid preview toggle and render mock visual preview', async () => {
+    render(<CodeViewer />);
+
+    // Click Mermaid tab
+    fireEvent.click(screen.getByRole('button', { name: /mermaid/i }));
+
+    // By default, it should be in Preview mode, showing sub-toggles
+    expect(screen.getByRole('button', { name: /preview/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /code/i })).toBeInTheDocument();
+
+    // Verify MermaidPreview is rendered (we wait for async render to resolve)
+    const mockedSvg = await screen.findByText('Mocked Mermaid SVG');
+    expect(mockedSvg).toBeInTheDocument();
+
+    // Switch to Code mode
+    fireEvent.click(screen.getByRole('button', { name: /code/i }));
+
+    // Verify raw code is shown
+    expect(screen.getByText(content => content.includes('graph TD'))).toBeInTheDocument();
+  });
+
+  it('should filter test components from YAML, JSON, and Mermaid views based on showTests state', () => {
+    // 1. Initialize store with a schema containing both normal and test components
+    const { initSchema } = useBlueprintStore.getState();
+    initSchema({
+      name: 'Filtered Project',
+      version: '1.0.0',
+      nodes: [
+        { id: 'app', type: 'rest-api', name: 'App Node', isTest: false },
+        { id: 'app-test', type: 'rest-api', name: 'App Test Node', isTest: true },
+      ],
+      dependencies: [{ from: 'app-test', to: 'app', type: 'direct-call', description: 'Test app' }],
+    });
+
+    // Ensure showTests is false (the default)
+    useBlueprintStore.setState({ showTests: false });
+
+    const { rerender } = render(<CodeViewer />);
+
+    // Verify YAML view does NOT contain app-test
+    let yamlBlock = screen.getByText(content => content.includes('name: Filtered Project'));
+    expect(yamlBlock).toHaveTextContent('id: app');
+    expect(yamlBlock).not.toHaveTextContent('id: app-test');
+
+    // Switch to JSON tab
+    fireEvent.click(screen.getByRole('button', { name: /json/i }));
+    let jsonBlock = screen.getByText(content => content.includes('"name": "Filtered Project"'));
+    expect(jsonBlock).toHaveTextContent('"id": "app"');
+    expect(jsonBlock).not.toHaveTextContent('"id": "app-test"');
+
+    // Switch showTests to true
+    useBlueprintStore.setState({ showTests: true });
+    rerender(<CodeViewer />);
+
+    // Click JSON tab again to refresh/verify
+    fireEvent.click(screen.getByRole('button', { name: /json/i }));
+    jsonBlock = screen.getByText(content => content.includes('"name": "Filtered Project"'));
+    expect(jsonBlock).toHaveTextContent('"id": "app"');
+    expect(jsonBlock).toHaveTextContent('"id": "app-test"');
   });
 });
