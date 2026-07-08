@@ -55,5 +55,5 @@ export const ConsoleLoggerAdapter: LoggerPort = {
       context ? '\nContext:' : '',
       context || ''
     );
-  }
+  },
 };

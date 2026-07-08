@@ -7,7 +7,7 @@ export const CodeViewer: React.FC = () => {
   const { schema, yamlCode, importYaml, logger } = useBlueprintStore();
   const [activeTab, setActiveTab] = useState<'yaml' | 'json' | 'mermaid' | 'import'>('yaml');
   const [copied, setCopied] = useState(false);
-  
+
   // Local state for import textarea
   const [importText, setImportText] = useState('');
   const [importError, setImportError] = useState<string | null>(null);
@@ -17,6 +17,7 @@ export const CodeViewer: React.FC = () => {
     if (activeTab === 'import' && !importText) {
       setImportText(yamlCode);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab, yamlCode]);
 
   const getCodeContent = () => {
@@ -57,9 +58,7 @@ export const CodeViewer: React.FC = () => {
       {/* Header */}
       <div className="p-4 border-b border-slate-900 flex items-center gap-2">
         <FileCode className="w-5 h-5 text-brand-500" />
-        <h3 className="font-semibold text-slate-100 tracking-tight text-base">
-          Schema Explorer
-        </h3>
+        <h3 className="font-semibold text-slate-100 tracking-tight text-base">Schema Explorer</h3>
       </div>
 
       {/* Tabs */}
@@ -90,7 +89,7 @@ export const CodeViewer: React.FC = () => {
             <p className="text-xs text-slate-400 leading-relaxed">
               Paste your Blueprint YAML schema configuration here to re-render the workspace:
             </p>
-            
+
             <textarea
               value={importText}
               onChange={e => setImportText(e.target.value)}

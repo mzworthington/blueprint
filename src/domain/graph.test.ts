@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { validateGraph, parseSchemaFromYaml, serializeSchemaToYaml, serializeSchemaToMermaid } from './graph';
+import {
+  validateGraph,
+  parseSchemaFromYaml,
+  serializeSchemaToYaml,
+  serializeSchemaToMermaid,
+} from './graph';
 import type { SystemSchema } from './schema';
 
 describe('Graph Validation & Cycle Detection', () => {
@@ -10,12 +15,12 @@ describe('Graph Validation & Cycle Detection', () => {
       nodes: [
         { id: 'Gateway', type: 'rest-api', name: 'Gateway' },
         { id: 'AuthService', type: 'grpc-service', name: 'AuthService' },
-        { id: 'SessionDB', type: 'relational-database', name: 'SessionDB' }
+        { id: 'SessionDB', type: 'relational-database', name: 'SessionDB' },
       ],
       dependencies: [
         { from: 'Gateway', to: 'AuthService', type: 'direct-call' },
-        { from: 'AuthService', to: 'SessionDB', type: 'read-write' }
-      ]
+        { from: 'AuthService', to: 'SessionDB', type: 'read-write' },
+      ],
     };
 
     const result = validateGraph(schema);
@@ -27,12 +32,8 @@ describe('Graph Validation & Cycle Detection', () => {
     const schema: SystemSchema = {
       name: 'Self Loop',
       version: '1.0.0',
-      nodes: [
-        { id: 'Worker', type: 'serverless-function', name: 'Worker' }
-      ],
-      dependencies: [
-        { from: 'Worker', to: 'Worker', type: 'direct-call' }
-      ]
+      nodes: [{ id: 'Worker', type: 'serverless-function', name: 'Worker' }],
+      dependencies: [{ from: 'Worker', to: 'Worker', type: 'direct-call' }],
     };
 
     const result = validateGraph(schema);
@@ -49,13 +50,13 @@ describe('Graph Validation & Cycle Detection', () => {
       nodes: [
         { id: 'ServiceA', type: 'grpc-service', name: 'Service A' },
         { id: 'ServiceB', type: 'grpc-service', name: 'Service B' },
-        { id: 'ServiceC', type: 'grpc-service', name: 'Service C' }
+        { id: 'ServiceC', type: 'grpc-service', name: 'Service C' },
       ],
       dependencies: [
         { from: 'ServiceA', to: 'ServiceB', type: 'direct-call' },
         { from: 'ServiceB', to: 'ServiceC', type: 'direct-call' },
-        { from: 'ServiceC', to: 'ServiceA', type: 'direct-call' }
-      ]
+        { from: 'ServiceC', to: 'ServiceA', type: 'direct-call' },
+      ],
     };
 
     const result = validateGraph(schema);
@@ -78,13 +79,13 @@ describe('Graph Validation & Cycle Detection', () => {
         { id: 'A', type: 'rest-api', name: 'A' },
         { id: 'B', type: 'grpc-service', name: 'B' },
         { id: 'C', type: 'event-broker', name: 'C' },
-        { id: 'D', type: 'event-broker', name: 'D' }
+        { id: 'D', type: 'event-broker', name: 'D' },
       ],
       dependencies: [
         { from: 'A', to: 'B', type: 'direct-call' },
         { from: 'C', to: 'D', type: 'publish-subscribe' },
-        { from: 'D', to: 'C', type: 'publish-subscribe' }
-      ]
+        { from: 'D', to: 'C', type: 'publish-subscribe' },
+      ],
     };
 
     const result = validateGraph(schema);
@@ -150,10 +151,8 @@ nodes:
     const schema: SystemSchema = {
       name: 'Demo System',
       version: '1.0.0',
-      nodes: [
-        { id: 'UserApi', type: 'grpc-service', name: 'User API' }
-      ],
-      dependencies: []
+      nodes: [{ id: 'UserApi', type: 'grpc-service', name: 'User API' }],
+      dependencies: [],
     };
 
     const yamlContent = serializeSchemaToYaml(schema);
@@ -168,11 +167,9 @@ nodes:
       version: '1.0.0',
       nodes: [
         { id: 'Gateway', type: 'rest-api', name: 'Gateway Node' },
-        { id: 'DB', type: 'relational-database', name: 'DB Node' }
+        { id: 'DB', type: 'relational-database', name: 'DB Node' },
       ],
-      dependencies: [
-        { from: 'Gateway', to: 'DB', type: 'direct-call', description: 'Query' }
-      ]
+      dependencies: [{ from: 'Gateway', to: 'DB', type: 'direct-call', description: 'Query' }],
     };
 
     const mermaidContent = serializeSchemaToMermaid(schema);
@@ -182,4 +179,3 @@ nodes:
     expect(mermaidContent).toContain('Gateway --> |"Query"| DB');
   });
 });
-

@@ -11,11 +11,9 @@ describe('Zustand Store Actions & State Management', () => {
       version: '1.0.0',
       nodes: [
         { id: 'nodeA', type: 'rest-api', name: 'Node A', x: 0, y: 0 },
-        { id: 'nodeB', type: 'grpc-service', name: 'Node B', x: 100, y: 100 }
+        { id: 'nodeB', type: 'grpc-service', name: 'Node B', x: 100, y: 100 },
       ],
-      dependencies: [
-        { from: 'nodeA', to: 'nodeB', type: 'direct-call', description: 'Request' }
-      ]
+      dependencies: [{ from: 'nodeA', to: 'nodeB', type: 'direct-call', description: 'Request' }],
     });
   });
 
@@ -57,7 +55,7 @@ describe('Zustand Store Actions & State Management', () => {
     const store = useBlueprintStore.getState();
     store.updateNode('nodeA', {
       name: 'Updated Node A',
-      properties: { port: 8080 }
+      properties: { port: 8080 },
     });
 
     const updatedState = useBlueprintStore.getState();
@@ -86,13 +84,13 @@ describe('Zustand Store Actions & State Management', () => {
 
   it('should establish a connection between nodes and detect a cycle', () => {
     const store = useBlueprintStore.getState();
-    
+
     // Connect B -> A (creates cycle A -> B -> A)
     store.onConnect({
       source: 'nodeB',
       target: 'nodeA',
       sourceHandle: 'right-source',
-      targetHandle: 'left-target'
+      targetHandle: 'left-target',
     });
 
     const updatedState = useBlueprintStore.getState();

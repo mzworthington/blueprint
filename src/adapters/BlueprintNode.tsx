@@ -1,25 +1,19 @@
 import React, { memo } from 'react';
 import { Handle, Position } from '@xyflow/react';
 import type { NodeProps, Node } from '@xyflow/react';
-import {
-  Database,
-  Globe,
-  Zap,
-  Cpu,
-  Layers,
-  Share2,
-  Trash2,
-} from 'lucide-react';
+import { Database, Globe, Zap, Cpu, Layers, Share2, Trash2 } from 'lucide-react';
 import type { NodeType } from '../domain/schema';
 import { useBlueprintStore } from './store';
 
-type CustomNode = Node<{
-  id: string;
-  type: NodeType;
-  name: string;
-  properties: Record<string, string | number | boolean>;
-}, 'blueprintNode'>;
-
+type CustomNode = Node<
+  {
+    id: string;
+    type: NodeType;
+    name: string;
+    properties: Record<string, string | number | boolean>;
+  },
+  'blueprintNode'
+>;
 
 const nodeTypeConfigs: Record<
   NodeType,
@@ -79,7 +73,7 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
   const { id, type, name } = data;
   const config = nodeTypeConfigs[type as NodeType] || nodeTypeConfigs['rest-api'];
   const Icon = config.icon;
-  
+
   const selectNode = useBlueprintStore(state => state.selectNode);
   const deleteNode = useBlueprintStore(state => state.deleteNode);
 
@@ -147,9 +141,7 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
 
       {/* Body Content */}
       <div className="mt-3">
-        <h4 className="font-semibold text-slate-100 truncate text-base leading-tight">
-          {name}
-        </h4>
+        <h4 className="font-semibold text-slate-100 truncate text-base leading-tight">{name}</h4>
         <p className="text-xs text-slate-400 font-mono mt-1 select-all" title="Component ID">
           {id}
         </p>

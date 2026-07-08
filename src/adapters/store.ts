@@ -16,11 +16,7 @@ import type {
   ValidationResult,
   PropertyMap,
 } from '../domain/schema';
-import {
-  validateGraph,
-  parseSchemaFromYaml,
-  serializeSchemaToYaml,
-} from '../domain/graph';
+import { validateGraph, parseSchemaFromYaml, serializeSchemaToYaml } from '../domain/graph';
 import type { FileSystemPort, LoggerPort } from '../domain/ports';
 import { BrowserFileSystemAdapter } from './fileSync';
 import { ConsoleLoggerAdapter } from './telemetry';
@@ -47,11 +43,11 @@ export type BlueprintRFEdge = RFEdge<ComponentEdgeData>;
 interface BlueprintState {
   // Domain Schema state
   schema: SystemSchema;
-  
+
   // React Flow visual states
   nodes: BlueprintRFNode[];
   edges: BlueprintRFEdge[];
-  
+
   // UI selection and validation states
   selectedNodeId: string | null;
   validationResult: ValidationResult;
@@ -61,18 +57,18 @@ interface BlueprintState {
   initSchema: (schema: SystemSchema) => void;
   updateSchemaName: (name: string) => void;
   importYaml: (yamlContent: string) => boolean;
-  
+
   // Canvas operations
   onNodesChange: (changes: NodeChange[]) => void;
   onEdgesChange: (changes: EdgeChange[]) => void;
   onConnect: (connection: Connection) => void;
-  
+
   // Node CRUD operations
   addNode: (type: NodeType) => void;
   updateNode: (id: string, updates: Partial<SystemNode>) => void;
   deleteNode: (id: string) => void;
   selectNode: (id: string | null) => void;
-  
+
   // Dependency operations
   updateDependency: (from: string, to: string, updates: Partial<SystemDependency>) => void;
   deleteDependency: (from: string, to: string) => void;
@@ -91,11 +87,11 @@ const mapDomainNodeToRFNode = (n: SystemNode): BlueprintRFNode => ({
   id: n.id,
   type: 'blueprintNode',
   position: { x: n.x ?? 150 + Math.random() * 200, y: n.y ?? 150 + Math.random() * 200 },
-  data: { 
+  data: {
     id: n.id,
-    type: n.type, 
-    name: n.name, 
-    properties: n.properties || {} 
+    type: n.type,
+    name: n.name,
+    properties: n.properties || {},
   },
 });
 
@@ -108,7 +104,7 @@ const mapDomainDepToRFEdge = (d: SystemDependency): BlueprintRFEdge => ({
   data: { type: d.type, description: d.description || '' },
   style: {
     strokeWidth: 2,
-  }
+  },
 });
 
 // Re-generate pure schema from canvas state
@@ -161,7 +157,7 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
     const name = customSchemaName ?? currentSchema.name;
     const version = currentSchema.version;
     const nextSchema = rebuildSchemaFromCanvas(name, version, nextNodes, nextEdges);
-    
+
     // Validate
     const validationResult = validateGraph(nextSchema);
     const yamlCode = serializeSchemaToYaml(nextSchema);
@@ -169,7 +165,11 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
     // Observability validation warnings
     if (!validationResult.isValid && get().logger) {
       get().logger.warn('Schema validation warnings triggered', {
-        issues: validationResult.issues.map(i => ({ type: i.type, message: i.message, path: i.path }))
+        issues: validationResult.issues.map(i => ({
+          type: i.type,
+          message: i.message,
+          path: i.path,
+        })),
       });
     }
 
@@ -187,9 +187,13 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
         animated: edge.animated || isCycleEdge,
         style: {
           ...edge.style,
-          stroke: isCycleEdge ? '#ef4444' : (edge.data?.type === 'publish-subscribe' ? '#c084fc' : '#8b5cf6'),
+          stroke: isCycleEdge
+            ? '#ef4444'
+            : edge.data?.type === 'publish-subscribe'
+              ? '#c084fc'
+              : '#8b5cf6',
           strokeWidth: isCycleEdge ? 3.5 : 2,
-        }
+        },
       };
     });
 
@@ -225,12 +229,17 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
       logger.info('Initiating schema file write', { file: `${sanitizedName}.yaml` });
 
       try {
-        const success = await fileSystemPort.saveSchema(yamlCode, `${sanitizedName || 'blueprint'}.yaml`);
+        const success = await fileSystemPort.saveSchema(
+          yamlCode,
+          `${sanitizedName || 'blueprint'}.yaml`
+        );
         const duration = performance.now() - start;
         if (success) {
           logger.info('Schema file written successfully', { durationMs: Math.round(duration) });
         } else {
-          logger.warn('Schema file write cancelled or failed', { durationMs: Math.round(duration) });
+          logger.warn('Schema file write cancelled or failed', {
+            durationMs: Math.round(duration),
+          });
         }
         return success;
       } catch (err) {
@@ -263,17 +272,17 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
       }
     },
 
-    initSchema: (schema) => {
+    initSchema: schema => {
       const rfNodes = schema.nodes.map(mapDomainNodeToRFNode);
       const rfEdges = schema.dependencies.map(mapDomainDepToRFEdge);
       applyStateUpdates(rfNodes, rfEdges, schema.name);
     },
 
-    updateSchemaName: (name) => {
+    updateSchemaName: name => {
       applyStateUpdates(get().nodes, get().edges, name);
     },
 
-    importYaml: (yamlContent) => {
+    importYaml: yamlContent => {
       try {
         const schema = parseSchemaFromYaml(yamlContent);
         get().initSchema(schema);
@@ -284,28 +293,28 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
       }
     },
 
-    onNodesChange: (changes) => {
+    onNodesChange: changes => {
       const nextNodes = applyNodeChanges(changes, get().nodes) as unknown as BlueprintRFNode[];
       applyStateUpdates(nextNodes, get().edges);
     },
 
-    onEdgesChange: (changes) => {
+    onEdgesChange: changes => {
       const nextEdges = applyEdgeChanges(changes, get().edges) as unknown as BlueprintRFEdge[];
       applyStateUpdates(get().nodes, nextEdges);
     },
 
-    onConnect: (connection) => {
+    onConnect: connection => {
       if (!connection.source || !connection.target) return;
-      
+
       const newEdgeId = `edge-${connection.source}-${connection.target}`;
-      
+
       // Skip if edge already exists
       if (get().edges.some(e => e.id === newEdgeId)) return;
 
       get().logger.info('Establishing connection edge between component nodes', {
         from: connection.source,
         to: connection.target,
-        type: 'direct-call'
+        type: 'direct-call',
       });
 
       const newEdge: BlueprintRFEdge = {
@@ -314,15 +323,18 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
         target: connection.target,
         type: 'default',
         data: { type: 'direct-call', description: '' },
-        style: { strokeWidth: 2 }
+        style: { strokeWidth: 2 },
       };
 
       applyStateUpdates(get().nodes, [...get().edges, newEdge]);
     },
 
-    addNode: (type) => {
+    addNode: type => {
       const id = `${type}-${Date.now().toString().slice(-4)}`;
-      const name = `New ${type.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}`;
+      const name = `New ${type
+        .split('-')
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' ')}`;
       const newDomainNode: SystemNode = {
         id,
         type,
@@ -385,18 +397,18 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
       applyStateUpdates(nextNodes, nextEdges);
     },
 
-    deleteNode: (id) => {
+    deleteNode: id => {
       get().logger.info('Deleting node component from canvas', { id });
       const nextNodes = get().nodes.filter(n => n.id !== id);
       // Remove any edges referencing this node
       const nextEdges = get().edges.filter(e => e.source !== id && e.target !== id);
-      
+
       const nextSelected = get().selectedNodeId === id ? null : get().selectedNodeId;
       set({ selectedNodeId: nextSelected });
       applyStateUpdates(nextNodes, nextEdges);
     },
 
-    selectNode: (id) => {
+    selectNode: id => {
       set({ selectedNodeId: id });
     },
 

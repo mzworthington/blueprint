@@ -1,4 +1,3 @@
-
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
 import { PropertyPanel } from './PropertyPanel';
@@ -13,9 +12,9 @@ describe('PropertyPanel UI Component', () => {
       version: '1.0.0',
       nodes: [
         { id: 'gateway-api', type: 'rest-api', name: 'Gateway API', x: 0, y: 0 },
-        { id: 'session-store', type: 'cache-store', name: 'Session Cache', x: 10, y: 10 }
+        { id: 'session-store', type: 'cache-store', name: 'Session Cache', x: 10, y: 10 },
       ],
-      dependencies: []
+      dependencies: [],
     });
     // Ensure no node is selected
     useBlueprintStore.setState({ selectedNodeId: null });
@@ -23,7 +22,7 @@ describe('PropertyPanel UI Component', () => {
 
   it('should render Workspace config and Catalog when no node is selected', () => {
     render(<PropertyPanel />);
-    
+
     expect(screen.getByText('Properties Panel')).toBeInTheDocument();
     expect(screen.getByLabelText(/Workspace Name/i)).toBeInTheDocument();
     expect(screen.getByText('Component Catalog')).toBeInTheDocument();
@@ -33,20 +32,20 @@ describe('PropertyPanel UI Component', () => {
 
   it('should trigger node creation when catalog component is clicked', () => {
     render(<PropertyPanel />);
-    
+
     // Initial nodes count is 2
     expect(useBlueprintStore.getState().nodes).toHaveLength(2);
-    
+
     // Click REST API component card to instantiate a new node
     fireEvent.click(screen.getByText('REST API'));
-    
+
     // Total nodes should be 3
     expect(useBlueprintStore.getState().nodes).toHaveLength(3);
   });
 
   it('should show validation success message when architecture is acyclic', () => {
     render(<PropertyPanel />);
-    
+
     expect(screen.getByText('Architecture Valid')).toBeInTheDocument();
     expect(screen.getByText(/No cyclic loops or invalid boundaries/i)).toBeInTheDocument();
   });
@@ -58,17 +57,17 @@ describe('PropertyPanel UI Component', () => {
       source: 'gateway-api',
       target: 'session-store',
       sourceHandle: null,
-      targetHandle: null
+      targetHandle: null,
     });
     onConnect({
       source: 'session-store',
       target: 'gateway-api',
       sourceHandle: null,
-      targetHandle: null
+      targetHandle: null,
     });
 
     render(<PropertyPanel />);
-    
+
     expect(screen.getByText('Circular Dependency')).toBeInTheDocument();
     expect(screen.getByText(/Circular dependency detected/i)).toBeInTheDocument();
   });

@@ -1,12 +1,5 @@
 import React, { useMemo } from 'react';
-import {
-  ReactFlow,
-  Background,
-  Controls,
-  MiniMap,
-  BackgroundVariant,
-  Panel,
-} from '@xyflow/react';
+import { ReactFlow, Background, Controls, MiniMap, BackgroundVariant, Panel } from '@xyflow/react';
 import { useBlueprintStore } from './store';
 import { BlueprintNode } from './BlueprintNode';
 import { Download, Upload, AlertTriangle, CheckCircle, RefreshCcw } from 'lucide-react';
@@ -90,9 +83,7 @@ export const Canvas: React.FC = () => {
         <Panel position="top-left" className="m-4 flex items-center gap-3">
           <div className="flex items-center gap-3 bg-slate-950/80 border border-slate-850 px-4 py-2 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md">
             <div>
-              <h1 className="text-sm font-semibold text-slate-100 m-0">
-                {schema.name}
-              </h1>
+              <h1 className="text-sm font-semibold text-slate-100 m-0">{schema.name}</h1>
               <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mt-0.5">
                 Workspace
               </p>

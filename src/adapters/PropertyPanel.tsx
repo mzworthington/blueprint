@@ -40,9 +40,7 @@ export const PropertyPanel: React.FC = () => {
   } = useBlueprintStore();
 
   const selectedRFNode = nodes.find(n => n.id === selectedNodeId);
-  const selectedNode = selectedRFNode
-    ? schema.nodes.find(sn => sn.id === selectedNodeId)
-    : null;
+  const selectedNode = selectedRFNode ? schema.nodes.find(sn => sn.id === selectedNodeId) : null;
 
   // Local state for properties editor
   const [propKey, setPropKey] = useState('');
@@ -56,7 +54,10 @@ export const PropertyPanel: React.FC = () => {
 
   const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!selectedNodeId) return;
-    const newId = e.target.value.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '');
+    const newId = e.target.value
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9_-]/g, '');
     if (newId && newId !== selectedNodeId) {
       // Prevent duplicate IDs
       if (schema.nodes.some(n => n.id === newId)) return;
@@ -72,12 +73,12 @@ export const PropertyPanel: React.FC = () => {
   const handleAddProperty = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedNodeId || !selectedNode || !propKey.trim()) return;
-    
+
     const nextProps: PropertyMap = {
       ...(selectedNode.properties || {}),
       [propKey.trim()]: propVal,
     };
-    
+
     updateNode(selectedNodeId, { properties: nextProps });
     setPropKey('');
     setPropVal('');
@@ -99,9 +100,7 @@ export const PropertyPanel: React.FC = () => {
     <div className="w-80 h-full flex flex-col border-l border-slate-900 bg-slate-950/80 glass-panel">
       {/* Upper header */}
       <div className="p-4 border-b border-slate-900 flex items-center justify-between">
-        <h3 className="font-semibold text-slate-100 tracking-tight text-base">
-          Properties Panel
-        </h3>
+        <h3 className="font-semibold text-slate-100 tracking-tight text-base">Properties Panel</h3>
         {selectedNodeId && (
           <button
             onClick={() => selectNode(null)}
@@ -120,7 +119,10 @@ export const PropertyPanel: React.FC = () => {
             {/* Core Info */}
             <div className="space-y-4">
               <div>
-                <label htmlFor="component-name-input" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                <label
+                  htmlFor="component-name-input"
+                  className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5"
+                >
                   Component Name
                 </label>
                 <input
@@ -133,7 +135,10 @@ export const PropertyPanel: React.FC = () => {
               </div>
 
               <div>
-                <label htmlFor="component-id-input" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                <label
+                  htmlFor="component-id-input"
+                  className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5"
+                >
                   Component ID (Schema Key)
                 </label>
                 <input
@@ -231,7 +236,7 @@ export const PropertyPanel: React.FC = () => {
                     const isSource = edge.source === selectedNodeId;
                     const partnerId = isSource ? edge.target : edge.source;
                     const partnerNode = schema.nodes.find(n => n.id === partnerId);
-                    
+
                     return (
                       <div
                         key={edge.id}
@@ -240,9 +245,7 @@ export const PropertyPanel: React.FC = () => {
                         <div className="flex items-center justify-between text-xs">
                           <span className="font-semibold text-slate-300">
                             {isSource ? '➔ Output to' : '📥 Input from'}{' '}
-                            <span className="text-brand-100">
-                              {partnerNode?.name || partnerId}
-                            </span>
+                            <span className="text-brand-100">{partnerNode?.name || partnerId}</span>
                           </span>
                           <button
                             onClick={() => deleteDependency(edge.source, edge.target)}
@@ -297,7 +300,10 @@ export const PropertyPanel: React.FC = () => {
           <div className="space-y-6">
             {/* Project/Workspace properties */}
             <div>
-              <label htmlFor="workspace-name-input" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+              <label
+                htmlFor="workspace-name-input"
+                className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5"
+              >
                 Workspace Name
               </label>
               <input
@@ -351,9 +357,9 @@ export const PropertyPanel: React.FC = () => {
                 </div>
               ) : (
                 <div className="space-y-2">
-                  {validationResult.issues.map((issue, idx) => (
+                  {validationResult.issues.map(issue => (
                     <div
-                      key={idx}
+                      key={`${issue.type}-${issue.message}`}
                       className="flex items-start gap-2.5 bg-red-950/20 border border-red-900/30 rounded-xl p-3.5 text-red-400 text-xs"
                     >
                       <AlertTriangle className="w-5 h-5 shrink-0" />

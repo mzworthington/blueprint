@@ -90,14 +90,13 @@ const nodeTypeSchema = z.enum([
   'cache-store',
 ]);
 
-const dependencyTypeSchema = z.enum([
-  'direct-call',
-  'publish-subscribe',
-  'read-write',
-]);
+const dependencyTypeSchema = z.enum(['direct-call', 'publish-subscribe', 'read-write']);
 
 const systemNodeSchema = z.object({
-  id: z.string().min(1).regex(/^[a-zA-Z0-9_-]+$/, 'Node ID must be alphanumeric, dashes, or underscores'),
+  id: z
+    .string()
+    .min(1)
+    .regex(/^[a-zA-Z0-9_-]+$/, 'Node ID must be alphanumeric, dashes, or underscores'),
   type: nodeTypeSchema,
   name: z.string().min(1),
   properties: z.record(z.union([z.string(), z.number(), z.boolean()])).optional(),
@@ -188,7 +187,7 @@ export function serializeSchemaToYaml(schema: SystemSchema): string {
  */
 export function serializeSchemaToMermaid(schema: SystemSchema): string {
   const lines = ['graph TD'];
-  
+
   for (const node of schema.nodes) {
     let label = `["${node.name}"]`;
     if (node.type === 'relational-database') {
@@ -211,4 +210,3 @@ export function serializeSchemaToMermaid(schema: SystemSchema): string {
 
   return lines.join('\n');
 }
-

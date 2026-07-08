@@ -66,7 +66,7 @@ export const BrowserFileSystemAdapter: FileSystemPort = {
         return content;
       } else {
         // Classic browser file input fallback
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
           const input = document.createElement('input');
           input.type = 'file';
           input.accept = '.yaml,.yml';
@@ -89,5 +89,5 @@ export const BrowserFileSystemAdapter: FileSystemPort = {
       }
       throw e;
     }
-  }
+  },
 };

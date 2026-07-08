@@ -1,4 +1,3 @@
-
 import { ReactFlowProvider } from '@xyflow/react';
 import { CodeViewer } from './adapters/CodeViewer';
 import { Canvas } from './adapters/Canvas';
