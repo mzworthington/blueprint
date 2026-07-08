@@ -52,11 +52,13 @@ interface BlueprintState {
   selectedNodeId: string | null;
   validationResult: ValidationResult;
   yamlCode: string;
+  lastError: string | null;
 
   // Actions
   initSchema: (schema: SystemSchema) => void;
   updateSchemaName: (name: string) => void;
   importYaml: (yamlContent: string) => boolean;
+  clearError: () => void;
 
   // Canvas operations
   onNodesChange: (changes: NodeChange[]) => void;
@@ -219,6 +221,7 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
     selectedNodeId: null,
     validationResult: initialValidation,
     yamlCode: initialYaml,
+    lastError: null,
     fileSystemPort: BrowserFileSystemAdapter,
     logger: ConsoleLoggerAdapter,
 
@@ -284,13 +287,20 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
 
     importYaml: yamlContent => {
       try {
+        set({ lastError: null });
         const schema = parseSchemaFromYaml(yamlContent);
         get().initSchema(schema);
         return true;
-      } catch (e) {
+      } catch (e: any) {
+        const errorMsg = e.message || 'Failed to import YAML schema configuration';
+        set({ lastError: errorMsg });
         get().logger.error('Failed to import YAML schema configuration', e);
         return false;
       }
+    },
+
+    clearError: () => {
+      set({ lastError: null });
     },
 
     onNodesChange: changes => {

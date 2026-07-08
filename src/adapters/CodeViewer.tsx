@@ -4,13 +4,12 @@ import { useBlueprintStore } from './store';
 import { serializeSchemaToMermaid } from '../domain/graph';
 
 export const CodeViewer: React.FC = () => {
-  const { schema, yamlCode, importYaml, logger } = useBlueprintStore();
+  const { schema, yamlCode, importYaml, lastError, clearError, logger } = useBlueprintStore();
   const [activeTab, setActiveTab] = useState<'yaml' | 'json' | 'mermaid' | 'import'>('yaml');
   const [copied, setCopied] = useState(false);
 
   // Local state for import textarea
   const [importText, setImportText] = useState('');
-  const [importError, setImportError] = useState<string | null>(null);
 
   // Sync import text when code changes, so it defaults to the current state
   useEffect(() => {
@@ -43,13 +42,10 @@ export const CodeViewer: React.FC = () => {
   };
 
   const handleImport = () => {
-    setImportError(null);
     const success = importYaml(importText);
     if (success) {
       setActiveTab('yaml');
       setImportText('');
-    } else {
-      setImportError('Invalid schema YAML. Please check structure and fields.');
     }
   };
 
@@ -68,7 +64,7 @@ export const CodeViewer: React.FC = () => {
             key={tab}
             onClick={() => {
               setActiveTab(tab);
-              if (tab !== 'import') setImportError(null);
+              clearError();
             }}
             className={`flex-1 text-center py-1.5 text-xs font-semibold rounded-lg capitalize transition ${
               activeTab === tab
@@ -97,10 +93,10 @@ export const CodeViewer: React.FC = () => {
               className="flex-1 bg-slate-900/90 border border-slate-800 rounded-xl p-3 text-xs font-mono text-slate-100 focus:outline-none focus:border-brand-500 resize-none"
             />
 
-            {importError && (
+            {lastError && (
               <div className="flex items-start gap-2 bg-red-950/20 border border-red-900/30 rounded-lg p-2.5 text-red-400 text-xs">
                 <AlertCircle className="w-4.5 h-4.5 shrink-0 mt-0.5" />
-                <span>{importError}</span>
+                <span className="break-words w-full">{lastError}</span>
               </div>
             )}
 

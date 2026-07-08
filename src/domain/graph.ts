@@ -120,37 +120,55 @@ const systemSchemaValidator = z.object({
   dependencies: z.array(systemDependencySchema).optional(),
 });
 
-/**
- * Parses a YAML string into a SystemSchema.
- */
 export function parseSchemaFromYaml(yamlContent: string): SystemSchema {
-  const parsed = yaml.load(yamlContent);
-  if (!parsed || typeof parsed !== 'object') {
-    throw new Error('Invalid YAML: output is not an object');
+  let parsed: any;
+  try {
+    parsed = yaml.load(yamlContent);
+  } catch (yamlErr: any) {
+    throw new Error(`Invalid schema YAML. YAML Parsing Error: ${yamlErr.message || yamlErr}`);
   }
 
-  const validated = systemSchemaValidator.parse(parsed);
+  if (!parsed || typeof parsed !== 'object') {
+    throw new Error('Invalid schema YAML. Schema must be a valid YAML object');
+  }
 
-  return {
-    name: validated.name,
-    version: validated.version,
-    nodes: validated.nodes.map(n => ({
-      id: n.id,
-      type: n.type,
-      name: n.name,
-      properties: n.properties || {},
-      x: n.x,
-      y: n.y,
-    })),
-    dependencies: validated.dependencies
-      ? validated.dependencies.map(d => ({
-          from: d.from,
-          to: d.to,
-          type: d.type,
-          description: d.description || '',
-        }))
-      : [],
-  };
+  try {
+    const validated = systemSchemaValidator.parse(parsed);
+
+    return {
+      name: validated.name,
+      version: validated.version,
+      nodes: validated.nodes.map(n => ({
+        id: n.id,
+        type: n.type,
+        name: n.name,
+        properties: n.properties || {},
+        x: n.x,
+        y: n.y,
+      })),
+      dependencies: validated.dependencies
+        ? validated.dependencies.map(d => ({
+            from: d.from,
+            to: d.to,
+            type: d.type,
+            description: d.description || '',
+          }))
+        : [],
+    };
+  } catch (zodErr: any) {
+    if (zodErr instanceof z.ZodError) {
+      const details = zodErr.issues
+        .map(issue => {
+          const path = issue.path
+            .map((p, idx) => (typeof p === 'number' ? `[${p}]` : (idx > 0 ? '.' : '') + p))
+            .join('');
+          return `${path || 'root'}: ${issue.message}`;
+        })
+        .join('; ');
+      throw new Error(`Invalid schema YAML. Schema Validation Error: ${details}`);
+    }
+    throw zodErr;
+  }
 }
 
 /**
