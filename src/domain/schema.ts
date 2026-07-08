@@ -4,7 +4,9 @@ export type NodeType =
   | 'grpc-service'
   | 'serverless-function'
   | 'rest-api'
-  | 'cache-store';
+  | 'cache-store'
+  | 'gateway-api'
+  | 'background-worker';
 
 export interface PropertyMap {
   [key: string]: string | number | boolean;

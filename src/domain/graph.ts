@@ -88,6 +88,8 @@ const nodeTypeSchema = z.enum([
   'serverless-function',
   'rest-api',
   'cache-store',
+  'gateway-api',
+  'background-worker',
 ]);
 
 const dependencyTypeSchema = z.enum(['direct-call', 'publish-subscribe', 'read-write']);

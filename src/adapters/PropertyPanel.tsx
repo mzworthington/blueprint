@@ -21,6 +21,8 @@ const NODE_TYPES: { type: NodeType; label: string; icon: any }[] = [
   { type: 'relational-database', label: 'Relational DB', icon: Database },
   { type: 'cache-store', label: 'Cache Store', icon: Layers },
   { type: 'serverless-function', label: 'Serverless Fn', icon: Zap },
+  { type: 'gateway-api', label: 'Gateway API', icon: Globe },
+  { type: 'background-worker', label: 'Background Worker', icon: Cpu },
 ];
 
 export const PropertyPanel: React.FC = () => {

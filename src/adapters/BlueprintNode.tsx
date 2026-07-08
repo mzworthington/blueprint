@@ -67,6 +67,20 @@ const nodeTypeConfigs: Record<
     bg: 'rgba(249, 115, 22, 0.08)',
     border: 'rgba(249, 115, 22, 0.3)',
   },
+  'gateway-api': {
+    label: 'Gateway API',
+    icon: Globe,
+    color: '#14b8a6', // teal-500
+    bg: 'rgba(20, 184, 166, 0.08)',
+    border: 'rgba(20, 184, 166, 0.3)',
+  },
+  'background-worker': {
+    label: 'Background Worker',
+    icon: Cpu,
+    color: '#6366f1', // indigo-500
+    bg: 'rgba(99, 102, 241, 0.08)',
+    border: 'rgba(99, 102, 241, 0.3)',
+  },
 };
 
 export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) => {
