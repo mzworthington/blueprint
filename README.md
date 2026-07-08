@@ -118,6 +118,14 @@ Compiles type definitions and generates the minified production bundle in the `d
 pnpm build
 ```
 
+### 4. Auto-Generate System Diagrams (AST Analyzer)
+
+Parses your local TypeScript/React codebase, extracts components and dependency relationships, calculates optimal visual grid coordinates with Dagre, and outputs the standard `blueprint.yaml` schema file:
+
+```bash
+pnpm analyze
+```
+
 ---
 
 ## 🧪 Testing Environment
