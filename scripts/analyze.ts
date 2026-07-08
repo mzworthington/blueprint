@@ -326,9 +326,7 @@ function runAnalysis() {
     name: 'Auto-Generated Blueprint System Map',
     version: '1.0.0',
     nodes: layoutNodes,
-    dependencies: dependenciesList.filter(
-      edge => nodesMap.has(edge.from) && nodesMap.has(edge.to)
-    ),
+    dependencies: dependenciesList.filter(edge => nodesMap.has(edge.from) && nodesMap.has(edge.to)),
   };
 
   // 5. Serialize and write standard YAML output
