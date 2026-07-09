@@ -194,10 +194,53 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
         backdropFilter: 'blur(8px)',
       }}
     >
+      {/* Top handles */}
+      <Handle
+        type="target"
+        position={Position.Top}
+        id="top-target"
+        className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
+      />
+      <Handle
+        type="source"
+        position={Position.Top}
+        id="top-source"
+        className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
+      />
+
+      {/* Bottom handles */}
+      <Handle
+        type="target"
+        position={Position.Bottom}
+        id="bottom-target"
+        className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
+      />
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        id="bottom-source"
+        className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
+      />
+
+      {/* Left handles */}
       <Handle
         type="target"
         position={Position.Left}
         id="left-target"
+        className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
+      />
+      <Handle
+        type="source"
+        position={Position.Left}
+        id="left-source"
+        className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
+      />
+
+      {/* Right handles */}
+      <Handle
+        type="target"
+        position={Position.Right}
+        id="right-target"
         className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
       />
       <Handle

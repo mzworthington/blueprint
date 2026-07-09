@@ -155,6 +155,43 @@ const mapDomainDepToRFEdge = (d: SystemDependency): BlueprintRFEdge => ({
   },
 });
 
+const getClosestHandles = (
+  sourceNode: BlueprintRFNode,
+  targetNode: BlueprintRFNode
+): { sourceHandle: string; targetHandle: string } => {
+  const aw = sourceNode.measured?.width ?? 256;
+  const ah = sourceNode.measured?.height ?? 120;
+  const ax = sourceNode.position.x;
+  const ay = sourceNode.position.y;
+
+  const bw = targetNode.measured?.width ?? 256;
+  const bh = targetNode.measured?.height ?? 120;
+  const bx = targetNode.position.x;
+  const by = targetNode.position.y;
+
+  const cxA = ax + aw / 2;
+  const cyA = ay + ah / 2;
+  const cxB = bx + bw / 2;
+  const cyB = by + bh / 2;
+
+  const dx = cxB - cxA;
+  const dy = cyB - cyA;
+
+  if (Math.abs(dx) > Math.abs(dy)) {
+    if (dx > 0) {
+      return { sourceHandle: 'right-source', targetHandle: 'left-target' };
+    } else {
+      return { sourceHandle: 'left-source', targetHandle: 'right-target' };
+    }
+  } else {
+    if (dy > 0) {
+      return { sourceHandle: 'bottom-source', targetHandle: 'top-target' };
+    } else {
+      return { sourceHandle: 'top-source', targetHandle: 'bottom-target' };
+    }
+  }
+};
+
 const rebuildSchemaFromCanvas = (
   name: string,
   version: string,
@@ -240,13 +277,27 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
     const version = currentSchema.version;
     const level = customSchemaLevel ?? currentSchema.level ?? 'container';
     const parentRef = customParentRef !== undefined ? customParentRef : currentSchema.parentRef;
+
+    // Recalculate closest handles for all edges dynamically
+    const edgesWithHandles = nextEdges.map(edge => {
+      const sourceNode = nextNodes.find(n => n.id === edge.source);
+      const targetNode = nextNodes.find(n => n.id === edge.target);
+      if (!sourceNode || !targetNode) return edge;
+      const { sourceHandle, targetHandle } = getClosestHandles(sourceNode, targetNode);
+      return {
+        ...edge,
+        sourceHandle,
+        targetHandle,
+      };
+    });
+
     const nextSchema = rebuildSchemaFromCanvas(
       name,
       version,
       level,
       parentRef,
       nextNodes,
-      nextEdges
+      edgesWithHandles
     );
 
     // Validate
@@ -271,7 +322,7 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
         .flatMap(issue => issue.path || [])
     );
 
-    const highlightedEdges = nextEdges.map(edge => {
+    const highlightedEdges = edgesWithHandles.map(edge => {
       const isCycleEdge = cycleNodes.has(edge.source) && cycleNodes.has(edge.target);
       return {
         ...edge,
@@ -307,7 +358,17 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
   };
 
   const initialNodes = defaultInitialSchema.nodes.map(mapDomainNodeToRFNode);
-  const initialEdges = defaultInitialSchema.dependencies.map(mapDomainDepToRFEdge);
+  const initialEdges = defaultInitialSchema.dependencies.map(mapDomainDepToRFEdge).map(edge => {
+    const sourceNode = initialNodes.find(n => n.id === edge.source);
+    const targetNode = initialNodes.find(n => n.id === edge.target);
+    if (!sourceNode || !targetNode) return edge;
+    const { sourceHandle, targetHandle } = getClosestHandles(sourceNode, targetNode);
+    return {
+      ...edge,
+      sourceHandle,
+      targetHandle,
+    };
+  });
   const initialValidation = validateGraph(defaultInitialSchema);
   const initialYaml = serializeSchemaToYaml(defaultInitialSchema);
 
