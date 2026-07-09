@@ -1,4 +1,4 @@
-import yaml from 'js-yaml';
+import * as yaml from 'js-yaml';
 import { z } from 'zod';
 import type { SystemSchema, ValidationResult, ValidationIssue } from './schema';
 
@@ -117,7 +117,7 @@ const systemNodeSchema = z.object({
   name: z.string().min(1),
   c4Ref: z.string().optional(),
   external: z.boolean().optional(),
-  properties: z.record(z.union([z.string(), z.number(), z.boolean()])).optional(),
+  properties: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).optional(),
   isTest: z.boolean().optional(),
   x: z.number().optional(),
   y: z.number().optional(),
@@ -184,7 +184,7 @@ export function parseSchemaFromYaml(yamlContent: string): SystemSchema {
       const details = zodErr.issues
         .map(issue => {
           const path = issue.path
-            .map((p, idx) => (typeof p === 'number' ? `[${p}]` : (idx > 0 ? '.' : '') + p))
+            .map((p, idx) => (typeof p === 'number' ? `[${p}]` : (idx > 0 ? '.' : '') + String(p)))
             .join('');
           return `${path || 'root'}: ${issue.message}`;
         })
@@ -236,7 +236,6 @@ export function serializeSchemaToYaml(schema: SystemSchema): string {
   return yaml.dump(cleanSchema, {
     noRefs: true,
     lineWidth: 120,
-    noCompatMode: true,
   });
 }
 

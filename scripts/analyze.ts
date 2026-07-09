@@ -1,6 +1,6 @@
 import { Project, SyntaxKind, CallExpression, NewExpression, ImportDeclaration } from 'ts-morph';
 import dagre from 'dagre';
-import yaml from 'js-yaml';
+import * as yaml from 'js-yaml';
 import * as fs from 'fs';
 import * as path from 'path';
 
