@@ -29,6 +29,22 @@ function sanitizeId(raw: string): string {
   return raw.toLowerCase().replace(/[^a-z0-9_-]/g, '_');
 }
 
+function getMeaningfulName(): string {
+  try {
+    const pkgPath = path.resolve(process.cwd(), 'package.json');
+    if (fs.existsSync(pkgPath)) {
+      const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+      if (pkg.name) {
+        const nameWithoutScope = pkg.name.includes('/') ? pkg.name.split('/')[1] : pkg.name;
+        return sanitizeId(nameWithoutScope);
+      }
+    }
+  } catch {
+    // ignore
+  }
+  return sanitizeId(path.basename(process.cwd()));
+}
+
 function runAnalysis() {
   console.log('🚀 Starting AST Codebase Analysis...');
 
@@ -322,8 +338,14 @@ function runAnalysis() {
     };
   });
 
+  const systemName = getMeaningfulName();
+  const displayName = systemName
+    .split(/[-_]/)
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+
   const finalSchema: BlueprintSchema = {
-    name: 'Auto-Generated Blueprint System Map',
+    name: `${displayName} System Map`,
     version: '1.0.0',
     nodes: layoutNodes,
     dependencies: dependenciesList.filter(edge => nodesMap.has(edge.from) && nodesMap.has(edge.to)),
@@ -336,7 +358,12 @@ function runAnalysis() {
     noRefs: true,
   });
 
-  const outputPath = path.resolve(process.cwd(), 'blueprint.yaml');
+  const blueprintsDir = path.resolve(process.cwd(), 'blueprints');
+  if (!fs.existsSync(blueprintsDir)) {
+    fs.mkdirSync(blueprintsDir, { recursive: true });
+  }
+
+  const outputPath = path.resolve(blueprintsDir, `${systemName}.yaml`);
   fs.writeFileSync(outputPath, yamlContent, 'utf8');
 
   console.log(`✅ Successfully generated visual layout!`);

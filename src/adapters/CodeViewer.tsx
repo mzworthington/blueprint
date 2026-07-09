@@ -10,8 +10,6 @@ export const CodeViewer: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'yaml' | 'json' | 'mermaid' | 'import'>('yaml');
   const [copied, setCopied] = useState(false);
   const [mermaidMode, setMermaidMode] = useState<'preview' | 'code'>('preview');
-
-  // Local state for import textarea
   const [importText, setImportText] = useState('');
 
   // Sync import text when code changes, so it defaults to the current state
@@ -22,7 +20,6 @@ export const CodeViewer: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab, yamlCode]);
 
-  // Dynamically filter schema if we exclude test components
   const filteredSchema = useMemo(() => {
     if (showTests) return schema;
 
@@ -77,13 +74,11 @@ export const CodeViewer: React.FC = () => {
           : 'w-96 border-r border-slate-900'
       }`}
     >
-      {/* Header */}
       <div className="p-4 border-b border-slate-900 flex items-center gap-2">
         <FileCode className="w-5 h-5 text-brand-500" />
         <h3 className="font-semibold text-slate-100 tracking-tight text-base">Schema Explorer</h3>
       </div>
 
-      {/* Tabs */}
       <div className="flex border-b border-slate-900 bg-slate-950/60 p-1">
         {(['yaml', 'json', 'mermaid', 'import'] as const).map(tab => (
           <button
@@ -103,10 +98,8 @@ export const CodeViewer: React.FC = () => {
         ))}
       </div>
 
-      {/* Content */}
       <div className="flex-1 overflow-hidden flex flex-col p-4">
         {activeTab === 'import' ? (
-          // IMPORT MODE
           <div className="flex-1 flex flex-col space-y-3">
             <p className="text-xs text-slate-400 leading-relaxed">
               Paste your Blueprint YAML schema configuration here to re-render the workspace:
@@ -135,9 +128,7 @@ export const CodeViewer: React.FC = () => {
             </button>
           </div>
         ) : (
-          // READ-ONLY VIEW MODE
           <div className="flex-1 flex flex-col overflow-hidden relative group">
-            {/* Mermaid Sub-toggle */}
             {activeTab === 'mermaid' && (
               <div className="flex bg-slate-950/60 p-0.5 rounded-lg border border-slate-900 mb-3 self-end shrink-0 z-20">
                 <button
@@ -163,7 +154,6 @@ export const CodeViewer: React.FC = () => {
               </div>
             )}
 
-            {/* Copy button */}
             <button
               onClick={handleCopy}
               className="absolute top-3 right-3 p-2 rounded-lg bg-slate-950 border border-slate-900 text-slate-400 hover:text-slate-200 hover:bg-slate-900 transition flex items-center gap-1.5 text-xs font-semibold z-10 shadow-md cursor-pointer"
@@ -181,7 +171,6 @@ export const CodeViewer: React.FC = () => {
               )}
             </button>
 
-            {/* Content Area (Mermaid Preview or Code Box) */}
             {activeTab === 'mermaid' && mermaidMode === 'preview' ? (
               <MermaidPreview code={getCodeContent()} />
             ) : (

@@ -1,4 +1,4 @@
-name: Auto-Generated Blueprint System Map
+name: Blueprint System Map
 version: 1.0.0
 nodes:
   - id: frontend-client
@@ -7,8 +7,17 @@ nodes:
     properties:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
-    x: 1410
+    x: 2260
     'y': 50
+  - id: app_test
+    type: gateway-api
+    name: App.test UI Component
+    isTest: true
+    properties:
+      filepath: src/App.test.tsx
+      technology: React Component
+    x: 4445
+    'y': 690
   - id: setuptests
     type: gateway-api
     name: setupTests UI Component
@@ -16,8 +25,17 @@ nodes:
     properties:
       filepath: src/setupTests.ts
       technology: React Component
-    x: 1870
+    x: 2910
     'y': 50
+  - id: blueprintnode_test
+    type: gateway-api
+    name: BlueprintNode.test UI Component
+    isTest: true
+    properties:
+      filepath: src/adapters/BlueprintNode.test.tsx
+      technology: React Component
+    x: 4135
+    'y': 370
   - id: blueprintnode
     type: gateway-api
     name: BlueprintNode UI Component
@@ -25,8 +43,35 @@ nodes:
     properties:
       filepath: src/adapters/BlueprintNode.tsx
       technology: React Component
-    x: 2610
+    x: 3865
     'y': 690
+  - id: breadcrumbs_test
+    type: gateway-api
+    name: Breadcrumbs.test UI Component
+    isTest: true
+    properties:
+      filepath: src/adapters/Breadcrumbs.test.tsx
+      technology: React Component
+    x: 3515
+    'y': 370
+  - id: breadcrumbs
+    type: gateway-api
+    name: Breadcrumbs UI Component
+    isTest: false
+    properties:
+      filepath: src/adapters/Breadcrumbs.tsx
+      technology: React Component
+    x: 3245
+    'y': 690
+  - id: canvas_test
+    type: gateway-api
+    name: Canvas.test UI Component
+    isTest: true
+    properties:
+      filepath: src/adapters/Canvas.test.tsx
+      technology: React Component
+    x: 3370
+    'y': 50
   - id: canvas
     type: gateway-api
     name: Canvas UI Component
@@ -34,7 +79,7 @@ nodes:
     properties:
       filepath: src/adapters/Canvas.tsx
       technology: React Component
-    x: 2340
+    x: 2960
     'y': 370
   - id: codeviewer_test
     type: gateway-api
@@ -43,7 +88,7 @@ nodes:
     properties:
       filepath: src/adapters/CodeViewer.test.tsx
       technology: React Component
-    x: 1880
+    x: 2380
     'y': 370
   - id: codeviewer
     type: gateway-api
@@ -52,8 +97,17 @@ nodes:
     properties:
       filepath: src/adapters/CodeViewer.tsx
       technology: React Component
-    x: 1610
+    x: 2245
     'y': 690
+  - id: filesync_test
+    type: background-worker
+    name: fileSync.test Service
+    isTest: true
+    properties:
+      filepath: src/adapters/fileSync.test.ts
+      technology: TypeScript Domain Service
+    x: 140
+    'y': 1010
   - id: filesync
     type: background-worker
     name: fileSync Service
@@ -61,7 +115,7 @@ nodes:
     properties:
       filepath: src/adapters/fileSync.ts
       technology: TypeScript Domain Service
-    x: 1045
+    x: 140
     'y': 1330
   - id: mermaidpreview
     type: gateway-api
@@ -70,7 +124,7 @@ nodes:
     properties:
       filepath: src/adapters/MermaidPreview.tsx
       technology: React Component
-    x: 140
+    x: 600
     'y': 1010
   - id: propertypanel_test
     type: gateway-api
@@ -79,7 +133,7 @@ nodes:
     properties:
       filepath: src/adapters/PropertyPanel.test.tsx
       technology: React Component
-    x: 1260
+    x: 1720
     'y': 370
   - id: propertypanel
     type: gateway-api
@@ -88,7 +142,7 @@ nodes:
     properties:
       filepath: src/adapters/PropertyPanel.tsx
       technology: React Component
-    x: 990
+    x: 1450
     'y': 690
   - id: store_test
     type: background-worker
@@ -97,7 +151,7 @@ nodes:
     properties:
       filepath: src/adapters/store.test.ts
       technology: TypeScript Domain Service
-    x: 530
+    x: 990
     'y': 690
   - id: store
     type: gateway-api
@@ -106,7 +160,7 @@ nodes:
     properties:
       filepath: src/adapters/store.ts
       technology: React Component
-    x: 1380
+    x: 2610
     'y': 1010
   - id: telemetry
     type: background-worker
@@ -115,7 +169,7 @@ nodes:
     properties:
       filepath: src/adapters/telemetry.ts
       technology: TypeScript Domain Service
-    x: 1585
+    x: 2720
     'y': 1330
   - id: graph_test
     type: background-worker
@@ -124,7 +178,7 @@ nodes:
     properties:
       filepath: src/domain/graph.test.ts
       technology: TypeScript Domain Service
-    x: 2745
+    x: 4580
     'y': 1010
   - id: graph
     type: background-worker
@@ -133,7 +187,7 @@ nodes:
     properties:
       filepath: src/domain/graph.ts
       technology: TypeScript Domain Service
-    x: 2975
+    x: 4810
     'y': 1330
   - id: ports
     type: background-worker
@@ -142,7 +196,7 @@ nodes:
     properties:
       filepath: src/domain/ports.ts
       technology: TypeScript Domain Service
-    x: 1045
+    x: 140
     'y': 1650
   - id: schema
     type: background-worker
@@ -151,14 +205,50 @@ nodes:
     properties:
       filepath: src/domain/schema.ts
       technology: TypeScript Domain Service
-    x: 2330
+    x: 3830
     'y': 50
 dependencies:
+  - from: app_test
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: blueprintnode_test
+    to: blueprintnode
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: blueprintnode_test
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
   - from: frontend-client
     to: blueprintnode
     type: direct-call
     description: Renders BlueprintNode layout component
   - from: blueprintnode
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: breadcrumbs_test
+    to: breadcrumbs
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: breadcrumbs_test
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: breadcrumbs
+    type: direct-call
+    description: Renders Breadcrumbs layout component
+  - from: breadcrumbs
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: canvas_test
+    to: canvas
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: canvas_test
     to: store
     type: direct-call
     description: Executes local class methods / functions
@@ -172,6 +262,10 @@ dependencies:
     description: Executes local class methods / functions
   - from: canvas
     to: blueprintnode
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: canvas
+    to: breadcrumbs
     type: direct-call
     description: Executes local class methods / functions
   - from: codeviewer_test
@@ -196,6 +290,10 @@ dependencies:
     description: Executes local class methods / functions
   - from: codeviewer
     to: mermaidpreview
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: filesync_test
+    to: filesync
     type: direct-call
     description: Executes local class methods / functions
   - from: frontend-client

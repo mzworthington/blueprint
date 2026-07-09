@@ -13,6 +13,18 @@ export interface FileSystemPort {
 }
 
 /**
+ * Driven Outbound Port for multi-file workspace operations.
+ */
+export interface WorkspacePort {
+  selectDirectory(): Promise<boolean>;
+  readFile(relativePath: string): Promise<string>;
+  writeFile(relativePath: string, content: string): Promise<boolean>;
+  getDirectoryName(): string;
+  hasPermission(): Promise<boolean>;
+  readDirectoryFiles(): Promise<Array<{ name: string; content: string }>>;
+}
+
+/**
  * Driven Outbound Port for structured observability logging.
  */
 export interface LoggerPort {

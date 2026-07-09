@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useBlueprintStore } from './store';
+import { useBlueprintStore, resolveRelativePath } from './store';
 import type { NodeType } from '../domain/schema';
 
 describe('Zustand Store Actions & State Management', () => {
@@ -151,5 +151,162 @@ describe('Zustand Store Actions & State Management', () => {
 
     useBlueprintStore.getState().toggleRightCollapsed();
     expect(useBlueprintStore.getState().rightCollapsed).toBe(false);
+  });
+
+  describe('C4 Workspace & Zoom Navigation Actions', () => {
+    const mockFiles: Record<string, string> = {
+      'blueprint.yaml': `
+name: Root Context
+version: 1.0.0
+level: context
+nodes:
+  - id: web-app
+    type: web-app
+    name: Web App
+    c4Ref: ./web/container.yaml
+dependencies: []
+`,
+      'web/container.yaml': `
+name: Web Containers
+version: 1.0.0
+level: container
+parentRef: ../blueprint.yaml
+nodes:
+  - id: controller
+    type: component
+    name: API Controller
+dependencies: []
+`,
+    };
+
+    const mockWorkspacePort: any = {
+      selectDirectory: async () => true,
+      readFile: async (path: string) => {
+        if (mockFiles[path]) return mockFiles[path];
+        throw new Error(`File not found: ${path}`);
+      },
+      writeFile: async (path: string, content: string) => {
+        mockFiles[path] = content;
+        return true;
+      },
+      getDirectoryName: () => 'MockWorkspace',
+      hasPermission: async () => true,
+      readDirectoryFiles: async () => {
+        return Object.entries(mockFiles)
+          .filter(
+            ([path]) => !path.includes('/') && (path.endsWith('.yaml') || path.endsWith('.yml'))
+          )
+          .map(([path, content]) => ({ name: path, content }));
+      },
+    };
+
+    beforeEach(() => {
+      useBlueprintStore.setState({
+        workspacePort: mockWorkspacePort,
+        currentFilePath: 'blueprint.yaml',
+        navigationStack: [],
+        isWorkspaceOpen: false,
+        workspaceName: '',
+      });
+    });
+
+    it('should open workspace, read blueprint.yaml, and mark workspace as open', async () => {
+      const store = useBlueprintStore.getState();
+      const success = await store.openWorkspaceDirectory();
+
+      expect(success).toBe(true);
+      const updatedState = useBlueprintStore.getState();
+      expect(updatedState.isWorkspaceOpen).toBe(true);
+      expect(updatedState.workspaceName).toBe('MockWorkspace');
+      expect(updatedState.currentFilePath).toBe('blueprint.yaml');
+      expect(updatedState.schema.name).toBe('Root Context');
+      expect(updatedState.schema.level).toBe('context');
+      expect(updatedState.nodes).toHaveLength(1);
+    });
+
+    it('should zoom into a node, push history to navigationStack, and read target file', async () => {
+      const store = useBlueprintStore.getState();
+      // First, open workspace
+      await store.openWorkspaceDirectory();
+
+      // Zoom in
+      const success = await store.zoomIntoNode('web-app');
+      expect(success).toBe(true);
+
+      const updatedState = useBlueprintStore.getState();
+      expect(updatedState.currentFilePath).toBe('web/container.yaml');
+      expect(updatedState.navigationStack).toHaveLength(1);
+      expect(updatedState.navigationStack[0].path).toBe('blueprint.yaml');
+      expect(updatedState.navigationStack[0].schema.name).toBe('Root Context');
+      expect(updatedState.schema.name).toBe('Web Containers');
+      expect(updatedState.schema.level).toBe('container');
+      expect(updatedState.nodes).toHaveLength(1);
+      expect(updatedState.nodes[0].data.name).toBe('API Controller');
+    });
+
+    it('should zoom out to restore parent schema state', async () => {
+      const store = useBlueprintStore.getState();
+      await store.openWorkspaceDirectory();
+      await store.zoomIntoNode('web-app');
+
+      // Zoom out
+      const zoomOutSuccess = await store.zoomOut();
+      expect(zoomOutSuccess).toBe(true);
+
+      const updatedState = useBlueprintStore.getState();
+      expect(updatedState.currentFilePath).toBe('blueprint.yaml');
+      expect(updatedState.navigationStack).toHaveLength(0);
+      expect(updatedState.schema.name).toBe('Root Context');
+      expect(updatedState.nodes).toHaveLength(1);
+    });
+
+    it('should fail to zoom in if workspace is not open', async () => {
+      // Direct load root schema manually without opening workspace folder picker
+      const store = useBlueprintStore.getState();
+      store.initSchema({
+        name: 'Manual Root Context',
+        version: '1.0.0',
+        level: 'context',
+        nodes: [{ id: 'web-app', type: 'web-app', name: 'Web App', c4Ref: './web/container.yaml' }],
+        dependencies: [],
+      });
+
+      const success = await store.zoomIntoNode('web-app');
+      expect(success).toBe(false);
+      expect(useBlueprintStore.getState().lastError).toContain('Workspace Folder');
+    });
+
+    it('should resolve relative path correctly', () => {
+      expect(resolveRelativePath('blueprint.yaml', './web/container.yaml')).toBe(
+        'web/container.yaml'
+      );
+      expect(
+        resolveRelativePath('services/auth/components.yaml', '../billing/container.yaml')
+      ).toBe('services/billing/container.yaml');
+    });
+
+    it('should load multiple top-level systems and support selecting between them', async () => {
+      mockFiles['another-system.yaml'] = `
+name: Another System
+version: 1.0.0
+level: container
+nodes: []
+dependencies: []
+`;
+      const store = useBlueprintStore.getState();
+      const success = await store.openWorkspaceDirectory();
+      expect(success).toBe(true);
+
+      const state = useBlueprintStore.getState();
+      expect(state.loadedSystems).toHaveLength(2);
+      expect(state.loadedSystems[0].path).toBe('blueprint.yaml');
+      expect(state.loadedSystems[1].path).toBe('another-system.yaml');
+      expect(state.currentFilePath).toBe('blueprint.yaml');
+
+      store.selectSystem('another-system.yaml');
+      const state2 = useBlueprintStore.getState();
+      expect(state2.currentFilePath).toBe('another-system.yaml');
+      expect(state2.schema.name).toBe('Another System');
+    });
   });
 });

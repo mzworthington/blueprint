@@ -197,4 +197,79 @@ nodes:
     expect(mermaidContent).toContain('node_graph["graph Service"]');
     expect(mermaidContent).toContain('node_Gateway --> |"Query"| node_DB');
   });
+
+  describe('C4 Model Validation & Serialization Extensions', () => {
+    it('should parse C4 properties from valid YAML schema', () => {
+      const yamlContent = `
+name: High-Level System Context
+version: 1.0.0
+level: context
+parentRef: ../root-workspace.yaml
+nodes:
+  - id: billing-service
+    type: microservice
+    name: Billing Service
+    c4Ref: ./billing/container.yaml
+  - id: payment-gateway
+    type: software-system
+    name: External Payment Processor
+    external: true
+dependencies:
+  - from: billing-service
+    to: payment-gateway
+    type: direct-call
+    description: Authorize Credit Card
+`;
+      const schema = parseSchemaFromYaml(yamlContent);
+      expect(schema.level).toBe('context');
+      expect(schema.parentRef).toBe('../root-workspace.yaml');
+      expect(schema.nodes).toHaveLength(2);
+      expect(schema.nodes[0].id).toBe('billing-service');
+      expect(schema.nodes[0].type).toBe('microservice');
+      expect(schema.nodes[0].c4Ref).toBe('./billing/container.yaml');
+      expect(schema.nodes[1].external).toBe(true);
+      expect(schema.dependencies[0].description).toBe('Authorize Credit Card');
+    });
+
+    it('should serialize C4 properties to valid YAML and Mermaid', () => {
+      const schema: SystemSchema = {
+        name: 'Workspace Level',
+        version: '1.2.0',
+        level: 'container',
+        parentRef: '../workspace.yaml',
+        nodes: [
+          {
+            id: 'webapp',
+            type: 'web-app',
+            name: 'Web Portal',
+            c4Ref: './portal/components.yaml',
+          },
+          {
+            id: 'external_svc',
+            type: 'software-system',
+            name: 'API Service',
+            external: true,
+          },
+        ],
+        dependencies: [
+          {
+            from: 'webapp',
+            to: 'external_svc',
+            type: 'direct-call',
+            description: 'Hits Endpoint',
+          },
+        ],
+      };
+
+      const yamlContent = serializeSchemaToYaml(schema);
+      expect(yamlContent).toContain('level: container');
+      expect(yamlContent).toContain('parentRef: ../workspace.yaml');
+      expect(yamlContent).toContain('c4Ref: ./portal/components.yaml');
+      expect(yamlContent).toContain('external: true');
+
+      const mermaid = serializeSchemaToMermaid(schema);
+      expect(mermaid).toContain('node_webapp["Web Portal"]');
+      expect(mermaid).toContain('node_external_svc["API Service (External)"]');
+    });
+  });
 });

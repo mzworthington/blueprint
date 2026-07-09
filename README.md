@@ -7,17 +7,12 @@ Blueprint is a local-first, bi-directionally synchronized visual diagramming can
 ## 🚀 Key Features
 
 - **Bi-directional Live Synchronization:** Move nodes or wire connections on the grid to instantly update the output YAML schema. Edit or paste YAML schema in the editor to immediately redraw the canvas layout.
-- **Hexagonal Ports & Adapters Isolation:** Domain core models and graph logic are kept pure, decoupling systems design rules from browser DOM interfaces, state libraries, or visual graph libraries.
 - **Circular Dependency Detection:** Runs real-time cycle validation (DFS traversal) over dependency links, highlighting offending visual edges in red and printing warnings.
-- **Zero-Trust Input Validation:** Every loaded schema is validated at the boundary using `zod` to prevent malformed properties, incorrect enums, or invalid node IDs containing malicious symbols or spaces.
 - **Local-First Persistence:** Mounts directly to your local workspace files utilizing the native browser **File System Access API**, falling back gracefully to text downloads where unsupported.
-- **Console Telemetry Observability:** Structured telemetry logger printing trace details of component creation, edge links, validation alerts, and file sync performance in the browser developer tools console.
 
 ---
 
 ## 🏛️ System Architecture
-
-Blueprint is built strictly conforming to **Hexagonal (Ports & Adapters)** architectural boundaries. This ensures that the core domain is easily testable in isolation and completely decoupled from framework changes.
 
 ```mermaid
 graph TD
@@ -94,11 +89,9 @@ To enforce a zero-trust model at boundaries, Blueprint employs a two-tier valida
 - **Node.js:** `v20.x` or later
 - **pnpm:** `v10.x` or later
 
-### 1. Clone & Install Dependencies
+### 1. Install Dependencies
 
 ```bash
-git clone <repository-url>
-cd blueprint
 pnpm install
 ```
 
@@ -128,9 +121,7 @@ pnpm analyze
 
 ---
 
-## 🧪 Testing Environment
-
-Blueprint maintains a strict BDD/TDD flow. The test suite is divided into domain logic unit tests and adapter rendering integration tests.
+## 🧪 Testing Environment, Code Style & Quality Control
 
 ### Running Tests
 
@@ -139,16 +130,6 @@ Run the entire Vitest suite:
 ```bash
 pnpm test
 ```
-
-### Test Coverage Areas
-
-1. **Core Domain (`graph.test.ts`):** Verifies cycle tracing, Mermaid generator maps, Zod parsing blocks, and malicious Node ID rejections.
-2. **Store Logic (`store.test.ts`):** Verifies state mutations (adding nodes, removing connections, renaming systems) and automatic validation updates.
-3. **UI Components (`CodeViewer.test.tsx`, `PropertyPanel.test.tsx`):** Employs **React Testing Library** and `jsdom` to verify tab switching, YAML imports, workspace renaming, custom metadata property additions, and cycle warnings.
-
----
-
-## 🎨 Code Style & Quality Control
 
 ### Formatting
 
@@ -166,7 +147,7 @@ pnpm format:write
 
 ### Git Commit Hooks
 
-We employ **Husky** and **lint-staged** to automatically intercept commits:
+We use **Husky** and **lint-staged** to automatically intercept commits:
 
 - Only modified files are processed.
 - Before committing, files undergo automated format fixing (`prettier --write`) and lint verification (`oxlint -c .oxlintrc.json`).

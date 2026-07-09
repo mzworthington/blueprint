@@ -10,16 +10,31 @@ import {
   Plus,
   Trash2,
   CheckCircle,
+  User,
+  Network,
+  Monitor,
+  Smartphone,
+  Code,
 } from 'lucide-react';
 import { useBlueprintStore } from './store';
 import type { NodeType, PropertyMap } from '../domain/schema';
 
 const NODE_TYPES: { type: NodeType; label: string; icon: any }[] = [
+  { type: 'person', label: 'Person (Actor)', icon: User },
+  { type: 'software-system', label: 'Software System', icon: Network },
+  { type: 'web-app', label: 'Web App', icon: Monitor },
+  { type: 'mobile-app', label: 'Mobile App', icon: Smartphone },
+  { type: 'single-page-app', label: 'Single Page App', icon: Monitor },
+  { type: 'microservice', label: 'Microservice', icon: Cpu },
+  { type: 'database', label: 'Database', icon: Database },
+  { type: 'cache-store', label: 'Cache Store', icon: Layers },
+  { type: 'event-broker', label: 'Event Broker', icon: Share2 },
+  { type: 'serverless-app', label: 'Serverless App', icon: Zap },
+  { type: 'component', label: 'Component', icon: Layers },
+  { type: 'code-module', label: 'Code Module', icon: Code },
   { type: 'rest-api', label: 'REST API', icon: Globe },
   { type: 'grpc-service', label: 'gRPC Service', icon: Cpu },
-  { type: 'event-broker', label: 'Event Broker', icon: Share2 },
   { type: 'relational-database', label: 'Relational DB', icon: Database },
-  { type: 'cache-store', label: 'Cache Store', icon: Layers },
   { type: 'serverless-function', label: 'Serverless Fn', icon: Zap },
   { type: 'gateway-api', label: 'Gateway API', icon: Globe },
   { type: 'background-worker', label: 'Background Worker', icon: Cpu },
@@ -47,11 +62,9 @@ export const PropertyPanel: React.FC = () => {
   const selectedRFNode = nodes.find(n => n.id === selectedNodeId);
   const selectedNode = selectedRFNode ? schema.nodes.find(sn => sn.id === selectedNodeId) : null;
 
-  // Local state for properties editor
   const [propKey, setPropKey] = useState('');
   const [propVal, setPropVal] = useState('');
 
-  // Handle updates to selected node fields
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!selectedNodeId) return;
     updateNode(selectedNodeId, { name: e.target.value });
@@ -96,7 +109,6 @@ export const PropertyPanel: React.FC = () => {
     updateNode(selectedNodeId, { properties: nextProps });
   };
 
-  // Find connections related to this node
   const nodeConnections = edges.filter(
     e => e.source === selectedNodeId || e.target === selectedNodeId
   );
@@ -125,7 +137,6 @@ export const PropertyPanel: React.FC = () => {
       {/* Main Panel Content */}
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
         {selectedNode ? (
-          // NODE IS SELECTED
           <div className="space-y-6">
             {/* Core Info */}
             <div className="space-y-4">
@@ -177,15 +188,48 @@ export const PropertyPanel: React.FC = () => {
                   ))}
                 </select>
               </div>
+
+              <div>
+                <label
+                  htmlFor="component-c4ref-input"
+                  className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5"
+                >
+                  C4 Sub-Diagram Link (YAML)
+                </label>
+                <input
+                  id="component-c4ref-input"
+                  type="text"
+                  placeholder="./services/auth/container.yaml"
+                  value={selectedNode.c4Ref || ''}
+                  onChange={e =>
+                    updateNode(selectedNode.id, { c4Ref: e.target.value || undefined })
+                  }
+                  className="w-full bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 font-mono focus:outline-none focus:border-brand-500 transition"
+                />
+              </div>
+
+              <div className="flex items-center justify-between border-t border-slate-900/60 pt-3">
+                <label
+                  htmlFor="component-external-checkbox"
+                  className="text-xs font-semibold text-slate-400 uppercase tracking-wider"
+                >
+                  External System / Actor
+                </label>
+                <input
+                  id="component-external-checkbox"
+                  type="checkbox"
+                  checked={!!selectedNode.external}
+                  onChange={e => updateNode(selectedNode.id, { external: e.target.checked })}
+                  className="w-4 h-4 rounded border-slate-800 text-brand-600 focus:ring-brand-500 bg-slate-900 cursor-pointer"
+                />
+              </div>
             </div>
 
-            {/* Custom Properties (Key-Value Metadata) */}
             <div className="border-t border-slate-900 pt-4">
               <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
                 Metadata Attributes
               </h4>
 
-              {/* Existing Metadata */}
               {selectedNode.properties && Object.keys(selectedNode.properties).length > 0 ? (
                 <div className="space-y-2 mb-3">
                   {Object.entries(selectedNode.properties).map(([key, val]) => (
@@ -210,7 +254,6 @@ export const PropertyPanel: React.FC = () => {
                 <p className="text-xs text-slate-500 italic mb-3">No metadata attributes added.</p>
               )}
 
-              {/* Add attribute form */}
               <form onSubmit={handleAddProperty} className="flex gap-2">
                 <input
                   type="text"
@@ -236,7 +279,6 @@ export const PropertyPanel: React.FC = () => {
               </form>
             </div>
 
-            {/* Inbound & Outbound Connections */}
             <div className="border-t border-slate-900 pt-4">
               <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
                 Active Connections
@@ -266,7 +308,6 @@ export const PropertyPanel: React.FC = () => {
                           </button>
                         </div>
 
-                        {/* Connection type selection */}
                         <div className="flex gap-2">
                           <select
                             value={(edge.data as any)?.type || 'direct-call'}
@@ -291,7 +332,6 @@ export const PropertyPanel: React.FC = () => {
               )}
             </div>
 
-            {/* Danger Zone */}
             <div className="border-t border-slate-900 pt-4">
               <button
                 onClick={() => {
@@ -307,9 +347,7 @@ export const PropertyPanel: React.FC = () => {
             </div>
           </div>
         ) : (
-          // NO NODE SELECTED - WORKSPACE CONFIG
           <div className="space-y-6">
-            {/* Project/Workspace properties */}
             <div>
               <label
                 htmlFor="workspace-name-input"
@@ -326,7 +364,6 @@ export const PropertyPanel: React.FC = () => {
               />
             </div>
 
-            {/* Test Component Filtering Toggle */}
             <div className="flex items-center justify-between border-t border-slate-900 pt-4">
               <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
                 Show Test Components
@@ -345,7 +382,6 @@ export const PropertyPanel: React.FC = () => {
               </button>
             </div>
 
-            {/* Quick-add Toolbox */}
             <div className="border-t border-slate-900 pt-4">
               <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
                 Component Catalog
@@ -370,7 +406,6 @@ export const PropertyPanel: React.FC = () => {
               </div>
             </div>
 
-            {/* Validation Overview */}
             <div className="border-t border-slate-900 pt-4">
               <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
                 Graph Validation
@@ -415,7 +450,6 @@ export const PropertyPanel: React.FC = () => {
         )}
       </div>
 
-      {/* Footer credits */}
       <div className="p-4 border-t border-slate-900 text-center">
         <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider">
           Blueprint Engine v0.1.0

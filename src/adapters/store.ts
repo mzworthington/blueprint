@@ -15,12 +15,41 @@ import type {
   DependencyType,
   ValidationResult,
   PropertyMap,
+  C4Level,
 } from '../domain/schema';
 import { validateGraph, parseSchemaFromYaml, serializeSchemaToYaml } from '../domain/graph';
-import type { FileSystemPort, LoggerPort } from '../domain/ports';
-import { BrowserFileSystemAdapter } from './fileSync';
+import type { FileSystemPort, WorkspacePort, LoggerPort } from '../domain/ports';
+import { BrowserFileSystemAdapter, BrowserWorkspaceAdapter } from './fileSync';
 import { ConsoleLoggerAdapter } from './telemetry';
-import defaultYaml from '../../blueprint.yaml?raw';
+
+export function resolveRelativePath(basePath: string, relativePath: string): string {
+  if (relativePath.startsWith('/') || relativePath.includes('://')) {
+    return relativePath;
+  }
+  const baseDir = basePath.split('/').slice(0, -1);
+  const relParts = relativePath.split('/');
+
+  for (const part of relParts) {
+    if (part === '.' || part === '') {
+      continue;
+    } else if (part === '..') {
+      baseDir.pop();
+    } else {
+      baseDir.push(part);
+    }
+  }
+  return baseDir.join('/');
+}
+// Load all default blueprints in the blueprints directory at compile/run time via Vite
+const defaultBlueprintModules = import.meta.glob<{ default: string }>('../../blueprints/*.ya?ml', {
+  query: '?raw',
+  eager: true,
+});
+
+const getFileName = (filePath: string) => {
+  const parts = filePath.split('/');
+  return parts[parts.length - 1];
+};
 
 // Strict UI node/edge schemas to decouple React Flow interfaces from pure domain models
 export type ComponentNodeData = {
@@ -28,6 +57,8 @@ export type ComponentNodeData = {
   id: string;
   type: NodeType;
   name: string;
+  c4Ref?: string;
+  external?: boolean;
   isTest?: boolean;
   properties: PropertyMap;
 };
@@ -43,60 +74,60 @@ export type ComponentEdgeData = {
 export type BlueprintRFEdge = RFEdge<ComponentEdgeData>;
 
 interface BlueprintState {
-  // Domain Schema state
   schema: SystemSchema;
 
-  // React Flow visual states
   nodes: BlueprintRFNode[];
   edges: BlueprintRFEdge[];
 
-  // UI selection and validation states
   selectedNodeId: string | null;
   validationResult: ValidationResult;
   yamlCode: string;
   lastError: string | null;
 
-  // Actions
   initSchema: (schema: SystemSchema) => void;
   updateSchemaName: (name: string) => void;
   importYaml: (yamlContent: string) => boolean;
   clearError: () => void;
 
-  // Canvas operations
   onNodesChange: (changes: NodeChange[]) => void;
   onEdgesChange: (changes: EdgeChange[]) => void;
   onConnect: (connection: Connection) => void;
 
-  // Node CRUD operations
   addNode: (type: NodeType) => void;
   updateNode: (id: string, updates: Partial<SystemNode>) => void;
   deleteNode: (id: string) => void;
   selectNode: (id: string | null) => void;
 
-  // Dependency operations
   updateDependency: (from: string, to: string, updates: Partial<SystemDependency>) => void;
   deleteDependency: (from: string, to: string) => void;
 
-  // File Sync actions via outbound Port
   fileSystemPort: FileSystemPort;
   saveSchema: () => Promise<boolean>;
   loadSchema: () => Promise<boolean>;
 
-  // Observability logging port
+  workspacePort: WorkspacePort;
+  currentFilePath: string;
+  navigationStack: Array<{ path: string; schema: SystemSchema }>;
+  isWorkspaceOpen: boolean;
+  workspaceName: string;
+  openWorkspaceDirectory: () => Promise<boolean>;
+  zoomIntoNode: (nodeId: string) => Promise<boolean>;
+  zoomOut: () => Promise<boolean>;
+  saveActiveDiagram: () => Promise<boolean>;
+
   logger: LoggerPort;
 
-  // Visual filters
   showTests: boolean;
   toggleShowTests: () => void;
 
-  // Panel collapse states
   leftCollapsed: boolean;
   rightCollapsed: boolean;
   toggleLeftCollapsed: () => void;
   toggleRightCollapsed: () => void;
-}
 
-// Helpers to map Domain Schema <-> React Flow Canvas
+  loadedSystems: Array<{ path: string; name: string; schema: SystemSchema }>;
+  selectSystem: (path: string) => void;
+}
 const mapDomainNodeToRFNode = (n: SystemNode): BlueprintRFNode => ({
   id: n.id,
   type: 'blueprintNode',
@@ -105,6 +136,8 @@ const mapDomainNodeToRFNode = (n: SystemNode): BlueprintRFNode => ({
     id: n.id,
     type: n.type,
     name: n.name,
+    c4Ref: n.c4Ref,
+    external: n.external,
     isTest: n.isTest,
     properties: n.properties || {},
   },
@@ -122,10 +155,11 @@ const mapDomainDepToRFEdge = (d: SystemDependency): BlueprintRFEdge => ({
   },
 });
 
-// Re-generate pure schema from canvas state
 const rebuildSchemaFromCanvas = (
   name: string,
   version: string,
+  level: C4Level,
+  parentRef: string | undefined,
   rfNodes: BlueprintRFNode[],
   rfEdges: BlueprintRFEdge[]
 ): SystemSchema => {
@@ -133,6 +167,8 @@ const rebuildSchemaFromCanvas = (
     id: rn.id,
     type: rn.data.type,
     name: rn.data.name,
+    c4Ref: rn.data.c4Ref,
+    external: rn.data.external,
     isTest: rn.data.isTest,
     properties: rn.data.properties,
     x: rn.position.x,
@@ -146,38 +182,72 @@ const rebuildSchemaFromCanvas = (
     description: re.data?.description || '',
   }));
 
-  return { name, version, nodes, dependencies };
+  return { name, version, level, parentRef, nodes, dependencies };
 };
 
-let defaultInitialSchema: SystemSchema;
-try {
-  defaultInitialSchema = parseSchemaFromYaml(defaultYaml);
-} catch {
-  defaultInitialSchema = {
-    name: 'New Cloud Workspace',
-    version: '1.0.0',
-    nodes: [
-      { id: 'gateway', type: 'rest-api', name: 'API Gateway', x: 100, y: 150 },
-      { id: 'auth-svc', type: 'grpc-service', name: 'Auth Service', x: 400, y: 100 },
-      { id: 'user-db', type: 'relational-database', name: 'User Relational DB', x: 700, y: 150 },
-    ],
-    dependencies: [
-      { from: 'gateway', to: 'auth-svc', type: 'direct-call', description: 'Validate tokens' },
-      { from: 'auth-svc', to: 'user-db', type: 'read-write', description: 'Fetch session records' },
-    ],
-  };
+let defaultInitialSchema: SystemSchema = {
+  name: 'New Cloud Workspace',
+  version: '1.0.0',
+  level: 'container',
+  nodes: [
+    { id: 'gateway', type: 'rest-api', name: 'API Gateway', x: 100, y: 150 },
+    { id: 'auth-svc', type: 'grpc-service', name: 'Auth Service', x: 400, y: 100 },
+    { id: 'user-db', type: 'relational-database', name: 'User Relational DB', x: 700, y: 150 },
+  ],
+  dependencies: [
+    { from: 'gateway', to: 'auth-svc', type: 'direct-call', description: 'Validate tokens' },
+    { from: 'auth-svc', to: 'user-db', type: 'read-write', description: 'Fetch session records' },
+  ],
+};
+
+const defaultLoadedSystems: Array<{ path: string; name: string; schema: SystemSchema }> = [];
+
+Object.entries(defaultBlueprintModules).forEach(([filePath, module]) => {
+  try {
+    const yamlContent = module.default;
+    const parsed = parseSchemaFromYaml(yamlContent);
+    const fileName = getFileName(filePath);
+    defaultLoadedSystems.push({
+      path: fileName,
+      name: parsed.name || fileName.replace(/\.ya?ml$/, ''),
+      schema: parsed,
+    });
+  } catch (e) {
+    console.error('Failed to parse default blueprint:', filePath, e);
+  }
+});
+
+if (defaultLoadedSystems.length > 0) {
+  defaultInitialSchema = defaultLoadedSystems[0].schema;
+} else {
+  defaultLoadedSystems.push({
+    path: 'blueprint.yaml',
+    name: defaultInitialSchema.name,
+    schema: defaultInitialSchema,
+  });
 }
 
 export const useBlueprintStore = create<BlueprintState>((set, get) => {
   const applyStateUpdates = (
     nextNodes: BlueprintRFNode[],
     nextEdges: BlueprintRFEdge[],
-    customSchemaName?: string
+    customSchemaName?: string,
+    customSchemaLevel?: C4Level,
+    customParentRef?: string
   ) => {
     const currentSchema = get().schema;
     const name = customSchemaName ?? currentSchema.name;
     const version = currentSchema.version;
-    const nextSchema = rebuildSchemaFromCanvas(name, version, nextNodes, nextEdges);
+    const level = customSchemaLevel ?? currentSchema.level ?? 'container';
+    const parentRef = customParentRef !== undefined ? customParentRef : currentSchema.parentRef;
+    const nextSchema = rebuildSchemaFromCanvas(
+      name,
+      version,
+      level,
+      parentRef,
+      nextNodes,
+      nextEdges
+    );
 
     // Validate
     const validationResult = validateGraph(nextSchema);
@@ -218,16 +288,24 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
       };
     });
 
+    const nextLoadedSystems =
+      get().loadedSystems?.map(sys => {
+        if (sys.path === get().currentFilePath) {
+          return { ...sys, name: nextSchema.name, schema: nextSchema };
+        }
+        return sys;
+      }) || [];
+
     set({
       nodes: nextNodes,
       edges: highlightedEdges,
       schema: nextSchema,
       validationResult,
       yamlCode,
+      loadedSystems: nextLoadedSystems,
     });
   };
 
-  // Initialize store with default schema
   const initialNodes = defaultInitialSchema.nodes.map(mapDomainNodeToRFNode);
   const initialEdges = defaultInitialSchema.dependencies.map(mapDomainDepToRFEdge);
   const initialValidation = validateGraph(defaultInitialSchema);
@@ -245,7 +323,29 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
     leftCollapsed: false,
     rightCollapsed: false,
     fileSystemPort: BrowserFileSystemAdapter,
+    workspacePort: BrowserWorkspaceAdapter,
+    currentFilePath:
+      defaultLoadedSystems.length > 0 ? defaultLoadedSystems[0].path : 'blueprint.yaml',
+    navigationStack: [],
+    isWorkspaceOpen: false,
+    workspaceName: '',
     logger: ConsoleLoggerAdapter,
+    loadedSystems: defaultLoadedSystems,
+
+    selectSystem: (path: string) => {
+      const { loadedSystems, logger } = get();
+      const system = loadedSystems.find(s => s.path === path);
+      if (!system) {
+        logger.warn('System path not found in loaded systems', { path });
+        return;
+      }
+      logger.info('Switching active system', { name: system.name, path });
+      set({
+        currentFilePath: path,
+        selectedNodeId: null,
+      });
+      get().initSchema(system.schema);
+    },
 
     saveSchema: async () => {
       const { yamlCode, schema, fileSystemPort, logger } = get();
@@ -300,7 +400,7 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
     initSchema: schema => {
       const rfNodes = schema.nodes.map(mapDomainNodeToRFNode);
       const rfEdges = schema.dependencies.map(mapDomainDepToRFEdge);
-      applyStateUpdates(rfNodes, rfEdges, schema.name);
+      applyStateUpdates(rfNodes, rfEdges, schema.name, schema.level, schema.parentRef);
     },
 
     updateSchemaName: name => {
@@ -311,6 +411,21 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
       try {
         set({ lastError: null });
         const schema = parseSchemaFromYaml(yamlContent);
+        const name = schema.name || 'imported_schema';
+        const path = `${name.toLowerCase().replace(/[^a-z0-9_-]/g, '_')}.yaml`;
+
+        const existingIndex = get().loadedSystems.findIndex(s => s.path === path);
+        let newLoadedSystems = [...get().loadedSystems];
+        if (existingIndex >= 0) {
+          newLoadedSystems[existingIndex] = { path, name, schema };
+        } else {
+          newLoadedSystems.push({ path, name, schema });
+        }
+
+        set({
+          currentFilePath: path,
+          loadedSystems: newLoadedSystems,
+        });
         get().initSchema(schema);
         return true;
       } catch (e: any) {
@@ -480,6 +595,125 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
 
     toggleRightCollapsed: () => {
       set(state => ({ rightCollapsed: !state.rightCollapsed }));
+    },
+
+    openWorkspaceDirectory: async () => {
+      const { workspacePort, logger } = get();
+      logger.info('Opening workspace folder picker');
+      try {
+        const ok = await workspacePort.selectDirectory();
+        if (!ok) return false;
+
+        const files = await workspacePort.readDirectoryFiles();
+        if (files.length === 0) {
+          throw new Error('No blueprint .yaml or .yml files found in selected directory');
+        }
+
+        const nextLoadedSystems = files.map(file => {
+          const schema = parseSchemaFromYaml(file.content);
+          return {
+            path: file.name,
+            name: schema.name || file.name.replace(/\.ya?ml$/, ''),
+            schema,
+          };
+        });
+
+        const firstSystem = nextLoadedSystems[0];
+
+        set({
+          isWorkspaceOpen: true,
+          workspaceName: workspacePort.getDirectoryName(),
+          loadedSystems: nextLoadedSystems,
+          currentFilePath: firstSystem.path,
+          navigationStack: [],
+        });
+        get().initSchema(firstSystem.schema);
+        return true;
+      } catch (err) {
+        logger.error('Failed to open workspace directory', err);
+        set({ lastError: (err as Error).message || 'Failed to open workspace directory' });
+        return false;
+      }
+    },
+
+    zoomIntoNode: async (nodeId: string) => {
+      const { schema, currentFilePath, navigationStack, workspacePort, isWorkspaceOpen, logger } =
+        get();
+      const node = schema.nodes.find(n => n.id === nodeId);
+      if (!node || !node.c4Ref) return false;
+
+      logger.info('Zooming into sub-diagram', { node: node.name, ref: node.c4Ref });
+
+      if (!isWorkspaceOpen) {
+        logger.warn('Cannot zoom in: workspace directory not open.');
+        set({ lastError: 'Please open a Workspace Folder to navigate C4 relative links.' });
+        return false;
+      }
+
+      try {
+        const targetPath = resolveRelativePath(currentFilePath, node.c4Ref);
+        const content = await workspacePort.readFile(targetPath);
+        const subSchema = parseSchemaFromYaml(content);
+
+        const newStack = [...navigationStack, { path: currentFilePath, schema }];
+        set({
+          currentFilePath: targetPath,
+          navigationStack: newStack,
+          selectedNodeId: null,
+        });
+        get().initSchema(subSchema);
+        return true;
+      } catch (err) {
+        logger.error('Failed to load sub-diagram', err, { path: node.c4Ref });
+        set({
+          lastError: `Failed to load sub-diagram at ${node.c4Ref}: ${(err as Error).message}`,
+        });
+        return false;
+      }
+    },
+
+    zoomOut: async () => {
+      const { navigationStack, logger } = get();
+      if (navigationStack.length === 0) {
+        logger.info('Already at root of diagram, cannot zoom out');
+        return false;
+      }
+
+      logger.info('Zooming out to parent diagram');
+      const newStack = [...navigationStack];
+      const parentState = newStack.pop();
+
+      if (parentState) {
+        set({
+          currentFilePath: parentState.path,
+          navigationStack: newStack,
+          selectedNodeId: null,
+        });
+        get().initSchema(parentState.schema);
+        return true;
+      }
+      return false;
+    },
+
+    saveActiveDiagram: async () => {
+      const { yamlCode, currentFilePath, workspacePort, isWorkspaceOpen, logger } = get();
+      if (!isWorkspaceOpen) {
+        return get().saveSchema();
+      }
+
+      logger.info('Saving active diagram directly to workspace', { path: currentFilePath });
+      try {
+        const success = await workspacePort.writeFile(currentFilePath, yamlCode);
+        if (success) {
+          logger.info('Diagram saved successfully');
+        } else {
+          logger.error('Failed to save diagram');
+        }
+        return success;
+      } catch (err) {
+        logger.error('Error saving diagram in workspace', err);
+        return false;
+      }
     },
   };
 });

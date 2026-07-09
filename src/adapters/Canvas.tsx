@@ -1,14 +1,14 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { ReactFlow, Background, Controls, MiniMap, BackgroundVariant, Panel } from '@xyflow/react';
 import { useBlueprintStore } from './store';
 import { BlueprintNode } from './BlueprintNode';
-import { Download, Upload, AlertTriangle, CheckCircle, RefreshCcw } from 'lucide-react';
+import { Breadcrumbs } from './Breadcrumbs';
+import { Download, Upload, AlertTriangle, CheckCircle, RefreshCcw, Folder } from 'lucide-react';
 
 export const Canvas: React.FC = () => {
   const {
     nodes,
     edges,
-    schema,
     validationResult,
     onNodesChange,
     onEdgesChange,
@@ -20,9 +20,16 @@ export const Canvas: React.FC = () => {
     lastError,
     clearError,
     showTests,
+    zoomIntoNode,
+    zoomOut,
+    openWorkspaceDirectory,
+    isWorkspaceOpen,
+    saveActiveDiagram,
+    loadedSystems,
+    currentFilePath,
+    selectSystem,
   } = useBlueprintStore();
 
-  // Map custom node types
   const nodeTypes = useMemo(
     () => ({
       blueprintNode: BlueprintNode as any,
@@ -30,8 +37,30 @@ export const Canvas: React.FC = () => {
     []
   );
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const isTyping =
+        document.activeElement?.tagName === 'INPUT' ||
+        document.activeElement?.tagName === 'TEXTAREA' ||
+        document.activeElement?.hasAttribute('contenteditable');
+
+      if (isTyping) return;
+
+      if (e.key === 'Escape' || e.key === 'Backspace') {
+        zoomOut();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [zoomOut]);
+
   const handleSave = async () => {
-    await saveSchema();
+    if (isWorkspaceOpen) {
+      await saveActiveDiagram();
+    } else {
+      await saveSchema();
+    }
   };
 
   const handleLoad = async () => {
@@ -43,13 +72,13 @@ export const Canvas: React.FC = () => {
       initSchema({
         name: 'Empty Workspace',
         version: '1.0.0',
+        level: 'container',
         nodes: [],
         dependencies: [],
       });
     }
   };
 
-  // Dynamically filter nodes and edges based on test flag and toggle selection
   const filteredNodes = useMemo(() => {
     if (showTests) return nodes;
     return nodes.filter(n => !n.data.isTest);
@@ -69,6 +98,11 @@ export const Canvas: React.FC = () => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        onNodeDoubleClick={(_, node) => {
+          if (node.data?.c4Ref) {
+            zoomIntoNode(node.id);
+          }
+        }}
         nodeTypes={nodeTypes}
         minZoom={0.05}
         maxZoom={4}
@@ -96,48 +130,78 @@ export const Canvas: React.FC = () => {
           style={{ width: 120, height: 90 }}
         />
 
-        {/* Floating Top Header Panel */}
         <Panel position="top-left" className="m-4 flex items-center gap-3">
-          <div className="flex items-center gap-3 bg-slate-950/80 border border-slate-850 px-4 py-2 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md">
-            <div>
-              <h1 className="text-sm font-semibold text-slate-100 m-0">{schema.name}</h1>
-              <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mt-0.5">
-                Workspace
-              </p>
+          <Breadcrumbs />
+
+          {/* System Selector Dropdown */}
+          {loadedSystems && loadedSystems.length > 0 && (
+            <div className="flex items-center gap-2 bg-slate-950/90 border border-slate-900 px-3 py-1.5 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md text-xs">
+              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500">
+                System:
+              </span>
+              <select
+                value={currentFilePath}
+                onChange={e => selectSystem(e.target.value)}
+                className="bg-slate-900 border border-slate-850 text-slate-200 hover:text-slate-100 hover:border-slate-700 px-2.5 py-1 rounded-lg text-xs font-semibold focus:outline-none focus:border-brand-500 cursor-pointer transition duration-200"
+              >
+                {loadedSystems.map(sys => (
+                  <option key={sys.path} value={sys.path}>
+                    {sys.name}
+                  </option>
+                ))}
+              </select>
             </div>
+          )}
 
-            <div className="w-px h-6 bg-slate-800/80 self-center mx-1" />
-
-            {/* Disk IO Actions */}
-            <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 bg-slate-950/80 border border-slate-850 px-3 py-1.5 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md">
+            {isWorkspaceOpen ? (
               <button
-                onClick={handleLoad}
+                onClick={openWorkspaceDirectory}
                 className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-850 text-slate-300 hover:text-slate-100 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 transition"
-                title="Open YAML from disk"
+                title="Open another folder workspace"
               >
-                <Upload className="w-3.5 h-3.5" />
-                <span>Open File</span>
+                <Folder className="w-3.5 h-3.5 text-brand-500" />
+                <span>Open Folder</span>
               </button>
+            ) : (
               <button
-                onClick={handleSave}
-                className="flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-lg shadow-brand-600/20 transition"
-                title="Save YAML to disk"
+                onClick={openWorkspaceDirectory}
+                className="flex items-center gap-1.5 bg-brand-600/15 border border-brand-500/30 text-brand-400 hover:bg-brand-600/30 px-3 py-1.5 rounded-lg text-xs font-semibold transition"
+                title="Open a local directory workspace"
               >
-                <Download className="w-3.5 h-3.5" />
-                <span>Save Schema</span>
+                <Folder className="w-3.5 h-3.5 text-brand-500" />
+                <span>Open Folder</span>
               </button>
-              <button
-                onClick={handleClear}
-                className="p-1.5 rounded-lg bg-slate-900 hover:bg-red-950/20 text-slate-500 hover:text-red-400 border border-slate-800 hover:border-red-900/30 transition"
-                title="Clear canvas"
-              >
-                <RefreshCcw className="w-3.5 h-3.5" />
-              </button>
-            </div>
+            )}
+
+            <button
+              onClick={handleLoad}
+              className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-850 text-slate-300 hover:text-slate-100 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 transition"
+              title="Open single YAML from disk"
+            >
+              <Upload className="w-3.5 h-3.5" />
+              <span>Open File</span>
+            </button>
+
+            <button
+              onClick={handleSave}
+              className="flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-lg shadow-brand-600/20 transition"
+              title={isWorkspaceOpen ? 'Save diagram directly in folder' : 'Save YAML to disk'}
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>{isWorkspaceOpen ? 'Save' : 'Save Schema'}</span>
+            </button>
+
+            <button
+              onClick={handleClear}
+              className="p-1.5 rounded-lg bg-slate-900 hover:bg-red-950/20 text-slate-500 hover:text-red-400 border border-slate-800 hover:border-red-900/30 transition"
+              title="Clear canvas"
+            >
+              <RefreshCcw className="w-3.5 h-3.5" />
+            </button>
           </div>
         </Panel>
 
-        {/* Floating Top Right Validation Badge */}
         <Panel position="top-right" className="m-4">
           <div className="flex items-center shadow-lg shadow-black/40 backdrop-blur-md">
             {validationResult.isValid ? (
@@ -154,7 +218,6 @@ export const Canvas: React.FC = () => {
           </div>
         </Panel>
 
-        {/* Floating Top Center Error Alert Toast */}
         {lastError && (
           <Panel position="top-center" className="m-4 max-w-md w-full animate-bounce-short">
             <div className="flex items-start gap-3 bg-red-950/90 border border-red-900/50 px-4 py-3 rounded-xl shadow-2xl shadow-red-950/40 backdrop-blur-md text-red-200 text-xs">

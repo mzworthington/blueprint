@@ -12,7 +12,6 @@ export const ConsoleLoggerAdapter: LoggerPort = {
       message,
       context: context || {},
     };
-    // Styled log output for browser developer tools console
     console.log(
       `%c[BLUEPRINT - INFO]%c [${payload.timestamp}] ${message}`,
       'color: #8b5cf6; font-weight: bold;',

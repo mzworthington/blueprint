@@ -82,12 +82,26 @@ export function validateGraph(schema: SystemSchema): ValidationResult {
 }
 
 const nodeTypeSchema = z.enum([
-  'relational-database',
+  // Level 1: System Context
+  'person',
+  'software-system',
+  // Level 2: Container
+  'web-app',
+  'mobile-app',
+  'single-page-app',
+  'microservice',
+  'database',
+  'cache-store',
   'event-broker',
+  'serverless-app',
+  // Level 3 & 4: Component & Code
+  'component',
+  'code-module',
+  // Legacy / existing node types
+  'relational-database',
   'grpc-service',
   'serverless-function',
   'rest-api',
-  'cache-store',
   'gateway-api',
   'background-worker',
 ]);
@@ -101,6 +115,8 @@ const systemNodeSchema = z.object({
     .regex(/^[a-zA-Z0-9_-]+$/, 'Node ID must be alphanumeric, dashes, or underscores'),
   type: nodeTypeSchema,
   name: z.string().min(1),
+  c4Ref: z.string().optional(),
+  external: z.boolean().optional(),
   properties: z.record(z.union([z.string(), z.number(), z.boolean()])).optional(),
   isTest: z.boolean().optional(),
   x: z.number().optional(),
@@ -117,6 +133,8 @@ const systemDependencySchema = z.object({
 const systemSchemaValidator = z.object({
   name: z.string().min(1),
   version: z.string().min(1),
+  level: z.enum(['context', 'container', 'component', 'code']).optional(),
+  parentRef: z.string().optional(),
   nodes: z.array(systemNodeSchema),
   dependencies: z.array(systemDependencySchema).optional(),
 });
@@ -139,10 +157,14 @@ export function parseSchemaFromYaml(yamlContent: string): SystemSchema {
     return {
       name: validated.name,
       version: validated.version,
+      level: validated.level || 'container',
+      parentRef: validated.parentRef,
       nodes: validated.nodes.map(n => ({
         id: n.id,
         type: n.type,
         name: n.name,
+        c4Ref: n.c4Ref,
+        external: n.external,
         properties: n.properties || {},
         isTest: n.isTest,
         x: n.x,
@@ -178,29 +200,38 @@ export function parseSchemaFromYaml(yamlContent: string): SystemSchema {
  */
 export function serializeSchemaToYaml(schema: SystemSchema): string {
   // Clean coordinates and optional properties to keep YAML tidy
-  const cleanSchema = {
+  const cleanSchema: any = {
     name: schema.name,
     version: schema.version,
-    nodes: schema.nodes.map(n => {
-      const cleaned: SystemSchema['nodes'][number] = { id: n.id, type: n.type, name: n.name };
-      if (n.isTest !== undefined) cleaned.isTest = n.isTest;
-      if (n.properties && Object.keys(n.properties).length > 0) {
-        cleaned.properties = n.properties;
-      }
-      if (typeof n.x === 'number') cleaned.x = Math.round(n.x);
-      if (typeof n.y === 'number') cleaned.y = Math.round(n.y);
-      return cleaned;
-    }),
-    dependencies: schema.dependencies.map(d => {
-      const cleaned: SystemSchema['dependencies'][number] = {
-        from: d.from,
-        to: d.to,
-        type: d.type,
-      };
-      if (d.description) cleaned.description = d.description;
-      return cleaned;
-    }),
+    level: schema.level || 'container',
   };
+
+  if (schema.parentRef) {
+    cleanSchema.parentRef = schema.parentRef;
+  }
+
+  cleanSchema.nodes = schema.nodes.map(n => {
+    const cleaned: any = { id: n.id, type: n.type, name: n.name };
+    if (n.c4Ref) cleaned.c4Ref = n.c4Ref;
+    if (n.external !== undefined) cleaned.external = n.external;
+    if (n.isTest !== undefined) cleaned.isTest = n.isTest;
+    if (n.properties && Object.keys(n.properties).length > 0) {
+      cleaned.properties = n.properties;
+    }
+    if (typeof n.x === 'number') cleaned.x = Math.round(n.x);
+    if (typeof n.y === 'number') cleaned.y = Math.round(n.y);
+    return cleaned;
+  });
+
+  cleanSchema.dependencies = schema.dependencies.map(d => {
+    const cleaned: any = {
+      from: d.from,
+      to: d.to,
+      type: d.type,
+    };
+    if (d.description) cleaned.description = d.description;
+    return cleaned;
+  });
 
   return yaml.dump(cleanSchema, {
     noRefs: true,
@@ -220,14 +251,18 @@ export function serializeSchemaToMermaid(schema: SystemSchema): string {
 
   for (const node of schema.nodes) {
     let label = `["${node.name}"]`;
-    if (node.type === 'relational-database') {
+    if (node.type === 'relational-database' || node.type === 'database') {
       label = `[("${node.name}")]`;
     } else if (node.type === 'event-broker') {
       label = `{"${node.name}"}`;
     } else if (node.type === 'cache-store') {
       label = `[("${node.name}")]`;
-    } else if (node.type === 'serverless-function') {
+    } else if (node.type === 'serverless-function' || node.type === 'serverless-app') {
       label = `[["${node.name}"]]`;
+    } else if (node.type === 'person') {
+      label = `["👤 ${node.name}"]`;
+    } else if (node.external) {
+      label = `["${node.name} (External)"]`;
     }
     lines.push(`    ${mId(node.id)}${label}`);
   }

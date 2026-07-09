@@ -12,16 +12,10 @@ function App() {
   return (
     <ReactFlowProvider>
       <div className="flex h-screen w-screen bg-slate-950 overflow-hidden text-slate-100 selection:bg-brand-600/30 relative">
-        {/* Left Side: Code Editor & Importer */}
         <CodeViewer />
-
-        {/* Center: Interactive React Flow Canvas */}
         <Canvas />
-
-        {/* Right Side: Attributes & Selection Config */}
         <PropertyPanel />
 
-        {/* Left Panel Toggle Button - Painted last to stay on top of React Flow */}
         <button
           onClick={toggleLeftCollapsed}
           className="absolute top-1/2 -translate-y-1/2 z-50 bg-slate-900 border border-slate-850 hover:border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-850 p-2 rounded-r-xl shadow-2xl transition-all duration-300 ease-in-out focus:outline-none cursor-pointer flex items-center justify-center border-l-0"
@@ -36,7 +30,6 @@ function App() {
           )}
         </button>
 
-        {/* Right Panel Toggle Button - Painted last to stay on top of React Flow */}
         <button
           onClick={toggleRightCollapsed}
           className="absolute top-1/2 -translate-y-1/2 z-50 bg-slate-900 border border-slate-850 hover:border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-850 p-2 rounded-l-xl shadow-2xl transition-all duration-300 ease-in-out focus:outline-none cursor-pointer flex items-center justify-center border-r-0"
