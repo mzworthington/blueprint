@@ -320,8 +320,8 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
     yamlCode: initialYaml,
     lastError: null,
     showTests: false,
-    leftCollapsed: false,
-    rightCollapsed: false,
+    leftCollapsed: true,
+    rightCollapsed: true,
     fileSystemPort: BrowserFileSystemAdapter,
     workspacePort: BrowserWorkspaceAdapter,
     currentFilePath:

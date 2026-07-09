@@ -137,20 +137,20 @@ describe('Zustand Store Actions & State Management', () => {
 
   it('should manage leftCollapsed and rightCollapsed panel states', () => {
     const store = useBlueprintStore.getState();
-    expect(store.leftCollapsed).toBe(false);
-    expect(store.rightCollapsed).toBe(false);
-
-    useBlueprintStore.getState().toggleLeftCollapsed();
-    expect(useBlueprintStore.getState().leftCollapsed).toBe(true);
+    expect(store.leftCollapsed).toBe(true);
+    expect(store.rightCollapsed).toBe(true);
 
     useBlueprintStore.getState().toggleLeftCollapsed();
     expect(useBlueprintStore.getState().leftCollapsed).toBe(false);
 
-    useBlueprintStore.getState().toggleRightCollapsed();
-    expect(useBlueprintStore.getState().rightCollapsed).toBe(true);
+    useBlueprintStore.getState().toggleLeftCollapsed();
+    expect(useBlueprintStore.getState().leftCollapsed).toBe(true);
 
     useBlueprintStore.getState().toggleRightCollapsed();
     expect(useBlueprintStore.getState().rightCollapsed).toBe(false);
+
+    useBlueprintStore.getState().toggleRightCollapsed();
+    expect(useBlueprintStore.getState().rightCollapsed).toBe(true);
   });
 
   describe('C4 Workspace & Zoom Navigation Actions', () => {

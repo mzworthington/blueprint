@@ -4,15 +4,11 @@ import App from './App';
 import { useBlueprintStore } from './adapters/store';
 
 describe('App Layout and Collapsible Panels', () => {
-  it('should render left and right panels by default and support toggling them', () => {
-    // Reset store state
-    useBlueprintStore.setState({ leftCollapsed: false, rightCollapsed: false });
+  it('should have panels hidden by default and support toggling them', () => {
+    // Reset store state to defaults
+    useBlueprintStore.setState({ leftCollapsed: true, rightCollapsed: true });
 
     render(<App />);
-
-    // Verify both headers exist
-    expect(screen.getByText('Schema Explorer')).toBeInTheDocument();
-    expect(screen.getByText('Properties Panel')).toBeInTheDocument();
 
     // Find collapse toggles
     const leftToggle = screen.getByLabelText('Toggle Left Panel');
@@ -20,18 +16,24 @@ describe('App Layout and Collapsible Panels', () => {
     expect(leftToggle).toBeInTheDocument();
     expect(rightToggle).toBeInTheDocument();
 
-    // Click left toggle to collapse
+    // Verify initial collapsed state
+    expect(useBlueprintStore.getState().leftCollapsed).toBe(true);
+    expect(useBlueprintStore.getState().rightCollapsed).toBe(true);
+
+    // Click left toggle to expand
+    fireEvent.click(leftToggle);
+    expect(useBlueprintStore.getState().leftCollapsed).toBe(false);
+
+    // Click right toggle to expand
+    fireEvent.click(rightToggle);
+    expect(useBlueprintStore.getState().rightCollapsed).toBe(false);
+
+    // Click left toggle to collapse back
     fireEvent.click(leftToggle);
     expect(useBlueprintStore.getState().leftCollapsed).toBe(true);
 
-    // Click right toggle to collapse
+    // Click right toggle to collapse back
     fireEvent.click(rightToggle);
     expect(useBlueprintStore.getState().rightCollapsed).toBe(true);
-
-    // Expand them back
-    fireEvent.click(leftToggle);
-    expect(useBlueprintStore.getState().leftCollapsed).toBe(false);
-    fireEvent.click(rightToggle);
-    expect(useBlueprintStore.getState().rightCollapsed).toBe(false);
   });
 });
