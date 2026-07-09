@@ -5,7 +5,7 @@ import { serializeSchemaToMermaid, serializeSchemaToYaml } from '../domain/graph
 import { MermaidPreview } from './MermaidPreview';
 
 export const CodeViewer: React.FC = () => {
-  const { schema, yamlCode, importYaml, lastError, clearError, logger, showTests } =
+  const { schema, yamlCode, importYaml, lastError, clearError, logger, showTests, leftCollapsed } =
     useBlueprintStore();
   const [activeTab, setActiveTab] = useState<'yaml' | 'json' | 'mermaid' | 'import'>('yaml');
   const [copied, setCopied] = useState(false);
@@ -70,7 +70,13 @@ export const CodeViewer: React.FC = () => {
   };
 
   return (
-    <div className="w-96 h-full flex flex-col border-r border-slate-900 bg-slate-950/80 glass-panel">
+    <div
+      className={`h-full flex flex-col bg-slate-950/80 glass-panel transition-all duration-300 ease-in-out ${
+        leftCollapsed
+          ? 'w-0 border-r-0 opacity-0 overflow-hidden pointer-events-none'
+          : 'w-96 border-r border-slate-900'
+      }`}
+    >
       {/* Header */}
       <div className="p-4 border-b border-slate-900 flex items-center gap-2">
         <FileCode className="w-5 h-5 text-brand-500" />

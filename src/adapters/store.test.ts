@@ -134,4 +134,22 @@ describe('Zustand Store Actions & State Management', () => {
     // Verify it rebuilds correctly
     expect(state.schema.nodes.find(n => n.id === 'app-test')?.isTest).toBe(true);
   });
+
+  it('should manage leftCollapsed and rightCollapsed panel states', () => {
+    const store = useBlueprintStore.getState();
+    expect(store.leftCollapsed).toBe(false);
+    expect(store.rightCollapsed).toBe(false);
+
+    useBlueprintStore.getState().toggleLeftCollapsed();
+    expect(useBlueprintStore.getState().leftCollapsed).toBe(true);
+
+    useBlueprintStore.getState().toggleLeftCollapsed();
+    expect(useBlueprintStore.getState().leftCollapsed).toBe(false);
+
+    useBlueprintStore.getState().toggleRightCollapsed();
+    expect(useBlueprintStore.getState().rightCollapsed).toBe(true);
+
+    useBlueprintStore.getState().toggleRightCollapsed();
+    expect(useBlueprintStore.getState().rightCollapsed).toBe(false);
+  });
 });

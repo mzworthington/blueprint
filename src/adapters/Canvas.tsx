@@ -70,6 +70,8 @@ export const Canvas: React.FC = () => {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
+        minZoom={0.05}
+        maxZoom={4}
         fitView
         className="h-full"
       >

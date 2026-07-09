@@ -6,3 +6,11 @@ import { afterEach } from 'vitest';
 afterEach(() => {
   cleanup();
 });
+
+class ResizeObserverMock {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+global.ResizeObserver = ResizeObserverMock;

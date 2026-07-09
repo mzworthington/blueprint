@@ -88,6 +88,12 @@ interface BlueprintState {
   // Visual filters
   showTests: boolean;
   toggleShowTests: () => void;
+
+  // Panel collapse states
+  leftCollapsed: boolean;
+  rightCollapsed: boolean;
+  toggleLeftCollapsed: () => void;
+  toggleRightCollapsed: () => void;
 }
 
 // Helpers to map Domain Schema <-> React Flow Canvas
@@ -236,6 +242,8 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
     yamlCode: initialYaml,
     lastError: null,
     showTests: false,
+    leftCollapsed: false,
+    rightCollapsed: false,
     fileSystemPort: BrowserFileSystemAdapter,
     logger: ConsoleLoggerAdapter,
 
@@ -464,6 +472,14 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
 
     toggleShowTests: () => {
       set(state => ({ showTests: !state.showTests }));
+    },
+
+    toggleLeftCollapsed: () => {
+      set(state => ({ leftCollapsed: !state.leftCollapsed }));
+    },
+
+    toggleRightCollapsed: () => {
+      set(state => ({ rightCollapsed: !state.rightCollapsed }));
     },
   };
 });

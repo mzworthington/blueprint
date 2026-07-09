@@ -41,6 +41,7 @@ export const PropertyPanel: React.FC = () => {
     deleteDependency,
     showTests,
     toggleShowTests,
+    rightCollapsed,
   } = useBlueprintStore();
 
   const selectedRFNode = nodes.find(n => n.id === selectedNodeId);
@@ -101,7 +102,13 @@ export const PropertyPanel: React.FC = () => {
   );
 
   return (
-    <div className="w-80 h-full flex flex-col border-l border-slate-900 bg-slate-950/80 glass-panel">
+    <div
+      className={`h-full flex flex-col bg-slate-950/80 glass-panel transition-all duration-300 ease-in-out ${
+        rightCollapsed
+          ? 'w-0 border-l-0 opacity-0 overflow-hidden pointer-events-none'
+          : 'w-80 border-l border-slate-900'
+      }`}
+    >
       {/* Upper header */}
       <div className="p-4 border-b border-slate-900 flex items-center justify-between">
         <h3 className="font-semibold text-slate-100 tracking-tight text-base">Properties Panel</h3>
