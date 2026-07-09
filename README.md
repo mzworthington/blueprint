@@ -7,6 +7,8 @@ Blueprint is a local-first, bi-directionally synchronized visual diagramming can
 ## 🚀 Key Features
 
 - **Bi-directional Live Synchronization:** Move nodes or wire connections on the grid to instantly update the output YAML schema. Edit or paste YAML schema in the editor to immediately redraw the canvas layout.
+- **Multi-File Workspace & System Switcher:** Eagerly loads all blueprints from the `blueprints/` directory. Provides an interactive glassmorphic dropdown switcher to swap seamlessly between different system diagrams.
+- **Recursive C4 Zoom & Hierarchical Navigation:** Double-click on components referencing a sub-diagram (`c4Ref`) to zoom in. Navigate back up using the interactive Breadcrumbs trail or via `Escape`/`Backspace` shortcuts.
 - **Circular Dependency Detection:** Runs real-time cycle validation (DFS traversal) over dependency links, highlighting offending visual edges in red and printing warnings.
 - **Local-First Persistence:** Mounts directly to your local workspace files utilizing the native browser **File System Access API**, falling back gracefully to text downloads where unsupported.
 
@@ -16,7 +18,7 @@ Blueprint is a local-first, bi-directionally synchronized visual diagramming can
 
 ```mermaid
 graph TD
-    subgraph Driving Adapters [Driving UI Adapters]
+    subgraph Driving [Driving UI Adapters]
         Canvas[Canvas.tsx - React Flow]
         CodeViewer[CodeViewer.tsx - Tabs/Editor]
         PropertyPanel[PropertyPanel.tsx - Sidebar]
@@ -27,20 +29,24 @@ graph TD
         Domain[graph.ts - Domain Core Logic]
     end
 
-    subgraph Outbound Ports [Outbound Ports]
+    subgraph Ports [Outbound Ports]
         FSPort[FileSystemPort]
         LoggerPort[LoggerPort]
     end
 
-    subgraph Driven Adapters [Driven Infrastructure Adapters]
+    subgraph Driven [Driven Infrastructure Adapters]
         FSAdapter[BrowserFileSystemAdapter]
         LogAdapter[ConsoleLoggerAdapter]
     end
 
-    Driving --> Store
+    Canvas --> Store
+    CodeViewer --> Store
+    PropertyPanel --> Store
     Store --> Domain
-    Store --> Outbound Ports
-    Outbound Ports --> Driven Adapters
+    Store --> FSPort
+    Store --> LoggerPort
+    FSPort --> FSAdapter
+    LoggerPort --> LogAdapter
 ```
 
 ### 1. Pure Domain Layer (`src/domain/`)
@@ -113,7 +119,7 @@ pnpm build
 
 ### 4. Auto-Generate System Diagrams (AST Analyzer)
 
-Parses your local TypeScript/React codebase, extracts components and dependency relationships, calculates optimal visual grid coordinates with Dagre, and outputs the standard `blueprint.yaml` schema file:
+Parses your local TypeScript/React codebase, extracts components and dependency relationships, calculates optimal visual grid coordinates with Dagre, and outputs a capitalized system schema file inside the `blueprints/` directory (e.g. `blueprints/my-system.yaml`):
 
 ```bash
 pnpm analyze

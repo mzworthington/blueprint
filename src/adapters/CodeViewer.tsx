@@ -12,7 +12,6 @@ export const CodeViewer: React.FC = () => {
   const [mermaidMode, setMermaidMode] = useState<'preview' | 'code'>('preview');
   const [importText, setImportText] = useState('');
 
-  // Sync import text when code changes, so it defaults to the current state
   useEffect(() => {
     if (activeTab === 'import' && !importText) {
       setImportText(yamlCode);
