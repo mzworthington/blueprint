@@ -1,21 +1,21 @@
-# Security & Architectural Audit Handover
+# Auditing Phase Handover (Codebase AST Analyzer Refactoring)
 
-- **Phase:** Audit & Conformance Review
+- **Phase:** Security & Architectural Audit
 - **Status:** COMPLETE
-- **Next Agent:** Telemetry & Observability (`telemetry-agent.md`)
+- **Next Agent:** Telemetry (`telemetry-agent.md`)
 
 ---
 
-## 1. Zero-Trust Security Audit
+## 1. Architectural Guardrails Audit
 
-* **Boundary Schema Enforcement:** Integrated Zod validations (`zod`) in the graph parser at system boundaries. Malformed node type declarations or unexpected YAML shapes are rejected.
-* **Regex Sanitization:** Node IDs are checked against a strict pattern (`/^[a-zA-Z0-9_-]+$/`) to prevent code injections, spaces, or tag strings.
-* **Test Verification:** Created security test cases in [graph.test.ts](../../src/domain/graph.test.ts) confirming validation exceptions are raised for invalid node types and IDs.
+* **Boundary Separation Check:** We verified that no files under the pure domain layer (`scripts/analysis/domain/`) import from outer adapters or framework-specific layers (e.g. `ts-morph`, `dagre`, `fs`, `path`).
+* **SOLID Principles Conformity:**
+  - **Single Responsibility Principle (SRP):** The monolithic parsing, coordinate calculations, and filesystem writes from the original script have been separated into three decoupled driven adapters (`TsMorphParserAdapter`, `DagreLayoutAdapter`, `NodeFileSystemAdapter`).
+  - **Dependency Inversion Principle (DIP):** The core analyzer service `CodebaseAnalyzer` now depends only on abstract interfaces (Ports), allowing flexible replacement (e.g., using a different parser or layout calculator in the future).
 
 ---
 
-## 2. Hexagonal Conformance Audit
+## 2. Zero-Trust Security Verification
 
-* **Dependency Vector Checklist:** Checked every file inside `src/domain/` to confirm it only imports adjacent domain models, with zero dependency references pointing outward to `adapters`, `store`, or visual react libraries.
-* **Ports Decoupling:** Outbound operations (file sync, trace logs) go through abstract ports (`FileSystemPort`, `LoggerPort`), which are injected via Zustand dynamically.
-* **Type Strictness:** Enforced strict Custom Type signatures for visual entities, eliminating type overrides or `any` declarations.
+* **Input Sanitization:** The codebase analyzer parses package names from `package.json` and directory names using a strict sanitization function (`sanitizeId`) that strips non-alphanumeric/dash/underscore characters to prevent injection bugs.
+* **Safe Filesystem Execution:** Directory and schema generation resolves all file paths cleanly, avoiding raw string concatenations that could lead to path traversal vulnerabilities.

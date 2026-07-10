@@ -1,6 +1,6 @@
-# Specification Phase Handover
+# Specification Phase Handover (Codebase AST Analyzer Refactoring)
 
-- **Phase:** Specification Intake
+- **Phase:** BDD Specification Intake
 - **Status:** COMPLETE
 - **Next Agent:** TDD / Design (`tdd-agent.md`)
 
@@ -8,74 +8,75 @@
 
 ## 1. Domain Glossary
 
-* **Canvas:** An infinite, zoomable rendering area that supports panning, selection, and dragging of nodes.
-* **Component Node (Node):** A visual and logical representation of a specific system component (e.g., Relational Database, Event Broker, gRPC Service, Serverless Function).
-* **Data Dependency Edge (Edge):** A directed link connecting an output port of a source component node to an input port of a destination component node.
-* **System Schema (Schema):** The declarative, version-controlled JSON/YAML definition that represents the system graph, node types, attributes, and dependencies.
-* **Cycle:** A closed loop of directed edges where a component node depends on itself directly or transitively (e.g., A -> B -> C -> A).
+* **AST (Abstract Syntax Tree):** A structural tree representation of code syntax parsed from source files, used here to extract imports, class instantiations, and method calls.
+* **Component Node:** A system entity identified in source files (e.g. React UI components, Prisma/Mongo database clients, Kafka event brokers, Express API routers).
+* **Dependency Edge:** A directed dependency relationship between components resolved by relative imports or external API calls.
+* **C4 Container:** An architectural grouping container (e.g., Frontend React UI, Domain Logic Layer, State & Sync Manager, external-services).
+* **Workspace Manifest:** The schema connecting multiple C4 coordinate schemas together.
 
 ---
 
 ## 2. Gherkin Acceptance Scenarios
 
-### Feature: System Canvas Creation & Visual-Schema Sync
+### Feature: Codebase AST Analysis and C4 Classification
 
-  **Scenario: Drag-and-drop a node onto the canvas**
-    Given an empty canvas
-    When the user drags a "Relational Database" node with name "CustomerDB" onto the canvas
-    Then the canvas should render the "CustomerDB" database node
-    And the generated System Schema JSON should contain:
-      """json
-      {
-        "nodes": [
-          { "id": "CustomerDB", "type": "relational-database", "properties": {} }
-        ]
-      }
-      """
+  **Scenario: React Component File Heuristic Classification**
+    Given a file `/src/adapters/MyComponent.tsx`
+    And the file imports `react` or `@xyflow/react`
+    And the file does not have the base name `app` or `main`
+    When the analyzer runs on the codebase
+    Then the file should be classified as `gateway-api`
+    And the node name should be "MyComponent UI Component"
+    And its technology property should be "React Component"
 
-  **Scenario: Connect two nodes with a directed edge**
-    Given a canvas containing a service node "AuthService" and a database node "SessionDB"
-    When the user draws an edge from "AuthService" to "SessionDB"
-    Then the canvas should render a directed connection from "AuthService" to "SessionDB"
-    And the generated System Schema JSON should define a dependency from "AuthService" to "SessionDB":
-      """json
-      {
-        "dependencies": [
-          { "from": "AuthService", "to": "SessionDB", "type": "direct-call" }
-        ]
-      }
-      """
+  **Scenario: Database Client Heuristic Classification**
+    Given a file `/src/adapters/db.ts`
+    And the file imports `prisma`, `knex`, `pg`, or `mongodb`
+    Or the file contains a `new PrismaClient()` expression
+    When the analyzer runs on the codebase
+    Then the file should be classified as `relational-database`
+    And the node name should be "Db Database"
+    And its technology property should be "Prisma / SQL Database Client"
 
-### Feature: Graph Theory & Validation
+  **Scenario: Event Broker Client Heuristic Classification**
+    Given a file `/src/adapters/broker.ts`
+    And the file imports `kafkajs`, `bullmq`, `amqplib`, or `mqtt`
+    Or the file instantiates a class with a name containing `Queue` or `Kafka`
+    When the analyzer runs on the codebase
+    Then the file should be classified as `event-broker`
+    And the node name should be "Broker Message Broker"
 
-  **Scenario: Detect a cyclic dependency**
-    Given a canvas with nodes "GatewayService", "BillingService", and "UserService"
-    And a dependency chain: "GatewayService" -> "BillingService" -> "UserService"
-    When the user draws an edge from "UserService" to "GatewayService"
-    Then the system should trigger a Validation Alert
-    And highlight the cyclic dependency path ("GatewayService", "BillingService", "UserService") in red on the canvas
-    And the validation state should indicate a cycle violation
+  **Scenario: REST API Controller Heuristic Classification**
+    Given a file `/src/adapters/routes.ts`
+    And the file imports `express`, `fastify`, or `@nestjs/common`
+    When the analyzer runs on the codebase
+    Then the file should be classified as `rest-api`
+    And the node name should be "Routes REST Endpoint"
 
-  **Scenario: Import valid YAML to render canvas**
-    Given an empty canvas
-    When the user imports the following YAML schema:
-      """yaml
-      nodes:
-        - id: UserApi
-          type: grpc-service
-        - id: UserCache
-          type: cache-store
-      dependencies:
-        - from: UserApi
-          to: UserCache
-          type: read-write
-      """
-    Then the canvas should automatically render two nodes: "UserApi" and "UserCache"
-    And render a directed edge from "UserApi" to "UserCache"
+  **Scenario: Mapping Codebase Files to C4 Containers**
+    Given a codebase source file at path `src/domain/graph.ts`
+    When the analyzer maps the file to a C4 Container
+    Then it should be assigned to the `domain-logic` container
+    And the container name should be "Domain Logic Layer"
+
+  **Scenario: Detecting Internal Codebase Dependencies**
+    Given a source file `src/adapters/Canvas.tsx`
+    And it imports relative module `../domain/graph`
+    When the analyzer resolves dependencies
+    Then a dependency should be created from `canvas` to `graph`
+    And the dependency type should be `direct-call`
+
+  **Scenario: Detecting Outbound External API calls**
+    Given a source file `src/adapters/Canvas.tsx`
+    And it invokes call expression `fetch(...)` or `axios.get(...)`
+    When the analyzer resolves dependencies
+    Then a dependency should be created from `canvas` to `external-api-target`
+    And a rest-api node `external-api-target` should be registered
 
 ---
 
 ## 3. Technical Constraints & Context
 
-1. **Local-First Executions:** The schema parsing, node graph models, and rendering calculations must execute completely on the client side with 0ms network latency constraints.
-2. **Hexagonal Architecture Boundary:** The Graph model and traversal algorithms (DFS, cycle check) must be written as a pure TypeScript domain library without any React Flow or DOM-dependent references.
+1. **Strict Hexagonal Separation:** The domain core model must have zero imports from `ts-morph` or `fs`.
+2. **Deterministic Layout Coordinates:** Dagre layout calculations must run on nodes and dependencies deterministically prior to YAML serialization.
+3. **Obsolete File Cleanup:** The workspace manifest generator must delete legacy schema files (`blueprints/blueprint.yaml` and `blueprints/blueprint-components.yaml`).

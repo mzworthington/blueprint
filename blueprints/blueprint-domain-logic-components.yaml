@@ -30,7 +30,7 @@ nodes:
       filepath: src/domain/ports.ts
       technology: TypeScript Domain Service
     external: false
-    x: 1980
+    x: 2900
     'y': 370
   - id: schema
     type: background-worker
@@ -42,6 +42,26 @@ nodes:
     external: false
     x: 600
     'y': 50
+  - id: slug_test
+    type: background-worker
+    name: slug.test Service
+    isTest: true
+    properties:
+      filepath: src/domain/slug.test.ts
+      technology: TypeScript Domain Service
+    external: false
+    x: 2440
+    'y': 50
+  - id: slug
+    type: background-worker
+    name: slug Service
+    isTest: false
+    properties:
+      filepath: src/domain/slug.ts
+      technology: TypeScript Domain Service
+    external: false
+    x: 2210
+    'y': 370
   - id: codeviewer
     type: gateway-api
     name: CodeViewer UI Component (Frontend React UI)
@@ -51,6 +71,16 @@ nodes:
       technology: React Component
     external: true
     x: 140
+    'y': 50
+  - id: propertypanel
+    type: gateway-api
+    name: PropertyPanel UI Component (Frontend React UI)
+    isTest: false
+    properties:
+      filepath: src/adapters/PropertyPanel.tsx
+      technology: React Component
+    external: true
+    x: 1980
     'y': 50
   - id: store
     type: gateway-api
@@ -70,11 +100,15 @@ nodes:
       filepath: src/adapters/fileSync.ts
       technology: TypeScript Domain Service
     external: true
-    x: 1980
+    x: 2900
     'y': 50
 dependencies:
   - from: codeviewer
     to: graph
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: propertypanel
+    to: slug
     type: direct-call
     description: Executes local class methods / functions
   - from: store
@@ -83,6 +117,10 @@ dependencies:
     description: Executes local class methods / functions
   - from: graph_test
     to: graph
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: slug_test
+    to: slug
     type: direct-call
     description: Executes local class methods / functions
   - from: filesync

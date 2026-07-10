@@ -40,7 +40,7 @@ nodes:
       filepath: src/adapters/Breadcrumbs.tsx
       technology: React Component
     external: false
-    x: 1085
+    x: 1030
     'y': 690
   - id: canvas_test
     type: gateway-api
@@ -50,7 +50,7 @@ nodes:
       filepath: src/adapters/Canvas.test.tsx
       technology: React Component
     external: false
-    x: 1365
+    x: 1215
     'y': 50
   - id: canvas
     type: gateway-api
@@ -70,7 +70,7 @@ nodes:
       filepath: src/adapters/CodeViewer.test.tsx
       technology: React Component
     external: false
-    x: 2420
+    x: 1960
     'y': 370
   - id: codeviewer
     type: gateway-api
@@ -80,7 +80,7 @@ nodes:
       filepath: src/adapters/CodeViewer.tsx
       technology: React Component
     external: false
-    x: 3105
+    x: 2690
     'y': 690
   - id: mermaidpreview
     type: gateway-api
@@ -90,7 +90,7 @@ nodes:
       filepath: src/adapters/MermaidPreview.tsx
       technology: React Component
     external: false
-    x: 3470
+    x: 3405
     'y': 1010
   - id: propertypanel_test
     type: gateway-api
@@ -100,7 +100,7 @@ nodes:
       filepath: src/adapters/PropertyPanel.test.tsx
       technology: React Component
     external: false
-    x: 1960
+    x: 2420
     'y': 370
   - id: propertypanel
     type: gateway-api
@@ -110,7 +110,7 @@ nodes:
       filepath: src/adapters/PropertyPanel.tsx
       technology: React Component
     external: false
-    x: 2645
+    x: 3150
     'y': 690
   - id: store
     type: gateway-api
@@ -129,7 +129,7 @@ nodes:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
     external: true
-    x: 2175
+    x: 1945
     'y': 50
   - id: graph
     type: background-worker
@@ -139,7 +139,17 @@ nodes:
       filepath: src/domain/graph.ts
       technology: TypeScript Domain Service
     external: true
-    x: 3010
+    x: 2945
+    'y': 1010
+  - id: slug
+    type: background-worker
+    name: slug Service (Domain Logic Layer)
+    isTest: false
+    properties:
+      filepath: src/domain/slug.ts
+      technology: TypeScript Domain Service
+    external: true
+    x: 3865
     'y': 1010
 dependencies:
   - from: blueprintnode_test
@@ -240,5 +250,9 @@ dependencies:
     description: Renders PropertyPanel layout component
   - from: propertypanel
     to: store
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: propertypanel
+    to: slug
     type: direct-call
     description: Executes local class methods / functions
