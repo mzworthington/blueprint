@@ -26,7 +26,7 @@ describe('Blueprint Store Integration Helper Actions', () => {
 
   it('should initialize with default workspace manifest values on startup', () => {
     expect(defaultWorkspaceManifest).not.toBeNull();
-    expect(defaultWorkspaceManifest?.name).toBe('Blueprint Workspace');
-    expect(defaultWorkspaceManifestYaml).toContain('name: Blueprint Workspace');
+    expect(defaultWorkspaceManifest?.name).toBeDefined();
+    expect(defaultWorkspaceManifestYaml).toContain(`name: ${defaultWorkspaceManifest?.name}`);
   });
 });

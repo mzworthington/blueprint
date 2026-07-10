@@ -7,44 +7,33 @@ nodes:
     name: keys Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-react/src/layouts/keys.ts
+      filepath: plugins/scaffolder-react/src/layouts/keys.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 600
+    x: 870
     'y': 690
   - id: createscaffolderlayout
     type: gateway-api
     name: createScaffolderLayout UI Component
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-react/src/layouts/createScaffolderLayout.ts
+      filepath: plugins/scaffolder-react/src/layouts/createScaffolderLayout.ts
       namespaces: ''
       technology: React Component
     external: false
-    x: 1060
+    x: 180
     'y': 370
-  - id: usecustomfieldextensions
+  - id: createscaffolderfieldextension
     type: background-worker
-    name: useCustomFieldExtensions Service (hooks)
+    name: createScaffolderFieldExtension Service (extensions)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-react/src/hooks/useCustomFieldExtensions.ts
+      filepath: plugins/scaffolder-react/src/extensions/createScaffolderFieldExtension.tsx
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 140
-    'y': 370
-  - id: usecustomlayouts
-    type: background-worker
-    name: useCustomLayouts Service (hooks)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-react/src/hooks/useCustomLayouts.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
+    x: 640
     'y': 370
   - id: frontend-client
     type: gateway-api
@@ -53,25 +42,43 @@ nodes:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
     external: true
-    x: 1060
+    x: 180
     'y': 50
   - id: core
     type: background-worker
-    name: core Service (providers)
+    name: core Service (gerrit)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend-module-gitea/src/providers/core.ts
+      filepath: packages/integration/src/gerrit/core.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: usecustomlayouts
+    type: background-worker
+    name: useCustomLayouts Service (hooks)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-react/src/hooks/useCustomLayouts.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1100
-    'y': 690
+    'y': 370
+  - id: usecustomfieldextensions
+    type: background-worker
+    name: useCustomFieldExtensions Service (hooks)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-react/src/hooks/useCustomFieldExtensions.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1560
+    'y': 370
 dependencies:
-  - from: usecustomfieldextensions
-    to: keys
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: usecustomlayouts
+  - from: createscaffolderfieldextension
     to: keys
     type: direct-call
     description: Executes local class methods / functions
@@ -85,5 +92,13 @@ dependencies:
     description: Executes local class methods / functions
   - from: createscaffolderlayout
     to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: usecustomlayouts
+    to: keys
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: usecustomfieldextensions
+    to: keys
     type: direct-call
     description: Executes local class methods / functions

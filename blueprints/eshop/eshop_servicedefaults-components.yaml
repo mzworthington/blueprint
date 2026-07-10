@@ -2,100 +2,59 @@ name: EShop - eShop.ServiceDefaults Components
 version: 1.0.0
 level: component
 nodes:
-  - id: extensions
+  - id: claimsprincipalextensions
     type: background-worker
-    name: Extensions Service
+    name: ClaimsPrincipalExtensions Service
     isTest: false
     properties:
-      filepath: ../eshop/src/eShop.ServiceDefaults/Extensions.cs
+      filepath: src/eShop.ServiceDefaults/ClaimsPrincipalExtensions.cs
       namespaces: eShop.ServiceDefaults
       technology: C# Domain Service
     external: false
-    x: 370
+    x: 140
     'y': 50
   - id: authenticationextensions
     type: background-worker
     name: AuthenticationExtensions Service
     isTest: false
     properties:
-      filepath: ../eshop/src/eShop.ServiceDefaults/AuthenticationExtensions.cs
+      filepath: src/eShop.ServiceDefaults/AuthenticationExtensions.cs
       namespaces: eShop.ServiceDefaults
       technology: C# Domain Service
     external: false
-    x: 830
-    'y': 50
-  - id: claimsprincipalextensions
-    type: background-worker
-    name: ClaimsPrincipalExtensions Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/eShop.ServiceDefaults/ClaimsPrincipalExtensions.cs
-      namespaces: eShop.ServiceDefaults
-      technology: C# Domain Service
-    external: false
-    x: 1290
-    'y': 50
-  - id: httpclientextensions
-    type: background-worker
-    name: HttpClientExtensions Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/eShop.ServiceDefaults/HttpClientExtensions.cs
-      namespaces: eShop.ServiceDefaults
-      technology: C# Domain Service
-    external: false
-    x: 1750
-    'y': 50
-  - id: openapi_extensions
-    type: background-worker
-    name: OpenApi.Extensions Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/eShop.ServiceDefaults/OpenApi.Extensions.cs
-      namespaces: eShop.ServiceDefaults
-      technology: C# Domain Service
-    external: false
-    x: 2210
+    x: 600
     'y': 50
   - id: openapioptionsextensions
     type: background-worker
     name: OpenApiOptionsExtensions Service
     isTest: false
     properties:
-      filepath: ../eshop/src/eShop.ServiceDefaults/OpenApiOptionsExtensions.cs
+      filepath: src/eShop.ServiceDefaults/OpenApiOptionsExtensions.cs
       namespaces: eShop.ServiceDefaults
       technology: C# Domain Service
     external: false
-    x: 2670
+    x: 1060
     'y': 50
-  - id: redirectviewmodel
+  - id: openapi_extensions
     type: background-worker
-    name: RedirectViewModel Service (IdentityServerHost.Quickstart)
+    name: OpenApi.Extensions Service
     isTest: false
     properties:
-      filepath: ../eshop/src/Identity.API/Quickstart/Account/RedirectViewModel.cs
-      namespaces: IdentityServerHost.Quickstart.UI
+      filepath: src/eShop.ServiceDefaults/OpenApi.Extensions.cs
+      namespaces: eShop.ServiceDefaults
       technology: C# Domain Service
-    external: true
-    x: 140
-    'y': 370
-  - id: ieventbusbuilder
+    external: false
+    x: 1520
+    'y': 50
+  - id: httpclientextensions
     type: background-worker
-    name: IEventBusBuilder Service (Microsoft.Extensions)
+    name: HttpClientExtensions Service
     isTest: false
     properties:
-      filepath: ../eshop/src/EventBus/Abstractions/IEventBusBuilder.cs
-      namespaces: Microsoft.Extensions.DependencyInjection
+      filepath: src/eShop.ServiceDefaults/HttpClientExtensions.cs
+      namespaces: eShop.ServiceDefaults
       technology: C# Domain Service
-    external: true
-    x: 600
-    'y': 370
-dependencies:
-  - from: extensions
-    to: redirectviewmodel
-    type: direct-call
-    description: References class type / calls methods
-  - from: extensions
-    to: ieventbusbuilder
-    type: direct-call
-    description: References class type / calls methods
+    external: false
+    x: 1980
+    'y': 50
+dependencies: []

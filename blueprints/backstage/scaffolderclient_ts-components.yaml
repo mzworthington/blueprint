@@ -7,40 +7,73 @@ nodes:
     name: ScaffolderClient Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-common/src/ScaffolderClient.ts
+      filepath: plugins/scaffolder-common/src/ScaffolderClient.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 1290
     'y': 370
-  - id: apis
-    type: gateway-api
-    name: apis UI Component (apis.ts)
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search/src/apis.ts
+      filepath: packages/frontend-test-utils/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: plugin
+    type: background-worker
+    name: plugin Service (plugin.tsx)
+    isTest: false
+    properties:
+      filepath: packages/app-example-plugin/src/plugin.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: extensions
+    type: gateway-api
+    name: extensions UI Component (extensions)
+    isTest: false
+    properties:
+      filepath: packages/core-plugin-api/src/extensions/extensions.tsx
       namespaces: ''
       technology: React Component
     external: true
-    x: 830
+    x: 1060
+    'y': 50
+  - id: scaffolderservice
+    type: background-worker
+    name: scaffolderService Service (scaffolderService.ts)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-node/src/scaffolderService.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
     'y': 50
   - id: scaffolderclient_test
     type: background-worker
     name: ScaffolderClient.test Service (ScaffolderClient.test.ts)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/scaffolder-common/src/ScaffolderClient.test.ts
+      filepath: plugins/scaffolder-common/src/ScaffolderClient.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1290
+    x: 1980
     'y': 50
   - id: errors
     type: background-worker
     name: errors Service (errors.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      filepath: packages/codemods/src/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -51,20 +84,20 @@ nodes:
     name: integration Service (types)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/permission-common/src/types/integration.ts
+      filepath: plugins/permission-common/src/types/integration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 690
   - id: types
-    type: background-worker
-    name: types Service (types.ts)
+    type: gateway-api
+    name: types UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      filepath: packages/core-components/src/components/TabbedLayout/types.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
     x: 1060
     'y': 690
@@ -73,7 +106,7 @@ nodes:
     name: TemplateEntityV1beta3 Service (TemplateEntityV1beta3.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-common/src/TemplateEntityV1beta3.ts
+      filepath: plugins/scaffolder-common/src/TemplateEntityV1beta3.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -81,10 +114,10 @@ nodes:
     'y': 690
   - id: api
     type: background-worker
-    name: api Service (api.ts)
+    name: api Service (types)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-react/src/api.ts
+      filepath: packages/catalog-client/src/types/api.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -95,25 +128,37 @@ nodes:
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 2440
     'y': 690
-  - id: scaffolderservice
-    type: background-worker
-    name: scaffolderService Service (scaffolderService.ts)
+  - id: apis
+    type: gateway-api
+    name: apis UI Component (apis.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-node/src/scaffolderService.ts
+      filepath: packages/create-app/templates/legacy-app/packages/app/src/apis.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
-    x: 1750
+    x: 2440
     'y': 50
 dependencies:
-  - from: apis
+  - from: index
+    to: scaffolderclient
+    type: direct-call
+    description: References class type / calls methods
+  - from: plugin
+    to: scaffolderclient
+    type: direct-call
+    description: References class type / calls methods
+  - from: extensions
+    to: scaffolderclient
+    type: direct-call
+    description: References class type / calls methods
+  - from: scaffolderservice
     to: scaffolderclient
     type: direct-call
     description: References class type / calls methods
@@ -145,7 +190,7 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: scaffolderservice
+  - from: apis
     to: scaffolderclient
     type: direct-call
     description: References class type / calls methods

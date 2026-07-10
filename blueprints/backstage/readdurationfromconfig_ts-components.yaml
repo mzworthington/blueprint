@@ -7,42 +7,31 @@ nodes:
     name: readDurationFromConfig Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/config/src/readDurationFromConfig.ts
+      filepath: packages/config/src/readDurationFromConfig.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 600
     'y': 370
-  - id: readdurationfromconfig_test
-    type: background-worker
-    name: readDurationFromConfig.test Service (readDurationFromConfig.test.ts)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/config/src/readDurationFromConfig.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 50
   - id: errors
     type: background-worker
     name: errors Service (errors.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      filepath: packages/codemods/src/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 140
     'y': 690
   - id: types
-    type: background-worker
-    name: types Service (types.ts)
+    type: gateway-api
+    name: types UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      filepath: packages/core-components/src/components/TabbedLayout/types.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
     x: 600
     'y': 690
@@ -51,17 +40,24 @@ nodes:
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1060
     'y': 690
+  - id: readdurationfromconfig_test
+    type: background-worker
+    name: readDurationFromConfig.test Service (readDurationFromConfig.test.ts)
+    isTest: true
+    properties:
+      filepath: packages/config/src/readDurationFromConfig.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
 dependencies:
-  - from: readdurationfromconfig_test
-    to: readdurationfromconfig
-    type: direct-call
-    description: Executes local class methods / functions
   - from: readdurationfromconfig
     to: errors
     type: direct-call
@@ -74,3 +70,7 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: readdurationfromconfig_test
+    to: readdurationfromconfig
+    type: direct-call
+    description: Executes local class methods / functions

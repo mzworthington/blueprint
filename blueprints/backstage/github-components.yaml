@@ -2,177 +2,133 @@ name: Backstage - github Components
 version: 1.0.0
 level: component
 nodes:
+  - id: singleinstancegithubcredentialsprovider
+    type: background-worker
+    name: SingleInstanceGithubCredentialsProvider Service
+    isTest: false
+    properties:
+      filepath: packages/integration/src/github/SingleInstanceGithubCredentialsProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3665
+    'y': 1010
+  - id: githubintegration
+    type: background-worker
+    name: GithubIntegration Service
+    isTest: false
+    properties:
+      filepath: packages/integration/src/github/GithubIntegration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1735
+    'y': 1010
+  - id: githubintegration_test
+    type: background-worker
+    name: GithubIntegration.test Service
+    isTest: true
+    properties:
+      filepath: packages/integration/src/github/GithubIntegration.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 950
+    'y': 690
+  - id: singleinstancegithubcredentialsprovider_test
+    type: background-worker
+    name: SingleInstanceGithubCredentialsProvider.test Service
+    isTest: true
+    properties:
+      filepath: packages/integration/src/github/SingleInstanceGithubCredentialsProvider.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3855
+    'y': 690
   - id: defaultgithubcredentialsprovider_test
     type: background-worker
     name: DefaultGithubCredentialsProvider.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/integration/src/github/DefaultGithubCredentialsProvider.test.ts
+      filepath: packages/integration/src/github/DefaultGithubCredentialsProvider.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 3340
+    x: 3275
     'y': 50
   - id: defaultgithubcredentialsprovider
     type: background-worker
     name: DefaultGithubCredentialsProvider Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/github/DefaultGithubCredentialsProvider.ts
+      filepath: packages/integration/src/github/DefaultGithubCredentialsProvider.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 3100
+    x: 2965
     'y': 370
-  - id: githubintegration_test
-    type: background-worker
-    name: GithubIntegration.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/integration/src/github/GithubIntegration.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1005
-    'y': 690
-  - id: githubintegration
-    type: background-worker
-    name: GithubIntegration Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/integration/src/github/GithubIntegration.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1275
-    'y': 1010
-  - id: singleinstancegithubcredentialsprovider_test
-    type: background-worker
-    name: SingleInstanceGithubCredentialsProvider.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/integration/src/github/SingleInstanceGithubCredentialsProvider.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 3505
-    'y': 690
-  - id: singleinstancegithubcredentialsprovider
-    type: background-worker
-    name: SingleInstanceGithubCredentialsProvider Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/integration/src/github/SingleInstanceGithubCredentialsProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 3260
-    'y': 1010
-  - id: githuburlreader_test
-    type: background-worker
-    name: GithubUrlReader.test Service (entrypoints)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/urlReader/lib/GithubUrlReader.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2385
-    'y': 690
   - id: scmintegrations_test
     type: background-worker
     name: ScmIntegrations.test Service (ScmIntegrations.test.ts)
     isTest: true
     properties:
-      filepath: ../backstage/packages/integration/src/ScmIntegrations.test.ts
+      filepath: packages/integration/src/ScmIntegrations.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1925
-    'y': 690
-  - id: scmintegrations
-    type: background-worker
-    name: ScmIntegrations Service (ScmIntegrations.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/integration/src/ScmIntegrations.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1465
+    x: 2790
     'y': 690
   - id: config
-    type: background-worker
-    name: config Service (collators)
+    type: gateway-api
+    name: config UI Component (layout)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      filepath: packages/core-components/src/layout/Sidebar/config.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
-    x: 885
+    x: 600
     'y': 1330
   - id: types
-    type: background-worker
-    name: types Service (types.ts)
+    type: gateway-api
+    name: types UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      filepath: packages/core-components/src/components/TabbedLayout/types.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
-    x: 3635
+    x: 3530
     'y': 1330
-  - id: registry
-    type: background-worker
-    name: registry Service (registry.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/integration/src/registry.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 450
-    'y': 690
-  - id: url
-    type: background-worker
-    name: url Service (stages)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2965
-    'y': 690
   - id: error
     type: background-worker
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 4095
+    x: 4205
     'y': 1330
-  - id: headers
+  - id: cache
     type: background-worker
-    name: headers Service (lib)
+    name: Cache Service (commands)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/app-backend/src/lib/headers.ts
+      filepath: packages/repo-tools/src/commands/package-docs/Cache.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2060
-    'y': 1010
+    x: 4665
+    'y': 1330
   - id: helpers
     type: background-worker
-    name: helpers Service (helpers.ts)
+    name: helpers Service (entrypoints)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-react/src/helpers.ts
+      filepath: packages/backend-defaults/src/entrypoints/auth/external/helpers.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -183,36 +139,128 @@ nodes:
     name: errors Service (errors.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      filepath: packages/codemods/src/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2790
+    x: 2775
     'y': 1330
-  - id: cache
+  - id: headers
     type: background-worker
-    name: Cache Service (commands)
+    name: headers Service (lib)
     isTest: false
     properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/package-docs/Cache.ts
+      filepath: plugins/app-backend/src/lib/headers.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 4555
-    'y': 1330
+    x: 950
+    'y': 1010
+  - id: scmintegrations
+    type: background-worker
+    name: ScmIntegrations Service (ScmIntegrations.ts)
+    isTest: false
+    properties:
+      filepath: packages/integration/src/ScmIntegrations.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1410
+    'y': 690
+  - id: registry
+    type: background-worker
+    name: registry Service (registry.ts)
+    isTest: false
+    properties:
+      filepath: packages/integration/src/registry.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1870
+    'y': 690
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2330
+    'y': 690
+  - id: githuburlreader_test
+    type: background-worker
+    name: GithubUrlReader.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GithubUrlReader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 490
+    'y': 690
 dependencies:
-  - from: githuburlreader_test
-    to: githubintegration
-    type: direct-call
-    description: References class type / calls methods
   - from: scmintegrations_test
     to: githubintegration
     type: direct-call
     description: Executes local class methods / functions
-  - from: scmintegrations
+  - from: singleinstancegithubcredentialsprovider
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: singleinstancegithubcredentialsprovider
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: singleinstancegithubcredentialsprovider
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: singleinstancegithubcredentialsprovider
+    to: cache
+    type: direct-call
+    description: References class type / calls methods
+  - from: githubintegration
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: githubintegration
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: githubintegration
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: githubintegration
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: githubintegration_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: githubintegration_test
     to: githubintegration
     type: direct-call
     description: Executes local class methods / functions
+  - from: githubintegration_test
+    to: headers
+    type: direct-call
+    description: References class type / calls methods
+  - from: singleinstancegithubcredentialsprovider_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: singleinstancegithubcredentialsprovider_test
+    to: singleinstancegithubcredentialsprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: singleinstancegithubcredentialsprovider_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
   - from: defaultgithubcredentialsprovider_test
     to: scmintegrations
     type: direct-call
@@ -253,63 +301,15 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: githubintegration_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: githubintegration_test
-    to: githubintegration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: githubintegration_test
-    to: headers
-    type: direct-call
-    description: References class type / calls methods
-  - from: githubintegration
-    to: helpers
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: githubintegration
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: githubintegration
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: githubintegration
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: singleinstancegithubcredentialsprovider_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: singleinstancegithubcredentialsprovider_test
-    to: singleinstancegithubcredentialsprovider
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: singleinstancegithubcredentialsprovider_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: singleinstancegithubcredentialsprovider
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: singleinstancegithubcredentialsprovider
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: singleinstancegithubcredentialsprovider
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: singleinstancegithubcredentialsprovider
-    to: cache
-    type: direct-call
-    description: References class type / calls methods
   - from: registry
     to: githubintegration
     type: direct-call
     description: Executes local class methods / functions
+  - from: scmintegrations
+    to: githubintegration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: githuburlreader_test
+    to: githubintegration
+    type: direct-call
+    description: References class type / calls methods

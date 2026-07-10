@@ -2,148 +2,897 @@ name: Backstage - gerrit Components
 version: 1.0.0
 level: component
 nodes:
-  - id: gerritintegration_test
+  - id: core_test
     type: background-worker
-    name: GerritIntegration.test Service
+    name: core.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/integration/src/gerrit/GerritIntegration.test.ts
+      filepath: packages/integration/src/gerrit/core.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1060
-    'y': 50
+    x: 395
+    'y': 370
+  - id: core
+    type: background-worker
+    name: core Service
+    isTest: false
+    properties:
+      filepath: packages/integration/src/gerrit/core.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 11850
+    'y': 690
   - id: gerritintegration
     type: background-worker
     name: GerritIntegration Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/gerrit/GerritIntegration.ts
+      filepath: packages/integration/src/gerrit/GerritIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1480
+    x: 22890
     'y': 370
-  - id: gerriturlreader_test
+  - id: gerritintegration_test
     type: background-worker
-    name: GerritUrlReader.test Service (entrypoints)
+    name: GerritIntegration.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/urlReader/lib/GerritUrlReader.test.ts
+      filepath: packages/integration/src/gerrit/GerritIntegration.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1190
+    'y': 50
+  - id: textsize
+    type: gateway-api
+    name: TextSize UI Component (TextSize)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-module-addons-contrib/src/TextSize/TextSize.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1270
+    'y': 370
+  - id: issuelink
+    type: background-worker
+    name: IssueLink Service (ReportIssue)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-module-addons-contrib/src/ReportIssue/IssueLink.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1730
+    'y': 370
+  - id: reportissuecontent
+    type: gateway-api
+    name: ReportIssueContent UI Component (ReportIssue)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-module-addons-contrib/src/ReportIssue/ReportIssueContent.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 2190
+    'y': 370
+  - id: expandablenavigation
+    type: gateway-api
+    name: ExpandableNavigation UI Component (ExpandableNavigation)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-module-addons-contrib/src/ExpandableNavigation/ExpandableNavigation.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 2650
+    'y': 370
+  - id: widgetsettingsoverlay
+    type: gateway-api
+    name: WidgetSettingsOverlay UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/home/src/components/CustomHomepage/WidgetSettingsOverlay.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 3110
+    'y': 370
+  - id: types
+    type: gateway-api
+    name: types UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 12905
+    'y': 1010
+  - id: githuborgentityprovider
+    type: background-worker
+    name: GithubOrgEntityProvider Service (providers)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-github/src/providers/GithubOrgEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3570
+    'y': 370
+  - id: githubmultiorgentityprovider
+    type: background-worker
+    name: GithubMultiOrgEntityProvider Service (providers)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-github/src/providers/GithubMultiOrgEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 4030
+    'y': 370
+  - id: github
+    type: background-worker
+    name: github Service (schema)
+    isTest: false
+    properties:
+      filepath: packages/connections/src/schema/github.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 4490
+    'y': 370
+  - id: github_test
+    type: background-worker
+    name: github.test Service (schema)
+    isTest: true
+    properties:
+      filepath: packages/connections/src/schema/github.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 4950
+    'y': 370
+  - id: giteaentityprovider
+    type: background-worker
+    name: GiteaEntityProvider Service (providers)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitea/src/providers/GiteaEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 5410
+    'y': 370
+  - id: integration
+    type: background-worker
+    name: integration Service (types)
+    isTest: false
+    properties:
+      filepath: plugins/permission-common/src/types/integration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 140
-    'y': 50
+    'y': 1010
+  - id: giteaentityprovider_test
+    type: background-worker
+    name: GiteaEntityProvider.test Service (providers)
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-gitea/src/providers/GiteaEntityProvider.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 5870
+    'y': 370
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
+    isTest: false
+    properties:
+      filepath: packages/frontend-test-utils/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 6330
+    'y': 370
+  - id: form
+    type: gateway-api
+    name: Form UI Component (next)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-react/src/next/components/Form/Form.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 6790
+    'y': 370
+  - id: stepper
+    type: gateway-api
+    name: Stepper UI Component (next)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-react/src/next/components/Stepper/Stepper.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 7250
+    'y': 370
+  - id: rjsf
+    type: gateway-api
+    name: rjsf UI Component (extensions)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-react/src/extensions/rjsf.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 7710
+    'y': 370
+  - id: createscaffolderlayout
+    type: gateway-api
+    name: createScaffolderLayout UI Component (layouts)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-react/src/layouts/createScaffolderLayout.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 8170
+    'y': 370
+  - id: gitlabgroupaccessaction
+    type: background-worker
+    name: gitlabGroupAccessAction Service (actions)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-gitlab/src/actions/gitlabGroupAccessAction.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 8630
+    'y': 370
+  - id: router
+    type: rest-api
+    name: router REST Endpoint (router.ts)
+    isTest: false
+    properties:
+      filepath: packages/backend-openapi-utils/src/router.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 9090
+    'y': 370
+  - id: loader_test
+    type: background-worker
+    name: loader.test Service (loader.test.ts)
+    isTest: true
+    properties:
+      filepath: packages/config-loader/src/loader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 9550
+    'y': 370
+  - id: examplecomponent
+    type: background-worker
+    name: ExampleComponent Service (components)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-new/templates/plugin-web-library/src/components/ExampleComponent/ExampleComponent.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 10010
+    'y': 370
+  - id: node
+    type: gateway-api
+    name: Node UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/DependencyGraph/Node.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 315
+    'y': 690
+  - id: config
+    type: gateway-api
+    name: config UI Component (layout)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 11525
+    'y': 1010
+  - id: external-api-target
+    type: rest-api
+    name: External HTTP API Endpoint (External HTTP Services)
+    isTest: false
+    properties:
+      description: Generic outbound web integration endpoints.
+    external: true
+    x: 760
+    'y': 1010
+  - id: helpers
+    type: background-worker
+    name: helpers Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/auth/external/helpers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 13365
+    'y': 1010
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 11985
+    'y': 1010
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 12445
+    'y': 1010
+  - id: azureurl
+    type: background-worker
+    name: AzureUrl Service (azure)
+    isTest: false
+    properties:
+      filepath: packages/integration/src/azure/AzureUrl.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 23580
+    'y': 1010
+  - id: defaultazuredevopscredentialsprovider
+    type: background-worker
+    name: DefaultAzureDevOpsCredentialsProvider Service (azure)
+    isTest: false
+    properties:
+      filepath: packages/integration/src/azure/DefaultAzureDevOpsCredentialsProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 10470
+    'y': 370
+  - id: harnessintegration
+    type: background-worker
+    name: HarnessIntegration Service (harness)
+    isTest: false
+    properties:
+      filepath: packages/integration/src/harness/HarnessIntegration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 10930
+    'y': 370
+  - id: giteaintegration
+    type: background-worker
+    name: GiteaIntegration Service (gitea)
+    isTest: false
+    properties:
+      filepath: packages/integration/src/gitea/GiteaIntegration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 11390
+    'y': 370
   - id: scmintegrations_test
     type: background-worker
     name: ScmIntegrations.test Service (ScmIntegrations.test.ts)
     isTest: true
     properties:
-      filepath: ../backstage/packages/integration/src/ScmIntegrations.test.ts
+      filepath: packages/integration/src/ScmIntegrations.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1520
+    x: 730
+    'y': 50
+  - id: registry
+    type: background-worker
+    name: registry Service (registry.ts)
+    isTest: false
+    properties:
+      filepath: packages/integration/src/registry.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 22890
     'y': 50
   - id: scmintegrations
     type: background-worker
     name: ScmIntegrations Service (ScmIntegrations.ts)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/ScmIntegrations.ts
+      filepath: packages/integration/src/ScmIntegrations.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1980
+    x: 23350
     'y': 50
-  - id: config
+  - id: getpackageversion
     type: background-worker
-    name: config Service (collators)
+    name: getPackageVersion Service (util)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      filepath: packages/yarn-plugin/src/util/getPackageVersion.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 370
-    'y': 690
-  - id: helpers
+    x: 11850
+    'y': 370
+  - id: getpackageversion_test
     type: background-worker
-    name: helpers Service (helpers.ts)
-    isTest: false
+    name: getPackageVersion.test Service (util)
+    isTest: true
     properties:
-      filepath: ../backstage/plugins/techdocs-react/src/helpers.ts
+      filepath: packages/yarn-plugin/src/util/getPackageVersion.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 870
-    'y': 690
-  - id: types
+    x: 12310
+    'y': 370
+  - id: backstagenpmresolver_test
     type: background-worker
-    name: types Service (types.ts)
-    isTest: false
+    name: BackstageNpmResolver.test Service (resolvers)
+    isTest: true
     properties:
-      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      filepath: packages/yarn-plugin/src/resolvers/BackstageNpmResolver.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1520
-    'y': 690
-  - id: core
+    x: 12770
+    'y': 370
+  - id: backstagenpmresolver
     type: background-worker
-    name: core Service (providers)
+    name: BackstageNpmResolver Service (resolvers)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend-module-gitea/src/providers/core.ts
+      filepath: packages/yarn-plugin/src/resolvers/BackstageNpmResolver.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1980
-    'y': 690
-  - id: url
+    x: 13230
+    'y': 370
+  - id: reducedependency
     type: background-worker
-    name: url Service (stages)
+    name: reduceDependency Service (handlers)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
+      filepath: packages/yarn-plugin/src/handlers/reduceDependency.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2440
-    'y': 690
-  - id: registry
+    x: 13690
+    'y': 370
+  - id: afterworkspacedependencyaddition_test
     type: background-worker
-    name: registry Service (registry.ts)
-    isTest: false
+    name: afterWorkspaceDependencyAddition.test Service (handlers)
+    isTest: true
     properties:
-      filepath: ../backstage/packages/integration/src/registry.ts
+      filepath: packages/yarn-plugin/src/handlers/afterWorkspaceDependencyAddition.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2440
+    x: 14150
+    'y': 370
+  - id: afterworkspacedependencyaddition
+    type: background-worker
+    name: afterWorkspaceDependencyAddition Service (handlers)
+    isTest: false
+    properties:
+      filepath: packages/yarn-plugin/src/handlers/afterWorkspaceDependencyAddition.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 14610
+    'y': 370
+  - id: beforeworkspacepacking
+    type: background-worker
+    name: beforeWorkspacePacking Service (handlers)
+    isTest: false
+    properties:
+      filepath: packages/yarn-plugin/src/handlers/beforeWorkspacePacking.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 15070
+    'y': 370
+  - id: afterworkspacedependencyreplacement
+    type: background-worker
+    name: afterWorkspaceDependencyReplacement Service (handlers)
+    isTest: false
+    properties:
+      filepath: packages/yarn-plugin/src/handlers/afterWorkspaceDependencyReplacement.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 15530
+    'y': 370
+  - id: afterworkspacedependencyreplacement_test
+    type: background-worker
+    name: afterWorkspaceDependencyReplacement.test Service (handlers)
+    isTest: true
+    properties:
+      filepath: packages/yarn-plugin/src/handlers/afterWorkspaceDependencyReplacement.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 15990
+    'y': 370
+  - id: reducedependency_test
+    type: background-worker
+    name: reduceDependency.test Service (handlers)
+    isTest: true
+    properties:
+      filepath: packages/yarn-plugin/src/handlers/reduceDependency.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 16450
+    'y': 370
+  - id: beforeworkspacepacking_test
+    type: background-worker
+    name: beforeWorkspacePacking.test Service (handlers)
+    isTest: true
+    properties:
+      filepath: packages/yarn-plugin/src/handlers/beforeWorkspacePacking.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 16910
+    'y': 370
+  - id: optimization
+    type: background-worker
+    name: optimization Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/optimization.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 17370
+    'y': 370
+  - id: linkworkspaces
+    type: background-worker
+    name: linkWorkspaces Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/linkWorkspaces.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 17830
+    'y': 370
+  - id: server
+    type: background-worker
+    name: server Service (commands)
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/package/schema/openapi/generate/server.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 18290
+    'y': 370
+  - id: transforms
+    type: background-worker
+    name: transforms Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/transforms.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 18750
+    'y': 370
+  - id: bundle
+    type: gateway-api
+    name: bundle UI Component (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/bundle.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 19210
+    'y': 370
+  - id: entitypage
+    type: gateway-api
+    name: EntityPage UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/create-app/templates/legacy-app/packages/app/src/components/catalog/EntityPage.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 19670
+    'y': 370
+  - id: searchpage
+    type: gateway-api
+    name: SearchPage UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/create-app/templates/legacy-app/packages/app/src/components/search/SearchPage.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 20130
+    'y': 370
+  - id: logofull
+    type: background-worker
+    name: LogoFull Service (modules)
+    isTest: false
+    properties:
+      filepath: packages/create-app/templates/default-app/packages/app/src/modules/nav/LogoFull.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 20590
+    'y': 370
+  - id: root
+    type: gateway-api
+    name: Root UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/create-app/templates/legacy-app/packages/app/src/components/Root/Root.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 21050
+    'y': 370
+  - id: logoicon
+    type: background-worker
+    name: LogoIcon Service (modules)
+    isTest: false
+    properties:
+      filepath: packages/create-app/templates/default-app/packages/app/src/modules/nav/LogoIcon.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 21510
+    'y': 370
+  - id: sidebarlogo
+    type: background-worker
+    name: SidebarLogo Service (modules)
+    isTest: false
+    properties:
+      filepath: packages/create-app/templates/default-app/packages/app/src/modules/nav/SidebarLogo.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 21970
+    'y': 370
+  - id: gerriturlreader_test
+    type: background-worker
+    name: GerritUrlReader.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GerritUrlReader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 23810
     'y': 50
+  - id: table
+    type: gateway-api
+    name: Table UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/Table/Table.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 22430
+    'y': 370
 dependencies:
-  - from: gerriturlreader_test
-    to: gerritintegration
+  - from: textsize
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: issuelink
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: reportissuecontent
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: expandablenavigation
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: widgetsettingsoverlay
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: types
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: githuborgentityprovider
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: githubmultiorgentityprovider
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: github
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: github_test
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: giteaentityprovider
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: core_test
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: core_test
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: giteaentityprovider_test
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: core
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: form
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: stepper
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: rjsf
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createscaffolderlayout
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlabgroupaccessaction
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: router
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: loader_test
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: examplecomponent
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: core_test
+    to: node
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: core_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: core
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests
+  - from: core
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests
+  - from: core
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: core
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: core
+    to: error
     type: direct-call
     description: References class type / calls methods
+  - from: core
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: core
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests
+  - from: core
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests
+  - from: core_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: core
+    to: azureurl
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultazuredevopscredentialsprovider
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: azureurl
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: harnessintegration
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: giteaintegration
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
   - from: scmintegrations_test
     to: gerritintegration
     type: direct-call
     description: Executes local class methods / functions
-  - from: scmintegrations
+  - from: core_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: core
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: registry
     to: gerritintegration
     type: direct-call
     description: Executes local class methods / functions
-  - from: gerritintegration_test
-    to: config
+  - from: core_test
+    to: external-api-target
     type: direct-call
-    description: Executes local class methods / functions
-  - from: gerritintegration_test
-    to: gerritintegration
+    description: HMR outbound query requests
+  - from: core_test
+    to: external-api-target
     type: direct-call
-    description: Executes local class methods / functions
+    description: HMR outbound query requests
+  - from: core_test
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests
   - from: gerritintegration
     to: helpers
     type: direct-call
@@ -164,7 +913,119 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: registry
+  - from: gerritintegration_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gerritintegration_test
     to: gerritintegration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: scmintegrations
+    to: gerritintegration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: getpackageversion
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: getpackageversion_test
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: backstagenpmresolver_test
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: backstagenpmresolver
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: reducedependency
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: afterworkspacedependencyaddition_test
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: afterworkspacedependencyaddition
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: beforeworkspacepacking
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: afterworkspacedependencyreplacement
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: afterworkspacedependencyreplacement_test
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: reducedependency_test
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: beforeworkspacepacking_test
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: optimization
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: linkworkspaces
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: config
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: server
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: transforms
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: bundle
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: entitypage
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: searchpage
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: logofull
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: root
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: logoicon
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: sidebarlogo
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gerriturlreader_test
+    to: gerritintegration
+    type: direct-call
+    description: References class type / calls methods
+  - from: table
+    to: core
     type: direct-call
     description: Executes local class methods / functions

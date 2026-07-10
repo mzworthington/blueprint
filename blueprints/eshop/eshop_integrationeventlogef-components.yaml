@@ -7,77 +7,77 @@ nodes:
     name: EventStateEnum Service
     isTest: false
     properties:
-      filepath: ../eshop/src/IntegrationEventLogEF/EventStateEnum.cs
+      filepath: src/IntegrationEventLogEF/EventStateEnum.cs
       namespaces: eShop.IntegrationEventLogEF
       technology: C# Domain Service
     external: false
-    x: 925
+    x: 1195
     'y': 690
   - id: integrationeventlogentry
     type: background-worker
     name: IntegrationEventLogEntry Service
     isTest: false
     properties:
-      filepath: ../eshop/src/IntegrationEventLogEF/IntegrationEventLogEntry.cs
+      filepath: src/IntegrationEventLogEF/IntegrationEventLogEntry.cs
       namespaces: eShop.IntegrationEventLogEF
       technology: C# Domain Service
     external: false
-    x: 695
+    x: 965
     'y': 370
   - id: integrationlogextensions
     type: background-worker
     name: IntegrationLogExtensions Service
     isTest: false
     properties:
-      filepath: ../eshop/src/IntegrationEventLogEF/IntegrationLogExtensions.cs
+      filepath: src/IntegrationEventLogEF/IntegrationLogExtensions.cs
       namespaces: eShop.IntegrationEventLogEF
       technology: C# Domain Service
     external: false
-    x: 235
-    'y': 50
-  - id: iintegrationeventlogservice
-    type: background-worker
-    name: IIntegrationEventLogService Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/IntegrationEventLogEF/Services/IIntegrationEventLogService.cs
-      namespaces: eShop.IntegrationEventLogEF.Services
-      technology: C# Domain Service
-    external: false
-    x: 235
-    'y': 370
-  - id: integrationeventlogservice
-    type: background-worker
-    name: IntegrationEventLogService Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/IntegrationEventLogEF/Services/IntegrationEventLogService.cs
-      namespaces: eShop.IntegrationEventLogEF.Services
-      technology: C# Domain Service
-    external: false
-    x: 695
+    x: 140
     'y': 50
   - id: resilienttransaction
     type: background-worker
     name: ResilientTransaction Service
     isTest: false
     properties:
-      filepath: ../eshop/src/IntegrationEventLogEF/Utilities/ResilientTransaction.cs
+      filepath: src/IntegrationEventLogEF/Utilities/ResilientTransaction.cs
       namespaces: eShop.IntegrationEventLogEF.Utilities
       technology: C# Domain Service
     external: false
-    x: 1155
+    x: 600
     'y': 50
+  - id: integrationeventlogservice
+    type: background-worker
+    name: IntegrationEventLogService Service
+    isTest: false
+    properties:
+      filepath: src/IntegrationEventLogEF/Services/IntegrationEventLogService.cs
+      namespaces: eShop.IntegrationEventLogEF.Services
+      technology: C# Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: iintegrationeventlogservice
+    type: background-worker
+    name: IIntegrationEventLogService Service
+    isTest: false
+    properties:
+      filepath: src/IntegrationEventLogEF/Services/IIntegrationEventLogService.cs
+      namespaces: eShop.IntegrationEventLogEF.Services
+      technology: C# Domain Service
+    external: false
+    x: 505
+    'y': 370
   - id: integrationevent
     type: background-worker
     name: IntegrationEvent Service (eShop.EventBus)
     isTest: false
     properties:
-      filepath: ../eshop/src/EventBus/Events/IntegrationEvent.cs
+      filepath: src/EventBus/Events/IntegrationEvent.cs
       namespaces: eShop.EventBus.Events
       technology: C# Domain Service
     external: true
-    x: 140
+    x: 450
     'y': 690
 dependencies:
   - from: integrationeventlogentry
@@ -86,10 +86,6 @@ dependencies:
     description: References class type / calls methods
   - from: integrationeventlogentry
     to: eventstateenum
-    type: direct-call
-    description: References class type / calls methods
-  - from: iintegrationeventlogservice
-    to: integrationevent
     type: direct-call
     description: References class type / calls methods
   - from: integrationeventlogservice
@@ -102,5 +98,9 @@ dependencies:
     description: References class type / calls methods
   - from: integrationeventlogservice
     to: eventstateenum
+    type: direct-call
+    description: References class type / calls methods
+  - from: iintegrationeventlogservice
+    to: integrationevent
     type: direct-call
     description: References class type / calls methods

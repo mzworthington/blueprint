@@ -7,66 +7,57 @@ nodes:
     name: clientHelpers Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend-module-msgraph-incremental/src/clientHelpers.ts
+      filepath: plugins/catalog-backend-module-msgraph-incremental/src/clientHelpers.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 600
     'y': 370
-  - id: microsoftgraphincrementalentityprovider_test
-    type: background-worker
-    name: MicrosoftGraphIncrementalEntityProvider.test Service (MicrosoftGraphIncrementalEntityProvider.test.ts)
-    isTest: true
-    properties:
-      filepath: >-
-        ../backstage/plugins/catalog-backend-module-msgraph-incremental/src/MicrosoftGraphIncrementalEntityProvider.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 140
-    'y': 50
-  - id: microsoftgraphincrementalentityprovider
-    type: background-worker
-    name: MicrosoftGraphIncrementalEntityProvider Service (MicrosoftGraphIncrementalEntityProvider.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend-module-msgraph-incremental/src/MicrosoftGraphIncrementalEntityProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 50
   - id: clienthelpers_test
     type: background-worker
     name: clientHelpers.test Service (clientHelpers.test.ts)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend-module-msgraph-incremental/src/clientHelpers.test.ts
+      filepath: plugins/catalog-backend-module-msgraph-incremental/src/clientHelpers.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1060
+    x: 140
     'y': 50
   - id: error
     type: background-worker
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 690
+  - id: microsoftgraphincrementalentityprovider_test
+    type: background-worker
+    name: MicrosoftGraphIncrementalEntityProvider.test Service (MicrosoftGraphIncrementalEntityProvider.test.ts)
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-msgraph-incremental/src/MicrosoftGraphIncrementalEntityProvider.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: microsoftgraphincrementalentityprovider
+    type: background-worker
+    name: MicrosoftGraphIncrementalEntityProvider Service (MicrosoftGraphIncrementalEntityProvider.ts)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-msgraph-incremental/src/MicrosoftGraphIncrementalEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 50
 dependencies:
-  - from: microsoftgraphincrementalentityprovider_test
-    to: clienthelpers
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: microsoftgraphincrementalentityprovider
-    to: clienthelpers
-    type: direct-call
-    description: Executes local class methods / functions
   - from: clienthelpers_test
     to: clienthelpers
     type: direct-call
@@ -75,3 +66,11 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: microsoftgraphincrementalentityprovider_test
+    to: clienthelpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: microsoftgraphincrementalentityprovider
+    to: clienthelpers
+    type: direct-call
+    description: Executes local class methods / functions

@@ -7,24 +7,39 @@ nodes:
     name: reader.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/config/src/reader.test.ts
+      filepath: packages/config/src/reader.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 140
+    x: 370
     'y': 50
+  - id: test-utils
+    type: gateway-api
+    name: test-utils UI Component (test-utils.tsx)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-addons-test-utils/src/test-utils.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 370
   - id: reader
     type: background-worker
     name: reader Service (reader.ts)
     isTest: false
     properties:
-      filepath: ../backstage/packages/config/src/reader.ts
+      filepath: packages/config/src/reader.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 140
+    x: 600
     'y': 370
 dependencies:
+  - from: reader_test
+    to: test-utils
+    type: direct-call
+    description: Executes local class methods / functions
   - from: reader_test
     to: reader
     type: direct-call

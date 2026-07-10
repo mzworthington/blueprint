@@ -7,97 +7,108 @@ nodes:
     name: plugin-scanner-watcher.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/backend-dynamic-feature-service/src/scanner/plugin-scanner-watcher.test.ts
+      filepath: packages/backend-dynamic-feature-service/src/scanner/plugin-scanner-watcher.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 585
+    x: 600
     'y': 50
   - id: plugin-scanner_test
     type: background-worker
     name: plugin-scanner.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/backend-dynamic-feature-service/src/scanner/plugin-scanner.test.ts
+      filepath: packages/backend-dynamic-feature-service/src/scanner/plugin-scanner.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1070
+    x: 1100
     'y': 50
   - id: plugin-scanner
     type: background-worker
     name: plugin-scanner Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/backend-dynamic-feature-service/src/scanner/plugin-scanner.ts
+      filepath: packages/backend-dynamic-feature-service/src/scanner/plugin-scanner.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2220
+    x: 2260
     'y': 370
   - id: features
     type: background-worker
     name: features Service (features)
     isTest: false
     properties:
-      filepath: ../backstage/packages/backend-dynamic-feature-service/src/features/features.ts
+      filepath: packages/backend-dynamic-feature-service/src/features/features.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1720
+    x: 1800
     'y': 50
-  - id: plugin-manager_test
+  - id: schemas
     type: background-worker
-    name: plugin-manager.test Service (manager)
-    isTest: true
+    name: schemas Service (schemas)
+    isTest: false
     properties:
-      filepath: ../backstage/packages/backend-dynamic-feature-service/src/manager/plugin-manager.test.ts
+      filepath: packages/backend-dynamic-feature-service/src/schemas/schemas.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2180
+    x: 2260
     'y': 50
   - id: plugin-manager
     type: background-worker
     name: plugin-manager Service (manager)
     isTest: false
     properties:
-      filepath: ../backstage/packages/backend-dynamic-feature-service/src/manager/plugin-manager.ts
+      filepath: packages/backend-dynamic-feature-service/src/manager/plugin-manager.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2640
+    x: 2720
+    'y': 50
+  - id: plugin-manager_test
+    type: background-worker
+    name: plugin-manager.test Service (manager)
+    isTest: true
+    properties:
+      filepath: packages/backend-dynamic-feature-service/src/manager/plugin-manager.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3180
     'y': 50
   - id: testutils
     type: background-worker
-    name: testUtils Service (testUtils.ts)
+    name: testUtils Service (__fixtures__)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-react/src/testUtils.ts
+      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/testUtils.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 140
     'y': 370
   - id: config
-    type: background-worker
-    name: config Service (collators)
+    type: gateway-api
+    name: config UI Component (layout)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      filepath: packages/core-components/src/layout/Sidebar/config.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
     x: 410
     'y': 690
   - id: types
-    type: background-worker
-    name: types Service (types.ts)
+    type: gateway-api
+    name: types UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      filepath: packages/core-components/src/components/TabbedLayout/types.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
     x: 1315
     'y': 690
@@ -106,7 +117,7 @@ nodes:
     name: url Service (stages)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
+      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -117,44 +128,37 @@ nodes:
     name: errors Service (errors.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      filepath: packages/codemods/src/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2315
+    x: 2355
     'y': 690
   - id: error
     type: background-worker
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2775
+    x: 2815
     'y': 690
-  - id: schemas
-    type: background-worker
-    name: schemas Service (schemas)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-dynamic-feature-service/src/schemas/schemas.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 3100
-    'y': 50
 dependencies:
   - from: features
     to: plugin-scanner
     type: direct-call
     description: Executes local class methods / functions
-  - from: plugin-manager_test
+  - from: schemas
     to: plugin-scanner
     type: direct-call
     description: Executes local class methods / functions
   - from: plugin-manager
+    to: plugin-scanner
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plugin-manager_test
     to: plugin-scanner
     type: direct-call
     description: Executes local class methods / functions
@@ -210,7 +214,3 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: schemas
-    to: plugin-scanner
-    type: direct-call
-    description: Executes local class methods / functions

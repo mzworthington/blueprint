@@ -2,3009 +2,1149 @@ name: Backstage - database Components
 version: 1.0.0
 level: component
 nodes:
-  - id: mysql_test
-    type: relational-database
-    name: mysql.test Database
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/backend-test-utils/src/database/mysql.test.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 3570
-    'y': 370
-  - id: mysql
-    type: relational-database
-    name: mysql Database
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-test-utils/src/database/mysql.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 69555
-    'y': 690
-  - id: postgres_test
-    type: relational-database
-    name: postgres.test Database
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/backend-test-utils/src/database/postgres.test.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 32715
-    'y': 370
-  - id: postgres
-    type: relational-database
-    name: postgres Database
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-test-utils/src/database/postgres.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 70840
-    'y': 690
-  - id: tables
-    type: background-worker
-    name: tables Service
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend-module-incremental-ingestion/src/database/tables.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 58980
-    'y': 3250
-  - id: util_test
-    type: background-worker
-    name: util.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/search-backend-module-pg/src/database/util.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 505
-    'y': 1010
-  - id: util
-    type: relational-database
-    name: util Database
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/search-backend-module-pg/src/database/util.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 40775
-    'y': 1330
-  - id: testdatabases_test
-    type: background-worker
-    name: TestDatabases.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/backend-test-utils/src/database/TestDatabases.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 73555
-    'y': 50
-  - id: testdatabases
-    type: relational-database
-    name: TestDatabases Database
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-test-utils/src/database/TestDatabases.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 73555
-    'y': 370
-  - id: sqlite_test
-    type: background-worker
-    name: sqlite.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/backend-test-utils/src/database/sqlite.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 140
-    'y': 1970
-  - id: sqlite
-    type: relational-database
-    name: sqlite Database
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-test-utils/src/database/sqlite.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 60425
-    'y': 2290
-  - id: authdatabase
-    type: relational-database
-    name: AuthDatabase Database
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/auth-backend/src/database/AuthDatabase.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 7645
-    'y': 1650
-  - id: offlinesessiondatabase_test
-    type: relational-database
-    name: OfflineSessionDatabase.test Database
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/auth-backend/src/database/OfflineSessionDatabase.test.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 1785
-    'y': 1010
-  - id: offlinesessiondatabase
-    type: relational-database
-    name: OfflineSessionDatabase Database
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/auth-backend/src/database/OfflineSessionDatabase.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 11500
-    'y': 1330
-  - id: oidcdatabase_test
-    type: background-worker
-    name: OidcDatabase.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/auth-backend/src/database/OidcDatabase.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2760
-    'y': 1010
-  - id: oidcdatabase
-    type: relational-database
-    name: OidcDatabase Database
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/auth-backend/src/database/OidcDatabase.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 17885
-    'y': 1330
-  - id: userinfodatabase_test
-    type: relational-database
-    name: UserInfoDatabase.test Database
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/auth-backend/src/database/UserInfoDatabase.test.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 3220
-    'y': 1010
-  - id: userinfodatabase
-    type: relational-database
-    name: UserInfoDatabase Database
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/auth-backend/src/database/UserInfoDatabase.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 22945
-    'y': 1330
-  - id: defaultcatalogdatabase_test
-    type: background-worker
-    name: DefaultCatalogDatabase.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/DefaultCatalogDatabase.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 4000
-    'y': 690
   - id: defaultcatalogdatabase
     type: relational-database
     name: DefaultCatalogDatabase Database
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/DefaultCatalogDatabase.ts
+      filepath: plugins/catalog-backend/src/database/DefaultCatalogDatabase.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: false
-    x: 65005
-    'y': 1010
-  - id: defaultprocessingdatabase_test
-    type: relational-database
-    name: DefaultProcessingDatabase.test Database
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/DefaultProcessingDatabase.test.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 5930
+    x: 18115
     'y': 690
-  - id: defaultprocessingdatabase
-    type: relational-database
-    name: DefaultProcessingDatabase Database
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/DefaultProcessingDatabase.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 63990
-    'y': 1010
-  - id: defaultproviderdatabase_test
-    type: relational-database
-    name: DefaultProviderDatabase.test Database
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/DefaultProviderDatabase.test.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 74475
-    'y': 50
-  - id: defaultproviderdatabase
-    type: relational-database
-    name: DefaultProviderDatabase Database
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/DefaultProviderDatabase.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 72740
-    'y': 370
-  - id: conversion_test
+  - id: defaultcatalogdatabase_test
     type: background-worker
-    name: conversion.test Service
+    name: DefaultCatalogDatabase.test Service
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/conversion.test.ts
+      filepath: plugins/catalog-backend/src/database/DefaultCatalogDatabase.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 4810
-    'y': 1010
+    x: 24685
+    'y': 370
   - id: metrics_test
     type: relational-database
     name: metrics.test Database
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/metrics.test.ts
+      filepath: plugins/catalog-backend/src/database/metrics.test.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: false
-    x: 6510
-    'y': 690
+    x: 23265
+    'y': 1010
   - id: migrations
     type: relational-database
     name: migrations Database
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend-module-incremental-ingestion/src/database/migrations.ts
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/database/migrations.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: false
-    x: 61235
-    'y': 1010
-  - id: deletewitheagerpruningofchildren_test
-    type: relational-database
-    name: deleteWithEagerPruningOfChildren.test Database
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/provider/deleteWithEagerPruningOfChildren.test.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 66000
-    'y': 370
-  - id: deletewitheagerpruningofchildren
-    type: relational-database
-    name: deleteWithEagerPruningOfChildren Database
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/provider/deleteWithEagerPruningOfChildren.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 71310
-    'y': 690
-  - id: refreshbyrefreshkeys_test
-    type: background-worker
-    name: refreshByRefreshKeys.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/provider/refreshByRefreshKeys.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 7185
-    'y': 690
-  - id: refreshbyrefreshkeys
-    type: relational-database
-    name: refreshByRefreshKeys Database
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/provider/refreshByRefreshKeys.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 64545
-    'y': 1010
-  - id: checklocationkeyconflict
-    type: relational-database
-    name: checkLocationKeyConflict Database
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/refreshState/checkLocationKeyConflict.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 67365
+    x: 15195
     'y': 1330
-  - id: insertunprocessedentity
+  - id: deleteorphanedentities
     type: relational-database
-    name: insertUnprocessedEntity Database
+    name: deleteOrphanedEntities Database
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/refreshState/insertUnprocessedEntity.ts
+      filepath: plugins/catalog-backend/src/database/operations/util/deleteOrphanedEntities.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: false
-    x: 66785
-    'y': 1330
-  - id: updateunprocessedentity
-    type: relational-database
-    name: updateUnprocessedEntity Database
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/refreshState/updateUnprocessedEntity.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 66245
-    'y': 1330
-  - id: buildentitysearch_test
-    type: background-worker
-    name: buildEntitySearch.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/stitcher/buildEntitySearch.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 7645
-    'y': 690
-  - id: buildentitysearch
-    type: background-worker
-    name: buildEntitySearch Service
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/stitcher/buildEntitySearch.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 59600
-    'y': 1010
-  - id: getdeferredstitchableentities_test
-    type: background-worker
-    name: getDeferredStitchableEntities.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/stitcher/getDeferredStitchableEntities.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 8105
-    'y': 690
-  - id: getdeferredstitchableentities
-    type: relational-database
-    name: getDeferredStitchableEntities Database
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/stitcher/getDeferredStitchableEntities.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 62775
-    'y': 1010
-  - id: markdeferredstitchcompleted_test
-    type: background-worker
-    name: markDeferredStitchCompleted.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/stitcher/markDeferredStitchCompleted.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 13380
-    'y': 690
-  - id: markdeferredstitchcompleted
-    type: relational-database
-    name: markDeferredStitchCompleted Database
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/stitcher/markDeferredStitchCompleted.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 60060
-    'y': 1010
-  - id: markforstitching_test
-    type: background-worker
-    name: markForStitching.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/stitcher/markForStitching.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 54555
-    'y': 690
-  - id: markforstitching
-    type: relational-database
-    name: markForStitching Database
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/stitcher/markForStitching.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 65610
-    'y': 1010
-  - id: performstitching_test
-    type: background-worker
-    name: performStitching.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/stitcher/performStitching.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 66890
-    'y': 370
-  - id: performstitching
-    type: relational-database
-    name: performStitching Database
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/stitcher/performStitching.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 68060
-    'y': 690
-  - id: syncsearchrows_test
-    type: relational-database
-    name: syncSearchRows.test Database
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/stitcher/syncSearchRows.test.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 55095
-    'y': 690
-  - id: syncsearchrows
-    type: relational-database
-    name: syncSearchRows Database
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/stitcher/syncSearchRows.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 60600
+    x: 28385
     'y': 1010
   - id: deleteorphanedentities_test
     type: relational-database
     name: deleteOrphanedEntities.test Database
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/util/deleteOrphanedEntities.test.ts
+      filepath: plugins/catalog-backend/src/database/operations/util/deleteOrphanedEntities.test.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: false
-    x: 68035
-    'y': 370
-  - id: deleteorphanedentities
+    x: 25965
+    'y': 690
+  - id: insertunprocessedentity
     type: relational-database
-    name: deleteOrphanedEntities Database
+    name: insertUnprocessedEntity Database
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/util/deleteOrphanedEntities.ts
+      filepath: plugins/catalog-backend/src/database/operations/refreshState/insertUnprocessedEntity.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: false
-    x: 68750
-    'y': 690
-  - id: incrementalingestiondatabasemanager_test
-    type: background-worker
-    name: IncrementalIngestionDatabaseManager.test Service
+    x: 27925
+    'y': 1010
+  - id: updateunprocessedentity
+    type: relational-database
+    name: updateUnprocessedEntity Database
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/database/operations/refreshState/updateUnprocessedEntity.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 27465
+    'y': 1010
+  - id: checklocationkeyconflict
+    type: relational-database
+    name: checkLocationKeyConflict Database
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/database/operations/refreshState/checkLocationKeyConflict.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 24045
+    'y': 1010
+  - id: refreshbyrefreshkeys
+    type: relational-database
+    name: refreshByRefreshKeys Database
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/database/operations/provider/refreshByRefreshKeys.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 29635
+    'y': 1330
+  - id: deletewitheagerpruningofchildren_test
+    type: relational-database
+    name: deleteWithEagerPruningOfChildren.test Database
     isTest: true
     properties:
-      filepath: >-
-        ../backstage/plugins/catalog-backend-module-incremental-ingestion/src/database/IncrementalIngestionDatabaseManager.test.ts
+      filepath: plugins/catalog-backend/src/database/operations/provider/deleteWithEagerPruningOfChildren.test.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 25505
+    'y': 690
+  - id: deletewitheagerpruningofchildren
+    type: relational-database
+    name: deleteWithEagerPruningOfChildren Database
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/database/operations/provider/deleteWithEagerPruningOfChildren.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 25045
+    'y': 1010
+  - id: refreshbyrefreshkeys_test
+    type: background-worker
+    name: refreshByRefreshKeys.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend/src/database/operations/provider/refreshByRefreshKeys.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 3540
-    'y': 2610
-  - id: incrementalingestiondatabasemanager
+    x: 26545
+    'y': 1010
+  - id: getdeferredstitchableentities
     type: relational-database
-    name: IncrementalIngestionDatabaseManager Database
+    name: getDeferredStitchableEntities Database
     isTest: false
     properties:
-      filepath: >-
-        ../backstage/plugins/catalog-backend-module-incremental-ingestion/src/database/IncrementalIngestionDatabaseManager.ts
+      filepath: plugins/catalog-backend/src/database/operations/stitcher/getDeferredStitchableEntities.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: false
-    x: 38450
-    'y': 2930
+    x: 14760
+    'y': 690
+  - id: performstitching
+    type: relational-database
+    name: performStitching Database
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/database/operations/stitcher/performStitching.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 27005
+    'y': 1010
+  - id: markdeferredstitchcompleted
+    type: relational-database
+    name: markDeferredStitchCompleted Database
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/database/operations/stitcher/markDeferredStitchCompleted.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 23155
+    'y': 1330
+  - id: markdeferredstitchcompleted_test
+    type: background-worker
+    name: markDeferredStitchCompleted.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend/src/database/operations/stitcher/markDeferredStitchCompleted.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 20345
+    'y': 1010
+  - id: buildentitysearch
+    type: background-worker
+    name: buildEntitySearch Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/database/operations/stitcher/buildEntitySearch.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 30175
+    'y': 1330
+  - id: syncsearchrows
+    type: relational-database
+    name: syncSearchRows Database
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/database/operations/stitcher/syncSearchRows.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 27965
+    'y': 1330
+  - id: buildentitysearch_test
+    type: background-worker
+    name: buildEntitySearch.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend/src/database/operations/stitcher/buildEntitySearch.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 30365
+    'y': 1010
+  - id: markforstitching_test
+    type: background-worker
+    name: markForStitching.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend/src/database/operations/stitcher/markForStitching.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 21805
+    'y': 1010
+  - id: performstitching_test
+    type: background-worker
+    name: performStitching.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend/src/database/operations/stitcher/performStitching.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 19805
+    'y': 690
+  - id: markforstitching
+    type: relational-database
+    name: markForStitching Database
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/database/operations/stitcher/markForStitching.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 25965
+    'y': 1330
+  - id: syncsearchrows_test
+    type: relational-database
+    name: syncSearchRows.test Database
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend/src/database/operations/stitcher/syncSearchRows.test.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 22265
+    'y': 1010
+  - id: getdeferredstitchableentities_test
+    type: background-worker
+    name: getDeferredStitchableEntities.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend/src/database/operations/stitcher/getDeferredStitchableEntities.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 18220
+    'y': 370
+  - id: conversion_test
+    type: background-worker
+    name: conversion.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend/src/database/conversion.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 14300
+    'y': 690
+  - id: defaultproviderdatabase_test
+    type: relational-database
+    name: DefaultProviderDatabase.test Database
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend/src/database/DefaultProviderDatabase.test.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 25145
+    'y': 370
+  - id: defaultprocessingdatabase
+    type: relational-database
+    name: DefaultProcessingDatabase Database
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/database/DefaultProcessingDatabase.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 19345
+    'y': 690
+  - id: defaultprocessingdatabase_test
+    type: relational-database
+    name: DefaultProcessingDatabase.test Database
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend/src/database/DefaultProcessingDatabase.test.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 21740
+    'y': 370
+  - id: defaultproviderdatabase
+    type: relational-database
+    name: DefaultProviderDatabase Database
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/database/DefaultProviderDatabase.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 22760
+    'y': 690
   - id: databasenotificationsstore_test
     type: relational-database
     name: DatabaseNotificationsStore.test Database
     isTest: true
     properties:
-      filepath: ../backstage/plugins/notifications-backend/src/database/DatabaseNotificationsStore.test.ts
+      filepath: plugins/notifications-backend/src/database/DatabaseNotificationsStore.test.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: false
-    x: 1665
-    'y': 1650
-  - id: databasenotificationsstore
-    type: relational-database
-    name: DatabaseNotificationsStore Database
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/notifications-backend/src/database/DatabaseNotificationsStore.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 1665
-    'y': 1970
+    x: 1275
+    'y': 50
   - id: notificationsstore
     type: background-worker
     name: NotificationsStore Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/notifications-backend/src/database/NotificationsStore.ts
+      filepath: plugins/notifications-backend/src/database/NotificationsStore.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1855
-    'y': 2290
-  - id: databasedocumentstore_test
-    type: background-worker
-    name: DatabaseDocumentStore.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/search-backend-module-pg/src/database/DatabaseDocumentStore.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 55905
+    x: 4315
     'y': 690
-  - id: databasedocumentstore
+  - id: databasenotificationsstore
     type: relational-database
-    name: DatabaseDocumentStore Database
+    name: DatabaseNotificationsStore Database
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-module-pg/src/database/DatabaseDocumentStore.ts
+      filepath: plugins/notifications-backend/src/database/DatabaseNotificationsStore.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: false
-    x: 55445
-    'y': 1010
-  - id: databaseusersettingsstore_test
-    type: relational-database
-    name: DatabaseUserSettingsStore.test Database
+    x: 1275
+    'y': 370
+  - id: incrementalingestiondatabasemanager_test
+    type: background-worker
+    name: IncrementalIngestionDatabaseManager.test Service
     isTest: true
     properties:
-      filepath: ../backstage/plugins/user-settings-backend/src/database/DatabaseUserSettingsStore.test.ts
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/database/IncrementalIngestionDatabaseManager.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 4310
+    'y': 1010
+  - id: incrementalingestiondatabasemanager
+    type: relational-database
+    name: IncrementalIngestionDatabaseManager Database
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/database/IncrementalIngestionDatabaseManager.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: false
-    x: 2125
-    'y': 1650
+    x: 3745
+    'y': 1330
+  - id: offlinesessiondatabase_test
+    type: relational-database
+    name: OfflineSessionDatabase.test Database
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/database/OfflineSessionDatabase.test.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 16840
+    'y': 370
+  - id: userinfodatabase
+    type: relational-database
+    name: UserInfoDatabase Database
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/database/UserInfoDatabase.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 6655
+    'y': 690
+  - id: userinfodatabase_test
+    type: relational-database
+    name: UserInfoDatabase.test Database
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/database/UserInfoDatabase.test.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 8215
+    'y': 370
+  - id: offlinesessiondatabase
+    type: relational-database
+    name: OfflineSessionDatabase Database
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/database/OfflineSessionDatabase.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 15220
+    'y': 690
+  - id: oidcdatabase
+    type: relational-database
+    name: OidcDatabase Database
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/database/OidcDatabase.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 12405
+    'y': 690
+  - id: authdatabase
+    type: relational-database
+    name: AuthDatabase Database
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/database/AuthDatabase.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 10020
+    'y': 1010
+  - id: oidcdatabase_test
+    type: background-worker
+    name: OidcDatabase.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/database/OidcDatabase.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 10515
+    'y': 370
   - id: databaseusersettingsstore
     type: relational-database
     name: DatabaseUserSettingsStore Database
     isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-backend/src/database/DatabaseUserSettingsStore.ts
+      filepath: plugins/user-settings-backend/src/database/DatabaseUserSettingsStore.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: false
-    x: 9025
-    'y': 1970
+    x: 10055
+    'y': 370
+  - id: databaseusersettingsstore_test
+    type: relational-database
+    name: DatabaseUserSettingsStore.test Database
+    isTest: true
+    properties:
+      filepath: plugins/user-settings-backend/src/database/DatabaseUserSettingsStore.test.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 10515
+    'y': 50
   - id: usersettingsstore
     type: background-worker
     name: UserSettingsStore Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-backend/src/database/UserSettingsStore.ts
+      filepath: plugins/user-settings-backend/src/database/UserSettingsStore.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 8755
-    'y': 2290
-  - id: databasemanager
-    type: relational-database
-    name: DatabaseManager Database (entrypoints)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/database/DatabaseManager.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 69245
-    'y': 370
-  - id: config
+    x: 1330
+    'y': 690
+  - id: databasedocumentstore_test
     type: background-worker
-    name: config Service (collators)
-    isTest: false
+    name: DatabaseDocumentStore.test Service
+    isTest: true
     properties:
-      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      filepath: plugins/search-backend-module-pg/src/database/DatabaseDocumentStore.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
-    external: true
-    x: 61695
-    'y': 1010
+    external: false
+    x: 11635
+    'y': 370
+  - id: databasedocumentstore
+    type: relational-database
+    name: DatabaseDocumentStore Database
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-pg/src/database/DatabaseDocumentStore.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 15680
+    'y': 690
+  - id: sqlite
+    type: relational-database
+    name: sqlite Database
+    isTest: false
+    properties:
+      filepath: packages/backend-test-utils/src/database/sqlite.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 870
+    'y': 690
+  - id: testdatabases
+    type: relational-database
+    name: TestDatabases Database
+    isTest: false
+    properties:
+      filepath: packages/backend-test-utils/src/database/TestDatabases.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 5780
+    'y': 370
+  - id: testdatabases_test
+    type: background-worker
+    name: TestDatabases.test Service
+    isTest: true
+    properties:
+      filepath: packages/backend-test-utils/src/database/TestDatabases.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 5780
+    'y': 50
+  - id: sqlite_test
+    type: background-worker
+    name: sqlite.test Service
+    isTest: true
+    properties:
+      filepath: packages/backend-test-utils/src/database/sqlite.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 370
   - id: errors
     type: background-worker
     name: errors Service (errors.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      filepath: packages/codemods/src/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 62235
-    'y': 2290
+    x: 31585
+    'y': 1650
   - id: types
-    type: background-worker
-    name: types Service (types.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/user-settings-common/src/types.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 59060
-    'y': 2610
-  - id: defaultnameoverride
-    type: relational-database
-    name: defaultNameOverride Database (entrypoints)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/database/connectors/defaultNameOverride.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 69450
-    'y': 1010
-  - id: mergedatabaseconfig
-    type: background-worker
-    name: mergeDatabaseConfig Service (entrypoints)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/database/connectors/mergeDatabaseConfig.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 70530
-    'y': 1010
-  - id: url
-    type: background-worker
-    name: url Service (stages)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 59060
-    'y': 1650
-  - id: error
-    type: background-worker
-    name: error Service (serialization)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 52345
-    'y': 1650
-  - id: migratebackendtasks
-    type: relational-database
-    name: migrateBackendTasks Database (entrypoints)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/scheduler/database/migrateBackendTasks.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 4080
-    'y': 2930
-  - id: localtaskworker
-    type: background-worker
-    name: LocalTaskWorker Service (entrypoints)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/scheduler/lib/LocalTaskWorker.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 8375
-    'y': 1010
-  - id: plugintaskschedulerimpl
-    type: relational-database
-    name: PluginTaskSchedulerImpl Database (entrypoints)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/scheduler/lib/PluginTaskSchedulerImpl.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 8835
-    'y': 1010
-  - id: plugintaskschedulerjanitor_test
-    type: relational-database
-    name: PluginTaskSchedulerJanitor.test Database (entrypoints)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/scheduler/lib/PluginTaskSchedulerJanitor.test.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 4540
-    'y': 2930
-  - id: plugintaskschedulerjanitor
-    type: relational-database
-    name: PluginTaskSchedulerJanitor Database (entrypoints)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/scheduler/lib/PluginTaskSchedulerJanitor.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 9295
-    'y': 1010
-  - id: taskworker_test
-    type: background-worker
-    name: TaskWorker.test Service (scaffolder)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend/src/scaffolder/tasks/TaskWorker.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 5000
-    'y': 2930
-  - id: taskworker
-    type: event-broker
-    name: TaskWorker Message Broker (scaffolder)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend/src/scaffolder/tasks/TaskWorker.ts
-      namespaces: ''
-      technology: TypeScript Event Client
-    external: true
-    x: 9755
-    'y': 1010
-  - id: giteaurlreader
-    type: background-worker
-    name: GiteaUrlReader Service (entrypoints)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/urlReader/lib/GiteaUrlReader.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 10215
-    'y': 1010
-  - id: githuburlreader
-    type: background-worker
-    name: GithubUrlReader Service (entrypoints)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/urlReader/lib/GithubUrlReader.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 10675
-    'y': 1010
-  - id: readurlresponsefactory
-    type: background-worker
-    name: ReadUrlResponseFactory Service (entrypoints)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/urlReader/lib/ReadUrlResponseFactory.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 11135
-    'y': 1010
-  - id: readtreeresponsefactory
-    type: background-worker
-    name: ReadTreeResponseFactory Service (entrypoints)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/urlReader/lib/tree/ReadTreeResponseFactory.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 11595
-    'y': 1010
-  - id: tararchiveresponse
-    type: background-worker
-    name: TarArchiveResponse Service (entrypoints)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/urlReader/lib/tree/TarArchiveResponse.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 12055
-    'y': 1010
-  - id: ziparchiveresponse
-    type: background-worker
-    name: ZipArchiveResponse Service (entrypoints)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/urlReader/lib/tree/ZipArchiveResponse.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 12515
-    'y': 1010
-  - id: testcaches_test
-    type: background-worker
-    name: TestCaches.test Service (cache)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/backend-test-utils/src/cache/TestCaches.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 12975
-    'y': 1010
-  - id: isdockerdisabledfortests
-    type: background-worker
-    name: isDockerDisabledForTests Service (util)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-test-utils/src/util/isDockerDisabledForTests.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 67405
-    'y': 690
-  - id: waitforready
-    type: background-worker
-    name: waitForReady Service (util)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-test-utils/src/util/waitForReady.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 69910
-    'y': 1010
-  - id: inmemorycatalogclient
-    type: background-worker
-    name: InMemoryCatalogClient Service (testUtils)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-client/src/testUtils/InMemoryCatalogClient.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 56445
-    'y': 690
-  - id: apientityv1alpha1
-    type: background-worker
-    name: ApiEntityV1alpha1 Service (kinds)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/kinds/ApiEntityV1alpha1.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 13515
-    'y': 1010
-  - id: componententityv1alpha1
-    type: background-worker
-    name: ComponentEntityV1alpha1 Service (kinds)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/kinds/ComponentEntityV1alpha1.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 13975
-    'y': 1010
-  - id: domainentityv1alpha1
-    type: background-worker
-    name: DomainEntityV1alpha1 Service (kinds)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/kinds/DomainEntityV1alpha1.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 14435
-    'y': 1010
-  - id: groupentityv1alpha1
-    type: background-worker
-    name: GroupEntityV1alpha1 Service (kinds)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/kinds/GroupEntityV1alpha1.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 14895
-    'y': 1010
-  - id: locationentityv1alpha1
-    type: background-worker
-    name: LocationEntityV1alpha1 Service (kinds)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/kinds/LocationEntityV1alpha1.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 15355
-    'y': 1010
-  - id: mcpserverapientity
-    type: background-worker
-    name: McpServerApiEntity Service (kinds)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/kinds/McpServerApiEntity.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 15815
-    'y': 1010
-  - id: resourceentityv1alpha1
-    type: background-worker
-    name: ResourceEntityV1alpha1 Service (kinds)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/kinds/ResourceEntityV1alpha1.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 16275
-    'y': 1010
-  - id: systementityv1alpha1
-    type: background-worker
-    name: SystemEntityV1alpha1 Service (kinds)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/kinds/SystemEntityV1alpha1.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 16735
-    'y': 1010
-  - id: userentityv1alpha1
-    type: background-worker
-    name: UserEntityV1alpha1 Service (kinds)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/kinds/UserEntityV1alpha1.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 17195
-    'y': 1010
-  - id: validation
     type: gateway-api
-    name: validation UI Component (components)
+    name: types UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder/src/components/fields/RepoUrlPicker/validation.ts
+      filepath: packages/core-components/src/components/TabbedLayout/types.ts
       namespaces: ''
       technology: React Component
     external: true
-    x: 52805
+    x: 3705
+    'y': 1010
+  - id: tables
+    type: background-worker
+    name: tables Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/scheduler/database/tables.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 21955
     'y': 1650
-  - id: compilecatalogmodel
-    type: background-worker
-    name: compileCatalogModel Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/compileCatalogModel.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 17655
-    'y': 1010
-  - id: mergejsonschemas
-    type: background-worker
-    name: mergeJsonSchemas Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/jsonSchema/mergeJsonSchemas.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 18115
-    'y': 1010
-  - id: validatekindrootschemasemantics
-    type: background-worker
-    name: validateKindRootSchemaSemantics Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/jsonSchema/validateKindRootSchemaSemantics.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 18575
-    'y': 1010
-  - id: validatemetaschema
-    type: background-worker
-    name: validateMetaSchema Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/jsonSchema/validateMetaSchema.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 19035
-    'y': 1010
-  - id: zod
-    type: background-worker
-    name: zod Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/jsonSchema/zod.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 19495
-    'y': 1010
-  - id: declareannotation
-    type: background-worker
-    name: declareAnnotation Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/operations/declareAnnotation.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 46980
-    'y': 1650
-  - id: declarekind
-    type: background-worker
-    name: declareKind Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/operations/declareKind.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 46520
-    'y': 1650
-  - id: declarekindversion
-    type: background-worker
-    name: declareKindVersion Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/operations/declareKindVersion.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 46060
-    'y': 1650
-  - id: declarelabel
-    type: background-worker
-    name: declareLabel Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/operations/declareLabel.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 45600
-    'y': 1650
-  - id: declarerelation
-    type: background-worker
-    name: declareRelation Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/operations/declareRelation.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 45140
-    'y': 1650
-  - id: declaretag
-    type: background-worker
-    name: declareTag Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/operations/declareTag.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 44680
-    'y': 1650
-  - id: index
-    type: background-worker
-    name: index Service (index.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/user-settings-common/src/index.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 44220
-    'y': 1650
-  - id: removeannotation
-    type: background-worker
-    name: removeAnnotation Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/operations/removeAnnotation.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 43760
-    'y': 1650
-  - id: removekind
-    type: background-worker
-    name: removeKind Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/operations/removeKind.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 43300
-    'y': 1650
-  - id: removelabel
-    type: background-worker
-    name: removeLabel Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/operations/removeLabel.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 42840
-    'y': 1650
-  - id: removetag
-    type: background-worker
-    name: removeTag Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/operations/removeTag.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 42380
-    'y': 1650
-  - id: updateannotation
-    type: background-worker
-    name: updateAnnotation Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/operations/updateAnnotation.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 41920
-    'y': 1650
-  - id: updatekind
-    type: background-worker
-    name: updateKind Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/operations/updateKind.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 41460
-    'y': 1650
-  - id: updatekindversion
-    type: background-worker
-    name: updateKindVersion Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/operations/updateKindVersion.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 41000
-    'y': 1650
-  - id: updatelabel
-    type: background-worker
-    name: updateLabel Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/operations/updateLabel.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 40540
-    'y': 1650
-  - id: updaterelation
-    type: background-worker
-    name: updateRelation Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/operations/updateRelation.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 32225
-    'y': 1650
-  - id: updatetag
-    type: background-worker
-    name: updateTag Service (model)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/catalog-model/src/model/operations/updateTag.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 31765
-    'y': 1650
-  - id: utils
-    type: background-worker
-    name: utils Service (reader)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/techdocs/src/reader/transformers/html/utils.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1300
-    'y': 1330
-  - id: runcliextraction
-    type: background-worker
-    name: runCliExtraction Service (commands)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/api-reports/cli-reports/runCliExtraction.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 19955
-    'y': 1010
-  - id: knip-extractor
-    type: background-worker
-    name: knip-extractor Service (commands)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/knip-reports/knip-extractor.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 20415
-    'y': 1010
-  - id: diff
-    type: background-worker
-    name: diff Service (commands)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/repo/schema/openapi/diff.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 20875
-    'y': 1010
-  - id: afterworkspacedependencyaddition
-    type: background-worker
-    name: afterWorkspaceDependencyAddition Service (handlers)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/yarn-plugin/src/handlers/afterWorkspaceDependencyAddition.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 21335
-    'y': 1010
-  - id: beforeworkspacepacking
-    type: background-worker
-    name: beforeWorkspacePacking Service (handlers)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/yarn-plugin/src/handlers/beforeWorkspacePacking.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 21795
-    'y': 1010
-  - id: reducedependency
-    type: background-worker
-    name: reduceDependency Service (handlers)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/yarn-plugin/src/handlers/reduceDependency.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 22255
-    'y': 1010
-  - id: databasekeystore_test
-    type: background-worker
-    name: DatabaseKeyStore.test Service (identity)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/auth-backend/src/identity/DatabaseKeyStore.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1760
-    'y': 1330
-  - id: keystores_test
-    type: background-worker
-    name: KeyStores.test Service (identity)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/auth-backend/src/identity/KeyStores.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2220
-    'y': 1330
-  - id: keystores
-    type: background-worker
-    name: KeyStores Service (identity)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/auth-backend/src/identity/KeyStores.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2680
-    'y': 1330
-  - id: catalogauthresolvercontext_test
-    type: background-worker
-    name: CatalogAuthResolverContext.test Service (lib)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/auth-backend/src/lib/resolvers/CatalogAuthResolverContext.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 22715
-    'y': 1010
-  - id: catalogauthresolvercontext
-    type: background-worker
-    name: CatalogAuthResolverContext Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/auth-backend/src/lib/resolvers/CatalogAuthResolverContext.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 23175
-    'y': 1010
-  - id: router
-    type: rest-api
-    name: router REST Endpoint (service)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/user-settings-backend/src/service/router.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 23635
-    'y': 1010
-  - id: offlineaccessservice
-    type: background-worker
-    name: OfflineAccessService Service (service)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/auth-backend/src/service/OfflineAccessService.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 24095
-    'y': 1010
-  - id: oidcrouter_test
-    type: background-worker
-    name: OidcRouter.test Service (service)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/auth-backend/src/service/OidcRouter.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 24555
-    'y': 1010
-  - id: oidcrouter
-    type: rest-api
-    name: OidcRouter REST Endpoint (service)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/auth-backend/src/service/OidcRouter.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 25015
-    'y': 1010
-  - id: oidcservice_test
-    type: background-worker
-    name: OidcService.test Service (service)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/auth-backend/src/service/OidcService.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 25475
-    'y': 1010
-  - id: oidcservice
-    type: background-worker
-    name: OidcService Service (service)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/auth-backend/src/service/OidcService.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 25935
-    'y': 1010
   - id: conversion
     type: background-worker
     name: conversion Service (conversion.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-node/src/conversion.ts
+      filepath: plugins/catalog-node/src/conversion.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 54075
+    x: 12370
+    'y': 1010
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 15030
+    'y': 1010
+  - id: metrics
+    type: background-worker
+    name: metrics Service (metrics.ts)
+    isTest: false
+    properties:
+      filepath: plugins/mcp-actions-backend/src/metrics.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 19385
+    'y': 1330
+  - id: util
+    type: background-worker
+    name: util Service (__fixtures__)
+    isTest: false
+    properties:
+      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/util.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 30265
+    'y': 1650
+  - id: alpha
+    type: background-worker
+    name: alpha Service (alpha.ts)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/alpha.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 20385
     'y': 1330
   - id: refresh
     type: background-worker
     name: refresh Service (processing)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/processing/refresh.ts
+      filepath: plugins/catalog-backend/src/processing/refresh.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 53615
-    'y': 1330
-  - id: alpha
-    type: gateway-api
-    name: alpha UI Component (alpha.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/techdocs-react/src/alpha.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 47440
-    'y': 1650
-  - id: metrics
-    type: background-worker
-    name: metrics Service (util)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend/src/util/metrics.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 53155
-    'y': 1330
+    x: 16245
+    'y': 1010
   - id: constants
     type: background-worker
-    name: constants Service (ReportIssue)
+    name: constants Service (components)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-module-addons-contrib/src/ReportIssue/constants.ts
+      filepath: packages/core-components/src/components/DependencyGraph/constants.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 63625
-    'y': 1330
-  - id: defaultcatalogprocessingengine_test
+    x: 16705
+    'y': 1010
+  - id: defaultstitcher
+    type: relational-database
+    name: DefaultStitcher Database (stitching)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/stitching/DefaultStitcher.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 22630
+    'y': 370
+  - id: defaultstitcher_test
     type: background-worker
-    name: DefaultCatalogProcessingEngine.test Service (processing)
+    name: DefaultStitcher.test Service (stitching)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/processing/DefaultCatalogProcessingEngine.test.ts
+      filepath: plugins/catalog-backend/src/stitching/DefaultStitcher.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 56905
-    'y': 690
+    x: 19710
+    'y': 1010
   - id: defaultcatalogprocessingengine
     type: relational-database
     name: DefaultCatalogProcessingEngine Database (processing)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/processing/DefaultCatalogProcessingEngine.ts
+      filepath: plugins/catalog-backend/src/processing/DefaultCatalogProcessingEngine.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: true
-    x: 70270
-    'y': 370
-  - id: defaultcatalogprocessingorchestrator
-    type: background-worker
-    name: DefaultCatalogProcessingOrchestrator Service (processing)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/processing/DefaultCatalogProcessingOrchestrator.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 26395
-    'y': 1010
-  - id: processorcachemanager
-    type: background-worker
-    name: ProcessorCacheManager Service (processing)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/processing/ProcessorCacheManager.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 26855
-    'y': 1010
-  - id: processoroutputcollector
-    type: background-worker
-    name: ProcessorOutputCollector Service (processing)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/processing/ProcessorOutputCollector.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 27315
-    'y': 1010
+    x: 27370
+    'y': 690
   - id: evictentitiesfromorphanedproviders_test
     type: relational-database
     name: evictEntitiesFromOrphanedProviders.test Database (processing)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/processing/evictEntitiesFromOrphanedProviders.test.ts
+      filepath: plugins/catalog-backend/src/processing/evictEntitiesFromOrphanedProviders.test.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: true
-    x: 74015
-    'y': 50
-  - id: integration
+    x: 24225
+    'y': 370
+  - id: defaultcatalogprocessingengine_test
     type: background-worker
-    name: integration Service (types)
-    isTest: false
+    name: DefaultCatalogProcessingEngine.test Service (processing)
+    isTest: true
     properties:
-      filepath: ../backstage/plugins/permission-common/src/types/integration.ts
+      filepath: plugins/catalog-backend/src/processing/DefaultCatalogProcessingEngine.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 18210
-    'y': 1650
-  - id: configlocationentityprovider
-    type: background-worker
-    name: ConfigLocationEntityProvider Service (providers)
-    isTest: false
+    x: 26395
+    'y': 370
+  - id: genericscmeventrefreshprovider_test
+    type: relational-database
+    name: GenericScmEventRefreshProvider.test Database (providers)
+    isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/providers/ConfigLocationEntityProvider.ts
+      filepath: plugins/catalog-backend/src/providers/GenericScmEventRefreshProvider.test.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: Prisma / SQL Database Client
     external: true
-    x: 27775
+    x: 17165
     'y': 1010
   - id: defaultlocationstore_test
     type: background-worker
     name: DefaultLocationStore.test Service (providers)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/providers/DefaultLocationStore.test.ts
+      filepath: plugins/catalog-backend/src/providers/DefaultLocationStore.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 57365
-    'y': 690
-  - id: defaultlocationstore
-    type: relational-database
-    name: DefaultLocationStore Database (providers)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/providers/DefaultLocationStore.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 28235
+    x: 11910
     'y': 1010
-  - id: genericscmeventrefreshprovider_test
+  - id: stitchingperformance_test
     type: relational-database
-    name: GenericScmEventRefreshProvider.test Database (providers)
+    name: stitchingPerformance.test Database (tests)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/providers/GenericScmEventRefreshProvider.test.ts
+      filepath: plugins/catalog-backend/src/tests/performance/stitchingPerformance.test.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: true
-    x: 57825
-    'y': 690
-  - id: genericscmeventrefreshprovider
-    type: relational-database
-    name: GenericScmEventRefreshProvider Database (providers)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/providers/GenericScmEventRefreshProvider.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 5460
-    'y': 2930
-  - id: authorizedentitiescatalog
-    type: background-worker
-    name: AuthorizedEntitiesCatalog Service (service)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/AuthorizedEntitiesCatalog.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 28790
+    x: 8035
     'y': 1010
-  - id: catalogbuilder
-    type: rest-api
-    name: CatalogBuilder REST Endpoint (service)
-    isTest: false
+  - id: providerdeltamutations_test
+    type: relational-database
+    name: providerDeltaMutations.test Database (tests)
+    isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/CatalogBuilder.ts
+      filepath: plugins/catalog-backend/src/tests/performance/providerDeltaMutations.test.ts
       namespaces: ''
-      technology: REST Controller / Router
+      technology: Prisma / SQL Database Client
     external: true
-    x: 71940
-    'y': 50
+    x: 17300
+    'y': 370
+  - id: getprocessableentitiesperformance_test
+    type: relational-database
+    name: getProcessableEntitiesPerformance.test Database (tests)
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend/src/tests/performance/getProcessableEntitiesPerformance.test.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 13695
+    'y': 370
+  - id: integration_test
+    type: relational-database
+    name: integration.test Database (tests)
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend/src/tests/integration.test.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 19140
+    'y': 370
   - id: defaultentitiescatalog_test
     type: relational-database
     name: DefaultEntitiesCatalog.test Database (service)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/DefaultEntitiesCatalog.test.ts
+      filepath: plugins/catalog-backend/src/service/DefaultEntitiesCatalog.test.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: true
-    x: 58285
-    'y': 690
-  - id: defaultentitiescatalog
-    type: relational-database
-    name: DefaultEntitiesCatalog Database (service)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/DefaultEntitiesCatalog.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 58745
-    'y': 690
-  - id: defaultrefreshservice_test
-    type: relational-database
-    name: DefaultRefreshService.test Database (service)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/DefaultRefreshService.test.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 59525
-    'y': 690
-  - id: defaultrefreshservice
-    type: background-worker
-    name: DefaultRefreshService Service (service)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/DefaultRefreshService.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 59985
-    'y': 690
+    x: 22805
+    'y': 1010
   - id: createrouter_test
     type: rest-api
     name: createRouter.test REST Endpoint (service)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/createRouter.test.ts
+      filepath: plugins/catalog-backend/src/service/createRouter.test.ts
       namespaces: ''
       technology: REST Controller / Router
     external: true
-    x: 60905
-    'y': 690
-  - id: createrouter
-    type: rest-api
-    name: createRouter REST Endpoint (service)
-    isTest: false
+    x: 5850
+    'y': 1010
+  - id: applypredicateentityfiltertoquery_test
+    type: relational-database
+    name: applyPredicateEntityFilterToQuery.test Database (service)
+    isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/createRouter.ts
+      filepath: plugins/catalog-backend/src/service/request/applyPredicateEntityFilterToQuery.test.ts
       namespaces: ''
-      technology: REST Controller / Router
+      technology: Prisma / SQL Database Client
     external: true
-    x: 29250
+    x: 21345
     'y': 1010
   - id: applyentityfiltertoquery_test
     type: relational-database
     name: applyEntityFilterToQuery.test Database (service)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/request/applyEntityFilterToQuery.test.ts
+      filepath: plugins/catalog-backend/src/service/request/applyEntityFilterToQuery.test.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: true
-    x: 61595
-    'y': 690
-  - id: applypredicateentityfiltertoquery_test
+    x: 20885
+    'y': 1010
+  - id: defaultentitiescatalog
     type: relational-database
-    name: applyPredicateEntityFilterToQuery.test Database (service)
-    isTest: true
+    name: DefaultEntitiesCatalog Database (service)
+    isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/request/applyPredicateEntityFilterToQuery.test.ts
+      filepath: plugins/catalog-backend/src/service/DefaultEntitiesCatalog.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: true
-    x: 62310
-    'y': 690
-  - id: parseentityquery_test
-    type: background-worker
-    name: parseEntityQuery.test Service (service)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/request/parseEntityQuery.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 29710
+    x: 24505
     'y': 1010
-  - id: parseentityquery
-    type: background-worker
-    name: parseEntityQuery Service (service)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/request/parseEntityQuery.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 30170
-    'y': 1010
-  - id: parsequeryentitiesparams_test
-    type: background-worker
-    name: parseQueryEntitiesParams.test Service (service)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/request/parseQueryEntitiesParams.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 30630
-    'y': 1010
-  - id: parsequeryentitiesparams
-    type: background-worker
-    name: parseQueryEntitiesParams Service (service)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/request/parseQueryEntitiesParams.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 31090
-    'y': 1010
-  - id: express
+  - id: catalogbuilder
     type: rest-api
-    name: express REST Endpoint (types)
+    name: CatalogBuilder REST Endpoint (service)
     isTest: false
     properties:
-      filepath: ../backstage/packages/backend-openapi-utils/src/types/express.ts
+      filepath: plugins/catalog-backend/src/service/CatalogBuilder.ts
       namespaces: ''
       technology: REST Controller / Router
     external: true
-    x: 31305
-    'y': 1650
-  - id: connectentityproviders
-    type: background-worker
-    name: connectEntityProviders Service (processing)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/processing/connectEntityProviders.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 30845
-    'y': 1650
-  - id: defaultstitcher_test
-    type: background-worker
-    name: DefaultStitcher.test Service (stitching)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/stitching/DefaultStitcher.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 63160
-    'y': 690
-  - id: defaultstitcher
-    type: relational-database
-    name: DefaultStitcher Database (stitching)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/stitching/DefaultStitcher.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 71510
+    x: 17760
     'y': 370
-  - id: progresstracker
-    type: relational-database
-    name: progressTracker Database (stitching)
+  - id: defaultrefreshservice
+    type: background-worker
+    name: DefaultRefreshService Service (service)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/stitching/progressTracker.ts
+      filepath: plugins/catalog-backend/src/service/DefaultRefreshService.ts
       namespaces: ''
-      technology: Prisma / SQL Database Client
+      technology: TypeScript Domain Service
     external: true
-    x: 5920
-    'y': 2930
-  - id: integration_test
+    x: 18680
+    'y': 370
+  - id: defaultrefreshservice_test
     type: relational-database
-    name: integration.test Database (tests)
+    name: DefaultRefreshService.test Database (service)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/tests/integration.test.ts
+      filepath: plugins/catalog-backend/src/service/DefaultRefreshService.test.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: true
-    x: 72915
-    'y': 50
-  - id: getprocessableentitiesperformance_test
+    x: 15920
+    'y': 370
+  - id: wrapperproviders
     type: relational-database
-    name: getProcessableEntitiesPerformance.test Database (tests)
-    isTest: true
+    name: WrapperProviders Database (module)
+    isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/tests/performance/getProcessableEntitiesPerformance.test.ts
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/module/WrapperProviders.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: true
-    x: 63990
-    'y': 690
-  - id: providerdeltamutations_test
-    type: relational-database
-    name: providerDeltaMutations.test Database (tests)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/tests/performance/providerDeltaMutations.test.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 55365
-    'y': 50
-  - id: stitchingperformance_test
-    type: relational-database
-    name: stitchingPerformance.test Database (tests)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/tests/performance/stitchingPerformance.test.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 64600
-    'y': 690
-  - id: githubentityproviderconfig
-    type: background-worker
-    name: GithubEntityProviderConfig Service (providers)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend-module-github/src/providers/GithubEntityProviderConfig.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 17750
-    'y': 1650
-  - id: withlocations
-    type: background-worker
-    name: withLocations Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend-module-github/src/lib/withLocations.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 31550
-    'y': 1010
-  - id: githubentityprovider
-    type: background-worker
-    name: GithubEntityProvider Service (providers)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend-module-github/src/providers/GithubEntityProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 32010
-    'y': 1010
-  - id: githubmultiorgentityprovider
-    type: background-worker
-    name: GithubMultiOrgEntityProvider Service (providers)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend-module-github/src/providers/GithubMultiOrgEntityProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 32470
-    'y': 1010
-  - id: githuborgentityprovider
-    type: background-worker
-    name: GithubOrgEntityProvider Service (providers)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend-module-github/src/providers/GithubOrgEntityProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 32930
+    x: 4770
     'y': 1010
   - id: incrementalingestionengine
     type: background-worker
     name: IncrementalIngestionEngine Service (engine)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend-module-incremental-ingestion/src/engine/IncrementalIngestionEngine.ts
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/engine/IncrementalIngestionEngine.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 4770
-    'y': 2610
-  - id: wrapperproviders
-    type: relational-database
-    name: WrapperProviders Database (module)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend-module-incremental-ingestion/src/module/WrapperProviders.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 65245
-    'y': 690
+    x: 3245
+    'y': 1010
   - id: routes
     type: background-worker
     name: routes Service (routes.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs/src/routes.ts
+      filepath: packages/cli-module-new/templates/frontend-plugin/src/routes.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 5230
-    'y': 2610
-  - id: read_test
+    x: 2785
+    'y': 1010
+  - id: keystores
     type: background-worker
-    name: read.test Service (puppet)
+    name: KeyStores Service (identity)
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/identity/KeyStores.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 9520
+    'y': 690
+  - id: databasekeystore_test
+    type: background-worker
+    name: DatabaseKeyStore.test Service (entrypoints)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend-module-puppetdb/src/puppet/read.test.ts
+      filepath: packages/backend-defaults/src/entrypoints/auth/plugin/keys/DatabaseKeyStore.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 37545
-    'y': 1010
-  - id: read
+    x: 9060
+    'y': 690
+  - id: keystores_test
     type: background-worker
-    name: read Service (scaffolder)
-    isTest: false
+    name: KeyStores.test Service (identity)
+    isTest: true
     properties:
-      filepath: ../backstage/plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/read.ts
+      filepath: plugins/auth-backend/src/identity/KeyStores.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 38005
-    'y': 1010
-  - id: vendors
-    type: background-worker
-    name: vendors Service (ldap)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend-module-ldap/src/ldap/vendors.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 30385
-    'y': 1650
-  - id: error-detection
-    type: background-worker
-    name: error-detection Service (error-detection)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/kubernetes-common/src/error-detection/error-detection.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 38465
-    'y': 1010
-  - id: slacknotificationprocessor
-    type: relational-database
-    name: SlackNotificationProcessor Database (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/notifications-backend-module-slack/src/lib/SlackNotificationProcessor.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 38925
-    'y': 1010
-  - id: extensions
-    type: background-worker
-    name: extensions Service (extensions.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/techdocs-node/src/extensions.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 29925
-    'y': 1650
-  - id: createconditiontransformer
-    type: background-worker
-    name: createConditionTransformer Service (integration)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/permission-node/src/integration/createConditionTransformer.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 39385
-    'y': 1010
-  - id: createpermissionintegrationrouter
+    x: 8600
+    'y': 690
+  - id: router
     type: rest-api
-    name: createPermissionIntegrationRouter REST Endpoint (integration)
+    name: router REST Endpoint (router.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/permission-node/src/integration/createPermissionIntegrationRouter.ts
+      filepath: packages/backend-openapi-utils/src/router.ts
       namespaces: ''
       technology: REST Controller / Router
     external: true
-    x: 39845
-    'y': 1010
-  - id: createpermissionrule
+    x: 6375
+    'y': 370
+  - id: catalogauthresolvercontext
     type: background-worker
-    name: createPermissionRule Service (integration)
+    name: CatalogAuthResolverContext Service (lib)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/permission-node/src/integration/createPermissionRule.ts
+      filepath: plugins/auth-backend/src/lib/resolvers/CatalogAuthResolverContext.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 680
-    'y': 1330
-  - id: github
+    x: 3165
+    'y': 370
+  - id: catalogauthresolvercontext_test
     type: background-worker
-    name: github Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/github.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 40305
-    'y': 1010
-  - id: githubactionsdispatch
-    type: background-worker
-    name: githubActionsDispatch Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/githubActionsDispatch.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 40765
-    'y': 1010
-  - id: githubautolinks
-    type: background-worker
-    name: githubAutolinks Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/githubAutolinks.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 41225
-    'y': 1010
-  - id: githubbranchprotection
-    type: background-worker
-    name: githubBranchProtection Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/githubBranchProtection.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 41685
-    'y': 1010
-  - id: githubdeploykey
-    type: background-worker
-    name: githubDeployKey Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/githubDeployKey.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 42145
-    'y': 1010
-  - id: githubenvironment
-    type: background-worker
-    name: githubEnvironment Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/githubEnvironment.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 42605
-    'y': 1010
-  - id: githubissuescreate_test
-    type: background-worker
-    name: githubIssuesCreate.test Service (actions)
+    name: CatalogAuthResolverContext.test Service (lib)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/githubIssuesCreate.test.ts
+      filepath: plugins/auth-backend/src/lib/resolvers/CatalogAuthResolverContext.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 43065
-    'y': 1010
-  - id: githubissuescreate
+    x: 2705
+    'y': 370
+  - id: oidcrouter_test
     type: background-worker
-    name: githubIssuesCreate Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/githubIssuesCreate.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 43525
-    'y': 1010
-  - id: githubissueslabel_examples_test
-    type: background-worker
-    name: githubIssuesLabel.examples.test Service (actions)
+    name: OidcRouter.test Service (service)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/githubIssuesLabel.examples.test.ts
+      filepath: plugins/auth-backend/src/service/OidcRouter.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 43985
-    'y': 1010
-  - id: githubissueslabel_test
+    x: 8675
+    'y': 370
+  - id: offlineaccessservice
     type: background-worker
-    name: githubIssuesLabel.test Service (actions)
+    name: OfflineAccessService Service (service)
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/service/OfflineAccessService.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 16380
+    'y': 370
+  - id: oidcservice
+    type: background-worker
+    name: OidcService Service (service)
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/service/OidcService.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 7755
+    'y': 370
+  - id: oidcservice_test
+    type: background-worker
+    name: OidcService.test Service (service)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/githubIssuesLabel.test.ts
+      filepath: plugins/auth-backend/src/service/OidcService.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 44445
-    'y': 1010
-  - id: githubissueslabel
-    type: background-worker
-    name: githubIssuesLabel Service (actions)
+    x: 7295
+    'y': 370
+  - id: oidcrouter
+    type: rest-api
+    name: OidcRouter REST Endpoint (service)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/githubIssuesLabel.ts
+      filepath: plugins/auth-backend/src/service/OidcRouter.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: REST Controller / Router
     external: true
-    x: 44905
-    'y': 1010
-  - id: githubpagesenable
-    type: background-worker
-    name: githubPagesEnable Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/githubPagesEnable.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 45365
-    'y': 1010
-  - id: githubpullrequest
-    type: background-worker
-    name: githubPullRequest Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/githubPullRequest.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 45825
-    'y': 1010
-  - id: githubrepocreate
-    type: background-worker
-    name: githubRepoCreate Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/githubRepoCreate.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 46285
-    'y': 1010
-  - id: githubrepopush
-    type: background-worker
-    name: githubRepoPush Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/githubRepoPush.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 46745
-    'y': 1010
-  - id: githubwebhook
-    type: background-worker
-    name: githubWebhook Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/githubWebhook.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 47205
-    'y': 1010
-  - id: autocomplete
-    type: background-worker
-    name: autocomplete Service (autocomplete)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/autocomplete/autocomplete.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 47665
-    'y': 1010
-  - id: gitlabgroupaccessaction_test
-    type: background-worker
-    name: gitlabGroupAccessAction.test Service (actions)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/actions/gitlabGroupAccessAction.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 48125
-    'y': 1010
-  - id: gitlabgroupaccessaction
-    type: background-worker
-    name: gitlabGroupAccessAction Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/actions/gitlabGroupAccessAction.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 48585
-    'y': 1010
-  - id: gitlabgroupensureexists_test
-    type: background-worker
-    name: gitlabGroupEnsureExists.test Service (actions)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/actions/gitlabGroupEnsureExists.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 49045
-    'y': 1010
-  - id: gitlabgroupensureexists
-    type: background-worker
-    name: gitlabGroupEnsureExists Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/actions/gitlabGroupEnsureExists.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 49505
-    'y': 1010
-  - id: gitlabissuecreate
-    type: background-worker
-    name: gitlabIssueCreate Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/actions/gitlabIssueCreate.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 49965
-    'y': 1010
-  - id: gitlabissueedit
-    type: background-worker
-    name: gitlabIssueEdit Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/actions/gitlabIssueEdit.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 50425
-    'y': 1010
-  - id: gitlabmergerequest
-    type: background-worker
-    name: gitlabMergeRequest Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/actions/gitlabMergeRequest.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 50885
-    'y': 1010
-  - id: gitlabpipelinetrigger
-    type: background-worker
-    name: gitlabPipelineTrigger Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/actions/gitlabPipelineTrigger.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 51345
-    'y': 1010
-  - id: gitlabprojectaccesstokencreate
-    type: background-worker
-    name: gitlabProjectAccessTokenCreate Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/actions/gitlabProjectAccessTokenCreate.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 51805
-    'y': 1010
-  - id: gitlabprojectdeploytokencreate
-    type: background-worker
-    name: gitlabProjectDeployTokenCreate Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/actions/gitlabProjectDeployTokenCreate.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 52265
-    'y': 1010
-  - id: gitlabprojectvariablecreate
-    type: background-worker
-    name: gitlabProjectVariableCreate Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/actions/gitlabProjectVariableCreate.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 52725
-    'y': 1010
-  - id: gitlabrepopush
-    type: background-worker
-    name: gitlabRepoPush Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/actions/gitlabRepoPush.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 53185
-    'y': 1010
-  - id: gitlabuserinfo
-    type: background-worker
-    name: gitlabUserInfo Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/actions/gitlabUserInfo.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 53645
-    'y': 1010
-  - id: gitlab
-    type: background-worker
-    name: gitlab Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/actions/gitlab.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 8890
-    'y': 1650
-  - id: commongitlabconfig
-    type: background-worker
-    name: commonGitlabConfig Service (commonGitlabConfig.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/commonGitlabConfig.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 29465
-    'y': 1650
-  - id: createtemplateaction
-    type: background-worker
-    name: createTemplateAction Service (actions)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-node/src/actions/createTemplateAction.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 29005
-    'y': 1650
-  - id: usetemplateschema
-    type: gateway-api
-    name: useTemplateSchema UI Component (next)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-react/src/next/hooks/useTemplateSchema.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 7065
-    'y': 1650
+    x: 6835
+    'y': 370
   - id: plugin
     type: background-worker
-    name: plugin Service (plugin.ts)
+    name: plugin Service (plugin.tsx)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-backend/src/plugin.ts
+      filepath: packages/app-example-plugin/src/plugin.tsx
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 28545
-    'y': 1650
+    x: 7755
+    'y': 50
+  - id: router_test
+    type: rest-api
+    name: router.test REST Endpoint (router.test.ts)
+    isTest: true
+    properties:
+      filepath: packages/cli-module-new/templates/backend-plugin/src/router.test.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 600
+    'y': 370
   - id: pgsearchengine
     type: background-worker
     name: PgSearchEngine Service (PgSearchEngine)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.ts
+      filepath: plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 55905
-    'y': 1010
+    x: 9980
+    'y': 690
   - id: googlestorage
     type: rest-api
     name: googleStorage REST Endpoint (stages)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-node/src/stages/publish/googleStorage.ts
+      filepath: plugins/techdocs-node/src/stages/publish/googleStorage.ts
       namespaces: ''
       technology: REST Controller / Router
     external: true
-    x: 65705
-    'y': 690
-  - id: router_test
-    type: rest-api
-    name: router.test REST Endpoint (service)
-    isTest: true
+    x: 5230
+    'y': 1010
+  - id: isdockerdisabledfortests
+    type: background-worker
+    name: isDockerDisabledForTests Service (util)
+    isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-backend/src/service/router.test.ts
+      filepath: packages/backend-test-utils/src/util/isDockerDisabledForTests.ts
       namespaces: ''
-      technology: REST Controller / Router
+      technology: TypeScript Domain Service
     external: true
-    x: 2125
-    'y': 1970
+    x: 10440
+    'y': 690
+  - id: mysql
+    type: relational-database
+    name: mysql Database (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/database/connectors/mysql.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 10900
+    'y': 690
+  - id: postgres
+    type: relational-database
+    name: postgres Database (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/database/connectors/postgres.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 11360
+    'y': 690
+  - id: inmemorycatalogclient
+    type: background-worker
+    name: InMemoryCatalogClient Service (testUtils)
+    isTest: false
+    properties:
+      filepath: packages/catalog-client/src/testUtils/InMemoryCatalogClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 29905
+    'y': 1010
 dependencies:
-  - from: databasemanager
-    to: mysql
-    type: read-write
-    description: Queries database table records
-  - from: databasemanager
-    to: postgres
-    type: read-write
-    description: Queries database table records
-  - from: mysql_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: mysql_test
-    to: mysql
-    type: read-write
-    description: Queries database table records
-  - from: mysql
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: mysql
+  - from: defaultcatalogdatabase
     to: errors
     type: direct-call
     description: Executes local class methods / functions
-  - from: mysql
+  - from: defaultcatalogdatabase
     to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: mysql
-    to: defaultnameoverride
-    type: read-write
-    description: Queries database table records
-  - from: mysql
-    to: mergedatabaseconfig
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: mysql
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: mysql
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: postgres_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: postgres_test
-    to: postgres
-    type: read-write
-    description: Queries database table records
-  - from: postgres
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: postgres
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: postgres
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: postgres
-    to: mergedatabaseconfig
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: postgres
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: migratebackendtasks
+  - from: defaultcatalogdatabase
     to: tables
     type: direct-call
     description: Executes local class methods / functions
-  - from: localtaskworker
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: plugintaskschedulerimpl
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: plugintaskschedulerjanitor_test
-    to: tables
+  - from: defaultcatalogdatabase
+    to: conversion
     type: direct-call
     description: Executes local class methods / functions
-  - from: plugintaskschedulerjanitor
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plugintaskschedulerjanitor
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: taskworker_test
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: taskworker
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: taskworker
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: util_test
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: util
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: giteaurlreader
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: githuburlreader
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: readurlresponsefactory
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: readtreeresponsefactory
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: tararchiveresponse
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: ziparchiveresponse
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: testcaches_test
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: testdatabases_test
-    to: testdatabases
-    type: read-write
-    description: Queries database table records
-  - from: testdatabases
-    to: isdockerdisabledfortests
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: testdatabases
-    to: mysql
-    type: read-write
-    description: Queries database table records
-  - from: testdatabases
-    to: postgres
-    type: read-write
-    description: Queries database table records
-  - from: testdatabases
-    to: sqlite
-    type: read-write
-    description: Queries database table records
-  - from: testdatabases
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: testdatabases
+  - from: defaultcatalogdatabase
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: mysql_test
-    to: isdockerdisabledfortests
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: mysql_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: mysql
-    to: waitforready
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: postgres_test
-    to: isdockerdisabledfortests
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: postgres_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: postgres
-    to: waitforready
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: sqlite_test
-    to: sqlite
-    type: read-write
-    description: Queries database table records
-  - from: sqlite_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: sqlite
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: inmemorycatalogclient
-    to: buildentitysearch
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: apientityv1alpha1
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: componententityv1alpha1
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: domainentityv1alpha1
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: groupentityv1alpha1
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: locationentityv1alpha1
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: mcpserverapientity
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: resourceentityv1alpha1
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: systementityv1alpha1
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: userentityv1alpha1
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: util
-    to: validation
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: compilecatalogmodel
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: mergejsonschemas
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: validatekindrootschemasemantics
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: validatemetaschema
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: zod
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: util
-    to: declareannotation
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: declarekind
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: declarekindversion
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: declarelabel
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: declarerelation
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: declaretag
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: index
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: removeannotation
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: removekind
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: removelabel
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: removetag
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: updateannotation
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: updatekind
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: updatekindversion
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: updatelabel
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: updaterelation
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: updatetag
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util_test
-    to: utils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: runcliextraction
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: knip-extractor
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: diff
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: util
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: afterworkspacedependencyaddition
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: beforeworkspacepacking
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: reducedependency
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: offlinesessiondatabase_test
-    to: offlinesessiondatabase
-    type: read-write
-    description: Queries database table records
-  - from: offlinesessiondatabase
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: oidcdatabase_test
-    to: authdatabase
-    type: read-write
-    description: Queries database table records
-  - from: oidcdatabase_test
-    to: oidcdatabase
-    type: read-write
-    description: Queries database table records
-  - from: oidcdatabase
-    to: authdatabase
-    type: read-write
-    description: Queries database table records
-  - from: oidcdatabase
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: userinfodatabase_test
-    to: userinfodatabase
-    type: read-write
-    description: Queries database table records
-  - from: userinfodatabase_test
-    to: authdatabase
-    type: read-write
-    description: Queries database table records
-  - from: userinfodatabase
-    to: authdatabase
-    type: read-write
-    description: Queries database table records
-  - from: userinfodatabase
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: databasekeystore_test
-    to: authdatabase
-    type: read-write
-    description: Queries database table records
-  - from: keystores_test
-    to: authdatabase
-    type: read-write
-    description: Queries database table records
-  - from: keystores
-    to: authdatabase
-    type: read-write
-    description: Queries database table records
-  - from: catalogauthresolvercontext_test
-    to: userinfodatabase
-    type: read-write
-    description: Queries database table records
-  - from: catalogauthresolvercontext
-    to: userinfodatabase
-    type: read-write
-    description: Queries database table records
-  - from: router
-    to: userinfodatabase
-    type: read-write
-    description: Queries database table records
-  - from: offlineaccessservice
-    to: offlinesessiondatabase
-    type: read-write
-    description: Queries database table records
-  - from: oidcrouter_test
-    to: userinfodatabase
-    type: read-write
-    description: Queries database table records
-  - from: oidcrouter_test
-    to: oidcdatabase
-    type: read-write
-    description: Queries database table records
-  - from: oidcrouter_test
-    to: authdatabase
-    type: read-write
-    description: Queries database table records
-  - from: oidcrouter
-    to: userinfodatabase
-    type: read-write
-    description: Queries database table records
-  - from: oidcrouter
-    to: oidcdatabase
-    type: read-write
-    description: Queries database table records
-  - from: oidcservice_test
-    to: authdatabase
-    type: read-write
-    description: Queries database table records
-  - from: oidcservice_test
-    to: oidcdatabase
-    type: read-write
-    description: Queries database table records
-  - from: oidcservice_test
-    to: userinfodatabase
-    type: read-write
-    description: Queries database table records
-  - from: oidcservice
-    to: userinfodatabase
-    type: read-write
-    description: Queries database table records
-  - from: oidcservice
-    to: oidcdatabase
-    type: read-write
-    description: Queries database table records
-  - from: router
-    to: authdatabase
-    type: read-write
-    description: Queries database table records
-  - from: router
-    to: oidcdatabase
-    type: read-write
-    description: Queries database table records
   - from: defaultcatalogdatabase_test
     to: defaultcatalogdatabase
     type: read-write
@@ -3017,162 +1157,6 @@ dependencies:
     to: tables
     type: direct-call
     description: Executes local class methods / functions
-  - from: defaultcatalogdatabase
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultcatalogdatabase
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultcatalogdatabase
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultcatalogdatabase
-    to: conversion
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultcatalogdatabase
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: defaultprocessingdatabase_test
-    to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: defaultprocessingdatabase_test
-    to: defaultprocessingdatabase
-    type: read-write
-    description: Queries database table records
-  - from: defaultprocessingdatabase_test
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultprocessingdatabase_test
-    to: refresh
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultprocessingdatabase_test
-    to: conversion
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultprocessingdatabase_test
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: defaultprocessingdatabase_test
-    to: alpha
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultprocessingdatabase
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultprocessingdatabase
-    to: refresh
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultprocessingdatabase
-    to: conversion
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultprocessingdatabase
-    to: metrics
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultprocessingdatabase
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultprocessingdatabase
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultprocessingdatabase
-    to: checklocationkeyconflict
-    type: read-write
-    description: Queries database table records
-  - from: defaultprocessingdatabase
-    to: insertunprocessedentity
-    type: read-write
-    description: Queries database table records
-  - from: defaultprocessingdatabase
-    to: updateunprocessedentity
-    type: read-write
-    description: Queries database table records
-  - from: defaultprocessingdatabase
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: defaultprocessingdatabase
-    to: constants
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultprocessingdatabase
-    to: alpha
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultproviderdatabase_test
-    to: defaultproviderdatabase
-    type: read-write
-    description: Queries database table records
-  - from: defaultproviderdatabase_test
-    to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: defaultproviderdatabase_test
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultproviderdatabase_test
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: defaultproviderdatabase
-    to: conversion
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultproviderdatabase
-    to: deletewitheagerpruningofchildren
-    type: read-write
-    description: Queries database table records
-  - from: defaultproviderdatabase
-    to: refreshbyrefreshkeys
-    type: read-write
-    description: Queries database table records
-  - from: defaultproviderdatabase
-    to: checklocationkeyconflict
-    type: read-write
-    description: Queries database table records
-  - from: defaultproviderdatabase
-    to: insertunprocessedentity
-    type: read-write
-    description: Queries database table records
-  - from: defaultproviderdatabase
-    to: updateunprocessedentity
-    type: read-write
-    description: Queries database table records
-  - from: defaultproviderdatabase
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultproviderdatabase
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultproviderdatabase
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: conversion_test
-    to: conversion
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: conversion_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
   - from: metrics_test
     to: migrations
     type: read-write
@@ -3185,58 +1169,26 @@ dependencies:
     to: metrics
     type: direct-call
     description: Executes local class methods / functions
-  - from: metrics
+  - from: deleteorphanedentities
     to: tables
     type: direct-call
     description: Executes local class methods / functions
-  - from: deletewitheagerpruningofchildren_test
-    to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: deletewitheagerpruningofchildren_test
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: deletewitheagerpruningofchildren_test
-    to: deletewitheagerpruningofchildren
-    type: read-write
-    description: Queries database table records
-  - from: deletewitheagerpruningofchildren
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: deletewitheagerpruningofchildren
+  - from: deleteorphanedentities
     to: markforstitching
     type: read-write
     description: Queries database table records
-  - from: refreshbyrefreshkeys_test
+  - from: deleteorphanedentities_test
     to: migrations
     type: read-write
     description: Queries database table records
-  - from: refreshbyrefreshkeys_test
+  - from: deleteorphanedentities_test
     to: tables
     type: direct-call
     description: Executes local class methods / functions
-  - from: refreshbyrefreshkeys_test
-    to: util
+  - from: deleteorphanedentities_test
+    to: deleteorphanedentities
     type: read-write
     description: Queries database table records
-  - from: refreshbyrefreshkeys_test
-    to: refreshbyrefreshkeys
-    type: read-write
-    description: Queries database table records
-  - from: refreshbyrefreshkeys
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: refreshbyrefreshkeys
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: checklocationkeyconflict
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
   - from: insertunprocessedentity
     to: tables
     type: direct-call
@@ -3245,32 +1197,52 @@ dependencies:
     to: tables
     type: direct-call
     description: Executes local class methods / functions
-  - from: buildentitysearch_test
-    to: buildentitysearch
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: buildentitysearch
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: buildentitysearch
+  - from: checklocationkeyconflict
     to: tables
     type: direct-call
     description: Executes local class methods / functions
-  - from: buildentitysearch
+  - from: refreshbyrefreshkeys
+    to: tables
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: refreshbyrefreshkeys
     to: util
-    type: read-write
-    description: Queries database table records
-  - from: getdeferredstitchableentities_test
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: deletewitheagerpruningofchildren_test
     to: migrations
     type: read-write
     description: Queries database table records
-  - from: getdeferredstitchableentities_test
+  - from: deletewitheagerpruningofchildren_test
     to: tables
     type: direct-call
     description: Executes local class methods / functions
-  - from: getdeferredstitchableentities_test
-    to: getdeferredstitchableentities
+  - from: deletewitheagerpruningofchildren_test
+    to: deletewitheagerpruningofchildren
+    type: read-write
+    description: Queries database table records
+  - from: deletewitheagerpruningofchildren
+    to: tables
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: deletewitheagerpruningofchildren
+    to: markforstitching
+    type: read-write
+    description: Queries database table records
+  - from: refreshbyrefreshkeys_test
+    to: migrations
+    type: read-write
+    description: Queries database table records
+  - from: refreshbyrefreshkeys_test
+    to: tables
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: refreshbyrefreshkeys_test
+    to: util
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: refreshbyrefreshkeys_test
+    to: refreshbyrefreshkeys
     type: read-write
     description: Queries database table records
   - from: getdeferredstitchableentities
@@ -3285,62 +1257,6 @@ dependencies:
     to: tables
     type: direct-call
     description: Executes local class methods / functions
-  - from: markdeferredstitchcompleted_test
-    to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: markdeferredstitchcompleted_test
-    to: markdeferredstitchcompleted
-    type: read-write
-    description: Queries database table records
-  - from: markdeferredstitchcompleted_test
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: markdeferredstitchcompleted
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: markforstitching_test
-    to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: markforstitching_test
-    to: markforstitching
-    type: read-write
-    description: Queries database table records
-  - from: markforstitching_test
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: markforstitching
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: markforstitching
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: performstitching_test
-    to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: performstitching_test
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: performstitching_test
-    to: markforstitching
-    type: read-write
-    description: Queries database table records
-  - from: performstitching_test
-    to: performstitching
-    type: read-write
-    description: Queries database table records
-  - from: performstitching_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
   - from: performstitching
     to: alpha
     type: direct-call
@@ -3365,6 +1281,86 @@ dependencies:
     to: syncsearchrows
     type: read-write
     description: Queries database table records
+  - from: markdeferredstitchcompleted
+    to: tables
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: markdeferredstitchcompleted_test
+    to: migrations
+    type: read-write
+    description: Queries database table records
+  - from: markdeferredstitchcompleted_test
+    to: markdeferredstitchcompleted
+    type: read-write
+    description: Queries database table records
+  - from: markdeferredstitchcompleted_test
+    to: tables
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: buildentitysearch
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: buildentitysearch
+    to: tables
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: buildentitysearch
+    to: util
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: syncsearchrows
+    to: tables
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: syncsearchrows
+    to: util
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: buildentitysearch_test
+    to: buildentitysearch
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: markforstitching_test
+    to: migrations
+    type: read-write
+    description: Queries database table records
+  - from: markforstitching_test
+    to: markforstitching
+    type: read-write
+    description: Queries database table records
+  - from: markforstitching_test
+    to: tables
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: performstitching_test
+    to: migrations
+    type: read-write
+    description: Queries database table records
+  - from: performstitching_test
+    to: tables
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: performstitching_test
+    to: markforstitching
+    type: read-write
+    description: Queries database table records
+  - from: performstitching_test
+    to: performstitching
+    type: read-write
+    description: Queries database table records
+  - from: performstitching_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: markforstitching
+    to: tables
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: markforstitching
+    to: util
+    type: direct-call
+    description: Executes local class methods / functions
   - from: syncsearchrows_test
     to: migrations
     type: read-write
@@ -3377,260 +1373,152 @@ dependencies:
     to: syncsearchrows
     type: read-write
     description: Queries database table records
-  - from: syncsearchrows
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: syncsearchrows
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: deleteorphanedentities_test
+  - from: getdeferredstitchableentities_test
     to: migrations
     type: read-write
     description: Queries database table records
-  - from: deleteorphanedentities_test
+  - from: getdeferredstitchableentities_test
     to: tables
     type: direct-call
     description: Executes local class methods / functions
-  - from: deleteorphanedentities_test
-    to: deleteorphanedentities
+  - from: getdeferredstitchableentities_test
+    to: getdeferredstitchableentities
     type: read-write
     description: Queries database table records
-  - from: deleteorphanedentities
-    to: tables
+  - from: conversion_test
+    to: conversion
     type: direct-call
     description: Executes local class methods / functions
-  - from: deleteorphanedentities
-    to: markforstitching
-    type: read-write
-    description: Queries database table records
-  - from: types
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util_test
+  - from: conversion_test
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: util
+  - from: defaultproviderdatabase_test
+    to: defaultproviderdatabase
+    type: read-write
+    description: Queries database table records
+  - from: defaultproviderdatabase_test
+    to: migrations
+    type: read-write
+    description: Queries database table records
+  - from: defaultproviderdatabase_test
+    to: tables
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultproviderdatabase_test
+    to: util
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultprocessingdatabase
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultprocessingdatabase
+    to: refresh
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultprocessingdatabase
+    to: conversion
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultprocessingdatabase
+    to: metrics
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultprocessingdatabase
+    to: tables
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultprocessingdatabase
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultprocessingdatabase
+    to: checklocationkeyconflict
+    type: read-write
+    description: Queries database table records
+  - from: defaultprocessingdatabase
+    to: insertunprocessedentity
+    type: read-write
+    description: Queries database table records
+  - from: defaultprocessingdatabase
+    to: updateunprocessedentity
+    type: read-write
+    description: Queries database table records
+  - from: defaultprocessingdatabase
+    to: util
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultprocessingdatabase
+    to: constants
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultprocessingdatabase
     to: alpha
     type: direct-call
     description: Executes local class methods / functions
-  - from: defaultcatalogprocessingengine_test
+  - from: defaultprocessingdatabase_test
+    to: migrations
+    type: read-write
+    description: Queries database table records
+  - from: defaultprocessingdatabase_test
     to: defaultprocessingdatabase
     type: read-write
     description: Queries database table records
-  - from: defaultcatalogprocessingengine
-    to: markforstitching
-    type: read-write
-    description: Queries database table records
-  - from: defaultcatalogprocessingengine
-    to: deleteorphanedentities
-    type: read-write
-    description: Queries database table records
-  - from: defaultcatalogprocessingorchestrator
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: processorcachemanager
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: processoroutputcollector
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: evictentitiesfromorphanedproviders_test
-    to: defaultproviderdatabase
-    type: read-write
-    description: Queries database table records
-  - from: evictentitiesfromorphanedproviders_test
-    to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: util
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: configlocationentityprovider
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: defaultlocationstore_test
-    to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: defaultlocationstore_test
+  - from: defaultprocessingdatabase_test
     to: tables
     type: direct-call
     description: Executes local class methods / functions
-  - from: defaultlocationstore
+  - from: defaultprocessingdatabase_test
+    to: refresh
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultprocessingdatabase_test
+    to: conversion
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultprocessingdatabase_test
+    to: util
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultprocessingdatabase_test
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultproviderdatabase
+    to: conversion
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultproviderdatabase
+    to: deletewitheagerpruningofchildren
+    type: read-write
+    description: Queries database table records
+  - from: defaultproviderdatabase
+    to: refreshbyrefreshkeys
+    type: read-write
+    description: Queries database table records
+  - from: defaultproviderdatabase
+    to: checklocationkeyconflict
+    type: read-write
+    description: Queries database table records
+  - from: defaultproviderdatabase
+    to: insertunprocessedentity
+    type: read-write
+    description: Queries database table records
+  - from: defaultproviderdatabase
+    to: updateunprocessedentity
+    type: read-write
+    description: Queries database table records
+  - from: defaultproviderdatabase
     to: tables
     type: direct-call
     description: Executes local class methods / functions
-  - from: defaultlocationstore
+  - from: defaultproviderdatabase
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultproviderdatabase
     to: util
-    type: read-write
-    description: Queries database table records
-  - from: genericscmeventrefreshprovider_test
-    to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: genericscmeventrefreshprovider_test
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: genericscmeventrefreshprovider
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: authorizedentitiescatalog
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: catalogbuilder
-    to: defaultcatalogdatabase
-    type: read-write
-    description: Queries database table records
-  - from: catalogbuilder
-    to: defaultprocessingdatabase
-    type: read-write
-    description: Queries database table records
-  - from: catalogbuilder
-    to: defaultproviderdatabase
-    type: read-write
-    description: Queries database table records
-  - from: catalogbuilder
-    to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: catalogbuilder
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: defaultentitiescatalog_test
-    to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: defaultentitiescatalog_test
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultentitiescatalog_test
-    to: buildentitysearch
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultentitiescatalog
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultentitiescatalog
-    to: markforstitching
-    type: read-write
-    description: Queries database table records
-  - from: defaultentitiescatalog
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: defaultrefreshservice_test
-    to: defaultcatalogdatabase
-    type: read-write
-    description: Queries database table records
-  - from: defaultrefreshservice_test
-    to: defaultprocessingdatabase
-    type: read-write
-    description: Queries database table records
-  - from: defaultrefreshservice_test
-    to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: defaultrefreshservice_test
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultrefreshservice
-    to: defaultcatalogdatabase
-    type: read-write
-    description: Queries database table records
-  - from: createrouter_test
-    to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: createrouter_test
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createrouter_test
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: createrouter
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: applyentityfiltertoquery_test
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: applyentityfiltertoquery_test
-    to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: applyentityfiltertoquery_test
-    to: buildentitysearch
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: applypredicateentityfiltertoquery_test
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: applypredicateentityfiltertoquery_test
-    to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: applypredicateentityfiltertoquery_test
-    to: buildentitysearch
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: parseentityquery_test
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: parseentityquery
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: parsequeryentitiesparams_test
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: parsequeryentitiesparams
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: util
-    to: express
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: connectentityproviders
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultstitcher_test
-    to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: defaultstitcher_test
-    to: markforstitching
-    type: read-write
-    description: Queries database table records
-  - from: defaultstitcher_test
-    to: tables
     type: direct-call
     description: Executes local class methods / functions
   - from: defaultstitcher
@@ -3641,10 +1529,62 @@ dependencies:
     to: performstitching
     type: read-write
     description: Queries database table records
-  - from: progresstracker
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
+  - from: defaultstitcher_test
+    to: migrations
+    type: read-write
+    description: Queries database table records
+  - from: defaultstitcher_test
+    to: markforstitching
+    type: read-write
+    description: Queries database table records
+  - from: defaultcatalogprocessingengine
+    to: markforstitching
+    type: read-write
+    description: Queries database table records
+  - from: defaultcatalogprocessingengine
+    to: deleteorphanedentities
+    type: read-write
+    description: Queries database table records
+  - from: evictentitiesfromorphanedproviders_test
+    to: defaultproviderdatabase
+    type: read-write
+    description: Queries database table records
+  - from: evictentitiesfromorphanedproviders_test
+    to: migrations
+    type: read-write
+    description: Queries database table records
+  - from: defaultcatalogprocessingengine_test
+    to: defaultprocessingdatabase
+    type: read-write
+    description: Queries database table records
+  - from: genericscmeventrefreshprovider_test
+    to: migrations
+    type: read-write
+    description: Queries database table records
+  - from: defaultlocationstore_test
+    to: migrations
+    type: read-write
+    description: Queries database table records
+  - from: stitchingperformance_test
+    to: migrations
+    type: read-write
+    description: Queries database table records
+  - from: providerdeltamutations_test
+    to: migrations
+    type: read-write
+    description: Queries database table records
+  - from: providerdeltamutations_test
+    to: defaultproviderdatabase
+    type: read-write
+    description: Queries database table records
+  - from: getprocessableentitiesperformance_test
+    to: defaultprocessingdatabase
+    type: read-write
+    description: Queries database table records
+  - from: getprocessableentitiesperformance_test
+    to: migrations
+    type: read-write
+    description: Queries database table records
   - from: integration_test
     to: defaultcatalogdatabase
     type: read-write
@@ -3665,110 +1605,78 @@ dependencies:
     to: deleteorphanedentities
     type: read-write
     description: Queries database table records
-  - from: getprocessableentitiesperformance_test
+  - from: defaultentitiescatalog_test
+    to: migrations
+    type: read-write
+    description: Queries database table records
+  - from: defaultentitiescatalog_test
+    to: buildentitysearch
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createrouter_test
+    to: migrations
+    type: read-write
+    description: Queries database table records
+  - from: applypredicateentityfiltertoquery_test
+    to: migrations
+    type: read-write
+    description: Queries database table records
+  - from: applypredicateentityfiltertoquery_test
+    to: buildentitysearch
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: applyentityfiltertoquery_test
+    to: migrations
+    type: read-write
+    description: Queries database table records
+  - from: applyentityfiltertoquery_test
+    to: buildentitysearch
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultentitiescatalog
+    to: markforstitching
+    type: read-write
+    description: Queries database table records
+  - from: catalogbuilder
+    to: defaultcatalogdatabase
+    type: read-write
+    description: Queries database table records
+  - from: catalogbuilder
     to: defaultprocessingdatabase
     type: read-write
     description: Queries database table records
-  - from: getprocessableentitiesperformance_test
-    to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: providerdeltamutations_test
-    to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: providerdeltamutations_test
+  - from: catalogbuilder
     to: defaultproviderdatabase
     type: read-write
     description: Queries database table records
-  - from: stitchingperformance_test
+  - from: catalogbuilder
     to: migrations
     type: read-write
     description: Queries database table records
-  - from: util_test
-    to: githubentityproviderconfig
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: githubentityproviderconfig
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: withlocations
-    to: util
+  - from: defaultrefreshservice
+    to: defaultcatalogdatabase
     type: read-write
     description: Queries database table records
-  - from: githubentityprovider
-    to: util
+  - from: defaultrefreshservice_test
+    to: defaultcatalogdatabase
     type: read-write
     description: Queries database table records
-  - from: githubmultiorgentityprovider
-    to: util
+  - from: defaultrefreshservice_test
+    to: defaultprocessingdatabase
     type: read-write
     description: Queries database table records
-  - from: githuborgentityprovider
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: incrementalingestiondatabasemanager_test
-    to: incrementalingestiondatabasemanager
-    type: read-write
-    description: Queries database table records
-  - from: incrementalingestiondatabasemanager
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: migrations
-    to: tables
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: incrementalingestionengine
-    to: incrementalingestiondatabasemanager
-    type: read-write
-    description: Queries database table records
-  - from: wrapperproviders
-    to: incrementalingestiondatabasemanager
-    type: read-write
-    description: Queries database table records
-  - from: wrapperproviders
+  - from: defaultrefreshservice_test
     to: migrations
-    type: read-write
-    description: Queries database table records
-  - from: routes
-    to: incrementalingestiondatabasemanager
-    type: read-write
-    description: Queries database table records
-  - from: types
-    to: incrementalingestiondatabasemanager
-    type: read-write
-    description: Queries database table records
-  - from: config
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: read_test
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: read
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: util
-    to: vendors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: error-detection
-    to: util
     type: read-write
     description: Queries database table records
   - from: databasenotificationsstore_test
     to: databasenotificationsstore
     type: read-write
     description: Queries database table records
+  - from: notificationsstore
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
   - from: databasenotificationsstore
     to: notificationsstore
     type: direct-call
@@ -3777,188 +1685,184 @@ dependencies:
     to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: notificationsstore
+  - from: incrementalingestiondatabasemanager_test
+    to: incrementalingestiondatabasemanager
+    type: read-write
+    description: Queries database table records
+  - from: migrations
+    to: tables
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: incrementalingestiondatabasemanager
+    to: tables
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: wrapperproviders
+    to: incrementalingestiondatabasemanager
+    type: read-write
+    description: Queries database table records
+  - from: wrapperproviders
+    to: migrations
+    type: read-write
+    description: Queries database table records
+  - from: types
+    to: incrementalingestiondatabasemanager
+    type: read-write
+    description: Queries database table records
+  - from: incrementalingestionengine
+    to: incrementalingestiondatabasemanager
+    type: read-write
+    description: Queries database table records
+  - from: routes
+    to: incrementalingestiondatabasemanager
+    type: read-write
+    description: Queries database table records
+  - from: offlinesessiondatabase_test
+    to: offlinesessiondatabase
+    type: read-write
+    description: Queries database table records
+  - from: userinfodatabase
+    to: authdatabase
+    type: read-write
+    description: Queries database table records
+  - from: userinfodatabase
     to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: slacknotificationprocessor
-    to: util
+  - from: userinfodatabase_test
+    to: userinfodatabase
     type: read-write
     description: Queries database table records
-  - from: util
-    to: extensions
+  - from: userinfodatabase_test
+    to: authdatabase
+    type: read-write
+    description: Queries database table records
+  - from: offlinesessiondatabase
+    to: error
     type: direct-call
-    description: Executes local class methods / functions
-  - from: createconditiontransformer
-    to: util
+    description: References class type / calls methods
+  - from: oidcdatabase
+    to: authdatabase
     type: read-write
     description: Queries database table records
-  - from: createpermissionintegrationrouter
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: util_test
-    to: createpermissionrule
+  - from: oidcdatabase
+    to: error
     type: direct-call
-    description: Executes local class methods / functions
-  - from: github
-    to: util
+    description: References class type / calls methods
+  - from: oidcdatabase_test
+    to: authdatabase
     type: read-write
     description: Queries database table records
-  - from: githubactionsdispatch
-    to: util
+  - from: oidcdatabase_test
+    to: oidcdatabase
     type: read-write
     description: Queries database table records
-  - from: githubautolinks
-    to: util
+  - from: keystores
+    to: authdatabase
     type: read-write
     description: Queries database table records
-  - from: githubbranchprotection
-    to: util
+  - from: databasekeystore_test
+    to: authdatabase
     type: read-write
     description: Queries database table records
-  - from: githubdeploykey
-    to: util
+  - from: keystores_test
+    to: authdatabase
     type: read-write
     description: Queries database table records
-  - from: githubenvironment
-    to: util
+  - from: router
+    to: userinfodatabase
     type: read-write
     description: Queries database table records
-  - from: githubissuescreate_test
-    to: util
+  - from: catalogauthresolvercontext
+    to: userinfodatabase
     type: read-write
     description: Queries database table records
-  - from: githubissuescreate
-    to: util
+  - from: catalogauthresolvercontext_test
+    to: userinfodatabase
     type: read-write
     description: Queries database table records
-  - from: githubissueslabel_examples_test
-    to: util
+  - from: oidcrouter_test
+    to: userinfodatabase
     type: read-write
     description: Queries database table records
-  - from: githubissueslabel_test
-    to: util
+  - from: oidcrouter_test
+    to: oidcdatabase
     type: read-write
     description: Queries database table records
-  - from: githubissueslabel
-    to: util
+  - from: oidcrouter_test
+    to: authdatabase
     type: read-write
     description: Queries database table records
-  - from: githubpagesenable
-    to: util
+  - from: offlineaccessservice
+    to: offlinesessiondatabase
     type: read-write
     description: Queries database table records
-  - from: githubpullrequest
-    to: util
+  - from: router
+    to: authdatabase
     type: read-write
     description: Queries database table records
-  - from: githubrepocreate
-    to: util
+  - from: router
+    to: oidcdatabase
     type: read-write
     description: Queries database table records
-  - from: githubrepopush
-    to: util
+  - from: oidcservice
+    to: userinfodatabase
     type: read-write
     description: Queries database table records
-  - from: githubwebhook
-    to: util
+  - from: oidcservice
+    to: oidcdatabase
     type: read-write
     description: Queries database table records
-  - from: autocomplete
-    to: util
+  - from: oidcservice_test
+    to: authdatabase
     type: read-write
     description: Queries database table records
-  - from: gitlabgroupaccessaction_test
-    to: util
+  - from: oidcservice_test
+    to: oidcdatabase
     type: read-write
     description: Queries database table records
-  - from: gitlabgroupaccessaction
-    to: util
+  - from: oidcservice_test
+    to: userinfodatabase
     type: read-write
     description: Queries database table records
-  - from: gitlabgroupensureexists_test
-    to: util
+  - from: oidcrouter
+    to: userinfodatabase
     type: read-write
     description: Queries database table records
-  - from: gitlabgroupensureexists
-    to: util
+  - from: oidcrouter
+    to: oidcdatabase
     type: read-write
     description: Queries database table records
-  - from: gitlabissuecreate
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: gitlabissueedit
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: gitlabmergerequest
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: gitlabpipelinetrigger
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: gitlabprojectaccesstokencreate
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: gitlabprojectdeploytokencreate
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: gitlabprojectvariablecreate
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: gitlabrepopush
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: gitlabuserinfo
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: util_test
+  - from: databaseusersettingsstore
     to: errors
     type: direct-call
     description: Executes local class methods / functions
-  - from: util_test
-    to: gitlab
-    type: direct-call
-    description: References class type / calls methods
-  - from: util
-    to: commongitlabconfig
+  - from: databaseusersettingsstore
+    to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: util
-    to: gitlab
+  - from: databaseusersettingsstore
+    to: usersettingsstore
     type: direct-call
-    description: References class type / calls methods
-  - from: createtemplateaction
-    to: util
+    description: Executes local class methods / functions
+  - from: databaseusersettingsstore_test
+    to: databaseusersettingsstore
     type: read-write
     description: Queries database table records
-  - from: util_test
-    to: integration
+  - from: usersettingsstore
+    to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: util
-    to: createtemplateaction
+  - from: plugin
+    to: databaseusersettingsstore
+    type: read-write
+    description: Queries database table records
+  - from: router
+    to: usersettingsstore
     type: direct-call
     description: Executes local class methods / functions
-  - from: util_test
-    to: usetemplateschema
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: usetemplateschema
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: plugin
+  - from: router_test
+    to: usersettingsstore
     type: direct-call
     description: Executes local class methods / functions
   - from: databasedocumentstore_test
@@ -3975,8 +1879,8 @@ dependencies:
     description: Executes local class methods / functions
   - from: databasedocumentstore
     to: util
-    type: read-write
-    description: Queries database table records
+    type: direct-call
+    description: Executes local class methods / functions
   - from: databasedocumentstore
     to: error
     type: direct-call
@@ -3985,35 +1889,47 @@ dependencies:
     to: migrations
     type: read-write
     description: Queries database table records
-  - from: databaseusersettingsstore_test
-    to: databaseusersettingsstore
-    type: read-write
-    description: Queries database table records
-  - from: databaseusersettingsstore
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: databaseusersettingsstore
+  - from: sqlite
     to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: databaseusersettingsstore
-    to: usersettingsstore
+  - from: testdatabases
+    to: isdockerdisabledfortests
     type: direct-call
     description: Executes local class methods / functions
-  - from: usersettingsstore
+  - from: testdatabases
+    to: mysql
+    type: read-write
+    description: Queries database table records
+  - from: testdatabases
+    to: postgres
+    type: read-write
+    description: Queries database table records
+  - from: testdatabases
+    to: sqlite
+    type: read-write
+    description: Queries database table records
+  - from: testdatabases
     to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: plugin
-    to: databaseusersettingsstore
+  - from: testdatabases
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: testdatabases_test
+    to: testdatabases
     type: read-write
     description: Queries database table records
-  - from: router_test
-    to: usersettingsstore
+  - from: sqlite_test
+    to: sqlite
+    type: read-write
+    description: Queries database table records
+  - from: sqlite_test
+    to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: router
-    to: usersettingsstore
+  - from: inmemorycatalogclient
+    to: buildentitysearch
     type: direct-call
     description: Executes local class methods / functions

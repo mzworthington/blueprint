@@ -2,102 +2,47 @@ name: Backstage - DocsBuilder Components
 version: 1.0.0
 level: component
 nodes:
-  - id: buildmetadatastorage_test
-    type: background-worker
-    name: BuildMetadataStorage.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/techdocs-backend/src/DocsBuilder/BuildMetadataStorage.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1140
-    'y': 370
   - id: buildmetadatastorage
     type: background-worker
     name: BuildMetadataStorage Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-backend/src/DocsBuilder/BuildMetadataStorage.ts
+      filepath: plugins/techdocs-backend/src/DocsBuilder/BuildMetadataStorage.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 1790
     'y': 690
+  - id: buildmetadatastorage_test
+    type: background-worker
+    name: BuildMetadataStorage.test Service
+    isTest: true
+    properties:
+      filepath: plugins/techdocs-backend/src/DocsBuilder/BuildMetadataStorage.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1140
+    'y': 370
   - id: builder
     type: background-worker
     name: builder Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-backend/src/DocsBuilder/builder.ts
+      filepath: plugins/techdocs-backend/src/DocsBuilder/builder.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 1790
     'y': 370
-  - id: command
-    type: background-worker
-    name: command Service (commands)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/package-docs/command.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 640
-    'y': 50
-  - id: build
-    type: background-worker
-    name: build Service (commands)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/commands/repo/build.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1100
-    'y': 50
-  - id: buildbackend
-    type: background-worker
-    name: buildBackend Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/lib/buildBackend.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1560
-    'y': 50
-  - id: createdistworkspace
-    type: background-worker
-    name: createDistWorkspace Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/lib/packager/createDistWorkspace.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2020
-    'y': 50
-  - id: transforms_test
-    type: background-worker
-    name: transforms.test Service (tests)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/tests/transforms/transforms.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2480
-    'y': 50
   - id: config
-    type: background-worker
-    name: config Service (collators)
+    type: gateway-api
+    name: config UI Component (layout)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      filepath: packages/core-components/src/layout/Sidebar/config.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
     x: 140
     'y': 690
@@ -106,7 +51,7 @@ nodes:
     name: errors Service (errors.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      filepath: packages/codemods/src/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -117,7 +62,7 @@ nodes:
     name: integration Service (types)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/permission-common/src/types/integration.ts
+      filepath: plugins/permission-common/src/types/integration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -128,7 +73,7 @@ nodes:
     name: Cache Service (commands)
     isTest: false
     properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/package-docs/Cache.ts
+      filepath: packages/repo-tools/src/commands/package-docs/Cache.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -139,7 +84,7 @@ nodes:
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -150,33 +95,68 @@ nodes:
     name: DocsSynchronizer Service (service)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-backend/src/service/DocsSynchronizer.ts
+      filepath: plugins/techdocs-backend/src/service/DocsSynchronizer.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 2440
     'y': 370
+  - id: transforms_test
+    type: background-worker
+    name: transforms.test Service (tests)
+    isTest: true
+    properties:
+      filepath: packages/cli-module-build/src/tests/transforms/transforms.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 640
+    'y': 50
+  - id: buildbackend
+    type: background-worker
+    name: buildBackend Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/buildBackend.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1100
+    'y': 50
+  - id: createdistworkspace
+    type: background-worker
+    name: createDistWorkspace Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/packager/createDistWorkspace.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1560
+    'y': 50
+  - id: build
+    type: background-worker
+    name: build Service (commands)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/repo/build.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2020
+    'y': 50
+  - id: command
+    type: background-worker
+    name: command Service (commands)
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/package-docs/command.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2480
+    'y': 50
 dependencies:
-  - from: command
-    to: builder
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: build
-    to: builder
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: buildbackend
-    to: builder
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createdistworkspace
-    to: builder
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: transforms_test
-    to: builder
-    type: direct-call
-    description: Executes local class methods / functions
   - from: buildmetadatastorage_test
     to: buildmetadatastorage
     type: direct-call
@@ -209,3 +189,23 @@ dependencies:
     to: buildmetadatastorage
     type: direct-call
     description: References class type / calls methods
+  - from: transforms_test
+    to: builder
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: buildbackend
+    to: builder
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createdistworkspace
+    to: builder
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: build
+    to: builder
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: command
+    to: builder
+    type: direct-call
+    description: Executes local class methods / functions

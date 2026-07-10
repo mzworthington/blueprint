@@ -7,51 +7,62 @@ nodes:
     name: permissions Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-common/src/permissions.ts
+      filepath: plugins/catalog-common/src/permissions.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 1520
     'y': 370
-  - id: createbackend
+  - id: catalogplugin_test
     type: background-worker
-    name: CreateBackend Service (CreateBackend.ts)
-    isTest: false
+    name: CatalogPlugin.test Service (service)
+    isTest: true
     properties:
-      filepath: ../backstage/packages/backend-defaults/src/CreateBackend.ts
+      filepath: plugins/catalog-backend/src/service/CatalogPlugin.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 140
-    'y': 50
-  - id: mockservices
-    type: relational-database
-    name: mockServices Database (services)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-test-utils/src/services/mockServices.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 600
     'y': 50
   - id: authorizedentitiescatalog_test
     type: background-worker
     name: AuthorizedEntitiesCatalog.test Service (service)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/AuthorizedEntitiesCatalog.test.ts
+      filepath: plugins/catalog-backend/src/service/AuthorizedEntitiesCatalog.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
+    x: 600
+    'y': 50
+  - id: router
+    type: rest-api
+    name: router REST Endpoint (router.ts)
+    isTest: false
+    properties:
+      filepath: packages/backend-openapi-utils/src/router.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
     x: 1060
     'y': 50
-  - id: catalogplugin_test
+  - id: alpha
     type: background-worker
-    name: CatalogPlugin.test Service (service)
-    isTest: true
+    name: alpha Service (alpha.ts)
+    isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/CatalogPlugin.test.ts
+      filepath: packages/core-components/src/alpha.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 690
+  - id: permissionclient
+    type: background-worker
+    name: PermissionClient Service (PermissionClient.ts)
+    isTest: false
+    properties:
+      filepath: plugins/permission-common/src/PermissionClient.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -62,51 +73,36 @@ nodes:
     name: PermissionClient.test Service (PermissionClient.test.ts)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/permission-common/src/PermissionClient.test.ts
+      filepath: plugins/permission-common/src/PermissionClient.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1980
     'y': 50
-  - id: permissionclient
-    type: background-worker
-    name: PermissionClient Service (PermissionClient.ts)
+  - id: mockservices
+    type: relational-database
+    name: mockServices Database (services)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/permission-common/src/PermissionClient.ts
+      filepath: packages/backend-test-utils/src/services/mockServices.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: Prisma / SQL Database Client
     external: true
     x: 2440
     'y': 50
-  - id: alpha
-    type: gateway-api
-    name: alpha UI Component (alpha.ts)
+  - id: createbackend
+    type: background-worker
+    name: CreateBackend Service (CreateBackend.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-react/src/alpha.ts
+      filepath: packages/backend-defaults/src/CreateBackend.ts
       namespaces: ''
-      technology: React Component
-    external: true
-    x: 1520
-    'y': 690
-  - id: router
-    type: rest-api
-    name: router REST Endpoint (service)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/user-settings-backend/src/service/router.ts
-      namespaces: ''
-      technology: REST Controller / Router
+      technology: TypeScript Domain Service
     external: true
     x: 2900
     'y': 50
 dependencies:
-  - from: createbackend
-    to: permissions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: mockservices
+  - from: catalogplugin_test
     to: permissions
     type: direct-call
     description: Executes local class methods / functions
@@ -114,15 +110,7 @@ dependencies:
     to: permissions
     type: direct-call
     description: Executes local class methods / functions
-  - from: catalogplugin_test
-    to: permissions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: permissionclient_test
-    to: permissions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: permissionclient
+  - from: router
     to: permissions
     type: direct-call
     description: Executes local class methods / functions
@@ -130,7 +118,19 @@ dependencies:
     to: alpha
     type: direct-call
     description: Executes local class methods / functions
-  - from: router
+  - from: permissionclient
+    to: permissions
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: permissionclient_test
+    to: permissions
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: mockservices
+    to: permissions
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackend
     to: permissions
     type: direct-call
     description: Executes local class methods / functions

@@ -2,336 +2,292 @@ name: Backstage - auth Components
 version: 1.0.0
 level: component
 nodes:
-  - id: authidentifiers
-    type: background-worker
-    name: authIdentifiers Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-node/src/auth/authIdentifiers.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 140
-    'y': 1330
-  - id: secretstore
-    type: background-worker
-    name: secretStore Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-node/src/auth/secretStore.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 600
-    'y': 1330
-  - id: httpjson
-    type: background-worker
-    name: httpJson Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-node/src/auth/httpJson.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 15360
-    'y': 1330
-  - id: storage
-    type: background-worker
-    name: storage Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-node/src/auth/storage.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 11030
-    'y': 1330
-  - id: cliauth_test
-    type: background-worker
-    name: CliAuth.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/cli-node/src/auth/CliAuth.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 6500
-    'y': 690
-  - id: cliauth
-    type: background-worker
-    name: CliAuth Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-node/src/auth/CliAuth.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 5785
-    'y': 1010
-  - id: aksstrategy_test
-    type: background-worker
-    name: AksStrategy.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/auth/AksStrategy.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1180
-    'y': 370
-  - id: aksstrategy
-    type: background-worker
-    name: AksStrategy Service
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/auth/AksStrategy.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1315
-    'y': 690
-  - id: anonymousstrategy
-    type: background-worker
-    name: AnonymousStrategy Service
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/auth/AnonymousStrategy.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1815
-    'y': 690
-  - id: awsiamstrategy_test
-    type: background-worker
-    name: AwsIamStrategy.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/auth/AwsIamStrategy.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 3030
-    'y': 1010
-  - id: awsiamstrategy
-    type: background-worker
-    name: AwsIamStrategy Service
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/auth/AwsIamStrategy.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1140
-    'y': 1330
-  - id: azureidentitystrategy_test
-    type: background-worker
-    name: AzureIdentityStrategy.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/auth/AzureIdentityStrategy.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 6245
-    'y': 1010
-  - id: azureidentitystrategy
-    type: background-worker
-    name: AzureIdentityStrategy Service
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/auth/AzureIdentityStrategy.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 5125
-    'y': 1330
-  - id: dispatchstrategy_test
-    type: background-worker
-    name: DispatchStrategy.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/auth/DispatchStrategy.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 4760
-    'y': 1010
-  - id: dispatchstrategy
-    type: background-worker
-    name: DispatchStrategy Service
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/auth/DispatchStrategy.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 4165
-    'y': 1330
-  - id: googleserviceaccountstrategy_test
-    type: background-worker
-    name: GoogleServiceAccountStrategy.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/auth/GoogleServiceAccountStrategy.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2410
-    'y': 1010
-  - id: googleserviceaccountstrategy
-    type: background-worker
-    name: GoogleServiceAccountStrategy Service
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/auth/GoogleServiceAccountStrategy.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2315
-    'y': 1330
-  - id: googlestrategy
-    type: background-worker
-    name: GoogleStrategy Service
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/auth/GoogleStrategy.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 3300
-    'y': 690
-  - id: oidcstrategy_test
-    type: background-worker
-    name: OidcStrategy.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/auth/OidcStrategy.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2895
-    'y': 370
-  - id: oidcstrategy
-    type: background-worker
-    name: OidcStrategy Service
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/auth/OidcStrategy.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 5300
-    'y': 690
-  - id: serviceaccountstrategy_test
-    type: background-worker
-    name: ServiceAccountStrategy.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/auth/ServiceAccountStrategy.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 6015
-    'y': 1330
-  - id: serviceaccountstrategy
-    type: background-worker
-    name: ServiceAccountStrategy Service
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/auth/ServiceAccountStrategy.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 16265
-    'y': 1650
-  - id: builddefaultauthstrategymap
-    type: background-worker
-    name: buildDefaultAuthStrategyMap Service
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/auth/buildDefaultAuthStrategyMap.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2275
-    'y': 370
-  - id: requirepermission
-    type: rest-api
-    name: requirePermission REST Endpoint
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/auth/requirePermission.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: false
-    x: 16670
-    'y': 1330
   - id: pinnipedhelper_test
     type: background-worker
     name: PinnipedHelper.test Service
     isTest: true
     properties:
-      filepath: ../backstage/plugins/kubernetes-node/src/auth/PinnipedHelper.test.ts
+      filepath: plugins/kubernetes-node/src/auth/PinnipedHelper.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 8205
+    x: 695
     'y': 370
   - id: pinnipedhelper
     type: background-worker
     name: PinnipedHelper Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/kubernetes-node/src/auth/PinnipedHelper.ts
+      filepath: plugins/kubernetes-node/src/auth/PinnipedHelper.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 10300
+    x: 830
     'y': 690
-  - id: googlegcsurlreader_test
+  - id: googleserviceaccountstrategy_test
     type: background-worker
-    name: GoogleGcsUrlReader.test Service (entrypoints)
+    name: GoogleServiceAccountStrategy.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/urlReader/lib/GoogleGcsUrlReader.test.ts
+      filepath: plugins/kubernetes-backend/src/auth/GoogleServiceAccountStrategy.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
-    external: true
-    x: 14900
-    'y': 1010
-  - id: googlegcsurlreader
+    external: false
+    x: 1830
+    'y': 370
+  - id: googleserviceaccountstrategy
     type: background-worker
-    name: GoogleGcsUrlReader Service (entrypoints)
+    name: GoogleServiceAccountStrategy Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/urlReader/lib/GoogleGcsUrlReader.ts
+      filepath: plugins/kubernetes-backend/src/auth/GoogleServiceAccountStrategy.ts
       namespaces: ''
       technology: TypeScript Domain Service
-    external: true
-    x: 14440
-    'y': 1010
-  - id: actionsclient_test
+    external: false
+    x: 2735
+    'y': 690
+  - id: azureidentitystrategy
     type: background-worker
-    name: ActionsClient.test Service (lib)
+    name: AzureIdentityStrategy Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-backend/src/auth/AzureIdentityStrategy.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3950
+    'y': 690
+  - id: anonymousstrategy
+    type: background-worker
+    name: AnonymousStrategy Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-backend/src/auth/AnonymousStrategy.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 6015
+    'y': 690
+  - id: awsiamstrategy_test
+    type: background-worker
+    name: AwsIamStrategy.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/cli-module-actions/src/lib/ActionsClient.test.ts
+      filepath: plugins/kubernetes-backend/src/auth/AwsIamStrategy.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
-    external: true
-    x: 15900
-    'y': 1010
-  - id: actionsclient
+    external: false
+    x: 2370
+    'y': 370
+  - id: dispatchstrategy
     type: background-worker
-    name: ActionsClient Service (lib)
+    name: DispatchStrategy Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-actions/src/lib/ActionsClient.ts
+      filepath: plugins/kubernetes-backend/src/auth/DispatchStrategy.ts
       namespaces: ''
       technology: TypeScript Domain Service
-    external: true
-    x: 15440
+    external: false
+    x: 6475
+    'y': 690
+  - id: serviceaccountstrategy_test
+    type: background-worker
+    name: ServiceAccountStrategy.test Service
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-backend/src/auth/ServiceAccountStrategy.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1830
+    'y': 690
+  - id: googlestrategy
+    type: background-worker
+    name: GoogleStrategy Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-backend/src/auth/GoogleStrategy.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 5095
+    'y': 690
+  - id: azureidentitystrategy_test
+    type: background-worker
+    name: AzureIdentityStrategy.test Service
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-backend/src/auth/AzureIdentityStrategy.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3275
+    'y': 370
+  - id: dispatchstrategy_test
+    type: background-worker
+    name: DispatchStrategy.test Service
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-backend/src/auth/DispatchStrategy.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3735
+    'y': 370
+  - id: aksstrategy
+    type: background-worker
+    name: AksStrategy Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-backend/src/auth/AksStrategy.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 4410
+    'y': 690
+  - id: builddefaultauthstrategymap
+    type: background-worker
+    name: buildDefaultAuthStrategyMap Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-backend/src/auth/buildDefaultAuthStrategyMap.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 4380
+    'y': 370
+  - id: aksstrategy_test
+    type: background-worker
+    name: AksStrategy.test Service
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-backend/src/auth/AksStrategy.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 5190
+    'y': 370
+  - id: oidcstrategy
+    type: background-worker
+    name: OidcStrategy Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-backend/src/auth/OidcStrategy.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 5555
+    'y': 690
+  - id: oidcstrategy_test
+    type: background-worker
+    name: OidcStrategy.test Service
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-backend/src/auth/OidcStrategy.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 6230
+    'y': 370
+  - id: awsiamstrategy
+    type: background-worker
+    name: AwsIamStrategy Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-backend/src/auth/AwsIamStrategy.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3195
+    'y': 690
+  - id: serviceaccountstrategy
+    type: background-worker
+    name: ServiceAccountStrategy Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-backend/src/auth/ServiceAccountStrategy.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3505
     'y': 1010
+  - id: httpjson
+    type: background-worker
+    name: httpJson Service
+    isTest: false
+    properties:
+      filepath: packages/cli-node/src/auth/httpJson.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 9490
+    'y': 690
+  - id: cliauth
+    type: background-worker
+    name: CliAuth Service
+    isTest: false
+    properties:
+      filepath: packages/cli-node/src/auth/CliAuth.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 10545
+    'y': 370
+  - id: cliauth_test
+    type: background-worker
+    name: CliAuth.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-node/src/auth/CliAuth.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 11325
+    'y': 50
+  - id: authenticator
+    type: rest-api
+    name: authenticator REST Endpoint (authenticator.ts)
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-auth0-provider/src/authenticator.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 7190
+    'y': 370
+  - id: types
+    type: gateway-api
+    name: types UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1275
+    'y': 1010
+  - id: extensions
+    type: gateway-api
+    name: extensions UI Component (extensions)
+    isTest: false
+    properties:
+      filepath: packages/core-plugin-api/src/extensions/extensions.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 370
+    'y': 690
+  - id: node
+    type: gateway-api
+    name: Node UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/DependencyGraph/Node.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1290
+    'y': 690
   - id: external-api-target
     type: rest-api
     name: External HTTP API Endpoint (External HTTP Services)
@@ -339,318 +295,341 @@ nodes:
     properties:
       description: Generic outbound web integration endpoints.
     external: true
-    x: 17250
-    'y': 1650
-  - id: errors
+    x: 4315
+    'y': 1010
+  - id: url
     type: background-worker
-    name: errors Service (errors.ts)
+    name: url Service (stages)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 15415
-    'y': 1650
+    x: 140
+    'y': 1010
+  - id: index_test
+    type: background-worker
+    name: index.test Service (commands)
+    isTest: true
+    properties:
+      filepath: packages/repo-tools/src/commands/package/schema/openapi/generate/index.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 7650
+    'y': 370
+  - id: config
+    type: gateway-api
+    name: config UI Component (layout)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1735
+    'y': 1010
   - id: error
     type: background-worker
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 4475
-    'y': 1650
-  - id: list
-    type: background-worker
-    name: list Service (commands)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-auth/src/commands/list.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 13980
+    x: 7840
     'y': 1010
-  - id: login
-    type: background-worker
-    name: login Service (commands)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-auth/src/commands/login.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 13520
-    'y': 1010
-  - id: logout
-    type: background-worker
-    name: logout Service (commands)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-auth/src/commands/logout.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 13060
-    'y': 1010
-  - id: select
-    type: background-worker
-    name: select Service (commands)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-auth/src/commands/select.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 12600
-    'y': 1010
-  - id: auth_test
-    type: background-worker
-    name: auth.test Service (hooks)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/kubernetes-react/src/hooks/auth.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 12140
-    'y': 1010
-  - id: auth
-    type: background-worker
-    name: auth Service (auth.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/search-backend-module-elasticsearch/src/auth.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 11680
-    'y': 1010
-  - id: prompt_test
-    type: background-worker
-    name: prompt.test Service (lib)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/cli-module-auth/src/lib/prompt.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 11220
-    'y': 1010
-  - id: prompt
-    type: background-worker
-    name: prompt Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-auth/src/lib/prompt.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 10760
-    'y': 1010
-  - id: storage_test
-    type: background-worker
-    name: storage.test Service (lib)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/cli-module-auth/src/lib/storage.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 9840
-    'y': 1010
-  - id: authenticator
-    type: background-worker
-    name: authenticator Service (authenticator.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/auth-backend-module-vmware-cloud-provider/src/authenticator.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 6055
-    'y': 370
-  - id: config
-    type: background-worker
-    name: config Service (collators)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 965
-    'y': 1650
-  - id: types
-    type: background-worker
-    name: types Service (types.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/user-settings-common/src/types.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 7000
-    'y': 1010
-  - id: frontend-client
+  - id: container
     type: gateway-api
-    name: Frontend Client App (Frontend Client Host)
-    properties:
-      description: The main user interface running React and Vite.
-      technology: React + TypeScript
-    external: true
-    x: 16940
-    'y': 1010
-  - id: express
-    type: rest-api
-    name: express REST Endpoint (types)
+    name: Container UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/packages/backend-openapi-utils/src/types/express.ts
+      filepath: packages/ui/src/components/Container/Container.tsx
       namespaces: ''
-      technology: REST Controller / Router
+      technology: React Component
     external: true
-    x: 17710
-    'y': 1650
-  - id: index_test
-    type: background-worker
-    name: index.test Service (index.test.ts)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/techdocs-common/src/index.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 4300
+    x: 2195
     'y': 1010
-  - id: resourcesroutes
-    type: rest-api
-    name: resourcesRoutes REST Endpoint (routes)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/routes/resourcesRoutes.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 16480
-    'y': 1010
-  - id: kubernetesinitializer
-    type: background-worker
-    name: KubernetesInitializer Service (service)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/service/KubernetesInitializer.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 3125
-    'y': 50
   - id: kubernetesproxy_test
     type: rest-api
     name: KubernetesProxy.test REST Endpoint (service)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/service/KubernetesProxy.test.ts
+      filepath: plugins/kubernetes-backend/src/service/KubernetesProxy.test.ts
       namespaces: ''
       technology: REST Controller / Router
     external: true
-    x: 1640
+    x: 8110
     'y': 370
   - id: kubernetesrouter
     type: rest-api
     name: KubernetesRouter REST Endpoint (service)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/kubernetes-backend/src/service/KubernetesRouter.ts
+      filepath: plugins/kubernetes-backend/src/service/KubernetesRouter.ts
       namespaces: ''
       technology: REST Controller / Router
     external: true
-    x: 9380
-    'y': 1010
-  - id: extensions
+    x: 8570
+    'y': 370
+  - id: kubernetesinitializer
     type: background-worker
-    name: extensions Service (extensions.ts)
+    name: KubernetesInitializer Service (service)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-node/src/extensions.ts
+      filepath: plugins/kubernetes-backend/src/service/KubernetesInitializer.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 3760
-    'y': 690
-  - id: url
+    x: 6095
+    'y': 50
+  - id: errors
     type: background-worker
-    name: url Service (stages)
+    name: errors Service (errors.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
+      filepath: packages/codemods/src/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 10300
+    x: 10840
     'y': 1010
-  - id: gcpbucketworkspaceprovider
+  - id: actionsclient
     type: background-worker
-    name: GcpBucketWorkspaceProvider Service (providers)
+    name: ActionsClient Service (lib)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gcp/src/providers/GcpBucketWorkspaceProvider.ts
+      filepath: packages/cli-module-actions/src/lib/ActionsClient.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 8840
-    'y': 1010
-  - id: googlestorage_test
-    type: rest-api
-    name: googleStorage.test REST Endpoint (stages)
+    x: 9030
+    'y': 370
+  - id: actionsclient_test
+    type: background-worker
+    name: ActionsClient.test Service (lib)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/techdocs-node/src/stages/publish/googleStorage.test.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 8380
-    'y': 1010
-  - id: googlestorage
-    type: rest-api
-    name: googleStorage REST Endpoint (stages)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/techdocs-node/src/stages/publish/googleStorage.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 7920
-    'y': 1010
-  - id: googlemigration
-    type: background-worker
-    name: GoogleMigration Service (stages)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/techdocs-node/src/stages/publish/migrations/GoogleMigration.ts
+      filepath: packages/cli-module-actions/src/lib/ActionsClient.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 7460
-    'y': 1010
+    x: 9490
+    'y': 370
+  - id: storage
+    type: background-worker
+    name: storage Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-auth/src/lib/storage.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 10490
+    'y': 690
+  - id: secretstore
+    type: background-worker
+    name: secretStore Service (secretStore.ts)
+    isTest: false
+    properties:
+      filepath: packages/cli-internal/src/secretStore.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 10950
+    'y': 690
+  - id: authidentifiers
+    type: background-worker
+    name: authIdentifiers Service (authIdentifiers.ts)
+    isTest: false
+    properties:
+      filepath: packages/cli-internal/src/authIdentifiers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 10030
+    'y': 690
 dependencies:
-  - from: googlegcsurlreader_test
-    to: storage
+  - from: authenticator
+    to: googlestrategy
+    type: direct-call
+    description: References class type / calls methods
+  - from: authenticator
+    to: oidcstrategy
+    type: direct-call
+    description: References class type / calls methods
+  - from: pinnipedhelper_test
+    to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: googlegcsurlreader
-    to: storage
+  - from: pinnipedhelper_test
+    to: extensions
     type: direct-call
     description: Executes local class methods / functions
-  - from: actionsclient_test
-    to: httpjson
+  - from: pinnipedhelper_test
+    to: pinnipedhelper
     type: direct-call
     description: Executes local class methods / functions
-  - from: actionsclient
-    to: httpjson
+  - from: pinnipedhelper_test
+    to: node
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: pinnipedhelper
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests
+  - from: pinnipedhelper
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: pinnipedhelper
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: index_test
+    to: dispatchstrategy
+    type: direct-call
+    description: References class type / calls methods
+  - from: googleserviceaccountstrategy_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googleserviceaccountstrategy_test
+    to: googleserviceaccountstrategy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googleserviceaccountstrategy_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: googleserviceaccountstrategy
+    to: container
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googleserviceaccountstrategy
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googleserviceaccountstrategy
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: azureidentitystrategy
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: awsiamstrategy_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: awsiamstrategy_test
+    to: awsiamstrategy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: awsiamstrategy_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: dispatchstrategy
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: serviceaccountstrategy_test
+    to: serviceaccountstrategy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: serviceaccountstrategy_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: googlestrategy
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: azureidentitystrategy_test
+    to: azureidentitystrategy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: azureidentitystrategy_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: dispatchstrategy_test
+    to: dispatchstrategy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: builddefaultauthstrategymap
+    to: aksstrategy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: builddefaultauthstrategymap
+    to: awsiamstrategy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: builddefaultauthstrategymap
+    to: azureidentitystrategy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: builddefaultauthstrategymap
+    to: googlestrategy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: builddefaultauthstrategymap
+    to: googleserviceaccountstrategy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: builddefaultauthstrategymap
+    to: anonymousstrategy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: builddefaultauthstrategymap
+    to: oidcstrategy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: builddefaultauthstrategymap
+    to: serviceaccountstrategy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: aksstrategy_test
+    to: aksstrategy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: oidcstrategy
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: oidcstrategy
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: oidcstrategy_test
+    to: oidcstrategy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: oidcstrategy_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: awsiamstrategy
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: kubernetesproxy_test
+    to: anonymousstrategy
+    type: direct-call
+    description: References class type / calls methods
+  - from: kubernetesrouter
+    to: dispatchstrategy
+    type: direct-call
+    description: References class type / calls methods
+  - from: kubernetesinitializer
+    to: builddefaultauthstrategymap
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: kubernetesinitializer
+    to: dispatchstrategy
     type: direct-call
     description: Executes local class methods / functions
   - from: httpjson
@@ -665,47 +644,35 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: list
+  - from: actionsclient
+    to: httpjson
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: actionsclient_test
+    to: httpjson
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: httpjson
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests
+  - from: cliauth
     to: storage
     type: direct-call
     description: Executes local class methods / functions
-  - from: login
-    to: storage
+  - from: cliauth
+    to: secretstore
     type: direct-call
     description: Executes local class methods / functions
-  - from: logout
-    to: storage
+  - from: cliauth
+    to: authidentifiers
     type: direct-call
     description: Executes local class methods / functions
-  - from: select
-    to: storage
+  - from: cliauth
+    to: httpjson
     type: direct-call
     description: Executes local class methods / functions
-  - from: auth_test
-    to: storage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: auth
-    to: storage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: prompt_test
-    to: storage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: prompt
-    to: storage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: storage_test
-    to: storage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: storage
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: storage
+  - from: cliauth
     to: error
     type: direct-call
     description: References class type / calls methods
@@ -729,239 +696,3 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: cliauth
-    to: storage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: cliauth
-    to: secretstore
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: cliauth
-    to: authidentifiers
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: cliauth
-    to: httpjson
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: cliauth
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: httpjson
-    to: external-api-target
-    type: direct-call
-    description: HMR outbound query requests
-  - from: authenticator
-    to: googlestrategy
-    type: direct-call
-    description: References class type / calls methods
-  - from: authenticator
-    to: oidcstrategy
-    type: direct-call
-    description: References class type / calls methods
-  - from: aksstrategy_test
-    to: aksstrategy
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: awsiamstrategy_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: awsiamstrategy_test
-    to: awsiamstrategy
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: awsiamstrategy_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: awsiamstrategy
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: azureidentitystrategy_test
-    to: azureidentitystrategy
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: azureidentitystrategy_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: azureidentitystrategy
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: dispatchstrategy_test
-    to: dispatchstrategy
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: dispatchstrategy
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: googleserviceaccountstrategy_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: googleserviceaccountstrategy_test
-    to: googleserviceaccountstrategy
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: googleserviceaccountstrategy_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: googleserviceaccountstrategy
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: googleserviceaccountstrategy
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: googlestrategy
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: oidcstrategy_test
-    to: oidcstrategy
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: oidcstrategy_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: oidcstrategy
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: oidcstrategy
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: serviceaccountstrategy_test
-    to: serviceaccountstrategy
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: serviceaccountstrategy_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: builddefaultauthstrategymap
-    to: aksstrategy
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: builddefaultauthstrategymap
-    to: awsiamstrategy
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: builddefaultauthstrategymap
-    to: azureidentitystrategy
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: builddefaultauthstrategymap
-    to: googlestrategy
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: builddefaultauthstrategymap
-    to: googleserviceaccountstrategy
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: builddefaultauthstrategymap
-    to: anonymousstrategy
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: builddefaultauthstrategymap
-    to: oidcstrategy
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: builddefaultauthstrategymap
-    to: serviceaccountstrategy
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: requirepermission
-    type: direct-call
-    description: Hits API routing gateway
-  - from: requirepermission
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: requirepermission
-    to: express
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: index_test
-    to: dispatchstrategy
-    type: direct-call
-    description: References class type / calls methods
-  - from: resourcesroutes
-    to: requirepermission
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: kubernetesinitializer
-    to: builddefaultauthstrategymap
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: kubernetesinitializer
-    to: dispatchstrategy
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: kubernetesproxy_test
-    to: anonymousstrategy
-    type: direct-call
-    description: References class type / calls methods
-  - from: kubernetesrouter
-    to: requirepermission
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: kubernetesrouter
-    to: dispatchstrategy
-    type: direct-call
-    description: References class type / calls methods
-  - from: pinnipedhelper_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: pinnipedhelper_test
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: pinnipedhelper_test
-    to: pinnipedhelper
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: pinnipedhelper
-    to: external-api-target
-    type: direct-call
-    description: HMR outbound query requests
-  - from: pinnipedhelper
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: pinnipedhelper
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: gcpbucketworkspaceprovider
-    to: storage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: googlestorage_test
-    to: storage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: googlestorage
-    to: storage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: googlemigration
-    to: storage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: types
-    to: storage
-    type: direct-call
-    description: Executes local class methods / functions

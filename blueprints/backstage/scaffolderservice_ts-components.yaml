@@ -7,23 +7,12 @@ nodes:
     name: scaffolderService Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-node/src/scaffolderService.ts
+      filepath: plugins/scaffolder-node/src/scaffolderService.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 830
     'y': 370
-  - id: scaffolderservice_test
-    type: background-worker
-    name: scaffolderService.test Service (scaffolderService.test.ts)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/scaffolder-node/src/scaffolderService.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 50
   - id: external-api-target
     type: rest-api
     name: External HTTP API Endpoint (External HTTP Services)
@@ -38,7 +27,7 @@ nodes:
     name: errors Service (errors.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      filepath: packages/codemods/src/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -49,7 +38,7 @@ nodes:
     name: integration Service (types)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/permission-common/src/types/integration.ts
+      filepath: plugins/permission-common/src/types/integration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -60,28 +49,35 @@ nodes:
     name: ScaffolderClient Service (ScaffolderClient.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-common/src/ScaffolderClient.ts
+      filepath: plugins/scaffolder-common/src/ScaffolderClient.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1520
     'y': 690
+  - id: scaffolderservice_test
+    type: background-worker
+    name: scaffolderService.test Service (scaffolderService.test.ts)
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-node/src/scaffolderService.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
   - id: scaffolderservicemock
     type: background-worker
     name: scaffolderServiceMock Service (testUtils)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-node/src/testUtils/scaffolderServiceMock.ts
+      filepath: plugins/scaffolder-node/src/testUtils/scaffolderServiceMock.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1060
     'y': 50
 dependencies:
-  - from: scaffolderservice_test
-    to: scaffolderservice
-    type: direct-call
-    description: Executes local class methods / functions
   - from: scaffolderservice
     to: external-api-target
     type: direct-call
@@ -102,6 +98,10 @@ dependencies:
     to: scaffolderclient
     type: direct-call
     description: References class type / calls methods
+  - from: scaffolderservice_test
+    to: scaffolderservice
+    type: direct-call
+    description: Executes local class methods / functions
   - from: scaffolderservicemock
     to: scaffolderservice
     type: direct-call

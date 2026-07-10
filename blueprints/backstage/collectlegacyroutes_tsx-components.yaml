@@ -7,18 +7,18 @@ nodes:
     name: collectLegacyRoutes UI Component
     isTest: false
     properties:
-      filepath: ../backstage/packages/core-compat-api/src/collectLegacyRoutes.tsx
+      filepath: packages/core-compat-api/src/collectLegacyRoutes.tsx
       namespaces: ''
       technology: React Component
     external: false
     x: 1060
     'y': 370
-  - id: collectlegacyroutes_test
+  - id: convertlegacyapp
     type: gateway-api
-    name: collectLegacyRoutes.test UI Component (collectLegacyRoutes.test.tsx)
-    isTest: true
+    name: convertLegacyApp UI Component (convertLegacyApp.ts)
+    isTest: false
     properties:
-      filepath: ../backstage/packages/core-compat-api/src/collectLegacyRoutes.test.tsx
+      filepath: packages/core-compat-api/src/convertLegacyApp.ts
       namespaces: ''
       technology: React Component
     external: true
@@ -38,7 +38,7 @@ nodes:
     name: convertLegacyRouteRef Service (convertLegacyRouteRef.ts)
     isTest: false
     properties:
-      filepath: ../backstage/packages/core-compat-api/src/convertLegacyRouteRef.ts
+      filepath: packages/core-compat-api/src/convertLegacyRouteRef.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -49,7 +49,7 @@ nodes:
     name: compatWrapper UI Component (compatWrapper)
     isTest: false
     properties:
-      filepath: ../backstage/packages/core-compat-api/src/compatWrapper/compatWrapper.tsx
+      filepath: packages/core-compat-api/src/compatWrapper/compatWrapper.tsx
       namespaces: ''
       technology: React Component
     external: true
@@ -60,7 +60,7 @@ nodes:
     name: collectEntityPageContents UI Component (collectEntityPageContents.ts)
     isTest: false
     properties:
-      filepath: ../backstage/packages/core-compat-api/src/collectEntityPageContents.ts
+      filepath: packages/core-compat-api/src/collectEntityPageContents.ts
       namespaces: ''
       technology: React Component
     external: true
@@ -71,7 +71,7 @@ nodes:
     name: normalizeRoutePath Service (normalizeRoutePath.ts)
     isTest: false
     properties:
-      filepath: ../backstage/packages/core-compat-api/src/normalizeRoutePath.ts
+      filepath: packages/core-compat-api/src/normalizeRoutePath.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -82,25 +82,25 @@ nodes:
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1980
     'y': 690
-  - id: convertlegacyapp
+  - id: collectlegacyroutes_test
     type: gateway-api
-    name: convertLegacyApp UI Component (convertLegacyApp.ts)
-    isTest: false
+    name: collectLegacyRoutes.test UI Component (collectLegacyRoutes.test.tsx)
+    isTest: true
     properties:
-      filepath: ../backstage/packages/core-compat-api/src/convertLegacyApp.ts
+      filepath: packages/core-compat-api/src/collectLegacyRoutes.test.tsx
       namespaces: ''
       technology: React Component
     external: true
     x: 1520
     'y': 50
 dependencies:
-  - from: collectlegacyroutes_test
+  - from: convertlegacyapp
     to: collectlegacyroutes
     type: direct-call
     description: Executes local class methods / functions
@@ -128,7 +128,7 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: convertlegacyapp
+  - from: collectlegacyroutes_test
     to: collectlegacyroutes
     type: direct-call
     description: Executes local class methods / functions

@@ -2,55 +2,29 @@ name: Backstage - v5 Components
 version: 1.0.0
 level: component
 nodes:
-  - id: types_test
-    type: background-worker
-    name: types.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/theme/src/v5/types.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 140
-    'y': 50
   - id: defaultcomponentthemes
     type: background-worker
     name: defaultComponentThemes Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/theme/src/v5/defaultComponentThemes.ts
+      filepath: packages/theme/src/v5/defaultComponentThemes.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 600
+    x: 140
     'y': 50
-  - id: types
+  - id: styles
     type: background-worker
-    name: types Service (types.ts)
+    name: styles Service (components)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      filepath: packages/core-components/src/components/LogViewer/styles.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 140
     'y': 370
-  - id: styles
-    type: background-worker
-    name: styles Service (homePageComponents)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/home/src/homePageComponents/QuickStart/styles.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 370
 dependencies:
-  - from: types_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
   - from: defaultcomponentthemes
     to: styles
     type: direct-call

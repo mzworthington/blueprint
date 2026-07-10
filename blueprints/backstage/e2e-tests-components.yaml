@@ -2,60 +2,75 @@ name: Backstage - e2e-tests Components
 version: 1.0.0
 level: component
 nodes:
-  - id: homepage_test
-    type: background-worker
-    name: HomePage.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/app/e2e-tests/HomePage.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 140
-    'y': 50
   - id: searchpage_test
     type: background-worker
     name: SearchPage.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/app/e2e-tests/SearchPage.test.ts
+      filepath: packages/app/e2e-tests/SearchPage.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 600
     'y': 50
-  - id: app_test
+  - id: homepage_test
     type: background-worker
-    name: app.test Service
+    name: HomePage.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/create-app/templates/legacy-app/packages/app/e2e-tests/app.test.ts
+      filepath: packages/app/e2e-tests/HomePage.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1060
+    x: 1100
     'y': 50
+  - id: test-utils
+    type: gateway-api
+    name: test-utils UI Component (test-utils.tsx)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-addons-test-utils/src/test-utils.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 370
+  - id: searchpage
+    type: gateway-api
+    name: SearchPage UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/create-app/templates/legacy-app/packages/app/src/components/search/SearchPage.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 600
+    'y': 370
   - id: test
     type: background-worker
     name: test Service (commands)
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-test-jest/src/commands/repo/test.ts
+      filepath: packages/cli-module-test-jest/src/commands/package/test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 600
+    x: 1060
     'y': 370
 dependencies:
+  - from: searchpage_test
+    to: test-utils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: searchpage_test
+    to: searchpage
+    type: direct-call
+    description: Executes local class methods / functions
   - from: homepage_test
     to: test
     type: direct-call
     description: Executes local class methods / functions
   - from: searchpage_test
-    to: test
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: app_test
     to: test
     type: direct-call
     description: Executes local class methods / functions

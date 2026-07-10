@@ -2,13 +2,13 @@ name: EShop - Microsoft.Extensions Components
 version: 1.0.0
 level: component
 nodes:
-  - id: hostenvironmentextensions
+  - id: eventbusbuilderextensions
     type: background-worker
-    name: HostEnvironmentExtensions Service
+    name: EventBusBuilderExtensions Service
     isTest: false
     properties:
-      filepath: ../eshop/src/Catalog.API/Extensions/HostEnvironmentExtensions.cs
-      namespaces: Microsoft.Extensions.Hosting
+      filepath: src/EventBus/Extensions/EventBusBuilderExtensions.cs
+      namespaces: Microsoft.Extensions.DependencyInjection
       technology: C# Domain Service
     external: false
     x: 140
@@ -18,52 +18,52 @@ nodes:
     name: IEventBusBuilder Service
     isTest: false
     properties:
-      filepath: ../eshop/src/EventBus/Abstractions/IEventBusBuilder.cs
+      filepath: src/EventBus/Abstractions/IEventBusBuilder.cs
       namespaces: Microsoft.Extensions.DependencyInjection
       technology: C# Domain Service
     external: false
-    x: 1290
+    x: 1060
     'y': 370
-  - id: eventbusbuilderextensions
-    type: background-worker
-    name: EventBusBuilderExtensions Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/EventBus/Extensions/EventBusBuilderExtensions.cs
-      namespaces: Microsoft.Extensions.DependencyInjection
-      technology: C# Domain Service
-    external: false
-    x: 600
-    'y': 50
   - id: rabbitmqdependencyinjectionextensions
     type: background-worker
     name: RabbitMqDependencyInjectionExtensions Service
     isTest: false
     properties:
-      filepath: ../eshop/src/EventBusRabbitMQ/RabbitMqDependencyInjectionExtensions.cs
+      filepath: src/EventBusRabbitMQ/RabbitMqDependencyInjectionExtensions.cs
       namespaces: Microsoft.Extensions.Hosting
       technology: C# Domain Service
     external: false
-    x: 1060
+    x: 600
     'y': 50
   - id: configurationextensions
     type: background-worker
     name: ConfigurationExtensions Service
     isTest: false
     properties:
-      filepath: ../eshop/src/eShop.ServiceDefaults/ConfigurationExtensions.cs
+      filepath: src/eShop.ServiceDefaults/ConfigurationExtensions.cs
       namespaces: Microsoft.Extensions.Configuration
+      technology: C# Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: hostenvironmentextensions
+    type: background-worker
+    name: HostEnvironmentExtensions Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Extensions/HostEnvironmentExtensions.cs
+      namespaces: Microsoft.Extensions.Hosting
       technology: C# Domain Service
     external: false
     x: 1520
     'y': 50
   - id: extensions
     type: background-worker
-    name: Extensions Service (eShop.ServiceDefaults)
+    name: Extensions Service (Webhooks.API)
     isTest: false
     properties:
-      filepath: ../eshop/src/eShop.ServiceDefaults/Extensions.cs
-      namespaces: eShop.ServiceDefaults
+      filepath: src/Webhooks.API/Extensions/Extensions.cs
+      namespaces: ''
       technology: C# Domain Service
     external: true
     x: 1980

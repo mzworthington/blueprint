@@ -7,20 +7,20 @@ nodes:
     name: createApp.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/create-app/src/createApp.test.ts
+      filepath: packages/create-app/src/createApp.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 600
+    x: 1060
     'y': 50
-  - id: tasks
-    type: background-worker
-    name: tasks Service (lib)
+  - id: test-utils
+    type: gateway-api
+    name: test-utils UI Component (test-utils.tsx)
     isTest: false
     properties:
-      filepath: ../backstage/packages/create-app/src/lib/tasks.ts
+      filepath: plugins/techdocs-addons-test-utils/src/test-utils.tsx
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
     x: 140
     'y': 370
@@ -29,30 +29,60 @@ nodes:
     name: createApp Service (createApp.ts)
     isTest: false
     properties:
-      filepath: ../backstage/packages/create-app/src/createApp.ts
+      filepath: packages/create-app/src/createApp.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 370
-  - id: testutils
+  - id: error
     type: background-worker
-    name: testUtils Service (testUtils.ts)
+    name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-react/src/testUtils.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1060
     'y': 370
+  - id: tasks
+    type: background-worker
+    name: tasks Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/create-app/src/lib/tasks.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 370
+  - id: testutils
+    type: background-worker
+    name: testUtils Service (__fixtures__)
+    isTest: false
+    properties:
+      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/testUtils.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 370
 dependencies:
   - from: createapp_test
-    to: tasks
+    to: test-utils
     type: direct-call
     description: Executes local class methods / functions
   - from: createapp_test
     to: createapp
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createapp_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: createapp_test
+    to: tasks
     type: direct-call
     description: Executes local class methods / functions
   - from: createapp_test

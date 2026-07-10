@@ -7,25 +7,40 @@ nodes:
     name: convertLegacyPlugin Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/core-compat-api/src/convertLegacyPlugin.ts
+      filepath: packages/core-compat-api/src/convertLegacyPlugin.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 140
-    'y': 50
+    'y': 370
   - id: convertlegacyrouteref
     type: background-worker
     name: convertLegacyRouteRef Service (convertLegacyRouteRef.ts)
     isTest: false
     properties:
-      filepath: ../backstage/packages/core-compat-api/src/convertLegacyRouteRef.ts
+      filepath: packages/core-compat-api/src/convertLegacyRouteRef.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 140
-    'y': 370
+    'y': 690
+  - id: convertlegacyplugin_test
+    type: background-worker
+    name: convertLegacyPlugin.test Service (convertLegacyPlugin.test.tsx)
+    isTest: true
+    properties:
+      filepath: packages/core-compat-api/src/convertLegacyPlugin.test.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
 dependencies:
   - from: convertlegacyplugin
     to: convertlegacyrouteref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: convertlegacyplugin_test
+    to: convertlegacyplugin
     type: direct-call
     description: Executes local class methods / functions

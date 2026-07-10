@@ -7,25 +7,40 @@ nodes:
     name: resolution.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/frontend-defaults/src/resolution.test.ts
+      filepath: packages/frontend-defaults/src/resolution.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 140
+    x: 370
     'y': 50
   - id: resolution
     type: background-worker
     name: resolution Service (resolution.ts)
     isTest: false
     properties:
-      filepath: ../backstage/packages/frontend-defaults/src/resolution.ts
+      filepath: packages/frontend-defaults/src/resolution.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 140
     'y': 370
+  - id: test-utils
+    type: gateway-api
+    name: test-utils UI Component (test-utils.tsx)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-addons-test-utils/src/test-utils.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 600
+    'y': 370
 dependencies:
   - from: resolution_test
     to: resolution
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolution_test
+    to: test-utils
     type: direct-call
     description: Executes local class methods / functions

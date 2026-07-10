@@ -2,28 +2,72 @@ name: Backstage - features Components
 version: 1.0.0
 level: component
 nodes:
-  - id: features_test
-    type: background-worker
-    name: features.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/backend-dynamic-feature-service/src/features/features.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2020
-    'y': 50
   - id: features
     type: background-worker
     name: features Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/backend-dynamic-feature-service/src/features/features.ts
+      filepath: packages/backend-dynamic-feature-service/src/features/features.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 410
     'y': 370
+  - id: features_test
+    type: background-worker
+    name: features.test Service
+    isTest: true
+    properties:
+      filepath: packages/backend-dynamic-feature-service/src/features/features.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2020
+    'y': 50
+  - id: config
+    type: gateway-api
+    name: config UI Component (layout)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 690
+  - id: plugin-scanner
+    type: background-worker
+    name: plugin-scanner Service (scanner)
+    isTest: false
+    properties:
+      filepath: packages/backend-dynamic-feature-service/src/scanner/plugin-scanner.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: schemas
+    type: background-worker
+    name: schemas Service (schemas)
+    isTest: false
+    properties:
+      filepath: packages/backend-dynamic-feature-service/src/schemas/schemas.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+  - id: frontendremotesserver
+    type: background-worker
+    name: frontendRemotesServer Service (server)
+    isTest: false
+    properties:
+      filepath: packages/backend-dynamic-feature-service/src/server/frontendRemotesServer.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2520
+    'y': 690
   - id: external-api-target
     type: rest-api
     name: External HTTP API Endpoint (External HTTP Services)
@@ -38,7 +82,7 @@ nodes:
     name: CommonJSModuleLoader Service (loader)
     isTest: false
     properties:
-      filepath: ../backstage/packages/backend-dynamic-feature-service/src/loader/CommonJSModuleLoader.ts
+      filepath: packages/backend-dynamic-feature-service/src/loader/CommonJSModuleLoader.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -46,71 +90,43 @@ nodes:
     'y': 370
   - id: testutils
     type: background-worker
-    name: testUtils Service (testUtils.ts)
+    name: testUtils Service (__fixtures__)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-react/src/testUtils.ts
+      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/testUtils.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1790
     'y': 370
-  - id: frontendremotesserver
-    type: background-worker
-    name: frontendRemotesServer Service (server)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-dynamic-feature-service/src/server/frontendRemotesServer.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2520
-    'y': 690
   - id: error
     type: background-worker
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 2250
     'y': 370
-  - id: config
-    type: background-worker
-    name: config Service (collators)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 140
-    'y': 690
-  - id: plugin-scanner
-    type: background-worker
-    name: plugin-scanner Service (scanner)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-dynamic-feature-service/src/scanner/plugin-scanner.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 690
-  - id: schemas
-    type: background-worker
-    name: schemas Service (schemas)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-dynamic-feature-service/src/schemas/schemas.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1060
-    'y': 690
 dependencies:
+  - from: features
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: features
+    to: plugin-scanner
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: features
+    to: schemas
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: features
+    to: frontendremotesserver
+    type: direct-call
+    description: Executes local class methods / functions
   - from: features_test
     to: external-api-target
     type: direct-call
@@ -171,22 +187,6 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: features
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: features
-    to: plugin-scanner
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: features
-    to: schemas
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: features
-    to: frontendremotesserver
-    type: direct-call
-    description: Executes local class methods / functions
   - from: schemas
     to: features
     type: direct-call

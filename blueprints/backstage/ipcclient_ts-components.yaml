@@ -7,29 +7,29 @@ nodes:
     name: ipcClient Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/backend-dev-utils/src/ipcClient.ts
+      filepath: packages/backend-dev-utils/src/ipcClient.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 370
     'y': 370
-  - id: devdatastore_test
-    type: background-worker
-    name: DevDataStore.test Service (DevDataStore.test.ts)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/backend-dev-utils/src/DevDataStore.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 140
-    'y': 50
   - id: devdatastore
     type: background-worker
     name: DevDataStore Service (DevDataStore.ts)
     isTest: false
     properties:
-      filepath: ../backstage/packages/backend-dev-utils/src/DevDataStore.ts
+      filepath: packages/backend-dev-utils/src/DevDataStore.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: devdatastore_test
+    type: background-worker
+    name: DevDataStore.test Service (DevDataStore.test.ts)
+    isTest: true
+    properties:
+      filepath: packages/backend-dev-utils/src/DevDataStore.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -40,18 +40,18 @@ nodes:
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 370
     'y': 690
 dependencies:
-  - from: devdatastore_test
+  - from: devdatastore
     to: ipcclient
     type: direct-call
     description: Executes local class methods / functions
-  - from: devdatastore
+  - from: devdatastore_test
     to: ipcclient
     type: direct-call
     description: Executes local class methods / functions

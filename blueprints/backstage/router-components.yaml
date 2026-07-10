@@ -2,56 +2,34 @@ name: Backstage - router Components
 version: 1.0.0
 level: component
 nodes:
-  - id: azuredevopseventrouter_test
+  - id: gerriteventrouter
     type: background-worker
-    name: AzureDevOpsEventRouter.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/events-backend-module-azure/src/router/AzureDevOpsEventRouter.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1060
-    'y': 50
-  - id: azuredevopseventrouter
-    type: background-worker
-    name: AzureDevOpsEventRouter Service
+    name: GerritEventRouter Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/events-backend-module-azure/src/router/AzureDevOpsEventRouter.ts
+      filepath: plugins/events-backend-module-gerrit/src/router/GerritEventRouter.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 560
+    x: 790
     'y': 370
-  - id: bitbucketcloudeventrouter_test
+  - id: gerriteventrouter_test
     type: background-worker
-    name: BitbucketCloudEventRouter.test Service
+    name: GerritEventRouter.test Service
     isTest: true
     properties:
-      filepath: ../backstage/plugins/events-backend-module-bitbucket-cloud/src/router/BitbucketCloudEventRouter.test.ts
+      filepath: plugins/events-backend-module-gerrit/src/router/GerritEventRouter.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 1520
     'y': 50
-  - id: bitbucketcloudeventrouter
-    type: background-worker
-    name: BitbucketCloudEventRouter Service
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/events-backend-module-bitbucket-cloud/src/router/BitbucketCloudEventRouter.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1020
-    'y': 370
   - id: bitbucketservereventrouter_test
     type: background-worker
     name: BitbucketServerEventRouter.test Service
     isTest: true
     properties:
-      filepath: ../backstage/plugins/events-backend-module-bitbucket-server/src/router/BitbucketServerEventRouter.test.ts
+      filepath: plugins/events-backend-module-bitbucket-server/src/router/BitbucketServerEventRouter.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
@@ -62,186 +40,187 @@ nodes:
     name: BitbucketServerEventRouter Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/events-backend-module-bitbucket-server/src/router/BitbucketServerEventRouter.ts
+      filepath: plugins/events-backend-module-bitbucket-server/src/router/BitbucketServerEventRouter.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2670
+    x: 1250
     'y': 370
-  - id: gerriteventrouter_test
+  - id: bitbucketcloudeventrouter
     type: background-worker
-    name: GerritEventRouter.test Service
+    name: BitbucketCloudEventRouter Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-cloud/src/router/BitbucketCloudEventRouter.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1710
+    'y': 370
+  - id: bitbucketcloudeventrouter_test
+    type: background-worker
+    name: BitbucketCloudEventRouter.test Service
     isTest: true
     properties:
-      filepath: ../backstage/plugins/events-backend-module-gerrit/src/router/GerritEventRouter.test.ts
+      filepath: plugins/events-backend-module-bitbucket-cloud/src/router/BitbucketCloudEventRouter.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 2440
     'y': 50
-  - id: gerriteventrouter
-    type: background-worker
-    name: GerritEventRouter Service
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/events-backend-module-gerrit/src/router/GerritEventRouter.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 3590
-    'y': 370
   - id: githubeventrouter_test
     type: background-worker
     name: GithubEventRouter.test Service
     isTest: true
     properties:
-      filepath: ../backstage/plugins/events-backend-module-github/src/router/GithubEventRouter.test.ts
+      filepath: plugins/events-backend-module-github/src/router/GithubEventRouter.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 3360
+    x: 2900
     'y': 50
   - id: githubeventrouter
     type: background-worker
     name: GithubEventRouter Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/events-backend-module-github/src/router/GithubEventRouter.ts
+      filepath: plugins/events-backend-module-github/src/router/GithubEventRouter.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 4280
+    x: 3780
+    'y': 370
+  - id: gitlabeventrouter
+    type: background-worker
+    name: GitlabEventRouter Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-gitlab/src/router/GitlabEventRouter.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 4240
     'y': 370
   - id: gitlabeventrouter_test
     type: background-worker
     name: GitlabEventRouter.test Service
     isTest: true
     properties:
-      filepath: ../backstage/plugins/events-backend-module-gitlab/src/router/GitlabEventRouter.test.ts
+      filepath: plugins/events-backend-module-gitlab/src/router/GitlabEventRouter.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3360
+    'y': 50
+  - id: azuredevopseventrouter
+    type: background-worker
+    name: AzureDevOpsEventRouter Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-azure/src/router/AzureDevOpsEventRouter.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 4700
+    'y': 370
+  - id: azuredevopseventrouter_test
+    type: background-worker
+    name: AzureDevOpsEventRouter.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-azure/src/router/AzureDevOpsEventRouter.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 3820
-    'y': 50
-  - id: gitlabeventrouter
-    type: background-worker
-    name: GitlabEventRouter Service
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/events-backend-module-gitlab/src/router/GitlabEventRouter.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 4740
-    'y': 370
-  - id: testeventsservice
-    type: background-worker
-    name: TestEventsService Service (testUtils)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/events-backend-test-utils/src/testUtils/TestEventsService.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2020
-    'y': 370
-  - id: eventsmoduleazuredevopseventrouter
-    type: background-worker
-    name: eventsModuleAzureDevOpsEventRouter Service (service)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/events-backend-module-azure/src/service/eventsModuleAzureDevOpsEventRouter.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 140
-    'y': 50
-  - id: eventsmodulebitbucketcloudeventrouter
-    type: background-worker
-    name: eventsModuleBitbucketCloudEventRouter Service (service)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/events-backend-module-bitbucket-cloud/src/service/eventsModuleBitbucketCloudEventRouter.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 50
-  - id: eventsmodulebitbucketservereventrouter
-    type: background-worker
-    name: eventsModuleBitbucketServerEventRouter Service (service)
-    isTest: false
-    properties:
-      filepath: >-
-        ../backstage/plugins/events-backend-module-bitbucket-server/src/service/eventsModuleBitbucketServerEventRouter.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2900
     'y': 50
   - id: eventsmodulegerriteventrouter
     type: background-worker
     name: eventsModuleGerritEventRouter Service (service)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/events-backend-module-gerrit/src/service/eventsModuleGerritEventRouter.ts
+      filepath: plugins/events-backend-module-gerrit/src/service/eventsModuleGerritEventRouter.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 4280
+    x: 140
+    'y': 50
+  - id: testeventsservice
+    type: background-worker
+    name: TestEventsService Service (testUtils)
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-test-utils/src/testUtils/TestEventsService.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2630
+    'y': 370
+  - id: eventsmodulebitbucketservereventrouter
+    type: background-worker
+    name: eventsModuleBitbucketServerEventRouter Service (service)
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-server/src/service/eventsModuleBitbucketServerEventRouter.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: eventsmodulebitbucketcloudeventrouter
+    type: background-worker
+    name: eventsModuleBitbucketCloudEventRouter Service (service)
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-cloud/src/service/eventsModuleBitbucketCloudEventRouter.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
     'y': 50
   - id: eventsmodulegithubeventrouter
     type: background-worker
     name: eventsModuleGithubEventRouter Service (service)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/events-backend-module-github/src/service/eventsModuleGithubEventRouter.ts
+      filepath: plugins/events-backend-module-github/src/service/eventsModuleGithubEventRouter.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 4740
+    x: 4280
     'y': 50
   - id: eventsmodulegitlabeventrouter
     type: background-worker
     name: eventsModuleGitlabEventRouter Service (service)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/events-backend-module-gitlab/src/service/eventsModuleGitlabEventRouter.ts
+      filepath: plugins/events-backend-module-gitlab/src/service/eventsModuleGitlabEventRouter.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 4740
+    'y': 50
+  - id: eventsmoduleazuredevopseventrouter
+    type: background-worker
+    name: eventsModuleAzureDevOpsEventRouter Service (service)
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-azure/src/service/eventsModuleAzureDevOpsEventRouter.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 5200
     'y': 50
 dependencies:
-  - from: azuredevopseventrouter_test
-    to: azuredevopseventrouter
+  - from: eventsmodulegerriteventrouter
+    to: gerriteventrouter
     type: direct-call
     description: Executes local class methods / functions
-  - from: azuredevopseventrouter_test
-    to: testeventsservice
-    type: direct-call
-    description: References class type / calls methods
-  - from: eventsmoduleazuredevopseventrouter
-    to: azuredevopseventrouter
+  - from: gerriteventrouter_test
+    to: gerriteventrouter
     type: direct-call
     description: Executes local class methods / functions
-  - from: bitbucketcloudeventrouter_test
-    to: bitbucketcloudeventrouter
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: bitbucketcloudeventrouter_test
-    to: testeventsservice
-    type: direct-call
-    description: References class type / calls methods
-  - from: eventsmodulebitbucketcloudeventrouter
-    to: bitbucketcloudeventrouter
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: bitbucketservereventrouter_test
-    to: bitbucketservereventrouter
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: bitbucketservereventrouter_test
+  - from: gerriteventrouter_test
     to: testeventsservice
     type: direct-call
     description: References class type / calls methods
@@ -249,23 +228,23 @@ dependencies:
     to: bitbucketservereventrouter
     type: direct-call
     description: Executes local class methods / functions
-  - from: gerriteventrouter_test
-    to: gerriteventrouter
+  - from: bitbucketservereventrouter_test
+    to: bitbucketservereventrouter
     type: direct-call
     description: Executes local class methods / functions
-  - from: gerriteventrouter_test
+  - from: bitbucketservereventrouter_test
     to: testeventsservice
     type: direct-call
     description: References class type / calls methods
-  - from: eventsmodulegerriteventrouter
-    to: gerriteventrouter
+  - from: eventsmodulebitbucketcloudeventrouter
+    to: bitbucketcloudeventrouter
     type: direct-call
     description: Executes local class methods / functions
-  - from: githubeventrouter_test
-    to: githubeventrouter
+  - from: bitbucketcloudeventrouter_test
+    to: bitbucketcloudeventrouter
     type: direct-call
     description: Executes local class methods / functions
-  - from: githubeventrouter_test
+  - from: bitbucketcloudeventrouter_test
     to: testeventsservice
     type: direct-call
     description: References class type / calls methods
@@ -273,6 +252,18 @@ dependencies:
     to: githubeventrouter
     type: direct-call
     description: Executes local class methods / functions
+  - from: githubeventrouter_test
+    to: githubeventrouter
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: githubeventrouter_test
+    to: testeventsservice
+    type: direct-call
+    description: References class type / calls methods
+  - from: eventsmodulegitlabeventrouter
+    to: gitlabeventrouter
+    type: direct-call
+    description: Executes local class methods / functions
   - from: gitlabeventrouter_test
     to: gitlabeventrouter
     type: direct-call
@@ -281,7 +272,15 @@ dependencies:
     to: testeventsservice
     type: direct-call
     description: References class type / calls methods
-  - from: eventsmodulegitlabeventrouter
-    to: gitlabeventrouter
+  - from: eventsmoduleazuredevopseventrouter
+    to: azuredevopseventrouter
     type: direct-call
     description: Executes local class methods / functions
+  - from: azuredevopseventrouter_test
+    to: azuredevopseventrouter
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: azuredevopseventrouter_test
+    to: testeventsservice
+    type: direct-call
+    description: References class type / calls methods

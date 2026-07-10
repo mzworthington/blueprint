@@ -7,7 +7,7 @@ nodes:
     name: conversion Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-node/src/conversion.ts
+      filepath: plugins/catalog-node/src/conversion.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
@@ -18,119 +18,130 @@ nodes:
     name: DefaultCatalogDatabase Database (database)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/DefaultCatalogDatabase.ts
+      filepath: plugins/catalog-backend/src/database/DefaultCatalogDatabase.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: true
     x: 140
     'y': 50
-  - id: defaultprocessingdatabase_test
+  - id: getdeferredstitchableentities
     type: relational-database
-    name: DefaultProcessingDatabase.test Database (database)
-    isTest: true
+    name: getDeferredStitchableEntities Database (database)
+    isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/DefaultProcessingDatabase.test.ts
+      filepath: plugins/catalog-backend/src/database/operations/stitcher/getDeferredStitchableEntities.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: true
     x: 600
-    'y': 50
-  - id: defaultprocessingdatabase
-    type: relational-database
-    name: DefaultProcessingDatabase Database (database)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/DefaultProcessingDatabase.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 1060
-    'y': 50
-  - id: defaultproviderdatabase
-    type: relational-database
-    name: DefaultProviderDatabase Database (database)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/DefaultProviderDatabase.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 1520
-    'y': 50
-  - id: conversion_test
-    type: background-worker
-    name: conversion.test Service (database)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/conversion.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1980
     'y': 50
   - id: errors
     type: background-worker
     name: errors Service (errors.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      filepath: packages/codemods/src/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 2210
     'y': 690
-  - id: getdeferredstitchableentities
+  - id: conversion_test
+    type: background-worker
+    name: conversion.test Service (database)
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend/src/database/conversion.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 50
+  - id: defaultprocessingdatabase
     type: relational-database
-    name: getDeferredStitchableEntities Database (database)
+    name: DefaultProcessingDatabase Database (database)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/database/operations/stitcher/getDeferredStitchableEntities.ts
+      filepath: plugins/catalog-backend/src/database/DefaultProcessingDatabase.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 1520
+    'y': 50
+  - id: defaultprocessingdatabase_test
+    type: relational-database
+    name: DefaultProcessingDatabase.test Database (database)
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend/src/database/DefaultProcessingDatabase.test.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 1980
+    'y': 50
+  - id: defaultproviderdatabase
+    type: relational-database
+    name: DefaultProviderDatabase Database (database)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/database/DefaultProviderDatabase.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: true
     x: 2440
     'y': 50
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2670
+    'y': 690
   - id: processoroutputcollector
     type: background-worker
     name: ProcessorOutputCollector Service (processing)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/processing/ProcessorOutputCollector.ts
+      filepath: plugins/catalog-backend/src/processing/ProcessorOutputCollector.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 2900
-    'y': 50
-  - id: configlocationentityprovider
-    type: background-worker
-    name: ConfigLocationEntityProvider Service (providers)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/providers/ConfigLocationEntityProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 3360
     'y': 50
   - id: defaultlocationstore_test
     type: background-worker
     name: DefaultLocationStore.test Service (providers)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/providers/DefaultLocationStore.test.ts
+      filepath: plugins/catalog-backend/src/providers/DefaultLocationStore.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 3820
+    x: 3360
     'y': 50
   - id: defaultlocationstore
     type: relational-database
     name: DefaultLocationStore Database (providers)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/providers/DefaultLocationStore.ts
+      filepath: plugins/catalog-backend/src/providers/DefaultLocationStore.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
+    external: true
+    x: 3820
+    'y': 50
+  - id: configlocationentityprovider
+    type: background-worker
+    name: ConfigLocationEntityProvider Service (providers)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/providers/ConfigLocationEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
     external: true
     x: 4280
     'y': 50
@@ -139,41 +150,18 @@ nodes:
     name: DefaultLocationService Service (service)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/DefaultLocationService.ts
+      filepath: plugins/catalog-backend/src/service/DefaultLocationService.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 4740
     'y': 50
-  - id: error
-    type: background-worker
-    name: error Service (serialization)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2670
-    'y': 690
 dependencies:
   - from: defaultcatalogdatabase
     to: conversion
     type: direct-call
     description: Executes local class methods / functions
-  - from: defaultprocessingdatabase_test
-    to: conversion
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultprocessingdatabase
-    to: conversion
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultproviderdatabase
-    to: conversion
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: conversion_test
+  - from: getdeferredstitchableentities
     to: conversion
     type: direct-call
     description: Executes local class methods / functions
@@ -181,15 +169,27 @@ dependencies:
     to: errors
     type: direct-call
     description: Executes local class methods / functions
-  - from: getdeferredstitchableentities
+  - from: conversion_test
     to: conversion
     type: direct-call
     description: Executes local class methods / functions
+  - from: defaultprocessingdatabase
+    to: conversion
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultprocessingdatabase_test
+    to: conversion
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultproviderdatabase
+    to: conversion
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: conversion
+    to: error
+    type: direct-call
+    description: References class type / calls methods
   - from: processoroutputcollector
-    to: conversion
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: configlocationentityprovider
     to: conversion
     type: direct-call
     description: Executes local class methods / functions
@@ -201,11 +201,11 @@ dependencies:
     to: conversion
     type: direct-call
     description: Executes local class methods / functions
+  - from: configlocationentityprovider
+    to: conversion
+    type: direct-call
+    description: Executes local class methods / functions
   - from: defaultlocationservice
     to: conversion
     type: direct-call
     description: Executes local class methods / functions
-  - from: conversion
-    to: error
-    type: direct-call
-    description: References class type / calls methods

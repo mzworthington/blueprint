@@ -2,45 +2,56 @@ name: Backstage - engine Components
 version: 1.0.0
 level: component
 nodes:
-  - id: incrementalingestionengine_test
-    type: background-worker
-    name: IncrementalIngestionEngine.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend-module-incremental-ingestion/src/engine/IncrementalIngestionEngine.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 260
-    'y': 50
   - id: incrementalingestionengine
     type: background-worker
     name: IncrementalIngestionEngine Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend-module-incremental-ingestion/src/engine/IncrementalIngestionEngine.ts
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/engine/IncrementalIngestionEngine.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1060
+    x: 1385
     'y': 370
-  - id: types
+  - id: incrementalingestionengine_test
     type: background-worker
-    name: types Service (types.ts)
+    name: IncrementalIngestionEngine.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/engine/IncrementalIngestionEngine.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 680
+    'y': 50
+  - id: wrapperproviders
+    type: relational-database
+    name: WrapperProviders Database (module)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/module/WrapperProviders.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 1465
+    'y': 50
+  - id: alpha
+    type: background-worker
+    name: alpha Service (alpha.ts)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/alpha.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 600
+    x: 1060
     'y': 690
-  - id: alpha
+  - id: types
     type: gateway-api
-    name: alpha UI Component (alpha.ts)
+    name: types UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-react/src/alpha.ts
+      filepath: packages/core-components/src/components/TabbedLayout/types.ts
       namespaces: ''
       technology: React Component
     external: true
@@ -51,19 +62,18 @@ nodes:
     name: IncrementalIngestionDatabaseManager Database (database)
     isTest: false
     properties:
-      filepath: >-
-        ../backstage/plugins/catalog-backend-module-incremental-ingestion/src/database/IncrementalIngestionDatabaseManager.ts
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/database/IncrementalIngestionDatabaseManager.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: true
-    x: 1060
+    x: 600
     'y': 690
   - id: errors
     type: background-worker
     name: errors Service (errors.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      filepath: packages/codemods/src/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -74,34 +84,15 @@ nodes:
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1980
     'y': 690
-  - id: wrapperproviders
-    type: relational-database
-    name: WrapperProviders Database (module)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend-module-incremental-ingestion/src/module/WrapperProviders.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 1100
-    'y': 50
 dependencies:
-  - from: incrementalingestionengine_test
+  - from: wrapperproviders
     to: incrementalingestionengine
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: incrementalingestionengine_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: incrementalingestionengine_test
-    to: alpha
     type: direct-call
     description: Executes local class methods / functions
   - from: incrementalingestionengine
@@ -124,7 +115,15 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: wrapperproviders
+  - from: incrementalingestionengine_test
     to: incrementalingestionengine
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: incrementalingestionengine_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: incrementalingestionengine_test
+    to: alpha
     type: direct-call
     description: Executes local class methods / functions

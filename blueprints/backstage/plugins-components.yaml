@@ -2,75 +2,45 @@ name: Backstage - plugins Components
 version: 1.0.0
 level: component
 nodes:
-  - id: collectors
-    type: background-worker
-    name: collectors Service
-    isTest: false
+  - id: collectors_test
+    type: gateway-api
+    name: collectors.test UI Component
+    isTest: true
     properties:
-      filepath: ../backstage/packages/core-app-api/src/plugins/collectors.ts
+      filepath: packages/core-app-api/src/plugins/collectors.test.tsx
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: false
-    x: 600
-    'y': 370
+    x: 370
+    'y': 50
   - id: traversal
     type: gateway-api
     name: traversal UI Component (extensions)
     isTest: false
     properties:
-      filepath: ../backstage/packages/core-app-api/src/extensions/traversal.ts
+      filepath: packages/core-app-api/src/extensions/traversal.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 370
+  - id: collectors
+    type: gateway-api
+    name: collectors UI Component (routing)
+    isTest: false
+    properties:
+      filepath: packages/core-app-api/src/routing/collectors.tsx
       namespaces: ''
       technology: React Component
     external: true
     x: 600
-    'y': 690
-  - id: routeresolver_beta_test
-    type: background-worker
-    name: RouteResolver.beta.test Service (routing)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/core-app-api/src/routing/RouteResolver.beta.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 140
-    'y': 50
-  - id: routeresolver_compat_test
-    type: background-worker
-    name: RouteResolver.compat.test Service (routing)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/core-app-api/src/routing/RouteResolver.compat.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 50
-  - id: routeresolver_stable_test
-    type: background-worker
-    name: RouteResolver.stable.test Service (routing)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/core-app-api/src/routing/RouteResolver.stable.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1060
-    'y': 50
+    'y': 370
 dependencies:
-  - from: collectors
+  - from: collectors_test
     to: traversal
     type: direct-call
     description: Executes local class methods / functions
-  - from: routeresolver_beta_test
-    to: collectors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: routeresolver_compat_test
-    to: collectors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: routeresolver_stable_test
+  - from: collectors_test
     to: collectors
     type: direct-call
     description: Executes local class methods / functions

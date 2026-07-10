@@ -2,167 +2,163 @@ name: Backstage - ingestion Components
 version: 1.0.0
 level: component
 nodes:
-  - id: catalogrules_test
-    type: background-worker
-    name: CatalogRules.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/ingestion/CatalogRules.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 140
-    'y': 50
-  - id: catalogrules
-    type: background-worker
-    name: CatalogRules Service
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/ingestion/CatalogRules.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1060
-    'y': 370
   - id: locationanalyzer
     type: background-worker
     name: LocationAnalyzer Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-common/src/ingestion/LocationAnalyzer.ts
+      filepath: plugins/catalog-common/src/ingestion/LocationAnalyzer.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2250
+    x: 2885
     'y': 370
+  - id: catalogrules
+    type: background-worker
+    name: CatalogRules Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/ingestion/CatalogRules.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1275
+    'y': 370
+  - id: catalogrules_test
+    type: background-worker
+    name: CatalogRules.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend/src/ingestion/CatalogRules.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1100
+    'y': 50
   - id: recursivepartial_test
     type: background-worker
     name: RecursivePartial.test Service
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-common/src/ingestion/RecursivePartial.test.ts
+      filepath: plugins/catalog-common/src/ingestion/RecursivePartial.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 3210
+    x: 1735
     'y': 370
   - id: recursivepartial
     type: background-worker
     name: RecursivePartial Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-common/src/ingestion/RecursivePartial.ts
+      filepath: plugins/catalog-common/src/ingestion/RecursivePartial.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2980
-    'y': 690
-  - id: config
-    type: background-worker
-    name: config Service (collators)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 140
-    'y': 690
-  - id: error
-    type: background-worker
-    name: error Service (serialization)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1330
+    x: 2140
     'y': 690
   - id: integration
     type: background-worker
     name: integration Service (types)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/permission-common/src/types/integration.ts
+      filepath: plugins/permission-common/src/types/integration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1790
+    x: 2600
+    'y': 690
+  - id: config
+    type: gateway-api
+    name: config UI Component (layout)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 910
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1370
     'y': 690
   - id: defaultcatalogprocessingorchestrator_test
     type: background-worker
     name: DefaultCatalogProcessingOrchestrator.test Service (processing)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/processing/DefaultCatalogProcessingOrchestrator.test.ts
+      filepath: plugins/catalog-backend/src/processing/DefaultCatalogProcessingOrchestrator.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 600
+    x: 140
     'y': 50
   - id: defaultcatalogprocessingorchestrator
     type: background-worker
     name: DefaultCatalogProcessingOrchestrator Service (processing)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/processing/DefaultCatalogProcessingOrchestrator.ts
+      filepath: plugins/catalog-backend/src/processing/DefaultCatalogProcessingOrchestrator.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1060
+    x: 600
     'y': 50
-  - id: catalogbuilder
-    type: rest-api
-    name: CatalogBuilder REST Endpoint (service)
-    isTest: false
+  - id: integration_test
+    type: relational-database
+    name: integration.test Database (tests)
+    isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/CatalogBuilder.ts
+      filepath: plugins/catalog-backend/src/tests/integration.test.ts
       namespaces: ''
-      technology: REST Controller / Router
+      technology: Prisma / SQL Database Client
     external: true
-    x: 1710
+    x: 1925
     'y': 50
   - id: parseentitytransformparams
     type: background-worker
     name: parseEntityTransformParams Service (service)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/service/request/parseEntityTransformParams.ts
+      filepath: plugins/catalog-backend/src/service/request/parseEntityTransformParams.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2750
+    x: 2195
     'y': 370
-  - id: integration_test
-    type: relational-database
-    name: integration.test Database (tests)
-    isTest: true
+  - id: catalogbuilder
+    type: rest-api
+    name: CatalogBuilder REST Endpoint (service)
+    isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend/src/tests/integration.test.ts
+      filepath: plugins/catalog-backend/src/service/CatalogBuilder.ts
       namespaces: ''
-      technology: Prisma / SQL Database Client
+      technology: REST Controller / Router
     external: true
-    x: 2170
+    x: 2805
     'y': 50
   - id: common
     type: background-worker
-    name: common Service (error-detection)
+    name: common Service (errors)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/kubernetes-common/src/error-detection/common.ts
+      filepath: packages/errors/src/errors/common.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2250
+    x: 3060
     'y': 690
 dependencies:
-  - from: catalogrules_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: catalogrules_test
-    to: catalogrules
+  - from: locationanalyzer
+    to: integration
     type: direct-call
     description: Executes local class methods / functions
   - from: catalogrules
@@ -173,8 +169,16 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: locationanalyzer
-    to: integration
+  - from: catalogrules_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: catalogrules_test
+    to: catalogrules
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: recursivepartial_test
+    to: recursivepartial
     type: direct-call
     description: Executes local class methods / functions
   - from: defaultcatalogprocessingorchestrator_test
@@ -185,24 +189,20 @@ dependencies:
     to: catalogrules
     type: direct-call
     description: Executes local class methods / functions
-  - from: catalogbuilder
+  - from: integration_test
     to: catalogrules
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: catalogbuilder
-    to: locationanalyzer
     type: direct-call
     description: Executes local class methods / functions
   - from: parseentitytransformparams
     to: recursivepartial
     type: direct-call
     description: Executes local class methods / functions
-  - from: integration_test
+  - from: catalogbuilder
     to: catalogrules
     type: direct-call
     description: Executes local class methods / functions
-  - from: recursivepartial_test
-    to: recursivepartial
+  - from: catalogbuilder
+    to: locationanalyzer
     type: direct-call
     description: Executes local class methods / functions
   - from: locationanalyzer

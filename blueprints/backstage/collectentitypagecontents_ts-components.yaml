@@ -7,12 +7,34 @@ nodes:
     name: collectEntityPageContents UI Component
     isTest: false
     properties:
-      filepath: ../backstage/packages/core-compat-api/src/collectEntityPageContents.ts
+      filepath: packages/core-compat-api/src/collectEntityPageContents.ts
       namespaces: ''
       technology: React Component
     external: false
-    x: 370
+    x: 600
     'y': 370
+  - id: collectlegacyroutes
+    type: gateway-api
+    name: collectLegacyRoutes UI Component (collectLegacyRoutes.tsx)
+    isTest: false
+    properties:
+      filepath: packages/core-compat-api/src/collectLegacyRoutes.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 50
+  - id: collectentitypagecontents_test
+    type: gateway-api
+    name: collectEntityPageContents.test UI Component (collectEntityPageContents.test.tsx)
+    isTest: true
+    properties:
+      filepath: packages/core-compat-api/src/collectEntityPageContents.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 600
+    'y': 50
   - id: frontend-client
     type: gateway-api
     name: Frontend Client App (Frontend Client Host)
@@ -20,31 +42,39 @@ nodes:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
     external: true
-    x: 370
+    x: 1060
     'y': 50
   - id: alpha
-    type: gateway-api
-    name: alpha UI Component (alpha.ts)
+    type: background-worker
+    name: alpha Service (alpha.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-react/src/alpha.ts
+      filepath: packages/core-components/src/alpha.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
-    x: 140
+    x: 370
     'y': 690
   - id: normalizeroutepath
     type: background-worker
     name: normalizeRoutePath Service (normalizeRoutePath.ts)
     isTest: false
     properties:
-      filepath: ../backstage/packages/core-compat-api/src/normalizeRoutePath.ts
+      filepath: packages/core-compat-api/src/normalizeRoutePath.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 600
+    x: 830
     'y': 690
 dependencies:
+  - from: collectlegacyroutes
+    to: collectentitypagecontents
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: collectentitypagecontents_test
+    to: collectentitypagecontents
+    type: direct-call
+    description: Executes local class methods / functions
   - from: frontend-client
     to: collectentitypagecontents
     type: direct-call

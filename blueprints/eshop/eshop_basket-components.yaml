@@ -2,93 +2,153 @@ name: EShop - eShop.Basket Components
 version: 1.0.0
 level: component
 nodes:
-  - id: servercallcontextidentityextensions
+  - id: basketservicetests
     type: background-worker
-    name: ServerCallContextIdentityExtensions Service
+    name: BasketServiceTests Service
     isTest: false
     properties:
-      filepath: ../eshop/src/Basket.API/Extensions/ServerCallContextIdentityExtensions.cs
-      namespaces: eShop.Basket.API.Extensions
+      filepath: tests/Basket.UnitTests/BasketServiceTests.cs
+      namespaces: eShop.Basket.UnitTests
       technology: C# Domain Service
     external: false
-    x: 140
-    'y': 50
-  - id: orderstartedintegrationeventhandler
-    type: background-worker
-    name: OrderStartedIntegrationEventHandler Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/Basket.API/IntegrationEvents/EventHandling/OrderStartedIntegrationEventHandler.cs
-      namespaces: eShop.Basket.API.IntegrationEvents.EventHandling
-      technology: C# Domain Service
-    external: false
-    x: 600
-    'y': 50
-  - id: ibasketrepository
-    type: background-worker
-    name: IBasketRepository Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/Basket.API/Repositories/IBasketRepository.cs
-      namespaces: eShop.Basket.API.Repositories
-      technology: C# Domain Service
-    external: false
-    x: 1060
-    'y': 50
-  - id: redisbasketrepository
-    type: background-worker
-    name: RedisBasketRepository Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/Basket.API/Repositories/RedisBasketRepository.cs
-      namespaces: eShop.Basket.API.Repositories
-      technology: C# Domain Service
-    external: false
-    x: 1520
+    x: 830
     'y': 50
   - id: testservercallcontext
     type: background-worker
     name: TestServerCallContext Service
     isTest: false
     properties:
-      filepath: ../eshop/tests/Basket.UnitTests/Helpers/TestServerCallContext.cs
+      filepath: tests/Basket.UnitTests/Helpers/TestServerCallContext.cs
       namespaces: eShop.Basket.UnitTests.Helpers
       technology: C# Domain Service
     external: false
-    x: 1980
+    x: 1290
     'y': 50
-  - id: orderstartedintegrationevent
+  - id: redisbasketrepository
     type: background-worker
-    name: OrderStartedIntegrationEvent Service (eShop.Ordering)
+    name: RedisBasketRepository Service
     isTest: false
     properties:
-      filepath: ../eshop/src/Ordering.API/Application/IntegrationEvents/Events/OrderStartedIntegrationEvent.cs
-      namespaces: eShop.Ordering.API.Application.IntegrationEvents.Events
+      filepath: src/Basket.API/Repositories/RedisBasketRepository.cs
+      namespaces: eShop.Basket.API.Repositories
+      technology: C# Domain Service
+    external: false
+    x: 1750
+    'y': 50
+  - id: ibasketrepository
+    type: background-worker
+    name: IBasketRepository Service
+    isTest: false
+    properties:
+      filepath: src/Basket.API/Repositories/IBasketRepository.cs
+      namespaces: eShop.Basket.API.Repositories
+      technology: C# Domain Service
+    external: false
+    x: 2210
+    'y': 50
+  - id: servercallcontextidentityextensions
+    type: background-worker
+    name: ServerCallContextIdentityExtensions Service
+    isTest: false
+    properties:
+      filepath: src/Basket.API/Extensions/ServerCallContextIdentityExtensions.cs
+      namespaces: eShop.Basket.API.Extensions
+      technology: C# Domain Service
+    external: false
+    x: 2670
+    'y': 50
+  - id: orderstartedintegrationeventhandler
+    type: background-worker
+    name: OrderStartedIntegrationEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Basket.API/IntegrationEvents/EventHandling/OrderStartedIntegrationEventHandler.cs
+      namespaces: eShop.Basket.API.IntegrationEvents.EventHandling
+      technology: C# Domain Service
+    external: false
+    x: 3130
+    'y': 50
+  - id: catalogmockservice
+    type: background-worker
+    name: CatalogMockService Service (eShop.ClientApp)
+    isTest: false
+    properties:
+      filepath: src/ClientApp/Services/Catalog/CatalogMockService.cs
+      namespaces: eShop.ClientApp.Services.Catalog
+      technology: C# Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: basketitem
+    type: background-worker
+    name: BasketItem Service (eShop.Ordering)
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Models/BasketItem.cs
+      namespaces: eShop.Ordering.API.Application.Models
       technology: C# Domain Service
     external: true
     x: 600
+    'y': 370
+  - id: basketservice
+    type: background-worker
+    name: BasketService Service (eShop.WebApp)
+    isTest: false
+    properties:
+      filepath: src/WebApp/Services/BasketService.cs
+      namespaces: eShop.WebApp.Services
+      technology: C# Domain Service
+    external: true
+    x: 1060
     'y': 370
   - id: customerbasket
     type: background-worker
     name: CustomerBasket Service (eShop.Ordering)
     isTest: false
     properties:
-      filepath: ../eshop/src/Ordering.API/Application/Models/CustomerBasket.cs
+      filepath: src/Ordering.API/Application/Models/CustomerBasket.cs
       namespaces: eShop.Ordering.API.Application.Models
       technology: C# Domain Service
     external: true
-    x: 1290
+    x: 1750
+    'y': 370
+  - id: orderstartedintegrationevent
+    type: background-worker
+    name: OrderStartedIntegrationEvent Service (eShop.Ordering)
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/Events/OrderStartedIntegrationEvent.cs
+      namespaces: eShop.Ordering.API.Application.IntegrationEvents.Events
+      technology: C# Domain Service
+    external: true
+    x: 3130
     'y': 370
 dependencies:
-  - from: orderstartedintegrationeventhandler
-    to: orderstartedintegrationevent
+  - from: basketservicetests
+    to: catalogmockservice
+    type: direct-call
+    description: References class type / calls methods
+  - from: basketservicetests
+    to: basketitem
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: basketservicetests
+    to: basketservice
+    type: direct-call
+    description: References class type / calls methods
+  - from: basketservicetests
+    to: customerbasket
+    type: direct-call
+    description: References class type / calls methods
+  - from: redisbasketrepository
+    to: customerbasket
     type: direct-call
     description: References class type / calls methods
   - from: ibasketrepository
     to: customerbasket
     type: direct-call
     description: References class type / calls methods
-  - from: redisbasketrepository
-    to: customerbasket
+  - from: orderstartedintegrationeventhandler
+    to: orderstartedintegrationevent
     type: direct-call
     description: References class type / calls methods

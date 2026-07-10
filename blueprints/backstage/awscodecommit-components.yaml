@@ -7,86 +7,53 @@ nodes:
     name: AwsCodeCommitIntegration.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/integration/src/awsCodeCommit/AwsCodeCommitIntegration.test.ts
+      filepath: packages/integration/src/awsCodeCommit/AwsCodeCommitIntegration.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 680
+    x: 140
     'y': 50
   - id: awscodecommitintegration
     type: background-worker
     name: AwsCodeCommitIntegration Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/awsCodeCommit/AwsCodeCommitIntegration.ts
+      filepath: packages/integration/src/awsCodeCommit/AwsCodeCommitIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1330
+    x: 1290
     'y': 370
-  - id: awscodecommiturlreader_test
-    type: background-worker
-    name: AwsCodeCommitUrlReader.test Service (entrypoints)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/urlReader/lib/AwsCodeCommitUrlReader.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2250
-    'y': 50
-  - id: scmintegrations_test
-    type: background-worker
-    name: ScmIntegrations.test Service (ScmIntegrations.test.ts)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/integration/src/ScmIntegrations.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1790
-    'y': 50
-  - id: scmintegrations
-    type: background-worker
-    name: ScmIntegrations Service (ScmIntegrations.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/integration/src/ScmIntegrations.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1140
-    'y': 50
   - id: config
-    type: background-worker
-    name: config Service (collators)
+    type: gateway-api
+    name: config UI Component (layout)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 690
+  - id: helpers
+    type: background-worker
+    name: helpers Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/auth/external/helpers.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 690
-  - id: helpers
-    type: background-worker
-    name: helpers Service (helpers.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/techdocs-react/src/helpers.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 140
-    'y': 690
   - id: types
-    type: background-worker
-    name: types Service (types.ts)
+    type: gateway-api
+    name: types UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      filepath: packages/core-components/src/components/TabbedLayout/types.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
     x: 1290
     'y': 690
@@ -95,7 +62,7 @@ nodes:
     name: url Service (stages)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
+      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -106,25 +73,46 @@ nodes:
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 2210
     'y': 690
+  - id: scmintegrations_test
+    type: background-worker
+    name: ScmIntegrations.test Service (ScmIntegrations.test.ts)
+    isTest: true
+    properties:
+      filepath: packages/integration/src/ScmIntegrations.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: scmintegrations
+    type: background-worker
+    name: ScmIntegrations Service (ScmIntegrations.ts)
+    isTest: false
+    properties:
+      filepath: packages/integration/src/ScmIntegrations.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 50
+  - id: awscodecommiturlreader_test
+    type: background-worker
+    name: AwsCodeCommitUrlReader.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/AwsCodeCommitUrlReader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 50
 dependencies:
-  - from: awscodecommiturlreader_test
-    to: awscodecommitintegration
-    type: direct-call
-    description: References class type / calls methods
-  - from: scmintegrations_test
-    to: awscodecommitintegration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: scmintegrations
-    to: awscodecommitintegration
-    type: direct-call
-    description: Executes local class methods / functions
   - from: awscodecommitintegration_test
     to: config
     type: direct-call
@@ -151,5 +139,17 @@ dependencies:
     description: References class type / calls methods
   - from: awscodecommitintegration
     to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: scmintegrations_test
+    to: awscodecommitintegration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: scmintegrations
+    to: awscodecommitintegration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: awscodecommiturlreader_test
+    to: awscodecommitintegration
     type: direct-call
     description: References class type / calls methods

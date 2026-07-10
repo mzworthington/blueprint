@@ -7,18 +7,29 @@ nodes:
     name: PackageDiscoveryService Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/backend-defaults/src/PackageDiscoveryService.ts
+      filepath: packages/backend-defaults/src/PackageDiscoveryService.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 370
     'y': 370
+  - id: discoveryfeatureloader
+    type: background-worker
+    name: discoveryFeatureLoader Service (discoveryFeatureLoader.ts)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/discoveryFeatureLoader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 50
   - id: errors
     type: background-worker
     name: errors Service (errors.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      filepath: packages/codemods/src/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -29,24 +40,17 @@ nodes:
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 690
-  - id: discoveryfeatureloader
-    type: background-worker
-    name: discoveryFeatureLoader Service (discoveryFeatureLoader.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-defaults/src/discoveryFeatureLoader.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 370
-    'y': 50
 dependencies:
+  - from: discoveryfeatureloader
+    to: packagediscoveryservice
+    type: direct-call
+    description: Executes local class methods / functions
   - from: packagediscoveryservice
     to: errors
     type: direct-call
@@ -55,7 +59,3 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: discoveryfeatureloader
-    to: packagediscoveryservice
-    type: direct-call
-    description: Executes local class methods / functions

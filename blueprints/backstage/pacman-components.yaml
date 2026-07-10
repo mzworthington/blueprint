@@ -2,116 +2,222 @@ name: Backstage - pacman Components
 version: 1.0.0
 level: component
 nodes:
+  - id: lockfile
+    type: background-worker
+    name: Lockfile Service
+    isTest: false
+    properties:
+      filepath: packages/cli-node/src/pacman/Lockfile.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1710
+    'y': 1010
   - id: yarn
     type: background-worker
     name: Yarn Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-node/src/pacman/yarn/Yarn.ts
+      filepath: packages/cli-node/src/pacman/yarn/Yarn.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1060
+    x: 2155
     'y': 370
-  - id: packagemanager_test
-    type: background-worker
-    name: PackageManager.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/cli-node/src/pacman/PackageManager.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 465
-    'y': 50
   - id: packagemanager
     type: background-worker
     name: PackageManager Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-node/src/pacman/PackageManager.ts
+      filepath: packages/cli-node/src/pacman/PackageManager.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 140
+    x: 3385
     'y': 690
-  - id: packages_test
+  - id: packagemanager_test
     type: background-worker
-    name: packages.test Service (lib)
+    name: PackageManager.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/cli-module-migrate/src/lib/versioning/packages.test.ts
+      filepath: packages/cli-node/src/pacman/PackageManager.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
-    external: true
-    x: 925
+    external: false
+    x: 3210
     'y': 50
-  - id: packages
+  - id: error
     type: background-worker
-    name: packages Service (lib)
+    name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-migrate/src/lib/versioning/packages.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1385
-    'y': 50
+    x: 1710
+    'y': 1330
+  - id: devtoolsbackendapi
+    type: background-worker
+    name: DevToolsBackendApi Service (api)
+    isTest: false
+    properties:
+      filepath: plugins/devtools-backend/src/api/DevToolsBackendApi.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
   - id: errors
     type: background-worker
     name: errors Service (errors.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      filepath: packages/codemods/src/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1060
     'y': 690
-  - id: testutils
+  - id: packages
     type: background-worker
-    name: testUtils Service (testUtils.ts)
+    name: packages Service (lib)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-react/src/testUtils.ts
+      filepath: packages/cli-module-migrate/src/lib/versioning/packages.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 330
-    'y': 370
-  - id: lockfile
+    x: 1655
+    'y': 50
+  - id: packages_test
     type: background-worker
-    name: Lockfile Service (util)
-    isTest: false
+    name: packages.test Service (lib)
+    isTest: true
     properties:
-      filepath: ../backstage/plugins/devtools-backend/src/util/Lockfile.ts
+      filepath: packages/cli-module-migrate/src/lib/versioning/packages.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1020
-    'y': 1010
-  - id: types
+    x: 2115
+    'y': 50
+  - id: lockfile_test
     type: background-worker
-    name: types Service (types.ts)
-    isTest: false
+    name: Lockfile.test Service (monorepo)
+    isTest: true
     properties:
-      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      filepath: packages/cli-node/src/monorepo/Lockfile.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: packagegraph_test
+    type: background-worker
+    name: PackageGraph.test Service (monorepo)
+    isTest: true
+    properties:
+      filepath: packages/cli-node/src/monorepo/PackageGraph.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1520
     'y': 690
+  - id: packagegraph
+    type: background-worker
+    name: PackageGraph Service (monorepo)
+    isTest: false
+    properties:
+      filepath: packages/cli-node/src/monorepo/PackageGraph.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 690
+  - id: types
+    type: gateway-api
+    name: types UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 2520
+    'y': 690
+  - id: testutils
+    type: background-worker
+    name: testUtils Service (__fixtures__)
+    isTest: false
+    properties:
+      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/testUtils.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2615
+    'y': 370
+  - id: test-utils
+    type: gateway-api
+    name: test-utils UI Component (test-utils.tsx)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-addons-test-utils/src/test-utils.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 3075
+    'y': 370
 dependencies:
-  - from: packages_test
-    to: yarn
+  - from: lockfile
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: devtoolsbackendapi
+    to: lockfile
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: yarn
+    to: errors
     type: direct-call
     description: Executes local class methods / functions
   - from: packages
     to: yarn
     type: direct-call
     description: Executes local class methods / functions
+  - from: packages_test
+    to: yarn
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: lockfile_test
+    to: lockfile
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: packagegraph_test
+    to: lockfile
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: packagegraph
+    to: lockfile
+    type: direct-call
+    description: Executes local class methods / functions
   - from: yarn
-    to: errors
+    to: packagemanager
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: yarn
+    to: lockfile
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: yarn
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: packagemanager
+    to: yarn
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: packagemanager
+    to: lockfile
     type: direct-call
     description: Executes local class methods / functions
   - from: packagemanager_test
@@ -126,23 +232,7 @@ dependencies:
     to: yarn
     type: direct-call
     description: Executes local class methods / functions
-  - from: packagemanager
-    to: yarn
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: packagemanager
-    to: lockfile
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: yarn
-    to: packagemanager
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: yarn
-    to: lockfile
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: yarn
-    to: types
+  - from: packagemanager_test
+    to: test-utils
     type: direct-call
     description: Executes local class methods / functions

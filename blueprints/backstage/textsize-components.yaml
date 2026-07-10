@@ -7,18 +7,18 @@ nodes:
     name: TextSize.test UI Component
     isTest: true
     properties:
-      filepath: ../backstage/plugins/techdocs-module-addons-contrib/src/TextSize/TextSize.test.tsx
+      filepath: plugins/techdocs-module-addons-contrib/src/TextSize/TextSize.test.tsx
       namespaces: ''
       technology: React Component
     external: false
-    x: 1060
+    x: 140
     'y': 50
   - id: textsize
     type: gateway-api
     name: TextSize UI Component
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-module-addons-contrib/src/TextSize/TextSize.tsx
+      filepath: plugins/techdocs-module-addons-contrib/src/TextSize/TextSize.tsx
       namespaces: ''
       technology: React Component
     external: false
@@ -26,14 +26,25 @@ nodes:
     'y': 690
   - id: plugin
     type: background-worker
-    name: plugin Service (plugin.ts)
+    name: plugin Service (plugin.tsx)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-backend/src/plugin.ts
+      filepath: packages/app-example-plugin/src/plugin.tsx
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1060
+    x: 140
+    'y': 370
+  - id: alpha
+    type: background-worker
+    name: alpha Service (alpha.ts)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/alpha.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
     'y': 370
   - id: frontend-client
     type: gateway-api
@@ -42,31 +53,28 @@ nodes:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
     external: true
-    x: 140
+    x: 1060
     'y': 370
   - id: core
     type: background-worker
-    name: core Service (providers)
+    name: core Service (gerrit)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend-module-gitea/src/providers/core.ts
+      filepath: packages/integration/src/gerrit/core.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 1010
-  - id: alpha
-    type: background-worker
-    name: alpha Service (alpha.tsx)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/user-settings/src/alpha.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 370
 dependencies:
+  - from: plugin
+    to: textsize
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: alpha
+    to: textsize
+    type: direct-call
+    description: Executes local class methods / functions
   - from: textsize_test
     to: plugin
     type: direct-call
@@ -77,13 +85,5 @@ dependencies:
     description: Renders TextSize layout component
   - from: textsize
     to: core
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: alpha
-    to: textsize
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plugin
-    to: textsize
     type: direct-call
     description: Executes local class methods / functions

@@ -26,8 +26,8 @@ describe('DagreLayoutAdapter', () => {
 
   it('should use different configurations for container-level systems', async () => {
     const nodes: SystemNode[] = [
-      { id: 'domain-logic', name: 'Domain Logic', type: 'container' },
-      { id: 'frontend-ui', name: 'Frontend UI', type: 'container' },
+      { id: 'domain-logic', name: 'Domain Logic', type: 'microservice' },
+      { id: 'frontend-ui', name: 'Frontend UI', type: 'web-app' },
     ];
     const dependencies: SystemDependency[] = [];
 

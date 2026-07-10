@@ -2,89 +2,100 @@ name: EShop - Webhooks.API Components
 version: 1.0.0
 level: component
 nodes:
-  - id: orderstatuschangedtopaidintegrationeventhandler
+  - id: globalusings
     type: background-worker
-    name: OrderStatusChangedToPaidIntegrationEventHandler Service
+    name: GlobalUsings Service
     isTest: false
     properties:
-      filepath: ../eshop/src/Webhooks.API/IntegrationEvents/OrderStatusChangedToPaidIntegrationEventHandler.cs
-      namespaces: Webhooks.API.IntegrationEvents
+      filepath: src/Webhooks.API/GlobalUsings.cs
+      namespaces: ''
       technology: C# Domain Service
     external: false
-    x: 2480
+    x: 140
+    'y': 50
+  - id: program
+    type: background-worker
+    name: Program Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Program.cs
+      namespaces: ''
+      technology: C# Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: extensions
+    type: background-worker
+    name: Extensions Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Extensions/Extensions.cs
+      namespaces: ''
+      technology: C# Domain Service
+    external: false
+    x: 10800
     'y': 50
   - id: orderstatuschangedtopaidintegrationevent
     type: background-worker
     name: OrderStatusChangedToPaidIntegrationEvent Service
     isTest: false
     properties:
-      filepath: ../eshop/src/Webhooks.API/IntegrationEvents/OrderStatusChangedToPaidIntegrationEvent.cs
+      filepath: src/Webhooks.API/IntegrationEvents/OrderStatusChangedToPaidIntegrationEvent.cs
       namespaces: Webhooks.API.IntegrationEvents
       technology: C# Domain Service
     external: false
-    x: 680
-    'y': 370
-  - id: orderstockitem
-    type: background-worker
-    name: OrderStockItem Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/Webhooks.API/IntegrationEvents/OrderStockItem.cs
-      namespaces: Webhooks.API.IntegrationEvents
-      technology: C# Domain Service
-    external: false
-    x: 140
-    'y': 370
-  - id: productpricechangedintegrationevent
-    type: background-worker
-    name: ProductPriceChangedIntegrationEvent Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/Webhooks.API/IntegrationEvents/ProductPriceChangedIntegrationEvent.cs
-      namespaces: Webhooks.API.IntegrationEvents
-      technology: C# Domain Service
-    external: false
-    x: 2670
+    x: 2250
     'y': 370
   - id: orderstatuschangedtoshippedintegrationevent
     type: background-worker
     name: OrderStatusChangedToShippedIntegrationEvent Service
     isTest: false
     properties:
-      filepath: ../eshop/src/Webhooks.API/IntegrationEvents/OrderStatusChangedToShippedIntegrationEvent.cs
+      filepath: src/Webhooks.API/IntegrationEvents/OrderStatusChangedToShippedIntegrationEvent.cs
       namespaces: Webhooks.API.IntegrationEvents
       technology: C# Domain Service
     external: false
-    x: 5240
+    x: 560
     'y': 370
+  - id: orderstatuschangedtopaidintegrationeventhandler
+    type: background-worker
+    name: OrderStatusChangedToPaidIntegrationEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/IntegrationEvents/OrderStatusChangedToPaidIntegrationEventHandler.cs
+      namespaces: Webhooks.API.IntegrationEvents
+      technology: C# Domain Service
+    external: false
+    x: 1060
+    'y': 50
   - id: orderstatuschangedtoshippedintegrationeventhandler
     type: background-worker
     name: OrderStatusChangedToShippedIntegrationEventHandler Service
     isTest: false
     properties:
-      filepath: ../eshop/src/Webhooks.API/IntegrationEvents/OrderStatusChangedToShippedIntegrationEventHandler.cs
+      filepath: src/Webhooks.API/IntegrationEvents/OrderStatusChangedToShippedIntegrationEventHandler.cs
       namespaces: Webhooks.API.IntegrationEvents
       technology: C# Domain Service
     external: false
-    x: 6200
+    x: 1980
     'y': 50
   - id: webhookdata
     type: background-worker
     name: WebhookData Service
     isTest: false
     properties:
-      filepath: ../eshop/src/Webhooks.API/Model/WebhookData.cs
+      filepath: src/Webhooks.API/Model/WebhookData.cs
       namespaces: Webhooks.API.Model
       technology: C# Domain Service
     external: false
-    x: 6390
+    x: 4590
     'y': 370
   - id: webhooksubscriptionrequest
     type: background-worker
     name: WebhookSubscriptionRequest Service
     isTest: false
     properties:
-      filepath: ../eshop/src/Webhooks.API/Model/WebhookSubscriptionRequest.cs
+      filepath: src/Webhooks.API/Model/WebhookSubscriptionRequest.cs
       namespaces: Webhooks.API.Model
       technology: C# Domain Service
     external: false
@@ -95,262 +106,309 @@ nodes:
     name: WebhookType Service
     isTest: false
     properties:
-      filepath: ../eshop/src/Webhooks.API/Model/WebhookType.cs
+      filepath: src/Webhooks.API/Model/WebhookType.cs
       namespaces: Webhooks.API.Model
       technology: C# Domain Service
     external: false
-    x: 8730
+    x: 9380
     'y': 690
-  - id: webhooksapi
+  - id: productpricechangedintegrationevent
     type: background-worker
-    name: WebHooksApi Service
+    name: ProductPriceChangedIntegrationEvent Service
     isTest: false
     properties:
-      filepath: ../eshop/src/Webhooks.API/Apis/WebHooksApi.cs
-      namespaces: Webhooks.API
-      technology: C# Domain Service
-    external: false
-    x: 8230
-    'y': 50
-  - id: webhooksdomainexception
-    type: background-worker
-    name: WebhooksDomainException Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/Webhooks.API/Exceptions/WebhooksDomainException.cs
-      namespaces: Webhooks.API.Exceptions
-      technology: C# Domain Service
-    external: false
-    x: 1560
-    'y': 50
-  - id: routehandlerbuilderextensions
-    type: background-worker
-    name: RouteHandlerBuilderExtensions Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/Webhooks.API/Extensions/RouteHandlerBuilderExtensions.cs
-      namespaces: Webhooks.API.Extensions
-      technology: C# Domain Service
-    external: false
-    x: 2020
-    'y': 50
-  - id: webhookscontext
-    type: background-worker
-    name: WebhooksContext Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/Webhooks.API/Infrastructure/WebhooksContext.cs
-      namespaces: Webhooks.API.Infrastructure
-      technology: C# Domain Service
-    external: false
-    x: 7580
-    'y': 370
-  - id: productpricechangedintegrationeventhandler
-    type: background-worker
-    name: ProductPriceChangedIntegrationEventHandler Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/Webhooks.API/IntegrationEvents/ProductPriceChangedIntegrationEventHandler.cs
+      filepath: src/Webhooks.API/IntegrationEvents/ProductPriceChangedIntegrationEvent.cs
       namespaces: Webhooks.API.IntegrationEvents
       technology: C# Domain Service
     external: false
-    x: 4780
+    x: 6660
+    'y': 370
+  - id: orderstockitem
+    type: background-worker
+    name: OrderStockItem Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/IntegrationEvents/OrderStockItem.cs
+      namespaces: Webhooks.API.IntegrationEvents
+      technology: C# Domain Service
+    external: false
+    x: 5970
+    'y': 370
+  - id: webhookscontextmodelsnapshot
+    type: relational-database
+    name: WebhooksContextModelSnapshot Database
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Migrations/WebhooksContextModelSnapshot.cs
+      namespaces: Webhooks.API.Migrations
+      technology: Entity Framework / DB Context
+    external: false
+    x: 2440
     'y': 50
   - id: 20230925222606_initial_designer
     type: relational-database
     name: 20230925222606_Initial.Designer Database
     isTest: false
     properties:
-      filepath: ../eshop/src/Webhooks.API/Migrations/20230925222606_Initial.Designer.cs
+      filepath: src/Webhooks.API/Migrations/20230925222606_Initial.Designer.cs
       namespaces: Webhooks.API.Migrations
       technology: Entity Framework / DB Context
     external: false
-    x: 2940
+    x: 2900
     'y': 50
   - id: 20230925222606_initial
     type: relational-database
     name: 20230925222606_Initial Database
     isTest: false
     properties:
-      filepath: ../eshop/src/Webhooks.API/Migrations/20230925222606_Initial.cs
+      filepath: src/Webhooks.API/Migrations/20230925222606_Initial.cs
       namespaces: Webhooks.API.Migrations
       technology: Entity Framework / DB Context
     external: false
-    x: 3400
+    x: 3360
     'y': 50
-  - id: webhookscontextmodelsnapshot
-    type: relational-database
-    name: WebhooksContextModelSnapshot Database
+  - id: webhooksapi
+    type: background-worker
+    name: WebHooksApi Service
     isTest: false
     properties:
-      filepath: ../eshop/src/Webhooks.API/Migrations/WebhooksContextModelSnapshot.cs
-      namespaces: Webhooks.API.Migrations
-      technology: Entity Framework / DB Context
+      filepath: src/Webhooks.API/Apis/WebHooksApi.cs
+      namespaces: Webhooks.API
+      technology: C# Domain Service
     external: false
-    x: 3860
+    x: 9340
+    'y': 50
+  - id: webhooksdomainexception
+    type: background-worker
+    name: WebhooksDomainException Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Exceptions/WebhooksDomainException.cs
+      namespaces: Webhooks.API.Exceptions
+      technology: C# Domain Service
+    external: false
+    x: 4280
+    'y': 50
+  - id: routehandlerbuilderextensions
+    type: background-worker
+    name: RouteHandlerBuilderExtensions Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Extensions/RouteHandlerBuilderExtensions.cs
+      namespaces: Webhooks.API.Extensions
+      technology: C# Domain Service
+    external: false
+    x: 4740
     'y': 50
   - id: webhooksubscription
     type: background-worker
     name: WebhookSubscription Service
     isTest: false
     properties:
-      filepath: ../eshop/src/Webhooks.API/Model/WebhookSubscription.cs
+      filepath: src/Webhooks.API/Model/WebhookSubscription.cs
       namespaces: Webhooks.API.Model
       technology: C# Domain Service
     external: false
-    x: 8040
+    x: 8000
+    'y': 370
+  - id: productpricechangedintegrationeventhandler
+    type: background-worker
+    name: ProductPriceChangedIntegrationEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/IntegrationEvents/ProductPriceChangedIntegrationEventHandler.cs
+      namespaces: Webhooks.API.IntegrationEvents
+      technology: C# Domain Service
+    external: false
+    x: 7960
+    'y': 50
+  - id: webhookscontext
+    type: background-worker
+    name: WebhooksContext Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Infrastructure/WebhooksContext.cs
+      namespaces: Webhooks.API.Infrastructure
+      technology: C# Domain Service
+    external: false
+    x: 8540
+    'y': 370
+  - id: webhooksretriever
+    type: background-worker
+    name: WebhooksRetriever Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Services/WebhooksRetriever.cs
+      namespaces: Webhooks.API.Services
+      technology: C# Domain Service
+    external: false
+    x: 9000
     'y': 370
   - id: granturltesterservice
     type: background-worker
     name: GrantUrlTesterService Service
     isTest: false
     properties:
-      filepath: ../eshop/src/Webhooks.API/Services/GrantUrlTesterService.cs
+      filepath: src/Webhooks.API/Services/GrantUrlTesterService.cs
       namespaces: Webhooks.API.Services
       technology: C# Domain Service
     external: false
-    x: 4320
+    x: 5660
     'y': 50
   - id: igranturltesterservice
     type: background-worker
     name: IGrantUrlTesterService Service
     isTest: false
     properties:
-      filepath: ../eshop/src/Webhooks.API/Services/IGrantUrlTesterService.cs
+      filepath: src/Webhooks.API/Services/IGrantUrlTesterService.cs
       namespaces: Webhooks.API.Services
       technology: C# Domain Service
     external: false
-    x: 8500
-    'y': 370
-  - id: iwebhooksretriever
-    type: background-worker
-    name: IWebhooksRetriever Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/Webhooks.API/Services/IWebhooksRetriever.cs
-      namespaces: Webhooks.API.Services
-      technology: C# Domain Service
-    external: false
-    x: 8960
-    'y': 370
-  - id: iwebhookssender
-    type: background-worker
-    name: IWebhooksSender Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/Webhooks.API/Services/IWebhooksSender.cs
-      namespaces: Webhooks.API.Services
-      technology: C# Domain Service
-    external: false
-    x: 6660
-    'y': 50
-  - id: webhooksretriever
-    type: background-worker
-    name: WebhooksRetriever Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/Webhooks.API/Services/WebhooksRetriever.cs
-      namespaces: Webhooks.API.Services
-      technology: C# Domain Service
-    external: false
-    x: 9420
+    x: 9460
     'y': 370
   - id: webhookssender
     type: background-worker
     name: WebhooksSender Service
     isTest: false
     properties:
-      filepath: ../eshop/src/Webhooks.API/Services/WebhooksSender.cs
+      filepath: src/Webhooks.API/Services/WebhooksSender.cs
       namespaces: Webhooks.API.Services
       technology: C# Domain Service
     external: false
-    x: 7770
+    x: 7500
     'y': 50
-  - id: catalogapi
+  - id: iwebhooksretriever
     type: background-worker
-    name: CatalogApi Service (eShop.Catalog)
+    name: IWebhooksRetriever Service
     isTest: false
     properties:
-      filepath: ../eshop/src/Catalog.API/Apis/CatalogApi.cs
-      namespaces: eShop.Catalog.API
+      filepath: src/Webhooks.API/Services/IWebhooksRetriever.cs
+      namespaces: Webhooks.API.Services
+      technology: C# Domain Service
+    external: false
+    x: 9920
+    'y': 370
+  - id: iwebhookssender
+    type: background-worker
+    name: IWebhooksSender Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Services/IWebhooksSender.cs
+      namespaces: Webhooks.API.Services
+      technology: C# Domain Service
+    external: false
+    x: 6120
+    'y': 50
+  - id: ieventbusbuilder
+    type: background-worker
+    name: IEventBusBuilder Service (Microsoft.Extensions)
+    isTest: false
+    properties:
+      filepath: src/EventBus/Abstractions/IEventBusBuilder.cs
+      namespaces: Microsoft.Extensions.DependencyInjection
       technology: C# Domain Service
     external: true
-    x: 1100
-    'y': 50
+    x: 10380
+    'y': 370
   - id: ordershippeddomaineventhandler
     type: background-worker
     name: OrderShippedDomainEventHandler Service (eShop.Ordering)
     isTest: false
     properties:
-      filepath: ../eshop/src/Ordering.API/Application/DomainEventHandlers/OrderShippedDomainEventHandler.cs
+      filepath: src/Ordering.API/Application/DomainEventHandlers/OrderShippedDomainEventHandler.cs
       namespaces: eShop.Ordering.API.Application.DomainEventHandlers
       technology: C# Domain Service
     external: true
-    x: 5240
+    x: 1520
     'y': 50
   - id: orderstatuschangedtoawaitingvalidationdomaineventhandler
     type: background-worker
     name: OrderStatusChangedToAwaitingValidationDomainEventHandler Service (eShop.Ordering)
     isTest: false
     properties:
-      filepath: >-
-        ../eshop/src/Ordering.API/Application/DomainEventHandlers/OrderStatusChangedToAwaitingValidationDomainEventHandler.cs
+      filepath: src/Ordering.API/Application/DomainEventHandlers/OrderStatusChangedToAwaitingValidationDomainEventHandler.cs
       namespaces: eShop.Ordering.API.Application.DomainEventHandlers
       technology: C# Domain Service
     external: true
-    x: 140
+    x: 8420
     'y': 50
   - id: orderstatuschangedtopaiddomaineventhandler
     type: background-worker
     name: OrderStatusChangedToPaidDomainEventHandler Service (eShop.Ordering)
     isTest: false
     properties:
-      filepath: ../eshop/src/Ordering.API/Application/DomainEventHandlers/OrderStatusChangedToPaidDomainEventHandler.cs
+      filepath: src/Ordering.API/Application/DomainEventHandlers/OrderStatusChangedToPaidDomainEventHandler.cs
       namespaces: eShop.Ordering.API.Application.DomainEventHandlers
       technology: C# Domain Service
     external: true
-    x: 600
+    x: 5200
     'y': 50
   - id: orderstatus
     type: background-worker
     name: OrderStatus Service (eShop.Ordering)
     isTest: false
     properties:
-      filepath: ../eshop/src/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs
+      filepath: src/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs
       namespaces: eShop.Ordering.Domain.AggregatesModel.OrderAggregate
       technology: C# Domain Service
     external: true
-    x: 2940
+    x: 1250
     'y': 690
+  - id: redirectviewmodel
+    type: background-worker
+    name: RedirectViewModel Service (IdentityServerHost.Quickstart)
+    isTest: false
+    properties:
+      filepath: src/Identity.API/Quickstart/Account/RedirectViewModel.cs
+      namespaces: IdentityServerHost.Quickstart.UI
+      technology: C# Domain Service
+    external: true
+    x: 10840
+    'y': 370
   - id: webhookendpoints
     type: background-worker
     name: WebhookEndpoints Service (eShop.WebhookClient)
     isTest: false
     properties:
-      filepath: ../eshop/src/WebhookClient/Endpoints/WebhookEndpoints.cs
+      filepath: src/WebhookClient/Endpoints/WebhookEndpoints.cs
       namespaces: eShop.WebhookClient.Endpoints
       technology: C# Domain Service
     external: true
-    x: 5700
+    x: 3820
     'y': 50
   - id: webhooksclient
     type: background-worker
     name: WebHooksClient Service (eShop.WebhookClient)
     isTest: false
     properties:
-      filepath: ../eshop/src/WebhookClient/Services/WebHooksClient.cs
+      filepath: src/WebhookClient/Services/WebHooksClient.cs
       namespaces: eShop.WebhookClient.Services
       technology: C# Domain Service
     external: true
-    x: 7120
+    x: 6580
+    'y': 50
+  - id: catalogapi
+    type: background-worker
+    name: CatalogApi Service (eShop.Catalog)
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Apis/CatalogApi.cs
+      namespaces: eShop.Catalog.API
+      technology: C# Domain Service
+    external: true
+    x: 7040
     'y': 50
 dependencies:
-  - from: catalogapi
-    to: productpricechangedintegrationevent
+  - from: extensions
+    to: ieventbusbuilder
     type: direct-call
     description: References class type / calls methods
   - from: orderstatuschangedtopaidintegrationeventhandler
     to: orderstatuschangedtopaidintegrationevent
+    type: direct-call
+    description: References class type / calls methods
+  - from: orderstatuschangedtoshippedintegrationeventhandler
+    to: orderstatuschangedtoshippedintegrationevent
     type: direct-call
     description: References class type / calls methods
   - from: ordershippeddomaineventhandler
@@ -377,8 +435,8 @@ dependencies:
     to: orderstatus
     type: direct-call
     description: References class type / calls methods
-  - from: orderstatuschangedtoshippedintegrationeventhandler
-    to: orderstatuschangedtoshippedintegrationevent
+  - from: extensions
+    to: redirectviewmodel
     type: direct-call
     description: References class type / calls methods
   - from: webhookendpoints
@@ -387,6 +445,10 @@ dependencies:
     description: References class type / calls methods
   - from: webhooksclient
     to: webhooksubscriptionrequest
+    type: direct-call
+    description: References class type / calls methods
+  - from: catalogapi
+    to: productpricechangedintegrationevent
     type: direct-call
     description: References class type / calls methods
   - from: webhooksapi
@@ -405,18 +467,6 @@ dependencies:
     to: webhooksubscription
     type: direct-call
     description: References class type / calls methods
-  - from: orderstatuschangedtopaidintegrationeventhandler
-    to: webhookdata
-    type: direct-call
-    description: References class type / calls methods
-  - from: orderstatuschangedtoshippedintegrationeventhandler
-    to: webhookdata
-    type: direct-call
-    description: References class type / calls methods
-  - from: productpricechangedintegrationeventhandler
-    to: productpricechangedintegrationevent
-    type: direct-call
-    description: References class type / calls methods
   - from: webhookdata
     to: webhooktype
     type: direct-call
@@ -425,11 +475,15 @@ dependencies:
     to: webhooktype
     type: direct-call
     description: References class type / calls methods
-  - from: iwebhooksretriever
-    to: webhooktype
+  - from: orderstatuschangedtopaidintegrationeventhandler
+    to: webhookdata
     type: direct-call
     description: References class type / calls methods
-  - from: iwebhookssender
+  - from: productpricechangedintegrationeventhandler
+    to: productpricechangedintegrationevent
+    type: direct-call
+    description: References class type / calls methods
+  - from: orderstatuschangedtoshippedintegrationeventhandler
     to: webhookdata
     type: direct-call
     description: References class type / calls methods
@@ -443,5 +497,13 @@ dependencies:
     description: References class type / calls methods
   - from: webhookssender
     to: webhooksubscription
+    type: direct-call
+    description: References class type / calls methods
+  - from: iwebhooksretriever
+    to: webhooktype
+    type: direct-call
+    description: References class type / calls methods
+  - from: iwebhookssender
+    to: webhookdata
     type: direct-call
     description: References class type / calls methods

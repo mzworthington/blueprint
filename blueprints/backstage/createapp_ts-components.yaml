@@ -7,77 +7,178 @@ nodes:
     name: createApp Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/create-app/src/createApp.ts
+      filepath: packages/create-app/src/createApp.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 830
+    x: 1750
     'y': 370
   - id: createapp_test
     type: background-worker
     name: createApp.test Service (createApp.test.ts)
     isTest: true
     properties:
-      filepath: ../backstage/packages/create-app/src/createApp.test.ts
+      filepath: packages/create-app/src/createApp.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 50
+  - id: defaults
+    type: background-worker
+    name: defaults Service (defaults.ts)
+    isTest: false
+    properties:
+      filepath: packages/module-federation-common/src/defaults.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 140
-    'y': 50
-  - id: tasks
-    type: background-worker
-    name: tasks Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/create-app/src/lib/tasks.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 830
     'y': 690
-  - id: index
+  - id: defaultconfigloader
     type: background-worker
-    name: index Service (index.ts)
+    name: defaultConfigLoader Service (app)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-common/src/index.ts
+      filepath: packages/core-app-api/src/app/defaultConfigLoader.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 600
+    'y': 690
+  - id: overridebaseurlconfigs
+    type: background-worker
+    name: overrideBaseUrlConfigs Service (app)
+    isTest: false
+    properties:
+      filepath: packages/core-app-api/src/app/overrideBaseUrlConfigs.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+  - id: config
+    type: gateway-api
+    name: config UI Component (layout)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1520
+    'y': 690
+  - id: discovery
+    type: background-worker
+    name: discovery Service (types)
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/templates/typescript-backstage-client/types/discovery.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 690
+  - id: resolution
+    type: background-worker
+    name: resolution Service (resolution.ts)
+    isTest: false
+    properties:
+      filepath: packages/frontend-defaults/src/resolution.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2440
+    'y': 690
+  - id: maybecreateerrorpage
+    type: gateway-api
+    name: maybeCreateErrorPage UI Component (maybeCreateErrorPage.tsx)
+    isTest: false
+    properties:
+      filepath: packages/frontend-defaults/src/maybeCreateErrorPage.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 2900
+    'y': 690
+  - id: createfrontendplugin_test
+    type: gateway-api
+    name: createFrontendPlugin.test UI Component (wiring)
+    isTest: true
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/createFrontendPlugin.test.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1520
     'y': 50
   - id: createfrontendfeatureloader_test
     type: gateway-api
     name: createFrontendFeatureLoader.test UI Component (wiring)
     isTest: true
     properties:
-      filepath: ../backstage/packages/frontend-plugin-api/src/wiring/createFrontendFeatureLoader.test.ts
+      filepath: packages/frontend-plugin-api/src/wiring/createFrontendFeatureLoader.test.ts
       namespaces: ''
       technology: React Component
     external: true
-    x: 1060
+    x: 1980
     'y': 50
-  - id: createfrontendplugin_test
-    type: gateway-api
-    name: createFrontendPlugin.test UI Component (wiring)
-    isTest: true
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
+    isTest: false
     properties:
-      filepath: ../backstage/packages/frontend-plugin-api/src/wiring/createFrontendPlugin.test.ts
+      filepath: packages/frontend-test-utils/src/index.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
-    x: 1520
+    x: 2440
     'y': 50
+  - id: tasks
+    type: background-worker
+    name: tasks Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/create-app/src/lib/tasks.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3360
+    'y': 690
 dependencies:
   - from: createapp_test
     to: createapp
     type: direct-call
     description: Executes local class methods / functions
   - from: createapp
-    to: tasks
+    to: defaults
     type: direct-call
     description: Executes local class methods / functions
-  - from: index
+  - from: createapp
+    to: defaultconfigloader
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createapp
+    to: overridebaseurlconfigs
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createapp
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createapp
+    to: discovery
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createapp
+    to: resolution
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createapp
+    to: maybecreateerrorpage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendplugin_test
     to: createapp
     type: direct-call
     description: Executes local class methods / functions
@@ -85,7 +186,11 @@ dependencies:
     to: createapp
     type: direct-call
     description: Executes local class methods / functions
-  - from: createfrontendplugin_test
+  - from: index
     to: createapp
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createapp
+    to: tasks
     type: direct-call
     description: Executes local class methods / functions

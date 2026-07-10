@@ -2,123 +2,115 @@ name: Backstage - awsS3 Components
 version: 1.0.0
 level: component
 nodes:
-  - id: awss3integration_test
-    type: background-worker
-    name: AwsS3Integration.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/integration/src/awsS3/AwsS3Integration.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 830
-    'y': 50
   - id: awss3integration
     type: background-worker
     name: AwsS3Integration Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/awsS3/AwsS3Integration.ts
+      filepath: packages/integration/src/awsS3/AwsS3Integration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1250
+    x: 1140
     'y': 370
-  - id: awss3urlreader_test
+  - id: awss3integration_test
     type: background-worker
-    name: AwsS3UrlReader.test Service (entrypoints)
+    name: AwsS3Integration.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/backend-defaults/src/entrypoints/urlReader/lib/AwsS3UrlReader.test.ts
+      filepath: packages/integration/src/awsS3/AwsS3Integration.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
-    external: true
-    x: 140
+    external: false
+    x: 680
     'y': 50
   - id: scmintegrations_test
     type: background-worker
     name: ScmIntegrations.test Service (ScmIntegrations.test.ts)
     isTest: true
     properties:
-      filepath: ../backstage/packages/integration/src/ScmIntegrations.test.ts
+      filepath: packages/integration/src/ScmIntegrations.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1290
+    x: 2060
+    'y': 50
+  - id: registry
+    type: background-worker
+    name: registry Service (registry.ts)
+    isTest: false
+    properties:
+      filepath: packages/integration/src/registry.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1600
     'y': 50
   - id: scmintegrations
     type: background-worker
     name: ScmIntegrations Service (ScmIntegrations.ts)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/ScmIntegrations.ts
+      filepath: packages/integration/src/ScmIntegrations.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1750
+    x: 1140
     'y': 50
-  - id: config
-    type: background-worker
-    name: config Service (collators)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 410
-    'y': 690
   - id: helpers
     type: background-worker
-    name: helpers Service (helpers.ts)
+    name: helpers Service (entrypoints)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-react/src/helpers.ts
+      filepath: packages/backend-defaults/src/entrypoints/auth/external/helpers.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1290
+    x: 140
     'y': 690
   - id: types
-    type: background-worker
-    name: types Service (types.ts)
+    type: gateway-api
+    name: types UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      filepath: packages/core-components/src/components/TabbedLayout/types.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
-    x: 1750
+    x: 1180
     'y': 690
-  - id: registry
-    type: background-worker
-    name: registry Service (registry.ts)
+  - id: config
+    type: gateway-api
+    name: config UI Component (layout)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/registry.ts
+      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 680
+    'y': 690
+  - id: awss3urlreader_test
+    type: background-worker
+    name: AwsS3UrlReader.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/AwsS3UrlReader.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2210
+    x: 220
     'y': 50
 dependencies:
-  - from: awss3urlreader_test
-    to: awss3integration
-    type: direct-call
-    description: References class type / calls methods
   - from: scmintegrations_test
     to: awss3integration
     type: direct-call
     description: Executes local class methods / functions
-  - from: scmintegrations
+  - from: registry
     to: awss3integration
     type: direct-call
     description: Executes local class methods / functions
-  - from: awss3integration_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: awss3integration_test
+  - from: scmintegrations
     to: awss3integration
     type: direct-call
     description: Executes local class methods / functions
@@ -134,7 +126,15 @@ dependencies:
     to: config
     type: direct-call
     description: Executes local class methods / functions
-  - from: registry
+  - from: awss3integration_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: awss3integration_test
     to: awss3integration
     type: direct-call
     description: Executes local class methods / functions
+  - from: awss3urlreader_test
+    to: awss3integration
+    type: direct-call
+    description: References class type / calls methods

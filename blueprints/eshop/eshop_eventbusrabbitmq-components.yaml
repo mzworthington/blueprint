@@ -2,34 +2,34 @@ name: EShop - eShop.EventBusRabbitMQ Components
 version: 1.0.0
 level: component
 nodes:
-  - id: eventbusoptions
-    type: background-worker
-    name: EventBusOptions Service
-    isTest: false
-    properties:
-      filepath: ../eshop/src/EventBusRabbitMQ/EventBusOptions.cs
-      namespaces: eShop.EventBusRabbitMQ
-      technology: C# Domain Service
-    external: false
-    x: 140
-    'y': 50
   - id: rabbitmqeventbus
     type: background-worker
     name: RabbitMQEventBus Service
     isTest: false
     properties:
-      filepath: ../eshop/src/EventBusRabbitMQ/RabbitMQEventBus.cs
+      filepath: src/EventBusRabbitMQ/RabbitMQEventBus.cs
       namespaces: eShop.EventBusRabbitMQ
       technology: C# Domain Service
     external: false
-    x: 600
+    x: 140
     'y': 50
   - id: rabbitmqtelemetry
     type: background-worker
     name: RabbitMQTelemetry Service
     isTest: false
     properties:
-      filepath: ../eshop/src/EventBusRabbitMQ/RabbitMQTelemetry.cs
+      filepath: src/EventBusRabbitMQ/RabbitMQTelemetry.cs
+      namespaces: eShop.EventBusRabbitMQ
+      technology: C# Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: eventbusoptions
+    type: background-worker
+    name: EventBusOptions Service
+    isTest: false
+    properties:
+      filepath: src/EventBusRabbitMQ/EventBusOptions.cs
       namespaces: eShop.EventBusRabbitMQ
       technology: C# Domain Service
     external: false
@@ -40,11 +40,11 @@ nodes:
     name: IntegrationEvent Service (eShop.EventBus)
     isTest: false
     properties:
-      filepath: ../eshop/src/EventBus/Events/IntegrationEvent.cs
+      filepath: src/EventBus/Events/IntegrationEvent.cs
       namespaces: eShop.EventBus.Events
       technology: C# Domain Service
     external: true
-    x: 600
+    x: 140
     'y': 370
 dependencies:
   - from: rabbitmqeventbus

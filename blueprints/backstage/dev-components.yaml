@@ -7,18 +7,29 @@ nodes:
     name: DevPage Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration-react/dev/DevPage.tsx
+      filepath: packages/integration-react/dev/DevPage.tsx
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 370
     'y': 370
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
+    isTest: false
+    properties:
+      filepath: packages/frontend-test-utils/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 50
   - id: integration
     type: background-worker
     name: integration Service (types)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/permission-common/src/types/integration.ts
+      filepath: plugins/permission-common/src/types/integration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -29,33 +40,22 @@ nodes:
     name: ScmIntegrationsApi Service (api)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration-react/src/api/ScmIntegrationsApi.ts
+      filepath: packages/integration-react/src/api/ScmIntegrationsApi.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 690
-  - id: index
-    type: background-worker
-    name: index Service (index.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/user-settings-common/src/index.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 370
-    'y': 50
 dependencies:
+  - from: index
+    to: devpage
+    type: direct-call
+    description: Executes local class methods / functions
   - from: devpage
     to: integration
     type: direct-call
     description: Executes local class methods / functions
   - from: devpage
     to: scmintegrationsapi
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: index
-    to: devpage
     type: direct-call
     description: Executes local class methods / functions

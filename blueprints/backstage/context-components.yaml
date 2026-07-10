@@ -2,38 +2,38 @@ name: Backstage - context Components
 version: 1.0.0
 level: component
 nodes:
-  - id: entitycontextmenucontext
+  - id: searchcontext
     type: gateway-api
-    name: EntityContextMenuContext UI Component
+    name: SearchContext UI Component
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog/src/context/EntityContextMenuContext.tsx
+      filepath: plugins/search-react/src/context/SearchContext.tsx
       namespaces: ''
       technology: React Component
     external: false
-    x: 140
+    x: 180
     'y': 370
   - id: searchcontext_test
     type: gateway-api
     name: SearchContext.test UI Component
     isTest: true
     properties:
-      filepath: ../backstage/plugins/search-react/src/context/SearchContext.test.tsx
+      filepath: plugins/search-react/src/context/SearchContext.test.tsx
       namespaces: ''
       technology: React Component
     external: false
-    x: 1195
+    x: 1085
     'y': 50
-  - id: searchcontext
+  - id: entitycontextmenucontext
     type: gateway-api
-    name: SearchContext UI Component
+    name: EntityContextMenuContext UI Component
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-react/src/context/SearchContext.tsx
+      filepath: plugins/catalog/src/context/EntityContextMenuContext.tsx
       namespaces: ''
       technology: React Component
     external: false
-    x: 600
+    x: 680
     'y': 370
   - id: frontend-client
     type: gateway-api
@@ -42,69 +42,53 @@ nodes:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
     external: true
-    x: 180
+    x: 490
     'y': 50
-  - id: test-utils
+  - id: types
     type: gateway-api
-    name: test-utils UI Component (test-utils.tsx)
+    name: types UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-addons-test-utils/src/test-utils.tsx
+      filepath: packages/core-components/src/components/TabbedLayout/types.ts
       namespaces: ''
       technology: React Component
     external: true
-    x: 1060
-    'y': 370
+    x: 140
+    'y': 690
   - id: api
     type: background-worker
-    name: api Service (api.ts)
+    name: api Service (types)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-react/src/api.ts
+      filepath: packages/catalog-client/src/types/api.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1140
-    'y': 690
-  - id: types
-    type: background-worker
-    name: types Service (types.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/user-settings-common/src/types.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 330
+    x: 1220
     'y': 690
   - id: error
     type: background-worker
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1600
+    x: 1680
     'y': 690
+  - id: test-utils
+    type: gateway-api
+    name: test-utils UI Component (test-utils.tsx)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-addons-test-utils/src/test-utils.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1140
+    'y': 370
 dependencies:
-  - from: frontend-client
-    to: entitycontextmenucontext
-    type: direct-call
-    description: Renders EntityContextMenuContext layout component
-  - from: searchcontext_test
-    to: test-utils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: searchcontext_test
-    to: searchcontext
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: searchcontext_test
-    to: api
-    type: direct-call
-    description: Executes local class methods / functions
   - from: frontend-client
     to: searchcontext
     type: direct-call
@@ -121,3 +105,19 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: searchcontext_test
+    to: test-utils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: searchcontext_test
+    to: searchcontext
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: searchcontext_test
+    to: api
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: entitycontextmenucontext
+    type: direct-call
+    description: Renders EntityContextMenuContext layout component

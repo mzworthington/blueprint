@@ -7,25 +7,70 @@ nodes:
     name: observable Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/types/src/observable.ts
+      filepath: packages/types/src/observable.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 140
+    x: 830
     'y': 370
-  - id: observable_test
+  - id: index
     type: background-worker
-    name: observable.test Service (observable.test.ts)
-    isTest: true
+    name: index Service (index.ts)
+    isTest: false
     properties:
-      filepath: ../backstage/packages/types/src/observable.test.ts
+      filepath: packages/frontend-test-utils/src/index.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 140
     'y': 50
+  - id: cardheader_test
+    type: gateway-api
+    name: CardHeader.test UI Component (next)
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-react/src/next/components/TemplateCard/CardHeader.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 600
+    'y': 50
+  - id: observable_test
+    type: background-worker
+    name: observable.test Service (observable.test.ts)
+    isTest: true
+    properties:
+      filepath: packages/types/src/observable.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 50
+  - id: alertdisplay_test
+    type: gateway-api
+    name: AlertDisplay.test UI Component (components)
+    isTest: true
+    properties:
+      filepath: packages/core-components/src/components/AlertDisplay/AlertDisplay.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1520
+    'y': 50
 dependencies:
+  - from: index
+    to: observable
+    type: direct-call
+    description: References class type / calls methods
+  - from: cardheader_test
+    to: observable
+    type: direct-call
+    description: References class type / calls methods
   - from: observable_test
     to: observable
     type: direct-call
     description: Executes local class methods / functions
+  - from: alertdisplay_test
+    to: observable
+    type: direct-call
+    description: References class type / calls methods

@@ -2,202 +2,130 @@ name: Backstage - puppet Components
 version: 1.0.0
 level: component
 nodes:
-  - id: read_test
-    type: background-worker
-    name: read.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/catalog-backend-module-puppetdb/src/puppet/read.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1870
-    'y': 50
   - id: transformers_test
     type: background-worker
     name: transformers.test Service
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-backend-module-puppetdb/src/puppet/transformers.test.ts
+      filepath: plugins/catalog-backend-module-puppetdb/src/puppet/transformers.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 140
-    'y': 370
+    x: 1140
+    'y': 50
   - id: transformers
     type: background-worker
     name: transformers Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend-module-puppetdb/src/puppet/transformers.ts
+      filepath: plugins/catalog-backend-module-puppetdb/src/puppet/transformers.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 3440
-    'y': 690
-  - id: config
+    x: 1275
+    'y': 370
+  - id: index
     type: background-worker
-    name: config Service (collators)
+    name: index Service (index.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      filepath: packages/frontend-test-utils/src/index.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 4820
-    'y': 370
-  - id: errors
-    type: background-worker
-    name: errors Service (errors.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2980
-    'y': 370
-  - id: integration
-    type: background-worker
-    name: integration Service (types)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/permission-common/src/types/integration.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2520
-    'y': 370
+    x: 140
+    'y': 50
   - id: read
     type: background-worker
-    name: read Service (scaffolder)
+    name: read Service (microsoftGraph)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/read.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2060
-    'y': 370
-  - id: client
-    type: gateway-api
-    name: client UI Component (client.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/techdocs/src/client.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 1600
-    'y': 370
-  - id: constants
-    type: background-worker
-    name: constants Service (ReportIssue)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/techdocs-module-addons-contrib/src/ReportIssue/constants.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1330
-    'y': 1010
-  - id: util
-    type: relational-database
-    name: util Database (database)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/search-backend-module-pg/src/database/util.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 1060
-    'y': 370
-  - id: vendors
-    type: background-worker
-    name: vendors Service (ldap)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend-module-ldap/src/ldap/vendors.ts
+      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/read.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 600
-    'y': 370
-  - id: types
-    type: background-worker
-    name: types Service (types.ts)
+    'y': 50
+  - id: providers
+    type: gateway-api
+    name: providers UI Component (layout)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      filepath: packages/core-components/src/layout/SignInPage/providers.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 735
+    'y': 370
+  - id: types
+    type: gateway-api
+    name: types UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1045
+    'y': 690
+  - id: constants
+    type: background-worker
+    name: constants Service (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/DependencyGraph/constants.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 3480
-    'y': 1010
+    x: 1505
+    'y': 690
+  - id: dom
+    type: gateway-api
+    name: dom UI Component (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/components/TechDocsReaderPageContent/dom.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1680
+    'y': 50
   - id: removemkdocsheader_test
     type: background-worker
     name: removeMkdocsHeader.test Service (reader)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/techdocs/src/reader/transformers/removeMkdocsHeader.test.ts
+      filepath: plugins/techdocs/src/reader/transformers/removeMkdocsHeader.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 3440
-    'y': 370
+    x: 2140
+    'y': 50
   - id: rewritedoclinks_test
     type: background-worker
     name: rewriteDocLinks.test Service (reader)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/techdocs/src/reader/transformers/rewriteDocLinks.test.ts
+      filepath: plugins/techdocs/src/reader/transformers/rewriteDocLinks.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 3900
-    'y': 370
+    x: 2600
+    'y': 50
   - id: shadowdom
     type: gateway-api
     name: shadowDom UI Component (test-utils)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs/src/test-utils/shadowDom.ts
+      filepath: plugins/techdocs/src/test-utils/shadowDom.ts
       namespaces: ''
       technology: React Component
     external: true
-    x: 4360
-    'y': 370
+    x: 3060
+    'y': 50
 dependencies:
-  - from: read_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read_test
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read_test
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read_test
-    to: read
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read_test
-    to: client
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read_test
-    to: constants
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read_test
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: read_test
-    to: vendors
+  - from: index
+    to: transformers
     type: direct-call
     description: Executes local class methods / functions
   - from: read
@@ -205,6 +133,10 @@ dependencies:
     type: direct-call
     description: Executes local class methods / functions
   - from: transformers_test
+    to: providers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: transformers_test
     to: types
     type: direct-call
     description: Executes local class methods / functions
@@ -222,6 +154,10 @@ dependencies:
     description: Executes local class methods / functions
   - from: transformers
     to: constants
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: dom
+    to: transformers
     type: direct-call
     description: Executes local class methods / functions
   - from: removemkdocsheader_test

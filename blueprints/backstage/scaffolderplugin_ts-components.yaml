@@ -7,51 +7,40 @@ nodes:
     name: ScaffolderPlugin Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-backend/src/ScaffolderPlugin.ts
+      filepath: plugins/scaffolder-backend/src/ScaffolderPlugin.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1290
+    x: 1520
     'y': 370
-  - id: scaffolderplugin_test
-    type: background-worker
-    name: ScaffolderPlugin.test Service (ScaffolderPlugin.test.ts)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/scaffolder-backend/src/ScaffolderPlugin.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1290
-    'y': 50
   - id: integration
     type: background-worker
     name: integration Service (types)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/permission-common/src/types/integration.ts
+      filepath: plugins/permission-common/src/types/integration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 140
     'y': 690
   - id: alpha
-    type: gateway-api
-    name: alpha UI Component (alpha.ts)
+    type: background-worker
+    name: alpha Service (alpha.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-react/src/alpha.ts
+      filepath: packages/core-components/src/alpha.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 690
   - id: router
     type: rest-api
-    name: router REST Endpoint (service)
+    name: router REST Endpoint (router.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-backend/src/service/router.ts
+      filepath: packages/backend-openapi-utils/src/router.ts
       namespaces: ''
       technology: REST Controller / Router
     external: true
@@ -62,7 +51,7 @@ nodes:
     name: loggerToWinstonLogger Service (actions)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-node-test-utils/src/actions/loggerToWinstonLogger.ts
+      filepath: plugins/scaffolder-node-test-utils/src/actions/loggerToWinstonLogger.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -73,28 +62,46 @@ nodes:
     name: templating Service (util)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-backend/src/util/templating.ts
+      filepath: plugins/scaffolder-backend/src/util/templating.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1980
+    'y': 690
+  - id: actions
+    type: background-worker
+    name: actions Service (home)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/home/components/Tables/actions.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2440
     'y': 690
   - id: error
     type: background-worker
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2440
+    x: 2900
     'y': 690
+  - id: scaffolderplugin_test
+    type: background-worker
+    name: ScaffolderPlugin.test Service (ScaffolderPlugin.test.ts)
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/ScaffolderPlugin.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 50
 dependencies:
-  - from: scaffolderplugin_test
-    to: scaffolderplugin
-    type: direct-call
-    description: Executes local class methods / functions
   - from: scaffolderplugin
     to: integration
     type: direct-call
@@ -116,6 +123,14 @@ dependencies:
     type: direct-call
     description: Executes local class methods / functions
   - from: scaffolderplugin
+    to: actions
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: scaffolderplugin
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: scaffolderplugin_test
+    to: scaffolderplugin
+    type: direct-call
+    description: Executes local class methods / functions

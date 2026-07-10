@@ -7,35 +7,50 @@ nodes:
     name: apis.test Service
     isTest: true
     properties:
-      filepath: ../backstage/plugins/search/src/apis.test.ts
+      filepath: plugins/search/src/apis.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 370
+    x: 600
     'y': 50
-  - id: apis
+  - id: test-utils
     type: gateway-api
-    name: apis UI Component (apis.ts)
+    name: test-utils UI Component (test-utils.tsx)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search/src/apis.ts
+      filepath: plugins/techdocs-addons-test-utils/src/test-utils.tsx
       namespaces: ''
       technology: React Component
     external: true
     x: 140
     'y': 370
-  - id: mockfetchapi
-    type: background-worker
-    name: MockFetchApi Service (testUtils)
+  - id: apis
+    type: gateway-api
+    name: apis UI Component (apis.ts)
     isTest: false
     properties:
-      filepath: ../backstage/packages/test-utils/src/testUtils/apis/FetchApi/MockFetchApi.ts
+      filepath: packages/create-app/templates/legacy-app/packages/app/src/apis.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
     x: 600
     'y': 370
+  - id: mockfetchapi
+    type: background-worker
+    name: MockFetchApi Service (apis)
+    isTest: false
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/FetchApi/MockFetchApi.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
 dependencies:
+  - from: apis_test
+    to: test-utils
+    type: direct-call
+    description: Executes local class methods / functions
   - from: apis_test
     to: apis
     type: direct-call

@@ -140,9 +140,12 @@ async function run() {
     if (spinner) {
       spinner.start('Analyzing codebase structure...');
     }
+    const absoluteOutputDir = path.resolve(process.cwd(), outputDir);
     await analyzer.runAnalysis(globPattern, outputDir);
     if (spinner) {
-      spinner.stop(pc.green('Successfully generated visual layout levels!'));
+      spinner.stop(
+        pc.green(`Successfully generated visual layout levels inside: ${absoluteOutputDir}`)
+      );
     }
   } catch (error) {
     if (spinner) {

@@ -7,20 +7,20 @@ nodes:
     name: ScmIntegrations.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/integration/src/ScmIntegrations.test.ts
+      filepath: packages/integration/src/ScmIntegrations.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 5890
     'y': 50
   - id: awss3
-    type: rest-api
-    name: awsS3 REST Endpoint (stages)
+    type: background-worker
+    name: awsS3 Service (schema)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-node/src/stages/publish/awsS3.ts
+      filepath: packages/connections/src/schema/awsS3.ts
       namespaces: ''
-      technology: REST Controller / Router
+      technology: TypeScript Domain Service
     external: true
     x: 140
     'y': 370
@@ -29,7 +29,7 @@ nodes:
     name: AwsS3Integration Service (awsS3)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/awsS3/AwsS3Integration.ts
+      filepath: packages/integration/src/awsS3/AwsS3Integration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -37,10 +37,10 @@ nodes:
     'y': 370
   - id: azure
     type: background-worker
-    name: azure Service (actions)
+    name: azure Service (schema)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-azure/src/actions/azure.ts
+      filepath: packages/connections/src/schema/azure.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -51,7 +51,7 @@ nodes:
     name: AzureIntegration Service (azure)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/azure/AzureIntegration.ts
+      filepath: packages/integration/src/azure/AzureIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -59,10 +59,10 @@ nodes:
     'y': 370
   - id: bitbucketcloud
     type: background-worker
-    name: bitbucketCloud Service (actions)
+    name: bitbucketCloud Service (schema)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-bitbucket-cloud/src/actions/bitbucketCloud.ts
+      filepath: packages/connections/src/schema/bitbucketCloud.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -70,10 +70,10 @@ nodes:
     'y': 370
   - id: bitbucketserver
     type: background-worker
-    name: bitbucketServer Service (actions)
+    name: bitbucketServer Service (schema)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-bitbucket-server/src/actions/bitbucketServer.ts
+      filepath: packages/connections/src/schema/bitbucketServer.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -81,10 +81,10 @@ nodes:
     'y': 370
   - id: gerrit
     type: background-worker
-    name: gerrit Service (actions)
+    name: gerrit Service (schema)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gerrit/src/actions/gerrit.ts
+      filepath: packages/connections/src/schema/gerrit.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -95,7 +95,7 @@ nodes:
     name: GerritIntegration Service (gerrit)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/gerrit/GerritIntegration.ts
+      filepath: packages/integration/src/gerrit/GerritIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -103,10 +103,10 @@ nodes:
     'y': 370
   - id: github
     type: background-worker
-    name: github Service (actions)
+    name: github Service (schema)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/github.ts
+      filepath: packages/connections/src/schema/github.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -117,7 +117,7 @@ nodes:
     name: GithubIntegration Service (github)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/github/GithubIntegration.ts
+      filepath: packages/integration/src/github/GithubIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -125,10 +125,10 @@ nodes:
     'y': 370
   - id: gitlab
     type: background-worker
-    name: gitlab Service (actions)
+    name: gitlab Service (schema)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/actions/gitlab.ts
+      filepath: packages/connections/src/schema/gitlab.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -139,7 +139,7 @@ nodes:
     name: GitLabIntegration Service (gitlab)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/gitlab/GitLabIntegration.ts
+      filepath: packages/integration/src/gitlab/GitLabIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -147,10 +147,10 @@ nodes:
     'y': 370
   - id: helpers
     type: background-worker
-    name: helpers Service (helpers.ts)
+    name: helpers Service (entrypoints)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-react/src/helpers.ts
+      filepath: packages/backend-defaults/src/entrypoints/auth/external/helpers.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -161,7 +161,7 @@ nodes:
     name: ScmIntegrations Service (ScmIntegrations.ts)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/ScmIntegrations.ts
+      filepath: packages/integration/src/ScmIntegrations.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -169,10 +169,10 @@ nodes:
     'y': 370
   - id: gitea
     type: background-worker
-    name: gitea Service (actions)
+    name: gitea Service (schema)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-backend-module-gitea/src/actions/gitea.ts
+      filepath: packages/connections/src/schema/gitea.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -183,7 +183,7 @@ nodes:
     name: AwsCodeCommitIntegration Service (awsCodeCommit)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/awsCodeCommit/AwsCodeCommitIntegration.ts
+      filepath: packages/integration/src/awsCodeCommit/AwsCodeCommitIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -194,7 +194,7 @@ nodes:
     name: awsCodeCommit Service (schema)
     isTest: false
     properties:
-      filepath: ../backstage/packages/connections/src/schema/awsCodeCommit.ts
+      filepath: packages/connections/src/schema/awsCodeCommit.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -205,20 +205,20 @@ nodes:
     name: harness Service (schema)
     isTest: false
     properties:
-      filepath: ../backstage/packages/connections/src/schema/harness.ts
+      filepath: packages/connections/src/schema/harness.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 7960
     'y': 370
   - id: azureblobstorage
-    type: rest-api
-    name: azureBlobStorage REST Endpoint (stages)
+    type: background-worker
+    name: azureBlobStorage Service (schema)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-node/src/stages/publish/azureBlobStorage.ts
+      filepath: packages/connections/src/schema/azureBlobStorage.ts
       namespaces: ''
-      technology: REST Controller / Router
+      technology: TypeScript Domain Service
     external: true
     x: 8420
     'y': 370
@@ -227,7 +227,7 @@ nodes:
     name: googleGcs Service (schema)
     isTest: false
     properties:
-      filepath: ../backstage/packages/connections/src/schema/googleGcs.ts
+      filepath: packages/connections/src/schema/googleGcs.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -238,7 +238,7 @@ nodes:
     name: AzureBlobStorageIntegration Service (azureBlobStorage)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/azureBlobStorage/AzureBlobStorageIntegration.ts
+      filepath: packages/integration/src/azureBlobStorage/AzureBlobStorageIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -249,7 +249,7 @@ nodes:
     name: BitbucketCloudIntegration Service (bitbucketCloud)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/bitbucketCloud/BitbucketCloudIntegration.ts
+      filepath: packages/integration/src/bitbucketCloud/BitbucketCloudIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -260,7 +260,7 @@ nodes:
     name: BitbucketServerIntegration Service (bitbucketServer)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/bitbucketServer/BitbucketServerIntegration.ts
+      filepath: packages/integration/src/bitbucketServer/BitbucketServerIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -271,7 +271,7 @@ nodes:
     name: GiteaIntegration Service (gitea)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/gitea/GiteaIntegration.ts
+      filepath: packages/integration/src/gitea/GiteaIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -282,7 +282,7 @@ nodes:
     name: HarnessIntegration Service (harness)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/harness/HarnessIntegration.ts
+      filepath: packages/integration/src/harness/HarnessIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -293,7 +293,7 @@ nodes:
     name: GoogleGcsIntegration Service (googleGcs)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/googleGcs/GoogleGcsIntegration.ts
+      filepath: packages/integration/src/googleGcs/GoogleGcsIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true

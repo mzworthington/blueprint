@@ -1,6 +1,7 @@
 import Parser from 'web-tree-sitter';
 import * as path from 'path';
 import * as fs from 'fs';
+import pc from 'picocolors';
 import type { CodebaseParserPort } from '../domain/ports.ts';
 import type { ParsedSourceFile } from '../domain/types.ts';
 
@@ -32,9 +33,10 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
       wasmName
     );
     const binWasmPath = path.resolve(path.dirname(process.execPath), wasmName);
+    const execDirWasmPath = path.resolve(path.dirname(process.argv[0]), wasmName);
     const relativeWasmPath = path.resolve(
       __dirname,
-      '../../../../node_modules/tree-sitter-wasms/out',
+      '../../../node_modules/tree-sitter-wasms/out',
       wasmName
     );
 
@@ -43,11 +45,23 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
       wasmPath = localWasmPath;
     } else if (fs.existsSync(binWasmPath)) {
       wasmPath = binWasmPath;
+    } else if (fs.existsSync(execDirWasmPath)) {
+      wasmPath = execDirWasmPath;
     } else if (fs.existsSync(relativeWasmPath)) {
       wasmPath = relativeWasmPath;
     }
 
     if (!wasmPath || !fs.existsSync(wasmPath)) {
+      console.warn(
+        pc.yellow(
+          `[Warning] Could not find WASM parser for extension "${ext}". Expected at one of:\n` +
+            `  - ${localWasmPath}\n` +
+            `  - ${binWasmPath}\n` +
+            `  - ${execDirWasmPath}\n` +
+            `  - ${relativeWasmPath}\n` +
+            `Please place the .wasm file in the same directory as the executable or in your project's node_modules.`
+        )
+      );
       return null;
     }
 

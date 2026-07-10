@@ -2,1085 +2,1612 @@ name: Backstage - commands Components
 version: 1.0.0
 level: component
 nodes:
-  - id: execute_test
+  - id: client
     type: background-worker
-    name: execute.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/cli-module-actions/src/commands/execute.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 830
-    'y': 690
-  - id: execute
-    type: background-worker
-    name: execute Service
+    name: client Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-actions/src/commands/execute.ts
+      filepath: packages/repo-tools/src/commands/package/schema/openapi/generate/client.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 180
+    x: 21715
+    'y': 1010
+  - id: schema
+    type: background-worker
+    name: schema Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-config/src/commands/schema.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1415
+    'y': 1010
+  - id: index_test
+    type: background-worker
+    name: index.test Service
+    isTest: true
+    properties:
+      filepath: packages/repo-tools/src/commands/package/schema/openapi/generate/index.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 32320
+    'y': 370
+  - id: publish
+    type: background-worker
+    name: publish Service
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli/src/commands/publish/publish.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 19160
     'y': 1010
   - id: list
     type: background-worker
     name: list Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-auth/src/commands/list.ts
+      filepath: packages/cli-module-auth/src/commands/list.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 870
+    x: 33570
     'y': 1010
-  - id: sourcesadd_test
-    type: background-worker
-    name: sourcesAdd.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/cli-module-actions/src/commands/sourcesAdd.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 5110
-    'y': 50
-  - id: sourcesadd
-    type: background-worker
-    name: sourcesAdd Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-actions/src/commands/sourcesAdd.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 5110
-    'y': 370
-  - id: sourceslist
-    type: background-worker
-    name: sourcesList Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-actions/src/commands/sourcesList.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 5570
-    'y': 370
   - id: sourcesremove_test
     type: background-worker
     name: sourcesRemove.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/cli-module-actions/src/commands/sourcesRemove.test.ts
+      filepath: packages/cli-module-actions/src/commands/sourcesRemove.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 32795
+    x: 24765
+    'y': 50
+  - id: sourcesadd_test
+    type: background-worker
+    name: sourcesAdd.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-actions/src/commands/sourcesAdd.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 50930
     'y': 50
   - id: sourcesremove
     type: background-worker
     name: sourcesRemove Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-actions/src/commands/sourcesRemove.ts
+      filepath: packages/cli-module-actions/src/commands/sourcesRemove.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 32795
+    x: 35915
     'y': 370
-  - id: login_test
+  - id: execute
     type: background-worker
-    name: login.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/cli-module-auth/src/commands/login.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 4450
-    'y': 690
-  - id: login
-    type: background-worker
-    name: login Service
+    name: execute Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-auth/src/commands/login.ts
+      filepath: packages/cli-module-actions/src/commands/execute.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 3910
+    x: 28340
     'y': 1010
-  - id: logout
+  - id: sourceslist
     type: background-worker
-    name: logout Service
+    name: sourcesList Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-auth/src/commands/logout.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1845
-    'y': 1010
-  - id: printtoken
-    type: background-worker
-    name: printToken Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-auth/src/commands/printToken.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 31015
-    'y': 50
-  - id: select
-    type: background-worker
-    name: select Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-auth/src/commands/select.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2385
-    'y': 1010
-  - id: show
-    type: background-worker
-    name: show Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-auth/src/commands/show.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2845
-    'y': 1010
-  - id: buildworkspace
-    type: background-worker
-    name: buildWorkspace Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/commands/buildWorkspace.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 3345
-    'y': 1010
-  - id: command
-    type: background-worker
-    name: command Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/package-docs/command.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 9600
-    'y': 370
-  - id: index_d
-    type: background-worker
-    name: index.d Service
-    isTest: false
-    properties:
-      filepath: >-
-        ../backstage/packages/cli-module-build/src/commands/package/bundle/__fixtures__/packed/frontend/dist/@mf-types/index.d.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 31475
-    'y': 50
-  - id: command_test
-    type: background-worker
-    name: command.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/commands/package/bundle/command.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 18570
-    'y': 50
-  - id: clean
-    type: background-worker
-    name: clean Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/commands/repo/clean.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 33255
-    'y': 50
-  - id: postpack
-    type: background-worker
-    name: postpack Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/commands/package/postpack.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 34470
-    'y': 50
-  - id: prepack
-    type: background-worker
-    name: prepack Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/commands/package/prepack.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 38610
-    'y': 50
-  - id: resolvelinkedworkspace
-    type: background-worker
-    name: resolveLinkedWorkspace Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/commands/package/start/resolveLinkedWorkspace.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 28655
-    'y': 1010
-  - id: startbackend
-    type: background-worker
-    name: startBackend Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/commands/package/start/startBackend.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 19325
-    'y': 1330
-  - id: startfrontend
-    type: background-worker
-    name: startFrontend Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/commands/package/start/startFrontend.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 20245
-    'y': 1330
-  - id: startpackage_test
-    type: background-worker
-    name: startPackage.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/commands/package/start/startPackage.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 5190
-    'y': 690
-  - id: startpackage
-    type: background-worker
-    name: startPackage Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/commands/package/start/startPackage.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 19785
-    'y': 1010
-  - id: build
-    type: background-worker
-    name: build Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/commands/repo/build.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 29655
-    'y': 370
-  - id: start_test
-    type: background-worker
-    name: start.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/commands/repo/start.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 30140
-    'y': 370
-  - id: start
-    type: background-worker
-    name: start Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/commands/repo/start.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 30085
-    'y': 690
-  - id: server
-    type: background-worker
-    name: server Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/package/schema/openapi/generate/server.ts
+      filepath: packages/cli-module-actions/src/commands/sourcesList.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 38405
-    'y': 1010
-  - id: print
+    'y': 370
+  - id: execute_test
     type: background-worker
-    name: print Service
-    isTest: false
+    name: execute.test Service
+    isTest: true
     properties:
-      filepath: ../backstage/packages/cli-module-config/src/commands/print.ts
+      filepath: packages/cli-module-actions/src/commands/execute.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 5880
-    'y': 1010
-  - id: docs
-    type: gateway-api
-    name: docs UI Component
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-config/src/commands/docs.ts
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 21015
-    'y': 1010
-  - id: validate
+    x: 26120
+    'y': 690
+  - id: sourcesadd
     type: background-worker
-    name: validate Service
+    name: sourcesAdd Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-config/src/commands/validate.ts
+      filepath: packages/cli-module-actions/src/commands/sourcesAdd.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 6745
-    'y': 1010
-  - id: githubcreateappserver
-    type: gateway-api
-    name: GithubCreateAppServer UI Component
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-github/src/commands/create-github-app/GithubCreateAppServer.ts
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 29115
-    'y': 1010
-  - id: info
-    type: background-worker
-    name: info Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-info/src/commands/info.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 34930
-    'y': 50
+    x: 48170
+    'y': 370
   - id: lint
     type: background-worker
     name: lint Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/repo/schema/openapi/lint.ts
+      filepath: packages/repo-tools/src/commands/repo/schema/openapi/lint.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 7665
+    x: 16685
     'y': 1010
-  - id: fix
-    type: background-worker
-    name: fix Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-maintenance/src/commands/repo/fix.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 8125
-    'y': 1010
-  - id: list-deprecations
-    type: background-worker
-    name: list-deprecations Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-maintenance/src/commands/repo/list-deprecations.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 35390
-    'y': 50
-  - id: packageexports
-    type: background-worker
-    name: packageExports Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-migrate/src/commands/packageExports.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 8585
-    'y': 1010
-  - id: packagelintconfigs
-    type: background-worker
-    name: packageLintConfigs Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-migrate/src/commands/packageLintConfigs.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 35850
-    'y': 50
   - id: packagerole
     type: background-worker
     name: packageRole Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-migrate/src/commands/packageRole.ts
+      filepath: packages/cli-module-migrate/src/commands/packageRole.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 36310
+    x: 25225
     'y': 50
   - id: packagescripts
     type: background-worker
     name: packageScripts Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-migrate/src/commands/packageScripts.ts
+      filepath: packages/cli-module-migrate/src/commands/packageScripts.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 36770
+    x: 25685
     'y': 50
-  - id: reactrouterdeps
-    type: background-worker
-    name: reactRouterDeps Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-migrate/src/commands/reactRouterDeps.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 37230
-    'y': 50
-  - id: bump_test
-    type: background-worker
-    name: bump.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/cli-module-migrate/src/commands/versions/bump.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 30745
-    'y': 370
-  - id: bump
-    type: background-worker
-    name: bump Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-migrate/src/commands/versions/bump.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 30610
-    'y': 690
   - id: migrate_test
     type: background-worker
     name: migrate.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/cli-module-migrate/src/commands/versions/migrate.test.ts
+      filepath: packages/cli-module-migrate/src/commands/versions/migrate.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 31820
+    x: 33240
     'y': 370
   - id: migrate
     type: background-worker
     name: migrate Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/techdocs-cli/src/commands/migrate/migrate.ts
+      filepath: packages/techdocs-cli/src/commands/migrate/migrate.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 31325
+    x: 23555
     'y': 1010
-  - id: new_test
+  - id: bump_test
     type: background-worker
-    name: new.test Service
+    name: bump.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/cli-module-new/src/commands/new.test.ts
+      filepath: packages/cli-module-migrate/src/commands/versions/bump.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 6840
-    'y': 690
-  - id: new
+    x: 32780
+    'y': 370
+  - id: bump
     type: background-worker
-    name: new Service
+    name: bump Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-new/src/commands/new.ts
+      filepath: packages/cli-module-migrate/src/commands/versions/bump.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 7205
+    x: 12675
+    'y': 690
+  - id: packagelintconfigs
+    type: background-worker
+    name: packageLintConfigs Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/commands/packageLintConfigs.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 26145
+    'y': 50
+  - id: packageexports
+    type: background-worker
+    name: packageExports Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/commands/packageExports.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 9940
+    'y': 1010
+  - id: reactrouterdeps
+    type: background-worker
+    name: reactRouterDeps Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/commands/reactRouterDeps.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 26605
+    'y': 50
+  - id: test_test
+    type: background-worker
+    name: test.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-test-jest/src/commands/repo/test.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 8995
+    'y': 690
+  - id: test
+    type: background-worker
+    name: test Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-test-jest/src/commands/package/test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 10400
     'y': 1010
   - id: codeowners
     type: background-worker
     name: codeowners Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/generate-catalog-info/codeowners.ts
+      filepath: packages/repo-tools/src/commands/generate-catalog-info/codeowners.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 21935
+    x: 12980
     'y': 1010
-  - id: test
+  - id: new_test
     type: background-worker
-    name: test Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-test-jest/src/commands/repo/test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 14675
-    'y': 1010
-  - id: test_test
-    type: background-worker
-    name: test.test Service
+    name: new.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/cli-module-test-jest/src/commands/repo/test.test.ts
+      filepath: packages/cli-module-new/src/commands/new.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 8125
+    x: 36295
     'y': 690
-  - id: export
+  - id: new
     type: background-worker
-    name: export Service
+    name: new Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-translations/src/commands/export.ts
+      filepath: packages/cli-module-new/src/commands/new.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 9595
-    'y': 1010
-  - id: import
-    type: background-worker
-    name: import Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-translations/src/commands/import.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 10270
-    'y': 1010
-  - id: runcommand
-    type: relational-database
-    name: runCommand Database
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/e2e-test/src/commands/runCommand.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 35635
-    'y': 1010
-  - id: builddocs
-    type: background-worker
-    name: buildDocs Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/api-reports/api-reports/buildDocs.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 11270
-    'y': 1010
-  - id: createtemporarytsconfig
-    type: background-worker
-    name: createTemporaryTsConfig Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/api-reports/api-reports/createTemporaryTsConfig.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 37690
-    'y': 50
-  - id: generatetypedeclarations
-    type: background-worker
-    name: generateTypeDeclarations Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/api-reports/api-reports/generateTypeDeclarations.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 38150
-    'y': 50
-  - id: patchapireportgeneration
-    type: background-worker
-    name: patchApiReportGeneration Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/api-reports/api-reports/patchApiReportGeneration.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 33065
-    'y': 1010
-  - id: runapiextraction_test
-    type: background-worker
-    name: runApiExtraction.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/api-reports/api-reports/runApiExtraction.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 32280
-    'y': 370
-  - id: runapiextraction
-    type: background-worker
-    name: runApiExtraction Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/api-reports/api-reports/runApiExtraction.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 32280
-    'y': 690
-  - id: buildapireports_test
-    type: background-worker
-    name: buildApiReports.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/api-reports/buildApiReports.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 33715
-    'y': 50
-  - id: buildapireports
-    type: background-worker
-    name: buildApiReports Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/api-reports/buildApiReports.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 33890
-    'y': 370
-  - id: categorizepackagedirs
-    type: background-worker
-    name: categorizePackageDirs Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/api-reports/categorizePackageDirs.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 33510
-    'y': 690
-  - id: generateclireport
-    type: background-worker
-    name: generateCliReport Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/api-reports/cli-reports/generateCliReport.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 12065
-    'y': 1330
-  - id: runcliextraction
-    type: background-worker
-    name: runCliExtraction Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/api-reports/cli-reports/runCliExtraction.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 11890
-    'y': 1010
-  - id: logapireportinstructions
-    type: background-worker
-    name: logApiReportInstructions Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/api-reports/common/logApiReportInstructions.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 39070
-    'y': 50
-  - id: tryrunprettier
-    type: background-worker
-    name: tryRunPrettier Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/api-reports/common/tryRunPrettier.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 39530
-    'y': 50
-  - id: generatesqlreport
-    type: background-worker
-    name: generateSqlReport Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/api-reports/sql-reports/generateSqlReport.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 13525
-    'y': 1330
-  - id: getpgschemainfo
-    type: relational-database
-    name: getPgSchemaInfo Database
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/api-reports/sql-reports/getPgSchemaInfo.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 13065
-    'y': 1330
-  - id: runsqlextraction
-    type: relational-database
-    name: runSqlExtraction Database
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/api-reports/sql-reports/runSqlExtraction.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 13160
-    'y': 1010
-  - id: generate-catalog-info
-    type: background-worker
-    name: generate-catalog-info Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/generate-catalog-info/generate-catalog-info.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 9205
-    'y': 690
-  - id: generate-patch
-    type: background-worker
-    name: generate-patch Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/generate-patch/generate-patch.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 14215
-    'y': 1010
-  - id: knip-extractor
-    type: background-worker
-    name: knip-extractor Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/knip-reports/knip-extractor.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 10810
-    'y': 1010
-  - id: knip-reports
-    type: background-worker
-    name: knip-reports Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/knip-reports/knip-reports.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 11175
-    'y': 690
-  - id: lint-legacy-backend-exports
-    type: background-worker
-    name: lint-legacy-backend-exports Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/lint-legacy-backend-exports/lint-legacy-backend-exports.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 39990
-    'y': 50
-  - id: diff
-    type: background-worker
-    name: diff Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/repo/schema/openapi/diff.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 16135
-    'y': 1010
-  - id: fuzz
-    type: background-worker
-    name: fuzz Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/repo/schema/openapi/fuzz.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 16595
-    'y': 1010
-  - id: cache_test
-    type: background-worker
-    name: Cache.test Service
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/package-docs/Cache.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 12810
-    'y': 690
-  - id: cache
-    type: background-worker
-    name: Cache Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/package-docs/Cache.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 27695
-    'y': 1010
-  - id: peer-deps
-    type: background-worker
-    name: peer-deps Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/peer-deps/peer-deps.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 40450
-    'y': 50
-  - id: verify
-    type: background-worker
-    name: verify Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/repo/schema/openapi/verify.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 18135
-    'y': 1010
-  - id: type-deps
-    type: background-worker
-    name: type-deps Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/type-deps/type-deps.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 18595
+    x: 19810
     'y': 1010
   - id: generate
     type: background-worker
     name: generate Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/techdocs-cli/src/commands/generate/generate.ts
+      filepath: packages/techdocs-cli/src/commands/generate/generate.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 19055
+    x: 15365
     'y': 1010
   - id: mkdocs
     type: gateway-api
     name: mkdocs UI Component
     isTest: false
     properties:
-      filepath: ../backstage/packages/techdocs-cli/src/commands/serve/mkdocs.ts
+      filepath: packages/techdocs-cli/src/commands/serve/mkdocs.ts
       namespaces: ''
       technology: React Component
     external: false
-    x: 21475
+    x: 27880
     'y': 1010
   - id: serve
     type: gateway-api
     name: serve UI Component
     isTest: false
     properties:
-      filepath: ../backstage/packages/techdocs-cli/src/commands/serve/serve.ts
+      filepath: packages/techdocs-cli/src/commands/serve/serve.ts
       namespaces: ''
       technology: React Component
     external: false
-    x: 22395
+    x: 40110
     'y': 1010
-  - id: homepage_test
-    type: background-worker
-    name: HomePage.test Service (e2e-tests)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/app/e2e-tests/HomePage.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 13270
-    'y': 690
-  - id: searchpage_test
-    type: background-worker
-    name: SearchPage.test Service (e2e-tests)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/app/e2e-tests/SearchPage.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 13730
-    'y': 690
-  - id: app_test
-    type: background-worker
-    name: app.test Service (e2e-tests)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/create-app/templates/legacy-app/packages/app/e2e-tests/app.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 14675
-    'y': 690
-  - id: createbackend
-    type: background-worker
-    name: CreateBackend Service (CreateBackend.ts)
+  - id: githubcreateappserver
+    type: gateway-api
+    name: GithubCreateAppServer UI Component
     isTest: false
     properties:
-      filepath: ../backstage/packages/backend-defaults/src/CreateBackend.ts
+      filepath: packages/cli-module-github/src/commands/create-github-app/GithubCreateAppServer.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 27420
+    'y': 1010
+  - id: login
+    type: background-worker
+    name: login Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-auth/src/commands/login.ts
       namespaces: ''
       technology: TypeScript Domain Service
-    external: true
-    x: 15135
+    external: false
+    x: 41030
+    'y': 1010
+  - id: login_test
+    type: background-worker
+    name: login.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-auth/src/commands/login.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 27020
     'y': 690
-  - id: mockservices
+  - id: printtoken
+    type: background-worker
+    name: printToken Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-auth/src/commands/printToken.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 27065
+    'y': 50
+  - id: show
+    type: background-worker
+    name: show Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-auth/src/commands/show.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 55530
+    'y': 1010
+  - id: logout
+    type: background-worker
+    name: logout Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-auth/src/commands/logout.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 62475
+    'y': 1010
+  - id: export
+    type: background-worker
+    name: export Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-translations/src/commands/export.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 61010
+    'y': 1010
+  - id: import
+    type: background-worker
+    name: import Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-translations/src/commands/import.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 56530
+    'y': 1010
+  - id: print
+    type: background-worker
+    name: print Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-config/src/commands/print.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 18065
+    'y': 1010
+  - id: server
+    type: background-worker
+    name: server Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/package/schema/openapi/generate/server.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 65585
+    'y': 1010
+  - id: buildworkspace
+    type: background-worker
+    name: buildWorkspace Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/buildWorkspace.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 40570
+    'y': 1010
+  - id: start_test
+    type: background-worker
+    name: start.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-build/src/commands/repo/start.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 26125
+    'y': 370
+  - id: start
+    type: background-worker
+    name: start Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/repo/start.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 10835
+    'y': 690
+  - id: clean
+    type: background-worker
+    name: clean Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/clean.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 27525
+    'y': 50
+  - id: build
+    type: background-worker
+    name: build Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/repo/build.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 51890
+    'y': 370
+  - id: prepack
+    type: background-worker
+    name: prepack Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/prepack.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 47710
+    'y': 50
+  - id: startfrontend
+    type: background-worker
+    name: startFrontend Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/start/startFrontend.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 71445
+    'y': 1330
+  - id: resolvelinkedworkspace
+    type: background-worker
+    name: resolveLinkedWorkspace Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/start/resolveLinkedWorkspace.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 4795
+    'y': 1010
+  - id: startpackage_test
+    type: background-worker
+    name: startPackage.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/start/startPackage.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 17550
+    'y': 690
+  - id: startbackend
+    type: background-worker
+    name: startBackend Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/start/startBackend.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 1330
+  - id: command
+    type: background-worker
+    name: command Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/package-docs/command.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 44775
+    'y': 370
+  - id: startpackage
+    type: background-worker
+    name: startPackage Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/start/startPackage.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 18525
+    'y': 1010
+  - id: command_test
+    type: background-worker
+    name: command.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/bundle/command.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 33855
+    'y': 50
+  - id: index_d
+    type: background-worker
+    name: index.d Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/bundle/__fixtures__/packed/frontend/dist/@mf-types/index.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 45330
+    'y': 50
+  - id: postpack
+    type: background-worker
+    name: postpack Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/postpack.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 46790
+    'y': 50
+  - id: knip-extractor
+    type: background-worker
+    name: knip-extractor Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/knip-reports/knip-extractor.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 55990
+    'y': 1010
+  - id: knip-reports
+    type: background-worker
+    name: knip-reports Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/knip-reports/knip-reports.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 59675
+    'y': 690
+  - id: generate-patch
+    type: background-worker
+    name: generate-patch Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/generate-patch/generate-patch.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 17605
+    'y': 1010
+  - id: lint-legacy-backend-exports
+    type: background-worker
+    name: lint-legacy-backend-exports Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/lint-legacy-backend-exports/lint-legacy-backend-exports.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 47250
+    'y': 50
+  - id: buildapireports_test
+    type: background-worker
+    name: buildApiReports.test Service
+    isTest: true
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/buildApiReports.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 23995
+    'y': 50
+  - id: categorizepackagedirs
+    type: background-worker
+    name: categorizePackageDirs Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/categorizePackageDirs.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 7615
+    'y': 690
+  - id: generateclireport
+    type: background-worker
+    name: generateCliReport Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/cli-reports/generateCliReport.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3255
+    'y': 1010
+  - id: runcliextraction
+    type: background-worker
+    name: runCliExtraction Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/cli-reports/runCliExtraction.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 24190
+    'y': 690
+  - id: patchapireportgeneration
+    type: background-worker
+    name: patchApiReportGeneration Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/api-reports/patchApiReportGeneration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 57755
+    'y': 1010
+  - id: builddocs
+    type: background-worker
+    name: buildDocs Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/api-reports/buildDocs.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 15905
+    'y': 1010
+  - id: runapiextraction
+    type: background-worker
+    name: runApiExtraction Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/api-reports/runApiExtraction.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 51975
+    'y': 690
+  - id: generatetypedeclarations
+    type: background-worker
+    name: generateTypeDeclarations Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/api-reports/generateTypeDeclarations.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 48170
+    'y': 50
+  - id: createtemporarytsconfig
+    type: background-worker
+    name: createTemporaryTsConfig Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/api-reports/createTemporaryTsConfig.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 48630
+    'y': 50
+  - id: runapiextraction_test
+    type: background-worker
+    name: runApiExtraction.test Service
+    isTest: true
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/api-reports/runApiExtraction.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 54840
+    'y': 370
+  - id: buildapireports
+    type: background-worker
+    name: buildApiReports Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/buildApiReports.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 33700
+    'y': 370
+  - id: tryrunprettier
+    type: background-worker
+    name: tryRunPrettier Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/common/tryRunPrettier.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 49090
+    'y': 50
+  - id: logapireportinstructions
+    type: background-worker
+    name: logApiReportInstructions Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/common/logApiReportInstructions.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 49550
+    'y': 50
+  - id: generatesqlreport
+    type: background-worker
+    name: generateSqlReport Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/sql-reports/generateSqlReport.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3795
+    'y': 1010
+  - id: runsqlextraction
     type: relational-database
-    name: mockServices Database (services)
+    name: runSqlExtraction Database
     isTest: false
     properties:
-      filepath: ../backstage/packages/backend-test-utils/src/services/mockServices.ts
+      filepath: packages/repo-tools/src/commands/api-reports/sql-reports/runSqlExtraction.ts
       namespaces: ''
       technology: Prisma / SQL Database Client
-    external: true
-    x: 15595
+    external: false
+    x: 15810
     'y': 690
-  - id: resolveauth
-    type: background-worker
-    name: resolveAuth Service (lib)
+  - id: getpgschemainfo
+    type: relational-database
+    name: getPgSchemaInfo Database
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-actions/src/lib/resolveAuth.ts
+      filepath: packages/repo-tools/src/commands/api-reports/sql-reports/getPgSchemaInfo.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 4335
+    'y': 1010
+  - id: peer-deps
+    type: background-worker
+    name: peer-deps Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/peer-deps/peer-deps.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 50010
+    'y': 50
+  - id: cache_test
+    type: background-worker
+    name: Cache.test Service
+    isTest: true
+    properties:
+      filepath: packages/repo-tools/src/commands/package-docs/Cache.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 63770
+    'y': 690
+  - id: cache
+    type: background-worker
+    name: Cache Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/package-docs/Cache.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 61555
+    'y': 1010
+  - id: generate-catalog-info
+    type: background-worker
+    name: generate-catalog-info Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/generate-catalog-info/generate-catalog-info.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 11295
+    'y': 690
+  - id: type-deps
+    type: background-worker
+    name: type-deps Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/type-deps/type-deps.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 62015
+    'y': 1010
+  - id: fuzz
+    type: background-worker
+    name: fuzz Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/package/schema/openapi/fuzz.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 70150
+    'y': 1010
+  - id: verify
+    type: background-worker
+    name: verify Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/repo/schema/openapi/verify.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 67220
+    'y': 1010
+  - id: diff
+    type: background-worker
+    name: diff Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/package/schema/openapi/diff.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 66450
+    'y': 1010
+  - id: list-deprecations
+    type: background-worker
+    name: list-deprecations Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-maintenance/src/commands/repo/list-deprecations.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 50470
+    'y': 50
+  - id: fix
+    type: background-worker
+    name: fix Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-maintenance/src/commands/repo/fix.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 17145
+    'y': 1010
+  - id: info
+    type: background-worker
+    name: info Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-info/src/commands/info.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 20310
+    'y': 1010
+  - id: runcommand
+    type: relational-database
+    name: runCommand Database
+    isTest: false
+    properties:
+      filepath: packages/e2e-test/src/commands/runCommand.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 24055
+    'y': 1010
+  - id: validate
+    type: background-worker
+    name: validate Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-config/src/commands/validate.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2045
+    'y': 1010
+  - id: docs
+    type: gateway-api
+    name: docs UI Component
+    isTest: false
+    properties:
+      filepath: packages/cli-module-config/src/commands/docs.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 2505
+    'y': 1010
+  - id: components
+    type: gateway-api
+    name: components UI Component (defaults)
+    isTest: false
+    properties:
+      filepath: packages/app-defaults/src/defaults/components.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 27480
+    'y': 690
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
+    isTest: false
+    properties:
+      filepath: packages/frontend-test-utils/src/index.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1520
+    x: 31160
+    'y': 690
+  - id: content
+    type: gateway-api
+    name: Content UI Component (layout)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/layout/Content/Content.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 28400
+    'y': 690
+  - id: visitlist
+    type: gateway-api
+    name: VisitList UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/home/src/components/VisitList/VisitList.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 28860
+    'y': 690
+  - id: addwidgetdialog
+    type: background-worker
+    name: AddWidgetDialog Service (components)
+    isTest: false
+    properties:
+      filepath: plugins/home/src/components/CustomHomepage/AddWidgetDialog.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 29320
+    'y': 690
+  - id: ownerlistpicker
+    type: gateway-api
+    name: OwnerListPicker UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/components/ListTasksPage/OwnerListPicker.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 29780
+    'y': 690
+  - id: entitypicker
+    type: gateway-api
+    name: EntityPicker UI Component (alpha)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/alpha/fields/EntityPicker.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 680
+    'y': 1330
+  - id: dryrunresultslist
+    type: background-worker
+    name: DryRunResultsList Service (alpha)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/alpha/components/TemplateEditorPage/DryRunResults/DryRunResultsList.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 30240
+    'y': 690
+  - id: templateeditorintro
+    type: gateway-api
+    name: TemplateEditorIntro UI Component (alpha)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/alpha/components/TemplateEditorPage/TemplateEditorIntro.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 18930
+    'y': 690
+  - id: codeownersprocessor
+    type: background-worker
+    name: CodeOwnersProcessor Service (processors)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/processors/CodeOwnersProcessor.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 11755
+    'y': 690
+  - id: userlistpicker
+    type: gateway-api
+    name: UserListPicker UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-react/src/components/UserListPicker/UserListPicker.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 30700
+    'y': 690
+  - id: entitycardactions
+    type: background-worker
+    name: EntityCardActions Service (components)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-react/src/components/EntityPeekAheadPopover/CardActionComponents/EntityCardActions.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 19890
+    'y': 690
+  - id: usersettingsappearancecard
+    type: background-worker
+    name: UserSettingsAppearanceCard Service (components)
+    isTest: false
+    properties:
+      filepath: plugins/user-settings/src/components/General/UserSettingsAppearanceCard.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 32170
+    'y': 690
+  - id: usersettingsauthproviders
+    type: background-worker
+    name: UserSettingsAuthProviders Service (components)
+    isTest: false
+    properties:
+      filepath: plugins/user-settings/src/components/AuthProviders/UserSettingsAuthProviders.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 32630
+    'y': 690
+  - id: usersettingsfeatureflags
+    type: gateway-api
+    name: UserSettingsFeatureFlags UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/user-settings/src/components/FeatureFlags/UserSettingsFeatureFlags.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 33090
+    'y': 690
+  - id: builder
+    type: background-worker
+    name: builder Service (DocsBuilder)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-backend/src/DocsBuilder/builder.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 57835
+    'y': 690
+  - id: router
+    type: rest-api
+    name: router REST Endpoint (router.ts)
+    isTest: false
+    properties:
+      filepath: packages/backend-openapi-utils/src/router.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 58295
+    'y': 690
+  - id: router_test
+    type: rest-api
+    name: router.test REST Endpoint (router.test.ts)
+    isTest: true
+    properties:
+      filepath: packages/cli-module-new/templates/backend-plugin/src/router.test.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 58755
+    'y': 690
+  - id: docssynchronizer
+    type: background-worker
+    name: DocsSynchronizer Service (service)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-backend/src/service/DocsSynchronizer.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 59215
+    'y': 690
+  - id: docssynchronizer_test
+    type: background-worker
+    name: DocsSynchronizer.test Service (service)
+    isTest: true
+    properties:
+      filepath: plugins/techdocs-backend/src/service/DocsSynchronizer.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 60135
+    'y': 690
+  - id: groupprofilecard
+    type: gateway-api
+    name: GroupProfileCard UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/org/src/components/Cards/Group/GroupProfile/GroupProfileCard.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 36755
+    'y': 690
+  - id: userprofilecard
+    type: gateway-api
+    name: UserProfileCard UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/org/src/components/Cards/User/UserProfileCard/UserProfileCard.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 37215
+    'y': 690
+  - id: searchresultgroup
+    type: gateway-api
+    name: SearchResultGroup UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/search-react/src/components/SearchResultGroup/SearchResultGroup.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 37675
+    'y': 690
+  - id: searchresult_stories
+    type: gateway-api
+    name: SearchResult.stories UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/search-react/src/components/SearchResult/SearchResult.stories.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 38135
+    'y': 690
+  - id: searchresultlist
+    type: gateway-api
+    name: SearchResultList UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/search-react/src/components/SearchResultList/SearchResultList.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 40935
+    'y': 690
+  - id: extensions
+    type: gateway-api
+    name: extensions UI Component (extensions)
+    isTest: false
+    properties:
+      filepath: packages/core-plugin-api/src/extensions/extensions.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 41395
+    'y': 690
+  - id: read
+    type: background-worker
+    name: read Service (microsoftGraph)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/read.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 20810
+    'y': 690
+  - id: read_test
+    type: background-worker
+    name: read.test Service (microsoftGraph)
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/read.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 21270
+    'y': 690
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: packages/codemods/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1165
+    'y': 1330
+  - id: config
+    type: gateway-api
+    name: config UI Component (layout)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1725
+    'y': 1330
+  - id: vendors
+    type: background-worker
+    name: vendors Service (ldap)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-ldap/src/ldap/vendors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2775
+    'y': 1330
+  - id: entitytabsgroup
+    type: gateway-api
+    name: EntityTabsGroup UI Component (alpha)
+    isTest: false
+    properties:
+      filepath: plugins/catalog/src/alpha/components/EntityTabs/EntityTabsGroup.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 41855
+    'y': 690
+  - id: plugin_test
+    type: background-worker
+    name: Plugin.test Service (plugin)
+    isTest: true
+    properties:
+      filepath: packages/core-plugin-api/src/plugin/Plugin.test.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 21730
+    'y': 690
+  - id: mcpservice_test
+    type: background-worker
+    name: McpService.test Service (services)
+    isTest: true
+    properties:
+      filepath: plugins/mcp-actions-backend/src/services/McpService.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 22190
+    'y': 690
+  - id: pendingpodcontent
+    type: background-worker
+    name: PendingPodContent Service (components)
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-react/src/components/Pods/PodDrawer/PendingPodContent.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 42315
+    'y': 690
+  - id: errorlist
+    type: gateway-api
+    name: ErrorList UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-react/src/components/Pods/ErrorList/ErrorList.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 42775
+    'y': 690
+  - id: events
+    type: background-worker
+    name: Events Service (components)
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-react/src/components/Pods/Events/Events.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 27940
+    'y': 690
+  - id: fixdialog
+    type: gateway-api
+    name: FixDialog UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-react/src/components/Pods/FixDialog/FixDialog.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 43235
+    'y': 690
+  - id: searchmodal_stories
+    type: gateway-api
+    name: SearchModal.stories UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/search/src/components/SearchModal/SearchModal.stories.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 43695
+    'y': 690
+  - id: searchtype_accordion
+    type: gateway-api
+    name: SearchType.Accordion UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/search/src/components/SearchType/SearchType.Accordion.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 44155
+    'y': 690
+  - id: errorlisttemplate
+    type: background-worker
+    name: errorListTemplate Service (next)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-react/src/next/components/Stepper/ErrorListTemplate/errorListTemplate.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 44615
+    'y': 690
+  - id: scaffolderpagecontextmenu
+    type: gateway-api
+    name: ScaffolderPageContextMenu UI Component (next)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-react/src/next/components/ScaffolderPageContextMenu/ScaffolderPageContextMenu.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 45075
+    'y': 690
+  - id: types
+    type: gateway-api
+    name: types UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 3245
+    'y': 1330
+  - id: utils
+    type: background-worker
+    name: utils Service (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/Avatar/utils.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 5215
+    'y': 1330
+  - id: infocontent
+    type: background-worker
+    name: InfoContent Service (components)
+    isTest: false
+    properties:
+      filepath: plugins/devtools/src/components/Content/InfoContent/InfoContent.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 45535
+    'y': 690
+  - id: plugin
+    type: background-worker
+    name: plugin Service (plugin.tsx)
+    isTest: false
+    properties:
+      filepath: packages/app-example-plugin/src/plugin.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 40465
+    'y': 50
+  - id: gitlabdiscoveryprocessor
+    type: background-worker
+    name: GitLabDiscoveryProcessor Service (GitLabDiscoveryProcessor.ts)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitlab/src/GitLabDiscoveryProcessor.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 61470
+    'y': 690
+  - id: integration
+    type: background-worker
+    name: integration Service (types)
+    isTest: false
+    properties:
+      filepath: plugins/permission-common/src/types/integration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 5765
     'y': 1330
   - id: error
     type: background-worker
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 14485
+    x: 13260
     'y': 1330
-  - id: actionsclient
+  - id: url
     type: background-worker
-    name: ActionsClient Service (lib)
+    name: url Service (stages)
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-actions/src/lib/ActionsClient.ts
+      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 600
+    x: 20915
     'y': 1330
-  - id: schematoflags
+  - id: client_test
     type: background-worker
-    name: schemaToFlags Service (lib)
-    isTest: false
+    name: client.test Service (microsoftGraph)
+    isTest: true
     properties:
-      filepath: ../backstage/packages/cli-module-actions/src/lib/schemaToFlags.ts
+      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/client.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 140
-    'y': 1330
-  - id: format
-    type: background-worker
-    name: format Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-actions/src/lib/format.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1060
-    'y': 1330
-  - id: pluginsources
-    type: background-worker
-    name: pluginSources Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-actions/src/lib/pluginSources.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 16595
+    x: 22650
     'y': 690
-  - id: storage
-    type: background-worker
-    name: storage Service (auth)
+  - id: entitylistcomponent
+    type: gateway-api
+    name: EntityListComponent UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-node/src/auth/storage.ts
+      filepath: plugins/catalog-import/src/components/EntityListComponent/EntityListComponent.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 45995
+    'y': 690
+  - id: containerrunner
+    type: background-worker
+    name: ContainerRunner Service (actions)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-rails/src/actions/fetch/rails/ContainerRunner.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2440
-    'y': 1330
+    x: 33550
+    'y': 690
+  - id: testutils
+    type: background-worker
+    name: testUtils Service (__fixtures__)
+    isTest: false
+    properties:
+      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/testUtils.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 34050
+    'y': 690
+  - id: auth
+    type: background-worker
+    name: auth Service (apis)
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/apis/definitions/auth.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 34915
+    'y': 690
+  - id: dispatchstrategy
+    type: background-worker
+    name: DispatchStrategy Service (auth)
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-backend/src/auth/DispatchStrategy.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 35375
+    'y': 690
+  - id: transformer
+    type: gateway-api
+    name: transformer UI Component (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/transformer.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 35835
+    'y': 690
   - id: external-api-target
     type: rest-api
     name: External HTTP API Endpoint (External HTTP Services)
@@ -1088,293 +1615,436 @@ nodes:
     properties:
       description: Generic outbound web integration endpoints.
     external: true
-    x: 14945
+    x: 21485
     'y': 1330
-  - id: localserver
+  - id: awss3
     type: background-worker
-    name: localServer Service (lib)
+    name: awsS3 Service (schema)
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-auth/src/lib/localServer.ts
+      filepath: packages/connections/src/schema/awsS3.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 3940
+    x: 22105
     'y': 1330
-  - id: pkce
+  - id: azureblobstorage
     type: background-worker
-    name: pkce Service (lib)
+    name: azureBlobStorage Service (schema)
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-auth/src/lib/pkce.ts
+      filepath: packages/connections/src/schema/azureBlobStorage.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 4400
+    x: 22565
     'y': 1330
-  - id: http
-    type: background-worker
-    name: http Service (lib)
+  - id: googlestorage
+    type: rest-api
+    name: googleStorage REST Endpoint (stages)
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-auth/src/lib/http.ts
+      filepath: plugins/techdocs-node/src/stages/publish/googleStorage.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 23025
+    'y': 1330
+  - id: local
+    type: rest-api
+    name: local REST Endpoint (stages)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/publish/local.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 24660
+    'y': 1330
+  - id: openstackswift
+    type: rest-api
+    name: openStackSwift REST Endpoint (stages)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/publish/openStackSwift.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 25120
+    'y': 1330
+  - id: publish_test
+    type: background-worker
+    name: publish.test Service (stages)
+    isTest: true
+    properties:
+      filepath: plugins/techdocs-node/src/stages/publish/publish.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2900
-    'y': 1330
-  - id: url
-    type: background-worker
-    name: url Service (stages)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 3360
-    'y': 1330
-  - id: prompt
-    type: background-worker
-    name: prompt Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-auth/src/lib/prompt.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1980
-    'y': 1330
-  - id: packager
-    type: background-worker
-    name: packager Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/lib/builder/packager.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 5560
-    'y': 1330
-  - id: builder
-    type: background-worker
-    name: builder Service (DocsBuilder)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/techdocs-backend/src/DocsBuilder/builder.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 16055
+    x: 19390
     'y': 690
-  - id: role
-    type: background-worker
-    name: role Service (lib)
+  - id: combobox_stories
+    type: gateway-api
+    name: Combobox.stories UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-build/src/lib/role.ts
+      filepath: packages/ui/src/components/Combobox/Combobox.stories.tsx
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
-    x: 5920
+    x: 6235
     'y': 690
-  - id: buildfrontend
+  - id: react-aria-components
     type: background-worker
-    name: buildFrontend Service (lib)
+    name: react-aria-components Service (react-aria-components.ts)
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-build/src/lib/buildFrontend.ts
+      filepath: packages/ui/src/react-aria-components.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 17055
-    'y': 690
-  - id: buildbackend
-    type: background-worker
-    name: buildBackend Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/lib/buildBackend.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 17595
-    'y': 690
-  - id: urls
-    type: background-worker
-    name: urls Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/lib/urls.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 6380
-    'y': 690
-  - id: productionpack
-    type: background-worker
-    name: productionPack Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/lib/packager/productionPack.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 34510
-    'y': 370
-  - id: publishing
-    type: background-worker
-    name: publishing Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/lib/publishing.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 38650
-    'y': 370
-  - id: typedistproject
-    type: background-worker
-    name: typeDistProject Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/lib/typeDistProject.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 39110
-    'y': 370
-  - id: errors
-    type: background-worker
-    name: errors Service (errors.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 34545
+    x: 25580
     'y': 1330
-  - id: runner
-    type: background-worker
-    name: runner Service (lib)
+  - id: usedefinition
+    type: gateway-api
+    name: useDefinition UI Component (hooks)
     isTest: false
     properties:
-      filepath: ../backstage/packages/repo-tools/src/lib/runner.ts
+      filepath: packages/ui/src/hooks/useDefinition/useDefinition.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 26040
+    'y': 1330
+  - id: definition
+    type: background-worker
+    name: definition Service (components)
+    isTest: false
+    properties:
+      filepath: packages/ui/src/components/Badge/definition.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 13475
-    'y': 1650
-  - id: hasreactdomclient
-    type: background-worker
-    name: hasReactDomClient Service (lib)
+    x: 26500
+    'y': 1330
+  - id: box
+    type: gateway-api
+    name: Box UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-build/src/lib/bundler/hasReactDomClient.ts
+      filepath: packages/ui/src/components/Box/Box.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 26960
+    'y': 1330
+  - id: buttonicon
+    type: gateway-api
+    name: ButtonIcon UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/ui/src/components/ButtonIcon/ButtonIcon.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 38900
+    'y': 1330
+  - id: menu
+    type: gateway-api
+    name: Menu UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/ui/src/components/Menu/Menu.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 39360
+    'y': 1330
+  - id: list_stories
+    type: gateway-api
+    name: List.stories UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/ui/src/components/List/List.stories.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 48295
+    'y': 690
+  - id: select_stories
+    type: background-worker
+    name: Select.stories Service (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/Select/Select.stories.tsx
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 21015
-    'y': 1650
+    x: 6695
+    'y': 690
+  - id: mockservices
+    type: relational-database
+    name: mockServices Database (services)
+    isTest: false
+    properties:
+      filepath: packages/backend-test-utils/src/services/mockServices.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 62850
+    'y': 690
+  - id: pluginsources
+    type: background-worker
+    name: pluginSources Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-actions/src/lib/pluginSources.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 39555
+    'y': 690
+  - id: actionsclient
+    type: background-worker
+    name: ActionsClient Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-actions/src/lib/ActionsClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 39820
+    'y': 1330
+  - id: schematoflags
+    type: background-worker
+    name: schemaToFlags Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-actions/src/lib/schemaToFlags.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 40280
+    'y': 1330
+  - id: resolveauth
+    type: background-worker
+    name: resolveAuth Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-actions/src/lib/resolveAuth.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 55180
+    'y': 1330
+  - id: format
+    type: background-worker
+    name: format Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-actions/src/lib/format.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 55720
+    'y': 1330
   - id: optionsparser
     type: background-worker
     name: optionsParser Service (lib)
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-lint/src/lib/optionsParser.ts
+      filepath: packages/cli-module-build/src/lib/optionsParser.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 16810
+    x: 56220
     'y': 1330
-  - id: testutils
-    type: background-worker
-    name: testUtils Service (testUtils.ts)
+  - id: test-utils
+    type: gateway-api
+    name: test-utils UI Component (test-utils.tsx)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-react/src/testUtils.ts
+      filepath: plugins/techdocs-addons-test-utils/src/test-utils.tsx
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
-    x: 31430
+    x: 40015
     'y': 690
-  - id: config
+  - id: packages
     type: background-worker
-    name: config Service (collators)
+    name: packages Service (lib)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      filepath: packages/cli-module-migrate/src/lib/versioning/packages.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 17270
-    'y': 1330
-  - id: core
-    type: background-worker
-    name: core Service (providers)
+    x: 24515
+    'y': 1010
+  - id: node
+    type: gateway-api
+    name: Node UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-backend-module-gitea/src/providers/core.ts
+      filepath: packages/core-components/src/components/DependencyGraph/Node.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 40475
+    'y': 690
+  - id: app_test
+    type: gateway-api
+    name: App.test UI Component (App.test.tsx)
+    isTest: true
+    properties:
+      filepath: packages/create-app/templates/default-app/packages/app/src/App.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 7155
+    'y': 690
+  - id: homepage_test
+    type: background-worker
+    name: HomePage.test Service (e2e-tests)
+    isTest: true
+    properties:
+      filepath: packages/app/e2e-tests/HomePage.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 37945
-    'y': 1330
-  - id: packagedetection
-    type: event-broker
-    name: packageDetection Message Broker (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/lib/bundler/packageDetection.ts
-      namespaces: ''
-      technology: TypeScript Event Client
-    external: true
-    x: 38405
-    'y': 1330
-  - id: paths
+    x: 8075
+    'y': 690
+  - id: searchpage_test
     type: background-worker
-    name: paths Service (lib)
-    isTest: false
+    name: SearchPage.test Service (e2e-tests)
+    isTest: true
     properties:
-      filepath: ../backstage/packages/repo-tools/src/lib/paths.ts
+      filepath: packages/app/e2e-tests/SearchPage.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 29825
-    'y': 1330
-  - id: types
-    type: background-worker
-    name: types Service (types.ts)
+    x: 8535
+    'y': 690
+  - id: index-public-experimental
+    type: gateway-api
+    name: index-public-experimental UI Component (index-public-experimental.tsx)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      filepath: packages/app-legacy/src/index-public-experimental.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 23190
+    'y': 690
+  - id: codeowners_test
+    type: background-worker
+    name: codeowners.test Service (lib)
+    isTest: true
+    properties:
+      filepath: packages/cli-module-new/src/lib/codeowners/codeowners.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 14625
-    'y': 1650
-  - id: modulefederation
-    type: event-broker
-    name: moduleFederation Message Broker (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-build/src/lib/bundler/moduleFederation.ts
-      namespaces: ''
-      technology: TypeScript Event Client
-    external: true
-    x: 38945
-    'y': 1330
-  - id: main
+    x: 12215
+    'y': 690
+  - id: executeportabletemplate
     type: background-worker
-    name: main Service (tests)
+    name: executePortableTemplate Service (lib)
     isTest: false
     properties:
-      filepath: ../backstage/packages/cli-module-build/src/tests/transforms/__fixtures__/pkg-module/main.ts
+      filepath: packages/cli-module-new/src/lib/execution/executePortableTemplate.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 5100
+    x: 14060
+    'y': 690
+  - id: collectportabletemplateinput
+    type: background-worker
+    name: collectPortableTemplateInput Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-new/src/lib/preparation/collectPortableTemplateInput.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 14520
+    'y': 690
+  - id: createnewpackage
+    type: background-worker
+    name: createNewPackage Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-new/src/lib/createNewPackage.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 56840
+    'y': 1330
+  - id: singleinstancegithubcredentialsprovider
+    type: background-worker
+    name: SingleInstanceGithubCredentialsProvider Service (github)
+    isTest: false
+    properties:
+      filepath: packages/integration/src/github/SingleInstanceGithubCredentialsProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 63310
+    'y': 690
+  - id: failonbrowsererrors
+    type: background-worker
+    name: failOnBrowserErrors Service (playwright)
+    isTest: false
+    properties:
+      filepath: packages/e2e-test-utils/src/playwright/failOnBrowserErrors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 9455
+    'y': 690
+  - id: generateprojects
+    type: background-worker
+    name: generateProjects Service (playwright)
+    isTest: false
+    properties:
+      filepath: packages/e2e-test-utils/src/playwright/generateProjects.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 9915
+    'y': 690
+  - id: utility
+    type: background-worker
+    name: utility Service (utility.ts)
+    isTest: false
+    properties:
+      filepath: packages/backend-openapi-utils/src/utility.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 57300
+    'y': 1330
+  - id: discovery
+    type: background-worker
+    name: discovery Service (types)
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/templates/typescript-backstage-client/types/discovery.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 57760
+    'y': 1330
+  - id: publisherconfig
+    type: background-worker
+    name: PublisherConfig Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli/src/lib/PublisherConfig.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 58220
     'y': 1330
   - id: frontend-client
     type: gateway-api
@@ -1383,404 +2053,852 @@ nodes:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
     external: true
-    x: 21245
+    x: 23730
     'y': 690
-  - id: express
-    type: rest-api
-    name: express REST Endpoint (types)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/backend-openapi-utils/src/types/express.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 35005
-    'y': 1330
-  - id: index
-    type: background-worker
-    name: index Service (index.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/user-settings-common/src/index.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 34200
-    'y': 690
-  - id: packages
-    type: background-worker
-    name: packages Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-migrate/src/lib/versioning/packages.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 30705
-    'y': 1010
-  - id: utils
-    type: background-worker
-    name: utils Service (reader)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/techdocs/src/reader/transformers/html/utils.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 28230
-    'y': 1330
-  - id: createnewpackage
-    type: background-worker
-    name: createNewPackage Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-new/src/lib/createNewPackage.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 6760
-    'y': 1330
-  - id: codeowners_test
-    type: background-worker
-    name: codeowners.test Service (lib)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/cli-module-new/src/lib/codeowners/codeowners.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 22960
-    'y': 690
-  - id: executeportabletemplate
-    type: background-worker
-    name: executePortableTemplate Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-new/src/lib/execution/executePortableTemplate.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 23420
-    'y': 690
-  - id: collectportabletemplateinput
-    type: background-worker
-    name: collectPortableTemplateInput Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-new/src/lib/preparation/collectPortableTemplateInput.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 23880
-    'y': 690
-  - id: discoverpackages
-    type: background-worker
-    name: discoverPackages Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-translations/src/lib/discoverPackages.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 10040
-    'y': 1330
-  - id: extracttranslations
-    type: background-worker
-    name: extractTranslations Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-translations/src/lib/extractTranslations.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 9580
-    'y': 1330
-  - id: messagefilepath
-    type: background-worker
-    name: messageFilePath Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/cli-module-translations/src/lib/messageFilePath.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 10500
-    'y': 1330
-  - id: playwright_config
-    type: background-worker
-    name: playwright.config Service (backstage)
-    isTest: false
-    properties:
-      filepath: ../backstage/playwright.config.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 24340
-    'y': 690
-  - id: helpers
-    type: background-worker
-    name: helpers Service (helpers.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/techdocs-react/src/helpers.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 20705
-    'y': 1330
-  - id: failonbrowsererrors
-    type: background-worker
-    name: failOnBrowserErrors Service (playwright)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/e2e-test-utils/src/playwright/failOnBrowserErrors.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 24800
-    'y': 690
-  - id: generateprojects
-    type: background-worker
-    name: generateProjects Service (playwright)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/e2e-test-utils/src/playwright/generateProjects.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 25260
-    'y': 690
-  - id: singleinstancegithubcredentialsprovider
-    type: background-worker
-    name: SingleInstanceGithubCredentialsProvider Service (github)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/integration/src/github/SingleInstanceGithubCredentialsProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 25720
-    'y': 690
-  - id: common
-    type: background-worker
-    name: common Service (error-detection)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/kubernetes-common/src/error-detection/common.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 27770
-    'y': 1330
-  - id: getpackageexportdetails
-    type: background-worker
-    name: getPackageExportDetails Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/lib/getPackageExportDetails.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 34085
-    'y': 1330
-  - id: util
-    type: relational-database
-    name: util Database (database)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/search-backend-module-pg/src/database/util.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 12525
-    'y': 1330
-  - id: exec
-    type: background-worker
-    name: exec Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/lib/exec.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 19785
-    'y': 1330
-  - id: constants
-    type: background-worker
-    name: constants Service (ReportIssue)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/techdocs-module-addons-contrib/src/ReportIssue/constants.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 30285
-    'y': 1330
-  - id: dedupe-imports
-    type: background-worker
-    name: dedupe-imports Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/repo-tools/src/lib/openapi/dedupe-imports.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 39405
-    'y': 1330
-  - id: utility
-    type: background-worker
-    name: utility Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/techdocs-cli/src/lib/utility.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 30745
-    'y': 1330
-  - id: discovery
-    type: background-worker
-    name: discovery Service (schema)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/scaffolder-common/src/schema/openapi/generated/types/discovery.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 36205
-    'y': 1330
-  - id: publisherconfig
-    type: background-worker
-    name: PublisherConfig Service (lib)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/techdocs-cli/src/lib/PublisherConfig.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 36665
-    'y': 1330
   - id: mkdocsserver
     type: background-worker
     name: mkdocsServer Service (lib)
     isTest: false
     properties:
-      filepath: ../backstage/packages/techdocs-cli/src/lib/mkdocsServer.ts
+      filepath: packages/techdocs-cli/src/lib/mkdocsServer.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 28690
+    x: 58680
     'y': 1330
   - id: httpserver
     type: background-worker
     name: httpServer Service (lib)
     isTest: false
     properties:
-      filepath: ../backstage/packages/techdocs-cli/src/lib/httpServer.ts
+      filepath: packages/techdocs-cli/src/lib/httpServer.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 29150
+    x: 59140
     'y': 1330
-  - id: codeownersprocessor
-    type: background-worker
-    name: CodeOwnersProcessor Service (processors)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend/src/processors/CodeOwnersProcessor.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 26180
-    'y': 690
-  - id: gitlabdiscoveryprocessor
-    type: background-worker
-    name: GitLabDiscoveryProcessor Service (GitLabDiscoveryProcessor.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/catalog-backend-module-gitlab/src/GitLabDiscoveryProcessor.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 26640
-    'y': 690
-  - id: docssynchronizer_test
-    type: background-worker
-    name: DocsSynchronizer.test Service (service)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/techdocs-backend/src/service/DocsSynchronizer.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 27100
-    'y': 690
-  - id: docssynchronizer
-    type: background-worker
-    name: DocsSynchronizer Service (service)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/techdocs-backend/src/service/DocsSynchronizer.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 27560
-    'y': 690
-  - id: router_test
+  - id: express
     type: rest-api
-    name: router.test REST Endpoint (service)
-    isTest: true
+    name: express REST Endpoint (types)
+    isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-backend/src/service/router.test.ts
+      filepath: packages/backend-openapi-utils/src/types/express.ts
       namespaces: ''
       technology: REST Controller / Router
     external: true
-    x: 28020
-    'y': 690
-  - id: router
-    type: rest-api
-    name: router REST Endpoint (service)
+    x: 59600
+    'y': 1330
+  - id: localserver
+    type: background-worker
+    name: localServer Service (lib)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-backend/src/service/router.ts
+      filepath: packages/cli-module-auth/src/lib/localServer.ts
       namespaces: ''
-      technology: REST Controller / Router
+      technology: TypeScript Domain Service
     external: true
-    x: 28480
+    x: 60060
+    'y': 1330
+  - id: pkce
+    type: background-worker
+    name: pkce Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-auth/src/lib/pkce.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 60520
+    'y': 1330
+  - id: http
+    type: background-worker
+    name: http Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-auth/src/lib/http.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 60980
+    'y': 1330
+  - id: storage
+    type: background-worker
+    name: storage Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-auth/src/lib/storage.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 62075
+    'y': 1330
+  - id: prompt
+    type: background-worker
+    name: prompt Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-auth/src/lib/prompt.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 62535
+    'y': 1330
+  - id: discoverpackages
+    type: background-worker
+    name: discoverPackages Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-translations/src/lib/discoverPackages.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 62995
+    'y': 1330
+  - id: extracttranslations
+    type: background-worker
+    name: extractTranslations Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-translations/src/lib/extractTranslations.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 63935
+    'y': 1330
+  - id: messagefilepath
+    type: background-worker
+    name: messageFilePath Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-translations/src/lib/messageFilePath.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 64395
+    'y': 1330
+  - id: root
+    type: gateway-api
+    name: Root UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/create-app/templates/legacy-app/packages/app/src/components/Root/Root.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 54650
+    'y': 50
+  - id: advancedsettings
+    type: gateway-api
+    name: AdvancedSettings UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/app-legacy/src/components/advancedSettings/AdvancedSettings.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 48755
+    'y': 690
+  - id: main
+    type: background-worker
+    name: main Service (tests)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/tests/transforms/__fixtures__/pkg-default/main.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 64855
+    'y': 1330
+  - id: core
+    type: background-worker
+    name: core Service (gerrit)
+    isTest: false
+    properties:
+      filepath: packages/integration/src/gerrit/core.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 65315
+    'y': 1330
+  - id: packagedetection
+    type: event-broker
+    name: packageDetection Message Broker (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/packageDetection.ts
+      namespaces: ''
+      technology: TypeScript Event Client
+    external: true
+    x: 65775
+    'y': 1330
+  - id: paths
+    type: background-worker
+    name: paths Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/lib/paths.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 66490
+    'y': 1330
+  - id: modulefederation
+    type: event-broker
+    name: moduleFederation Message Broker (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/moduleFederation.ts
+      namespaces: ''
+      technology: TypeScript Event Client
+    external: true
+    x: 67070
+    'y': 1330
+  - id: packager
+    type: background-worker
+    name: packager Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/builder/packager.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 67530
+    'y': 1330
+  - id: buildfrontend
+    type: background-worker
+    name: buildFrontend Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/buildFrontend.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 46455
+    'y': 690
+  - id: buildbackend
+    type: background-worker
+    name: buildBackend Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/buildBackend.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 46915
+    'y': 690
+  - id: productionpack
+    type: background-worker
+    name: productionPack Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/packager/productionPack.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 36375
+    'y': 370
+  - id: publishing
+    type: background-worker
+    name: publishing Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/publishing.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 37065
+    'y': 370
+  - id: typedistproject
+    type: background-worker
+    name: typeDistProject Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/typeDistProject.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 37525
+    'y': 370
+  - id: hasreactdomclient
+    type: background-worker
+    name: hasReactDomClient Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/hasReactDomClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 71445
+    'y': 1650
+  - id: runner
+    type: background-worker
+    name: runner Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/lib/runner.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 275
+    'y': 1650
+  - id: role
+    type: background-worker
+    name: role Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/role.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 47375
+    'y': 690
+  - id: urls
+    type: background-worker
+    name: urls Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/urls.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 47835
+    'y': 690
+  - id: util
+    type: background-worker
+    name: util Service (__fixtures__)
+    isTest: false
+    properties:
+      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/util.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 67990
+    'y': 1330
+  - id: exec
+    type: background-worker
+    name: exec Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/lib/exec.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 68450
+    'y': 1330
+  - id: common
+    type: background-worker
+    name: common Service (errors)
+    isTest: false
+    properties:
+      filepath: packages/errors/src/errors/common.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 68910
+    'y': 1330
+  - id: getpackageexportdetails
+    type: background-worker
+    name: getPackageExportDetails Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/lib/getPackageExportDetails.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 69370
+    'y': 1330
+  - id: constants
+    type: background-worker
+    name: constants Service (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/DependencyGraph/constants.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 69830
+    'y': 1330
+  - id: helpers
+    type: background-worker
+    name: helpers Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/auth/external/helpers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 70350
+    'y': 1330
+  - id: dedupe-imports
+    type: background-worker
+    name: dedupe-imports Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/lib/openapi/dedupe-imports.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 70810
+    'y': 1330
+  - id: playwright_config
+    type: background-worker
+    name: playwright.config Service (Application Shell)
+    isTest: false
+    properties:
+      filepath: playwright.config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 10375
+    'y': 690
+  - id: createbackend
+    type: background-worker
+    name: CreateBackend Service (CreateBackend.ts)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/CreateBackend.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 64310
+    'y': 690
+  - id: headeractionmenu
+    type: gateway-api
+    name: HeaderActionMenu UI Component (layout)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/layout/HeaderActionMenu/HeaderActionMenu.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 49215
+    'y': 690
+  - id: breadcrumbs
+    type: gateway-api
+    name: Breadcrumbs UI Component (layout)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/layout/Breadcrumbs/Breadcrumbs.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 49675
+    'y': 690
+  - id: breadcrumbs_stories
+    type: gateway-api
+    name: Breadcrumbs.stories UI Component (layout)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/layout/Breadcrumbs/Breadcrumbs.stories.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 50135
+    'y': 690
+  - id: oauthrequestdialog
+    type: gateway-api
+    name: OAuthRequestDialog UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/OAuthRequestDialog/OAuthRequestDialog.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 50595
+    'y': 690
+  - id: metadatatable
+    type: gateway-api
+    name: MetadataTable UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/StructuredMetadataTable/MetadataTable.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 51055
+    'y': 690
+  - id: linkbutton_stories
+    type: gateway-api
+    name: LinkButton.stories UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/LinkButton/LinkButton.stories.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 51515
+    'y': 690
+  - id: gaugecard_stories
+    type: gateway-api
+    name: GaugeCard.stories UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/ProgressBars/GaugeCard.stories.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 20350
+    'y': 690
+  - id: errorpanel
+    type: gateway-api
+    name: ErrorPanel UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/ErrorPanel/ErrorPanel.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 52435
     'y': 690
 dependencies:
-  - from: homepage_test
-    to: test
+  - from: components
+    to: list
     type: direct-call
     description: Executes local class methods / functions
-  - from: searchpage_test
-    to: test
+  - from: index
+    to: client
     type: direct-call
     description: Executes local class methods / functions
-  - from: app_test
-    to: test
+  - from: content
+    to: list
     type: direct-call
     description: Executes local class methods / functions
-  - from: createbackend
+  - from: visitlist
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: addwidgetdialog
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: ownerlistpicker
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: schema
+    to: entitypicker
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: dryrunresultslist
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templateeditorintro
+    to: publish
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: codeownersprocessor
+    to: codeowners
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: userlistpicker
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: entitycardactions
+    to: info
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: usersettingsappearancecard
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: usersettingsauthproviders
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: usersettingsfeatureflags
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: builder
     to: cache
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: router
+    to: cache
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: router_test
+    to: cache
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: docssynchronizer
+    to: cache
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: docssynchronizer_test
+    to: cache
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: groupprofilecard
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: userprofilecard
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: searchresultgroup
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: searchresult_stories
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: searchresultlist
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: extensions
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: client
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read_test
+    to: client
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: client
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: client
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: client
+    to: vendors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: entitytabsgroup
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plugin_test
+    to: client
+    type: direct-call
+    description: References class type / calls methods
+  - from: mcpservice_test
+    to: client
+    type: direct-call
+    description: References class type / calls methods
+  - from: pendingpodcontent
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: errorlist
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: events
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: events
+    to: info
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: fixdialog
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: searchmodal_stories
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: searchtype_accordion
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: errorlisttemplate
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: scaffolderpagecontextmenu
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: schema
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: schema
+    to: utils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: infocontent
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plugin
+    to: build
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlabdiscoveryprocessor
+    to: cache
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: client
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: client
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: client
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: client
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: client_test
+    to: client
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: entitylistcomponent
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index_test
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index_test
+    to: index
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index_test
+    to: containerrunner
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index_test
+    to: testutils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index_test
+    to: auth
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index_test
+    to: dispatchstrategy
+    type: direct-call
+    description: References class type / calls methods
+  - from: index_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: index_test
+    to: transformer
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plugin
+    to: client
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: client
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests
+  - from: publish
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: publish
+    to: awss3
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: publish
+    to: azureblobstorage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: publish
+    to: googlestorage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: publish
+    to: local
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: publish
+    to: openstackswift
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: publish
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: publish
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: publish_test
+    to: publish
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: combobox_stories
+    to: test
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: list
+    to: react-aria-components
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: list
+    to: usedefinition
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: list
+    to: definition
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: list
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: list
+    to: box
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: list
+    to: buttonicon
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: list
+    to: menu
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: list_stories
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: select_stories
+    to: test
     type: direct-call
     description: Executes local class methods / functions
   - from: mockservices
     to: cache
     type: direct-call
     description: Executes local class methods / functions
-  - from: execute_test
-    to: execute
+  - from: sourcesremove_test
+    to: sourcesremove
     type: direct-call
     description: Executes local class methods / functions
-  - from: execute_test
-    to: resolveauth
+  - from: sourcesadd_test
+    to: sourcesadd
     type: direct-call
     description: Executes local class methods / functions
-  - from: execute_test
-    to: error
+  - from: sourcesremove
+    to: pluginsources
     type: direct-call
-    description: References class type / calls methods
+    description: Executes local class methods / functions
   - from: execute
     to: actionsclient
     type: direct-call
@@ -1801,6 +2919,10 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: sourceslist
+    to: pluginsources
+    type: direct-call
+    description: Executes local class methods / functions
   - from: list
     to: actionsclient
     type: direct-call
@@ -1813,314 +2935,42 @@ dependencies:
     to: format
     type: direct-call
     description: Executes local class methods / functions
-  - from: sourcesadd_test
-    to: sourcesadd
+  - from: execute_test
+    to: execute
     type: direct-call
     description: Executes local class methods / functions
+  - from: execute_test
+    to: resolveauth
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: execute_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
   - from: sourcesadd
     to: pluginsources
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: sourceslist
-    to: pluginsources
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: sourcesremove_test
-    to: sourcesremove
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: sourcesremove
-    to: pluginsources
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: list
-    to: storage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: login_test
-    to: login
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: login_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: login
-    to: external-api-target
-    type: direct-call
-    description: HMR outbound query requests
-  - from: login
-    to: localserver
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: login
-    to: pkce
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: login
-    to: http
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: login
-    to: storage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: login
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: login
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: logout
-    to: storage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: logout
-    to: http
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: logout
-    to: prompt
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: logout
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: select
-    to: storage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: select
-    to: prompt
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: show
-    to: http
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: show
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: buildworkspace
-    to: packager
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: buildworkspace
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: command
-    to: builder
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: command
-    to: role
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: command
-    to: buildfrontend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: command
-    to: buildbackend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: command
-    to: urls
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: command_test
-    to: command
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: command_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: command
-    to: packager
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: command
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: postpack
-    to: productionpack
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: prepack
-    to: productionpack
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: prepack
-    to: publishing
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: prepack
-    to: typedistproject
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: command
-    to: startpackage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: command
-    to: resolvelinkedworkspace
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolvelinkedworkspace
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolvelinkedworkspace
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: startbackend
-    to: runner
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: startfrontend
-    to: hasreactdomclient
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: startpackage_test
-    to: startpackage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: startpackage
-    to: startbackend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: startpackage
-    to: startfrontend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: startpackage
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: build
-    to: builder
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: build
-    to: buildfrontend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: build
-    to: buildbackend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: build
-    to: optionsparser
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: start_test
-    to: start
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: start_test
-    to: testutils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: start
-    to: resolvelinkedworkspace
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: start
-    to: startpackage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: start
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: server
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: server
-    to: core
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: server
-    to: packagedetection
-    type: publish-subscribe
-    description: Publishes / consumes messaging topics
-  - from: server
-    to: paths
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: server
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: server
-    to: modulefederation
-    type: publish-subscribe
-    description: Publishes / consumes messaging topics
-  - from: print
-    to: main
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: docs
-    type: direct-call
-    description: Renders docs layout component
-  - from: docs
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: docs
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: print
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: print
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: validate
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: githubcreateappserver
-    type: direct-call
-    description: Renders GithubCreateAppServer layout component
-  - from: githubcreateappserver
-    to: express
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: githubcreateappserver
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: index
-    to: githubcreateappserver
     type: direct-call
     description: Executes local class methods / functions
   - from: lint
     to: optionsparser
     type: direct-call
     description: Executes local class methods / functions
-  - from: fix
-    to: error
+  - from: migrate_test
+    to: testutils
     type: direct-call
-    description: References class type / calls methods
-  - from: packageexports
-    to: error
+    description: Executes local class methods / functions
+  - from: migrate_test
+    to: migrate
     type: direct-call
-    description: References class type / calls methods
+    description: Executes local class methods / functions
+  - from: migrate_test
+    to: test-utils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: migrate
+    to: utils
+    type: direct-call
+    description: Executes local class methods / functions
   - from: bump_test
     to: testutils
     type: direct-call
@@ -2130,7 +2980,15 @@ dependencies:
     type: direct-call
     description: Executes local class methods / functions
   - from: bump_test
+    to: test-utils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: bump_test
     to: packages
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: bump_test
+    to: node
     type: direct-call
     description: Executes local class methods / functions
   - from: bump_test
@@ -2157,16 +3015,44 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: migrate_test
-    to: testutils
+  - from: packageexports
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: app_test
+    to: test
     type: direct-call
     description: Executes local class methods / functions
-  - from: migrate_test
-    to: migrate
+  - from: homepage_test
+    to: test
     type: direct-call
     description: Executes local class methods / functions
-  - from: migrate
-    to: utils
+  - from: searchpage_test
+    to: test
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index-public-experimental
+    to: client
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: test_test
+    to: test
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: codeowners_test
+    to: codeowners
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: executeportabletemplate
+    to: codeowners
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: collectportabletemplateinput
+    to: codeowners
     type: direct-call
     description: Executes local class methods / functions
   - from: new_test
@@ -2185,78 +3071,14 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: codeowners_test
-    to: codeowners
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: executeportabletemplate
-    to: codeowners
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: collectportabletemplateinput
-    to: codeowners
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: test_test
-    to: test
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: test
-    to: error
+  - from: singleinstancegithubcredentialsprovider
+    to: cache
     type: direct-call
     description: References class type / calls methods
-  - from: export
-    to: discoverpackages
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: export
-    to: extracttranslations
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: export
-    to: messagefilepath
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: export
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: import
-    to: discoverpackages
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: import
-    to: messagefilepath
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: import
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: playwright_config
-    to: test
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: index
-    to: runcommand
-    type: read-write
-    description: Queries database table records
-  - from: runcommand
-    to: external-api-target
-    type: direct-call
-    description: HMR outbound query requests
-  - from: runcommand
-    to: helpers
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: runcommand
+  - from: schema
     to: errors
     type: direct-call
     description: Executes local class methods / functions
-  - from: runcommand
-    to: error
-    type: direct-call
-    description: References class type / calls methods
   - from: failonbrowsererrors
     to: test
     type: direct-call
@@ -2265,292 +3087,16 @@ dependencies:
     to: test
     type: direct-call
     description: Executes local class methods / functions
-  - from: singleinstancegithubcredentialsprovider
-    to: cache
-    type: direct-call
-    description: References class type / calls methods
-  - from: builddocs
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: patchapireportgeneration
-    to: common
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: patchapireportgeneration
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: runapiextraction_test
-    to: runapiextraction
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: runapiextraction
-    to: getpackageexportdetails
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: runapiextraction
-    to: common
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: runapiextraction
-    to: patchapireportgeneration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: runapiextraction
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: buildapireports_test
-    to: testutils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: buildapireports_test
-    to: categorizepackagedirs
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: buildapireports_test
-    to: buildapireports
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: buildapireports_test
-    to: index
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: buildapireports
-    to: categorizepackagedirs
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: buildapireports
-    to: paths
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: buildapireports
-    to: index
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: generateclireport
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: runcliextraction
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: runcliextraction
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: runcliextraction
-    to: generateclireport
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: runcliextraction
-    to: common
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: runcliextraction
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: generatesqlreport
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: getpgschemainfo
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: runsqlextraction
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: runsqlextraction
-    to: getpgschemainfo
-    type: read-write
-    description: Queries database table records
-  - from: runsqlextraction
-    to: generatesqlreport
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: runsqlextraction
-    to: common
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: runsqlextraction
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: codeowners
-    to: utils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: codeowners
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: generate-catalog-info
-    to: codeowners
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: generate-catalog-info
-    to: utils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: generate-catalog-info
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: generate-patch
-    to: external-api-target
-    type: direct-call
-    description: HMR outbound query requests
-  - from: generate-patch
-    to: exec
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: generate-patch
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: generate-patch
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: knip-extractor
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: knip-extractor
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: knip-reports
-    to: knip-extractor
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: knip-reports
-    to: paths
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: diff
-    to: exec
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: diff
-    to: constants
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: diff
-    to: helpers
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: diff
-    to: util
-    type: read-write
-    description: Queries database table records
-  - from: diff
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: fuzz
-    to: exec
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: fuzz
-    to: helpers
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: index
-    to: server
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: server
-    to: exec
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: server
-    to: constants
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: server
-    to: dedupe-imports
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: server
-    to: helpers
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: cache_test
-    to: cache
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: cache
-    to: constants
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: cache
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: command
-    to: paths
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: command
-    to: utils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: command
-    to: cache
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: lint
-    to: runner
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: lint
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: lint
-    to: helpers
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: lint
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: verify
-    to: runner
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: verify
-    to: constants
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: verify
-    to: helpers
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: verify
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: type-deps
-    to: getpackageexportdetails
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: type-deps
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: generate
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: generate
+  - from: publish
     to: utility
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: publish
+    to: discovery
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: publish
+    to: publisherconfig
     type: direct-call
     description: Executes local class methods / functions
   - from: migrate
@@ -2569,6 +3115,14 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: generate
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: generate
+    to: utility
+    type: direct-call
+    description: Executes local class methods / functions
   - from: frontend-client
     to: mkdocs
     type: direct-call
@@ -2605,31 +3159,667 @@ dependencies:
     to: utils
     type: direct-call
     description: Executes local class methods / functions
-  - from: codeownersprocessor
+  - from: frontend-client
+    to: githubcreateappserver
+    type: direct-call
+    description: Renders GithubCreateAppServer layout component
+  - from: githubcreateappserver
+    to: express
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: githubcreateappserver
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: index
+    to: githubcreateappserver
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: login
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests
+  - from: login
+    to: localserver
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: login
+    to: pkce
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: login
+    to: http
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: login
+    to: storage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: login
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: login
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: login_test
+    to: login
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: login_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: list
+    to: storage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: show
+    to: http
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: show
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: logout
+    to: storage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: logout
+    to: http
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: logout
+    to: prompt
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: logout
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: export
+    to: discoverpackages
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: export
+    to: extracttranslations
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: export
+    to: messagefilepath
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: export
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: import
+    to: discoverpackages
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: import
+    to: messagefilepath
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: import
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: root
+    to: build
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: advancedsettings
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: print
+    to: main
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: server
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: server
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: server
+    to: packagedetection
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: server
+    to: paths
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: server
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: server
+    to: modulefederation
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: buildworkspace
+    to: packager
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: buildworkspace
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: start_test
+    to: start
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: start_test
+    to: testutils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: start
+    to: resolvelinkedworkspace
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: start
+    to: startpackage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: start
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: build
+    to: builder
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: build
+    to: buildfrontend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: build
+    to: buildbackend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: build
+    to: optionsparser
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: prepack
+    to: productionpack
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: prepack
+    to: publishing
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: prepack
+    to: typedistproject
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: startfrontend
+    to: hasreactdomclient
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolvelinkedworkspace
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolvelinkedworkspace
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: startpackage_test
+    to: startpackage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: startbackend
+    to: runner
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: command
+    to: startpackage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: command
+    to: resolvelinkedworkspace
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: command
+    to: role
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: startpackage
+    to: startbackend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: startpackage
+    to: startfrontend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: startpackage
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: command_test
+    to: command
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: command_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: command
+    to: buildfrontend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: command
+    to: packager
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: command
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: postpack
+    to: productionpack
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: command
+    to: builder
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: command
+    to: buildbackend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: command
+    to: urls
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: knip-extractor
+    to: util
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: knip-extractor
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: knip-reports
+    to: knip-extractor
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: knip-reports
+    to: paths
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: generate-patch
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests
+  - from: generate-patch
+    to: exec
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: generate-patch
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: generate-patch
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: buildapireports_test
+    to: testutils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: buildapireports_test
+    to: categorizepackagedirs
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: buildapireports_test
+    to: buildapireports
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: buildapireports_test
+    to: index
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: generateclireport
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runcliextraction
+    to: util
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runcliextraction
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runcliextraction
+    to: generateclireport
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runcliextraction
+    to: common
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runcliextraction
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: patchapireportgeneration
+    to: common
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: patchapireportgeneration
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: builddocs
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: runapiextraction
+    to: getpackageexportdetails
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runapiextraction
+    to: common
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runapiextraction
+    to: patchapireportgeneration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runapiextraction
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: runapiextraction_test
+    to: runapiextraction
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: buildapireports
+    to: categorizepackagedirs
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: buildapireports
+    to: paths
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: buildapireports
+    to: index
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: generatesqlreport
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runsqlextraction
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runsqlextraction
+    to: getpgschemainfo
+    type: read-write
+    description: Queries database table records
+  - from: runsqlextraction
+    to: generatesqlreport
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runsqlextraction
+    to: common
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runsqlextraction
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: getpgschemainfo
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: cache_test
+    to: cache
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: cache
+    to: constants
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: cache
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: command
+    to: paths
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: command
+    to: utils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: command
+    to: cache
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: generate-catalog-info
     to: codeowners
     type: direct-call
     description: Executes local class methods / functions
-  - from: gitlabdiscoveryprocessor
+  - from: generate-catalog-info
+    to: utils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: generate-catalog-info
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: codeowners
+    to: utils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: codeowners
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: type-deps
+    to: getpackageexportdetails
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: type-deps
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: lint
+    to: runner
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: lint
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: lint
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: lint
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: fuzz
+    to: exec
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: verify
+    to: runner
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: verify
+    to: constants
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: verify
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: verify
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: diff
+    to: exec
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: diff
+    to: constants
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: diff
+    to: util
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: fuzz
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: diff
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: diff
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: client
+    to: exec
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: client
+    to: constants
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: client
+    to: dedupe-imports
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: client
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index
+    to: server
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: server
+    to: exec
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: server
+    to: constants
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: server
+    to: dedupe-imports
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: server
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: fix
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: index
+    to: runcommand
+    type: read-write
+    description: Queries database table records
+  - from: runcommand
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests
+  - from: runcommand
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runcommand
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runcommand
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: playwright_config
+    to: test
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: schema
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: print
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: print
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: validate
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: docs
+    type: direct-call
+    description: Renders docs layout component
+  - from: docs
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: docs
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackend
     to: cache
     type: direct-call
     description: Executes local class methods / functions
-  - from: builder
-    to: cache
+  - from: headeractionmenu
+    to: list
     type: direct-call
     description: Executes local class methods / functions
-  - from: docssynchronizer_test
-    to: cache
+  - from: breadcrumbs
+    to: list
     type: direct-call
     description: Executes local class methods / functions
-  - from: docssynchronizer
-    to: cache
+  - from: breadcrumbs_stories
+    to: list
     type: direct-call
     description: Executes local class methods / functions
-  - from: router_test
-    to: cache
+  - from: oauthrequestdialog
+    to: list
     type: direct-call
     description: Executes local class methods / functions
-  - from: router
-    to: cache
+  - from: metadatatable
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: linkbutton_stories
+    to: list
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gaugecard_stories
+    to: info
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: errorpanel
+    to: list
     type: direct-call
     description: Executes local class methods / functions

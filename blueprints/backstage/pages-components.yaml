@@ -7,34 +7,45 @@ nodes:
     name: _home UI Component
     isTest: false
     properties:
-      filepath: ../backstage/microsite/src/pages/home/_home.tsx
+      filepath: microsite/src/pages/home/_home.tsx
       namespaces: ''
       technology: React Component
     external: false
-    x: 1290
+    x: 600
     'y': 370
   - id: _hubspotnewadoptersform
     type: gateway-api
     name: _hubSpotNewAdoptersForm UI Component
     isTest: false
     properties:
-      filepath: ../backstage/microsite/src/pages/home/_hubSpotNewAdoptersForm.tsx
+      filepath: microsite/src/pages/home/_hubSpotNewAdoptersForm.tsx
       namespaces: ''
       technology: React Component
     external: false
-    x: 600
+    x: 2440
     'y': 690
   - id: _plugincard
     type: gateway-api
     name: _pluginCard UI Component
     isTest: false
     properties:
-      filepath: ../backstage/microsite/src/pages/plugins/_pluginCard.tsx
+      filepath: microsite/src/pages/plugins/_pluginCard.tsx
       namespaces: ''
       technology: React Component
     external: false
-    x: 2250
+    x: 1425
     'y': 370
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
+    isTest: false
+    properties:
+      filepath: packages/frontend-test-utils/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
   - id: frontend-client
     type: gateway-api
     name: Frontend Client App (Frontend Client Host)
@@ -49,29 +60,29 @@ nodes:
     name: Link UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/packages/ui/src/components/Link/Link.tsx
+      filepath: packages/core-components/src/components/Link/Link.tsx
       namespaces: ''
       technology: React Component
     external: true
-    x: 1520
+    x: 140
     'y': 690
   - id: bannersection
     type: gateway-api
     name: bannerSection UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/microsite/src/components/bannerSection/bannerSection.tsx
+      filepath: microsite/src/components/bannerSection/bannerSection.tsx
       namespaces: ''
       technology: React Component
     external: true
-    x: 140
+    x: 600
     'y': 690
   - id: bannersectiongrid
     type: gateway-api
     name: bannerSectionGrid UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/microsite/src/components/bannerSection/bannerSectionGrid.tsx
+      filepath: microsite/src/components/bannerSection/bannerSectionGrid.tsx
       namespaces: ''
       technology: React Component
     external: true
@@ -82,46 +93,39 @@ nodes:
     name: contentBlock UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/microsite/src/components/contentBlock/contentBlock.tsx
+      filepath: microsite/src/components/contentBlock/contentBlock.tsx
       namespaces: ''
       technology: React Component
     external: true
-    x: 1980
+    x: 1520
     'y': 690
   - id: layout
     type: background-worker
     name: layout Service (reader)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs/src/reader/transformers/styles/rules/layout.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/layout.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2440
+    x: 1980
     'y': 690
-  - id: index
-    type: background-worker
-    name: index Service (index.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/user-settings-common/src/index.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 680
-    'y': 50
   - id: simplecard
     type: gateway-api
     name: simpleCard UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/microsite/src/components/simpleCard/simpleCard.tsx
+      filepath: microsite/src/components/simpleCard/simpleCard.tsx
       namespaces: ''
       technology: React Component
     external: true
     x: 2900
     'y': 690
 dependencies:
+  - from: index
+    to: _home
+    type: direct-call
+    description: Executes local class methods / functions
   - from: frontend-client
     to: _home
     type: direct-call
@@ -155,7 +159,7 @@ dependencies:
     type: direct-call
     description: Renders _hubSpotNewAdoptersForm layout component
   - from: index
-    to: _home
+    to: _plugincard
     type: direct-call
     description: Executes local class methods / functions
   - from: frontend-client
@@ -168,9 +172,5 @@ dependencies:
     description: Executes local class methods / functions
   - from: _plugincard
     to: simplecard
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: index
-    to: _plugincard
     type: direct-call
     description: Executes local class methods / functions

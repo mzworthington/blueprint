@@ -7,40 +7,40 @@ nodes:
     name: definitions Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/ui/src/definitions.ts
+      filepath: packages/ui/src/definitions.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 1060
     'y': 370
+  - id: connectionsservice
+    type: background-worker
+    name: ConnectionsService Service (api)
+    isTest: false
+    properties:
+      filepath: packages/connections/src/api/ConnectionsService.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
   - id: connection
     type: background-worker
     name: Connection Service (api)
     isTest: false
     properties:
-      filepath: ../backstage/packages/connections/src/api/Connection.ts
+      filepath: packages/connections/src/api/Connection.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 140
+    x: 600
     'y': 50
   - id: connectiontype
     type: background-worker
     name: ConnectionType Service (api)
     isTest: false
     properties:
-      filepath: ../backstage/packages/connections/src/api/ConnectionType.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 50
-  - id: connectionsservice
-    type: background-worker
-    name: ConnectionsService Service (api)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/connections/src/api/ConnectionsService.ts
+      filepath: packages/connections/src/api/ConnectionType.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -51,7 +51,7 @@ nodes:
     name: DefaultConnectionService Service (api)
     isTest: false
     properties:
-      filepath: ../backstage/packages/connections/src/api/DefaultConnectionService.ts
+      filepath: packages/connections/src/api/DefaultConnectionService.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -62,22 +62,22 @@ nodes:
     name: createFrontendFeatureLoader Service (wiring)
     isTest: false
     properties:
-      filepath: ../backstage/packages/frontend-plugin-api/src/wiring/createFrontendFeatureLoader.ts
+      filepath: packages/frontend-plugin-api/src/wiring/createFrontendFeatureLoader.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1980
     'y': 50
 dependencies:
+  - from: connectionsservice
+    to: definitions
+    type: direct-call
+    description: Executes local class methods / functions
   - from: connection
     to: definitions
     type: direct-call
     description: Executes local class methods / functions
   - from: connectiontype
-    to: definitions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: connectionsservice
     to: definitions
     type: direct-call
     description: Executes local class methods / functions

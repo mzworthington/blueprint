@@ -7,23 +7,12 @@ nodes:
     name: convertLegacyPageExtension UI Component
     isTest: false
     properties:
-      filepath: ../backstage/packages/core-compat-api/src/convertLegacyPageExtension.tsx
+      filepath: packages/core-compat-api/src/convertLegacyPageExtension.tsx
       namespaces: ''
       technology: React Component
     external: false
     x: 600
     'y': 370
-  - id: convertlegacypageextension_test
-    type: gateway-api
-    name: convertLegacyPageExtension.test UI Component (convertLegacyPageExtension.test.tsx)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/core-compat-api/src/convertLegacyPageExtension.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 370
-    'y': 50
   - id: frontend-client
     type: gateway-api
     name: Frontend Client App (Frontend Client Host)
@@ -31,14 +20,14 @@ nodes:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
     external: true
-    x: 830
+    x: 370
     'y': 50
   - id: convertlegacyrouteref
     type: background-worker
     name: convertLegacyRouteRef Service (convertLegacyRouteRef.ts)
     isTest: false
     properties:
-      filepath: ../backstage/packages/core-compat-api/src/convertLegacyRouteRef.ts
+      filepath: packages/core-compat-api/src/convertLegacyRouteRef.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -49,7 +38,7 @@ nodes:
     name: compatWrapper UI Component (compatWrapper)
     isTest: false
     properties:
-      filepath: ../backstage/packages/core-compat-api/src/compatWrapper/compatWrapper.tsx
+      filepath: packages/core-compat-api/src/compatWrapper/compatWrapper.tsx
       namespaces: ''
       technology: React Component
     external: true
@@ -60,17 +49,24 @@ nodes:
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1060
     'y': 690
+  - id: convertlegacypageextension_test
+    type: gateway-api
+    name: convertLegacyPageExtension.test UI Component (convertLegacyPageExtension.test.tsx)
+    isTest: true
+    properties:
+      filepath: packages/core-compat-api/src/convertLegacyPageExtension.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 830
+    'y': 50
 dependencies:
-  - from: convertlegacypageextension_test
-    to: convertlegacypageextension
-    type: direct-call
-    description: Executes local class methods / functions
   - from: frontend-client
     to: convertlegacypageextension
     type: direct-call
@@ -87,3 +83,7 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: convertlegacypageextension_test
+    to: convertlegacypageextension
+    type: direct-call
+    description: Executes local class methods / functions

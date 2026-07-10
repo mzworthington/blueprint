@@ -7,11 +7,11 @@ nodes:
     name: convertLegacyApp UI Component
     isTest: false
     properties:
-      filepath: ../backstage/packages/core-compat-api/src/convertLegacyApp.ts
+      filepath: packages/core-compat-api/src/convertLegacyApp.ts
       namespaces: ''
       technology: React Component
     external: false
-    x: 140
+    x: 600
     'y': 370
   - id: frontend-client
     type: gateway-api
@@ -20,25 +20,70 @@ nodes:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
     external: true
-    x: 140
+    x: 370
     'y': 50
+  - id: collectlegacyroutes
+    type: gateway-api
+    name: collectLegacyRoutes UI Component (collectLegacyRoutes.tsx)
+    isTest: false
+    properties:
+      filepath: packages/core-compat-api/src/collectLegacyRoutes.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 690
+  - id: compatwrapper
+    type: gateway-api
+    name: compatWrapper UI Component (compatWrapper)
+    isTest: false
+    properties:
+      filepath: packages/core-compat-api/src/compatWrapper/compatWrapper.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 600
+    'y': 690
   - id: error
     type: background-worker
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 140
+    x: 1060
     'y': 690
+  - id: convertlegacyapp_test
+    type: gateway-api
+    name: convertLegacyApp.test UI Component (convertLegacyApp.test.tsx)
+    isTest: true
+    properties:
+      filepath: packages/core-compat-api/src/convertLegacyApp.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 830
+    'y': 50
 dependencies:
   - from: frontend-client
     to: convertlegacyapp
     type: direct-call
     description: Renders convertLegacyApp layout component
   - from: convertlegacyapp
+    to: collectlegacyroutes
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: convertlegacyapp
+    to: compatwrapper
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: convertlegacyapp
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: convertlegacyapp_test
+    to: convertlegacyapp
+    type: direct-call
+    description: Executes local class methods / functions

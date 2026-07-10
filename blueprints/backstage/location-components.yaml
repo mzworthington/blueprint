@@ -1,0 +1,76 @@
+name: Backstage - location Components
+version: 1.0.0
+level: component
+nodes:
+  - id: annotation
+    type: background-worker
+    name: annotation Service
+    isTest: false
+    properties:
+      filepath: packages/catalog-model/src/location/annotation.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 830
+    'y': 370
+  - id: githubmultiorgentityprovider
+    type: background-worker
+    name: GithubMultiOrgEntityProvider Service (providers)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-github/src/providers/GithubMultiOrgEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: defaulttransformers
+    type: background-worker
+    name: defaultTransformers Service (microsoftGraph)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/defaultTransformers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: withlocations
+    type: background-worker
+    name: withLocations Service (lib)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-github/src/lib/withLocations.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 50
+  - id: helpers
+    type: background-worker
+    name: helpers Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/auth/external/helpers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 50
+dependencies:
+  - from: githubmultiorgentityprovider
+    to: annotation
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaulttransformers
+    to: annotation
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: withlocations
+    to: annotation
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: helpers
+    to: annotation
+    type: direct-call
+    description: Executes local class methods / functions

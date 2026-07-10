@@ -7,7 +7,7 @@ nodes:
     name: catalogService Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/catalog-node/src/catalogService.ts
+      filepath: contrib/catalog/read-write-split/workspace/packages/backend/src/catalogService.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
@@ -18,29 +18,29 @@ nodes:
     name: CatalogClient Service (CatalogClient.ts)
     isTest: false
     properties:
-      filepath: ../backstage/packages/catalog-client/src/CatalogClient.ts
+      filepath: packages/catalog-client/src/CatalogClient.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 370
     'y': 690
-  - id: index
-    type: background-worker
-    name: index Service (index.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/user-settings-common/src/index.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 140
-    'y': 50
   - id: catalogservice_test
     type: background-worker
     name: catalogService.test Service (catalogService.test.ts)
     isTest: true
     properties:
-      filepath: ../backstage/plugins/catalog-node/src/catalogService.test.ts
+      filepath: plugins/catalog-node/src/catalogService.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
+    isTest: false
+    properties:
+      filepath: packages/frontend-test-utils/src/index.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -51,11 +51,11 @@ dependencies:
     to: catalogclient
     type: direct-call
     description: References class type / calls methods
-  - from: index
+  - from: catalogservice_test
     to: catalogservice
     type: direct-call
     description: Executes local class methods / functions
-  - from: catalogservice_test
+  - from: index
     to: catalogservice
     type: direct-call
     description: Executes local class methods / functions

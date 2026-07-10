@@ -7,18 +7,29 @@ nodes:
     name: AzureBlobStorageIntegration.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/integration/src/azureBlobStorage/AzureBlobStorageIntegration.test.ts
+      filepath: packages/integration/src/azureBlobStorage/AzureBlobStorageIntegration.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 140
     'y': 50
+  - id: defaultazurecredentialsprovider
+    type: background-worker
+    name: DefaultAzureCredentialsProvider Service
+    isTest: false
+    properties:
+      filepath: packages/integration/src/azureBlobStorage/DefaultAzureCredentialsProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1910
+    'y': 370
   - id: azureblobstorageintegration
     type: background-worker
     name: AzureBlobStorageIntegration Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/azureBlobStorage/AzureBlobStorageIntegration.ts
+      filepath: packages/integration/src/azureBlobStorage/AzureBlobStorageIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
@@ -29,64 +40,42 @@ nodes:
     name: DefaultAzureCredentialsManager.test Service
     isTest: true
     properties:
-      filepath: ../backstage/packages/integration/src/azureBlobStorage/DefaultAzureCredentialsManager.test.ts
+      filepath: packages/integration/src/azureBlobStorage/DefaultAzureCredentialsManager.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 1775
     'y': 50
-  - id: defaultazurecredentialsprovider
-    type: background-worker
-    name: DefaultAzureCredentialsProvider Service
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/integration/src/azureBlobStorage/DefaultAzureCredentialsProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1910
-    'y': 370
   - id: scmintegrations_test
     type: background-worker
     name: ScmIntegrations.test Service (ScmIntegrations.test.ts)
     isTest: true
     properties:
-      filepath: ../backstage/packages/integration/src/ScmIntegrations.test.ts
+      filepath: packages/integration/src/ScmIntegrations.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 50
   - id: config
-    type: background-worker
-    name: config Service (collators)
+    type: gateway-api
+    name: config UI Component (layout)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      filepath: packages/core-components/src/layout/Sidebar/config.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
     x: 815
     'y': 690
-  - id: helpers
-    type: background-worker
-    name: helpers Service (helpers.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/techdocs-react/src/helpers.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 140
-    'y': 690
   - id: types
-    type: background-worker
-    name: types Service (types.ts)
+    type: gateway-api
+    name: types UI Component (components)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      filepath: packages/core-components/src/components/TabbedLayout/types.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
     x: 1275
     'y': 690
@@ -95,34 +84,45 @@ nodes:
     name: registry Service (registry.ts)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/registry.ts
+      filepath: packages/integration/src/registry.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1735
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2220
+    'y': 690
+  - id: helpers
+    type: background-worker
+    name: helpers Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/auth/external/helpers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
     'y': 690
   - id: scmintegrations
     type: background-worker
     name: ScmIntegrations Service (ScmIntegrations.ts)
     isTest: false
     properties:
-      filepath: ../backstage/packages/integration/src/ScmIntegrations.ts
+      filepath: packages/integration/src/ScmIntegrations.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 2370
     'y': 370
-  - id: error
-    type: background-worker
-    name: error Service (serialization)
-    isTest: false
-    properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2220
-    'y': 690
 dependencies:
   - from: scmintegrations_test
     to: azureblobstorageintegration
@@ -136,6 +136,22 @@ dependencies:
     to: azureblobstorageintegration
     type: direct-call
     description: Executes local class methods / functions
+  - from: defaultazurecredentialsprovider
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultazurecredentialsprovider
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultazurecredentialsprovider
+    to: registry
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultazurecredentialsprovider
+    to: error
+    type: direct-call
+    description: References class type / calls methods
   - from: azureblobstorageintegration
     to: helpers
     type: direct-call
@@ -164,19 +180,3 @@ dependencies:
     to: scmintegrations
     type: direct-call
     description: Executes local class methods / functions
-  - from: defaultazurecredentialsprovider
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultazurecredentialsprovider
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultazurecredentialsprovider
-    to: registry
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultazurecredentialsprovider
-    to: error
-    type: direct-call
-    description: References class type / calls methods

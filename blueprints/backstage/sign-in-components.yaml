@@ -7,40 +7,40 @@ nodes:
     name: commonSignInResolvers Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/auth-node/src/sign-in/commonSignInResolvers.ts
+      filepath: plugins/auth-node/src/sign-in/commonSignInResolvers.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 1625
+    'y': 50
+  - id: readdeclarativesigninresolver
+    type: background-worker
+    name: readDeclarativeSignInResolver Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/sign-in/readDeclarativeSignInResolver.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 450
     'y': 50
   - id: createsigninresolverfactory
     type: background-worker
     name: createSignInResolverFactory Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/auth-node/src/sign-in/createSignInResolverFactory.ts
+      filepath: plugins/auth-node/src/sign-in/createSignInResolverFactory.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 855
     'y': 370
-  - id: readdeclarativesigninresolver
-    type: background-worker
-    name: readDeclarativeSignInResolver Service
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/auth-node/src/sign-in/readDeclarativeSignInResolver.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 450
-    'y': 50
   - id: createoauthproviderfactory
     type: background-worker
     name: createOAuthProviderFactory Service (oauth)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/auth-node/src/oauth/createOAuthProviderFactory.ts
+      filepath: plugins/auth-node/src/oauth/createOAuthProviderFactory.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -51,7 +51,7 @@ nodes:
     name: errors Service (errors.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      filepath: packages/codemods/src/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -62,34 +62,34 @@ nodes:
     name: error Service (serialization)
     isTest: false
     properties:
-      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1315
     'y': 370
-  - id: types
-    type: background-worker
-    name: types Service (types.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/user-settings-common/src/types.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 450
-    'y': 690
   - id: config
-    type: background-worker
-    name: config Service (collators)
+    type: gateway-api
+    name: config UI Component (layout)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      filepath: packages/core-components/src/layout/Sidebar/config.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
     x: 140
     'y': 370
+  - id: types
+    type: gateway-api
+    name: types UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 450
+    'y': 690
 dependencies:
   - from: createoauthproviderfactory
     to: createsigninresolverfactory
@@ -107,14 +107,6 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: createsigninresolverfactory
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createsigninresolverfactory
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
   - from: readdeclarativesigninresolver
     to: config
     type: direct-call
@@ -131,3 +123,11 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: createsigninresolverfactory
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createsigninresolverfactory
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions

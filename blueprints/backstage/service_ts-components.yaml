@@ -7,7 +7,7 @@ nodes:
     name: service Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/events-node/src/service.ts
+      filepath: packages/connections/src/service.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
@@ -15,43 +15,43 @@ nodes:
     'y': 370
   - id: api
     type: background-worker
-    name: api Service (api.ts)
+    name: api Service (types)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-react/src/api.ts
+      filepath: packages/catalog-client/src/types/api.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 690
-  - id: extensions
+  - id: plugin
     type: background-worker
-    name: extensions Service (extensions.ts)
+    name: plugin Service (plugin.tsx)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-node/src/extensions.ts
+      filepath: packages/app-example-plugin/src/plugin.tsx
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 140
+    'y': 50
+  - id: extensions
+    type: gateway-api
+    name: extensions UI Component (extensions)
+    isTest: false
+    properties:
+      filepath: packages/core-plugin-api/src/extensions/extensions.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 600
     'y': 50
   - id: lib
     type: background-worker
     name: lib Service (lib.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/signals-node/src/lib.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 50
-  - id: plugin
-    type: background-worker
-    name: plugin Service (plugin.ts)
-    isTest: false
-    properties:
-      filepath: ../backstage/plugins/user-settings-backend/src/plugin.ts
+      filepath: plugins/notifications-node/src/lib.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -62,15 +62,15 @@ dependencies:
     to: api
     type: direct-call
     description: Executes local class methods / functions
+  - from: plugin
+    to: service
+    type: direct-call
+    description: Executes local class methods / functions
   - from: extensions
     to: service
     type: direct-call
     description: Executes local class methods / functions
   - from: lib
-    to: service
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plugin
     to: service
     type: direct-call
     description: Executes local class methods / functions

@@ -7,29 +7,18 @@ nodes:
     name: CreateBackend Service
     isTest: false
     properties:
-      filepath: ../backstage/packages/backend-defaults/src/CreateBackend.ts
+      filepath: packages/backend-defaults/src/CreateBackend.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2210
+    x: 2440
     'y': 370
-  - id: createbackend_test
-    type: background-worker
-    name: CreateBackend.test Service (CreateBackend.test.ts)
-    isTest: true
-    properties:
-      filepath: ../backstage/packages/backend-defaults/src/CreateBackend.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2210
-    'y': 50
   - id: auth
     type: background-worker
-    name: auth Service (auth.ts)
+    name: auth Service (apis)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-module-elasticsearch/src/auth.ts
+      filepath: packages/frontend-plugin-api/src/apis/definitions/auth.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -40,7 +29,7 @@ nodes:
     name: Cache Service (commands)
     isTest: false
     properties:
-      filepath: ../backstage/packages/repo-tools/src/commands/package-docs/Cache.ts
+      filepath: packages/repo-tools/src/commands/package-docs/Cache.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -51,7 +40,7 @@ nodes:
     name: database Service (services)
     isTest: false
     properties:
-      filepath: ../backstage/packages/backend-plugin-api/src/services/utilities/database.ts
+      filepath: packages/backend-plugin-api/src/services/utilities/database.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -59,86 +48,104 @@ nodes:
     'y': 690
   - id: discovery
     type: background-worker
-    name: discovery Service (schema)
+    name: discovery Service (types)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-common/src/schema/openapi/generated/types/discovery.ts
+      filepath: packages/repo-tools/templates/typescript-backstage-client/types/discovery.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1520
+    'y': 690
+  - id: lifecycle
+    type: background-worker
+    name: Lifecycle Service (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/Lifecycle/Lifecycle.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
     'y': 690
   - id: logger
     type: background-worker
     name: logger Service (scaffolder)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-backend/src/scaffolder/tasks/logger.ts
+      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/logger.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1980
+    x: 2440
     'y': 690
   - id: permissions
     type: background-worker
     name: permissions Service (permissions.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/scaffolder-common/src/permissions.ts
+      filepath: plugins/catalog-common/src/permissions.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2440
+    x: 2900
     'y': 690
   - id: rootlogger
     type: background-worker
     name: rootLogger Service (schemas)
     isTest: false
     properties:
-      filepath: ../backstage/packages/backend-dynamic-feature-service/src/schemas/rootLogger.ts
+      filepath: packages/backend-dynamic-feature-service/src/schemas/rootLogger.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2900
+    x: 3360
     'y': 690
   - id: scheduler
     type: background-worker
     name: Scheduler Service (Scheduler.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-node/src/Scheduler.ts
+      filepath: plugins/search-backend-node/src/Scheduler.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 3360
+    x: 3820
     'y': 690
   - id: alpha
-    type: gateway-api
-    name: alpha UI Component (alpha.ts)
+    type: background-worker
+    name: alpha Service (alpha.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/techdocs-react/src/alpha.ts
+      filepath: packages/core-components/src/alpha.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
-    x: 3820
+    x: 4280
     'y': 690
   - id: instancemetadataservicefactory
     type: background-worker
     name: instanceMetadataServiceFactory Service (alpha)
     isTest: false
     properties:
-      filepath: ../backstage/packages/backend-defaults/src/alpha/entrypoints/instanceMetadata/instanceMetadataServiceFactory.ts
+      filepath: packages/backend-defaults/src/alpha/entrypoints/instanceMetadata/instanceMetadataServiceFactory.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 4280
+    x: 4740
     'y': 690
+  - id: createbackend_test
+    type: background-worker
+    name: CreateBackend.test Service (CreateBackend.test.ts)
+    isTest: true
+    properties:
+      filepath: packages/backend-defaults/src/CreateBackend.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2440
+    'y': 50
 dependencies:
-  - from: createbackend_test
-    to: createbackend
-    type: direct-call
-    description: Executes local class methods / functions
   - from: createbackend
     to: auth
     type: direct-call
@@ -153,6 +160,10 @@ dependencies:
     description: Executes local class methods / functions
   - from: createbackend
     to: discovery
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackend
+    to: lifecycle
     type: direct-call
     description: Executes local class methods / functions
   - from: createbackend
@@ -177,5 +188,9 @@ dependencies:
     description: Executes local class methods / functions
   - from: createbackend
     to: instancemetadataservicefactory
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackend_test
+    to: createbackend
     type: direct-call
     description: Executes local class methods / functions

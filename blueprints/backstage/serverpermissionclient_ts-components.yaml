@@ -7,31 +7,20 @@ nodes:
     name: ServerPermissionClient Service
     isTest: false
     properties:
-      filepath: ../backstage/plugins/permission-node/src/ServerPermissionClient.ts
+      filepath: plugins/permission-node/src/ServerPermissionClient.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 370
     'y': 370
-  - id: serverpermissionclient_test
-    type: background-worker
-    name: ServerPermissionClient.test Service (ServerPermissionClient.test.ts)
-    isTest: true
-    properties:
-      filepath: ../backstage/plugins/permission-node/src/ServerPermissionClient.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 370
-    'y': 50
   - id: config
-    type: background-worker
-    name: config Service (collators)
+    type: gateway-api
+    name: config UI Component (layout)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      filepath: packages/core-components/src/layout/Sidebar/config.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
     x: 140
     'y': 690
@@ -40,17 +29,24 @@ nodes:
     name: PermissionClient Service (PermissionClient.ts)
     isTest: false
     properties:
-      filepath: ../backstage/plugins/permission-common/src/PermissionClient.ts
+      filepath: plugins/permission-common/src/PermissionClient.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 690
+  - id: serverpermissionclient_test
+    type: background-worker
+    name: ServerPermissionClient.test Service (ServerPermissionClient.test.ts)
+    isTest: true
+    properties:
+      filepath: plugins/permission-node/src/ServerPermissionClient.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 50
 dependencies:
-  - from: serverpermissionclient_test
-    to: serverpermissionclient
-    type: direct-call
-    description: Executes local class methods / functions
   - from: serverpermissionclient
     to: config
     type: direct-call
@@ -59,3 +55,7 @@ dependencies:
     to: permissionclient
     type: direct-call
     description: References class type / calls methods
+  - from: serverpermissionclient_test
+    to: serverpermissionclient
+    type: direct-call
+    description: Executes local class methods / functions
