@@ -786,7 +786,7 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
 
       if (!isWorkspaceOpen) {
         const resolvedFileName = getFileName(targetPath);
-        const found = defaultLoadedSystems.find(
+        const found = get().loadedSystems.find(
           s => s.path === targetPath || s.path === resolvedFileName
         );
         if (found) {
