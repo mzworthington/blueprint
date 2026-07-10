@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { ReactFlowProvider } from '@xyflow/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { CodeViewer } from './adapters/CodeViewer';
@@ -20,7 +20,11 @@ function App() {
     currentFilePath,
   } = useBlueprintStore();
 
+  const initialSyncRef = useRef(false);
+
   useEffect(() => {
+    if (initialSyncRef.current) return;
+
     const match = window.location.pathname.match(/^\/workspace\/([^/]+)$/);
     if (match) {
       const slug = match[1];
@@ -28,11 +32,14 @@ function App() {
         const sysName = sys.schema?.name || sys.name || sys.path;
         return slugify(sysName) === slug;
       });
-      if (found && found.path !== currentFilePath) {
-        selectSystem(found.path);
+      if (found) {
+        if (found.path !== currentFilePath) {
+          selectSystem(found.path);
+        }
+        initialSyncRef.current = true;
       }
     }
-  }, []);
+  }, [loadedSystems, currentFilePath, selectSystem]);
 
   useEffect(() => {
     const handlePopState = () => {

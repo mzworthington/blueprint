@@ -140,4 +140,32 @@ nodes:
     expect(jsonBlock).toHaveTextContent('"id": "app"');
     expect(jsonBlock).toHaveTextContent('"id": "app-test"');
   });
+
+  it('should render the Manifest tab when workspace is open, allowing editing and saving', async () => {
+    const mockSaveWorkspaceManifest = vi.fn().mockResolvedValue(true);
+    useBlueprintStore.setState({
+      isWorkspaceOpen: true,
+      workspaceManifestYaml: 'name: Mock Workspace\nroot: ./root.yaml',
+      saveWorkspaceManifest: mockSaveWorkspaceManifest,
+    });
+
+    render(<CodeViewer />);
+
+    const manifestTab = screen.getByRole('button', { name: /manifest/i });
+    expect(manifestTab).toBeInTheDocument();
+
+    fireEvent.click(manifestTab);
+
+    const textarea = screen.getByDisplayValue(/Mock Workspace/);
+    expect(textarea).toBeInTheDocument();
+
+    fireEvent.change(textarea, { target: { value: 'name: Updated Workspace\nroot: ./root.yaml' } });
+
+    const saveButton = screen.getByRole('button', { name: /save manifest/i });
+    fireEvent.click(saveButton);
+
+    expect(mockSaveWorkspaceManifest).toHaveBeenCalledWith(
+      'name: Updated Workspace\nroot: ./root.yaml'
+    );
+  });
 });

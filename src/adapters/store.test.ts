@@ -1,18 +1,19 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import {
   useBlueprintStore,
   resolveRelativePath,
   defaultInitialSchema,
   defaultLoadedSystems,
+  defaultWorkspaceManifest,
+  defaultWorkspaceManifestYaml,
 } from './store';
 import type { NodeType } from '../domain/schema';
 
 describe('Default Initial Schema & Hierarchical C4 Linking', () => {
-  it('should start at the System Context level and contain a linked reference to container level', () => {
-    expect(defaultInitialSchema.level).toBe('context');
-    const bankingSystem = defaultInitialSchema.nodes.find(n => n.id === 'banking-system');
-    expect(bankingSystem).toBeDefined();
-    expect(bankingSystem?.c4Ref).toBe('./internet-banking-container.yaml');
+  it('should verify initial default workspace structure', () => {
+    expect(defaultInitialSchema).toBeDefined();
+    expect(defaultInitialSchema.name).toBeDefined();
+    expect(defaultInitialSchema.nodes).toBeDefined();
   });
 });
 
@@ -392,20 +393,37 @@ dependencies: []
     });
 
     it('should zoom into a node using defaultLoadedSystems fallback if workspace is not open', async () => {
-      defaultLoadedSystems.push({
-        path: 'internet-banking-container.yaml',
-        name: 'Internet Banking - Containers',
-        schema: {
-          name: 'Internet Banking - Containers',
-          version: '1.0.0',
-          level: 'container',
-          nodes: [{ id: 'web-app', type: 'web-app', name: 'Web App' }],
-          dependencies: [],
-        },
+      useBlueprintStore.setState({
+        loadedSystems: [
+          {
+            path: 'internet-banking-container.yaml',
+            name: 'Internet Banking - Containers',
+            schema: {
+              name: 'Internet Banking - Containers',
+              version: '1.0.0',
+              level: 'container',
+              nodes: [{ id: 'web-app', type: 'web-app', name: 'Web App' }],
+              dependencies: [],
+            },
+          },
+        ],
       });
 
       const store = useBlueprintStore.getState();
-      store.initSchema(defaultInitialSchema);
+      store.initSchema({
+        name: 'Internet Banking - System Context',
+        version: '1.0.0',
+        level: 'context',
+        nodes: [
+          {
+            id: 'banking-system',
+            type: 'software-system',
+            name: 'Internet Banking System',
+            c4Ref: './internet-banking-container.yaml',
+          },
+        ],
+        dependencies: [],
+      });
       useBlueprintStore.setState({
         isWorkspaceOpen: false,
         currentFilePath: 'system-context.yaml',
@@ -452,6 +470,62 @@ dependencies: []
       const state2 = useBlueprintStore.getState();
       expect(state2.currentFilePath).toBe('another-system.yaml');
       expect(state2.schema.name).toBe('Another System');
+    });
+
+    it('should initialize with default workspace manifest values on startup', () => {
+      expect(defaultWorkspaceManifest).not.toBeNull();
+      expect(defaultWorkspaceManifest?.name).toBe('Blueprint Workspace');
+      expect(defaultWorkspaceManifestYaml).toContain('name: Blueprint Workspace');
+    });
+
+    it('should fall back to fileSystemPort saveSchema download when workspace is not open', async () => {
+      const store = useBlueprintStore.getState();
+      // Ensure workspace is not open
+      useBlueprintStore.setState({ isWorkspaceOpen: false });
+
+      const newManifestYaml = `name: Downloaded Workspace\nroot: ./root.yaml\nhierarchy: []`;
+      const spySaveSchema = vi.spyOn(store.fileSystemPort, 'saveSchema');
+      spySaveSchema.mockResolvedValue(true);
+
+      const success = await store.saveWorkspaceManifest(newManifestYaml);
+      expect(success).toBe(true);
+
+      const updated = useBlueprintStore.getState();
+      expect(updated.workspaceManifest?.name).toBe('Downloaded Workspace');
+      expect(spySaveSchema).toHaveBeenCalledWith(newManifestYaml, 'blueprint-workspace.yaml');
+
+      spySaveSchema.mockRestore();
+    });
+
+    it('should save workspace manifest to file and update manifest in state', async () => {
+      const store = useBlueprintStore.getState();
+      await store.openWorkspaceDirectory();
+
+      const newManifestYaml = `name: Updated Workspace\nroot: ./blueprint-containers.yaml\nhierarchy: []`;
+      const spyWriteFile = vi.spyOn(store.workspacePort, 'writeFile');
+
+      const success = await store.saveWorkspaceManifest(newManifestYaml);
+      expect(success).toBe(true);
+
+      const updated = useBlueprintStore.getState();
+      expect(updated.workspaceManifest?.name).toBe('Updated Workspace');
+      expect(updated.workspaceName).toBe('Updated Workspace');
+      expect(updated.workspaceManifestYaml).toBe(newManifestYaml);
+      expect(spyWriteFile).toHaveBeenCalledWith('blueprint-workspace.yaml', newManifestYaml);
+
+      spyWriteFile.mockRestore();
+    });
+
+    it('should fail to save manifest if mandatory properties are missing', async () => {
+      const store = useBlueprintStore.getState();
+      await store.openWorkspaceDirectory();
+
+      const invalidManifest = `name: Invalid Workspace`;
+      const success = await store.saveWorkspaceManifest(invalidManifest);
+      expect(success).toBe(false);
+      expect(useBlueprintStore.getState().lastError).toContain(
+        'Workspace manifest must contain "name" and "root" properties'
+      );
     });
   });
 });

@@ -131,6 +131,8 @@ interface BlueprintState {
   toggleRightCollapsed: () => void;
 
   workspaceManifest: WorkspaceManifest | null;
+  workspaceManifestYaml: string | null;
+  saveWorkspaceManifest: (manifestYaml: string) => Promise<boolean>;
   loadedSystems: Array<{ path: string; name: string; schema: SystemSchema }>;
   selectSystem: (path: string) => void;
 }
@@ -234,49 +236,27 @@ const rebuildSchemaFromCanvas = (
 };
 
 export let defaultInitialSchema: SystemSchema = {
-  name: 'Internet Banking - System Context',
+  name: 'Empty Workspace',
   version: '1.0.0',
   level: 'context',
-  nodes: [
-    { id: 'user', type: 'person', name: 'Customer', external: true, x: 100, y: 150 },
-    {
-      id: 'banking-system',
-      type: 'software-system',
-      name: 'Internet Banking System',
-      c4Ref: './internet-banking-container.yaml',
-      x: 400,
-      y: 150,
-    },
-    {
-      id: 'mainframe',
-      type: 'software-system',
-      name: 'Core Mainframe System',
-      external: true,
-      x: 700,
-      y: 150,
-    },
-  ],
-  dependencies: [
-    {
-      from: 'user',
-      to: 'banking-system',
-      type: 'direct-call',
-      description: 'Uses banking features',
-    },
-    {
-      from: 'banking-system',
-      to: 'mainframe',
-      type: 'direct-call',
-      description: 'Gets account information',
-    },
-  ],
+  nodes: [],
+  dependencies: [],
 };
 
 export const defaultLoadedSystems: Array<{ path: string; name: string; schema: SystemSchema }> = [];
+export let defaultWorkspaceManifest: WorkspaceManifest | null = null;
+export let defaultWorkspaceManifestYaml: string | null = null;
 
 Object.entries(defaultBlueprintModules).forEach(([filePath, module]) => {
   const fileName = getFileName(filePath);
   if (fileName === 'workspace.yaml' || fileName.endsWith('-workspace.yaml')) {
+    try {
+      const yamlContent = module.default;
+      defaultWorkspaceManifest = yaml.load(yamlContent) as WorkspaceManifest;
+      defaultWorkspaceManifestYaml = yamlContent;
+    } catch (e) {
+      console.error('Failed to parse default workspace manifest:', filePath, e);
+    }
     return;
   }
   try {
@@ -301,7 +281,18 @@ defaultLoadedSystems.sort((a, b) => {
 });
 
 if (defaultLoadedSystems.length > 0) {
-  defaultInitialSchema = defaultLoadedSystems[0].schema;
+  let resolvedRootSystem = defaultLoadedSystems[0];
+  const manifest = defaultWorkspaceManifest as WorkspaceManifest | null;
+  if (manifest && manifest.root) {
+    const resolvedRootName = getFileName(manifest.root);
+    const foundRoot = defaultLoadedSystems.find(
+      s => s.path === manifest.root || s.path === resolvedRootName
+    );
+    if (foundRoot) {
+      resolvedRootSystem = foundRoot;
+    }
+  }
+  defaultInitialSchema = resolvedRootSystem.schema;
 } else {
   defaultLoadedSystems.push({
     path: 'blueprint.yaml',
@@ -438,7 +429,8 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
     isWorkspaceOpen: false,
     workspaceName: '',
     logger: ConsoleLoggerAdapter,
-    workspaceManifest: null,
+    workspaceManifest: defaultWorkspaceManifest,
+    workspaceManifestYaml: defaultWorkspaceManifestYaml,
     loadedSystems: defaultLoadedSystems,
 
     selectSystem: (path: string) => {
@@ -768,6 +760,7 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
           isWorkspaceOpen: true,
           workspaceName: workspacePort.getDirectoryName(),
           workspaceManifest: parsedManifest,
+          workspaceManifestYaml: manifestFile ? manifestFile.content : null,
           loadedSystems: nextLoadedSystems,
           currentFilePath: firstSystem.path,
           navigationStack: [],
@@ -936,6 +929,38 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
         return success;
       } catch (err) {
         logger.error('Error saving diagram in workspace', err);
+        return false;
+      }
+    },
+
+    saveWorkspaceManifest: async (manifestYaml: string) => {
+      const { workspacePort, fileSystemPort, isWorkspaceOpen, logger } = get();
+      try {
+        const parsed = yaml.load(manifestYaml) as WorkspaceManifest;
+        if (!parsed.name || !parsed.root) {
+          throw new Error('Workspace manifest must contain "name" and "root" properties');
+        }
+
+        let success = false;
+        if (isWorkspaceOpen) {
+          success = await workspacePort.writeFile('blueprint-workspace.yaml', manifestYaml);
+        } else {
+          success = await fileSystemPort.saveSchema(manifestYaml, 'blueprint-workspace.yaml');
+        }
+
+        if (success) {
+          set({
+            workspaceManifest: parsed,
+            workspaceManifestYaml: manifestYaml,
+            workspaceName: parsed.name,
+            lastError: null,
+          });
+          logger.info('Workspace manifest saved successfully');
+        }
+        return success;
+      } catch (err) {
+        logger.error('Failed to save workspace manifest', err);
+        set({ lastError: `Failed to save manifest: ${(err as Error).message}` });
         return false;
       }
     },
