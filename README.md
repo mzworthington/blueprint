@@ -178,7 +178,7 @@ pnpm build
 Parses your local TypeScript/React codebase, extracts components and dependency relationships, calculates optimal visual grid coordinates with Dagre, and outputs a capitalized system schema file inside the `blueprints/` directory (e.g. `blueprints/my-system.yaml`):
 
 ```bash
-pnpm analyze
+pnpm blueprint
 ```
 
 #### Compiling to a Standalone Executable Binary
@@ -186,10 +186,10 @@ pnpm analyze
 To compile the AST analyzer into a standalone binary CLI tool using Bun:
 
 ```bash
-pnpm analyze:compile
+pnpm blueprint:compile
 ```
 
-This compiles a single standalone binary file into the `dist/` directory as `dist/analyze-cli`. Note that you will need the `.wasm` files from `node_modules/tree-sitter-wasms/out/` in the same directory as the executable or in the target project's `node_modules` for parser features to function correctly.
+This compiles a single standalone binary file into the `dist/` directory as `dist/blueprint`. Note that you will need the `.wasm` files from `node_modules/tree-sitter-wasms/out/` in the same directory as the executable or in the target project's `node_modules` for parser features to function correctly.
 
 ---
 

@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 describe('TreeSitterParserAdapter', () => {
-  const tempDir = path.resolve(process.cwd(), 'scripts/analysis/adapters/test_tmp');
+  const tempDir = path.resolve(process.cwd(), 'cli/analysis/adapters/test_tmp');
   let parser: TreeSitterParserAdapter;
 
   beforeAll(() => {
@@ -31,7 +31,7 @@ describe('TreeSitterParserAdapter', () => {
     const tsFile = path.join(tempDir, 'sample.ts');
     fs.writeFileSync(tsFile, tsContent, 'utf8');
 
-    const results = await parser.parseSourceFiles('scripts/analysis/adapters/test_tmp/**/*.ts');
+    const results = await parser.parseSourceFiles('cli/analysis/adapters/test_tmp/**/*.ts');
     expect(results).toHaveLength(1);
 
     const file = results[0];
@@ -59,7 +59,7 @@ fetch("https://api.com")
     const pyFile = path.join(tempDir, 'sample.py');
     fs.writeFileSync(pyFile, pyContent, 'utf8');
 
-    const results = await parser.parseSourceFiles('scripts/analysis/adapters/test_tmp/**/*.py');
+    const results = await parser.parseSourceFiles('cli/analysis/adapters/test_tmp/**/*.py');
     expect(results).toHaveLength(1);
 
     const file = results[0];
@@ -96,7 +96,7 @@ namespace TestProject.Controllers
     const csFile = path.join(tempDir, 'sample.cs');
     fs.writeFileSync(csFile, csContent, 'utf8');
 
-    const results = await parser.parseSourceFiles('scripts/analysis/adapters/test_tmp/**/*.cs');
+    const results = await parser.parseSourceFiles('cli/analysis/adapters/test_tmp/**/*.cs');
     expect(results).toHaveLength(1);
 
     const file = results[0];
