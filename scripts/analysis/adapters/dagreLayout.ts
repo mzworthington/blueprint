@@ -1,6 +1,6 @@
 import dagre from 'dagre';
-import type { LayoutPort } from '../domain/ports';
-import type { SystemNode, SystemDependency } from '../../../src/domain/schema';
+import type { LayoutPort } from '../domain/ports.ts';
+import type { SystemNode, SystemDependency } from '../../../src/domain/schema.ts';
 
 export class DagreLayoutAdapter implements LayoutPort {
   async computeLayout(

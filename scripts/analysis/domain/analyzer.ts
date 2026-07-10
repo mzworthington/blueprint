@@ -1,6 +1,11 @@
-import type { CodebaseParserPort, LayoutPort, AnalysisFileSystemPort, LoggerPort } from './ports';
-import type { ParsedSourceFile } from './types';
-import type { SystemNode, SystemDependency, SystemSchema } from '../../../src/domain/schema';
+import type {
+  CodebaseParserPort,
+  LayoutPort,
+  AnalysisFileSystemPort,
+  LoggerPort,
+} from './ports.ts';
+import type { ParsedSourceFile } from './types.ts';
+import type { SystemNode, SystemDependency, SystemSchema } from '../../../src/domain/schema.ts';
 import * as yaml from 'js-yaml';
 
 export interface CodebaseAnalyzerDependencies {
@@ -102,7 +107,7 @@ export class CodebaseAnalyzer {
     return parts[parts.length - 1] || 'blueprint';
   }
 
-  private getContainerInfo(node: SystemNode, systemName: string, filepath?: string) {
+  private getContainerInfo(node: SystemNode, _systemName: string, filepath?: string) {
     if (node.id === 'external-api-target') {
       return {
         id: 'external-services',

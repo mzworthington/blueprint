@@ -1,8 +1,8 @@
 import Parser from 'web-tree-sitter';
 import * as path from 'path';
 import * as fs from 'fs';
-import type { CodebaseParserPort } from '../domain/ports';
-import type { ParsedSourceFile } from '../domain/types';
+import type { CodebaseParserPort } from '../domain/ports.ts';
+import type { ParsedSourceFile } from '../domain/types.ts';
 
 export class TreeSitterParserAdapter implements CodebaseParserPort {
   private static initPromise: Promise<void> | null = null;

@@ -1,4 +1,4 @@
-import type { LoggerPort } from '../domain/ports';
+import type { LoggerPort } from '../domain/ports.ts';
 
 export class ConsoleLogger implements LoggerPort {
   private formatMessage(level: string, message: string, context?: Record<string, unknown>): string {

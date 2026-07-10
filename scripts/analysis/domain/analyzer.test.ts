@@ -1,8 +1,13 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { CodebaseAnalyzer } from './analyzer';
-import type { CodebaseParserPort, LayoutPort, AnalysisFileSystemPort, LoggerPort } from './ports';
-import type { ParsedSourceFile } from './types';
-import type { SystemNode, SystemDependency } from '../../../src/domain/schema';
+import { CodebaseAnalyzer } from './analyzer.ts';
+import type {
+  CodebaseParserPort,
+  LayoutPort,
+  AnalysisFileSystemPort,
+  LoggerPort,
+} from './ports.ts';
+import type { ParsedSourceFile } from './types.ts';
+import type { SystemNode, SystemDependency } from '../../../src/domain/schema.ts';
 
 class MockParser implements CodebaseParserPort {
   files: ParsedSourceFile[] = [];

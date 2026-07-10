@@ -1,7 +1,7 @@
 import { Project, SyntaxKind, ImportDeclaration, NewExpression, CallExpression } from 'ts-morph';
 import * as path from 'path';
-import type { CodebaseParserPort } from '../domain/ports';
-import type { ParsedSourceFile } from '../domain/types';
+import type { CodebaseParserPort } from '../domain/ports.ts';
+import type { ParsedSourceFile } from '../domain/types.ts';
 
 export class TsMorphParserAdapter implements CodebaseParserPort {
   async parseSourceFiles(globPattern: string): Promise<ParsedSourceFile[]> {

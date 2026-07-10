@@ -1,5 +1,5 @@
-import type { ParsedSourceFile } from './types';
-import type { SystemNode, SystemDependency } from '../../../src/domain/schema';
+import type { ParsedSourceFile } from './types.ts';
+import type { SystemNode, SystemDependency } from '../../../src/domain/schema.ts';
 
 export interface CodebaseParserPort {
   parseSourceFiles(globPattern: string): Promise<ParsedSourceFile[]>;

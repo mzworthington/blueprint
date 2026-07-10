@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
-import { TreeSitterParserAdapter } from './treeSitterParser';
+import { TreeSitterParserAdapter } from './treeSitterParser.ts';
 import * as fs from 'fs';
 import * as path from 'path';
 
