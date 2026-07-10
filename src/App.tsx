@@ -1,10 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { ReactFlowProvider } from '@xyflow/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { CodeViewer } from './adapters/CodeViewer';
-import { Canvas } from './adapters/Canvas';
-import { PropertyPanel } from './adapters/PropertyPanel';
-import { useBlueprintStore } from './adapters/store';
+import { CodeViewer } from './components/CodeViewer';
+import { Canvas } from './components/Canvas';
+import { PropertyPanel } from './components/PropertyPanel';
+import { DesignSystemShowcase } from './components/DesignSystemShowcase';
+import { useBlueprintStore } from './store/store';
 import { slugify } from './domain/slug';
 
 function App() {
@@ -18,6 +19,8 @@ function App() {
     loadedSystems,
     selectSystem,
     currentFilePath,
+    showDesignSystem,
+    setShowDesignSystem,
   } = useBlueprintStore();
 
   const initialSyncRef = useRef(false);
@@ -84,6 +87,8 @@ function App() {
         <CodeViewer />
         <Canvas />
         <PropertyPanel />
+
+        {showDesignSystem && <DesignSystemShowcase onClose={() => setShowDesignSystem(false)} />}
 
         <button
           onClick={toggleLeftCollapsed}

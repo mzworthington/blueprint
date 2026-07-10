@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
-import { useBlueprintStore } from './adapters/store';
+import { useBlueprintStore } from './store/store';
 
 describe('App Layout and Collapsible Panels', () => {
   it('should have panels hidden by default and support toggling them', () => {

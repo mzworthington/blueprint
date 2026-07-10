@@ -3,8 +3,8 @@ import * as yaml from 'js-yaml';
 import type { BlueprintState } from '../store';
 import type { FileSystemPort, WorkspacePort, LoggerPort } from '../../domain/ports';
 import type { WorkspaceManifest } from '../../domain/schema';
-import { BrowserFileSystemAdapter, BrowserWorkspaceAdapter } from '../fileSync';
-import { ConsoleLoggerAdapter } from '../telemetry';
+import { BrowserFileSystemAdapter, BrowserWorkspaceAdapter } from '../../adapters/fileSync';
+import { ConsoleLoggerAdapter } from '../../adapters/telemetry';
 import { parseSchemaFromYaml } from '../../domain/graph';
 import { getClosestManifest, getFileName, resolveWorkspaceManifestState } from '../../domain/path';
 

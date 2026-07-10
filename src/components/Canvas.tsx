@@ -8,7 +8,7 @@ import {
   Panel,
   useReactFlow,
 } from '@xyflow/react';
-import { useBlueprintStore } from './store';
+import { useBlueprintStore } from '../store/store';
 import { BlueprintNode } from './BlueprintNode';
 import { Breadcrumbs } from './Breadcrumbs';
 import {

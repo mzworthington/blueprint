@@ -1,5 +1,5 @@
 import React from 'react';
-import { useBlueprintStore, resolveRelativePath } from './store';
+import { useBlueprintStore, resolveRelativePath } from '../store/store';
 import { Folder, ChevronRight, Layers, Compass, Code, Network, ChevronDown } from 'lucide-react';
 import type { C4Level } from '../domain/schema';
 

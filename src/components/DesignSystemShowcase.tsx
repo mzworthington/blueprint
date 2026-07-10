@@ -1,0 +1,895 @@
+import React, { useState } from 'react';
+import {
+  Copy,
+  Check,
+  Download,
+  Palette,
+  FileCode,
+  Layers,
+  Sparkles,
+  ChevronRight,
+  Database,
+  Globe,
+  Zap,
+  Cpu,
+  Monitor,
+  Smartphone,
+  Info,
+  Sliders,
+} from 'lucide-react';
+
+interface DesignSystemShowcaseProps {
+  onClose: () => void;
+}
+
+export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onClose }) => {
+  const [activeTab, setActiveTab] = useState<
+    'identity' | 'tokens' | 'assets' | 'components' | 'sandbox'
+  >('identity');
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const copyToClipboard = (text: string, id: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  // SVG strings for downloading/copying
+  const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="1.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <rect width="32" height="32" rx="6" fill="#040914" />
+  <path d="M 0 16 L 32 16 M 16 0 L 16 32" stroke="#122342" stroke-width="0.75" />
+  <path d="M 8 0 V 32 M 24 0 V 32 M 0 8 H 32 M 0 24 H 32" stroke="#091427" stroke-width="0.5" />
+  <path d="M 16 5 V 27 M 5 16 H 27" stroke="#00d8ff" stroke-width="1.25" opacity="0.6" filter="url(#glow)" />
+  <rect x="11" y="11" width="10" height="10" rx="1.5" fill="#061125" stroke="#00f0ff" stroke-width="2" filter="url(#glow)" />
+  <circle cx="16" cy="16" r="2" fill="#00f0ff" />
+</svg>`;
+
+  const gridSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <path d="M 20 0 L 20 100 M 40 0 L 40 100 M 60 0 L 60 100 M 80 0 L 80 100 M 0 20 L 100 20 M 0 40 L 100 40 M 0 60 L 100 60 M 0 80 L 100 80" fill="none" stroke="rgba(6, 182, 212, 0.05)" stroke-width="0.5" />
+  <path d="M 100 0 L 100 100 M 0 100 L 100 100" fill="none" stroke="rgba(6, 182, 212, 0.15)" stroke-width="1" />
+</svg>`;
+
+  const handleDownload = (content: string, filename: string, mimeType: string) => {
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  // Sandbox State
+  const [sandboxNodeType, setSandboxNodeType] = useState<
+    'person' | 'software-system' | 'web-app' | 'database' | 'microservice'
+  >('web-app');
+  const [sandboxTitle, setSandboxTitle] = useState('Payment Service');
+  const [sandboxDesc, setSandboxDesc] = useState(
+    'Processes credit cards and generates receipts via gRPC.'
+  );
+  const [sandboxStatus, setSandboxStatus] = useState<'healthy' | 'warning' | 'error'>('healthy');
+
+  return (
+    <div className="fixed inset-0 z-[100] flex flex-col bg-[#040914]/98 blueprint-grid text-slate-100 overflow-y-auto animate-fade-in">
+      {/* HEADER SECTION */}
+      <header className="border-b border-[#00f0ff]/20 bg-[#061125]/90 backdrop-blur-md sticky top-0 z-50 p-4 md:px-8 flex items-center justify-between shadow-lg shadow-black/30">
+        <div className="flex items-center gap-3">
+          <div className="p-1 border border-[#00f0ff]/40 rounded bg-cyan-950/20 shadow-[0_0_8px_rgba(0,240,255,0.2)]">
+            <svg viewBox="0 0 32 32" className="w-8 h-8">
+              <path d="M 16 4 V 28 M 4 16 H 28" stroke="#00f0ff" stroke-width="1.5" />
+              <rect
+                x="10"
+                y="10"
+                width="12"
+                height="12"
+                fill="#061125"
+                stroke="#00f0ff"
+                stroke-width="2"
+              />
+              <circle cx="16" cy="16" r="3" fill="#00f0ff" />
+            </svg>
+          </div>
+          <div>
+            <h1 className="text-xl md:text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
+              BLUEPRINT{' '}
+              <span className="text-[#00f0ff] font-mono text-sm border border-[#00f0ff]/30 px-2 py-0.5 rounded bg-cyan-950/30">
+                DESIGN SYSTEM
+              </span>
+            </h1>
+            <p className="text-xs text-slate-400 font-medium font-sans">
+              System guidelines, vector assets, and glassmorphic user interface tokens.
+            </p>
+          </div>
+        </div>
+
+        <button
+          onClick={onClose}
+          className="px-4 py-2 border border-red-500/40 text-red-400 hover:text-white hover:bg-red-500/10 hover:border-red-500 rounded-lg text-sm font-semibold transition cursor-pointer flex items-center gap-1.5 focus:outline-none"
+        >
+          <span>✕</span> Close System View
+        </button>
+      </header>
+
+      {/* TABS CONTAINER */}
+      <div className="max-w-7xl w-full mx-auto px-4 md:px-8 py-6 flex-1 flex flex-col md:flex-row gap-8">
+        {/* Sidebar Navigation */}
+        <aside className="w-full md:w-64 shrink-0 flex flex-col space-y-1.5">
+          <button
+            onClick={() => setActiveTab('identity')}
+            className={`w-full text-left px-4 py-3 rounded-xl flex items-center justify-between text-sm font-bold border transition ${
+              activeTab === 'identity'
+                ? 'bg-brand-600/15 border-brand-500 text-brand-500 shadow-[0_0_12px_rgba(0,240,255,0.15)]'
+                : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 hover:border-slate-800'
+            }`}
+          >
+            <div className="flex items-center gap-2.5">
+              <Sparkles className="w-4 h-4" />
+              <span>Identity & Grid</span>
+            </div>
+            <ChevronRight className="w-4 h-4 opacity-55" />
+          </button>
+
+          <button
+            onClick={() => setActiveTab('tokens')}
+            className={`w-full text-left px-4 py-3 rounded-xl flex items-center justify-between text-sm font-bold border transition ${
+              activeTab === 'tokens'
+                ? 'bg-brand-600/15 border-brand-500 text-brand-500 shadow-[0_0_12px_rgba(0,240,255,0.15)]'
+                : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 hover:border-slate-800'
+            }`}
+          >
+            <div className="flex items-center gap-2.5">
+              <Palette className="w-4 h-4" />
+              <span>Design Tokens</span>
+            </div>
+            <ChevronRight className="w-4 h-4 opacity-55" />
+          </button>
+
+          <button
+            onClick={() => setActiveTab('assets')}
+            className={`w-full text-left px-4 py-3 rounded-xl flex items-center justify-between text-sm font-bold border transition ${
+              activeTab === 'assets'
+                ? 'bg-brand-600/15 border-brand-500 text-brand-500 shadow-[0_0_12px_rgba(0,240,255,0.15)]'
+                : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 hover:border-slate-800'
+            }`}
+          >
+            <div className="flex items-center gap-2.5">
+              <FileCode className="w-4 h-4" />
+              <span>Vector Asset Pack</span>
+            </div>
+            <ChevronRight className="w-4 h-4 opacity-55" />
+          </button>
+
+          <button
+            onClick={() => setActiveTab('components')}
+            className={`w-full text-left px-4 py-3 rounded-xl flex items-center justify-between text-sm font-bold border transition ${
+              activeTab === 'components'
+                ? 'bg-brand-600/15 border-brand-500 text-brand-500 shadow-[0_0_12px_rgba(0,240,255,0.15)]'
+                : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 hover:border-slate-800'
+            }`}
+          >
+            <div className="flex items-center gap-2.5">
+              <Layers className="w-4 h-4" />
+              <span>UI Components</span>
+            </div>
+            <ChevronRight className="w-4 h-4 opacity-55" />
+          </button>
+
+          <button
+            onClick={() => setActiveTab('sandbox')}
+            className={`w-full text-left px-4 py-3 rounded-xl flex items-center justify-between text-sm font-bold border transition ${
+              activeTab === 'sandbox'
+                ? 'bg-brand-600/15 border-brand-500 text-brand-500 shadow-[0_0_12px_rgba(0,240,255,0.15)]'
+                : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 hover:border-slate-800'
+            }`}
+          >
+            <div className="flex items-center gap-2.5">
+              <Sliders className="w-4 h-4" />
+              <span>Interactive Sandbox</span>
+            </div>
+            <ChevronRight className="w-4 h-4 opacity-55" />
+          </button>
+        </aside>
+
+        {/* Content Viewer */}
+        <main className="flex-1 bg-[#061125]/40 border border-[#00f0ff]/10 rounded-2xl p-6 md:p-8 backdrop-blur-sm min-h-[500px]">
+          {/* TAB 1: IDENTITY & GRID */}
+          {activeTab === 'identity' && (
+            <div className="space-y-6 animate-fade-in">
+              <div className="border-b border-[#00f0ff]/10 pb-4">
+                <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-[#00f0ff]" /> Brand Logo & Identity
+                </h2>
+                <p className="text-xs text-slate-400 mt-1">
+                  The primary identity draws direct inspiration from technical drafts, CAD systems,
+                  and electronic schematics.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div className="lg:col-span-5 flex justify-center p-6 border border-[#00f0ff]/15 bg-[#040914] rounded-2xl shadow-inner relative group overflow-hidden">
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,240,255,0.06),transparent_65%)]" />
+                  <img
+                    src="/assets/logo.svg"
+                    className="w-64 h-64 object-contain relative z-10 transition duration-500 group-hover:scale-105"
+                    alt="Blueprint Logo"
+                  />
+                </div>
+                <div className="lg:col-span-7 space-y-4">
+                  <h3 className="text-base font-bold text-white font-mono uppercase tracking-wider text-[#00f0ff]">
+                    The Schematic Philosophy
+                  </h3>
+                  <p className="text-sm text-slate-300 leading-relaxed font-sans">
+                    Rather than a passive visual logotype, the logo is composed of active nodes,
+                    cylinders, and logical structures representing software architecture.
+                  </p>
+                  <div className="bg-[#040914]/80 border border-[#00f0ff]/10 rounded-xl p-4 space-y-3 font-sans">
+                    <h4 className="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+                      <Info className="w-4 h-4 text-[#00f0ff]" /> Key Visual Guidelines:
+                    </h4>
+                    <ul className="text-xs text-slate-400 space-y-2 list-disc list-inside">
+                      <li>
+                        <strong className="text-slate-300">Drafting Grid Lines:</strong> Heavy
+                        structural blueprints require a base grid layer. Major guidelines appear at{' '}
+                        <code className="text-[#00f0ff] font-mono">100px</code> increments; micro
+                        subdivisions occur at <code className="text-[#00f0ff] font-mono">20px</code>
+                        .
+                      </li>
+                      <li>
+                        <strong className="text-slate-300">Electric Cyan Glow:</strong> Elements
+                        representing active network links, endpoints, or databases emit a bright
+                        neon cyan glow (filter blur) to signify operational flow.
+                      </li>
+                      <li>
+                        <strong className="text-slate-300">Monochrome Contrast:</strong> Main
+                        layouts rest on deep navy backdrops (
+                        <code className="text-[#00f0ff] font-mono">#040914</code>) with typography
+                        rendered in stark white or soft gray values.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 2: DESIGN TOKENS */}
+          {activeTab === 'tokens' && (
+            <div className="space-y-8 animate-fade-in">
+              <div className="border-b border-[#00f0ff]/10 pb-4">
+                <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
+                  <Palette className="w-5 h-5 text-[#00f0ff]" /> Design Tokens (Theme Variables)
+                </h2>
+                <p className="text-xs text-slate-400 mt-1">
+                  Standardized styling parameters used across the system layout to guarantee
+                  aesthetic consistency.
+                </p>
+              </div>
+
+              {/* Color Swatches Grid */}
+              <div className="space-y-4">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
+                  Color Palette
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {/* Cyan Glow */}
+                  <div className="border border-[#00f0ff]/15 bg-[#061125]/30 rounded-xl p-3 flex flex-col space-y-3">
+                    <div className="h-16 w-full rounded-lg bg-[#00f0ff] shadow-[0_0_12px_rgba(0,240,255,0.7)]" />
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="text-xs font-bold text-white">Cyan Primary</div>
+                        <div className="text-[10px] text-slate-400 font-mono mt-0.5">
+                          --color-brand-500
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between text-[11px] font-mono text-slate-300 border-t border-slate-900 mt-2 pt-2">
+                        <span>#00F0FF</span>
+                        <button
+                          onClick={() => copyToClipboard('#00f0ff', 'c-cyan')}
+                          className="text-[#00f0ff] hover:underline cursor-pointer flex items-center gap-1"
+                        >
+                          {copiedId === 'c-cyan' ? (
+                            <Check className="w-3 h-3" />
+                          ) : (
+                            <Copy className="w-3 h-3" />
+                          )}
+                          <span>{copiedId === 'c-cyan' ? 'Copied' : 'Copy'}</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Blueprint Background */}
+                  <div className="border border-[#00f0ff]/15 bg-[#061125]/30 rounded-xl p-3 flex flex-col space-y-3">
+                    <div className="h-16 w-full rounded-lg bg-[#040914] border border-slate-900 shadow-inner" />
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="text-xs font-bold text-white">Blueprint Navy</div>
+                        <div className="text-[10px] text-slate-400 font-mono mt-0.5">
+                          --color-blueprint-bg
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between text-[11px] font-mono text-slate-300 border-t border-slate-900 mt-2 pt-2">
+                        <span>#040914</span>
+                        <button
+                          onClick={() => copyToClipboard('#040914', 'c-bg')}
+                          className="text-[#00f0ff] hover:underline cursor-pointer flex items-center gap-1"
+                        >
+                          {copiedId === 'c-bg' ? (
+                            <Check className="w-3 h-3" />
+                          ) : (
+                            <Copy className="w-3 h-3" />
+                          )}
+                          <span>{copiedId === 'c-bg' ? 'Copied' : 'Copy'}</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Slate Neutral */}
+                  <div className="border border-[#00f0ff]/15 bg-[#061125]/30 rounded-xl p-3 flex flex-col space-y-3">
+                    <div className="h-16 w-full rounded-lg bg-[#0f172a]" />
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="text-xs font-bold text-white">Slate Base</div>
+                        <div className="text-[10px] text-slate-400 font-mono mt-0.5">
+                          --color-slate-900
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between text-[11px] font-mono text-slate-300 border-t border-slate-900 mt-2 pt-2">
+                        <span>#0F172A</span>
+                        <button
+                          onClick={() => copyToClipboard('#0f172a', 'c-slate')}
+                          className="text-[#00f0ff] hover:underline cursor-pointer flex items-center gap-1"
+                        >
+                          {copiedId === 'c-slate' ? (
+                            <Check className="w-3 h-3" />
+                          ) : (
+                            <Copy className="w-3 h-3" />
+                          )}
+                          <span>{copiedId === 'c-slate' ? 'Copied' : 'Copy'}</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Glow Grid */}
+                  <div className="border border-[#00f0ff]/15 bg-[#061125]/30 rounded-xl p-3 flex flex-col space-y-3">
+                    <div className="h-16 w-full rounded-lg bg-[#0b2b3f]/30 border border-[#00f0ff]/20 shadow-inner" />
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="text-xs font-bold text-white">Grid Guideline</div>
+                        <div className="text-[10px] text-slate-400 font-mono mt-0.5">
+                          --color-blueprint-border
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between text-[11px] font-mono text-slate-300 border-t border-slate-900 mt-2 pt-2">
+                        <span>rgba(0,240,255,0.15)</span>
+                        <button
+                          onClick={() => copyToClipboard('rgba(0, 240, 255, 0.15)', 'c-grid')}
+                          className="text-[#00f0ff] hover:underline cursor-pointer flex items-center gap-1"
+                        >
+                          {copiedId === 'c-grid' ? (
+                            <Check className="w-3 h-3" />
+                          ) : (
+                            <Copy className="w-3 h-3" />
+                          )}
+                          <span>{copiedId === 'c-grid' ? 'Copied' : 'Copy'}</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Typography Scale */}
+              <div className="space-y-4">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
+                  Typography Scale
+                </h3>
+                <div className="border border-[#00f0ff]/10 rounded-xl p-4 bg-[#040914]/40 divide-y divide-[#00f0ff]/5 space-y-4">
+                  {/* Font sans */}
+                  <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 gap-2">
+                    <div>
+                      <div className="text-xs font-semibold text-slate-400 font-mono">
+                        UI Title / Heading
+                      </div>
+                      <div className="text-lg font-extrabold text-white mt-1 font-sans">
+                        Plus Jakarta Sans - Bold
+                      </div>
+                    </div>
+                    <div className="text-xs font-mono text-slate-400 text-right">
+                      font-family: var(--font-sans)
+                      <br />
+                      letter-spacing: -0.02em
+                    </div>
+                  </div>
+                  {/* Font mono */}
+                  <div className="flex flex-col md:flex-row md:items-center justify-between py-4 gap-2">
+                    <div>
+                      <div className="text-xs font-semibold text-slate-400 font-mono">
+                        Code / Node Identifiers
+                      </div>
+                      <div className="text-sm font-semibold text-[#00f0ff] mt-1 font-mono">
+                        JetBrains Mono - Medium
+                      </div>
+                    </div>
+                    <div className="text-xs font-mono text-slate-400 text-right">
+                      font-family: var(--font-mono)
+                      <br />
+                      font-weight: 500
+                    </div>
+                  </div>
+                  {/* Scale sizes */}
+                  <div className="pt-4 space-y-3 font-sans">
+                    <div className="flex items-baseline gap-4">
+                      <span className="text-2xl font-extrabold text-white">Aa</span>
+                      <span className="text-xs font-mono text-[#00f0ff]">
+                        H1: 1.5rem (24px) / font-extrabold
+                      </span>
+                    </div>
+                    <div className="flex items-baseline gap-4">
+                      <span className="text-xl font-bold text-white">Aa</span>
+                      <span className="text-xs font-mono text-[#00f0ff]">
+                        H2: 1.25rem (20px) / font-bold
+                      </span>
+                    </div>
+                    <div className="flex items-baseline gap-4">
+                      <span className="text-sm font-medium text-slate-300">Aa</span>
+                      <span className="text-xs font-mono text-[#00f0ff]">
+                        Body: 0.875rem (14px) / font-normal
+                      </span>
+                    </div>
+                    <div className="flex items-baseline gap-4">
+                      <span className="text-xs font-normal text-slate-400">Aa</span>
+                      <span className="text-xs font-mono text-[#00f0ff]">
+                        Small: 0.75rem (12px) / text-slate-400
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 3: ASSETS */}
+          {activeTab === 'assets' && (
+            <div className="space-y-6 animate-fade-in">
+              <div className="border-b border-[#00f0ff]/10 pb-4">
+                <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
+                  <FileCode className="w-5 h-5 text-[#00f0ff]" /> Vector Asset Pack
+                </h2>
+                <p className="text-xs text-slate-400 mt-1">
+                  Exposes vector graphic source codes directly. Use these files in HTML markup,
+                  React components, or style sheets.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Favicon SVG Box */}
+                <div className="border border-[#00f0ff]/10 rounded-xl p-4 bg-[#040914]/40 flex flex-col justify-between space-y-4">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider font-mono">
+                        1. Favicon (favicon.svg)
+                      </h4>
+                      <div className="p-1 border border-[#00f0ff]/20 bg-[#040914] rounded">
+                        <svg viewBox="0 0 32 32" className="w-6 h-6">
+                          <path
+                            d="M 16 5 V 27 M 5 16 H 27"
+                            stroke="#00d8ff"
+                            stroke-width="1.25"
+                            opacity="0.6"
+                          />
+                          <rect
+                            x="11"
+                            y="11"
+                            width="10"
+                            height="10"
+                            rx="1.5"
+                            fill="#061125"
+                            stroke="#00f0ff"
+                            stroke-width="2"
+                          />
+                          <circle cx="16" cy="16" r="2" fill="#00f0ff" />
+                        </svg>
+                      </div>
+                    </div>
+                    <p className="text-xs text-slate-400 mt-2 font-sans">
+                      A lightweight core blueprint node designed for tab indicators, shortcuts, or
+                      micro-avatars.
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => copyToClipboard(faviconSvg, 'asset-fav')}
+                      className="flex-1 py-1.5 border border-[#00f0ff]/30 text-[#00f0ff] hover:bg-[#00f0ff]/10 rounded-lg text-xs font-semibold font-mono flex items-center justify-center gap-1.5 cursor-pointer"
+                    >
+                      {copiedId === 'asset-fav' ? (
+                        <Check className="w-3.5 h-3.5" />
+                      ) : (
+                        <Copy className="w-3.5 h-3.5" />
+                      )}
+                      <span>{copiedId === 'asset-fav' ? 'Copied' : 'Copy SVG'}</span>
+                    </button>
+                    <button
+                      onClick={() => handleDownload(faviconSvg, 'favicon.svg', 'image/svg+xml')}
+                      className="py-1.5 px-3 bg-[#00f0ff]/15 hover:bg-[#00f0ff]/25 text-[#00f0ff] rounded-lg text-xs font-semibold flex items-center justify-center cursor-pointer"
+                      title="Download SVG"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Drafting Grid Box */}
+                <div className="border border-[#00f0ff]/10 rounded-xl p-4 bg-[#040914]/40 flex flex-col justify-between space-y-4">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider font-mono">
+                        2. Blueprint Grid (grid.svg)
+                      </h4>
+                      <div className="w-8 h-8 rounded border border-[#00f0ff]/20 bg-[#040914] bg-[linear-gradient(rgba(0,240,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,240,255,0.1)_1px,transparent_1px)] bg-[size:10px_10px]" />
+                    </div>
+                    <p className="text-xs text-slate-400 mt-2 font-sans">
+                      Repeating pattern forming seamless blueprint graph grids. Ideal as a
+                      repeatable CSS background.
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => copyToClipboard(gridSvg, 'asset-grid')}
+                      className="flex-1 py-1.5 border border-[#00f0ff]/30 text-[#00f0ff] hover:bg-[#00f0ff]/10 rounded-lg text-xs font-semibold font-mono flex items-center justify-center gap-1.5 cursor-pointer"
+                    >
+                      {copiedId === 'asset-grid' ? (
+                        <Check className="w-3.5 h-3.5" />
+                      ) : (
+                        <Copy className="w-3.5 h-3.5" />
+                      )}
+                      <span>{copiedId === 'asset-grid' ? 'Copied' : 'Copy SVG'}</span>
+                    </button>
+                    <button
+                      onClick={() => handleDownload(gridSvg, 'grid.svg', 'image/svg+xml')}
+                      className="py-1.5 px-3 bg-[#00f0ff]/15 hover:bg-[#00f0ff]/25 text-[#00f0ff] rounded-lg text-xs font-semibold flex items-center justify-center cursor-pointer"
+                      title="Download SVG"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Blueprint Node Icons */}
+              <div className="space-y-3 mt-4">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
+                  Design System Schematic Icons
+                </h3>
+                <p className="text-xs text-slate-400">
+                  Customized vector icons representing typical node formats rendered using glowing
+                  outlines.
+                </p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                  {[
+                    { label: 'Web App', icon: Monitor },
+                    { label: 'Mobile Device', icon: Smartphone },
+                    { label: 'Microservice', icon: Cpu },
+                    { label: 'Database Cyl', icon: Database },
+                    { label: 'REST Endpoint', icon: Globe },
+                    { label: 'Lambda Trigger', icon: Zap },
+                  ].map((node, i) => (
+                    <div
+                      key={i}
+                      className="border border-[#00f0ff]/10 rounded-xl p-3 bg-[#040914]/60 text-center flex flex-col items-center justify-center space-y-2"
+                    >
+                      <node.icon className="w-7 h-7 text-[#00f0ff] filter drop-shadow-[0_0_4px_rgba(0,240,255,0.5)]" />
+                      <div className="text-[10px] font-mono text-slate-300">{node.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 4: UI COMPONENTS */}
+          {activeTab === 'components' && (
+            <div className="space-y-8 animate-fade-in max-h-[600px] overflow-y-auto pr-2">
+              <div className="border-b border-[#00f0ff]/10 pb-4 sticky top-0 bg-[#061125]/90 backdrop-blur-md z-10">
+                <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
+                  <Layers className="w-5 h-5 text-[#00f0ff]" /> UI Component Standards
+                </h2>
+                <p className="text-xs text-slate-400 mt-1">
+                  Reusable UI patterns styled explicitly using the blueprint and glassmorphic
+                  variables.
+                </p>
+              </div>
+
+              {/* Buttons Row */}
+              <div className="space-y-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
+                  1. Action Buttons
+                </h3>
+                <div className="flex flex-wrap gap-4 items-center">
+                  <button className="px-4 py-2 bg-[#00f0ff]/15 hover:bg-[#00f0ff]/25 text-[#00f0ff] border border-[#00f0ff]/40 hover:border-[#00f0ff] rounded-lg text-xs font-bold shadow-[0_0_10px_rgba(0,240,255,0.15)] hover:shadow-[0_0_15px_rgba(0,240,255,0.35)] transition cursor-pointer">
+                    Primary Glow
+                  </button>
+
+                  <button className="px-4 py-2 border border-[#00f0ff]/20 hover:border-[#00f0ff]/50 hover:bg-[#00f0ff]/5 text-slate-300 hover:text-white rounded-lg text-xs font-bold transition cursor-pointer">
+                    Outline Blueprint
+                  </button>
+
+                  <button className="px-4 py-2 border border-dashed border-[#00f0ff]/30 hover:border-brand-500/80 text-slate-400 hover:text-white rounded-lg text-xs font-semibold transition cursor-pointer">
+                    Dashed Target
+                  </button>
+                </div>
+              </div>
+
+              {/* Cards / Panels */}
+              <div className="space-y-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
+                  2. Glassmorphic Blueprint Cards
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="glass-panel p-4 rounded-xl flex flex-col justify-between space-y-4">
+                    <div>
+                      <h4 className="text-xs font-bold font-mono text-[#00f0ff] uppercase tracking-wider">
+                        Container Block
+                      </h4>
+                      <p className="text-xs text-slate-400 mt-2 font-sans leading-relaxed">
+                        Features faint cyan borders (
+                        <code className="text-[#00f0ff] font-mono">
+                          1px solid rgba(0, 240, 255, 0.15)
+                        </code>
+                        ) and heavy glass blurs (
+                        <code className="text-[#00f0ff] font-mono">blur(12px)</code>) stacked over
+                        deep card offsets.
+                      </p>
+                    </div>
+                    <div className="text-[10px] text-slate-500 font-mono">CLASS: glass-panel</div>
+                  </div>
+
+                  <div className="glass-panel-light p-4 rounded-xl flex flex-col justify-between space-y-4">
+                    <div>
+                      <h4 className="text-xs font-bold font-mono text-slate-300 uppercase tracking-wider">
+                        Subtle Component
+                      </h4>
+                      <p className="text-xs text-slate-400 mt-2 font-sans leading-relaxed">
+                        Features lighter backdrops (
+                        <code className="text-[#00f0ff] font-mono">rgba(255, 255, 255, 0.02)</code>)
+                        for inner items or nesting panels.
+                      </p>
+                    </div>
+                    <div className="text-[10px] text-slate-500 font-mono">
+                      CLASS: glass-panel-light
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Badges and States */}
+              <div className="space-y-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
+                  3. Level Badges & Status Markers
+                </h3>
+                <div className="flex flex-wrap gap-3">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-950/80 border border-emerald-900/40 text-emerald-400 font-mono">
+                    Context
+                  </span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-blue-950/80 border border-blue-900/40 text-blue-400 font-mono">
+                    Container
+                  </span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-purple-950/80 border border-purple-900/40 text-purple-400 font-mono">
+                    Component
+                  </span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-amber-950/80 border border-amber-900/40 text-amber-400 font-mono">
+                    Code
+                  </span>
+                </div>
+              </div>
+
+              {/* Forms / Text Inputs */}
+              <div className="space-y-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
+                  4. Terminal Form Inputs
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold font-mono text-slate-400 uppercase">
+                      Input Node Name
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="MyServiceComponent"
+                      className="w-full bg-[#040914] border border-[#00f0ff]/25 focus:border-[#00f0ff] focus:shadow-[0_0_10px_rgba(0,240,255,0.15)] rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none transition duration-200"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold font-mono text-slate-400 uppercase">
+                      Select Format
+                    </label>
+                    <select className="w-full bg-[#040914] border border-[#00f0ff]/25 focus:border-[#00f0ff] focus:shadow-[0_0_10px_rgba(0,240,255,0.15)] rounded-lg px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none transition duration-200 cursor-pointer">
+                      <option>microservice</option>
+                      <option>relational-database</option>
+                      <option>event-broker</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 5: SANDBOX */}
+          {activeTab === 'sandbox' && (
+            <div className="space-y-6 animate-fade-in">
+              <div className="border-b border-[#00f0ff]/10 pb-4">
+                <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
+                  <Sliders className="w-5 h-5 text-[#00f0ff]" /> Interactive Component Sandbox
+                </h2>
+                <p className="text-xs text-slate-400 mt-1">
+                  Adjust options below to live customize a blueprint node component card, verifying
+                  the design system's reactivity.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                {/* Sandbox Controls */}
+                <div className="lg:col-span-5 bg-[#040914]/60 border border-[#00f0ff]/10 rounded-xl p-4 space-y-4">
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold font-mono text-slate-400 uppercase">
+                      Node Title
+                    </label>
+                    <input
+                      type="text"
+                      value={sandboxTitle}
+                      onChange={e => setSandboxTitle(e.target.value)}
+                      className="w-full bg-[#040914] border border-[#00f0ff]/25 focus:border-[#00f0ff] rounded-lg px-3 py-1.5 text-xs font-mono text-white focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold font-mono text-slate-400 uppercase">
+                      Type Symbol
+                    </label>
+                    <select
+                      value={sandboxNodeType}
+                      onChange={e => setSandboxNodeType(e.target.value as any)}
+                      className="w-full bg-[#040914] border border-[#00f0ff]/25 focus:border-[#00f0ff] rounded-lg px-3 py-1.5 text-xs font-mono text-slate-300 focus:outline-none cursor-pointer"
+                    >
+                      <option value="person">Person (Actor)</option>
+                      <option value="web-app">Web App</option>
+                      <option value="database">Database</option>
+                      <option value="microservice">Microservice</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold font-mono text-slate-400 uppercase">
+                      Description
+                    </label>
+                    <textarea
+                      value={sandboxDesc}
+                      onChange={e => setSandboxDesc(e.target.value)}
+                      rows={2}
+                      className="w-full bg-[#040914] border border-[#00f0ff]/25 focus:border-[#00f0ff] rounded-lg px-3 py-1.5 text-xs font-mono text-white focus:outline-none resize-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold font-mono text-slate-400 uppercase">
+                      Status Level
+                    </label>
+                    <div className="flex gap-2">
+                      {['healthy', 'warning', 'error'].map(s => (
+                        <button
+                          key={s}
+                          onClick={() => setSandboxStatus(s as any)}
+                          className={`flex-1 py-1 rounded text-[10px] font-mono capitalize border transition ${
+                            sandboxStatus === s
+                              ? s === 'healthy'
+                                ? 'bg-emerald-950/80 border-emerald-500 text-emerald-400'
+                                : s === 'warning'
+                                  ? 'bg-amber-950/80 border-amber-500 text-amber-400'
+                                  : 'bg-red-950/80 border-red-500 text-red-400'
+                              : 'border-[#00f0ff]/10 text-slate-450 hover:bg-slate-900/40'
+                          }`}
+                        >
+                          {s}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Live Preview Panel */}
+                <div className="lg:col-span-7 flex flex-col space-y-4">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
+                    Live Renderer Output
+                  </h3>
+
+                  {/* Glowing Node Component */}
+                  <div className="p-8 border border-dashed border-[#00f0ff]/25 bg-[#040914]/80 rounded-2xl flex items-center justify-center min-h-[180px]">
+                    <div className="w-80 glass-panel border border-[#00f0ff]/30 p-4 rounded-xl flex flex-col space-y-3 relative group overflow-hidden">
+                      {/* Connection Handle indicators */}
+                      <div className="absolute -left-1.5 top-1/2 -translate-y-1/2 w-3 h-3 bg-[#00f0ff] border-2 border-[#040914] rounded-full shadow-[0_0_6px_#00f0ff]" />
+                      <div className="absolute -right-1.5 top-1/2 -translate-y-1/2 w-3 h-3 bg-[#00f0ff] border-2 border-[#040914] rounded-full shadow-[0_0_6px_#00f0ff]" />
+
+                      {/* Title & Icon Header */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <div className="p-1 border border-[#00f0ff]/30 rounded bg-cyan-950/10">
+                            {sandboxNodeType === 'person' && (
+                              <Cpu className="w-4 h-4 text-[#00f0ff]" />
+                            )}
+                            {sandboxNodeType === 'web-app' && (
+                              <Monitor className="w-4 h-4 text-[#00f0ff]" />
+                            )}
+                            {sandboxNodeType === 'database' && (
+                              <Database className="w-4 h-4 text-[#00f0ff]" />
+                            )}
+                            {sandboxNodeType === 'microservice' && (
+                              <Cpu className="w-4 h-4 text-[#00f0ff]" />
+                            )}
+                          </div>
+                          <div>
+                            <h4 className="text-xs font-extrabold text-white font-mono tracking-tight leading-none">
+                              {sandboxTitle}
+                            </h4>
+                            <span className="text-[8px] text-[#00f0ff] font-mono uppercase tracking-wider mt-1 block">
+                              {sandboxNodeType}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Status Marker */}
+                        <span
+                          className={`w-2 h-2 rounded-full ${
+                            sandboxStatus === 'healthy'
+                              ? 'bg-emerald-400 shadow-[0_0_8px_#10b981]'
+                              : sandboxStatus === 'warning'
+                                ? 'bg-amber-400 shadow-[0_0_8px_#f59e0b]'
+                                : 'bg-red-500 shadow-[0_0_8px_#f43f5e]'
+                          }`}
+                        />
+                      </div>
+
+                      {/* Description */}
+                      <p className="text-[10px] text-slate-400 font-sans leading-relaxed line-clamp-2 border-t border-slate-900 pt-2.5">
+                        {sandboxDesc || 'No component description provided...'}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Schema export preview */}
+                  <div className="bg-[#040914]/90 border border-slate-900 rounded-xl p-3 font-mono text-[10px] text-slate-300">
+                    <div className="text-[#00f0ff] mb-1 font-bold">
+                      // Serialized YAML Model Output:
+                    </div>
+                    <div>id: {sandboxTitle.toLowerCase().replace(/\s+/g, '-')}</div>
+                    <div>title: {sandboxTitle}</div>
+                    <div>type: {sandboxNodeType}</div>
+                    <div>description: {sandboxDesc}</div>
+                    <div>status: {sandboxStatus}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </main>
+      </div>
+
+      {/* FOOTER SECTION */}
+      <footer className="border-t border-[#00f0ff]/10 bg-[#061125]/90 backdrop-blur-md p-4 text-center text-[10px] text-slate-500 font-mono sticky bottom-0">
+        <div>
+          Designed by Antigravity AI Engine &copy; 2026. All Vector schematics are exported under
+          open-source MIT guidelines.
+        </div>
+      </footer>
+    </div>
+  );
+};

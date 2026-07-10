@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
 import { Breadcrumbs } from './Breadcrumbs';
-import { useBlueprintStore } from './store';
+import { useBlueprintStore } from '../store/store';
 
 describe('Breadcrumbs Component', () => {
   beforeEach(() => {

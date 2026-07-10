@@ -16,7 +16,7 @@ import {
   Smartphone,
   Code,
 } from 'lucide-react';
-import { useBlueprintStore } from './store';
+import { useBlueprintStore } from '../store/store';
 import type { NodeType, PropertyMap } from '../domain/schema';
 import { slugify } from '../domain/slug';
 

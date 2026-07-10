@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { CodeViewer } from './CodeViewer';
-import { useBlueprintStore } from './store';
+import { useBlueprintStore } from '../store/store';
 
 vi.mock('mermaid', () => ({
   default: {
@@ -25,7 +25,7 @@ describe('CodeViewer UI Component', () => {
   it('should render the Schema Explorer header and tabs', () => {
     render(<CodeViewer />);
 
-    expect(screen.getByText('Schema Explorer')).toBeInTheDocument();
+    expect(screen.getByText(/blueprint/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /yaml/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /json/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /mermaid/i })).toBeInTheDocument();

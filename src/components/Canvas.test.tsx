@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Canvas } from './Canvas';
-import { useBlueprintStore } from './store';
+import { useBlueprintStore } from '../store/store';
 
 vi.mock('@xyflow/react', () => {
   return {
