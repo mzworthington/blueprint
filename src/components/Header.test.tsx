@@ -1,7 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { Header } from './Header';
 import { useBlueprintStore } from '../store/store';
+
+vi.mock('./Searchbar', () => ({
+  Searchbar: () => <div data-testid="searchbar-mock">Searchbar Mock</div>,
+}));
 
 describe('Header Component', () => {
   beforeEach(() => {

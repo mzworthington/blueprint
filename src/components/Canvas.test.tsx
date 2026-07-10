@@ -39,6 +39,10 @@ vi.mock('./Breadcrumbs', () => ({
   Breadcrumbs: () => <div data-testid="breadcrumbs">Breadcrumbs Mock</div>,
 }));
 
+vi.mock('./Searchbar', () => ({
+  Searchbar: () => <div data-testid="searchbar-mock">Searchbar Mock</div>,
+}));
+
 describe('Canvas Component', () => {
   beforeEach(() => {
     const { initSchema } = useBlueprintStore.getState();

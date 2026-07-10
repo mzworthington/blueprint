@@ -3,6 +3,10 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from './App';
 import { useBlueprintStore } from './store/store';
 
+vi.mock('./components/Searchbar', () => ({
+  Searchbar: () => <div data-testid="searchbar-mock">Searchbar Mock</div>,
+}));
+
 describe('App Layout and Collapsible Panels', () => {
   it('should have panels hidden by default and support toggling them', () => {
     useBlueprintStore.setState({ leftCollapsed: true, rightCollapsed: true });

@@ -27,8 +27,16 @@ vi.mock('../components/PropertyPanel', () => ({
   PropertyPanel: () => <div data-testid="property-panel">PropertyPanel</div>,
 }));
 
+vi.mock('../components/Searchbar', () => ({
+  Searchbar: () => <div data-testid="searchbar-mock">Searchbar Mock</div>,
+}));
+
 vi.mock('@xyflow/react', () => ({
   ReactFlowProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  useReactFlow: () => ({
+    getNode: vi.fn(),
+    setCenter: vi.fn(),
+  }),
 }));
 
 describe('WorkspacePage Component', () => {

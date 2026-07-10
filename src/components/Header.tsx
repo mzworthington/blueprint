@@ -2,6 +2,7 @@ import React from 'react';
 import { CheckCircle, AlertTriangle } from 'lucide-react';
 import { useBlueprintStore } from '../store/store';
 import { Breadcrumbs } from './Breadcrumbs';
+import { Searchbar } from './Searchbar';
 
 export const Header: React.FC = () => {
   const { schema, validationResult } = useBlueprintStore();
@@ -36,6 +37,7 @@ export const Header: React.FC = () => {
           )}
         </div>
       </div>
+      <Searchbar />
     </header>
   );
 };
