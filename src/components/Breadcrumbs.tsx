@@ -228,12 +228,21 @@ export const Breadcrumbs: React.FC = () => {
           const SegIcon = segConfig.icon;
 
           const currentFamily = getWorkspaceFamily(currentFilePath);
-          const sameLevelSystems = loadedSystems.filter(
-            s =>
-              s.schema.level === seg.level &&
-              s.path !== seg.path &&
-              getWorkspaceFamily(s.path) === currentFamily
-          );
+          const sameLevelSystems = loadedSystems.filter(s => {
+            if (s.schema.level !== seg.level || s.path === seg.path) {
+              return false;
+            }
+            if (isWorkspaceOpen) {
+              return true;
+            }
+            // In Sandbox mode, the root breadcrumb segment (idx === 0) allows switching
+            // to other workspaces/families' root diagrams. Subsequent segments (idx > 0)
+            // are restricted to the same workspace family.
+            if (idx === 0) {
+              return true;
+            }
+            return getWorkspaceFamily(s.path) === currentFamily;
+          });
 
           return (
             <React.Fragment key={`${seg.path}-${idx}`}>
