@@ -185,14 +185,29 @@ export const BrowserWorkspaceAdapter: WorkspacePort = {
     if (!activeDirectoryHandle) {
       throw new Error('No workspace directory active');
     }
-    const files: Array<{ name: string; content: string }> = [];
-    for await (const entry of activeDirectoryHandle.values()) {
-      if (entry.kind === 'file' && (entry.name.endsWith('.yaml') || entry.name.endsWith('.yml'))) {
-        const file = await entry.getFile();
-        const content = await file.text();
-        files.push({ name: entry.name, content });
-      }
-    }
-    return files;
+    return scanDirectory(activeDirectoryHandle);
   },
 };
+
+async function scanDirectory(
+  dirHandle: FileSystemDirectoryHandle,
+  relativePrefix = ''
+): Promise<Array<{ name: string; content: string }>> {
+  const files: Array<{ name: string; content: string }> = [];
+  for await (const entry of dirHandle.values()) {
+    const relativePath = relativePrefix ? `${relativePrefix}/${entry.name}` : entry.name;
+    if (entry.kind === 'file') {
+      if (entry.name.endsWith('.yaml') || entry.name.endsWith('.yml')) {
+        const file = await (entry as any).getFile();
+        const content = await file.text();
+        files.push({ name: relativePath, content });
+      }
+    } else if (entry.kind === 'directory') {
+      if (entry.name !== 'node_modules' && !entry.name.startsWith('.')) {
+        const subFiles = await scanDirectory(entry as any, relativePath);
+        files.push(...subFiles);
+      }
+    }
+  }
+  return files;
+}

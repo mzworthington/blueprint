@@ -1,5 +1,5 @@
 import React from 'react';
-import { useBlueprintStore } from './store';
+import { useBlueprintStore, resolveRelativePath } from './store';
 import { Folder, ChevronRight, Layers, Compass, Code, Network, ChevronDown } from 'lucide-react';
 import type { C4Level } from '../domain/schema';
 
@@ -49,6 +49,7 @@ export const Breadcrumbs: React.FC = () => {
     zoomIntoNode,
     selectNode,
     workspaceManifest,
+    workspaceManifestPath,
     loadedSystems,
     selectSystem,
   } = useBlueprintStore();
@@ -71,20 +72,26 @@ export const Breadcrumbs: React.FC = () => {
   const getSegmentChildren = React.useCallback(
     (segPath: string) => {
       if (!workspaceManifest || !workspaceManifest.hierarchy) return [];
-      const segFileName = getFileName(segPath);
-      const match = workspaceManifest.hierarchy.find(h => getFileName(h.parent) === segFileName);
+      const manifestDir = workspaceManifestPath || currentFilePath;
+
+      const match = workspaceManifest.hierarchy.find(h => {
+        const resolvedParentPath = resolveRelativePath(manifestDir, h.parent);
+        return resolvedParentPath === segPath;
+      });
       if (!match) return [];
 
       return match.children.map(childPath => {
-        const childFileName = getFileName(childPath);
-        const system = loadedSystems.find(s => getFileName(s.path) === childFileName);
+        const resolvedChildPath = resolveRelativePath(manifestDir, childPath);
+        const system = loadedSystems.find(s => s.path === resolvedChildPath);
         return {
-          path: system?.path || childPath,
-          name: system?.name || childFileName.replace('-components.yaml', '').replace('.yaml', ''),
+          path: system?.path || resolvedChildPath,
+          name:
+            system?.name ||
+            getFileName(childPath).replace('-components.yaml', '').replace('.yaml', ''),
         };
       });
     },
-    [workspaceManifest, loadedSystems]
+    [workspaceManifest, loadedSystems, workspaceManifestPath, currentFilePath]
   );
 
   const activeLevel = schema.level || 'container';
@@ -100,25 +107,26 @@ export const Breadcrumbs: React.FC = () => {
     const list: Array<{ path: string; name: string; level: C4Level }> = [];
     if (!workspaceManifest || !workspaceManifest.hierarchy) return list;
 
-    const currentFileName = getFileName(currentFilePath);
-    let nextChildName = currentFileName;
+    const manifestDir = workspaceManifestPath || currentFilePath;
+    let activePath = currentFilePath;
     let foundParent = true;
 
     while (foundParent) {
       foundParent = false;
       for (const h of workspaceManifest.hierarchy) {
-        const hasChild = h.children.some(c => getFileName(c) === nextChildName);
+        const resolvedParentPath = resolveRelativePath(manifestDir, h.parent);
+        const resolvedChildrenPaths = h.children.map(c => resolveRelativePath(manifestDir, c));
+
+        const hasChild = resolvedChildrenPaths.some(c => c === activePath);
         if (hasChild) {
-          const parentPath = h.parent;
-          const parentFileName = getFileName(parentPath);
-          const parentSystem = loadedSystems.find(s => getFileName(s.path) === parentFileName);
+          const parentSystem = loadedSystems.find(s => s.path === resolvedParentPath);
           if (parentSystem) {
             list.unshift({
               path: parentSystem.path,
               name: parentSystem.name,
               level: parentSystem.schema.level || 'container',
             });
-            nextChildName = parentFileName;
+            activePath = resolvedParentPath;
             foundParent = true;
             break;
           }
@@ -126,7 +134,7 @@ export const Breadcrumbs: React.FC = () => {
       }
     }
     return list;
-  }, [workspaceManifest, loadedSystems, currentFilePath]);
+  }, [workspaceManifest, loadedSystems, currentFilePath, workspaceManifestPath]);
 
   const selectedNode = selectedNodeId ? schema.nodes.find(n => n.id === selectedNodeId) : null;
   const hasNextHierarchy = !!(selectedNode && selectedNode.c4Ref);
@@ -189,7 +197,10 @@ export const Breadcrumbs: React.FC = () => {
   const hasNextLevelChildren = currentChildren.length > 0;
 
   return (
-    <div className="flex items-center gap-2.5 bg-slate-950/90 border border-slate-900 px-4 py-2.5 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md text-xs select-none">
+    <div
+      ref={dropdownRef}
+      className="flex items-center gap-2.5 bg-slate-950/90 border border-slate-900 px-4 py-2.5 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md text-xs select-none"
+    >
       <div className="flex items-center gap-1.5 text-slate-400 font-medium">
         <Folder className="w-4 h-4 text-brand-500" />
         <span className="max-w-[120px] truncate" title={workspaceName || 'Sandbox'}>
@@ -206,26 +217,70 @@ export const Breadcrumbs: React.FC = () => {
           const segConfig = LEVEL_CONFIGS[seg.level];
           const SegIcon = segConfig.icon;
 
+          const sameLevelSystems = loadedSystems.filter(
+            s => s.schema.level === seg.level && s.path !== seg.path
+          );
+
           return (
             <React.Fragment key={`${seg.path}-${idx}`}>
               {idx > 0 && <ChevronRight className="w-3.5 h-3.5 text-slate-800 shrink-0" />}
 
-              <button
-                disabled={!isClickable}
-                onClick={seg.onClick}
-                className={`flex items-center gap-1.5 transition text-left focus:outline-none shrink-0 ${
-                  !isClickable
-                    ? 'text-slate-100 font-semibold cursor-default'
-                    : seg.isZoomPreview
-                      ? 'text-brand-400 hover:text-brand-300 font-medium cursor-pointer border border-brand-500/20 px-2 py-0.5 rounded bg-brand-950/20 hover:bg-brand-950/45'
-                      : 'text-slate-500 hover:text-slate-200 cursor-pointer'
-                }`}
-              >
-                <SegIcon
-                  className={`w-3.5 h-3.5 shrink-0 ${isLast && !seg.isZoomPreview ? segConfig.text : 'text-slate-600'}`}
-                />
-                <span className="truncate max-w-[150px]">{seg.name}</span>
-              </button>
+              <div className="relative flex items-center gap-0.5">
+                <button
+                  disabled={!isClickable}
+                  onClick={seg.onClick}
+                  className={`flex items-center gap-1.5 transition text-left focus:outline-none shrink-0 ${
+                    !isClickable
+                      ? 'text-slate-100 font-semibold cursor-default'
+                      : seg.isZoomPreview
+                        ? 'text-brand-400 hover:text-brand-300 font-medium cursor-pointer border border-brand-500/20 px-2 py-0.5 rounded bg-brand-950/20 hover:bg-brand-950/45'
+                        : 'text-slate-500 hover:text-slate-200 cursor-pointer'
+                  }`}
+                >
+                  <SegIcon
+                    className={`w-3.5 h-3.5 shrink-0 ${isLast && !seg.isZoomPreview ? segConfig.text : 'text-slate-600'}`}
+                  />
+                  <span className="truncate max-w-[150px]">{seg.name}</span>
+                </button>
+
+                {sameLevelSystems.length > 0 && (
+                  <button
+                    onClick={e => {
+                      e.stopPropagation();
+                      setOpenDropdownIdx(openDropdownIdx === idx ? null : idx);
+                    }}
+                    className={`p-0.5 rounded hover:bg-slate-900 transition focus:outline-none cursor-pointer shrink-0 ${
+                      openDropdownIdx === idx
+                        ? 'text-brand-400 bg-slate-900/50'
+                        : 'text-slate-600 hover:text-slate-300'
+                    }`}
+                    title={`Other ${segConfig.label} systems`}
+                  >
+                    <ChevronDown className="w-3.5 h-3.5" />
+                  </button>
+                )}
+
+                {openDropdownIdx === idx && (
+                  <div className="absolute top-full left-0 mt-1.5 bg-slate-950 border border-slate-900 rounded-xl shadow-2xl py-1.5 z-50 min-w-[200px] max-h-[250px] overflow-y-auto backdrop-blur-lg animate-in fade-in slide-in-from-top-1 duration-150 text-[11px]">
+                    <div className="px-2.5 py-1 text-[9px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-900/60 mb-1">
+                      Other {segConfig.label} Levels
+                    </div>
+                    {sameLevelSystems.map(sys => (
+                      <button
+                        key={sys.path}
+                        onClick={() => {
+                          selectSystem(sys.path);
+                          setOpenDropdownIdx(null);
+                        }}
+                        className="w-full text-left px-3 py-2 hover:bg-slate-900/80 hover:text-brand-400 text-slate-400 transition flex items-center gap-2"
+                      >
+                        <SegIcon className="w-3.5 h-3.5 text-slate-600 shrink-0" />
+                        <span className="truncate">{sys.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </React.Fragment>
           );
         })}
@@ -235,7 +290,7 @@ export const Breadcrumbs: React.FC = () => {
         <>
           <div className="w-px h-4 bg-slate-800/80 self-center mx-1 shrink-0" />
 
-          <div className="relative" ref={dropdownRef}>
+          <div className="relative">
             <button
               onClick={() => setOpenDropdownIdx(openDropdownIdx === 999 ? null : 999)}
               className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg border text-[10px] font-bold uppercase tracking-wider shrink-0 transition focus:outline-none cursor-pointer ${

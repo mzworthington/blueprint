@@ -28,23 +28,56 @@ export function resolveRelativePath(basePath: string, relativePath: string): str
   if (relativePath.startsWith('/') || relativePath.includes('://')) {
     return relativePath;
   }
-  const baseDir = basePath.split('/').slice(0, -1);
+  const parts = basePath.split('/');
+  parts.pop();
   const relParts = relativePath.split('/');
-
   for (const part of relParts) {
-    if (part === '.' || part === '') {
-      continue;
-    } else if (part === '..') {
-      baseDir.pop();
+    if (part === '.') continue;
+    if (part === '..') {
+      parts.pop();
     } else {
-      baseDir.push(part);
+      parts.push(part);
     }
   }
-  return baseDir.join('/');
+  return parts.join('/');
 }
 
+export function getClosestManifest(
+  filePath: string,
+  manifests: Array<{ path: string; manifest: WorkspaceManifest; yaml: string }>
+) {
+  if (manifests.length === 0) return null;
+  const fileDir = filePath.split('/').slice(0, -1).join('/');
+  let bestMatch: (typeof manifests)[0] | null = null;
+  let maxCommonSegments = -1;
+
+  for (const m of manifests) {
+    const mDir = m.path.split('/').slice(0, -1).join('/');
+    if (fileDir.startsWith(mDir) || mDir === '') {
+      const segments = mDir ? mDir.split('/').length : 0;
+      if (segments > maxCommonSegments) {
+        maxCommonSegments = segments;
+        bestMatch = m;
+      }
+    }
+  }
+  return bestMatch;
+}
+
+export const resolveWorkspaceManifestState = (
+  path: string,
+  loadedManifests: Array<{ path: string; manifest: WorkspaceManifest; yaml: string }>
+) => {
+  const activeManifest = getClosestManifest(path, loadedManifests);
+  return {
+    workspaceManifest: activeManifest ? activeManifest.manifest : null,
+    workspaceManifestYaml: activeManifest ? activeManifest.yaml : null,
+    workspaceManifestPath: activeManifest ? activeManifest.path : null,
+  };
+};
+
 const defaultBlueprintModules = import.meta.glob<{ default: string }>(
-  '../../blueprints/blueprint/*.{yaml,yml}',
+  '../../blueprints/**/*.{yaml,yml}',
   {
     query: '?raw',
     eager: true,
@@ -132,7 +165,9 @@ interface BlueprintState {
 
   workspaceManifest: WorkspaceManifest | null;
   workspaceManifestYaml: string | null;
+  workspaceManifestPath: string | null;
   saveWorkspaceManifest: (manifestYaml: string) => Promise<boolean>;
+  loadedManifests: Array<{ path: string; manifest: WorkspaceManifest; yaml: string }>;
   loadedSystems: Array<{ path: string; name: string; schema: SystemSchema }>;
   selectSystem: (path: string) => void;
 }
@@ -244,16 +279,27 @@ export let defaultInitialSchema: SystemSchema = {
 };
 
 export const defaultLoadedSystems: Array<{ path: string; name: string; schema: SystemSchema }> = [];
+export const defaultLoadedManifests: Array<{
+  path: string;
+  manifest: WorkspaceManifest;
+  yaml: string;
+}> = [];
 export let defaultWorkspaceManifest: WorkspaceManifest | null = null;
 export let defaultWorkspaceManifestYaml: string | null = null;
 
 Object.entries(defaultBlueprintModules).forEach(([filePath, module]) => {
   const fileName = getFileName(filePath);
+  const cleanPath = filePath.replace('../../blueprints/', '');
+
   if (fileName === 'workspace.yaml' || fileName.endsWith('-workspace.yaml')) {
     try {
       const yamlContent = module.default;
-      defaultWorkspaceManifest = yaml.load(yamlContent) as WorkspaceManifest;
-      defaultWorkspaceManifestYaml = yamlContent;
+      const parsed = yaml.load(yamlContent) as WorkspaceManifest;
+      defaultLoadedManifests.push({
+        path: cleanPath,
+        manifest: parsed,
+        yaml: yamlContent,
+      });
     } catch (e) {
       console.error('Failed to parse default workspace manifest:', filePath, e);
     }
@@ -263,12 +309,12 @@ Object.entries(defaultBlueprintModules).forEach(([filePath, module]) => {
     const yamlContent = module.default;
     const parsed = parseSchemaFromYaml(yamlContent);
     defaultLoadedSystems.push({
-      path: fileName,
+      path: cleanPath,
       name: parsed.name || fileName.replace(/\.ya?ml$/, ''),
       schema: parsed,
     });
   } catch (e) {
-    console.error('Failed to parse default blueprint:', filePath, e);
+    // Ignore non-schema files during eager build-time load
   }
 });
 
@@ -282,14 +328,21 @@ defaultLoadedSystems.sort((a, b) => {
 
 if (defaultLoadedSystems.length > 0) {
   let resolvedRootSystem = defaultLoadedSystems[0];
-  const manifest = defaultWorkspaceManifest as WorkspaceManifest | null;
-  if (manifest && manifest.root) {
-    const resolvedRootName = getFileName(manifest.root);
-    const foundRoot = defaultLoadedSystems.find(
-      s => s.path === manifest.root || s.path === resolvedRootName
-    );
-    if (foundRoot) {
-      resolvedRootSystem = foundRoot;
+  const initialManifest = getClosestManifest(resolvedRootSystem.path, defaultLoadedManifests);
+  if (initialManifest) {
+    defaultWorkspaceManifest = initialManifest.manifest;
+    defaultWorkspaceManifestYaml = initialManifest.yaml;
+    if (initialManifest.manifest.root) {
+      const resolvedRootName = getFileName(initialManifest.manifest.root);
+      const foundRoot = defaultLoadedSystems.find(
+        s =>
+          s.path === initialManifest.manifest.root ||
+          s.path === resolvedRootName ||
+          s.path.endsWith('/' + resolvedRootName)
+      );
+      if (foundRoot) {
+        resolvedRootSystem = foundRoot;
+      }
     }
   }
   defaultInitialSchema = resolvedRootSystem.schema;
@@ -431,19 +484,25 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
     logger: ConsoleLoggerAdapter,
     workspaceManifest: defaultWorkspaceManifest,
     workspaceManifestYaml: defaultWorkspaceManifestYaml,
+    workspaceManifestPath: defaultWorkspaceManifest
+      ? defaultLoadedManifests.find(m => m.manifest === defaultWorkspaceManifest)?.path || null
+      : null,
+    loadedManifests: defaultLoadedManifests,
     loadedSystems: defaultLoadedSystems,
 
     selectSystem: (path: string) => {
-      const { loadedSystems, logger } = get();
+      const { loadedSystems, loadedManifests, logger } = get();
       const system = loadedSystems.find(s => s.path === path);
       if (!system) {
         logger.warn('System path not found in loaded systems', { path });
         return;
       }
       logger.info('Switching active system', { name: system.name, path });
+      const manifestState = resolveWorkspaceManifestState(path, loadedManifests);
       set({
         currentFilePath: path,
         selectedNodeId: null,
+        ...manifestState,
       });
       get().initSchema(system.schema);
     },
@@ -527,9 +586,11 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
           newLoadedSystems.push({ path, name, schema });
         }
 
+        const manifestState = resolveWorkspaceManifestState(path, get().loadedManifests);
         set({
           currentFilePath: path,
           loadedSystems: newLoadedSystems,
+          ...manifestState,
         });
         get().initSchema(schema);
         return true;
@@ -718,52 +779,80 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
           throw new Error('No blueprint .yaml or .yml files found in selected directory');
         }
 
-        const manifestFile = files.find(
-          f => f.name === 'workspace.yaml' || f.name.endsWith('-workspace.yaml')
+        const manifestFiles = files.filter(
+          f =>
+            f.name === 'workspace.yaml' ||
+            f.name.endsWith('/workspace.yaml') ||
+            f.name.endsWith('-workspace.yaml')
         );
-        let parsedManifest: WorkspaceManifest | null = null;
-        if (manifestFile) {
-          try {
-            parsedManifest = yaml.load(manifestFile.content) as WorkspaceManifest;
-          } catch (e) {
-            logger.error('Failed to parse workspace manifest YAML', e);
-          }
-        }
 
-        const schemaFiles = files.filter(f => f !== manifestFile);
+        const nextLoadedManifests = manifestFiles
+          .map(f => {
+            try {
+              const manifest = yaml.load(f.content) as WorkspaceManifest;
+              return {
+                path: f.name,
+                manifest,
+                yaml: f.content,
+              };
+            } catch (e) {
+              logger.error(`Failed to parse workspace manifest YAML: ${f.name}`, e);
+              return null;
+            }
+          })
+          .filter((m): m is NonNullable<typeof m> => m !== null);
 
-        const nextLoadedSystems = schemaFiles.map(file => {
-          const schema = parseSchemaFromYaml(file.content);
-          return {
-            path: file.name,
-            name: schema.name || file.name.replace(/\.ya?ml$/, ''),
-            schema,
-          };
-        });
+        const schemaFiles = files.filter(f => !manifestFiles.includes(f));
+
+        const nextLoadedSystems = schemaFiles
+          .map(file => {
+            try {
+              const schema = parseSchemaFromYaml(file.content);
+              return {
+                path: file.name,
+                name:
+                  schema.name ||
+                  file.name
+                    .split('/')
+                    .pop()!
+                    .replace(/\.ya?ml$/, ''),
+                schema,
+              };
+            } catch (err) {
+              logger.warn(
+                `Skipping file ${file.name} as it is not a valid blueprint schema: ${err}`
+              );
+              return null;
+            }
+          })
+          .filter((s): s is NonNullable<typeof s> => s !== null);
 
         if (nextLoadedSystems.length === 0) {
           throw new Error('No valid blueprint schemas found in selected directory');
         }
 
         let firstSystem = nextLoadedSystems[0];
-        if (parsedManifest?.root) {
-          const resolvedRootName = getFileName(parsedManifest.root);
+        const initialManifest = getClosestManifest(firstSystem.path, nextLoadedManifests);
+        if (initialManifest?.manifest.root) {
+          const resolvedRootName = getFileName(initialManifest.manifest.root);
           const foundRoot = nextLoadedSystems.find(
-            s => s.path === parsedManifest.root || s.path === resolvedRootName
+            s => s.path === initialManifest.manifest.root || s.path === resolvedRootName
           );
           if (foundRoot) {
             firstSystem = foundRoot;
           }
         }
 
+        const manifestState = resolveWorkspaceManifestState(firstSystem.path, nextLoadedManifests);
+
         set({
           isWorkspaceOpen: true,
           workspaceName: workspacePort.getDirectoryName(),
-          workspaceManifest: parsedManifest,
-          workspaceManifestYaml: manifestFile ? manifestFile.content : null,
+          loadedManifests: nextLoadedManifests,
           loadedSystems: nextLoadedSystems,
           currentFilePath: firstSystem.path,
           navigationStack: [],
+          ...manifestState,
         });
         get().initSchema(firstSystem.schema);
         return true;
@@ -791,10 +880,12 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
         );
         if (found) {
           const newStack = [...navigationStack, { path: currentFilePath, schema }];
+          const manifestState = resolveWorkspaceManifestState(found.path, get().loadedManifests);
           set({
             currentFilePath: found.path,
             navigationStack: newStack,
             selectedNodeId: null,
+            ...manifestState,
           });
           get().initSchema(found.schema);
           return true;
@@ -810,10 +901,12 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
         const subSchema = parseSchemaFromYaml(content);
 
         const newStack = [...navigationStack, { path: currentFilePath, schema }];
+        const manifestState = resolveWorkspaceManifestState(targetPath, get().loadedManifests);
         set({
           currentFilePath: targetPath,
           navigationStack: newStack,
           selectedNodeId: null,
+          ...manifestState,
         });
         get().initSchema(subSchema);
         return true;
@@ -842,10 +935,15 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
         const parentState = newStack.pop();
 
         if (parentState) {
+          const manifestState = resolveWorkspaceManifestState(
+            parentState.path,
+            get().loadedManifests
+          );
           set({
             currentFilePath: parentState.path,
             navigationStack: newStack,
             selectedNodeId: null,
+            ...manifestState,
           });
           get().initSchema(parentState.schema);
           return true;
@@ -878,9 +976,11 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
             s => s.path === targetPath || s.path === resolvedFileName
           );
           if (found) {
+            const manifestState = resolveWorkspaceManifestState(found.path, get().loadedManifests);
             set({
               currentFilePath: found.path,
               selectedNodeId: null,
+              ...manifestState,
             });
             get().initSchema(found.schema);
             return true;
@@ -893,9 +993,11 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
           const content = await workspacePort.readFile(targetPath);
           const parentSchema = parseSchemaFromYaml(content);
 
+          const manifestState = resolveWorkspaceManifestState(targetPath, get().loadedManifests);
           set({
             currentFilePath: targetPath,
             selectedNodeId: null,
+            ...manifestState,
           });
           get().initSchema(parentSchema);
           return true;
@@ -942,10 +1044,11 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
         }
 
         let success = false;
+        const targetPath = get().workspaceManifestPath || 'blueprint-workspace.yaml';
         if (isWorkspaceOpen) {
-          success = await workspacePort.writeFile('blueprint-workspace.yaml', manifestYaml);
+          success = await workspacePort.writeFile(targetPath, manifestYaml);
         } else {
-          success = await fileSystemPort.saveSchema(manifestYaml, 'blueprint-workspace.yaml');
+          success = await fileSystemPort.saveSchema(manifestYaml, targetPath);
         }
 
         if (success) {

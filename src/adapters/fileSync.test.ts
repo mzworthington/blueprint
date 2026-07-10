@@ -181,6 +181,71 @@ describe('fileSync Adapters', () => {
       });
     });
 
+    it('readDirectoryFiles traverses child directories recursively and reads all yaml files', async () => {
+      const mockNestedFile = {
+        kind: 'file',
+        name: 'nested-config.yaml',
+        getFile: vi.fn().mockResolvedValue({
+          text: vi.fn().mockResolvedValue('nested config content'),
+        }),
+      };
+      const mockNestedDir = {
+        kind: 'directory',
+        name: 'subfolder',
+        values: () => {
+          return {
+            [Symbol.asyncIterator]() {
+              let index = 0;
+              const entries = [mockNestedFile];
+              return {
+                async next() {
+                  if (index < entries.length) {
+                    return { value: entries[index++], done: false };
+                  }
+                  return { done: true };
+                },
+              };
+            },
+          };
+        },
+      };
+
+      // Temporarily mock values on directory handle to include directory
+      const originalValues = mockDirectoryHandle.values;
+      mockDirectoryHandle.values = () => {
+        return {
+          [Symbol.asyncIterator]() {
+            let index = 0;
+            const entries = [mockFileHandle, mockNestedDir];
+            return {
+              async next() {
+                if (index < entries.length) {
+                  return { value: entries[index++], done: false };
+                }
+                return { done: true };
+              },
+            };
+          },
+        };
+      };
+
+      await BrowserWorkspaceAdapter.selectDirectory();
+      const files = await BrowserWorkspaceAdapter.readDirectoryFiles();
+
+      expect(files).toHaveLength(2);
+      expect(files).toContainEqual({
+        name: 'system.yaml',
+        content: 'file1 content',
+      });
+      expect(files).toContainEqual({
+        name: 'subfolder/nested-config.yaml',
+        content: 'nested config content',
+      });
+
+      // Restore
+      mockDirectoryHandle.values = originalValues;
+    });
+
     it('readFile splits path and traverses directory handle recursively to return content', async () => {
       await BrowserWorkspaceAdapter.selectDirectory();
 
