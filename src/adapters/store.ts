@@ -313,7 +313,7 @@ Object.entries(defaultBlueprintModules).forEach(([filePath, module]) => {
       name: parsed.name || fileName.replace(/\.ya?ml$/, ''),
       schema: parsed,
     });
-  } catch (e) {
+  } catch {
     // Ignore non-schema files during eager build-time load
   }
 });
