@@ -103,4 +103,89 @@ describe('Breadcrumbs Component', () => {
     expect(useBlueprintStore.getState().currentFilePath).toBe('blueprint.yaml');
     expect(useBlueprintStore.getState().navigationStack).toHaveLength(0);
   });
+
+  it('renders next hierarchy level preview when a node with c4Ref is selected', () => {
+    const { initSchema } = useBlueprintStore.getState();
+    initSchema({
+      name: 'Main App System',
+      version: '1.0.0',
+      level: 'container',
+      nodes: [
+        {
+          id: 'web-app',
+          type: 'web-app',
+          name: 'Web Application',
+          c4Ref: 'web-app-components.yaml',
+          x: 100,
+          y: 100,
+        },
+      ],
+      dependencies: [],
+    });
+
+    useBlueprintStore.setState({
+      selectedNodeId: 'web-app',
+    });
+
+    render(<Breadcrumbs />);
+
+    expect(screen.getByText('Web Application')).toBeInTheDocument();
+  });
+
+  it('reconstructs breadcrumbs hierarchy using workspace manifest when navigationStack is empty', () => {
+    const { initSchema } = useBlueprintStore.getState();
+    initSchema({
+      name: 'Component Diagram',
+      version: '1.0.0',
+      level: 'component',
+      nodes: [],
+      dependencies: [],
+    });
+
+    useBlueprintStore.setState({
+      isWorkspaceOpen: true,
+      workspaceName: 'TestWorkspace',
+      currentFilePath: 'blueprints/component.yaml',
+      navigationStack: [],
+      loadedSystems: [
+        {
+          path: 'blueprints/containers.yaml',
+          name: 'Container Diagram',
+          schema: {
+            name: 'Container Diagram',
+            version: '1.0.0',
+            level: 'container',
+            nodes: [],
+            dependencies: [],
+          },
+        },
+        {
+          path: 'blueprints/component.yaml',
+          name: 'Component Diagram',
+          schema: {
+            name: 'Component Diagram',
+            version: '1.0.0',
+            level: 'component',
+            nodes: [],
+            dependencies: [],
+          },
+        },
+      ],
+      workspaceManifest: {
+        name: 'Workspace Manifest',
+        root: './containers.yaml',
+        hierarchy: [
+          {
+            parent: './containers.yaml',
+            children: ['./component.yaml'],
+          },
+        ],
+      },
+    });
+
+    render(<Breadcrumbs />);
+
+    expect(screen.getByText('Container Diagram')).toBeInTheDocument();
+    expect(screen.getByText('Component Diagram')).toBeInTheDocument();
+  });
 });
