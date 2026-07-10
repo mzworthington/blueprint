@@ -116,7 +116,7 @@ const nodeTypeConfigs: Record<
     bg: 'rgba(203, 213, 225, 0.08)',
     border: 'rgba(203, 213, 225, 0.3)',
   },
-  // Legacy / existing node types
+
   'relational-database': {
     label: 'Relational DB',
     icon: Database,
@@ -168,6 +168,7 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
 
   const selectNode = useBlueprintStore(state => state.selectNode);
   const deleteNode = useBlueprintStore(state => state.deleteNode);
+  const zoomIntoNode = useBlueprintStore(state => state.zoomIntoNode);
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -263,13 +264,17 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
         </div>
 
         {data.c4Ref && (
-          <div
-            className="flex items-center gap-1 bg-brand-500/10 border border-brand-500/30 text-brand-400 px-1.5 py-0.5 rounded text-[8px] font-bold tracking-wider uppercase"
-            title="Double-click node to zoom inside"
+          <button
+            onClick={e => {
+              e.stopPropagation();
+              zoomIntoNode(id);
+            }}
+            className="flex items-center gap-1 bg-brand-500/10 border border-brand-500/30 hover:bg-brand-500/20 active:bg-brand-500/30 text-brand-400 px-1.5 py-0.5 rounded text-[8px] font-bold tracking-wider uppercase transition cursor-pointer z-10"
+            title="Click to zoom inside"
           >
             <ZoomIn className="w-2.5 h-2.5" />
             <span>Zoom</span>
-          </div>
+          </button>
         )}
 
         {selected && (

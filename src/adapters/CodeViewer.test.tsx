@@ -12,7 +12,6 @@ vi.mock('mermaid', () => ({
 
 describe('CodeViewer UI Component', () => {
   beforeEach(() => {
-    // Reset store before each test
     const { initSchema } = useBlueprintStore.getState();
     initSchema({
       name: 'Test Project',
@@ -44,7 +43,6 @@ describe('CodeViewer UI Component', () => {
   it('should switch tabs and show JSON schema representation', () => {
     render(<CodeViewer />);
 
-    // Click JSON tab
     fireEvent.click(screen.getByRole('button', { name: /json/i }));
 
     const codeBlock = screen.getByText(content => content.includes('"name": "Test Project"'));
@@ -54,16 +52,13 @@ describe('CodeViewer UI Component', () => {
   it('should support YAML import workflow', () => {
     render(<CodeViewer />);
 
-    // Switch to import tab
     fireEvent.click(screen.getByRole('button', { name: /import/i }));
 
-    // Check if instructions exist
     expect(screen.getByText(/Paste your Blueprint YAML schema/i)).toBeInTheDocument();
 
     const textarea = screen.getByPlaceholderText(/name: My System/i);
     expect(textarea).toBeInTheDocument();
 
-    // Type a new valid YAML schema
     const newYaml = `
 name: Imported System
 version: 2.1.0
@@ -74,10 +69,8 @@ nodes:
 `;
     fireEvent.change(textarea, { target: { value: newYaml } });
 
-    // Click Apply
     fireEvent.click(screen.getByRole('button', { name: /Apply Schema/i }));
 
-    // Should switch back to YAML tab and display new state
     expect(screen.getByRole('button', { name: /yaml/i })).toHaveClass('text-brand-100');
     expect(useBlueprintStore.getState().schema.name).toBe('Imported System');
     expect(useBlueprintStore.getState().schema.nodes[0].id).toBe('custom-service');
@@ -89,37 +82,29 @@ nodes:
     fireEvent.click(screen.getByRole('button', { name: /import/i }));
     const textarea = screen.getByPlaceholderText(/name: My System/i);
 
-    // Enter invalid YAML
     fireEvent.change(textarea, { target: { value: 'invalid: : yaml : syntax' } });
     fireEvent.click(screen.getByRole('button', { name: /Apply Schema/i }));
 
-    // Verification warning message is displayed
     expect(screen.getByText(/Invalid schema YAML/i)).toBeInTheDocument();
   });
 
   it('should support Mermaid preview toggle and render mock visual preview', async () => {
     render(<CodeViewer />);
 
-    // Click Mermaid tab
     fireEvent.click(screen.getByRole('button', { name: /mermaid/i }));
 
-    // By default, it should be in Preview mode, showing sub-toggles
     expect(screen.getByRole('button', { name: /preview/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /code/i })).toBeInTheDocument();
 
-    // Verify MermaidPreview is rendered (we wait for async render to resolve)
     const mockedSvg = await screen.findByText('Mocked Mermaid SVG');
     expect(mockedSvg).toBeInTheDocument();
 
-    // Switch to Code mode
     fireEvent.click(screen.getByRole('button', { name: /code/i }));
 
-    // Verify raw code is shown
     expect(screen.getByText(content => content.includes('graph TD'))).toBeInTheDocument();
   });
 
   it('should filter test components from YAML, JSON, and Mermaid views based on showTests state', () => {
-    // 1. Initialize store with a schema containing both normal and test components
     const { initSchema } = useBlueprintStore.getState();
     initSchema({
       name: 'Filtered Project',
@@ -131,27 +116,22 @@ nodes:
       dependencies: [{ from: 'app-test', to: 'app', type: 'direct-call', description: 'Test app' }],
     });
 
-    // Ensure showTests is false (the default)
     useBlueprintStore.setState({ showTests: false });
 
     const { rerender } = render(<CodeViewer />);
 
-    // Verify YAML view does NOT contain app-test
     let yamlBlock = screen.getByText(content => content.includes('name: Filtered Project'));
     expect(yamlBlock).toHaveTextContent('id: app');
     expect(yamlBlock).not.toHaveTextContent('id: app-test');
 
-    // Switch to JSON tab
     fireEvent.click(screen.getByRole('button', { name: /json/i }));
     let jsonBlock = screen.getByText(content => content.includes('"name": "Filtered Project"'));
     expect(jsonBlock).toHaveTextContent('"id": "app"');
     expect(jsonBlock).not.toHaveTextContent('"id": "app-test"');
 
-    // Switch showTests to true
     useBlueprintStore.setState({ showTests: true });
     rerender(<CodeViewer />);
 
-    // Click JSON tab again to refresh/verify
     fireEvent.click(screen.getByRole('button', { name: /json/i }));
     jsonBlock = screen.getByText(content => content.includes('"name": "Filtered Project"'));
     expect(jsonBlock).toHaveTextContent('"id": "app"');

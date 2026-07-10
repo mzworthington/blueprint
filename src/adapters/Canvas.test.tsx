@@ -28,6 +28,9 @@ vi.mock('@xyflow/react', () => {
     BackgroundVariant: {
       Dots: 'dots',
     },
+    useReactFlow: () => ({
+      fitView: vi.fn(),
+    }),
   };
 });
 
@@ -37,7 +40,6 @@ vi.mock('./Breadcrumbs', () => ({
 
 describe('Canvas Component', () => {
   beforeEach(() => {
-    // Reset store state before each test
     const { initSchema } = useBlueprintStore.getState();
     initSchema({
       name: 'System Canvas Test',
@@ -129,7 +131,6 @@ describe('Canvas Component', () => {
   });
 
   it('triggers openWorkspaceDirectory store action when Open Folder is clicked', async () => {
-    // Stub workspacePort selectDirectory mock
     const selectDirectoryMock = vi.fn().mockResolvedValue(true);
     const readDirectoryFilesMock = vi.fn().mockResolvedValue([
       {

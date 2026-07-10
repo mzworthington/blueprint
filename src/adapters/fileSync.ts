@@ -26,7 +26,6 @@ export const BrowserFileSystemAdapter: FileSystemPort = {
         await writable.close();
         return true;
       } else {
-        // Classic browser download fallback
         const blob = new Blob([yamlContent], { type: 'text/yaml;charset=utf-8;' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -65,7 +64,6 @@ export const BrowserFileSystemAdapter: FileSystemPort = {
         const content = await file.text();
         return content;
       } else {
-        // Classic browser file input fallback
         return new Promise(resolve => {
           const input = document.createElement('input');
           input.type = 'file';
@@ -126,8 +124,6 @@ export const BrowserWorkspaceAdapter: WorkspacePort = {
     for (let i = 0; i < parts.length - 1; i++) {
       const part = parts[i];
       if (part === '..') {
-        // If resolving relative paths, resolved path should already be normalized
-        // to not contain ".." at this stage.
         continue;
       }
       currentHandle = await currentHandle.getDirectoryHandle(part, { create: false });

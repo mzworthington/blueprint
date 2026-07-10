@@ -1,0 +1,30 @@
+name: Internet Banking - Containers
+version: 1.0.0
+level: container
+parentRef: ./system-context.yaml
+nodes:
+  - id: web-app
+    type: web-app
+    name: Web App Container
+    c4Ref: ./web-app-components.yaml
+    x: 150
+    y: 150
+  - id: api-gateway
+    type: gateway-api
+    name: API Gateway
+    x: 450
+    y: 150
+  - id: db-container
+    type: database
+    name: Relational Database Container
+    x: 750
+    y: 150
+dependencies:
+  - from: web-app
+    to: api-gateway
+    type: direct-call
+    description: Routes API calls
+  - from: api-gateway
+    to: db-container
+    type: read-write
+    description: Reads and writes data

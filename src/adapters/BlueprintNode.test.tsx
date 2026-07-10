@@ -17,7 +17,6 @@ vi.mock('@xyflow/react', () => {
 
 describe('BlueprintNode Component', () => {
   beforeEach(() => {
-    // Reset store state
     const { initSchema } = useBlueprintStore.getState();
     initSchema({
       name: 'Test Schema',
@@ -75,7 +74,6 @@ describe('BlueprintNode Component', () => {
 
     fireEvent.click(deleteBtn);
 
-    // Verify node was removed from the store schema
     expect(useBlueprintStore.getState().schema.nodes).toHaveLength(0);
   });
 
@@ -112,5 +110,22 @@ describe('BlueprintNode Component', () => {
     render(<BlueprintNode {...props} />);
 
     expect(screen.getByText('Zoom')).toBeInTheDocument();
+  });
+
+  it('triggers store zoomIntoNode when Zoom button is clicked', () => {
+    const props = {
+      ...defaultProps,
+      data: { ...defaultProps.data, c4Ref: './child.yaml' },
+    };
+    const zoomSpy = vi
+      .spyOn(useBlueprintStore.getState(), 'zoomIntoNode')
+      .mockImplementation(async () => true);
+
+    render(<BlueprintNode {...props} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /zoom/i }));
+
+    expect(zoomSpy).toHaveBeenCalledWith('test-node-1');
+    zoomSpy.mockRestore();
   });
 });

@@ -40,18 +40,20 @@ export function resolveRelativePath(basePath: string, relativePath: string): str
   }
   return baseDir.join('/');
 }
-// Load all default blueprints in the blueprints directory at compile/run time via Vite
-const defaultBlueprintModules = import.meta.glob<{ default: string }>('../../blueprints/*.ya?ml', {
-  query: '?raw',
-  eager: true,
-});
+
+const defaultBlueprintModules = import.meta.glob<{ default: string }>(
+  '../../blueprints/*.{yaml,yml}',
+  {
+    query: '?raw',
+    eager: true,
+  }
+);
 
 const getFileName = (filePath: string) => {
   const parts = filePath.split('/');
   return parts[parts.length - 1];
 };
 
-// Strict UI node/edge schemas to decouple React Flow interfaces from pure domain models
 export type ComponentNodeData = {
   [key: string]: unknown;
   id: string;
@@ -150,9 +152,14 @@ const mapDomainDepToRFEdge = (d: SystemDependency): BlueprintRFEdge => ({
   type: 'default',
   animated: d.type === 'publish-subscribe',
   data: { type: d.type, description: d.description || '' },
+  label: d.description || undefined,
   style: {
     strokeWidth: 2,
   },
+  labelStyle: { fill: '#94a3b8', fontSize: 10, fontWeight: 500 },
+  labelBgStyle: { fill: '#020617', fillOpacity: 0.85 },
+  labelBgPadding: [6, 4] as [number, number],
+  labelBgBorderRadius: 4,
 });
 
 const getClosestHandles = (
@@ -222,22 +229,46 @@ const rebuildSchemaFromCanvas = (
   return { name, version, level, parentRef, nodes, dependencies };
 };
 
-let defaultInitialSchema: SystemSchema = {
-  name: 'New Cloud Workspace',
+export let defaultInitialSchema: SystemSchema = {
+  name: 'Internet Banking - System Context',
   version: '1.0.0',
-  level: 'container',
+  level: 'context',
   nodes: [
-    { id: 'gateway', type: 'rest-api', name: 'API Gateway', x: 100, y: 150 },
-    { id: 'auth-svc', type: 'grpc-service', name: 'Auth Service', x: 400, y: 100 },
-    { id: 'user-db', type: 'relational-database', name: 'User Relational DB', x: 700, y: 150 },
+    { id: 'user', type: 'person', name: 'Customer', external: true, x: 100, y: 150 },
+    {
+      id: 'banking-system',
+      type: 'software-system',
+      name: 'Internet Banking System',
+      c4Ref: './internet-banking-container.yaml',
+      x: 400,
+      y: 150,
+    },
+    {
+      id: 'mainframe',
+      type: 'software-system',
+      name: 'Core Mainframe System',
+      external: true,
+      x: 700,
+      y: 150,
+    },
   ],
   dependencies: [
-    { from: 'gateway', to: 'auth-svc', type: 'direct-call', description: 'Validate tokens' },
-    { from: 'auth-svc', to: 'user-db', type: 'read-write', description: 'Fetch session records' },
+    {
+      from: 'user',
+      to: 'banking-system',
+      type: 'direct-call',
+      description: 'Uses banking features',
+    },
+    {
+      from: 'banking-system',
+      to: 'mainframe',
+      type: 'direct-call',
+      description: 'Gets account information',
+    },
   ],
 };
 
-const defaultLoadedSystems: Array<{ path: string; name: string; schema: SystemSchema }> = [];
+export const defaultLoadedSystems: Array<{ path: string; name: string; schema: SystemSchema }> = [];
 
 Object.entries(defaultBlueprintModules).forEach(([filePath, module]) => {
   try {
@@ -252,6 +283,14 @@ Object.entries(defaultBlueprintModules).forEach(([filePath, module]) => {
   } catch (e) {
     console.error('Failed to parse default blueprint:', filePath, e);
   }
+});
+
+defaultLoadedSystems.sort((a, b) => {
+  const levels: Record<string, number> = { context: 1, container: 2, component: 3, code: 4 };
+  const levelA = levels[a.schema.level || 'context'] || 5;
+  const levelB = levels[b.schema.level || 'context'] || 5;
+  if (levelA !== levelB) return levelA - levelB;
+  return a.path.localeCompare(b.path);
 });
 
 if (defaultLoadedSystems.length > 0) {
@@ -278,7 +317,6 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
     const level = customSchemaLevel ?? currentSchema.level ?? 'container';
     const parentRef = customParentRef !== undefined ? customParentRef : currentSchema.parentRef;
 
-    // Recalculate closest handles for all edges dynamically
     const edgesWithHandles = nextEdges.map(edge => {
       const sourceNode = nextNodes.find(n => n.id === edge.source);
       const targetNode = nextNodes.find(n => n.id === edge.target);
@@ -300,11 +338,9 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
       edgesWithHandles
     );
 
-    // Validate
     const validationResult = validateGraph(nextSchema);
     const yamlCode = serializeSchemaToYaml(nextSchema);
 
-    // Observability validation warnings
     if (!validationResult.isValid && get().logger) {
       get().logger.warn('Schema validation warnings triggered', {
         issues: validationResult.issues.map(i => ({
@@ -315,7 +351,6 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
       });
     }
 
-    // Apply validation highlights to edges involved in a cycle
     const cycleNodes = new Set(
       validationResult.issues
         .filter(issue => issue.type === 'cycle' && issue.path)
@@ -327,6 +362,11 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
       return {
         ...edge,
         animated: edge.animated || isCycleEdge,
+        label: edge.data?.description || undefined,
+        labelStyle: { fill: '#94a3b8', fontSize: 10, fontWeight: 500 },
+        labelBgStyle: { fill: '#020617', fillOpacity: 0.85 },
+        labelBgPadding: [6, 4] as [number, number],
+        labelBgBorderRadius: 4,
         style: {
           ...edge.style,
           stroke: isCycleEdge
@@ -516,7 +556,6 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
 
       const newEdgeId = `edge-${connection.source}-${connection.target}`;
 
-      // Skip if edge already exists
       if (get().edges.some(e => e.id === newEdgeId)) return;
 
       get().logger.info('Establishing connection edge between component nodes', {
@@ -566,6 +605,9 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
             name: updates.name ?? rn.data.name,
             type: updates.type ?? rn.data.type,
             properties: updates.properties ?? rn.data.properties,
+            external: updates.external !== undefined ? updates.external : rn.data.external,
+            c4Ref: 'c4Ref' in updates ? updates.c4Ref : rn.data.c4Ref,
+            isTest: updates.isTest !== undefined ? updates.isTest : rn.data.isTest,
           };
           return {
             ...rn,
@@ -575,7 +617,6 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
         return rn;
       });
 
-      // If ID changed, we also need to update dependencies that reference it
       let nextEdges = get().edges;
       if (updates.id && updates.id !== id) {
         nextNodes.forEach(n => {
@@ -608,7 +649,7 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
     deleteNode: id => {
       get().logger.info('Deleting node component from canvas', { id });
       const nextNodes = get().nodes.filter(n => n.id !== id);
-      // Remove any edges referencing this node
+
       const nextEdges = get().edges.filter(e => e.source !== id && e.target !== id);
 
       const nextSelected = get().selectedNodeId === id ? null : get().selectedNodeId;
@@ -617,7 +658,10 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
     },
 
     selectNode: id => {
-      set({ selectedNodeId: id });
+      set({
+        selectedNodeId: id,
+        rightCollapsed: id ? false : get().rightCollapsed,
+      });
     },
 
     updateDependency: (from, to, updates) => {
@@ -705,14 +749,30 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
 
       logger.info('Zooming into sub-diagram', { node: node.name, ref: node.c4Ref });
 
+      const targetPath = resolveRelativePath(currentFilePath, node.c4Ref);
+
       if (!isWorkspaceOpen) {
+        const resolvedFileName = getFileName(targetPath);
+        const found = defaultLoadedSystems.find(
+          s => s.path === targetPath || s.path === resolvedFileName
+        );
+        if (found) {
+          const newStack = [...navigationStack, { path: currentFilePath, schema }];
+          set({
+            currentFilePath: found.path,
+            navigationStack: newStack,
+            selectedNodeId: null,
+          });
+          get().initSchema(found.schema);
+          return true;
+        }
+
         logger.warn('Cannot zoom in: workspace directory not open.');
         set({ lastError: 'Please open a Workspace Folder to navigate C4 relative links.' });
         return false;
       }
 
       try {
-        const targetPath = resolveRelativePath(currentFilePath, node.c4Ref);
         const content = await workspacePort.readFile(targetPath);
         const subSchema = parseSchemaFromYaml(content);
 

@@ -9,14 +9,11 @@ export function validateGraph(schema: SystemSchema): ValidationResult {
   const issues: ValidationIssue[] = [];
   const adj = new Map<string, string[]>();
 
-  // Initialize adjacency list
   for (const node of schema.nodes) {
     adj.set(node.id, []);
   }
 
-  // Populate adjacency list
   for (const dep of schema.dependencies) {
-    // If the dependency points to or from non-existent nodes, we could flag it
     if (!adj.has(dep.from)) {
       issues.push({
         type: 'invalid-connection',
@@ -34,7 +31,6 @@ export function validateGraph(schema: SystemSchema): ValidationResult {
     adj.get(dep.from)!.push(dep.to);
   }
 
-  // DFS Cycle Detection
   const visited = new Set<string>();
   const stack: string[] = [];
   const stackSet = new Set<string>();
@@ -69,7 +65,7 @@ export function validateGraph(schema: SystemSchema): ValidationResult {
           message: `Circular dependency detected: ${cyclePath.join(' ➔ ')}`,
           path: cyclePath,
         });
-        // Stop after first cycle for simplicity, or we could list all
+
         break;
       }
     }
@@ -82,10 +78,9 @@ export function validateGraph(schema: SystemSchema): ValidationResult {
 }
 
 const nodeTypeSchema = z.enum([
-  // Level 1: System Context
   'person',
   'software-system',
-  // Level 2: Container
+
   'web-app',
   'mobile-app',
   'single-page-app',
@@ -94,10 +89,10 @@ const nodeTypeSchema = z.enum([
   'cache-store',
   'event-broker',
   'serverless-app',
-  // Level 3 & 4: Component & Code
+
   'component',
   'code-module',
-  // Legacy / existing node types
+
   'relational-database',
   'grpc-service',
   'serverless-function',
@@ -199,7 +194,6 @@ export function parseSchemaFromYaml(yamlContent: string): SystemSchema {
  * Serializes a SystemSchema model to a YAML string.
  */
 export function serializeSchemaToYaml(schema: SystemSchema): string {
-  // Clean coordinates and optional properties to keep YAML tidy
   const cleanSchema: any = {
     name: schema.name,
     version: schema.version,
@@ -245,7 +239,6 @@ export function serializeSchemaToYaml(schema: SystemSchema): string {
 export function serializeSchemaToMermaid(schema: SystemSchema): string {
   const lines = ['graph TD'];
 
-  // Helper to sanitize IDs for Mermaid to avoid reserved keyword conflicts (e.g. 'graph', 'subgraph', 'end')
   const mId = (id: string) => `node_${id.replace(/[^a-zA-Z0-9]/g, '_')}`;
 
   for (const node of schema.nodes) {

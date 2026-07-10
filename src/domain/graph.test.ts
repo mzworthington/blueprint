@@ -63,12 +63,12 @@ describe('Graph Validation & Cycle Detection', () => {
     expect(result.isValid).toBe(false);
     expect(result.issues).toHaveLength(1);
     expect(result.issues[0].type).toBe('cycle');
-    // The cycle path should contain the cycle nodes
+
     const path = result.issues[0].path;
     expect(path).toContain('ServiceA');
     expect(path).toContain('ServiceB');
     expect(path).toContain('ServiceC');
-    expect(path![0]).toBe(path![path!.length - 1]); // starts and ends at the same node
+    expect(path![0]).toBe(path![path!.length - 1]);
   });
 
   it('should detect cycles in disconnected subgraphs', () => {

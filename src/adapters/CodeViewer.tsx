@@ -16,8 +16,7 @@ export const CodeViewer: React.FC = () => {
     if (activeTab === 'import' && !importText) {
       setImportText(yamlCode);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTab, yamlCode]);
+  }, [activeTab, yamlCode, importText]);
 
   const filteredSchema = useMemo(() => {
     if (showTests) return schema;
@@ -128,47 +127,51 @@ export const CodeViewer: React.FC = () => {
           </div>
         ) : (
           <div className="flex-1 flex flex-col overflow-hidden relative group">
-            {activeTab === 'mermaid' && (
-              <div className="flex bg-slate-950/60 p-0.5 rounded-lg border border-slate-900 mb-3 self-end shrink-0 z-20">
-                <button
-                  onClick={() => setMermaidMode('preview')}
-                  className={`px-3 py-1 text-[11px] font-semibold rounded-md transition cursor-pointer ${
-                    mermaidMode === 'preview'
-                      ? 'bg-brand-600/15 border border-brand-500/30 text-brand-100'
-                      : 'text-slate-400 hover:text-slate-200'
-                  }`}
-                >
-                  Preview
-                </button>
-                <button
-                  onClick={() => setMermaidMode('code')}
-                  className={`px-3 py-1 text-[11px] font-semibold rounded-md transition cursor-pointer ${
-                    mermaidMode === 'code'
-                      ? 'bg-brand-600/15 border border-brand-500/30 text-brand-100'
-                      : 'text-slate-400 hover:text-slate-200'
-                  }`}
-                >
-                  Code
-                </button>
-              </div>
-            )}
-
-            <button
-              onClick={handleCopy}
-              className="absolute top-3 right-3 p-2 rounded-lg bg-slate-950 border border-slate-900 text-slate-400 hover:text-slate-200 hover:bg-slate-900 transition flex items-center gap-1.5 text-xs font-semibold z-10 shadow-md cursor-pointer"
-            >
-              {copied ? (
-                <>
-                  <Check className="w-4 h-4 text-emerald-400" />
-                  <span className="text-emerald-400">Copied!</span>
-                </>
+            <div className="flex items-center justify-between mb-3 shrink-0">
+              {activeTab === 'mermaid' ? (
+                <div className="flex bg-slate-950/60 p-0.5 rounded-lg border border-slate-900">
+                  <button
+                    onClick={() => setMermaidMode('preview')}
+                    className={`px-3 py-1 text-[11px] font-semibold rounded-md transition cursor-pointer ${
+                      mermaidMode === 'preview'
+                        ? 'bg-brand-600/15 border border-brand-500/30 text-brand-100'
+                        : 'text-slate-400 hover:text-slate-200'
+                    }`}
+                  >
+                    Preview
+                  </button>
+                  <button
+                    onClick={() => setMermaidMode('code')}
+                    className={`px-3 py-1 text-[11px] font-semibold rounded-md transition cursor-pointer ${
+                      mermaidMode === 'code'
+                        ? 'bg-brand-600/15 border border-brand-500/30 text-brand-100'
+                        : 'text-slate-400 hover:text-slate-200'
+                    }`}
+                  >
+                    Code
+                  </button>
+                </div>
               ) : (
-                <>
-                  <Copy className="w-4 h-4" />
-                  <span>Copy</span>
-                </>
+                <div />
               )}
-            </button>
+
+              <button
+                onClick={handleCopy}
+                className="px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-900 text-slate-400 hover:text-slate-200 hover:bg-slate-900 transition flex items-center gap-1.5 text-xs font-semibold shadow-md cursor-pointer z-10"
+              >
+                {copied ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    <span className="text-emerald-400">Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5" />
+                    <span>Copy</span>
+                  </>
+                )}
+              </button>
+            </div>
 
             {activeTab === 'mermaid' && mermaidMode === 'preview' ? (
               <MermaidPreview code={getCodeContent()} />

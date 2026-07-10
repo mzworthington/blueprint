@@ -1,10 +1,23 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useBlueprintStore, resolveRelativePath } from './store';
+import {
+  useBlueprintStore,
+  resolveRelativePath,
+  defaultInitialSchema,
+  defaultLoadedSystems,
+} from './store';
 import type { NodeType } from '../domain/schema';
+
+describe('Default Initial Schema & Hierarchical C4 Linking', () => {
+  it('should start at the System Context level and contain a linked reference to container level', () => {
+    expect(defaultInitialSchema.level).toBe('context');
+    const bankingSystem = defaultInitialSchema.nodes.find(n => n.id === 'banking-system');
+    expect(bankingSystem).toBeDefined();
+    expect(bankingSystem?.c4Ref).toBe('./internet-banking-container.yaml');
+  });
+});
 
 describe('Zustand Store Actions & State Management', () => {
   beforeEach(() => {
-    // Reset store before each test to guarantee test isolation
     const { initSchema } = useBlueprintStore.getState();
     initSchema({
       name: 'Test Workspace',
@@ -31,7 +44,6 @@ describe('Zustand Store Actions & State Management', () => {
     const store = useBlueprintStore.getState();
     store.addNode('relational-database' as NodeType);
 
-    // Get updated state
     const updatedState = useBlueprintStore.getState();
     expect(updatedState.nodes).toHaveLength(3);
     expect(updatedState.schema.nodes).toHaveLength(3);
@@ -56,13 +68,19 @@ describe('Zustand Store Actions & State Management', () => {
     store.updateNode('nodeA', {
       name: 'Updated Node A',
       properties: { port: 8080 },
+      external: true,
+      c4Ref: './subsystem.yaml',
     });
 
     const updatedState = useBlueprintStore.getState();
     const nodeA = updatedState.schema.nodes.find(n => n.id === 'nodeA');
     expect(nodeA?.name).toBe('Updated Node A');
     expect(nodeA?.properties?.port).toBe(8080);
+    expect(nodeA?.external).toBe(true);
+    expect(nodeA?.c4Ref).toBe('./subsystem.yaml');
     expect(updatedState.yamlCode).toContain('name: Updated Node A');
+    expect(updatedState.yamlCode).toContain('external: true');
+    expect(updatedState.yamlCode).toContain('c4Ref: ./subsystem.yaml');
   });
 
   it('should rename a node ID and update referencing edges', () => {
@@ -76,7 +94,6 @@ describe('Zustand Store Actions & State Management', () => {
     expect(newNode).toBeDefined();
     expect(newNode?.name).toBe('Node A');
 
-    // Edge must be updated to point from nodeNewA
     expect(updatedState.edges).toHaveLength(1);
     expect(updatedState.edges[0].source).toBe('nodeNewA');
     expect(updatedState.edges[0].target).toBe('nodeB');
@@ -85,7 +102,6 @@ describe('Zustand Store Actions & State Management', () => {
   it('should establish a connection between nodes and detect a cycle', () => {
     const store = useBlueprintStore.getState();
 
-    // Connect B -> A (creates cycle A -> B -> A)
     store.onConnect({
       source: 'nodeB',
       target: 'nodeA',
@@ -131,7 +147,6 @@ describe('Zustand Store Actions & State Management', () => {
     expect(rfNodeApp?.data.isTest).toBe(false);
     expect(rfNodeAppTest?.data.isTest).toBe(true);
 
-    // Verify it rebuilds correctly
     expect(state.schema.nodes.find(n => n.id === 'app-test')?.isTest).toBe(true);
   });
 
@@ -151,6 +166,18 @@ describe('Zustand Store Actions & State Management', () => {
 
     useBlueprintStore.getState().toggleRightCollapsed();
     expect(useBlueprintStore.getState().rightCollapsed).toBe(true);
+  });
+
+  it('should automatically expand right panel when a node is selected', () => {
+    useBlueprintStore.setState({ rightCollapsed: true, selectedNodeId: null });
+
+    const store = useBlueprintStore.getState();
+    expect(store.rightCollapsed).toBe(true);
+
+    store.selectNode('nodeA');
+
+    expect(useBlueprintStore.getState().rightCollapsed).toBe(false);
+    expect(useBlueprintStore.getState().selectedNodeId).toBe('nodeA');
   });
 
   describe('C4 Workspace & Zoom Navigation Actions', () => {
@@ -226,10 +253,9 @@ dependencies: []
 
     it('should zoom into a node, push history to navigationStack, and read target file', async () => {
       const store = useBlueprintStore.getState();
-      // First, open workspace
+
       await store.openWorkspaceDirectory();
 
-      // Zoom in
       const success = await store.zoomIntoNode('web-app');
       expect(success).toBe(true);
 
@@ -249,7 +275,6 @@ dependencies: []
       await store.openWorkspaceDirectory();
       await store.zoomIntoNode('web-app');
 
-      // Zoom out
       const zoomOutSuccess = await store.zoomOut();
       expect(zoomOutSuccess).toBe(true);
 
@@ -261,7 +286,6 @@ dependencies: []
     });
 
     it('should fail to zoom in if workspace is not open', async () => {
-      // Direct load root schema manually without opening workspace folder picker
       const store = useBlueprintStore.getState();
       store.initSchema({
         name: 'Manual Root Context',
@@ -274,6 +298,36 @@ dependencies: []
       const success = await store.zoomIntoNode('web-app');
       expect(success).toBe(false);
       expect(useBlueprintStore.getState().lastError).toContain('Workspace Folder');
+    });
+
+    it('should zoom into a node using defaultLoadedSystems fallback if workspace is not open', async () => {
+      defaultLoadedSystems.push({
+        path: 'internet-banking-container.yaml',
+        name: 'Internet Banking - Containers',
+        schema: {
+          name: 'Internet Banking - Containers',
+          version: '1.0.0',
+          level: 'container',
+          nodes: [{ id: 'web-app', type: 'web-app', name: 'Web App' }],
+          dependencies: [],
+        },
+      });
+
+      const store = useBlueprintStore.getState();
+      store.initSchema(defaultInitialSchema);
+      useBlueprintStore.setState({
+        isWorkspaceOpen: false,
+        currentFilePath: 'system-context.yaml',
+      });
+
+      const success = await store.zoomIntoNode('banking-system');
+      expect(success).toBe(true);
+
+      const updatedState = useBlueprintStore.getState();
+      expect(updatedState.currentFilePath).toBe('internet-banking-container.yaml');
+      expect(updatedState.navigationStack).toHaveLength(1);
+      expect(updatedState.navigationStack[0].path).toBe('system-context.yaml');
+      expect(updatedState.schema.name).toBe('Internet Banking - Containers');
     });
 
     it('should resolve relative path correctly', () => {

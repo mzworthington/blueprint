@@ -5,7 +5,6 @@ import { useBlueprintStore } from './store';
 
 describe('Breadcrumbs Component', () => {
   beforeEach(() => {
-    // Reset store state before each test
     const { initSchema } = useBlueprintStore.getState();
     initSchema({
       name: 'Main App System',
@@ -75,7 +74,6 @@ describe('Breadcrumbs Component', () => {
 
     render(<Breadcrumbs />);
 
-    // Verifying both levels in path are rendered
     expect(screen.getByText('Enterprise System Context')).toBeInTheDocument();
     expect(screen.getByText('Main App System')).toBeInTheDocument();
   });
@@ -102,7 +100,6 @@ describe('Breadcrumbs Component', () => {
     const rootBreadcrumbBtn = screen.getByText('Root Map');
     fireEvent.click(rootBreadcrumbBtn);
 
-    // Verify it popped history and set path back to parent/root
     expect(useBlueprintStore.getState().currentFilePath).toBe('blueprint.yaml');
     expect(useBlueprintStore.getState().navigationStack).toHaveLength(0);
   });

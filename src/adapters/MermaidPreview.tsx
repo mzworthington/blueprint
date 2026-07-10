@@ -24,14 +24,12 @@ export const MermaidPreview: React.FC<MermaidPreviewProps> = ({ code }) => {
   const [error, setError] = useState<string>('');
   const [rendering, setRendering] = useState<boolean>(false);
 
-  // Interactive Pan & Zoom states
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [scale, setScale] = useState<number>(1);
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const dragStart = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
-  // Reset interactive view when lightbox is toggled
   useEffect(() => {
     if (!isExpanded) {
       setScale(1);
@@ -66,7 +64,7 @@ export const MermaidPreview: React.FC<MermaidPreviewProps> = ({ code }) => {
 
       try {
         const id = `mermaid-render-${Math.random().toString(36).substring(2, 11)}`;
-        // mermaid.render is asynchronous in modern versions
+
         const { svg: renderedSvg } = await mermaid.render(id, code);
 
         if (active) {
@@ -89,9 +87,8 @@ export const MermaidPreview: React.FC<MermaidPreviewProps> = ({ code }) => {
     };
   }, [code]);
 
-  // Mouse pan handlers
   const handleMouseDown = (e: React.MouseEvent) => {
-    if (e.button !== 0) return; // Only left click drags
+    if (e.button !== 0) return;
     setIsDragging(true);
     dragStart.current = { x: e.clientX - position.x, y: e.clientY - position.y };
   };

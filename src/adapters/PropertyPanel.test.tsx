@@ -5,7 +5,6 @@ import { useBlueprintStore } from './store';
 
 describe('PropertyPanel UI Component', () => {
   beforeEach(() => {
-    // Clear and reset store
     const { initSchema } = useBlueprintStore.getState();
     initSchema({
       name: 'Cloud Infrastructure Workspace',
@@ -16,7 +15,7 @@ describe('PropertyPanel UI Component', () => {
       ],
       dependencies: [],
     });
-    // Ensure no node is selected
+
     useBlueprintStore.setState({ selectedNodeId: null });
   });
 
@@ -33,13 +32,10 @@ describe('PropertyPanel UI Component', () => {
   it('should trigger node creation when catalog component is clicked', () => {
     render(<PropertyPanel />);
 
-    // Initial nodes count is 2
     expect(useBlueprintStore.getState().nodes).toHaveLength(2);
 
-    // Click REST API component card to instantiate a new node
     fireEvent.click(screen.getByText('REST API'));
 
-    // Total nodes should be 3
     expect(useBlueprintStore.getState().nodes).toHaveLength(3);
   });
 
@@ -51,7 +47,6 @@ describe('PropertyPanel UI Component', () => {
   });
 
   it('should show cycle warning alert when circular dependency is triggered', () => {
-    // Manually inject a cycle in the store
     const { onConnect } = useBlueprintStore.getState();
     onConnect({
       source: 'gateway-api',
@@ -73,7 +68,6 @@ describe('PropertyPanel UI Component', () => {
   });
 
   it('should display node attributes editor when a node is selected', () => {
-    // Select the first node
     useBlueprintStore.setState({ selectedNodeId: 'gateway-api' });
 
     render(<PropertyPanel />);
@@ -92,7 +86,6 @@ describe('PropertyPanel UI Component', () => {
     const nameInput = screen.getByLabelText(/Component Name/i);
     fireEvent.change(nameInput, { target: { value: 'API Gateway Proxy' } });
 
-    // Verify name updated in store
     const updatedNode = useBlueprintStore.getState().schema.nodes.find(n => n.id === 'gateway-api');
     expect(updatedNode?.name).toBe('API Gateway Proxy');
   });
@@ -110,8 +103,29 @@ describe('PropertyPanel UI Component', () => {
     fireEvent.change(valueInput, { target: { value: '443' } });
     fireEvent.click(addButton);
 
-    // Verify properties updated in store
     const updatedNode = useBlueprintStore.getState().schema.nodes.find(n => n.id === 'gateway-api');
     expect(updatedNode?.properties?.port).toBe('443');
+  });
+  it('should allow editing active connection descriptions', () => {
+    const { onConnect } = useBlueprintStore.getState();
+    onConnect({
+      source: 'gateway-api',
+      target: 'session-store',
+      sourceHandle: 'right-source',
+      targetHandle: 'left-target',
+    });
+
+    useBlueprintStore.setState({ selectedNodeId: 'gateway-api' });
+
+    render(<PropertyPanel />);
+
+    const descInput = screen.getByPlaceholderText(/Add description/i);
+    expect(descInput).toBeInTheDocument();
+    expect(descInput).toHaveValue('');
+
+    fireEvent.change(descInput, { target: { value: 'JSON over HTTPS' } });
+
+    const edge = useBlueprintStore.getState().edges[0];
+    expect(edge.data?.description).toBe('JSON over HTTPS');
   });
 });

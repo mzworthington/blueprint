@@ -1,5 +1,13 @@
 import React, { useMemo, useEffect } from 'react';
-import { ReactFlow, Background, Controls, MiniMap, BackgroundVariant, Panel } from '@xyflow/react';
+import {
+  ReactFlow,
+  Background,
+  Controls,
+  MiniMap,
+  BackgroundVariant,
+  Panel,
+  useReactFlow,
+} from '@xyflow/react';
 import { useBlueprintStore } from './store';
 import { BlueprintNode } from './BlueprintNode';
 import { Breadcrumbs } from './Breadcrumbs';
@@ -30,12 +38,21 @@ export const Canvas: React.FC = () => {
     selectSystem,
   } = useBlueprintStore();
 
+  const { fitView } = useReactFlow();
+
   const nodeTypes = useMemo(
     () => ({
       blueprintNode: BlueprintNode as any,
     }),
     []
   );
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fitView({ duration: 400 });
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [currentFilePath, fitView]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

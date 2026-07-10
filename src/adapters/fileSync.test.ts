@@ -105,7 +105,6 @@ describe('fileSync Adapters', () => {
           return el;
         });
 
-        // Trigger loadSchema
         await BrowserFileSystemAdapter.loadSchema();
         expect(mockClick).toHaveBeenCalled();
       });
@@ -163,7 +162,6 @@ describe('fileSync Adapters', () => {
     });
 
     it('hasPermission queries and requests browser file handle permissions', async () => {
-      // First select directory to assign the handle
       await BrowserWorkspaceAdapter.selectDirectory();
 
       const hasPerm = await BrowserWorkspaceAdapter.hasPermission();

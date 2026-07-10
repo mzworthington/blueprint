@@ -77,7 +77,6 @@ export const PropertyPanel: React.FC = () => {
       .toLowerCase()
       .replace(/[^a-z0-9_-]/g, '');
     if (newId && newId !== selectedNodeId) {
-      // Prevent duplicate IDs
       if (schema.nodes.some(n => n.id === newId)) return;
       updateNode(selectedNodeId, { id: newId });
     }
@@ -308,20 +307,33 @@ export const PropertyPanel: React.FC = () => {
                           </button>
                         </div>
 
-                        <div className="flex gap-2">
-                          <select
-                            value={(edge.data as any)?.type || 'direct-call'}
+                        <div className="flex flex-col gap-2">
+                          <div className="flex gap-2">
+                            <select
+                              value={(edge.data as any)?.type || 'direct-call'}
+                              onChange={e =>
+                                updateDependency(edge.source, edge.target, {
+                                  type: e.target.value as any,
+                                })
+                              }
+                              className="flex-1 bg-slate-950 border border-slate-900 rounded px-1.5 py-1 text-[10px] text-slate-300 focus:outline-none"
+                            >
+                              <option value="direct-call">Direct Call</option>
+                              <option value="publish-subscribe">Pub/Sub (Async)</option>
+                              <option value="read-write">Read/Write</option>
+                            </select>
+                          </div>
+                          <input
+                            type="text"
+                            placeholder="Add description (e.g. JSON/HTTPS)"
+                            value={(edge.data as any)?.description || ''}
                             onChange={e =>
                               updateDependency(edge.source, edge.target, {
-                                type: e.target.value as any,
+                                description: e.target.value,
                               })
                             }
-                            className="bg-slate-950 border border-slate-900 rounded px-1.5 py-1 text-[10px] text-slate-300 focus:outline-none"
-                          >
-                            <option value="direct-call">Direct Call</option>
-                            <option value="publish-subscribe">Pub/Sub (Async)</option>
-                            <option value="read-write">Read/Write</option>
-                          </select>
+                            className="w-full bg-slate-950 border border-slate-900 rounded px-2 py-1 text-[10px] text-slate-300 focus:outline-none focus:border-brand-500 transition"
+                          />
                         </div>
                       </div>
                     );
