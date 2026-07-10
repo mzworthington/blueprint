@@ -43,6 +43,7 @@ export class TsMorphParserAdapter implements CodebaseParserPort {
         imports,
         newExpressions,
         callExpressions,
+        namespaces: [],
       });
     }
 

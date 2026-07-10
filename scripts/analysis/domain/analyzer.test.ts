@@ -123,24 +123,20 @@ describe('CodebaseAnalyzer Domain Service', () => {
 
     await analyzer.runAnalysis();
 
-    // Check cleanup
-    expect(fileSystem.deletedFiles.has('/workspace/blueprints/test-pkg.yaml')).toBe(true);
-    expect(fileSystem.deletedFiles.has('/workspace/blueprints/test-pkg-components.yaml')).toBe(true);
-
     // Verify written schema files
     const writtenPaths = Array.from(fileSystem.writtenFiles.keys());
-    expect(writtenPaths).toContain('/workspace/blueprints/test-pkg-containers.yaml');
-    expect(writtenPaths).toContain('/workspace/blueprints/test-pkg-domain-logic-components.yaml');
-    expect(writtenPaths).toContain('/workspace/blueprints/test-pkg-frontend-ui-components.yaml');
-    expect(writtenPaths).toContain('/workspace/blueprints/test-pkg-workspace.yaml');
+    expect(writtenPaths).toContain('/workspace/blueprints/test-pkg/containers.yaml');
+    expect(writtenPaths).toContain('/workspace/blueprints/test-pkg/domain-logic-components.yaml');
+    expect(writtenPaths).toContain('/workspace/blueprints/test-pkg/frontend-ui-components.yaml');
+    expect(writtenPaths).toContain('/workspace/blueprints/test-pkg/workspace.yaml');
 
     // Inspect Workspace Manifest content
-    const manifestYaml = fileSystem.writtenFiles.get('/workspace/blueprints/test-pkg-workspace.yaml')!;
+    const manifestYaml = fileSystem.writtenFiles.get('/workspace/blueprints/test-pkg/workspace.yaml')!;
     expect(manifestYaml).toContain('name: Test Pkg Workspace');
-    expect(manifestYaml).toContain('root: ./test-pkg-containers.yaml');
+    expect(manifestYaml).toContain('root: ./containers.yaml');
 
     // Inspect container schema content
-    const containerYaml = fileSystem.writtenFiles.get('/workspace/blueprints/test-pkg-containers.yaml')!;
+    const containerYaml = fileSystem.writtenFiles.get('/workspace/blueprints/test-pkg/containers.yaml')!;
     expect(containerYaml).toContain('Test Pkg - Container Level');
     expect(containerYaml).toContain('id: frontend-ui');
     expect(containerYaml).toContain('id: domain-logic');
@@ -162,7 +158,7 @@ describe('CodebaseAnalyzer Domain Service', () => {
       ];
 
       await analyzer.runAnalysis();
-      const containerYaml = fileSystem.writtenFiles.get('/workspace/blueprints/test-pkg-containers.yaml')!;
+      const containerYaml = fileSystem.writtenFiles.get('/workspace/blueprints/test-pkg/containers.yaml')!;
       expect(containerYaml).toContain('id: frontend-ui');
     });
 
@@ -180,7 +176,7 @@ describe('CodebaseAnalyzer Domain Service', () => {
       ];
 
       await analyzer.runAnalysis();
-      const componentYaml = fileSystem.writtenFiles.get('/workspace/blueprints/test-pkg-frontend-ui-components.yaml')!;
+      const componentYaml = fileSystem.writtenFiles.get('/workspace/blueprints/test-pkg/frontend-ui-components.yaml')!;
       expect(componentYaml).toContain('type: relational-database');
       expect(componentYaml).toContain('name: database Database');
     });
@@ -199,7 +195,7 @@ describe('CodebaseAnalyzer Domain Service', () => {
       ];
 
       await analyzer.runAnalysis();
-      const componentYaml = fileSystem.writtenFiles.get('/workspace/blueprints/test-pkg-frontend-ui-components.yaml')!;
+      const componentYaml = fileSystem.writtenFiles.get('/workspace/blueprints/test-pkg/frontend-ui-components.yaml')!;
       expect(componentYaml).toContain('type: relational-database');
     });
 
@@ -217,7 +213,7 @@ describe('CodebaseAnalyzer Domain Service', () => {
       ];
 
       await analyzer.runAnalysis();
-      const componentYaml = fileSystem.writtenFiles.get('/workspace/blueprints/test-pkg-frontend-ui-components.yaml')!;
+      const componentYaml = fileSystem.writtenFiles.get('/workspace/blueprints/test-pkg/frontend-ui-components.yaml')!;
       expect(componentYaml).toContain('type: event-broker');
     });
 
@@ -235,7 +231,7 @@ describe('CodebaseAnalyzer Domain Service', () => {
       ];
 
       await analyzer.runAnalysis();
-      const componentYaml = fileSystem.writtenFiles.get('/workspace/blueprints/test-pkg-frontend-ui-components.yaml')!;
+      const componentYaml = fileSystem.writtenFiles.get('/workspace/blueprints/test-pkg/frontend-ui-components.yaml')!;
       expect(componentYaml).toContain('type: rest-api');
     });
   });
@@ -255,7 +251,7 @@ describe('CodebaseAnalyzer Domain Service', () => {
       ];
 
       await analyzer.runAnalysis();
-      const containerYaml = fileSystem.writtenFiles.get('/workspace/blueprints/test-pkg-containers.yaml')!;
+      const containerYaml = fileSystem.writtenFiles.get('/workspace/blueprints/test-pkg/containers.yaml')!;
       expect(containerYaml).toContain('id: domain-logic');
     });
 
@@ -273,8 +269,31 @@ describe('CodebaseAnalyzer Domain Service', () => {
       ];
 
       await analyzer.runAnalysis();
-      const containerYaml = fileSystem.writtenFiles.get('/workspace/blueprints/test-pkg-containers.yaml')!;
+      const containerYaml = fileSystem.writtenFiles.get('/workspace/blueprints/test-pkg/containers.yaml')!;
       expect(containerYaml).toContain('id: state-sync');
+    });
+  });
+
+  describe('C# Namespace Naming', () => {
+    it('should derive systemName from the top-level C# namespace', async () => {
+      parser.files = [
+        {
+          filePath: '/workspace/src/UserController.cs',
+          relativePath: 'src/UserController.cs',
+          baseName: 'UserController',
+          isTestFile: false,
+          imports: [],
+          newExpressions: [],
+          callExpressions: [],
+          namespaces: ['EnterpriseProject.Controllers', 'EnterpriseProject.Services'],
+        },
+      ];
+
+      await analyzer.runAnalysis('src/**/*.cs');
+
+      const containerYaml = fileSystem.writtenFiles.get('/workspace/blueprints/enterpriseproject/containers.yaml')!;
+      expect(containerYaml).toContain('EnterpriseProject - Container Level');
+      expect(fileSystem.writtenFiles.has('/workspace/blueprints/enterpriseproject/workspace.yaml')).toBe(true);
     });
   });
 

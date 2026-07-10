@@ -74,4 +74,43 @@ fetch("https://api.com")
 
     expect(file.callExpressions).toContain('fetch');
   });
+
+  it('should parse imports, instantiations, and calls from C# files', async () => {
+    const csContent = `
+using System;
+using System.Threading.Tasks;
+using TestProject.Services;
+
+namespace TestProject.Controllers
+{
+    public class UserController
+    {
+        public UserController()
+        {
+            var db = new PrismaClient();
+            fetch("https://api.com");
+        }
+    }
+}
+`;
+    const csFile = path.join(tempDir, 'sample.cs');
+    fs.writeFileSync(csFile, csContent, 'utf8');
+
+    const results = await parser.parseSourceFiles('scripts/analysis/adapters/test_tmp/**/*.cs');
+    expect(results).toHaveLength(1);
+
+    const file = results[0];
+    expect(file.baseName).toBe('sample');
+
+    const importSpecs = file.imports.map(i => i.moduleSpecifier);
+    expect(importSpecs).toContain('System');
+    expect(importSpecs).toContain('System.Threading.Tasks');
+    expect(importSpecs).toContain('TestProject.Services');
+
+    const classNames = file.newExpressions.map(n => n.className);
+    expect(classNames).toContain('PrismaClient');
+
+    expect(file.callExpressions).toContain('fetch');
+    expect(file.namespaces).toContain('TestProject.Controllers');
+  });
 });

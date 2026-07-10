@@ -27,24 +27,76 @@ export class CodebaseAnalyzer {
     return raw.toLowerCase().replace(/[^a-z0-9_-]/g, '_');
   }
 
-  private getMeaningfulName(): string {
+  private getMeaningfulName(sourceFiles: ParsedSourceFile[], globPattern: string): string {
+    // 1. Resolve from C# namespaces
+    const topNamespaces: string[] = [];
+    sourceFiles.forEach(file => {
+      if (file.namespaces) {
+        file.namespaces.forEach(ns => {
+          const firstPart = ns.split('.')[0];
+          if (firstPart) {
+            topNamespaces.push(firstPart);
+          }
+        });
+      }
+    });
+
+    if (topNamespaces.length > 0) {
+      const freqMap = new Map<string, number>();
+      let maxCount = 0;
+      let mostFreqName = '';
+      topNamespaces.forEach(name => {
+        const count = (freqMap.get(name) || 0) + 1;
+        freqMap.set(name, count);
+        if (count > maxCount) {
+          maxCount = count;
+          mostFreqName = name;
+        }
+      });
+      if (mostFreqName) {
+        return mostFreqName;
+      }
+    }
+
+    // 2. Resolve package.json in scanned directory or current working directory
     try {
-      const pkgPath = this.fileSystem.getAbsolutePath(
-        this.fileSystem.getCurrentWorkingDirectory(),
-        'package.json'
-      );
+      const baseDir = globPattern.split('**')[0].replace(/\/$/, '').replace(/\\$/, '');
+      const scanDir = baseDir
+        ? this.fileSystem.getAbsolutePath(this.fileSystem.getCurrentWorkingDirectory(), baseDir)
+        : this.fileSystem.getCurrentWorkingDirectory();
+
+      let pkgPath = this.fileSystem.getAbsolutePath(scanDir, 'package.json');
+      if (!this.fileSystem.exists(pkgPath)) {
+        pkgPath = this.fileSystem.getAbsolutePath(this.fileSystem.getCurrentWorkingDirectory(), 'package.json');
+      }
+
       if (this.fileSystem.exists(pkgPath)) {
         const name = this.fileSystem.readPackageJsonName(pkgPath);
         if (name) {
           const nameWithoutScope = name.includes('/') ? name.split('/')[1] : name;
-          return this.sanitizeId(nameWithoutScope);
+          return nameWithoutScope;
         }
       }
     } catch {
       // ignore
     }
+
+    // 3. Resolve from base directory name of glob pattern
+    try {
+      const baseDir = globPattern.split('**')[0].replace(/\/$/, '').replace(/\\$/, '');
+      if (baseDir) {
+        const baseName = baseDir.split(/[\\/]/).filter(Boolean).pop();
+        if (baseName) {
+          return baseName;
+        }
+      }
+    } catch {
+      // ignore
+    }
+
+    // 4. Fallback to current working directory name
     const parts = this.fileSystem.getCurrentWorkingDirectory().split(/[\\/]/).filter(Boolean);
-    return this.sanitizeId(parts[parts.length - 1] || 'blueprint');
+    return parts[parts.length - 1] || 'blueprint';
   }
 
   private getContainerInfo(node: SystemNode, systemName: string, filepath?: string) {
@@ -377,11 +429,17 @@ export class CodebaseAnalyzer {
     }
 
     const components = Array.from(nodesMap.values());
-    const systemName = this.getMeaningfulName();
-    const displayName = systemName
-      .split(/[-_]/)
-      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-      .join(' ');
+    const meaningfulName = this.getMeaningfulName(sourceFiles, globPattern);
+    const systemName = this.sanitizeId(meaningfulName);
+    let displayName = meaningfulName;
+    if (meaningfulName.includes('-') || meaningfulName.includes('_')) {
+      displayName = meaningfulName
+        .split(/[-_]/)
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' ');
+    } else {
+      displayName = meaningfulName.charAt(0).toUpperCase() + meaningfulName.slice(1);
+    }
 
     this.logger.info(
       `📊 Extracted ${components.length} component nodes and ${dependenciesList.length} dependency edges.`
@@ -403,7 +461,7 @@ export class CodebaseAnalyzer {
           },
         };
         if (info.id !== 'external-services' && info.id !== 'frontend-client') {
-          cNode.c4Ref = `./${systemName}-${info.id}-components.yaml`;
+          cNode.c4Ref = `./${info.id}-components.yaml`;
         }
         containerNodesMap.set(info.id, cNode);
       }
@@ -439,10 +497,14 @@ export class CodebaseAnalyzer {
     const containers = Array.from(containerNodesMap.values());
     const layoutContainers = await this.layout.computeLayout(containers, containerDependenciesList);
 
-    const blueprintsDir = this.fileSystem.getAbsolutePath(
+    const rootBlueprintsDir = this.fileSystem.getAbsolutePath(
       this.fileSystem.getCurrentWorkingDirectory(),
       'blueprints'
     );
+    if (!this.fileSystem.exists(rootBlueprintsDir)) {
+      this.fileSystem.mkdir(rootBlueprintsDir);
+    }
+    const blueprintsDir = this.fileSystem.getAbsolutePath(rootBlueprintsDir, systemName);
     if (!this.fileSystem.exists(blueprintsDir)) {
       this.fileSystem.mkdir(blueprintsDir);
     }
@@ -461,7 +523,7 @@ export class CodebaseAnalyzer {
       noRefs: true,
     });
 
-    const containerPath = this.fileSystem.getAbsolutePath(blueprintsDir, `${systemName}-containers.yaml`);
+    const containerPath = this.fileSystem.getAbsolutePath(blueprintsDir, 'containers.yaml');
     await this.fileSystem.writeSchema(containerPath, containerYaml);
     this.logger.info(`📄 Saved Container-level schema: ${containerPath}`);
 
@@ -529,7 +591,7 @@ export class CodebaseAnalyzer {
 
       const componentPath = this.fileSystem.getAbsolutePath(
         blueprintsDir,
-        `${systemName}-${contId}-components.yaml`
+        `${contId}-components.yaml`
       );
       await this.fileSystem.writeSchema(componentPath, componentYaml);
       this.logger.info(`📄 Saved Component-level schema for ${contId}: ${componentPath}`);
@@ -537,11 +599,11 @@ export class CodebaseAnalyzer {
 
     const workspaceManifest = {
       name: `${displayName} Workspace`,
-      root: `./${systemName}-containers.yaml`,
+      root: './containers.yaml',
       hierarchy: [
         {
-          parent: `./${systemName}-containers.yaml`,
-          children: activeContainerIds.map(contId => `./${systemName}-${contId}-components.yaml`),
+          parent: './containers.yaml',
+          children: activeContainerIds.map(contId => `./${contId}-components.yaml`),
         },
       ],
     };
@@ -552,21 +614,9 @@ export class CodebaseAnalyzer {
       noRefs: true,
     });
 
-    const manifestPath = this.fileSystem.getAbsolutePath(blueprintsDir, `${systemName}-workspace.yaml`);
+    const manifestPath = this.fileSystem.getAbsolutePath(blueprintsDir, 'workspace.yaml');
     await this.fileSystem.writeSchema(manifestPath, manifestYaml);
     this.logger.info(`📄 Saved Workspace manifest schema: ${manifestPath}`);
-
-    const oldPath = this.fileSystem.getAbsolutePath(blueprintsDir, `${systemName}.yaml`);
-    if (this.fileSystem.exists(oldPath)) {
-      this.fileSystem.unlink(oldPath);
-      this.logger.info(`🗑️ Removed obsolete schema file: ${oldPath}`);
-    }
-
-    const oldCompPath = this.fileSystem.getAbsolutePath(blueprintsDir, `${systemName}-components.yaml`);
-    if (this.fileSystem.exists(oldCompPath)) {
-      this.fileSystem.unlink(oldCompPath);
-      this.logger.info(`🗑️ Removed obsolete global component schema file: ${oldCompPath}`);
-    }
 
     this.logger.info(`✅ Successfully generated visual layout levels!`);
   }

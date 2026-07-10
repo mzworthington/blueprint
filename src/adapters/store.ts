@@ -44,7 +44,7 @@ export function resolveRelativePath(basePath: string, relativePath: string): str
 }
 
 const defaultBlueprintModules = import.meta.glob<{ default: string }>(
-  '../../blueprints/*.{yaml,yml}',
+  '../../blueprints/blueprint/*.{yaml,yml}',
   {
     query: '?raw',
     eager: true,

@@ -55,6 +55,8 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
         return 'go';
       case '.java':
         return 'java';
+      case '.cs':
+        return 'c_sharp';
       default:
         return null;
     }
@@ -132,6 +134,7 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
       const imports: { moduleSpecifier: string }[] = [];
       const newExpressions: { className: string }[] = [];
       const callExpressions: string[] = [];
+      const namespaces: string[] = [];
 
       const walk = (node: Parser.SyntaxNode) => {
         // --- TypeScript/JavaScript parser logic ---
@@ -181,6 +184,34 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
           }
         }
 
+        // --- C# parser logic ---
+        if (ext === '.cs') {
+          if (node.type === 'using_directive') {
+            const nameNode = node.childForFieldName('name') || node.descendantsOfType(['qualified_name', 'identifier'])[0];
+            if (nameNode) {
+              imports.push({ moduleSpecifier: nameNode.text });
+            }
+          }
+          if (node.type === 'object_creation_expression') {
+            const typeNode = node.childForFieldName('type') || node.descendantsOfType('identifier')[0];
+            if (typeNode) {
+              newExpressions.push({ className: typeNode.text });
+            }
+          }
+          if (node.type === 'invocation_expression') {
+            const fnNode = node.child(0);
+            if (fnNode) {
+              callExpressions.push(fnNode.text);
+            }
+          }
+          if (node.type === 'namespace_declaration' || node.type === 'file_scoped_namespace_declaration') {
+            const nameNode = node.childForFieldName('name') || node.descendantsOfType(['qualified_name', 'identifier'])[0];
+            if (nameNode) {
+              namespaces.push(nameNode.text);
+            }
+          }
+        }
+
         // Recursively walk children
         for (let i = 0; i < node.childCount; i++) {
           walk(node.child(i)!);
@@ -197,6 +228,7 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
         imports,
         newExpressions,
         callExpressions,
+        namespaces,
       });
     }
 

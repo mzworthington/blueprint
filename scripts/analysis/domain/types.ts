@@ -16,6 +16,7 @@ export interface ParsedSourceFile {
   imports: ParsedImport[];
   newExpressions: ParsedNewExpression[];
   callExpressions: string[];
+  namespaces: string[];
 }
 
 export interface CodebaseAnalysisConfig {
