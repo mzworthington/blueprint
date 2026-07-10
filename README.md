@@ -16,6 +16,26 @@ Blueprint is a local-first, bi-directionally synchronized visual diagramming can
 
 ---
 
+## 📸 Interface Tour & E2E Journeys
+
+### 1. Expanded Workspace Properties & Catalog
+
+![Expanded Workspace Properties & Catalog](./screenshots/1-panels-expanded.png)
+
+### 2. Clean Diagram Canvas View
+
+![Clean Diagram Canvas View](./screenshots/2-panels-collapsed.png)
+
+### 3. Hierarchical C4 Container Level
+
+![Hierarchical C4 Container Level](./screenshots/3-container-level.png)
+
+### 4. Recursive Zoom-In Components
+
+![Recursive Zoom-In Components](./screenshots/4-zoomed-in-components.png)
+
+---
+
 ## 🏛️ System Architecture
 
 ```mermaid
