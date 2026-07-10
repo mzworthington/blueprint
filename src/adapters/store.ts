@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { applyNodeChanges, applyEdgeChanges } from '@xyflow/react';
+import * as yaml from 'js-yaml';
 import type {
   Node as RFNode,
   Edge as RFEdge,
@@ -16,6 +17,7 @@ import type {
   ValidationResult,
   PropertyMap,
   C4Level,
+  WorkspaceManifest,
 } from '../domain/schema';
 import { validateGraph, parseSchemaFromYaml, serializeSchemaToYaml } from '../domain/graph';
 import type { FileSystemPort, WorkspacePort, LoggerPort } from '../domain/ports';
@@ -88,6 +90,7 @@ interface BlueprintState {
 
   initSchema: (schema: SystemSchema) => void;
   updateSchemaName: (name: string) => void;
+  updateSchemaLevel: (level: C4Level) => void;
   importYaml: (yamlContent: string) => boolean;
   clearError: () => void;
 
@@ -127,6 +130,7 @@ interface BlueprintState {
   toggleLeftCollapsed: () => void;
   toggleRightCollapsed: () => void;
 
+  workspaceManifest: WorkspaceManifest | null;
   loadedSystems: Array<{ path: string; name: string; schema: SystemSchema }>;
   selectSystem: (path: string) => void;
 }
@@ -271,10 +275,13 @@ export let defaultInitialSchema: SystemSchema = {
 export const defaultLoadedSystems: Array<{ path: string; name: string; schema: SystemSchema }> = [];
 
 Object.entries(defaultBlueprintModules).forEach(([filePath, module]) => {
+  const fileName = getFileName(filePath);
+  if (fileName === 'workspace.yaml' || fileName.endsWith('-workspace.yaml')) {
+    return;
+  }
   try {
     const yamlContent = module.default;
     const parsed = parseSchemaFromYaml(yamlContent);
-    const fileName = getFileName(filePath);
     defaultLoadedSystems.push({
       path: fileName,
       name: parsed.name || fileName.replace(/\.ya?ml$/, ''),
@@ -287,8 +294,8 @@ Object.entries(defaultBlueprintModules).forEach(([filePath, module]) => {
 
 defaultLoadedSystems.sort((a, b) => {
   const levels: Record<string, number> = { context: 1, container: 2, component: 3, code: 4 };
-  const levelA = levels[a.schema.level || 'context'] || 5;
-  const levelB = levels[b.schema.level || 'context'] || 5;
+  const levelA = levels[a.schema.level] || 5;
+  const levelB = levels[b.schema.level] || 5;
   if (levelA !== levelB) return levelA - levelB;
   return a.path.localeCompare(b.path);
 });
@@ -314,7 +321,7 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
     const currentSchema = get().schema;
     const name = customSchemaName ?? currentSchema.name;
     const version = currentSchema.version;
-    const level = customSchemaLevel ?? currentSchema.level ?? 'container';
+    const level = customSchemaLevel ?? currentSchema.level;
     const parentRef = customParentRef !== undefined ? customParentRef : currentSchema.parentRef;
 
     const edgesWithHandles = nextEdges.map(edge => {
@@ -431,6 +438,7 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
     isWorkspaceOpen: false,
     workspaceName: '',
     logger: ConsoleLoggerAdapter,
+    workspaceManifest: null,
     loadedSystems: defaultLoadedSystems,
 
     selectSystem: (path: string) => {
@@ -506,6 +514,10 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
 
     updateSchemaName: name => {
       applyStateUpdates(get().nodes, get().edges, name);
+    },
+
+    updateSchemaLevel: level => {
+      applyStateUpdates(get().nodes, get().edges, undefined, level);
     },
 
     importYaml: yamlContent => {
@@ -714,7 +726,21 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
           throw new Error('No blueprint .yaml or .yml files found in selected directory');
         }
 
-        const nextLoadedSystems = files.map(file => {
+        const manifestFile = files.find(
+          f => f.name === 'workspace.yaml' || f.name.endsWith('-workspace.yaml')
+        );
+        let parsedManifest: WorkspaceManifest | null = null;
+        if (manifestFile) {
+          try {
+            parsedManifest = yaml.load(manifestFile.content) as WorkspaceManifest;
+          } catch (e) {
+            logger.error('Failed to parse workspace manifest YAML', e);
+          }
+        }
+
+        const schemaFiles = files.filter(f => f !== manifestFile);
+
+        const nextLoadedSystems = schemaFiles.map(file => {
           const schema = parseSchemaFromYaml(file.content);
           return {
             path: file.name,
@@ -723,11 +749,25 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
           };
         });
 
-        const firstSystem = nextLoadedSystems[0];
+        if (nextLoadedSystems.length === 0) {
+          throw new Error('No valid blueprint schemas found in selected directory');
+        }
+
+        let firstSystem = nextLoadedSystems[0];
+        if (parsedManifest?.root) {
+          const resolvedRootName = getFileName(parsedManifest.root);
+          const foundRoot = nextLoadedSystems.find(
+            s => s.path === parsedManifest.root || s.path === resolvedRootName
+          );
+          if (foundRoot) {
+            firstSystem = foundRoot;
+          }
+        }
 
         set({
           isWorkspaceOpen: true,
           workspaceName: workspacePort.getDirectoryName(),
+          workspaceManifest: parsedManifest,
           loadedSystems: nextLoadedSystems,
           currentFilePath: firstSystem.path,
           navigationStack: [],
@@ -794,25 +834,88 @@ export const useBlueprintStore = create<BlueprintState>((set, get) => {
     },
 
     zoomOut: async () => {
-      const { navigationStack, logger } = get();
-      if (navigationStack.length === 0) {
-        logger.info('Already at root of diagram, cannot zoom out');
+      const {
+        navigationStack,
+        schema,
+        currentFilePath,
+        workspacePort,
+        isWorkspaceOpen,
+        workspaceManifest,
+        logger,
+      } = get();
+      if (navigationStack.length > 0) {
+        logger.info('Zooming out to parent diagram');
+        const newStack = [...navigationStack];
+        const parentState = newStack.pop();
+
+        if (parentState) {
+          set({
+            currentFilePath: parentState.path,
+            navigationStack: newStack,
+            selectedNodeId: null,
+          });
+          get().initSchema(parentState.schema);
+          return true;
+        }
         return false;
       }
 
-      logger.info('Zooming out to parent diagram');
-      const newStack = [...navigationStack];
-      const parentState = newStack.pop();
-
-      if (parentState) {
-        set({
-          currentFilePath: parentState.path,
-          navigationStack: newStack,
-          selectedNodeId: null,
-        });
-        get().initSchema(parentState.schema);
-        return true;
+      let parentRefPath: string | null = null;
+      if (workspaceManifest) {
+        const currentName = getFileName(currentFilePath);
+        const entry = workspaceManifest.hierarchy.find(h =>
+          h.children.some(c => getFileName(c) === currentName)
+        );
+        if (entry) {
+          parentRefPath = entry.parent;
+        }
       }
+
+      if (!parentRefPath && schema.parentRef) {
+        parentRefPath = schema.parentRef;
+      }
+
+      if (parentRefPath) {
+        logger.info('Zooming out to parent diagram via path lookup', { ref: parentRefPath });
+        const targetPath = resolveRelativePath(currentFilePath, parentRefPath);
+
+        if (!isWorkspaceOpen) {
+          const resolvedFileName = getFileName(targetPath);
+          const found = defaultLoadedSystems.find(
+            s => s.path === targetPath || s.path === resolvedFileName
+          );
+          if (found) {
+            set({
+              currentFilePath: found.path,
+              selectedNodeId: null,
+            });
+            get().initSchema(found.schema);
+            return true;
+          }
+          logger.warn('Cannot zoom out: parent file not found in default systems.');
+          return false;
+        }
+
+        try {
+          const content = await workspacePort.readFile(targetPath);
+          const parentSchema = parseSchemaFromYaml(content);
+
+          set({
+            currentFilePath: targetPath,
+            selectedNodeId: null,
+          });
+          get().initSchema(parentSchema);
+          return true;
+        } catch (err) {
+          logger.error('Failed to load parent diagram', err, { path: parentRefPath });
+          set({
+            lastError: `Failed to load parent diagram at ${parentRefPath}: ${(err as Error).message}`,
+          });
+          return false;
+        }
+      }
+
+      logger.info('Already at root of diagram, cannot zoom out');
       return false;
     },
 

@@ -1,0 +1,91 @@
+name: Blueprint - Domain Logic Layer Components
+version: 1.0.0
+level: component
+nodes:
+  - id: graph_test
+    type: background-worker
+    name: graph.test Service
+    isTest: true
+    properties:
+      filepath: src/domain/graph.test.ts
+      technology: TypeScript Domain Service
+    external: false
+    x: 1520
+    'y': 50
+  - id: graph
+    type: background-worker
+    name: graph Service
+    isTest: false
+    properties:
+      filepath: src/domain/graph.ts
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 370
+  - id: ports
+    type: background-worker
+    name: ports Service
+    isTest: false
+    properties:
+      filepath: src/domain/ports.ts
+      technology: TypeScript Domain Service
+    external: false
+    x: 1980
+    'y': 370
+  - id: schema
+    type: background-worker
+    name: schema Service
+    isTest: false
+    properties:
+      filepath: src/domain/schema.ts
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: codeviewer
+    type: gateway-api
+    name: CodeViewer UI Component (Frontend React UI)
+    isTest: false
+    properties:
+      filepath: src/adapters/CodeViewer.tsx
+      technology: React Component
+    external: true
+    x: 140
+    'y': 50
+  - id: store
+    type: gateway-api
+    name: store UI Component (State & Sync Manager)
+    isTest: false
+    properties:
+      filepath: src/adapters/store.ts
+      technology: React Component
+    external: true
+    x: 1060
+    'y': 50
+  - id: filesync
+    type: background-worker
+    name: fileSync Service (State & Sync Manager)
+    isTest: false
+    properties:
+      filepath: src/adapters/fileSync.ts
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 50
+dependencies:
+  - from: codeviewer
+    to: graph
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: store
+    to: graph
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: graph_test
+    to: graph
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: filesync
+    to: ports
+    type: direct-call
+    description: Implements FileSystemPort interface

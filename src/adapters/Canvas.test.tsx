@@ -44,6 +44,7 @@ describe('Canvas Component', () => {
     initSchema({
       name: 'System Canvas Test',
       version: '1.0.0',
+      level: 'container',
       nodes: [
         { id: 'node1', type: 'rest-api', name: 'Node 1', x: 10, y: 10 },
         { id: 'node2', type: 'relational-database', name: 'Node 2', x: 100, y: 100 },
@@ -87,12 +88,12 @@ describe('Canvas Component', () => {
         {
           path: 'sys1.yaml',
           name: 'System 1',
-          schema: { name: 'S1', version: '1.0.0', nodes: [], dependencies: [] },
+          schema: { name: 'S1', version: '1.0.0', level: 'container', nodes: [], dependencies: [] },
         },
         {
           path: 'sys2.yaml',
           name: 'System 2',
-          schema: { name: 'S2', version: '1.0.0', nodes: [], dependencies: [] },
+          schema: { name: 'S2', version: '1.0.0', level: 'container', nodes: [], dependencies: [] },
         },
       ],
       currentFilePath: 'sys1.yaml',
@@ -112,12 +113,12 @@ describe('Canvas Component', () => {
         {
           path: 'sys1.yaml',
           name: 'System 1',
-          schema: { name: 'S1', version: '1.0.0', nodes: [], dependencies: [] },
+          schema: { name: 'S1', version: '1.0.0', level: 'container', nodes: [], dependencies: [] },
         },
         {
           path: 'sys2.yaml',
           name: 'System 2',
-          schema: { name: 'S2', version: '1.0.0', nodes: [], dependencies: [] },
+          schema: { name: 'S2', version: '1.0.0', level: 'container', nodes: [], dependencies: [] },
         },
       ],
       currentFilePath: 'sys1.yaml',
@@ -135,7 +136,8 @@ describe('Canvas Component', () => {
     const readDirectoryFilesMock = vi.fn().mockResolvedValue([
       {
         name: 'sys.yaml',
-        content: 'name: Loaded System\nversion: "1.0.0"\nnodes: []\ndependencies: []',
+        content:
+          'name: Loaded System\nversion: "1.0.0"\nlevel: container\nnodes: []\ndependencies: []',
       },
     ]);
     useBlueprintStore.setState({
@@ -221,7 +223,7 @@ dependencies: []
       navigationStack: [
         {
           path: 'parent.yaml',
-          schema: { name: 'Parent', version: '1', nodes: [], dependencies: [] },
+          schema: { name: 'Parent', version: '1', level: 'container', nodes: [], dependencies: [] },
         },
       ],
       currentFilePath: 'child.yaml',

@@ -16,6 +16,7 @@ describe('CodeViewer UI Component', () => {
     initSchema({
       name: 'Test Project',
       version: '1.0.0',
+      level: 'container',
       nodes: [{ id: 'web-api', type: 'rest-api', name: 'Web API' }],
       dependencies: [],
     });
@@ -62,6 +63,7 @@ describe('CodeViewer UI Component', () => {
     const newYaml = `
 name: Imported System
 version: 2.1.0
+level: container
 nodes:
   - id: custom-service
     type: grpc-service
@@ -109,6 +111,7 @@ nodes:
     initSchema({
       name: 'Filtered Project',
       version: '1.0.0',
+      level: 'container',
       nodes: [
         { id: 'app', type: 'rest-api', name: 'App Node', isTest: false },
         { id: 'app-test', type: 'rest-api', name: 'App Test Node', isTest: true },

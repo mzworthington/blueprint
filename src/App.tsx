@@ -1,13 +1,75 @@
+import { useEffect } from 'react';
 import { ReactFlowProvider } from '@xyflow/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { CodeViewer } from './adapters/CodeViewer';
 import { Canvas } from './adapters/Canvas';
 import { PropertyPanel } from './adapters/PropertyPanel';
 import { useBlueprintStore } from './adapters/store';
+import { slugify } from './domain/slug';
 
 function App() {
-  const { leftCollapsed, rightCollapsed, toggleLeftCollapsed, toggleRightCollapsed } =
-    useBlueprintStore();
+  const {
+    leftCollapsed,
+    rightCollapsed,
+    toggleLeftCollapsed,
+    toggleRightCollapsed,
+    workspaceName,
+    schema,
+    loadedSystems,
+    selectSystem,
+    currentFilePath,
+  } = useBlueprintStore();
+
+  useEffect(() => {
+    const match = window.location.pathname.match(/^\/workspace\/([^/]+)$/);
+    if (match) {
+      const slug = match[1];
+      const found = loadedSystems.find(sys => {
+        const sysName = sys.schema?.name || sys.name || sys.path;
+        return slugify(sysName) === slug;
+      });
+      if (found && found.path !== currentFilePath) {
+        selectSystem(found.path);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const match = window.location.pathname.match(/^\/workspace\/([^/]+)$/);
+      if (match) {
+        const slug = match[1];
+        const currentName = workspaceName || schema.name;
+        if (currentName && slugify(currentName) !== slug) {
+          const found = loadedSystems.find(sys => {
+            const sysName = sys.schema?.name || sys.name || sys.path;
+            return slugify(sysName) === slug;
+          });
+          if (found) {
+            selectSystem(found.path);
+          }
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [workspaceName, schema.name, loadedSystems, selectSystem]);
+
+  useEffect(() => {
+    const name = workspaceName || schema.name;
+    if (!name) return;
+    const slug = slugify(name);
+    const expectedPath = `/workspace/${slug}`;
+    if (window.location.pathname !== expectedPath) {
+      const isInitial = window.location.pathname === '/' || window.location.pathname === '';
+      if (isInitial) {
+        window.history.replaceState({}, '', expectedPath + window.location.search);
+      } else {
+        window.history.pushState({}, '', expectedPath + window.location.search);
+      }
+    }
+  }, [workspaceName, schema.name]);
 
   return (
     <ReactFlowProvider>

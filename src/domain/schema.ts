@@ -48,7 +48,7 @@ export interface SystemDependency {
 export interface SystemSchema {
   name: string;
   version: string;
-  level?: C4Level;
+  level: C4Level;
   parentRef?: string;
   nodes: SystemNode[];
   dependencies: SystemDependency[];
@@ -63,4 +63,15 @@ export interface ValidationIssue {
 export interface ValidationResult {
   isValid: boolean;
   issues: ValidationIssue[];
+}
+
+export interface WorkspaceHierarchy {
+  parent: string;
+  children: string[];
+}
+
+export interface WorkspaceManifest {
+  name: string;
+  root: string;
+  hierarchy: WorkspaceHierarchy[];
 }

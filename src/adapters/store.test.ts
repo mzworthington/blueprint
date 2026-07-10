@@ -22,6 +22,7 @@ describe('Zustand Store Actions & State Management', () => {
     initSchema({
       name: 'Test Workspace',
       version: '1.0.0',
+      level: 'container',
       nodes: [
         { id: 'nodeA', type: 'rest-api', name: 'Node A', x: 0, y: 0 },
         { id: 'nodeB', type: 'grpc-service', name: 'Node B', x: 100, y: 100 },
@@ -117,6 +118,16 @@ describe('Zustand Store Actions & State Management', () => {
     expect(updatedState.validationResult.issues[0].path).toContain('nodeB');
   });
 
+  it('should allow updating schema name and level', () => {
+    const store = useBlueprintStore.getState();
+
+    store.updateSchemaName('New Workspace Name');
+    expect(useBlueprintStore.getState().schema.name).toBe('New Workspace Name');
+
+    store.updateSchemaLevel('context');
+    expect(useBlueprintStore.getState().schema.level).toBe('context');
+  });
+
   it('should support showTests property and toggleShowTests action', () => {
     const store = useBlueprintStore.getState();
     expect(store.showTests).toBe(false);
@@ -133,6 +144,7 @@ describe('Zustand Store Actions & State Management', () => {
     initSchema({
       name: 'Test Project',
       version: '1.0.0',
+      level: 'container',
       nodes: [
         { id: 'app', type: 'rest-api', name: 'App Node', isTest: false },
         { id: 'app-test', type: 'rest-api', name: 'App Test Node', isTest: true },
@@ -283,6 +295,85 @@ dependencies: []
       expect(updatedState.navigationStack).toHaveLength(0);
       expect(updatedState.schema.name).toBe('Root Context');
       expect(updatedState.nodes).toHaveLength(1);
+    });
+
+    it('should zoom out to parent schema via parentRef when navigation stack is empty', async () => {
+      const store = useBlueprintStore.getState();
+
+      defaultLoadedSystems.push({
+        path: 'blueprint.yaml',
+        name: 'Root Context',
+        schema: {
+          name: 'Root Context',
+          version: '1.0.0',
+          level: 'context',
+          nodes: [],
+          dependencies: [],
+        },
+      });
+
+      store.initSchema({
+        name: 'Child Level',
+        version: '1.0.0',
+        level: 'container',
+        parentRef: './blueprint.yaml',
+        nodes: [],
+        dependencies: [],
+      });
+      useBlueprintStore.setState({
+        currentFilePath: 'web/container.yaml',
+        navigationStack: [],
+        isWorkspaceOpen: false,
+      });
+
+      const success = await store.zoomOut();
+      expect(success).toBe(true);
+      expect(useBlueprintStore.getState().currentFilePath).toBe('blueprint.yaml');
+      expect(useBlueprintStore.getState().schema.name).toBe('Root Context');
+    });
+
+    it('should zoom out to parent schema via workspaceManifest when navigation stack is empty', async () => {
+      const store = useBlueprintStore.getState();
+
+      defaultLoadedSystems.push({
+        path: 'blueprint-containers.yaml',
+        name: 'Container Level',
+        schema: {
+          name: 'Container Level',
+          version: '1.0.0',
+          level: 'container',
+          nodes: [],
+          dependencies: [],
+        },
+      });
+
+      store.initSchema({
+        name: 'App Host Components',
+        version: '1.0.0',
+        level: 'component',
+        nodes: [],
+        dependencies: [],
+      });
+      useBlueprintStore.setState({
+        currentFilePath: 'blueprint-app-host-components.yaml',
+        navigationStack: [],
+        isWorkspaceOpen: false,
+        workspaceManifest: {
+          name: 'Blueprint Workspace',
+          root: './blueprint-containers.yaml',
+          hierarchy: [
+            {
+              parent: './blueprint-containers.yaml',
+              children: ['./blueprint-app-host-components.yaml'],
+            },
+          ],
+        },
+      });
+
+      const success = await store.zoomOut();
+      expect(success).toBe(true);
+      expect(useBlueprintStore.getState().currentFilePath).toBe('blueprint-containers.yaml');
+      expect(useBlueprintStore.getState().schema.name).toContain('Container Level');
     });
 
     it('should fail to zoom in if workspace is not open', async () => {

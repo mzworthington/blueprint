@@ -21,6 +21,7 @@ describe('BlueprintNode Component', () => {
     initSchema({
       name: 'Test Schema',
       version: '1.0.0',
+      level: 'container',
       nodes: [{ id: 'test-node-1', type: 'microservice', name: 'My Service', x: 0, y: 0 }],
       dependencies: [],
     });

@@ -9,6 +9,7 @@ describe('PropertyPanel UI Component', () => {
     initSchema({
       name: 'Cloud Infrastructure Workspace',
       version: '1.0.0',
+      level: 'container',
       nodes: [
         { id: 'gateway-api', type: 'rest-api', name: 'Gateway API', x: 0, y: 0 },
         { id: 'session-store', type: 'cache-store', name: 'Session Cache', x: 10, y: 10 },
@@ -27,6 +28,28 @@ describe('PropertyPanel UI Component', () => {
     expect(screen.getByText('Component Catalog')).toBeInTheDocument();
     expect(screen.getByText('REST API')).toBeInTheDocument();
     expect(screen.getByText('Event Broker')).toBeInTheDocument();
+  });
+
+  it('should render Diagram C4 Level selector and trigger updateSchemaLevel on change', () => {
+    render(<PropertyPanel />);
+
+    const select = screen.getByLabelText(/Diagram C4 Level/i);
+    expect(select).toBeInTheDocument();
+    expect(select).toHaveValue('container');
+
+    fireEvent.change(select, { target: { value: 'context' } });
+    expect(useBlueprintStore.getState().schema.level).toBe('context');
+  });
+
+  it('should render read-only Workspace Slug from workspaceName or schema.name', () => {
+    useBlueprintStore.setState({ workspaceName: 'Awesome Cloud Workspace' });
+    render(<PropertyPanel />);
+
+    expect(screen.getByText('Workspace Slug')).toBeInTheDocument();
+    const slugInput = screen.getByLabelText(/Workspace Slug/i);
+    expect(slugInput).toBeInTheDocument();
+    expect(slugInput).toHaveAttribute('readonly');
+    expect(slugInput).toHaveValue('awesome-cloud-workspace');
   });
 
   it('should trigger node creation when catalog component is clicked', () => {

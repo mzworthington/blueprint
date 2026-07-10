@@ -128,7 +128,7 @@ const systemDependencySchema = z.object({
 const systemSchemaValidator = z.object({
   name: z.string().min(1),
   version: z.string().min(1),
-  level: z.enum(['context', 'container', 'component', 'code']).optional(),
+  level: z.enum(['context', 'container', 'component', 'code']),
   parentRef: z.string().optional(),
   nodes: z.array(systemNodeSchema),
   dependencies: z.array(systemDependencySchema).optional(),
@@ -152,7 +152,7 @@ export function parseSchemaFromYaml(yamlContent: string): SystemSchema {
     return {
       name: validated.name,
       version: validated.version,
-      level: validated.level || 'container',
+      level: validated.level,
       parentRef: validated.parentRef,
       nodes: validated.nodes.map(n => ({
         id: n.id,
@@ -197,7 +197,7 @@ export function serializeSchemaToYaml(schema: SystemSchema): string {
   const cleanSchema: any = {
     name: schema.name,
     version: schema.version,
-    level: schema.level || 'container',
+    level: schema.level,
   };
 
   if (schema.parentRef) {

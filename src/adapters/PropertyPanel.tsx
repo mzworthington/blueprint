@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { useBlueprintStore } from './store';
 import type { NodeType, PropertyMap } from '../domain/schema';
+import { slugify } from '../domain/slug';
 
 const NODE_TYPES: { type: NodeType; label: string; icon: any }[] = [
   { type: 'person', label: 'Person (Actor)', icon: User },
@@ -48,6 +49,7 @@ export const PropertyPanel: React.FC = () => {
     edges,
     validationResult,
     updateSchemaName,
+    updateSchemaLevel,
     addNode,
     updateNode,
     deleteNode,
@@ -57,6 +59,7 @@ export const PropertyPanel: React.FC = () => {
     showTests,
     toggleShowTests,
     rightCollapsed,
+    workspaceName,
   } = useBlueprintStore();
 
   const selectedRFNode = nodes.find(n => n.id === selectedNodeId);
@@ -374,6 +377,42 @@ export const PropertyPanel: React.FC = () => {
                 onChange={e => updateSchemaName(e.target.value)}
                 className="w-full bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition"
               />
+            </div>
+
+            <div>
+              <label
+                htmlFor="workspace-slug-input"
+                className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5"
+              >
+                Workspace Slug
+              </label>
+              <input
+                id="workspace-slug-input"
+                type="text"
+                readOnly
+                value={slugify(workspaceName || schema.name)}
+                className="w-full bg-slate-900/40 border border-slate-900 rounded-lg px-3 py-2 text-sm text-slate-400 focus:outline-none cursor-not-allowed transition"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="workspace-level-select"
+                className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5"
+              >
+                Diagram C4 Level
+              </label>
+              <select
+                id="workspace-level-select"
+                value={schema.level}
+                onChange={e => updateSchemaLevel(e.target.value as any)}
+                className="w-full bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition cursor-pointer"
+              >
+                <option value="context">System Context</option>
+                <option value="container">Container Level</option>
+                <option value="component">Component Level</option>
+                <option value="code">Code Level</option>
+              </select>
             </div>
 
             <div className="flex items-center justify-between border-t border-slate-900 pt-4">

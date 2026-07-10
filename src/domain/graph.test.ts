@@ -12,6 +12,7 @@ describe('Graph Validation & Cycle Detection', () => {
     const schema: SystemSchema = {
       name: 'Acyclic System',
       version: '1.0.0',
+      level: 'container',
       nodes: [
         { id: 'Gateway', type: 'rest-api', name: 'Gateway' },
         { id: 'AuthService', type: 'grpc-service', name: 'AuthService' },
@@ -32,6 +33,7 @@ describe('Graph Validation & Cycle Detection', () => {
     const schema: SystemSchema = {
       name: 'Self Loop',
       version: '1.0.0',
+      level: 'container',
       nodes: [{ id: 'Worker', type: 'serverless-function', name: 'Worker' }],
       dependencies: [{ from: 'Worker', to: 'Worker', type: 'direct-call' }],
     };
@@ -47,6 +49,7 @@ describe('Graph Validation & Cycle Detection', () => {
     const schema: SystemSchema = {
       name: 'Circular Services',
       version: '1.0.0',
+      level: 'container',
       nodes: [
         { id: 'ServiceA', type: 'grpc-service', name: 'Service A' },
         { id: 'ServiceB', type: 'grpc-service', name: 'Service B' },
@@ -75,6 +78,7 @@ describe('Graph Validation & Cycle Detection', () => {
     const schema: SystemSchema = {
       name: 'Disconnected Cycles',
       version: '1.0.0',
+      level: 'container',
       nodes: [
         { id: 'A', type: 'rest-api', name: 'A' },
         { id: 'B', type: 'grpc-service', name: 'B' },
@@ -102,6 +106,7 @@ describe('YAML Schema Parsing and Serialization', () => {
     const yamlContent = `
 name: Demo System
 version: 1.0.0
+level: container
 nodes:
   - id: UserApi
     type: grpc-service
@@ -127,6 +132,7 @@ dependencies:
     const invalidYaml = `
 name: Malicious System
 version: 1.0.0
+level: container
 nodes:
   - id: HackNode
     type: invalid-type-hacker
@@ -139,6 +145,7 @@ nodes:
     const invalidYaml = `
 name: Malicious System
 version: 1.0.0
+level: container
 nodes:
   - id: "invalid id with spaces"
     type: rest-api
@@ -151,6 +158,7 @@ nodes:
     const schema: SystemSchema = {
       name: 'Demo System',
       version: '1.0.0',
+      level: 'container',
       nodes: [{ id: 'UserApi', type: 'grpc-service', name: 'User API' }],
       dependencies: [],
     };
@@ -165,6 +173,7 @@ nodes:
     const yamlContent = `
 name: Test System
 version: 1.0.0
+level: container
 nodes:
   - id: ServiceTest
     type: grpc-service
@@ -182,6 +191,7 @@ nodes:
     const schema: SystemSchema = {
       name: 'Demo System',
       version: '1.0.0',
+      level: 'container',
       nodes: [
         { id: 'Gateway', type: 'rest-api', name: 'Gateway Node' },
         { id: 'DB', type: 'relational-database', name: 'DB Node' },
