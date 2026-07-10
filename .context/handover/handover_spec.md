@@ -1,4 +1,4 @@
-# Specification Phase Handover (Codebase AST Analyzer Refactoring)
+# Specification Phase Handover (Tree-sitter Integration)
 
 - **Phase:** BDD Specification Intake
 - **Status:** COMPLETE
@@ -8,75 +8,52 @@
 
 ## 1. Domain Glossary
 
-* **AST (Abstract Syntax Tree):** A structural tree representation of code syntax parsed from source files, used here to extract imports, class instantiations, and method calls.
-* **Component Node:** A system entity identified in source files (e.g. React UI components, Prisma/Mongo database clients, Kafka event brokers, Express API routers).
-* **Dependency Edge:** A directed dependency relationship between components resolved by relative imports or external API calls.
-* **C4 Container:** An architectural grouping container (e.g., Frontend React UI, Domain Logic Layer, State & Sync Manager, external-services).
-* **Workspace Manifest:** The schema connecting multiple C4 coordinate schemas together.
+* **Concrete Syntax Tree (CST):** A full syntax tree containing all tokens (including whitespace, semicolons, brackets) parsed from a source file, produced by Tree-sitter.
+* **Tree-sitter Query (S-expression):** A pattern matching DSL used to query AST/CST nodes (e.g. finding import declarations or new instantiations).
+* **WASM Grammars:** Pre-compiled WebAssembly binaries containing the syntax rules for specific programming languages (e.g. typescript, tsx, python, javascript).
 
 ---
 
 ## 2. Gherkin Acceptance Scenarios
 
-### Feature: Codebase AST Analysis and C4 Classification
+### Feature: Tree-sitter Codebase Parsing
 
-  **Scenario: React Component File Heuristic Classification**
-    Given a file `/src/adapters/MyComponent.tsx`
-    And the file imports `react` or `@xyflow/react`
-    And the file does not have the base name `app` or `main`
-    When the analyzer runs on the codebase
-    Then the file should be classified as `gateway-api`
-    And the node name should be "MyComponent UI Component"
-    And its technology property should be "React Component"
+  **Scenario: Parse imports from TypeScript file using Tree-sitter**
+    Given a TypeScript source file containing:
+      """typescript
+      import { useState } from 'react';
+      import graph from '../domain/graph';
+      """
+    When the Tree-sitter parser adapter parses the file
+    Then the parsed imports list should contain:
+      - `{ moduleSpecifier: 'react' }`
+      - `{ moduleSpecifier: '../domain/graph' }`
 
-  **Scenario: Database Client Heuristic Classification**
-    Given a file `/src/adapters/db.ts`
-    And the file imports `prisma`, `knex`, `pg`, or `mongodb`
-    Or the file contains a `new PrismaClient()` expression
-    When the analyzer runs on the codebase
-    Then the file should be classified as `relational-database`
-    And the node name should be "Db Database"
-    And its technology property should be "Prisma / SQL Database Client"
+  **Scenario: Parse class instantiations from TypeScript file using Tree-sitter**
+    Given a TypeScript source file containing:
+      """typescript
+      const db = new PrismaClient();
+      const broker = new Kafka();
+      """
+    When the Tree-sitter parser adapter parses the file
+    Then the parsed new expressions list should contain:
+      - `{ className: 'PrismaClient' }`
+      - `{ className: 'Kafka' }`
 
-  **Scenario: Event Broker Client Heuristic Classification**
-    Given a file `/src/adapters/broker.ts`
-    And the file imports `kafkajs`, `bullmq`, `amqplib`, or `mqtt`
-    Or the file instantiates a class with a name containing `Queue` or `Kafka`
-    When the analyzer runs on the codebase
-    Then the file should be classified as `event-broker`
-    And the node name should be "Broker Message Broker"
-
-  **Scenario: REST API Controller Heuristic Classification**
-    Given a file `/src/adapters/routes.ts`
-    And the file imports `express`, `fastify`, or `@nestjs/common`
-    When the analyzer runs on the codebase
-    Then the file should be classified as `rest-api`
-    And the node name should be "Routes REST Endpoint"
-
-  **Scenario: Mapping Codebase Files to C4 Containers**
-    Given a codebase source file at path `src/domain/graph.ts`
-    When the analyzer maps the file to a C4 Container
-    Then it should be assigned to the `domain-logic` container
-    And the container name should be "Domain Logic Layer"
-
-  **Scenario: Detecting Internal Codebase Dependencies**
-    Given a source file `src/adapters/Canvas.tsx`
-    And it imports relative module `../domain/graph`
-    When the analyzer resolves dependencies
-    Then a dependency should be created from `canvas` to `graph`
-    And the dependency type should be `direct-call`
-
-  **Scenario: Detecting Outbound External API calls**
-    Given a source file `src/adapters/Canvas.tsx`
-    And it invokes call expression `fetch(...)` or `axios.get(...)`
-    When the analyzer resolves dependencies
-    Then a dependency should be created from `canvas` to `external-api-target`
-    And a rest-api node `external-api-target` should be registered
+  **Scenario: Parse call expressions from TypeScript file using Tree-sitter**
+    Given a TypeScript source file containing:
+      """typescript
+      fetch('https://api.com/users');
+      axios.get('/endpoint');
+      """
+    When the Tree-sitter parser adapter parses the file
+    Then the parsed call expressions list should contain:
+      - `'fetch'`
+      - `'axios.get'` (or matches for 'axios')
 
 ---
 
 ## 3. Technical Constraints & Context
 
-1. **Strict Hexagonal Separation:** The domain core model must have zero imports from `ts-morph` or `fs`.
-2. **Deterministic Layout Coordinates:** Dagre layout calculations must run on nodes and dependencies deterministically prior to YAML serialization.
-3. **Obsolete File Cleanup:** The workspace manifest generator must delete legacy schema files (`blueprints/blueprint.yaml` and `blueprints/blueprint-components.yaml`).
+1. **Pure WASM Execution:** All Tree-sitter grammars must load from precompiled WASM binaries provided by `tree-sitter-wasms`. No native compiler runtime dependencies should be introduced.
+2. **Parser Port Adherence:** The new `TreeSitterParserAdapter` must implement the existing `CodebaseParserPort` cleanly, so it can be swapped or combined with `TsMorphParserAdapter` without changes to the `CodebaseAnalyzer` business logic.

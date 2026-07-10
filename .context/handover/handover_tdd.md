@@ -1,4 +1,4 @@
-# TDD / Design Phase Handover (Codebase AST Analyzer Refactoring)
+# TDD / Design Phase Handover (Tree-sitter Integration)
 
 - **Phase:** TDD Design
 - **Status:** COMPLETE
@@ -6,55 +6,29 @@
 
 ---
 
-## 1. Domain Ports (Interfaces)
+## 1. Adapter Design & Query Structure
 
-To ensure domain core isolation, we define the following ports in `scripts/analysis/domain/ports.ts`:
+We will implement `TreeSitterParserAdapter` under `scripts/analysis/adapters/treeSitterParser.ts`. It will implement `CodebaseParserPort` exactly like `TsMorphParserAdapter` does.
 
-### `CodebaseParserPort` (Outbound/Driven Port)
-Responsible for parsing the files matching a codebase pattern into pure representation structs.
-```typescript
-import type { ParsedSourceFile } from './types';
+### Tree-sitter S-expression queries:
+We will configure Tree-sitter query patterns to search the parsed Concrete Syntax Tree:
 
-export interface CodebaseParserPort {
-  parseSourceFiles(globPattern: string): Promise<ParsedSourceFile[]>;
-}
-```
-
-### `LayoutPort` (Outbound/Driven Port)
-Responsible for computing graph layouts for nodes and dependencies.
-```typescript
-import type { SystemNode, SystemDependency } from '../../../src/domain/schema';
-
-export interface LayoutPort {
-  computeLayout(nodes: SystemNode[], dependencies: SystemDependency[]): Promise<SystemNode[]>;
-}
-```
-
-### `AnalysisFileSystemPort` (Outbound/Driven Port)
-Responsible for all filesystem input/output operations, resolving paths, and retrieving package configurations.
-```typescript
-export interface AnalysisFileSystemPort {
-  writeSchema(filePath: string, yamlContent: string): Promise<void>;
-  exists(filePath: string): boolean;
-  mkdir(dirPath: string): void;
-  unlink(filePath: string): void;
-  readPackageJsonName(packageJsonPath: string): string | null;
-  getRelativePath(from: string, to: string): string;
-  getAbsolutePath(...parts: string[]): string;
-  getCurrentWorkingDirectory(): string;
-}
-```
+1. **Imports:**
+   - TS/JS: Match `(import_statement (literal) @import_spec)` and `(import_require_clause (string) @import_spec)`.
+   - Python: Match `(import_statement) @import` and `(import_from_statement) @import`.
+2. **New Expressions (Instantiation):**
+   - TS/JS: Match `(new_expression constructor: (_) @class_name)`.
+   - Python: Match `(call function: (identifier) @class_name)` where the identifier begins with a capital letter (standard class naming heuristic).
+3. **Call Expressions:**
+   - Match `(call_expression function: (_) @call_name)` or identifiers representing `fetch` or `axios` calls.
 
 ---
 
 ## 2. Test Strategy Plan
 
-- **Pure In-Memory Testing:** We will write all unit tests using mock implementations for the ports.
-- **Red-Green-Refactor Flow:**
-  1. Write failing tests in `scripts/analysis/domain/analyzer.test.ts` verifying classification heuristics, mapping logic, and layout calculations.
-  2. Implement the domain service `scripts/analysis/domain/analyzer.ts` to make tests pass.
-  3. Refactor logic to clean up functions.
-- **Mock Interfaces structure:**
-  - Mock Parser: returns configurable list of mock parsed files.
-  - Mock Layout: returns nodes with coordinates.
-  - Mock File System: tracks write, exist, delete, and read operations in-memory.
+- **Adapter Tests (`treeSitterParser.test.ts`):**
+  - We will write unit tests that write simple TS, JS, and Python files to a temporary directory in `src/` or verify snippets directly using the parser adapter.
+  - Test cases will cover:
+    - Parsing imports, instantiations, and fetch/axios calls for TypeScript files.
+    - Parsing imports, instantiations, and calls for Python files.
+    - Ensuring empty results are handled gracefully for unsupported languages or invalid syntax.

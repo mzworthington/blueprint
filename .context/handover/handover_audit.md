@@ -1,4 +1,4 @@
-# Auditing Phase Handover (Codebase AST Analyzer Refactoring)
+# Auditing Phase Handover (Tree-sitter Integration)
 
 - **Phase:** Security & Architectural Audit
 - **Status:** COMPLETE
@@ -8,14 +8,12 @@
 
 ## 1. Architectural Guardrails Audit
 
-* **Boundary Separation Check:** We verified that no files under the pure domain layer (`scripts/analysis/domain/`) import from outer adapters or framework-specific layers (e.g. `ts-morph`, `dagre`, `fs`, `path`).
-* **SOLID Principles Conformity:**
-  - **Single Responsibility Principle (SRP):** The monolithic parsing, coordinate calculations, and filesystem writes from the original script have been separated into three decoupled driven adapters (`TsMorphParserAdapter`, `DagreLayoutAdapter`, `NodeFileSystemAdapter`).
-  - **Dependency Inversion Principle (DIP):** The core analyzer service `CodebaseAnalyzer` now depends only on abstract interfaces (Ports), allowing flexible replacement (e.g., using a different parser or layout calculator in the future).
+* **Boundary Separation Check:** Confirmed that `scripts/analysis/domain/analyzer.ts` remains 100% pure and does not import `web-tree-sitter` or have knowledge of the syntax tree parser library.
+* **Ports & Adapters Validation:** The `TreeSitterParserAdapter` cleanly implements the `CodebaseParserPort` driving interface, maintaining solid architectural decoupling.
 
 ---
 
 ## 2. Zero-Trust Security Verification
 
-* **Input Sanitization:** The codebase analyzer parses package names from `package.json` and directory names using a strict sanitization function (`sanitizeId`) that strips non-alphanumeric/dash/underscore characters to prevent injection bugs.
-* **Safe Filesystem Execution:** Directory and schema generation resolves all file paths cleanly, avoiding raw string concatenations that could lead to path traversal vulnerabilities.
+* **Sandbox Safety:** Emscripten WASM runtime for Tree-sitter is safely loaded in-memory and isolated from any external command execution risks.
+* **Dylink Check:** The version of `web-tree-sitter` (`0.20.8`) is locked to match `tree-sitter-wasms` ABI specs to prevent memory corruption or execution crashes due to WASM ABI version mismatches.

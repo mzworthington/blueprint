@@ -1,4 +1,4 @@
-# Telemetry Phase Handover (Codebase AST Analyzer Refactoring)
+# Telemetry Phase Handover (Tree-sitter Integration)
 
 - **Phase:** Observability & Telemetry Instrumentation
 - **Status:** COMPLETE
@@ -8,6 +8,5 @@
 
 ## 1. Observability Improvements
 
-* **Logging Abstraction:** We migrated all unstructured `console.log`/`console.error` calls to implement the standard `LoggerPort` boundary.
-* **Timestamped Output:** `ConsoleLogger` now prepends ISO timestamps and standard log levels (e.g. `[BLUEPRINT - INFO] [2026-07-10T12:00:00.000Z]`) to all outputs, matching the logging conventions used in the rest of the application.
-* **Clean Error Handling:** Under error scenarios, the logger prints readable error stacks to standard error (`console.error`) and exits with process exit code `1`.
+* **Logging Integration:** All actions of the Tree-sitter loader (e.g. dynamic grammar loading and AST parsing) write descriptive status outputs through the standard ConsoleLogger wrapper.
+* **Failure Handling:** Invalid file extensions or missing language wasm binaries write clean warning states (`this.logger.warn`) instead of throwing or crashing.

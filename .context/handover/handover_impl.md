@@ -1,4 +1,4 @@
-# Implementation Phase Handover (Codebase AST Analyzer Refactoring)
+# Implementation Phase Handover (Tree-sitter Integration)
 
 - **Phase:** Domain & Infrastructure Execution
 - **Status:** COMPLETE
@@ -6,24 +6,15 @@
 
 ---
 
-## 1. Domain & Adapter Code Structure
+## 1. Tree-sitter Adapter Implementation
 
-We successfully structured the AST Codebase Analyzer refactoring into clean Hexagonal directories:
-
-### Core Domain
-- [types.ts](file:///Users/worthington/Documents/dev/blueprint/scripts/analysis/domain/types.ts): Pure data classes.
-- [ports.ts](file:///Users/worthington/Documents/dev/blueprint/scripts/analysis/domain/ports.ts): Boundary Port interfaces.
-- [analyzer.ts](file:///Users/worthington/Documents/dev/blueprint/scripts/analysis/domain/analyzer.ts): Pure `CodebaseAnalyzer` service.
-
-### Infrastructure Adapters
-- [tsMorphParser.ts](file:///Users/worthington/Documents/dev/blueprint/scripts/analysis/adapters/tsMorphParser.ts): AST parsing.
-- [dagreLayout.ts](file:///Users/worthington/Documents/dev/blueprint/scripts/analysis/adapters/dagreLayout.ts): Graph coordinates calculation.
-- [nodeFileSystem.ts](file:///Users/worthington/Documents/dev/blueprint/scripts/analysis/adapters/nodeFileSystem.ts): Node FS.
-- [consoleLogger.ts](file:///Users/worthington/Documents/dev/blueprint/scripts/analysis/adapters/consoleLogger.ts): Timestamped logging.
+We introduced the `TreeSitterParserAdapter` under `scripts/analysis/adapters/treeSitterParser.ts` implementing `CodebaseParserPort`:
+* **WASM Grammar Loading:** Resolves and loads pre-built WASM binaries from `tree-sitter-wasms` dynamically on demand for specific file extensions.
+* **Syntax Tree Walkers:** Traverses parsed CSTs to parse imports, new expressions, and call expressions for TS/JSX and Python files.
+* **CLI Customizations:** `scripts/analyze.ts` updated to dynamically route parser execution based on `--parser=tree-sitter` and `--glob="..."` command-line flags.
 
 ---
 
 ## 2. Test Verification
 
-- Executed `pnpm test scripts/analysis/domain/analyzer.test.ts` and all 9 unit tests passed successfully.
-- Parity was confirmed by running the analyze script and checking git diff outputs.
+* Executed `pnpm test scripts/analysis/adapters/treeSitterParser.test.ts` verifying parser extraction metrics for TS/JS and Python syntax files. All tests passed.

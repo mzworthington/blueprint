@@ -134,10 +134,10 @@ export class CodebaseAnalyzer {
     };
   }
 
-  async runAnalysis(): Promise<void> {
+  async runAnalysis(globPattern: string = 'src/**/*.{ts,tsx}'): Promise<void> {
     this.logger.info('🚀 Starting AST Codebase Analysis...');
 
-    const sourceFiles = await this.parser.parseSourceFiles('src/**/*.{ts,tsx}');
+    const sourceFiles = await this.parser.parseSourceFiles(globPattern);
     this.logger.info(`📂 Found ${sourceFiles.length} source files to inspect.`);
 
     const nodesMap = new Map<string, SystemNode>();
