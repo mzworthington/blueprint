@@ -1,5 +1,3 @@
-import type { SystemNode, SystemDependency } from '../../../src/domain/schema';
-
 export interface ParsedImport {
   moduleSpecifier: string;
 }

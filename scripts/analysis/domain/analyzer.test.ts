@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { CodebaseAnalyzer } from './analyzer';
 import type { CodebaseParserPort, LayoutPort, AnalysisFileSystemPort, LoggerPort } from './ports';
 import type { ParsedSourceFile } from './types';
@@ -6,7 +6,7 @@ import type { SystemNode, SystemDependency } from '../../../src/domain/schema';
 
 class MockParser implements CodebaseParserPort {
   files: ParsedSourceFile[] = [];
-  async parseSourceFiles(globPattern: string): Promise<ParsedSourceFile[]> {
+  async parseSourceFiles(_globPattern: string): Promise<ParsedSourceFile[]> {
     return this.files;
   }
 }
@@ -14,7 +14,7 @@ class MockParser implements CodebaseParserPort {
 class MockLayout implements LayoutPort {
   async computeLayout(
     nodes: SystemNode[],
-    dependencies: SystemDependency[]
+    _dependencies: SystemDependency[]
   ): Promise<SystemNode[]> {
     return nodes.map((n, idx) => ({
       ...n,
@@ -47,7 +47,7 @@ class MockFileSystem implements AnalysisFileSystemPort {
     this.deletedFiles.add(filePath);
   }
 
-  readPackageJsonName(packageJsonPath: string): string | null {
+  readPackageJsonName(_packageJsonPath: string): string | null {
     return this.pkgName;
   }
 
@@ -67,13 +67,13 @@ class MockFileSystem implements AnalysisFileSystemPort {
 
 class MockLogger implements LoggerPort {
   logs: string[] = [];
-  info(message: string, context?: Record<string, unknown>): void {
+  info(message: string, _context?: Record<string, unknown>): void {
     this.logs.push(`INFO: ${message}`);
   }
-  warn(message: string, context?: Record<string, unknown>): void {
+  warn(message: string, _context?: Record<string, unknown>): void {
     this.logs.push(`WARN: ${message}`);
   }
-  error(message: string, error?: unknown, context?: Record<string, unknown>): void {
+  error(message: string, _error?: unknown, _context?: Record<string, unknown>): void {
     this.logs.push(`ERROR: ${message}`);
   }
 }

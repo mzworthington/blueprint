@@ -194,5 +194,6 @@ pnpm format:write
 We use **Husky** and **lint-staged** to validate commits before they are finalized:
 
 - Staged files undergo Prettier formatting check (`prettier --check`) and lint verification (`oxlint -c .oxlintrc.json`).
+- The entire codebase is checked for lint errors (`pnpm run lint`).
 - The full Vitest test suite (`pnpm test`) is run.
 - If formatting check fails, lint errors are found, or unit tests fail, the commit is blocked.
