@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from './App';
 import { useBlueprintStore } from './store/store';
 
@@ -46,13 +46,13 @@ describe('App Layout and Collapsible Panels', () => {
 
     render(<App />);
 
-    expect(spyReplaceState).toHaveBeenCalledWith({}, '', '/workspace/my-super-cool-workspace');
+    expect(spyReplaceState).toHaveBeenCalledWith(null, '', '/workspace/my-super-cool-workspace');
 
     window.location = originalLocation as any;
     spyReplaceState.mockRestore();
   });
 
-  it('should switch systems in store when popstate event fires with a different slug', () => {
+  it('should switch systems in store when popstate event fires with a different slug', async () => {
     const originalLocation = window.location;
     delete (window as any).location;
     window.location = {
@@ -108,7 +108,9 @@ describe('App Layout and Collapsible Panels', () => {
     const popStateEvent = new PopStateEvent('popstate');
     window.dispatchEvent(popStateEvent);
 
-    expect(spySelectSystem).toHaveBeenCalledWith('target.yaml');
+    await waitFor(() => {
+      expect(spySelectSystem).toHaveBeenCalledWith('target.yaml');
+    });
 
     window.location = originalLocation as any;
     spySelectSystem.mockRestore();

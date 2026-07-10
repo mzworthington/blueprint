@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Copy, Check, Upload, AlertCircle, Save } from 'lucide-react';
 import { useBlueprintStore } from '../store/store';
+import { useLocation } from 'wouter';
 import { serializeSchemaToMermaid, serializeSchemaToYaml } from '../domain/graph';
 import { MermaidPreview } from './MermaidPreview';
 
@@ -17,8 +18,10 @@ export const CodeViewer: React.FC = () => {
     isWorkspaceOpen,
     workspaceManifestYaml,
     saveWorkspaceManifest,
-    setShowDesignSystem,
   } = useBlueprintStore();
+
+  const [, setLocation] = useLocation();
+
   const [activeTab, setActiveTab] = useState<'yaml' | 'json' | 'mermaid' | 'manifest' | 'import'>(
     'yaml'
   );
@@ -111,7 +114,7 @@ export const CodeViewer: React.FC = () => {
         </div>
         <div className="flex items-center gap-2 shrink-0">
           <button
-            onClick={() => setShowDesignSystem(true)}
+            onClick={() => setLocation('/design-system')}
             className="p-1 px-2 border border-brand-500/30 text-brand-500 hover:text-brand-300 hover:border-brand-500 hover:bg-brand-950/20 rounded text-[10px] font-bold font-mono tracking-wider transition cursor-pointer flex items-center gap-1"
             title="Open Design System View"
           >
