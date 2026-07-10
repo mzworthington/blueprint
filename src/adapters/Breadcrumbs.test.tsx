@@ -26,7 +26,6 @@ describe('Breadcrumbs Component', () => {
 
     expect(screen.getByText('Sandbox Workspace')).toBeInTheDocument();
     expect(screen.getByText('Main App System')).toBeInTheDocument();
-    expect(screen.getByText('Level: Container')).toBeInTheDocument();
   });
 
   it('renders specific workspace name when workspace directory is loaded', () => {
@@ -38,21 +37,6 @@ describe('Breadcrumbs Component', () => {
     render(<Breadcrumbs />);
 
     expect(screen.getByText('DevPortalRepo')).toBeInTheDocument();
-  });
-
-  it('renders custom C4 level indicators (e.g. Context, Component)', () => {
-    const { initSchema } = useBlueprintStore.getState();
-    initSchema({
-      name: 'System Context Map',
-      version: '1.0.0',
-      level: 'context',
-      nodes: [],
-      dependencies: [],
-    });
-
-    render(<Breadcrumbs />);
-
-    expect(screen.getByText('Level: Context')).toBeInTheDocument();
   });
 
   it('renders active diagram breadcrumbs and historical navigation stack', () => {
@@ -187,5 +171,77 @@ describe('Breadcrumbs Component', () => {
 
     expect(screen.getByText('Container Diagram')).toBeInTheDocument();
     expect(screen.getByText('Component Diagram')).toBeInTheDocument();
+  });
+
+  it('renders dropdown button with child components and triggers selectSystem when child is clicked', () => {
+    const { initSchema } = useBlueprintStore.getState();
+    initSchema({
+      name: 'Container Diagram',
+      version: '1.0.0',
+      level: 'container',
+      nodes: [],
+      dependencies: [],
+    });
+
+    useBlueprintStore.setState({
+      isWorkspaceOpen: true,
+      workspaceName: 'TestWorkspace',
+      currentFilePath: 'blueprints/containers.yaml',
+      navigationStack: [],
+      loadedSystems: [
+        {
+          path: 'blueprints/containers.yaml',
+          name: 'Container Diagram',
+          schema: {
+            name: 'Container Diagram',
+            version: '1.0.0',
+            level: 'container',
+            nodes: [],
+            dependencies: [],
+          },
+        },
+        {
+          path: 'blueprints/component.yaml',
+          name: 'Component Diagram',
+          schema: {
+            name: 'Component Diagram',
+            version: '1.0.0',
+            level: 'component',
+            nodes: [],
+            dependencies: [],
+          },
+        },
+      ],
+      workspaceManifest: {
+        name: 'Workspace Manifest',
+        root: './containers.yaml',
+        hierarchy: [
+          {
+            parent: './containers.yaml',
+            children: ['./component.yaml'],
+          },
+        ],
+      },
+    });
+
+    render(<Breadcrumbs />);
+
+    // Check if dropdown trigger button is present
+    const dropdownBtn = screen.getByTitle('Explore child components');
+    expect(dropdownBtn).toBeInTheDocument();
+
+    // Click trigger to open menu
+    fireEvent.click(dropdownBtn);
+
+    // Verify Jump to Component header and child item exists
+    expect(screen.getByText('Jump to component')).toBeInTheDocument();
+    const childOption = screen.getByText('Component Diagram');
+    expect(childOption).toBeInTheDocument();
+
+    // Click child option
+    fireEvent.click(childOption);
+
+    // Verify selectSystem is called
+    expect(useBlueprintStore.getState().currentFilePath).toBe('blueprints/component.yaml');
   });
 });

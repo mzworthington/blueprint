@@ -1,6 +1,6 @@
 import React from 'react';
 import { useBlueprintStore } from './store';
-import { Folder, ChevronRight, Layers, Compass, Code, Network } from 'lucide-react';
+import { Folder, ChevronRight, Layers, Compass, Code, Network, ChevronDown } from 'lucide-react';
 import type { C4Level } from '../domain/schema';
 
 const LEVEL_CONFIGS: Record<
@@ -53,9 +53,41 @@ export const Breadcrumbs: React.FC = () => {
     selectSystem,
   } = useBlueprintStore();
 
+  const [openDropdownIdx, setOpenDropdownIdx] = React.useState<number | null>(null);
+  const dropdownRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setOpenDropdownIdx(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const getFileName = (p: string) => p.split('/').pop() || p;
+
+  const getSegmentChildren = React.useCallback(
+    (segPath: string) => {
+      if (!workspaceManifest || !workspaceManifest.hierarchy) return [];
+      const segFileName = getFileName(segPath);
+      const match = workspaceManifest.hierarchy.find(h => getFileName(h.parent) === segFileName);
+      if (!match) return [];
+
+      return match.children.map(childPath => {
+        const childFileName = getFileName(childPath);
+        const system = loadedSystems.find(s => getFileName(s.path) === childFileName);
+        return {
+          path: system?.path || childPath,
+          name: system?.name || childFileName.replace('-components.yaml', '').replace('.yaml', ''),
+        };
+      });
+    },
+    [workspaceManifest, loadedSystems]
+  );
+
   const activeLevel = schema.level || 'container';
-  const levelConfig = LEVEL_CONFIGS[activeLevel];
-  const LevelIcon = levelConfig.icon;
 
   const handleBreadcrumbClick = async (targetIndex: number) => {
     const popCount = navigationStack.length - targetIndex;
@@ -63,8 +95,6 @@ export const Breadcrumbs: React.FC = () => {
       await zoomOut();
     }
   };
-
-  const getFileName = (p: string) => p.split('/').pop() || p;
 
   const ancestors = React.useMemo(() => {
     const list: Array<{ path: string; name: string; level: C4Level }> = [];
@@ -155,6 +185,9 @@ export const Breadcrumbs: React.FC = () => {
     });
   }
 
+  const currentChildren = getSegmentChildren(currentFilePath);
+  const hasNextLevelChildren = currentChildren.length > 0;
+
   return (
     <div className="flex items-center gap-2.5 bg-slate-950/90 border border-slate-900 px-4 py-2.5 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md text-xs select-none">
       <div className="flex items-center gap-1.5 text-slate-400 font-medium">
@@ -166,7 +199,7 @@ export const Breadcrumbs: React.FC = () => {
 
       <ChevronRight className="w-3.5 h-3.5 text-slate-700 shrink-0" />
 
-      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar scroll-smooth">
+      <div className="flex items-center gap-1.5 scroll-smooth">
         {segments.map((seg, idx) => {
           const isLast = idx === segments.length - 1;
           const isClickable = !isLast || seg.isZoomPreview;
@@ -198,14 +231,47 @@ export const Breadcrumbs: React.FC = () => {
         })}
       </div>
 
-      <div className="w-px h-4 bg-slate-800/80 self-center mx-1 shrink-0" />
+      {hasNextLevelChildren && (
+        <>
+          <div className="w-px h-4 bg-slate-800/80 self-center mx-1 shrink-0" />
 
-      <div
-        className={`flex items-center gap-1 px-2.5 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider shrink-0 ${levelConfig.bg} ${levelConfig.text} ${levelConfig.border}`}
-      >
-        <LevelIcon className="w-3 h-3" />
-        <span>Level: {levelConfig.label}</span>
-      </div>
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setOpenDropdownIdx(openDropdownIdx === 999 ? null : 999)}
+              className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg border text-[10px] font-bold uppercase tracking-wider shrink-0 transition focus:outline-none cursor-pointer ${
+                openDropdownIdx === 999
+                  ? 'bg-brand-950/50 border-brand-500/30 text-brand-400'
+                  : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+              }`}
+              title="Explore child components"
+            >
+              <span>Explore {getNextLevel(activeLevel)} Level</span>
+              <ChevronDown className="w-3.5 h-3.5" />
+            </button>
+
+            {openDropdownIdx === 999 && (
+              <div className="absolute top-full right-0 mt-1.5 bg-slate-950 border border-slate-900 rounded-xl shadow-2xl py-1.5 z-50 min-w-[200px] max-h-[250px] overflow-y-auto backdrop-blur-lg animate-in fade-in slide-in-from-top-1 duration-150 text-[11px]">
+                <div className="px-2.5 py-1 text-[9px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-900/60 mb-1">
+                  Jump to {getNextLevel(activeLevel)}
+                </div>
+                {currentChildren.map(child => (
+                  <button
+                    key={child.path}
+                    onClick={() => {
+                      selectSystem(child.path);
+                      setOpenDropdownIdx(null);
+                    }}
+                    className="w-full text-left px-3 py-2 hover:bg-slate-900/80 hover:text-brand-400 text-slate-400 transition flex items-center gap-2"
+                  >
+                    <Network className="w-3 h-3 text-slate-600 shrink-0" />
+                    <span className="truncate">{child.name}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

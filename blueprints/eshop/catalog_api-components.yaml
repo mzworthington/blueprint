@@ -1,0 +1,31 @@
+name: EShop - Catalog.API Components
+version: 1.0.0
+level: component
+nodes:
+  - id: catalogservices
+    type: background-worker
+    name: CatalogServices Service
+    isTest: false
+    properties:
+      filepath: ../eshop/src/Catalog.API/Model/CatalogServices.cs
+      namespaces: ''
+      technology: C# Domain Service
+    external: false
+    x: 140
+    'y': 370
+  - id: catalogapi
+    type: background-worker
+    name: CatalogApi Service (eShop.Catalog)
+    isTest: false
+    properties:
+      filepath: ../eshop/src/Catalog.API/Apis/CatalogApi.cs
+      namespaces: eShop.Catalog.API
+      technology: C# Domain Service
+    external: true
+    x: 140
+    'y': 50
+dependencies:
+  - from: catalogapi
+    to: catalogservices
+    type: direct-call
+    description: References class type / calls methods

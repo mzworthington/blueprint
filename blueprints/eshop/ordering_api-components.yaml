@@ -1,0 +1,162 @@
+name: EShop - Ordering.API Components
+version: 1.0.0
+level: component
+nodes:
+  - id: program_testing
+    type: background-worker
+    name: Program.Testing Service
+    isTest: false
+    properties:
+      filepath: ../eshop/src/Ordering.API/Program.Testing.cs
+      namespaces: ''
+      technology: C# Domain Service
+    external: false
+    x: 1290
+    'y': 50
+  - id: orderservices
+    type: background-worker
+    name: OrderServices Service
+    isTest: false
+    properties:
+      filepath: ../eshop/src/Ordering.API/Apis/OrderServices.cs
+      namespaces: ''
+      technology: C# Domain Service
+    external: false
+    x: 2900
+    'y': 370
+  - id: ordersapi
+    type: background-worker
+    name: OrdersApi Service
+    isTest: false
+    properties:
+      filepath: ../eshop/src/Ordering.API/Apis/OrdersApi.cs
+      namespaces: ''
+      technology: C# Domain Service
+    external: false
+    x: 1750
+    'y': 50
+  - id: cardtype
+    type: background-worker
+    name: CardType Service (eShop.Ordering)
+    isTest: false
+    properties:
+      filepath: ../eshop/src/Ordering.Domain/AggregatesModel/BuyerAggregate/CardType.cs
+      namespaces: eShop.Ordering.Domain.AggregatesModel.BuyerAggregate
+      technology: C# Domain Service
+    external: true
+    x: 3360
+    'y': 370
+  - id: order
+    type: background-worker
+    name: Order Service (eShop.Ordering)
+    isTest: false
+    properties:
+      filepath: ../eshop/src/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs
+      namespaces: eShop.Ordering.Domain.AggregatesModel.OrderAggregate
+      technology: C# Domain Service
+    external: true
+    x: 2440
+    'y': 370
+  - id: cancelordercommand
+    type: background-worker
+    name: CancelOrderCommand Service (eShop.Ordering)
+    isTest: false
+    properties:
+      filepath: ../eshop/src/Ordering.API/Application/Commands/CancelOrderCommand.cs
+      namespaces: eShop.Ordering.API.Application.Commands
+      technology: C# Domain Service
+    external: true
+    x: 1980
+    'y': 370
+  - id: shipordercommand
+    type: background-worker
+    name: ShipOrderCommand Service (eShop.Ordering)
+    isTest: false
+    properties:
+      filepath: ../eshop/src/Ordering.API/Application/Commands/ShipOrderCommand.cs
+      namespaces: eShop.Ordering.API.Application.Commands
+      technology: C# Domain Service
+    external: true
+    x: 1520
+    'y': 370
+  - id: iorderqueries
+    type: background-worker
+    name: IOrderQueries Service (eShop.Ordering)
+    isTest: false
+    properties:
+      filepath: ../eshop/src/Ordering.API/Application/Queries/IOrderQueries.cs
+      namespaces: eShop.Ordering.API.Application.Queries
+      technology: C# Domain Service
+    external: true
+    x: 1060
+    'y': 370
+  - id: createorderdraftcommand
+    type: background-worker
+    name: CreateOrderDraftCommand Service (eShop.Ordering)
+    isTest: false
+    properties:
+      filepath: ../eshop/src/Ordering.API/Application/Commands/CreateOrderDraftCommand.cs
+      namespaces: eShop.Ordering.API.Application.Commands
+      technology: C# Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: createordercommand
+    type: background-worker
+    name: CreateOrderCommand Service (eShop.Ordering)
+    isTest: false
+    properties:
+      filepath: ../eshop/src/Ordering.API/Application/Commands/CreateOrderCommand.cs
+      namespaces: eShop.Ordering.API.Application.Commands
+      technology: C# Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: orderswebapitest
+    type: background-worker
+    name: OrdersWebApiTest Service (eShop.Ordering)
+    isTest: false
+    properties:
+      filepath: ../eshop/tests/Ordering.UnitTests/Application/OrdersWebApiTest.cs
+      namespaces: eShop.Ordering.UnitTests.Application
+      technology: C# Domain Service
+    external: true
+    x: 3320
+    'y': 50
+dependencies:
+  - from: ordersapi
+    to: cardtype
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: ordersapi
+    to: order
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: ordersapi
+    to: cancelordercommand
+    type: direct-call
+    description: References class type / calls methods
+  - from: ordersapi
+    to: orderservices
+    type: direct-call
+    description: References class type / calls methods
+  - from: ordersapi
+    to: shipordercommand
+    type: direct-call
+    description: References class type / calls methods
+  - from: ordersapi
+    to: iorderqueries
+    type: direct-call
+    description: References class type / calls methods
+  - from: ordersapi
+    to: createorderdraftcommand
+    type: direct-call
+    description: References class type / calls methods
+  - from: ordersapi
+    to: createordercommand
+    type: direct-call
+    description: References class type / calls methods
+  - from: orderswebapitest
+    to: orderservices
+    type: direct-call
+    description: References class type / calls methods

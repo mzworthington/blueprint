@@ -138,6 +138,9 @@ export class CodebaseAnalyzer {
     }
 
     const normalized = filepath.replace(/\\/g, '/');
+    const fileExt = normalized.split('.').pop()?.toLowerCase();
+
+    // Custom TypeScript blueprints mapping rules
     if (normalized.startsWith('src/domain/')) {
       return {
         id: 'domain-logic',
@@ -172,19 +175,60 @@ export class CodebaseAnalyzer {
       }
     }
 
-    const parts = normalized.split('/');
-    if (parts.length > 2 && parts[0] === 'src') {
-      const dir = parts[1];
-      const name = dir.charAt(0).toUpperCase() + dir.slice(1) + ' Container';
+    // Resolve container from namespaces or folder structures
+    const namespacesStr = node.properties?.namespaces as string | undefined;
+    const namespaces = namespacesStr ? namespacesStr.split(',').filter(Boolean) : [];
+    let containerName = '';
+    let containerId = '';
+
+    // A. Use namespace if present (e.g. Basket.API.Controllers -> Basket.API)
+    if (namespaces.length > 0) {
+      const primaryNamespace = namespaces[0];
+      const parts = primaryNamespace.split('.');
+      const segment = parts.slice(0, Math.min(parts.length, 2)).join('.');
+      if (segment && segment !== 'System' && segment !== 'Microsoft') {
+        containerName = segment;
+        containerId = this.sanitizeId(segment);
+      }
+    }
+
+    // B. Fallback to folder structure (e.g. src/Basket.API/... -> Basket.API)
+    if (!containerId) {
+      const parts = normalized.split('/');
+      const srcIndex = parts.indexOf('src');
+      let folderName = '';
+      if (srcIndex !== -1 && parts.length > srcIndex + 1) {
+        folderName = parts[srcIndex + 1];
+      } else if (parts.length > 2) {
+        folderName = parts[parts.length - 2];
+      }
+
+      if (folderName && folderName !== 'src') {
+        containerName = folderName;
+        containerId = this.sanitizeId(folderName);
+      }
+    }
+
+    if (containerId) {
+      const isApi =
+        containerId.endsWith('api') ||
+        containerId.includes('controller') ||
+        containerId.includes('server');
+      const containerType = isApi ? ('gateway-api' as const) : ('background-worker' as const);
+      const desc = isApi
+        ? `REST API endpoints for ${containerName}`
+        : `Core domain services for ${containerName}`;
+
       return {
-        id: `container-${dir}`,
-        name,
-        type: 'background-worker' as const,
-        description: `Components located under src/${dir}`,
-        technology: 'TypeScript',
+        id: containerId,
+        name: containerName,
+        type: containerType,
+        description: desc,
+        technology: fileExt === 'cs' ? 'C# / .NET' : fileExt === 'py' ? 'Python' : 'TypeScript',
       };
     }
 
+    // Fallback to app-host
     return {
       id: 'app-host',
       name: 'Application Shell',
@@ -277,6 +321,16 @@ export class CodebaseAnalyzer {
         }
       });
 
+      const fileExt = sourceFile.relativePath.split('.').pop()?.toLowerCase();
+      let langPrefix = 'TypeScript';
+      if (fileExt === 'cs') {
+        langPrefix = 'C#';
+      } else if (fileExt === 'py') {
+        langPrefix = 'Python';
+      } else if (fileExt === 'js' || fileExt === 'jsx') {
+        langPrefix = 'JavaScript';
+      }
+
       // Determine target node properties
       if (isReactComponent) {
         if (cleanFileId !== 'app' && cleanFileId !== 'main') {
@@ -287,7 +341,13 @@ export class CodebaseAnalyzer {
             isTest: isTestFile,
             properties: {
               filepath: sourceFile.relativePath,
-              technology: 'React Component',
+              namespaces: (sourceFile.namespaces || []).join(','),
+              technology:
+                fileExt === 'cs'
+                  ? 'C# Razor/Blazor Component'
+                  : langPrefix === 'TypeScript' || langPrefix === 'JavaScript'
+                    ? 'React Component'
+                    : `${langPrefix} UI Component`,
             },
           });
         }
@@ -299,7 +359,13 @@ export class CodebaseAnalyzer {
           isTest: isTestFile,
           properties: {
             filepath: sourceFile.relativePath,
-            technology: 'Prisma / SQL Database Client',
+            namespaces: (sourceFile.namespaces || []).join(','),
+            technology:
+              fileExt === 'cs'
+                ? 'Entity Framework / DB Context'
+                : fileExt === 'py'
+                  ? 'SQLAlchemy / DB Client'
+                  : 'Prisma / SQL Database Client',
           },
         });
       } else if (isEventBroker) {
@@ -310,7 +376,8 @@ export class CodebaseAnalyzer {
           isTest: isTestFile,
           properties: {
             filepath: sourceFile.relativePath,
-            technology: 'Event Queue/Broker Client',
+            namespaces: (sourceFile.namespaces || []).join(','),
+            technology: `${langPrefix} Event Client`,
           },
         });
       } else if (isApiServer) {
@@ -321,7 +388,13 @@ export class CodebaseAnalyzer {
           isTest: isTestFile,
           properties: {
             filepath: sourceFile.relativePath,
-            technology: 'REST Controller / Router',
+            namespaces: (sourceFile.namespaces || []).join(','),
+            technology:
+              fileExt === 'cs'
+                ? 'ASP.NET Core Controller / Minimal API'
+                : fileExt === 'py'
+                  ? 'FastAPI / Flask Router'
+                  : 'REST Controller / Router',
           },
         });
       } else {
@@ -332,7 +405,8 @@ export class CodebaseAnalyzer {
           isTest: isTestFile,
           properties: {
             filepath: sourceFile.relativePath,
-            technology: 'TypeScript Domain Service',
+            namespaces: (sourceFile.namespaces || []).join(','),
+            technology: `${langPrefix} Domain Service`,
           },
         });
       }
@@ -431,6 +505,52 @@ export class CodebaseAnalyzer {
           }
         }
       });
+
+      // Check if it instantiates/references types from other scanned files
+      if (sourceFile.newExpressions) {
+        sourceFile.newExpressions.forEach(newExpr => {
+          let className = newExpr.className;
+          let targetId = this.sanitizeId(className);
+          let targetNode = nodesMap.get(targetId);
+
+          // C# interface resolution fallback: e.g. IUserService -> UserService
+          if (
+            !targetNode &&
+            className.startsWith('I') &&
+            className.length > 1 &&
+            className[1] === className[1].toUpperCase()
+          ) {
+            className = className.slice(1);
+            targetId = this.sanitizeId(className);
+            targetNode = nodesMap.get(targetId);
+          }
+
+          if (targetNode && targetId !== cleanFileId) {
+            const alreadyExists = dependenciesList.some(
+              d => d.from === cleanFileId && d.to === targetId
+            );
+            if (!alreadyExists) {
+              let edgeType: 'direct-call' | 'read-write' | 'publish-subscribe' = 'direct-call';
+              let desc = 'References class type / calls methods';
+
+              if (targetNode.type === 'relational-database') {
+                edgeType = 'read-write';
+                desc = 'Queries database table records';
+              } else if (targetNode.type === 'event-broker') {
+                edgeType = 'publish-subscribe';
+                desc = 'Publishes / consumes messaging topics';
+              }
+
+              dependenciesList.push({
+                from: cleanFileId,
+                to: targetId,
+                type: edgeType,
+                description: desc,
+              });
+            }
+          }
+        });
+      }
     }
 
     // Fallback: If this is the blueprint project itself, let's make sure filesSync.ts is connected to standard ports!

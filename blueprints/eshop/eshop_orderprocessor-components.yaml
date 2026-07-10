@@ -1,0 +1,42 @@
+name: EShop - eShop.OrderProcessor Components
+version: 1.0.0
+level: component
+nodes:
+  - id: backgroundtaskoptions
+    type: background-worker
+    name: BackgroundTaskOptions Service
+    isTest: false
+    properties:
+      filepath: ../eshop/src/OrderProcessor/BackgroundTaskOptions.cs
+      namespaces: eShop.OrderProcessor
+      technology: C# Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: graceperiodmanagerservice
+    type: relational-database
+    name: GracePeriodManagerService Database
+    isTest: false
+    properties:
+      filepath: ../eshop/src/OrderProcessor/Services/GracePeriodManagerService.cs
+      namespaces: eShop.OrderProcessor.Services
+      technology: Entity Framework / DB Context
+    external: false
+    x: 600
+    'y': 50
+  - id: graceperiodconfirmedintegrationevent
+    type: background-worker
+    name: GracePeriodConfirmedIntegrationEvent Service (eShop.Ordering)
+    isTest: false
+    properties:
+      filepath: ../eshop/src/Ordering.API/Application/IntegrationEvents/Events/GracePeriodConfirmedIntegrationEvent.cs
+      namespaces: eShop.Ordering.API.Application.IntegrationEvents.Events
+      technology: C# Domain Service
+    external: true
+    x: 600
+    'y': 370
+dependencies:
+  - from: graceperiodmanagerservice
+    to: graceperiodconfirmedintegrationevent
+    type: direct-call
+    description: References class type / calls methods

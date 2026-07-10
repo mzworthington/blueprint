@@ -1,0 +1,124 @@
+name: EShop - eShop.WebhookClient Components
+version: 1.0.0
+level: component
+nodes:
+  - id: authenticationendpoints
+    type: background-worker
+    name: AuthenticationEndpoints Service
+    isTest: false
+    properties:
+      filepath: ../eshop/src/WebhookClient/Endpoints/AuthenticationEndpoints.cs
+      namespaces: eShop.WebhookClient.Endpoints
+      technology: C# Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: webhookendpoints
+    type: background-worker
+    name: WebhookEndpoints Service
+    isTest: false
+    properties:
+      filepath: ../eshop/src/WebhookClient/Endpoints/WebhookEndpoints.cs
+      namespaces: eShop.WebhookClient.Endpoints
+      technology: C# Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: hooksrepository
+    type: background-worker
+    name: HooksRepository Service
+    isTest: false
+    properties:
+      filepath: ../eshop/src/WebhookClient/Services/HooksRepository.cs
+      namespaces: eShop.WebhookClient.Services
+      technology: C# Domain Service
+    external: false
+    x: 600
+    'y': 370
+  - id: webhookreceived
+    type: background-worker
+    name: WebHookReceived Service
+    isTest: false
+    properties:
+      filepath: ../eshop/src/WebhookClient/Services/WebHookReceived.cs
+      namespaces: eShop.WebhookClient.Services
+      technology: C# Domain Service
+    external: false
+    x: 775
+    'y': 690
+  - id: webhooksclient
+    type: background-worker
+    name: WebHooksClient Service
+    isTest: false
+    properties:
+      filepath: ../eshop/src/WebhookClient/Services/WebHooksClient.cs
+      namespaces: eShop.WebhookClient.Services
+      technology: C# Domain Service
+    external: false
+    x: 1140
+    'y': 50
+  - id: webhookclientoptions
+    type: background-worker
+    name: WebhookClientOptions Service
+    isTest: false
+    properties:
+      filepath: ../eshop/src/WebhookClient/Services/WebhookClientOptions.cs
+      namespaces: eShop.WebhookClient.Services
+      technology: C# Domain Service
+    external: false
+    x: 1600
+    'y': 50
+  - id: webhookresponse
+    type: background-worker
+    name: WebhookResponse Service
+    isTest: false
+    properties:
+      filepath: ../eshop/src/WebhookClient/Services/WebhookResponse.cs
+      namespaces: eShop.WebhookClient.Services
+      technology: C# Domain Service
+    external: false
+    x: 2060
+    'y': 50
+  - id: webhookdata
+    type: background-worker
+    name: WebhookData Service (Webhooks.API)
+    isTest: false
+    properties:
+      filepath: ../eshop/src/Webhooks.API/Model/WebhookData.cs
+      namespaces: Webhooks.API.Model
+      technology: C# Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: webhooksubscriptionrequest
+    type: background-worker
+    name: WebhookSubscriptionRequest Service (Webhooks.API)
+    isTest: false
+    properties:
+      filepath: ../eshop/src/Webhooks.API/Model/WebhookSubscriptionRequest.cs
+      namespaces: Webhooks.API.Model
+      technology: C# Domain Service
+    external: true
+    x: 1140
+    'y': 370
+dependencies:
+  - from: webhookendpoints
+    to: webhookdata
+    type: direct-call
+    description: References class type / calls methods
+  - from: webhookendpoints
+    to: hooksrepository
+    type: direct-call
+    description: References class type / calls methods
+  - from: webhookendpoints
+    to: webhookreceived
+    type: direct-call
+    description: References class type / calls methods
+  - from: hooksrepository
+    to: webhookreceived
+    type: direct-call
+    description: References class type / calls methods
+  - from: webhooksclient
+    to: webhooksubscriptionrequest
+    type: direct-call
+    description: References class type / calls methods

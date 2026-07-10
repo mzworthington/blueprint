@@ -11,7 +11,15 @@ import {
 import { useBlueprintStore } from './store';
 import { BlueprintNode } from './BlueprintNode';
 import { Breadcrumbs } from './Breadcrumbs';
-import { Download, Upload, AlertTriangle, CheckCircle, RefreshCcw, Folder } from 'lucide-react';
+import {
+  Download,
+  Upload,
+  AlertTriangle,
+  CheckCircle,
+  RefreshCcw,
+  Folder,
+  Layers,
+} from 'lucide-react';
 
 export const Canvas: React.FC = () => {
   const {
@@ -35,6 +43,7 @@ export const Canvas: React.FC = () => {
     saveActiveDiagram,
     loadedSystems,
     currentFilePath,
+    schema,
     selectSystem,
   } = useBlueprintStore();
 
@@ -128,6 +137,32 @@ export const Canvas: React.FC = () => {
       >
         <Background variant={BackgroundVariant.Dots} gap={24} size={1} color="#334155" />
         <Controls position="bottom-right" />
+
+        {loadedSystems && loadedSystems.length > 0 && (
+          <Panel
+            position="bottom-right"
+            style={{ margin: 16, marginRight: 70 }}
+            className="flex items-center shadow-lg shadow-black/40 backdrop-blur-md"
+          >
+            <div className="flex items-center gap-2 bg-slate-950/90 border border-slate-900 px-3 py-1.5 rounded-xl text-xs">
+              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500">
+                System:
+              </span>
+              <select
+                value={currentFilePath}
+                onChange={e => selectSystem(e.target.value)}
+                className="bg-slate-900 border border-slate-850 text-slate-200 hover:text-slate-100 hover:border-slate-700 px-2.5 py-1 rounded-lg text-xs font-semibold focus:outline-none focus:border-brand-500 cursor-pointer transition duration-200"
+              >
+                {loadedSystems.map(sys => (
+                  <option key={sys.path} value={sys.path}>
+                    {sys.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </Panel>
+        )}
+
         <MiniMap
           position="bottom-left"
           bgColor="#0f172a"
@@ -147,46 +182,55 @@ export const Canvas: React.FC = () => {
           style={{ width: 120, height: 90 }}
         />
 
-        <Panel position="top-left" className="m-4 max-w-[50%]">
-          <Breadcrumbs />
-        </Panel>
-
-        <Panel position="top-right" className="m-4 flex items-center gap-3">
-          {/* System Selector Dropdown */}
-          {loadedSystems && loadedSystems.length > 0 && (
-            <div className="flex items-center gap-2 bg-slate-950/90 border border-slate-900 px-3 py-1.5 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md text-xs">
-              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500">
-                System:
+        <Panel
+          position="bottom-left"
+          style={{ margin: 16, marginLeft: 155 }}
+          className="flex items-center gap-2"
+        >
+          {/* Level Marker */}
+          <div className="flex items-center shadow-lg shadow-black/40 backdrop-blur-md">
+            <div
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-[11px] font-semibold ${
+                schema.level === 'context'
+                  ? 'bg-emerald-950/80 border-emerald-900/40 text-emerald-400'
+                  : schema.level === 'container'
+                    ? 'bg-blue-950/80 border-blue-900/40 text-blue-400'
+                    : schema.level === 'component'
+                      ? 'bg-purple-950/80 border-purple-900/40 text-purple-400'
+                      : 'bg-amber-950/80 border-amber-900/40 text-amber-400'
+              }`}
+            >
+              <Layers className="w-3.5 h-3.5" />
+              <span>
+                Level:{' '}
+                {schema.level
+                  ? schema.level.charAt(0).toUpperCase() + schema.level.slice(1)
+                  : 'Container'}
               </span>
-              <select
-                value={currentFilePath}
-                onChange={e => selectSystem(e.target.value)}
-                className="bg-slate-900 border border-slate-850 text-slate-200 hover:text-slate-100 hover:border-slate-700 px-2.5 py-1 rounded-lg text-xs font-semibold focus:outline-none focus:border-brand-500 cursor-pointer transition duration-200"
-              >
-                {loadedSystems.map(sys => (
-                  <option key={sys.path} value={sys.path}>
-                    {sys.name}
-                  </option>
-                ))}
-              </select>
             </div>
-          )}
+          </div>
 
           {/* Validation Status */}
           <div className="flex items-center shadow-lg shadow-black/40 backdrop-blur-md">
             {validationResult.isValid ? (
-              <div className="flex items-center gap-2 bg-emerald-950/80 border border-emerald-900/40 text-emerald-400 px-3.5 py-2 rounded-xl text-xs font-semibold">
+              <div className="flex items-center gap-2 bg-emerald-950/80 border border-emerald-900/40 text-emerald-400 px-3.5 py-1.5 rounded-xl text-[11px] font-semibold">
                 <CheckCircle className="w-4 h-4" />
                 <span>Graph Valid</span>
               </div>
             ) : (
-              <div className="flex items-center gap-2 bg-red-950/80 border border-red-900/40 text-red-400 px-3.5 py-2 rounded-xl text-xs font-semibold animate-pulse">
+              <div className="flex items-center gap-2 bg-red-950/80 border border-red-900/40 text-red-400 px-3.5 py-1.5 rounded-xl text-[11px] font-semibold animate-pulse">
                 <AlertTriangle className="w-4 h-4" />
                 <span>Cycle Detected</span>
               </div>
             )}
           </div>
+        </Panel>
 
+        <Panel position="top-left" className="m-4 max-w-[50%]">
+          <Breadcrumbs />
+        </Panel>
+
+        <Panel position="top-right" className="m-4 flex items-center gap-3">
           {/* Actions Bar */}
           <div className="flex items-center gap-2 bg-slate-950/80 border border-slate-850 px-3 py-1.5 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md">
             {isWorkspaceOpen ? (
