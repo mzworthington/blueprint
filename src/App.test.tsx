@@ -7,6 +7,18 @@ vi.mock('./components/Searchbar', () => ({
   Searchbar: () => <div data-testid="searchbar-mock">Searchbar Mock</div>,
 }));
 
+vi.mock('./components/Canvas', () => ({
+  Canvas: () => <div data-testid="canvas-mock">Canvas Mock</div>,
+}));
+
+vi.mock('@xyflow/react', () => ({
+  ReactFlowProvider: ({ children }: any) => <>{children}</>,
+  useReactFlow: () => ({
+    getNode: vi.fn(),
+    setCenter: vi.fn(),
+  }),
+}));
+
 describe('App Layout and Collapsible Panels', () => {
   it('should have panels hidden by default and support toggling them', () => {
     useBlueprintStore.setState({ leftCollapsed: true, rightCollapsed: true });

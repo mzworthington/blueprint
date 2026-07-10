@@ -15,7 +15,6 @@ export const Searchbar: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Close dropdown and collapse on click outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
@@ -27,7 +26,6 @@ export const Searchbar: React.FC = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Hotkey focus: Cmd+K / Ctrl+K or /
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const isInput =
@@ -66,7 +64,6 @@ export const Searchbar: React.FC = () => {
     });
   }, [schema.nodes, searchQuery, showTests]);
 
-  // Reset activeIndex when search query updates
   useEffect(() => {
     setActiveIndex(0);
   }, [searchQuery]);
@@ -121,7 +118,6 @@ export const Searchbar: React.FC = () => {
 
   return (
     <div ref={containerRef} className="relative select-none z-50">
-      {/* Searchbar wrapper container. On mobile, if not expanded, it is a rounded icon button. */}
       <div
         onClick={handleContainerClick}
         className={`bg-slate-900 border border-slate-850 hover:border-slate-800 focus-within:border-brand-500 rounded-xl transition-all duration-300 flex items-center gap-2 ${
