@@ -147,9 +147,11 @@ export const Canvas: React.FC = () => {
           style={{ width: 120, height: 90 }}
         />
 
-        <Panel position="top-left" className="m-4 flex items-center gap-3">
+        <Panel position="top-left" className="m-4 max-w-[50%]">
           <Breadcrumbs />
+        </Panel>
 
+        <Panel position="top-right" className="m-4 flex items-center gap-3">
           {/* System Selector Dropdown */}
           {loadedSystems && loadedSystems.length > 0 && (
             <div className="flex items-center gap-2 bg-slate-950/90 border border-slate-900 px-3 py-1.5 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md text-xs">
@@ -170,6 +172,22 @@ export const Canvas: React.FC = () => {
             </div>
           )}
 
+          {/* Validation Status */}
+          <div className="flex items-center shadow-lg shadow-black/40 backdrop-blur-md">
+            {validationResult.isValid ? (
+              <div className="flex items-center gap-2 bg-emerald-950/80 border border-emerald-900/40 text-emerald-400 px-3.5 py-2 rounded-xl text-xs font-semibold">
+                <CheckCircle className="w-4 h-4" />
+                <span>Graph Valid</span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 bg-red-950/80 border border-red-900/40 text-red-400 px-3.5 py-2 rounded-xl text-xs font-semibold animate-pulse">
+                <AlertTriangle className="w-4 h-4" />
+                <span>Cycle Detected</span>
+              </div>
+            )}
+          </div>
+
+          {/* Actions Bar */}
           <div className="flex items-center gap-2 bg-slate-950/80 border border-slate-850 px-3 py-1.5 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md">
             {isWorkspaceOpen ? (
               <button
@@ -216,22 +234,6 @@ export const Canvas: React.FC = () => {
             >
               <RefreshCcw className="w-3.5 h-3.5" />
             </button>
-          </div>
-        </Panel>
-
-        <Panel position="top-right" className="m-4">
-          <div className="flex items-center shadow-lg shadow-black/40 backdrop-blur-md">
-            {validationResult.isValid ? (
-              <div className="flex items-center gap-2 bg-emerald-950/80 border border-emerald-900/40 text-emerald-400 px-3.5 py-2 rounded-xl text-xs font-semibold">
-                <CheckCircle className="w-4 h-4" />
-                <span>Graph Valid</span>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2 bg-red-950/80 border border-red-900/40 text-red-400 px-3.5 py-2 rounded-xl text-xs font-semibold animate-pulse">
-                <AlertTriangle className="w-4 h-4" />
-                <span>Cycle Detected</span>
-              </div>
-            )}
           </div>
         </Panel>
 
