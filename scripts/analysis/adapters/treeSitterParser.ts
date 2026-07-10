@@ -24,11 +24,7 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
     }
 
     const wasmName = `tree-sitter-${langKey}.wasm`;
-    const wasmPath = path.resolve(
-      process.cwd(),
-      'node_modules/tree-sitter-wasms/out',
-      wasmName
-    );
+    const wasmPath = path.resolve(process.cwd(), 'node_modules/tree-sitter-wasms/out', wasmName);
 
     if (!fs.existsSync(wasmPath)) {
       return null;
@@ -65,7 +61,7 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
   private parseGlobPattern(pattern: string): { dir: string; extensions: string[] } {
     const resolvedPattern = path.resolve(process.cwd(), pattern);
     const baseDir = resolvedPattern.split('**')[0].replace(/\/$/, '').replace(/\\$/, '');
-    
+
     const extMatch = resolvedPattern.match(/\{([^}]+)\}/);
     let extensions: string[] = [];
     if (extMatch) {
@@ -76,7 +72,7 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
         extensions = ['.' + singleExtMatch[1]];
       }
     }
-    
+
     if (extensions.length === 0) {
       extensions = ['.ts', '.tsx', '.js', '.jsx', '.py', '.go'];
     }
@@ -140,7 +136,8 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
         // --- TypeScript/JavaScript parser logic ---
         if (ext === '.ts' || ext === '.tsx' || ext === '.js' || ext === '.jsx') {
           if (node.type === 'import_statement') {
-            const literalNode = node.childForFieldName('source') || node.descendantsOfType('literal')[0];
+            const literalNode =
+              node.childForFieldName('source') || node.descendantsOfType('literal')[0];
             if (literalNode) {
               imports.push({ moduleSpecifier: literalNode.text.replace(/['"`]/g, '') });
             }
@@ -158,7 +155,7 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
             }
           }
         }
-        
+
         // --- Python parser logic ---
         if (ext === '.py') {
           if (node.type === 'import_statement') {
@@ -167,7 +164,8 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
             });
           }
           if (node.type === 'import_from_statement') {
-            const sourceNode = node.childForFieldName('module_name') || node.descendantsOfType('dotted_name')[0];
+            const sourceNode =
+              node.childForFieldName('module_name') || node.descendantsOfType('dotted_name')[0];
             if (sourceNode) {
               imports.push({ moduleSpecifier: sourceNode.text });
             }
@@ -187,13 +185,16 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
         // --- C# parser logic ---
         if (ext === '.cs') {
           if (node.type === 'using_directive') {
-            const nameNode = node.childForFieldName('name') || node.descendantsOfType(['qualified_name', 'identifier'])[0];
+            const nameNode =
+              node.childForFieldName('name') ||
+              node.descendantsOfType(['qualified_name', 'identifier'])[0];
             if (nameNode) {
               imports.push({ moduleSpecifier: nameNode.text });
             }
           }
           if (node.type === 'object_creation_expression') {
-            const typeNode = node.childForFieldName('type') || node.descendantsOfType('identifier')[0];
+            const typeNode =
+              node.childForFieldName('type') || node.descendantsOfType('identifier')[0];
             if (typeNode) {
               newExpressions.push({ className: typeNode.text });
             }
@@ -204,8 +205,13 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
               callExpressions.push(fnNode.text);
             }
           }
-          if (node.type === 'namespace_declaration' || node.type === 'file_scoped_namespace_declaration') {
-            const nameNode = node.childForFieldName('name') || node.descendantsOfType(['qualified_name', 'identifier'])[0];
+          if (
+            node.type === 'namespace_declaration' ||
+            node.type === 'file_scoped_namespace_declaration'
+          ) {
+            const nameNode =
+              node.childForFieldName('name') ||
+              node.descendantsOfType(['qualified_name', 'identifier'])[0];
             if (nameNode) {
               namespaces.push(nameNode.text);
             }

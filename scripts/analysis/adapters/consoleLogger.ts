@@ -16,7 +16,9 @@ export class ConsoleLogger implements LoggerPort {
   }
 
   error(message: string, error?: unknown, context?: Record<string, unknown>): void {
-    const errMessage = error ? `\nError: ${error instanceof Error ? error.stack || error.message : JSON.stringify(error)}` : '';
+    const errMessage = error
+      ? `\nError: ${error instanceof Error ? error.stack || error.message : JSON.stringify(error)}`
+      : '';
     console.error(this.formatMessage('ERROR', message, context) + errMessage);
   }
 }

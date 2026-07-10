@@ -3,19 +3,22 @@ import type { LayoutPort } from '../domain/ports';
 import type { SystemNode, SystemDependency } from '../../../src/domain/schema';
 
 export class DagreLayoutAdapter implements LayoutPort {
-  async computeLayout(nodes: SystemNode[], dependencies: SystemDependency[]): Promise<SystemNode[]> {
+  async computeLayout(
+    nodes: SystemNode[],
+    dependencies: SystemDependency[]
+  ): Promise<SystemNode[]> {
     const isContainerLevel = nodes.some(n =>
       ['domain-logic', 'state-sync', 'frontend-ui', 'app-host'].includes(n.id)
     );
 
     const g = new dagre.graphlib.Graph();
-    
+
     if (isContainerLevel) {
       g.setGraph({ rankdir: 'TB', nodesep: 220, edgesep: 100, ranksep: 250 });
     } else {
       g.setGraph({ rankdir: 'TB', nodesep: 180, edgesep: 80, ranksep: 220 });
     }
-    
+
     g.setDefaultEdgeLabel(() => ({}));
 
     const width = isContainerLevel ? 300 : 280;

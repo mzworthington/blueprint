@@ -8,7 +8,7 @@ import { CodebaseAnalyzer } from './analysis/domain/analyzer.ts';
 async function run() {
   const args = process.argv.slice(2);
   const useTreeSitter = args.includes('--parser=tree-sitter');
-  
+
   let globPattern = 'src/**/*.{ts,tsx}';
   const globArg = args.find(a => a.startsWith('--glob='));
   if (globArg) {

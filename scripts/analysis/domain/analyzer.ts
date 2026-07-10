@@ -67,7 +67,10 @@ export class CodebaseAnalyzer {
 
       let pkgPath = this.fileSystem.getAbsolutePath(scanDir, 'package.json');
       if (!this.fileSystem.exists(pkgPath)) {
-        pkgPath = this.fileSystem.getAbsolutePath(this.fileSystem.getCurrentWorkingDirectory(), 'package.json');
+        pkgPath = this.fileSystem.getAbsolutePath(
+          this.fileSystem.getCurrentWorkingDirectory(),
+          'package.json'
+        );
       }
 
       if (this.fileSystem.exists(pkgPath)) {
@@ -255,8 +258,15 @@ export class CodebaseAnalyzer {
         if (typeText.includes('PrismaClient') || typeText.includes('MongoClient')) {
           isDatabase = true;
         }
-        if (typeText.includes('Kafka') || typeText.includes('Queue') || typeText.includes('Client')) {
-          if (typeText.toLowerCase().includes('queue') || typeText.toLowerCase().includes('kafka')) {
+        if (
+          typeText.includes('Kafka') ||
+          typeText.includes('Queue') ||
+          typeText.includes('Client')
+        ) {
+          if (
+            typeText.toLowerCase().includes('queue') ||
+            typeText.toLowerCase().includes('kafka')
+          ) {
             isEventBroker = true;
           }
         }
@@ -476,7 +486,11 @@ export class CodebaseAnalyzer {
           systemName,
           fromNode.properties?.filepath as string
         );
-        const toInfo = this.getContainerInfo(toNode, systemName, toNode.properties?.filepath as string);
+        const toInfo = this.getContainerInfo(
+          toNode,
+          systemName,
+          toNode.properties?.filepath as string
+        );
 
         if (fromInfo.id !== toInfo.id) {
           const alreadyExists = containerDependenciesList.some(

@@ -33,7 +33,7 @@ describe('TreeSitterParserAdapter', () => {
 
     const results = await parser.parseSourceFiles('scripts/analysis/adapters/test_tmp/**/*.ts');
     expect(results).toHaveLength(1);
-    
+
     const file = results[0];
     expect(file.baseName).toBe('sample');
     expect(file.isTestFile).toBe(false);
