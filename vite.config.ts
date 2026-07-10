@@ -13,7 +13,7 @@ export default defineConfig({
     testTimeout: 15000,
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'lcov', 'cobertura'],
+      reporter: ['text', 'lcov', 'cobertura', 'json-summary', 'json'],
       include: ['src/**/*'],
       exclude: ['src/**/*.test.{ts,tsx}', 'src/setupTests.ts'],
     },
