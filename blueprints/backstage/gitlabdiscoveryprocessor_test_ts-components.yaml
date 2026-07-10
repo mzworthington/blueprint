@@ -1,0 +1,91 @@
+name: Backstage - GitLabDiscoveryProcessor.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: gitlabdiscoveryprocessor_test
+    type: background-worker
+    name: GitLabDiscoveryProcessor.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-gitlab/src/GitLabDiscoveryProcessor.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: gitlabdiscoveryprocessor
+    type: background-worker
+    name: GitLabDiscoveryProcessor Service (GitLabDiscoveryProcessor.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-gitlab/src/GitLabDiscoveryProcessor.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: lib
+    type: background-worker
+    name: lib Service (lib.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/signals-node/src/lib.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 370
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 370
+dependencies:
+  - from: gitlabdiscoveryprocessor_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlabdiscoveryprocessor_test
+    to: gitlabdiscoveryprocessor
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlabdiscoveryprocessor_test
+    to: lib
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlabdiscoveryprocessor_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: gitlabdiscoveryprocessor_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods

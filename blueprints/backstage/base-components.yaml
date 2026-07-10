@@ -1,0 +1,76 @@
+name: Backstage - base Components
+version: 1.0.0
+level: component
+nodes:
+  - id: createbasethemeoptions
+    type: background-worker
+    name: createBaseThemeOptions Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/theme/src/base/createBaseThemeOptions.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 275
+    'y': 50
+  - id: pagetheme
+    type: background-worker
+    name: pageTheme Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/theme/src/base/pageTheme.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 735
+    'y': 370
+  - id: palettes
+    type: background-worker
+    name: palettes Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/theme/src/base/palettes.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 735
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 275
+    'y': 370
+dependencies:
+  - from: createbasethemeoptions
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbasethemeoptions
+    to: pagetheme
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbasethemeoptions
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: pagetheme
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

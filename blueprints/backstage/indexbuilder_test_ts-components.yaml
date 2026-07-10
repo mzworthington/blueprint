@@ -1,0 +1,61 @@
+name: Backstage - IndexBuilder.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: indexbuilder_test
+    type: background-worker
+    name: IndexBuilder.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/IndexBuilder.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: indexbuilder
+    type: background-worker
+    name: IndexBuilder Service (IndexBuilder.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/IndexBuilder.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: lunrsearchengine
+    type: background-worker
+    name: LunrSearchEngine Service (engines)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/engines/LunrSearchEngine.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
+dependencies:
+  - from: indexbuilder_test
+    to: indexbuilder
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: indexbuilder_test
+    to: index
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: indexbuilder_test
+    to: lunrsearchengine
+    type: direct-call
+    description: References class type / calls methods

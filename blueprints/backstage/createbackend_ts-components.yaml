@@ -1,0 +1,181 @@
+name: Backstage - CreateBackend.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: createbackend
+    type: background-worker
+    name: CreateBackend Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-defaults/src/CreateBackend.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2210
+    'y': 370
+  - id: createbackend_test
+    type: background-worker
+    name: CreateBackend.test Service (CreateBackend.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/backend-defaults/src/CreateBackend.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2210
+    'y': 50
+  - id: auth
+    type: background-worker
+    name: auth Service (auth.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-elasticsearch/src/auth.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: cache
+    type: background-worker
+    name: Cache Service (commands)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/repo-tools/src/commands/package-docs/Cache.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: database
+    type: background-worker
+    name: database Service (services)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-plugin-api/src/services/utilities/database.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+  - id: discovery
+    type: background-worker
+    name: discovery Service (schema)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-common/src/schema/openapi/generated/types/discovery.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 690
+  - id: logger
+    type: background-worker
+    name: logger Service (scaffolder)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-backend/src/scaffolder/tasks/logger.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 690
+  - id: permissions
+    type: background-worker
+    name: permissions Service (permissions.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-common/src/permissions.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2440
+    'y': 690
+  - id: rootlogger
+    type: background-worker
+    name: rootLogger Service (schemas)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-dynamic-feature-service/src/schemas/rootLogger.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2900
+    'y': 690
+  - id: scheduler
+    type: background-worker
+    name: Scheduler Service (Scheduler.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/Scheduler.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3360
+    'y': 690
+  - id: alpha
+    type: gateway-api
+    name: alpha UI Component (alpha.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/alpha.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 3820
+    'y': 690
+  - id: instancemetadataservicefactory
+    type: background-worker
+    name: instanceMetadataServiceFactory Service (alpha)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-defaults/src/alpha/entrypoints/instanceMetadata/instanceMetadataServiceFactory.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 4280
+    'y': 690
+dependencies:
+  - from: createbackend_test
+    to: createbackend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackend
+    to: auth
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackend
+    to: cache
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackend
+    to: database
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackend
+    to: discovery
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackend
+    to: logger
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackend
+    to: permissions
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackend
+    to: rootlogger
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackend
+    to: scheduler
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackend
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackend
+    to: instancemetadataservicefactory
+    type: direct-call
+    description: Executes local class methods / functions

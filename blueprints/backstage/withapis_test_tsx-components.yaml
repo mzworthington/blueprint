@@ -1,0 +1,31 @@
+name: Backstage - withApis.test.tsx Components
+version: 1.0.0
+level: component
+nodes:
+  - id: withapis_test
+    type: gateway-api
+    name: withApis.test UI Component
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/withApis.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 140
+    'y': 50
+  - id: withapis
+    type: gateway-api
+    name: withApis UI Component (withApis.tsx)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/withApis.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 370
+dependencies:
+  - from: withapis_test
+    to: withapis
+    type: direct-call
+    description: Executes local class methods / functions

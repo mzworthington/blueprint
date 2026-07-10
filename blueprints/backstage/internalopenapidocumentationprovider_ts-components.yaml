@@ -1,0 +1,89 @@
+name: Backstage - InternalOpenApiDocumentationProvider.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: internalopenapidocumentationprovider
+    type: background-worker
+    name: InternalOpenApiDocumentationProvider Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-backstage-openapi/src/InternalOpenApiDocumentationProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 830
+    'y': 370
+  - id: external-api-target
+    type: rest-api
+    name: External HTTP API Endpoint (External HTTP Services)
+    isTest: false
+    properties:
+      description: Generic outbound web integration endpoints.
+    external: true
+    x: 140
+    'y': 690
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 690
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 830
+    'y': 50
+dependencies:
+  - from: internalopenapidocumentationprovider
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests
+  - from: internalopenapidocumentationprovider
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: internalopenapidocumentationprovider
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: internalopenapidocumentationprovider
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: index
+    to: internalopenapidocumentationprovider
+    type: direct-call
+    description: Executes local class methods / functions

@@ -68,8 +68,14 @@ defaultLoadedSystems.sort((a, b) => {
 });
 
 if (defaultLoadedSystems.length > 0) {
+  let initialManifest = defaultLoadedManifests.find(
+    m => m.path === 'blueprint/workspace.yaml' || m.path === 'blueprint\\workspace.yaml'
+  );
+  if (!initialManifest) {
+    initialManifest = getClosestManifest(defaultLoadedSystems[0].path, defaultLoadedManifests);
+  }
+
   let resolvedRootSystem = defaultLoadedSystems[0];
-  const initialManifest = getClosestManifest(resolvedRootSystem.path, defaultLoadedManifests);
   if (initialManifest) {
     defaultWorkspaceManifest = initialManifest.manifest;
     defaultWorkspaceManifestYaml = initialManifest.yaml;

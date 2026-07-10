@@ -1,0 +1,127 @@
+name: Backstage - KafkaPublishingEventConsumer Components
+version: 1.0.0
+level: component
+nodes:
+  - id: kafkapublishingeventconsumer_test
+    type: event-broker
+    name: KafkaPublishingEventConsumer.test Message Broker
+    isTest: true
+    properties:
+      filepath: >-
+        ../backstage/plugins/events-backend-module-kafka/src/KafkaPublishingEventConsumer/KafkaPublishingEventConsumer.test.ts
+      namespaces: ''
+      technology: TypeScript Event Client
+    external: false
+    x: 140
+    'y': 50
+  - id: kafkapublishingeventconsumer
+    type: event-broker
+    name: KafkaPublishingEventConsumer Message Broker
+    isTest: false
+    properties:
+      filepath: >-
+        ../backstage/plugins/events-backend-module-kafka/src/KafkaPublishingEventConsumer/KafkaPublishingEventConsumer.ts
+      namespaces: ''
+      technology: TypeScript Event Client
+    external: false
+    x: 830
+    'y': 370
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: loggerserviceadapter
+    type: event-broker
+    name: LoggerServiceAdapter Message Broker (utils)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/events-backend-module-kafka/src/utils/LoggerServiceAdapter.ts
+      namespaces: ''
+      technology: TypeScript Event Client
+    external: true
+    x: 640
+    'y': 690
+  - id: kafkatransformers
+    type: event-broker
+    name: kafkaTransformers Message Broker (utils)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/events-backend-module-kafka/src/utils/kafkaTransformers.ts
+      namespaces: ''
+      technology: TypeScript Event Client
+    external: true
+    x: 1100
+    'y': 690
+  - id: module_test
+    type: background-worker
+    name: module.test Service (module.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-techdocs/src/module.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: module
+    type: background-worker
+    name: module Service (module.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-techdocs/src/module.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 50
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 50
+dependencies:
+  - from: kafkapublishingeventconsumer_test
+    to: kafkapublishingeventconsumer
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: kafkapublishingeventconsumer_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: kafkapublishingeventconsumer
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: kafkapublishingeventconsumer
+    to: loggerserviceadapter
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: kafkapublishingeventconsumer
+    to: kafkatransformers
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: module_test
+    to: kafkapublishingeventconsumer
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: module
+    to: kafkapublishingeventconsumer
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: index
+    to: kafkapublishingeventconsumer
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics

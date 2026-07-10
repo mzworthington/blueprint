@@ -1,0 +1,46 @@
+name: Backstage - provideStaticCatalogModel.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: providestaticcatalogmodel
+    type: background-worker
+    name: provideStaticCatalogModel Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-node/src/provideStaticCatalogModel.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 50
+  - id: alpha
+    type: gateway-api
+    name: alpha UI Component (alpha.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/alpha.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 370
+  - id: extensions
+    type: background-worker
+    name: extensions Service (extensions.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-node/src/extensions.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+dependencies:
+  - from: providestaticcatalogmodel
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: providestaticcatalogmodel
+    to: extensions
+    type: direct-call
+    description: Executes local class methods / functions

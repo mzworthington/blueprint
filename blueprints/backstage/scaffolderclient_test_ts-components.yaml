@@ -1,0 +1,61 @@
+name: Backstage - ScaffolderClient.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: scaffolderclient_test
+    type: background-worker
+    name: ScaffolderClient.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/scaffolder-common/src/ScaffolderClient.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: integration
+    type: background-worker
+    name: integration Service (types)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/permission-common/src/types/integration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: scaffolderclient
+    type: background-worker
+    name: ScaffolderClient Service (ScaffolderClient.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-common/src/ScaffolderClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: mockfetchapi
+    type: background-worker
+    name: MockFetchApi Service (testUtils)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/test-utils/src/testUtils/apis/FetchApi/MockFetchApi.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
+dependencies:
+  - from: scaffolderclient_test
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: scaffolderclient_test
+    to: scaffolderclient
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: scaffolderclient_test
+    to: mockfetchapi
+    type: direct-call
+    description: References class type / calls methods

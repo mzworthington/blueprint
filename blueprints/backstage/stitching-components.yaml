@@ -1,0 +1,272 @@
+name: Backstage - stitching Components
+version: 1.0.0
+level: component
+nodes:
+  - id: defaultstitcher_test
+    type: background-worker
+    name: DefaultStitcher.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-backend/src/stitching/DefaultStitcher.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1005
+    'y': 50
+  - id: defaultstitcher
+    type: relational-database
+    name: DefaultStitcher Database
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend/src/stitching/DefaultStitcher.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 2790
+    'y': 370
+  - id: progresstracker
+    type: relational-database
+    name: progressTracker Database
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend/src/stitching/progressTracker.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 3900
+    'y': 690
+  - id: catalogbuilder
+    type: rest-api
+    name: CatalogBuilder REST Endpoint (service)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend/src/service/CatalogBuilder.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 2060
+    'y': 50
+  - id: migrations
+    type: relational-database
+    name: migrations Database (database)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-incremental-ingestion/src/database/migrations.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 410
+    'y': 370
+  - id: markforstitching
+    type: relational-database
+    name: markForStitching Database (database)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend/src/database/operations/stitcher/markForStitching.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 870
+    'y': 370
+  - id: tables
+    type: background-worker
+    name: tables Service (database)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-incremental-ingestion/src/database/tables.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 1010
+  - id: alpha
+    type: gateway-api
+    name: alpha UI Component (alpha.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/alpha.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 4630
+    'y': 1010
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1140
+    'y': 690
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1600
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2060
+    'y': 690
+  - id: getdeferredstitchableentities
+    type: relational-database
+    name: getDeferredStitchableEntities Database (database)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend/src/database/operations/stitcher/getDeferredStitchableEntities.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 2520
+    'y': 690
+  - id: performstitching
+    type: relational-database
+    name: performStitching Database (database)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend/src/database/operations/stitcher/performStitching.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 2980
+    'y': 690
+  - id: taskpipeline
+    type: background-worker
+    name: TaskPipeline Service (processing)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend/src/processing/TaskPipeline.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3440
+    'y': 690
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2290
+    'y': 1010
+  - id: metrics
+    type: background-worker
+    name: metrics Service (util)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-backend/src/util/metrics.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 4170
+    'y': 1010
+  - id: integration_test
+    type: relational-database
+    name: integration.test Database (tests)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-backend/src/tests/integration.test.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 4590
+    'y': 50
+dependencies:
+  - from: catalogbuilder
+    to: defaultstitcher
+    type: read-write
+    description: Queries database table records
+  - from: defaultstitcher_test
+    to: migrations
+    type: read-write
+    description: Queries database table records
+  - from: defaultstitcher_test
+    to: markforstitching
+    type: read-write
+    description: Queries database table records
+  - from: defaultstitcher_test
+    to: tables
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultstitcher_test
+    to: defaultstitcher
+    type: read-write
+    description: Queries database table records
+  - from: defaultstitcher_test
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultstitcher_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: defaultstitcher
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultstitcher
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultstitcher
+    to: getdeferredstitchableentities
+    type: read-write
+    description: Queries database table records
+  - from: defaultstitcher
+    to: performstitching
+    type: read-write
+    description: Queries database table records
+  - from: defaultstitcher
+    to: taskpipeline
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultstitcher
+    to: progresstracker
+    type: read-write
+    description: Queries database table records
+  - from: defaultstitcher
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultstitcher
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: progresstracker
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: progresstracker
+    to: tables
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: progresstracker
+    to: metrics
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: progresstracker
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: integration_test
+    to: defaultstitcher
+    type: read-write
+    description: Queries database table records

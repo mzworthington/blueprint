@@ -1,0 +1,31 @@
+name: Backstage - expand.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: expand_test
+    type: background-worker
+    name: expand.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/types/src/expand.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: expand
+    type: background-worker
+    name: expand Service (expand.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/types/src/expand.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+dependencies:
+  - from: expand_test
+    to: expand
+    type: direct-call
+    description: Executes local class methods / functions

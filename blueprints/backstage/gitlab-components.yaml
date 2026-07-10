@@ -1,0 +1,240 @@
+name: Backstage - gitlab Components
+version: 1.0.0
+level: component
+nodes:
+  - id: defaultgitlabcredentialsprovider
+    type: background-worker
+    name: DefaultGitlabCredentialsProvider Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/integration/src/gitlab/DefaultGitlabCredentialsProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2980
+    'y': 50
+  - id: gitlabintegration_test
+    type: background-worker
+    name: GitLabIntegration.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/integration/src/gitlab/GitLabIntegration.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 370
+  - id: gitlabintegration
+    type: background-worker
+    name: GitLabIntegration Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/integration/src/gitlab/GitLabIntegration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1480
+    'y': 690
+  - id: singleinstancegitlabcredentialsprovider
+    type: background-worker
+    name: SingleInstanceGitlabCredentialsProvider Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/integration/src/gitlab/SingleInstanceGitlabCredentialsProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2250
+    'y': 690
+  - id: gitlaburlreader_test
+    type: background-worker
+    name: GitlabUrlReader.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/backend-defaults/src/entrypoints/urlReader/lib/GitlabUrlReader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: scmintegrations_test
+    type: background-worker
+    name: ScmIntegrations.test Service (ScmIntegrations.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/integration/src/ScmIntegrations.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
+  - id: scmintegrations
+    type: background-worker
+    name: ScmIntegrations Service (ScmIntegrations.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/integration/src/ScmIntegrations.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 370
+  - id: registry
+    type: background-worker
+    name: registry Service (registry.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/integration/src/registry.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2480
+    'y': 1010
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3250
+    'y': 370
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3710
+    'y': 370
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1735
+    'y': 1010
+  - id: external-api-target
+    type: rest-api
+    name: External HTTP API Endpoint (External HTTP Services)
+    isTest: false
+    properties:
+      description: Generic outbound web integration endpoints.
+    external: true
+    x: 140
+    'y': 1010
+  - id: helpers
+    type: background-worker
+    name: helpers Service (helpers.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/helpers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 1010
+  - id: client_test
+    type: background-worker
+    name: client.test Service (client.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/techdocs/src/client.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2790
+    'y': 370
+dependencies:
+  - from: gitlaburlreader_test
+    to: gitlabintegration
+    type: direct-call
+    description: References class type / calls methods
+  - from: scmintegrations_test
+    to: gitlabintegration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: scmintegrations
+    to: gitlabintegration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultgitlabcredentialsprovider
+    to: registry
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultgitlabcredentialsprovider
+    to: singleinstancegitlabcredentialsprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultgitlabcredentialsprovider
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultgitlabcredentialsprovider
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: defaultgitlabcredentialsprovider
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: gitlabintegration_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlabintegration_test
+    to: gitlabintegration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlabintegration
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests
+  - from: gitlabintegration
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlabintegration
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlabintegration
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: singleinstancegitlabcredentialsprovider
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: singleinstancegitlabcredentialsprovider
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: registry
+    to: gitlabintegration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: client_test
+    to: gitlabintegration
+    type: direct-call
+    description: References class type / calls methods

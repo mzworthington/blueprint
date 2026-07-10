@@ -1,0 +1,61 @@
+name: Backstage - yarn Components
+version: 1.0.0
+level: component
+nodes:
+  - id: yarnplugin_test
+    type: background-worker
+    name: yarnPlugin.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/cli-node/src/yarn/yarnPlugin.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 50
+  - id: yarnplugin
+    type: background-worker
+    name: yarnPlugin Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/cli-node/src/yarn/yarnPlugin.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 370
+  - id: testutils
+    type: background-worker
+    name: testUtils Service (testUtils.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-react/src/testUtils.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+dependencies:
+  - from: yarnplugin_test
+    to: testutils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: yarnplugin_test
+    to: yarnplugin
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: yarnplugin
+    to: error
+    type: direct-call
+    description: References class type / calls methods

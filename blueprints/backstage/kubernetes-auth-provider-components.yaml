@@ -1,0 +1,152 @@
+name: Backstage - kubernetes-auth-provider Components
+version: 1.0.0
+level: component
+nodes:
+  - id: akskubernetesauthprovider
+    type: background-worker
+    name: AksKubernetesAuthProvider Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-react/src/kubernetes-auth-provider/AksKubernetesAuthProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 690
+  - id: googlekubernetesauthprovider
+    type: background-worker
+    name: GoogleKubernetesAuthProvider Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-react/src/kubernetes-auth-provider/GoogleKubernetesAuthProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 690
+  - id: kubernetesauthproviders_test
+    type: background-worker
+    name: KubernetesAuthProviders.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/kubernetes-react/src/kubernetes-auth-provider/KubernetesAuthProviders.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1235
+    'y': 50
+  - id: kubernetesauthproviders
+    type: background-worker
+    name: KubernetesAuthProviders Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-react/src/kubernetes-auth-provider/KubernetesAuthProviders.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1005
+    'y': 370
+  - id: oidckubernetesauthprovider
+    type: background-worker
+    name: OidcKubernetesAuthProvider Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-react/src/kubernetes-auth-provider/OidcKubernetesAuthProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1140
+    'y': 690
+  - id: serversideauthprovider
+    type: background-worker
+    name: ServerSideAuthProvider Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-react/src/kubernetes-auth-provider/ServerSideAuthProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2060
+    'y': 690
+  - id: plugin
+    type: background-worker
+    name: plugin Service (plugin.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-backend/src/plugin.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 775
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 870
+    'y': 1010
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1600
+    'y': 690
+dependencies:
+  - from: plugin
+    to: kubernetesauthproviders
+    type: direct-call
+    description: References class type / calls methods
+  - from: akskubernetesauthprovider
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googlekubernetesauthprovider
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: kubernetesauthproviders_test
+    to: kubernetesauthproviders
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: kubernetesauthproviders
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: kubernetesauthproviders
+    to: googlekubernetesauthprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: kubernetesauthproviders
+    to: serversideauthprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: kubernetesauthproviders
+    to: oidckubernetesauthprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: kubernetesauthproviders
+    to: akskubernetesauthprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: kubernetesauthproviders
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: oidckubernetesauthprovider
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: serversideauthprovider
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

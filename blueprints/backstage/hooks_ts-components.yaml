@@ -1,0 +1,161 @@
+name: Backstage - hooks.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: hooks
+    type: gateway-api
+    name: hooks UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/hooks.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 1290
+    'y': 370
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 140
+    'y': 50
+  - id: useallentitiescount
+    type: gateway-api
+    name: useAllEntitiesCount UI Component (components)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-react/src/components/UserListPicker/useAllEntitiesCount.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 600
+    'y': 50
+  - id: useownedentitiescount
+    type: gateway-api
+    name: useOwnedEntitiesCount UI Component (components)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-react/src/components/UserListPicker/useOwnedEntitiesCount.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1060
+    'y': 50
+  - id: usestarredentitiescount
+    type: gateway-api
+    name: useStarredEntitiesCount UI Component (components)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-react/src/components/UserListPicker/useStarredEntitiesCount.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1520
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 830
+    'y': 690
+  - id: transformer
+    type: background-worker
+    name: transformer Service (reader)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs/src/reader/transformers/transformer.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 50
+  - id: integration
+    type: background-worker
+    name: integration Service (types)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/permission-common/src/types/integration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1290
+    'y': 690
+  - id: constants
+    type: background-worker
+    name: constants Service (ReportIssue)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-module-addons-contrib/src/ReportIssue/constants.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1750
+    'y': 690
+  - id: hooks_test
+    type: gateway-api
+    name: hooks.test UI Component (hooks.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/hooks.test.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 2440
+    'y': 50
+dependencies:
+  - from: frontend-client
+    to: hooks
+    type: direct-call
+    description: Renders hooks layout component
+  - from: useallentitiescount
+    to: hooks
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: useownedentitiescount
+    to: hooks
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: usestarredentitiescount
+    to: hooks
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: hooks
+    type: direct-call
+    description: Renders hooks layout component
+  - from: hooks
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: transformer
+    to: hooks
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: hooks
+    type: direct-call
+    description: Renders hooks layout component
+  - from: hooks
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: hooks
+    to: constants
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: hooks_test
+    to: hooks
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: hooks
+    type: direct-call
+    description: Renders hooks layout component

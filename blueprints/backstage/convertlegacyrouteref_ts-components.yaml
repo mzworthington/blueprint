@@ -1,0 +1,91 @@
+name: Backstage - convertLegacyRouteRef.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: convertlegacyrouteref
+    type: background-worker
+    name: convertLegacyRouteRef Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/convertLegacyRouteRef.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 370
+  - id: convertlegacyplugin
+    type: background-worker
+    name: convertLegacyPlugin Service (convertLegacyPlugin.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/convertLegacyPlugin.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 50
+  - id: convertlegacyrouteref_test
+    type: background-worker
+    name: convertLegacyRouteRef.test Service (convertLegacyRouteRef.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/convertLegacyRouteRef.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 830
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: frontend
+    type: background-worker
+    name: frontend Service (schemas)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-dynamic-feature-service/src/schemas/frontend.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+dependencies:
+  - from: convertlegacyplugin
+    to: convertlegacyrouteref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: convertlegacyrouteref_test
+    to: convertlegacyrouteref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: convertlegacyrouteref
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: convertlegacyrouteref
+    to: frontend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: convertlegacyrouteref
+    to: error
+    type: direct-call
+    description: References class type / calls methods

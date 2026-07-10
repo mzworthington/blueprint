@@ -1,0 +1,76 @@
+name: Backstage - types.d.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: types_d
+    type: rest-api
+    name: types.d REST Endpoint
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/auth-backend-module-onelogin-provider/src/types.d.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: false
+    x: 140
+    'y': 370
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 140
+    'y': 50
+  - id: express
+    type: rest-api
+    name: express REST Endpoint (types)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-openapi-utils/src/types/express.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 140
+    'y': 690
+dependencies:
+  - from: frontend-client
+    to: types_d
+    type: direct-call
+    description: Hits API routing gateway
+  - from: frontend-client
+    to: types_d
+    type: direct-call
+    description: Hits API routing gateway
+  - from: frontend-client
+    to: types_d
+    type: direct-call
+    description: Hits API routing gateway
+  - from: frontend-client
+    to: types_d
+    type: direct-call
+    description: Hits API routing gateway
+  - from: types_d
+    to: express
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: types_d
+    type: direct-call
+    description: Hits API routing gateway
+  - from: frontend-client
+    to: types_d
+    type: direct-call
+    description: Hits API routing gateway
+  - from: frontend-client
+    to: types_d
+    type: direct-call
+    description: Hits API routing gateway
+  - from: frontend-client
+    to: types_d
+    type: direct-call
+    description: Hits API routing gateway
+  - from: frontend-client
+    to: types_d
+    type: direct-call
+    description: Hits API routing gateway

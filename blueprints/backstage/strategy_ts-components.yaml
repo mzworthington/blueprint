@@ -1,0 +1,104 @@
+name: Backstage - strategy.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: strategy
+    type: background-worker
+    name: strategy Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/auth-backend-module-microsoft-provider/src/strategy.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 370
+  - id: authenticator_test
+    type: background-worker
+    name: authenticator.test Service (authenticator.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/auth-backend-module-vmware-cloud-provider/src/authenticator.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: authenticator
+    type: background-worker
+    name: authenticator Service (authenticator.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/auth-backend-module-vmware-cloud-provider/src/authenticator.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: strategy_test
+    type: rest-api
+    name: strategy.test REST Endpoint (strategy.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/auth-backend-module-auth0-provider/src/strategy.test.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 1060
+    'y': 50
+  - id: express
+    type: rest-api
+    name: express REST Endpoint (types)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-openapi-utils/src/types/express.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 140
+    'y': 690
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: external-api-target
+    type: rest-api
+    name: External HTTP API Endpoint (External HTTP Services)
+    isTest: false
+    properties:
+      description: Generic outbound web integration endpoints.
+    external: true
+    x: 1060
+    'y': 690
+dependencies:
+  - from: authenticator_test
+    to: strategy
+    type: direct-call
+    description: References class type / calls methods
+  - from: authenticator
+    to: strategy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: strategy_test
+    to: strategy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: strategy
+    to: express
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: strategy
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: strategy
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests

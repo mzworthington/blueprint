@@ -1,0 +1,46 @@
+name: Backstage - pagination.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: pagination_test
+    type: background-worker
+    name: pagination.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/bitbucket-cloud-common/src/pagination.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 50
+  - id: pagination
+    type: background-worker
+    name: pagination Service (pagination.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/bitbucket-cloud-common/src/pagination.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+dependencies:
+  - from: pagination_test
+    to: pagination
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: pagination_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods

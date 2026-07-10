@@ -1,0 +1,250 @@
+name: Backstage - cluster-locator Components
+version: 1.0.0
+level: component
+nodes:
+  - id: catalogclusterlocator_test
+    type: background-worker
+    name: CatalogClusterLocator.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/cluster-locator/CatalogClusterLocator.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 180
+    'y': 50
+  - id: catalogclusterlocator
+    type: background-worker
+    name: CatalogClusterLocator Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/cluster-locator/CatalogClusterLocator.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1150
+    'y': 370
+  - id: configclusterlocator_test
+    type: background-worker
+    name: ConfigClusterLocator.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/cluster-locator/ConfigClusterLocator.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3355
+    'y': 50
+  - id: configclusterlocator
+    type: background-worker
+    name: ConfigClusterLocator Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/cluster-locator/ConfigClusterLocator.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2800
+    'y': 370
+  - id: gkeclusterlocator_test
+    type: background-worker
+    name: GkeClusterLocator.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/cluster-locator/GkeClusterLocator.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2815
+    'y': 50
+  - id: gkeclusterlocator
+    type: background-worker
+    name: GkeClusterLocator Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/cluster-locator/GkeClusterLocator.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2110
+    'y': 370
+  - id: localkubectlproxylocator
+    type: background-worker
+    name: LocalKubectlProxyLocator Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/cluster-locator/LocalKubectlProxyLocator.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 665
+    'y': 370
+  - id: testutils
+    type: background-worker
+    name: testUtils Service (testUtils.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-react/src/testUtils.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1150
+    'y': 690
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3045
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2585
+    'y': 690
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2070
+    'y': 690
+  - id: runperiodically
+    type: background-worker
+    name: runPeriodically Service (service)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/service/runPeriodically.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1610
+    'y': 690
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2150
+    'y': 50
+  - id: kubernetesproxy_test
+    type: rest-api
+    name: KubernetesProxy.test REST Endpoint (service)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/service/KubernetesProxy.test.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 640
+    'y': 50
+dependencies:
+  - from: catalogclusterlocator_test
+    to: catalogclusterlocator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: catalogclusterlocator_test
+    to: testutils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: catalogclusterlocator
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: configclusterlocator_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: configclusterlocator_test
+    to: configclusterlocator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: configclusterlocator_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: configclusterlocator
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: configclusterlocator
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: gkeclusterlocator_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gkeclusterlocator_test
+    to: gkeclusterlocator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gkeclusterlocator_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: gkeclusterlocator
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gkeclusterlocator
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gkeclusterlocator
+    to: runperiodically
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gkeclusterlocator
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: index
+    to: configclusterlocator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index
+    to: gkeclusterlocator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index
+    to: catalogclusterlocator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index
+    to: localkubectlproxylocator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: kubernetesproxy_test
+    to: localkubectlproxylocator
+    type: direct-call
+    description: Executes local class methods / functions

@@ -12,6 +12,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  pull-requests: write
 
 concurrency:
   group: 'pages'
@@ -46,8 +47,13 @@ jobs:
       - name: Check Linting Rules
         run: pnpm lint
 
-      - name: Run Test Suite
-        run: pnpm test
+      - name: Run Test Suite with Coverage
+        run: pnpm test:coverage
+
+      - name: Report Vitest Coverage
+        uses: dillionvictor/vitest-coverage-report-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium

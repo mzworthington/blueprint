@@ -1,0 +1,46 @@
+name: Backstage - DevDataStore.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: devdatastore
+    type: background-worker
+    name: DevDataStore Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-dev-utils/src/DevDataStore.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 370
+  - id: devdatastore_test
+    type: background-worker
+    name: DevDataStore.test Service (DevDataStore.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/backend-dev-utils/src/DevDataStore.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: ipcclient
+    type: background-worker
+    name: ipcClient Service (ipcClient.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-dev-utils/src/ipcClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+dependencies:
+  - from: devdatastore_test
+    to: devdatastore
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: devdatastore
+    to: ipcclient
+    type: direct-call
+    description: Executes local class methods / functions

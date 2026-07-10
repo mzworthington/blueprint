@@ -1,0 +1,31 @@
+name: Backstage - authModuleGithubProvider.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: authmodulegithubprovider
+    type: background-worker
+    name: authModuleGithubProvider Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend/src/authModuleGithubProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+dependencies:
+  - from: authmodulegithubprovider
+    to: error
+    type: direct-call
+    description: References class type / calls methods

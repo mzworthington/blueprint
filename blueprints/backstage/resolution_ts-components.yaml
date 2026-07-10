@@ -1,0 +1,106 @@
+name: Backstage - resolution.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: resolution
+    type: background-worker
+    name: resolution Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-defaults/src/resolution.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 830
+    'y': 370
+  - id: discovery
+    type: background-worker
+    name: discovery Service (schema)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-common/src/schema/openapi/generated/types/discovery.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: resolution_test
+    type: background-worker
+    name: resolution.test Service (resolution.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/frontend-defaults/src/resolution.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 50
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: createfrontendfeatureloader
+    type: background-worker
+    name: createFrontendFeatureLoader Service (wiring)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/wiring/createFrontendFeatureLoader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 690
+dependencies:
+  - from: discovery
+    to: resolution
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolution_test
+    to: resolution
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolution
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolution
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolution
+    to: createfrontendfeatureloader
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolution
+    to: error
+    type: direct-call
+    description: References class type / calls methods

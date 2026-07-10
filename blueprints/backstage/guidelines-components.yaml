@@ -1,0 +1,44 @@
+name: Backstage - guidelines Components
+version: 1.0.0
+level: component
+nodes:
+  - id: cardswithtable_stories
+    type: gateway-api
+    name: CardsWithTable.stories UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/ui/src/guidelines/CardsWithTable.stories.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 140
+    'y': 370
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 140
+    'y': 50
+  - id: provider
+    type: background-worker
+    name: provider Service (api)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-node/src/api/provider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+dependencies:
+  - from: frontend-client
+    to: cardswithtable_stories
+    type: direct-call
+    description: Renders CardsWithTable.stories layout component
+  - from: cardswithtable_stories
+    to: provider
+    type: direct-call
+    description: Executes local class methods / functions

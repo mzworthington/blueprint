@@ -1,0 +1,31 @@
+name: Backstage - catalogService.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: catalogservice_test
+    type: background-worker
+    name: catalogService.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-node/src/catalogService.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: catalogservice
+    type: background-worker
+    name: catalogService Service (catalogService.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-node/src/catalogService.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+dependencies:
+  - from: catalogservice_test
+    to: catalogservice
+    type: direct-call
+    description: Executes local class methods / functions

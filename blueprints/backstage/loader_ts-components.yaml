@@ -1,0 +1,91 @@
+name: Backstage - loader.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: loader
+    type: background-worker
+    name: loader Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-dynamic-feature-loader/src/loader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 370
+  - id: plugin-manager
+    type: background-worker
+    name: plugin-manager Service (manager)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-dynamic-feature-service/src/manager/plugin-manager.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 50
+  - id: loader_test
+    type: background-worker
+    name: loader.test Service (loader.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/config-loader/src/loader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 830
+    'y': 50
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+dependencies:
+  - from: plugin-manager
+    to: loader
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: loader_test
+    to: loader
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: loader
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: loader
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: loader
+    to: error
+    type: direct-call
+    description: References class type / calls methods

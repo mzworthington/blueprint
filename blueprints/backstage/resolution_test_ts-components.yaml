@@ -1,0 +1,31 @@
+name: Backstage - resolution.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: resolution_test
+    type: background-worker
+    name: resolution.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/frontend-defaults/src/resolution.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: resolution
+    type: background-worker
+    name: resolution Service (resolution.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-defaults/src/resolution.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+dependencies:
+  - from: resolution_test
+    to: resolution
+    type: direct-call
+    description: Executes local class methods / functions

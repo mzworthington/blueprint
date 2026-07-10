@@ -1,0 +1,95 @@
+name: Backstage - scm Components
+version: 1.0.0
+level: component
+nodes:
+  - id: git_test
+    type: background-worker
+    name: git.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/scaffolder-node/src/scm/git.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: git
+    type: relational-database
+    name: git Database
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-node/src/scm/git.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 600
+    'y': 370
+  - id: packagegraph_test
+    type: background-worker
+    name: PackageGraph.test Service (monorepo)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/cli-node/src/monorepo/PackageGraph.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: packagegraph
+    type: background-worker
+    name: PackageGraph Service (monorepo)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/cli-node/src/monorepo/PackageGraph.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 560
+    'y': 690
+dependencies:
+  - from: packagegraph_test
+    to: git
+    type: read-write
+    description: Queries database table records
+  - from: packagegraph
+    to: git
+    type: read-write
+    description: Queries database table records
+  - from: git_test
+    to: git
+    type: read-write
+    description: Queries database table records
+  - from: git_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: git
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: git
+    to: error
+    type: direct-call
+    description: References class type / calls methods

@@ -1,0 +1,61 @@
+name: Backstage - loader.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: loader_test
+    type: background-worker
+    name: loader.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/config-loader/src/loader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: loader
+    type: background-worker
+    name: loader Service (loader.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-dynamic-feature-loader/src/loader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
+dependencies:
+  - from: loader_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: loader_test
+    to: loader
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: loader_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

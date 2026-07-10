@@ -1,0 +1,140 @@
+name: Backstage - gitea Components
+version: 1.0.0
+level: component
+nodes:
+  - id: giteaintegration_test
+    type: background-worker
+    name: GiteaIntegration.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/integration/src/gitea/GiteaIntegration.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 870
+    'y': 50
+  - id: giteaintegration
+    type: background-worker
+    name: GiteaIntegration Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/integration/src/gitea/GiteaIntegration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1100
+    'y': 370
+  - id: giteaurlreader_test
+    type: background-worker
+    name: GiteaUrlReader.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/backend-defaults/src/entrypoints/urlReader/lib/GiteaUrlReader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: scmintegrations_test
+    type: background-worker
+    name: ScmIntegrations.test Service (ScmIntegrations.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/integration/src/ScmIntegrations.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1330
+    'y': 50
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 410
+    'y': 690
+  - id: helpers
+    type: background-worker
+    name: helpers Service (helpers.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/helpers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 870
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1330
+    'y': 690
+  - id: core
+    type: background-worker
+    name: core Service (providers)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-gitea/src/providers/core.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1790
+    'y': 690
+  - id: registry
+    type: background-worker
+    name: registry Service (registry.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/integration/src/registry.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1790
+    'y': 50
+dependencies:
+  - from: giteaurlreader_test
+    to: giteaintegration
+    type: direct-call
+    description: References class type / calls methods
+  - from: scmintegrations_test
+    to: giteaintegration
+    type: direct-call
+    description: References class type / calls methods
+  - from: giteaintegration_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: giteaintegration_test
+    to: giteaintegration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: giteaintegration
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: giteaintegration
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: giteaintegration
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: giteaintegration
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: registry
+    to: giteaintegration
+    type: direct-call
+    description: Executes local class methods / functions

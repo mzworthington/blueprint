@@ -1,0 +1,31 @@
+name: Backstage - discoveryFeatureLoader.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: discoveryfeatureloader
+    type: background-worker
+    name: discoveryFeatureLoader Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-defaults/src/discoveryFeatureLoader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: packagediscoveryservice
+    type: background-worker
+    name: PackageDiscoveryService Service (PackageDiscoveryService.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-defaults/src/PackageDiscoveryService.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+dependencies:
+  - from: discoveryfeatureloader
+    to: packagediscoveryservice
+    type: direct-call
+    description: Executes local class methods / functions

@@ -1,0 +1,46 @@
+name: Backstage - TaskSpec.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: taskspec
+    type: background-worker
+    name: TaskSpec Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-common/src/TaskSpec.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: api
+    type: background-worker
+    name: api Service (api.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/api.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+dependencies:
+  - from: taskspec
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: api
+    to: taskspec
+    type: direct-call
+    description: Executes local class methods / functions

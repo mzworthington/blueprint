@@ -1,0 +1,61 @@
+name: Backstage - createApp.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: createapp_test
+    type: background-worker
+    name: createApp.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/create-app/src/createApp.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: tasks
+    type: background-worker
+    name: tasks Service (lib)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/create-app/src/lib/tasks.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: createapp
+    type: background-worker
+    name: createApp Service (createApp.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/create-app/src/createApp.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: testutils
+    type: background-worker
+    name: testUtils Service (testUtils.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-react/src/testUtils.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
+dependencies:
+  - from: createapp_test
+    to: tasks
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createapp_test
+    to: createapp
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createapp_test
+    to: testutils
+    type: direct-call
+    description: Executes local class methods / functions

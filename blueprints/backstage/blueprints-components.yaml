@@ -1,0 +1,185 @@
+name: Backstage - blueprints Components
+version: 1.0.0
+level: component
+nodes:
+  - id: analyticsimplementationblueprint_test
+    type: background-worker
+    name: AnalyticsImplementationBlueprint.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/app-react/src/blueprints/AnalyticsImplementationBlueprint.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: analyticsimplementationblueprint
+    type: background-worker
+    name: AnalyticsImplementationBlueprint Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/app-react/src/blueprints/AnalyticsImplementationBlueprint.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 370
+  - id: apiblueprint_test
+    type: background-worker
+    name: ApiBlueprint.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/blueprints/ApiBlueprint.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: apiblueprint
+    type: background-worker
+    name: ApiBlueprint Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/blueprints/ApiBlueprint.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 370
+  - id: iconbundleblueprint
+    type: background-worker
+    name: IconBundleBlueprint Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/app-react/src/blueprints/IconBundleBlueprint.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: navcontentblueprint
+    type: gateway-api
+    name: NavContentBlueprint UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/app-react/src/blueprints/NavContentBlueprint.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 1980
+    'y': 370
+  - id: swappablecomponentblueprint
+    type: background-worker
+    name: SwappableComponentBlueprint Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/app-react/src/blueprints/SwappableComponentBlueprint.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1520
+    'y': 50
+  - id: themeblueprint_test
+    type: background-worker
+    name: ThemeBlueprint.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/app-react/src/blueprints/ThemeBlueprint.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2440
+    'y': 50
+  - id: themeblueprint
+    type: background-worker
+    name: ThemeBlueprint Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/app-react/src/blueprints/ThemeBlueprint.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2440
+    'y': 370
+  - id: translationblueprint_test
+    type: background-worker
+    name: TranslationBlueprint.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/app-react/src/blueprints/TranslationBlueprint.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2900
+    'y': 50
+  - id: translationblueprint
+    type: background-worker
+    name: TranslationBlueprint Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/app-react/src/blueprints/TranslationBlueprint.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2900
+    'y': 370
+  - id: apis
+    type: gateway-api
+    name: apis UI Component (apis.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search/src/apis.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 690
+  - id: createextensionblueprint
+    type: background-worker
+    name: createExtensionBlueprint Service (wiring)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/wiring/createExtensionBlueprint.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 1980
+    'y': 50
+dependencies:
+  - from: analyticsimplementationblueprint_test
+    to: analyticsimplementationblueprint
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: analyticsimplementationblueprint
+    to: apis
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: apiblueprint_test
+    to: apiblueprint
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: apiblueprint
+    to: createextensionblueprint
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: navcontentblueprint
+    type: direct-call
+    description: Renders NavContentBlueprint layout component
+  - from: themeblueprint_test
+    to: themeblueprint
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: translationblueprint_test
+    to: translationblueprint
+    type: direct-call
+    description: Executes local class methods / functions

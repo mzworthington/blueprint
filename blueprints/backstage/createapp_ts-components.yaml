@@ -1,0 +1,91 @@
+name: Backstage - createApp.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: createapp
+    type: background-worker
+    name: createApp Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/create-app/src/createApp.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 830
+    'y': 370
+  - id: createapp_test
+    type: background-worker
+    name: createApp.test Service (createApp.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/create-app/src/createApp.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: tasks
+    type: background-worker
+    name: tasks Service (lib)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/create-app/src/lib/tasks.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 830
+    'y': 690
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: createfrontendfeatureloader_test
+    type: gateway-api
+    name: createFrontendFeatureLoader.test UI Component (wiring)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/wiring/createFrontendFeatureLoader.test.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1060
+    'y': 50
+  - id: createfrontendplugin_test
+    type: gateway-api
+    name: createFrontendPlugin.test UI Component (wiring)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/wiring/createFrontendPlugin.test.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1520
+    'y': 50
+dependencies:
+  - from: createapp_test
+    to: createapp
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createapp
+    to: tasks
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index
+    to: createapp
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendfeatureloader_test
+    to: createapp
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendplugin_test
+    to: createapp
+    type: direct-call
+    description: Executes local class methods / functions

@@ -1,0 +1,151 @@
+name: Backstage - resolvers.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: resolvers
+    type: background-worker
+    name: resolvers Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/auth-backend-module-openshift-provider/src/resolvers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1290
+    'y': 370
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 830
+    'y': 50
+  - id: module
+    type: background-worker
+    name: module Service (module.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-techdocs/src/module.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1290
+    'y': 50
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: resolvers_test
+    type: background-worker
+    name: resolvers.test Service (resolvers.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/auth-backend-module-cloudflare-access-provider/src/resolvers.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1750
+    'y': 50
+  - id: authenticator
+    type: background-worker
+    name: authenticator Service (authenticator.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/auth-backend-module-vmware-cloud-provider/src/authenticator.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 690
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 690
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2440
+    'y': 690
+dependencies:
+  - from: index
+    to: resolvers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: module
+    to: resolvers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolvers
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: resolvers
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolvers_test
+    to: resolvers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolvers
+    to: authenticator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolvers
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: resolvers
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolvers
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions

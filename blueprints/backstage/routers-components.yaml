@@ -1,0 +1,149 @@
+name: Backstage - routers Components
+version: 1.0.0
+level: component
+nodes:
+  - id: createstreamablerouter
+    type: rest-api
+    name: createStreamableRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/mcp-actions-backend/src/routers/createStreamableRouter.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: false
+    x: 1520
+    'y': 370
+  - id: plugin
+    type: background-worker
+    name: plugin Service (plugin.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-backend/src/plugin.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1290
+    'y': 50
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 1750
+    'y': 50
+  - id: express
+    type: rest-api
+    name: express REST Endpoint (types)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-openapi-utils/src/types/express.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 140
+    'y': 690
+  - id: mcpservice
+    type: background-worker
+    name: McpService Service (services)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/mcp-actions-backend/src/services/McpService.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 690
+  - id: alpha
+    type: gateway-api
+    name: alpha UI Component (alpha.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/alpha.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1980
+    'y': 690
+  - id: metrics
+    type: background-worker
+    name: metrics Service (util)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-backend/src/util/metrics.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2440
+    'y': 690
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2900
+    'y': 690
+dependencies:
+  - from: plugin
+    to: createstreamablerouter
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: createstreamablerouter
+    type: direct-call
+    description: Hits API routing gateway
+  - from: createstreamablerouter
+    to: express
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createstreamablerouter
+    to: mcpservice
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createstreamablerouter
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createstreamablerouter
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createstreamablerouter
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createstreamablerouter
+    to: metrics
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createstreamablerouter
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions

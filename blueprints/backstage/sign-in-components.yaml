@@ -1,0 +1,133 @@
+name: Backstage - sign-in Components
+version: 1.0.0
+level: component
+nodes:
+  - id: commonsigninresolvers
+    type: background-worker
+    name: commonSignInResolvers Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/auth-node/src/sign-in/commonSignInResolvers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1625
+    'y': 50
+  - id: createsigninresolverfactory
+    type: background-worker
+    name: createSignInResolverFactory Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/auth-node/src/sign-in/createSignInResolverFactory.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 855
+    'y': 370
+  - id: readdeclarativesigninresolver
+    type: background-worker
+    name: readDeclarativeSignInResolver Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/auth-node/src/sign-in/readDeclarativeSignInResolver.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 450
+    'y': 50
+  - id: createoauthproviderfactory
+    type: background-worker
+    name: createOAuthProviderFactory Service (oauth)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/auth-node/src/oauth/createOAuthProviderFactory.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1030
+    'y': 50
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1545
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1315
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 450
+    'y': 690
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+dependencies:
+  - from: createoauthproviderfactory
+    to: createsigninresolverfactory
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: commonsigninresolvers
+    to: createsigninresolverfactory
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: commonsigninresolvers
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: commonsigninresolvers
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: createsigninresolverfactory
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createsigninresolverfactory
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: readdeclarativesigninresolver
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: readdeclarativesigninresolver
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: readdeclarativesigninresolver
+    to: createsigninresolverfactory
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: readdeclarativesigninresolver
+    to: error
+    type: direct-call
+    description: References class type / calls methods

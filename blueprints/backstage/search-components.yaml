@@ -1,0 +1,55 @@
+name: Backstage - search Components
+version: 1.0.0
+level: component
+nodes:
+  - id: catalogentitydocument
+    type: background-worker
+    name: CatalogEntityDocument Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-common/src/search/CatalogEntityDocument.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: usetechdocslocation
+    type: gateway-api
+    name: useTechDocsLocation UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs/src/search/hooks/useTechDocsLocation.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 600
+    'y': 370
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 600
+    'y': 50
+  - id: routes
+    type: background-worker
+    name: routes Service (routes.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs/src/routes.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+dependencies:
+  - from: frontend-client
+    to: usetechdocslocation
+    type: direct-call
+    description: Renders useTechDocsLocation layout component
+  - from: usetechdocslocation
+    to: routes
+    type: direct-call
+    description: Executes local class methods / functions

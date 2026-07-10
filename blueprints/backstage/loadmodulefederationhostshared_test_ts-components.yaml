@@ -1,0 +1,76 @@
+name: Backstage - loadModuleFederationHostShared.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: loadmodulefederationhostshared_test
+    type: background-worker
+    name: loadModuleFederationHostShared.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/module-federation-common/src/loadModuleFederationHostShared.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 830
+    'y': 50
+  - id: loadmodulefederationhostshared
+    type: background-worker
+    name: loadModuleFederationHostShared Service (loadModuleFederationHostShared.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/module-federation-common/src/loadModuleFederationHostShared.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 370
+dependencies:
+  - from: loadmodulefederationhostshared_test
+    to: loadmodulefederationhostshared
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: loadmodulefederationhostshared_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: loadmodulefederationhostshared_test
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: loadmodulefederationhostshared_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods

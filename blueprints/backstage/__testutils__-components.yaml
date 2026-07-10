@@ -1,0 +1,228 @@
+name: Backstage - __testUtils__ Components
+version: 1.0.0
+level: component
+nodes:
+  - id: fake_test
+    type: background-worker
+    name: fake.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/auth-backend-module-microsoft-provider/src/__testUtils__/fake.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: fake
+    type: background-worker
+    name: fake Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/auth-backend-module-microsoft-provider/src/__testUtils__/fake.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 370
+  - id: handlers
+    type: background-worker
+    name: handlers Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-gitlab/src/__testUtils__/handlers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2290
+    'y': 370
+  - id: mocks
+    type: background-worker
+    name: mocks Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-gitlab/src/__testUtils__/mocks.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1085
+    'y': 690
+  - id: catalogmocks
+    type: gateway-api
+    name: catalogMocks UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/org/src/__testUtils__/catalogMocks.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 3180
+    'y': 370
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2465
+    'y': 50
+  - id: authenticator_test
+    type: background-worker
+    name: authenticator.test Service (authenticator.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/auth-backend-module-vmware-cloud-provider/src/authenticator.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2465
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1085
+    'y': 1010
+  - id: client_test
+    type: background-worker
+    name: client.test Service (client.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/techdocs/src/client.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2005
+    'y': 50
+  - id: gitlabdiscoveryentityprovider_test
+    type: background-worker
+    name: GitlabDiscoveryEntityProvider.test Service (providers)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-gitlab/src/providers/GitlabDiscoveryEntityProvider.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1545
+    'y': 50
+  - id: gitlaborgdiscoveryentityprovider_test
+    type: background-worker
+    name: GitlabOrgDiscoveryEntityProvider.test Service (providers)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-gitlab/src/providers/GitlabOrgDiscoveryEntityProvider.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1085
+    'y': 50
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 3385
+    'y': 50
+  - id: testutils
+    type: background-worker
+    name: testUtils Service (testUtils.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-react/src/testUtils.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3180
+    'y': 690
+  - id: helpers_test
+    type: background-worker
+    name: helpers.test Service (stages)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/techdocs-node/src/stages/publish/helpers.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2925
+    'y': 50
+dependencies:
+  - from: index
+    to: handlers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: fake_test
+    to: fake
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: authenticator_test
+    to: fake
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: handlers
+    to: mocks
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: handlers
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: mocks
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: client_test
+    to: handlers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: client_test
+    to: mocks
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlabdiscoveryentityprovider_test
+    to: handlers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlabdiscoveryentityprovider_test
+    to: mocks
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlaborgdiscoveryentityprovider_test
+    to: handlers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlaborgdiscoveryentityprovider_test
+    to: mocks
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: catalogmocks
+    type: direct-call
+    description: Renders catalogMocks layout component
+  - from: catalogmocks
+    to: testutils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: helpers_test
+    to: catalogmocks
+    type: direct-call
+    description: Executes local class methods / functions

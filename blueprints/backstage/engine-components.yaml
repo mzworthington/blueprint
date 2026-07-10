@@ -1,0 +1,130 @@
+name: Backstage - engine Components
+version: 1.0.0
+level: component
+nodes:
+  - id: incrementalingestionengine_test
+    type: background-worker
+    name: IncrementalIngestionEngine.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-incremental-ingestion/src/engine/IncrementalIngestionEngine.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 260
+    'y': 50
+  - id: incrementalingestionengine
+    type: background-worker
+    name: IncrementalIngestionEngine Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-incremental-ingestion/src/engine/IncrementalIngestionEngine.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: alpha
+    type: gateway-api
+    name: alpha UI Component (alpha.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/alpha.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 690
+  - id: incrementalingestiondatabasemanager
+    type: relational-database
+    name: IncrementalIngestionDatabaseManager Database (database)
+    isTest: false
+    properties:
+      filepath: >-
+        ../backstage/plugins/catalog-backend-module-incremental-ingestion/src/database/IncrementalIngestionDatabaseManager.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 1060
+    'y': 690
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 690
+  - id: wrapperproviders
+    type: relational-database
+    name: WrapperProviders Database (module)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-incremental-ingestion/src/module/WrapperProviders.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 1100
+    'y': 50
+dependencies:
+  - from: incrementalingestionengine_test
+    to: incrementalingestionengine
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: incrementalingestionengine_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: incrementalingestionengine_test
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: incrementalingestionengine
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: incrementalingestionengine
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: incrementalingestionengine
+    to: incrementalingestiondatabasemanager
+    type: read-write
+    description: Queries database table records
+  - from: incrementalingestionengine
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: incrementalingestionengine
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: wrapperproviders
+    to: incrementalingestionengine
+    type: direct-call
+    description: Executes local class methods / functions

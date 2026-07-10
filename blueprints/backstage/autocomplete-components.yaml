@@ -1,0 +1,99 @@
+name: Backstage - autocomplete Components
+version: 1.0.0
+level: component
+nodes:
+  - id: autocomplete_test
+    type: background-worker
+    name: autocomplete.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/autocomplete/autocomplete.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 640
+    'y': 50
+  - id: autocomplete
+    type: background-worker
+    name: autocomplete Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-backend-module-gitlab/src/autocomplete/autocomplete.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 560
+    'y': 370
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: module
+    type: background-worker
+    name: module Service (module.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-techdocs/src/module.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1220
+    'y': 50
+  - id: integration
+    type: background-worker
+    name: integration Service (types)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/permission-common/src/types/integration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+  - id: util
+    type: relational-database
+    name: util Database (database)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-pg/src/database/util.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 600
+    'y': 690
+dependencies:
+  - from: autocomplete_test
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: autocomplete_test
+    to: autocomplete
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: autocomplete
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: module
+    to: autocomplete
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: autocomplete_test
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: autocomplete
+    to: util
+    type: read-write
+    description: Queries database table records
+  - from: autocomplete
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions

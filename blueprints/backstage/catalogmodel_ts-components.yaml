@@ -1,0 +1,46 @@
+name: Backstage - catalogModel.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: catalogmodel
+    type: background-worker
+    name: catalogModel Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-common/src/catalogModel.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 50
+  - id: alpha
+    type: gateway-api
+    name: alpha UI Component (alpha.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/alpha.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+dependencies:
+  - from: catalogmodel
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: catalogmodel
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

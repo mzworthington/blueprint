@@ -1,0 +1,208 @@
+name: Backstage - microsoftGraph Components
+version: 1.0.0
+level: component
+nodes:
+  - id: defaulttransformers
+    type: background-worker
+    name: defaultTransformers Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-msgraph/src/microsoftGraph/defaultTransformers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1250
+    'y': 370
+  - id: defaulttransformers_test
+    type: background-worker
+    name: defaultTransformers.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-msgraph/src/microsoftGraph/defaultTransformers.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1980
+    'y': 50
+  - id: org_test
+    type: background-worker
+    name: org.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-msgraph/src/microsoftGraph/org.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2940
+    'y': 50
+  - id: org
+    type: background-worker
+    name: org Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-msgraph/src/microsoftGraph/org.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2980
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: constants
+    type: background-worker
+    name: constants Service (ReportIssue)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-module-addons-contrib/src/ReportIssue/constants.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: github
+    type: background-worker
+    name: github Service (actions)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/github.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2050
+    'y': 690
+  - id: annotation
+    type: background-worker
+    name: annotation Service (lib)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-github/src/lib/annotation.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+  - id: github_test
+    type: background-worker
+    name: github.test Service (actions)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/scaffolder-backend-module-github/src/actions/github.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 980
+    'y': 50
+  - id: githuborgentityprovider
+    type: background-worker
+    name: GithubOrgEntityProvider Service (providers)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-github/src/providers/GithubOrgEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2480
+    'y': 50
+  - id: gitlaborgdiscoveryentityprovider
+    type: background-worker
+    name: GitlabOrgDiscoveryEntityProvider Service (providers)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-gitlab/src/providers/GitlabOrgDiscoveryEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1440
+    'y': 50
+  - id: read
+    type: background-worker
+    name: read Service (scaffolder)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/read.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3400
+    'y': 50
+  - id: helper
+    type: background-worker
+    name: helper Service (scaffolder)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-backend/src/scaffolder/tasks/helper.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1590
+    'y': 690
+dependencies:
+  - from: defaulttransformers
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaulttransformers
+    to: constants
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaulttransformers_test
+    to: defaulttransformers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaulttransformers_test
+    to: github
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaulttransformers
+    to: annotation
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaulttransformers
+    to: github
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: github_test
+    to: defaulttransformers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: github
+    to: defaulttransformers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: org_test
+    to: org
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: githuborgentityprovider
+    to: defaulttransformers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: githuborgentityprovider
+    to: org
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlaborgdiscoveryentityprovider
+    to: defaulttransformers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: org
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaulttransformers
+    to: helper
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: defaulttransformers
+    type: direct-call
+    description: Executes local class methods / functions

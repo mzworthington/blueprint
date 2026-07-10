@@ -1,0 +1,31 @@
+name: Backstage - deprecatedTypes.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: deprecatedtypes
+    type: background-worker
+    name: deprecatedTypes Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/config/src/deprecatedTypes.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+dependencies:
+  - from: deprecatedtypes
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

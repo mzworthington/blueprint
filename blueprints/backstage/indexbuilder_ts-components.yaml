@@ -1,0 +1,91 @@
+name: Backstage - IndexBuilder.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: indexbuilder
+    type: background-worker
+    name: IndexBuilder Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/IndexBuilder.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 370
+  - id: router_test
+    type: rest-api
+    name: router.test REST Endpoint (service)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/user-settings-backend/src/service/router.test.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 140
+    'y': 50
+  - id: indexbuilder_test
+    type: background-worker
+    name: IndexBuilder.test Service (IndexBuilder.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/IndexBuilder.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: scheduler
+    type: background-worker
+    name: Scheduler Service (Scheduler.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/Scheduler.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 830
+    'y': 690
+  - id: alpha
+    type: gateway-api
+    name: alpha UI Component (alpha.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/alpha.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1060
+    'y': 50
+dependencies:
+  - from: router_test
+    to: indexbuilder
+    type: direct-call
+    description: References class type / calls methods
+  - from: indexbuilder_test
+    to: indexbuilder
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: indexbuilder
+    to: scheduler
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: indexbuilder
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: alpha
+    to: indexbuilder
+    type: direct-call
+    description: References class type / calls methods

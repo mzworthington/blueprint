@@ -1,0 +1,148 @@
+name: Backstage - pacman Components
+version: 1.0.0
+level: component
+nodes:
+  - id: yarn
+    type: background-worker
+    name: Yarn Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/cli-node/src/pacman/yarn/Yarn.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 370
+  - id: packagemanager_test
+    type: background-worker
+    name: PackageManager.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/cli-node/src/pacman/PackageManager.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 465
+    'y': 50
+  - id: packagemanager
+    type: background-worker
+    name: PackageManager Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/cli-node/src/pacman/PackageManager.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 690
+  - id: packages_test
+    type: background-worker
+    name: packages.test Service (lib)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/cli-module-migrate/src/lib/versioning/packages.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 925
+    'y': 50
+  - id: packages
+    type: background-worker
+    name: packages Service (lib)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/cli-module-migrate/src/lib/versioning/packages.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1385
+    'y': 50
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+  - id: testutils
+    type: background-worker
+    name: testUtils Service (testUtils.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-react/src/testUtils.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 330
+    'y': 370
+  - id: lockfile
+    type: background-worker
+    name: Lockfile Service (util)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/devtools-backend/src/util/Lockfile.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1020
+    'y': 1010
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 690
+dependencies:
+  - from: packages_test
+    to: yarn
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: packages
+    to: yarn
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: yarn
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: packagemanager_test
+    to: testutils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: packagemanager_test
+    to: packagemanager
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: packagemanager_test
+    to: yarn
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: packagemanager
+    to: yarn
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: packagemanager
+    to: lockfile
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: yarn
+    to: packagemanager
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: yarn
+    to: lockfile
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: yarn
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

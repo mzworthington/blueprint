@@ -1,0 +1,33 @@
+name: Backstage - test-reject-network.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: test-reject-network_test
+    type: background-worker
+    name: test-reject-network.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/app-legacy/src/test-reject-network.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: external-api-target
+    type: rest-api
+    name: External HTTP API Endpoint (External HTTP Services)
+    isTest: false
+    properties:
+      description: Generic outbound web integration endpoints.
+    external: true
+    x: 140
+    'y': 370
+dependencies:
+  - from: test-reject-network_test
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests
+  - from: test-reject-network_test
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests

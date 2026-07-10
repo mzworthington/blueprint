@@ -1,0 +1,134 @@
+name: Backstage - analytics Components
+version: 1.0.0
+level: component
+nodes:
+  - id: tracker_test
+    type: background-worker
+    name: Tracker.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/analytics/Tracker.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: tracker
+    type: background-worker
+    name: Tracker Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/analytics/Tracker.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 370
+  - id: getnodetext
+    type: gateway-api
+    name: getNodeText UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/ui/src/analytics/getNodeText.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 1060
+    'y': 370
+  - id: useanalytics
+    type: gateway-api
+    name: useAnalytics UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/ui/src/analytics/useAnalytics.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 1520
+    'y': 370
+  - id: apis
+    type: gateway-api
+    name: apis UI Component (apis.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search/src/apis.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 330
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 1290
+    'y': 50
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1560
+    'y': 690
+  - id: stitchingperformance_test
+    type: relational-database
+    name: stitchingPerformance.test Database (tests)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-backend/src/tests/performance/stitchingPerformance.test.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 600
+    'y': 50
+dependencies:
+  - from: tracker_test
+    to: tracker
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: tracker
+    to: apis
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: tracker
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: getnodetext
+    type: direct-call
+    description: Renders getNodeText layout component
+  - from: frontend-client
+    to: useanalytics
+    type: direct-call
+    description: Renders useAnalytics layout component
+  - from: useanalytics
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: useanalytics
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: stitchingperformance_test
+    to: tracker
+    type: direct-call
+    description: References class type / calls methods

@@ -1,0 +1,61 @@
+name: Backstage - roles Components
+version: 1.0.0
+level: component
+nodes:
+  - id: packageroles_test
+    type: background-worker
+    name: PackageRoles.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/cli-node/src/roles/PackageRoles.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 50
+  - id: packageroles
+    type: background-worker
+    name: PackageRoles Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/cli-node/src/roles/PackageRoles.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+dependencies:
+  - from: packageroles_test
+    to: packageroles
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: packageroles
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: packageroles
+    to: error
+    type: direct-call
+    description: References class type / calls methods

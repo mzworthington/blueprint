@@ -1,0 +1,31 @@
+name: Backstage - clientHelpers.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: clienthelpers_test
+    type: background-worker
+    name: clientHelpers.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-msgraph-incremental/src/clientHelpers.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: clienthelpers
+    type: background-worker
+    name: clientHelpers Service (clientHelpers.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-msgraph-incremental/src/clientHelpers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+dependencies:
+  - from: clienthelpers_test
+    to: clienthelpers
+    type: direct-call
+    description: Executes local class methods / functions

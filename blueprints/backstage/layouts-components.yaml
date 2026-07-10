@@ -1,0 +1,89 @@
+name: Backstage - layouts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: keys
+    type: background-worker
+    name: keys Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-react/src/layouts/keys.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 690
+  - id: createscaffolderlayout
+    type: gateway-api
+    name: createScaffolderLayout UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-react/src/layouts/createScaffolderLayout.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 1060
+    'y': 370
+  - id: usecustomfieldextensions
+    type: background-worker
+    name: useCustomFieldExtensions Service (hooks)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-react/src/hooks/useCustomFieldExtensions.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: usecustomlayouts
+    type: background-worker
+    name: useCustomLayouts Service (hooks)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-react/src/hooks/useCustomLayouts.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 1060
+    'y': 50
+  - id: core
+    type: background-worker
+    name: core Service (providers)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-gitea/src/providers/core.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1100
+    'y': 690
+dependencies:
+  - from: usecustomfieldextensions
+    to: keys
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: usecustomlayouts
+    to: keys
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: createscaffolderlayout
+    type: direct-call
+    description: Renders createScaffolderLayout layout component
+  - from: createscaffolderlayout
+    to: keys
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createscaffolderlayout
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions

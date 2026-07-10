@@ -1,0 +1,106 @@
+name: Backstage - concurrency Components
+version: 1.0.0
+level: component
+nodes:
+  - id: concurrency
+    type: background-worker
+    name: concurrency Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/cli-node/src/concurrency/concurrency.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 180
+    'y': 690
+  - id: runconcurrenttasks_test
+    type: background-worker
+    name: runConcurrentTasks.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/cli-node/src/concurrency/runConcurrentTasks.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: runconcurrenttasks
+    type: background-worker
+    name: runConcurrentTasks Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/cli-node/src/concurrency/runConcurrentTasks.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 370
+  - id: runworkerqueuethreads_test
+    type: background-worker
+    name: runWorkerQueueThreads.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/cli-node/src/concurrency/runWorkerQueueThreads.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 640
+    'y': 50
+  - id: runworkerqueuethreads
+    type: background-worker
+    name: runWorkerQueueThreads Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/cli-node/src/concurrency/runWorkerQueueThreads.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 640
+    'y': 370
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 640
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1100
+    'y': 690
+dependencies:
+  - from: runconcurrenttasks_test
+    to: runconcurrenttasks
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runconcurrenttasks
+    to: concurrency
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runworkerqueuethreads_test
+    to: runworkerqueuethreads
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runworkerqueuethreads
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runworkerqueuethreads
+    to: concurrency
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runworkerqueuethreads
+    to: error
+    type: direct-call
+    description: References class type / calls methods

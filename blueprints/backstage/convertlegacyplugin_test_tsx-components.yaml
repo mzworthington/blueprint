@@ -1,0 +1,46 @@
+name: Backstage - convertLegacyPlugin.test.tsx Components
+version: 1.0.0
+level: component
+nodes:
+  - id: convertlegacyplugin_test
+    type: background-worker
+    name: convertLegacyPlugin.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/convertLegacyPlugin.test.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 50
+  - id: convertlegacyplugin
+    type: background-worker
+    name: convertLegacyPlugin Service (convertLegacyPlugin.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/convertLegacyPlugin.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: frontend
+    type: background-worker
+    name: frontend Service (schemas)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-dynamic-feature-service/src/schemas/frontend.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+dependencies:
+  - from: convertlegacyplugin_test
+    to: convertlegacyplugin
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: convertlegacyplugin_test
+    to: frontend
+    type: direct-call
+    description: Executes local class methods / functions

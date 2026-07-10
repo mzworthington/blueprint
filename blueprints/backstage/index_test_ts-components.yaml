@@ -1,0 +1,136 @@
+name: Backstage - index.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: index_test
+    type: background-worker
+    name: index.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/techdocs-common/src/index.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1750
+    'y': 50
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: testutils
+    type: background-worker
+    name: testUtils Service (testUtils.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-react/src/testUtils.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: auth
+    type: background-worker
+    name: auth Service (auth.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-elasticsearch/src/auth.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
+  - id: dispatchstrategy
+    type: background-worker
+    name: DispatchStrategy Service (auth)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/auth/DispatchStrategy.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 370
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 370
+  - id: integration
+    type: background-worker
+    name: integration Service (types)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/permission-common/src/types/integration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2440
+    'y': 370
+  - id: containerrunner
+    type: background-worker
+    name: ContainerRunner Service (actions)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-backend-module-rails/src/actions/fetch/rails/ContainerRunner.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2900
+    'y': 370
+  - id: transformer
+    type: background-worker
+    name: transformer Service (reader)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs/src/reader/transformers/transformer.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3360
+    'y': 370
+dependencies:
+  - from: index_test
+    to: index
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index_test
+    to: testutils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index_test
+    to: auth
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index_test
+    to: dispatchstrategy
+    type: direct-call
+    description: References class type / calls methods
+  - from: index_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: index_test
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index_test
+    to: containerrunner
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index_test
+    to: transformer
+    type: direct-call
+    description: Executes local class methods / functions

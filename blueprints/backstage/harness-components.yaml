@@ -1,0 +1,155 @@
+name: Backstage - harness Components
+version: 1.0.0
+level: component
+nodes:
+  - id: harnessintegration_test
+    type: background-worker
+    name: HarnessIntegration.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/integration/src/harness/HarnessIntegration.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 830
+    'y': 50
+  - id: harnessintegration
+    type: background-worker
+    name: HarnessIntegration Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/integration/src/harness/HarnessIntegration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1250
+    'y': 370
+  - id: harnessurlreader_test
+    type: background-worker
+    name: HarnessUrlReader.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/backend-defaults/src/entrypoints/urlReader/lib/HarnessUrlReader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: scmintegrations_test
+    type: background-worker
+    name: ScmIntegrations.test Service (ScmIntegrations.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/integration/src/ScmIntegrations.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1290
+    'y': 50
+  - id: scmintegrations
+    type: background-worker
+    name: ScmIntegrations Service (ScmIntegrations.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/integration/src/ScmIntegrations.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1750
+    'y': 50
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 690
+  - id: helpers
+    type: background-worker
+    name: helpers Service (helpers.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/helpers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 870
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 690
+  - id: core
+    type: background-worker
+    name: core Service (providers)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-gitea/src/providers/core.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 690
+  - id: registry
+    type: background-worker
+    name: registry Service (registry.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/integration/src/registry.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2210
+    'y': 50
+dependencies:
+  - from: harnessurlreader_test
+    to: harnessintegration
+    type: direct-call
+    description: References class type / calls methods
+  - from: scmintegrations_test
+    to: harnessintegration
+    type: direct-call
+    description: References class type / calls methods
+  - from: scmintegrations
+    to: harnessintegration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: harnessintegration_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: harnessintegration_test
+    to: harnessintegration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: harnessintegration
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: harnessintegration
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: harnessintegration
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: harnessintegration
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: registry
+    to: harnessintegration
+    type: direct-call
+    description: Executes local class methods / functions

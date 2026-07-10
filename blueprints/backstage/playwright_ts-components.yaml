@@ -1,0 +1,31 @@
+name: Backstage - playwright.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: playwright
+    type: background-worker
+    name: playwright Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/e2e-test-utils/src/playwright.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 370
+  - id: playwright_config
+    type: background-worker
+    name: playwright.config Service (backstage)
+    isTest: false
+    properties:
+      filepath: ../backstage/playwright.config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+dependencies:
+  - from: playwright_config
+    to: playwright
+    type: direct-call
+    description: Executes local class methods / functions

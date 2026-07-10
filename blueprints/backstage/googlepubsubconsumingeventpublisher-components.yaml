@@ -1,0 +1,146 @@
+name: Backstage - GooglePubSubConsumingEventPublisher Components
+version: 1.0.0
+level: component
+nodes:
+  - id: googlepubsubconsumingeventpublisher_test
+    type: background-worker
+    name: GooglePubSubConsumingEventPublisher.test Service
+    isTest: true
+    properties:
+      filepath: >-
+        ../backstage/plugins/events-backend-module-google-pubsub/src/GooglePubSubConsumingEventPublisher/GooglePubSubConsumingEventPublisher.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 330
+    'y': 50
+  - id: googlepubsubconsumingeventpublisher
+    type: background-worker
+    name: GooglePubSubConsumingEventPublisher Service
+    isTest: false
+    properties:
+      filepath: >-
+        ../backstage/plugins/events-backend-module-google-pubsub/src/GooglePubSubConsumingEventPublisher/GooglePubSubConsumingEventPublisher.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 925
+    'y': 370
+  - id: alpha
+    type: gateway-api
+    name: alpha UI Component (alpha.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/alpha.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1465
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 370
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 965
+    'y': 690
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1925
+    'y': 690
+  - id: module
+    type: background-worker
+    name: module Service (module.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-techdocs/src/module.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 965
+    'y': 50
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1425
+    'y': 50
+dependencies:
+  - from: googlepubsubconsumingeventpublisher_test
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googlepubsubconsumingeventpublisher_test
+    to: googlepubsubconsumingeventpublisher
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googlepubsubconsumingeventpublisher_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googlepubsubconsumingeventpublisher_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: googlepubsubconsumingeventpublisher
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googlepubsubconsumingeventpublisher
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googlepubsubconsumingeventpublisher
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googlepubsubconsumingeventpublisher
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: module
+    to: googlepubsubconsumingeventpublisher
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index
+    to: googlepubsubconsumingeventpublisher
+    type: direct-call
+    description: Executes local class methods / functions

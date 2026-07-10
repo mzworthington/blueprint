@@ -1,0 +1,123 @@
+name: Backstage - unified Components
+version: 1.0.0
+level: component
+nodes:
+  - id: overrides_test
+    type: background-worker
+    name: overrides.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/theme/src/unified/overrides.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: overrides
+    type: gateway-api
+    name: overrides UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/theme/src/unified/overrides.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 870
+    'y': 370
+  - id: useapplythemeattributes
+    type: gateway-api
+    name: useApplyThemeAttributes UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/theme/src/unified/useApplyThemeAttributes.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 1520
+    'y': 370
+  - id: overridablecomponents
+    type: background-worker
+    name: overridableComponents Service (overridableComponents.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs/src/overridableComponents.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: styles
+    type: background-worker
+    name: styles Service (homePageComponents)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/home/src/homePageComponents/QuickStart/styles.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 410
+    'y': 690
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 1100
+    'y': 50
+  - id: basetheme
+    type: background-worker
+    name: baseTheme Service (v4)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/theme/src/v4/baseTheme.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1560
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2020
+    'y': 50
+dependencies:
+  - from: overridablecomponents
+    to: overrides
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: overrides_test
+    to: styles
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: overrides_test
+    to: overrides
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: overrides
+    type: direct-call
+    description: Renders overrides layout component
+  - from: overrides
+    to: styles
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: useapplythemeattributes
+    type: direct-call
+    description: Renders useApplyThemeAttributes layout component
+  - from: basetheme
+    to: overrides
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: types
+    to: overrides
+    type: direct-call
+    description: Executes local class methods / functions

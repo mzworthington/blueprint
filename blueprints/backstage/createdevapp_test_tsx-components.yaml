@@ -1,0 +1,46 @@
+name: Backstage - createDevApp.test.tsx Components
+version: 1.0.0
+level: component
+nodes:
+  - id: createdevapp_test
+    type: gateway-api
+    name: createDevApp.test UI Component
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/frontend-dev-utils/src/createDevApp.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 370
+    'y': 50
+  - id: createdevapp
+    type: gateway-api
+    name: createDevApp UI Component (createDevApp.tsx)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-dev-utils/src/createDevApp.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 370
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+dependencies:
+  - from: createdevapp_test
+    to: createdevapp
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createdevapp_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods

@@ -1,0 +1,46 @@
+name: Backstage - discovery.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: discovery_test
+    type: background-worker
+    name: discovery.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/frontend-defaults/src/discovery.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 50
+  - id: discovery
+    type: background-worker
+    name: discovery Service (schema)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-common/src/schema/openapi/generated/types/discovery.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+dependencies:
+  - from: discovery_test
+    to: discovery
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: discovery_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions

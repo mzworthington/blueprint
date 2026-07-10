@@ -1,0 +1,61 @@
+name: Backstage - EntityPolicies.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: entitypolicies_test
+    type: background-worker
+    name: EntityPolicies.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/catalog-model/src/EntityPolicies.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: entity
+    type: background-worker
+    name: Entity Service (entity)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/catalog-model/src/entity/Entity.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: entitypolicies
+    type: background-worker
+    name: EntityPolicies Service (EntityPolicies.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/catalog-model/src/EntityPolicies.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
+dependencies:
+  - from: entitypolicies_test
+    to: entity
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: entitypolicies_test
+    to: entitypolicies
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: entitypolicies_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods

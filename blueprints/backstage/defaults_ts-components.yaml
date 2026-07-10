@@ -1,0 +1,61 @@
+name: Backstage - defaults.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: defaults
+    type: background-worker
+    name: defaults Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/module-federation-common/src/defaults.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 370
+  - id: defaults_test
+    type: background-worker
+    name: defaults.test Service (defaults.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/module-federation-common/src/defaults.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 690
+  - id: defaultentitypresentationapi
+    type: gateway-api
+    name: DefaultEntityPresentationApi UI Component (apis)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog/src/apis/EntityPresentationApi/DefaultEntityPresentationApi.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 600
+    'y': 50
+dependencies:
+  - from: defaults_test
+    to: defaults
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaults
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultentitypresentationapi
+    to: defaults
+    type: direct-call
+    description: Executes local class methods / functions

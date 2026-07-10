@@ -1,0 +1,95 @@
+name: Backstage - files Components
+version: 1.0.0
+level: component
+nodes:
+  - id: deserializedirectorycontents_test
+    type: background-worker
+    name: deserializeDirectoryContents.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/scaffolder-node/src/files/deserializeDirectoryContents.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 180
+    'y': 50
+  - id: deserializedirectorycontents
+    type: background-worker
+    name: deserializeDirectoryContents Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-node/src/files/deserializeDirectoryContents.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 370
+  - id: serializedirectorycontents_test
+    type: background-worker
+    name: serializeDirectoryContents.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/scaffolder-node/src/files/serializeDirectoryContents.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 680
+    'y': 50
+  - id: serializedirectorycontents
+    type: background-worker
+    name: serializeDirectoryContents Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-node/src/files/serializeDirectoryContents.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 640
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 180
+    'y': 690
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 680
+    'y': 690
+dependencies:
+  - from: deserializedirectorycontents_test
+    to: deserializedirectorycontents
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: deserializedirectorycontents_test
+    to: serializedirectorycontents
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: deserializedirectorycontents
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: serializedirectorycontents_test
+    to: serializedirectorycontents
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: serializedirectorycontents
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: serializedirectorycontents
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions

@@ -1,0 +1,122 @@
+name: Backstage - jsonSchemaRefPlaceholderResolver.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: jsonschemarefplaceholderresolver
+    type: background-worker
+    name: jsonSchemaRefPlaceholderResolver Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-openapi/src/jsonSchemaRefPlaceholderResolver.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 830
+    'y': 370
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: jsonschemarefplaceholderresolver_test
+    type: background-worker
+    name: jsonSchemaRefPlaceholderResolver.test Service (jsonSchemaRefPlaceholderResolver.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-openapi/src/jsonSchemaRefPlaceholderResolver.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 690
+  - id: lib
+    type: background-worker
+    name: lib Service (lib.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/signals-node/src/lib.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 830
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1290
+    'y': 690
+  - id: catalogmodulejsonschemarefplaceholderresolver_test
+    type: background-worker
+    name: catalogModuleJsonSchemaRefPlaceholderResolver.test Service (module)
+    isTest: true
+    properties:
+      filepath: >-
+        ../backstage/plugins/catalog-backend-module-openapi/src/module/catalogModuleJsonSchemaRefPlaceholderResolver.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 50
+  - id: catalogmodulejsonschemarefplaceholderresolver
+    type: background-worker
+    name: catalogModuleJsonSchemaRefPlaceholderResolver Service (module)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-openapi/src/module/catalogModuleJsonSchemaRefPlaceholderResolver.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 50
+dependencies:
+  - from: index
+    to: jsonschemarefplaceholderresolver
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: jsonschemarefplaceholderresolver_test
+    to: jsonschemarefplaceholderresolver
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: jsonschemarefplaceholderresolver
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: jsonschemarefplaceholderresolver
+    to: lib
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: jsonschemarefplaceholderresolver
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: catalogmodulejsonschemarefplaceholderresolver_test
+    to: jsonschemarefplaceholderresolver
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: catalogmodulejsonschemarefplaceholderresolver
+    to: jsonschemarefplaceholderresolver
+    type: direct-call
+    description: Executes local class methods / functions

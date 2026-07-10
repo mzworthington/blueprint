@@ -89,16 +89,20 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
     const list = fs.readdirSync(dir);
     list.forEach(file => {
       const filePath = path.join(dir, file);
-      const stat = fs.statSync(filePath);
-      if (stat && stat.isDirectory()) {
-        if (file !== 'node_modules' && !file.startsWith('.')) {
-          results.push(...this.getFilesRecursively(filePath, extensions));
+      try {
+        const stat = fs.statSync(filePath);
+        if (stat && stat.isDirectory()) {
+          if (file !== 'node_modules' && !file.startsWith('.')) {
+            results.push(...this.getFilesRecursively(filePath, extensions));
+          }
+        } else {
+          const ext = path.extname(file).toLowerCase();
+          if (extensions.includes(ext)) {
+            results.push(filePath);
+          }
         }
-      } else {
-        const ext = path.extname(file).toLowerCase();
-        if (extensions.includes(ext)) {
-          results.push(filePath);
-        }
+      } catch {
+        // Skip files that throw stat errors (e.g. broken symlinks)
       }
     });
     return results;
@@ -120,8 +124,14 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
 
       parser.setLanguage(lang);
 
-      const content = fs.readFileSync(filePath, 'utf8');
-      const tree = parser.parse(content);
+      let content = '';
+      let tree: Parser.Tree;
+      try {
+        content = fs.readFileSync(filePath, 'utf8');
+        tree = parser.parse(content);
+      } catch {
+        continue;
+      }
 
       const relativePath = path.relative(process.cwd(), filePath);
       const baseName = path.basename(relativePath, path.extname(relativePath));

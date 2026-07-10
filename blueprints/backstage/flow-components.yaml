@@ -1,0 +1,142 @@
+name: Backstage - flow Components
+version: 1.0.0
+level: component
+nodes:
+  - id: parsewebmessageresponse
+    type: background-worker
+    name: parseWebMessageResponse Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/auth-node/src/flow/__testUtils__/parseWebMessageResponse.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 830
+    'y': 370
+  - id: sendwebmessageresponse_test
+    type: rest-api
+    name: sendWebMessageResponse.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/auth-node/src/flow/sendWebMessageResponse.test.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: false
+    x: 330
+    'y': 50
+  - id: sendwebmessageresponse
+    type: rest-api
+    name: sendWebMessageResponse REST Endpoint
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/auth-node/src/flow/sendWebMessageResponse.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: false
+    x: 1005
+    'y': 690
+  - id: express
+    type: rest-api
+    name: express REST Endpoint (types)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-openapi-utils/src/types/express.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 140
+    'y': 1010
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 370
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 1370
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 965
+    'y': 1010
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1425
+    'y': 1010
+  - id: createoauthroutehandlers_test
+    type: rest-api
+    name: createOAuthRouteHandlers.test REST Endpoint (oauth)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/auth-node/src/oauth/createOAuthRouteHandlers.test.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 1115
+    'y': 50
+dependencies:
+  - from: parsewebmessageresponse
+    to: sendwebmessageresponse
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: sendwebmessageresponse_test
+    to: express
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: sendwebmessageresponse_test
+    to: sendwebmessageresponse
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: sendwebmessageresponse_test
+    to: parsewebmessageresponse
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: sendwebmessageresponse_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: frontend-client
+    to: sendwebmessageresponse
+    type: direct-call
+    description: Hits API routing gateway
+  - from: sendwebmessageresponse
+    to: express
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: sendwebmessageresponse
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: sendwebmessageresponse
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createoauthroutehandlers_test
+    to: parsewebmessageresponse
+    type: direct-call
+    description: Executes local class methods / functions

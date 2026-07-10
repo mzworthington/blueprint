@@ -1,0 +1,76 @@
+name: Backstage - v4 Components
+version: 1.0.0
+level: component
+nodes:
+  - id: themes
+    type: background-worker
+    name: themes Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/theme/src/v4/themes.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: basetheme
+    type: background-worker
+    name: baseTheme Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/theme/src/v4/baseTheme.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 370
+  - id: styles
+    type: background-worker
+    name: styles Service (homePageComponents)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/home/src/homePageComponents/QuickStart/styles.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: overrides
+    type: gateway-api
+    name: overrides UI Component (unified)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/theme/src/unified/overrides.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 600
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+dependencies:
+  - from: basetheme
+    to: styles
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: basetheme
+    to: overrides
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: basetheme
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: themes
+    to: basetheme
+    type: direct-call
+    description: Executes local class methods / functions

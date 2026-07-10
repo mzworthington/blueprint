@@ -1,0 +1,61 @@
+name: Backstage - e2e-tests Components
+version: 1.0.0
+level: component
+nodes:
+  - id: homepage_test
+    type: background-worker
+    name: HomePage.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/app/e2e-tests/HomePage.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: searchpage_test
+    type: background-worker
+    name: SearchPage.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/app/e2e-tests/SearchPage.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: app_test
+    type: background-worker
+    name: app.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/create-app/templates/legacy-app/packages/app/e2e-tests/app.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: test
+    type: background-worker
+    name: test Service (commands)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/cli-module-test-jest/src/commands/repo/test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+dependencies:
+  - from: homepage_test
+    to: test
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: searchpage_test
+    to: test
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: app_test
+    to: test
+    type: direct-call
+    description: Executes local class methods / functions

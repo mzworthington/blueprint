@@ -1,0 +1,31 @@
+name: Backstage - techdocsTypes.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: techdocstypes
+    type: background-worker
+    name: techdocsTypes Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-node/src/techdocsTypes.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 370
+  - id: extensions
+    type: background-worker
+    name: extensions Service (extensions.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-node/src/extensions.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+dependencies:
+  - from: extensions
+    to: techdocstypes
+    type: direct-call
+    description: Executes local class methods / functions

@@ -1,0 +1,59 @@
+name: Backstage - mdx-components.tsx Components
+version: 1.0.0
+level: component
+nodes:
+  - id: mdx-components
+    type: gateway-api
+    name: mdx-components UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/docs-ui/src/mdx-components.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 370
+    'y': 370
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 600
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 690
+dependencies:
+  - from: index
+    to: mdx-components
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: mdx-components
+    type: direct-call
+    description: Renders mdx-components layout component
+  - from: mdx-components
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

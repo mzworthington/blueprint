@@ -1,0 +1,171 @@
+name: Backstage - PgSearchEngine Components
+version: 1.0.0
+level: component
+nodes:
+  - id: pgsearchengine_test
+    type: background-worker
+    name: PgSearchEngine.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 50
+  - id: pgsearchengine
+    type: background-worker
+    name: PgSearchEngine Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 910
+    'y': 370
+  - id: pgsearchengineindexer_test
+    type: background-worker
+    name: PgSearchEngineIndexer.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngineIndexer.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1370
+    'y': 370
+  - id: pgsearchengineindexer
+    type: relational-database
+    name: PgSearchEngineIndexer Database
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngineIndexer.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 1895
+    'y': 690
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: database
+    type: background-worker
+    name: database Service (services)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-plugin-api/src/services/utilities/database.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 895
+    'y': 1010
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: databasedocumentstore_test
+    type: background-worker
+    name: DatabaseDocumentStore.test Service (database)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-pg/src/database/DatabaseDocumentStore.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 895
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1355
+    'y': 50
+  - id: module
+    type: background-worker
+    name: module Service (module.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-techdocs/src/module.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1815
+    'y': 50
+dependencies:
+  - from: pgsearchengine_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: pgsearchengine_test
+    to: database
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: pgsearchengine_test
+    to: pgsearchengine
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: pgsearchengine_test
+    to: pgsearchengineindexer
+    type: read-write
+    description: Queries database table records
+  - from: pgsearchengine
+    to: pgsearchengineindexer
+    type: read-write
+    description: Queries database table records
+  - from: pgsearchengine
+    to: database
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: pgsearchengine
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: pgsearchengineindexer_test
+    to: pgsearchengineindexer
+    type: read-write
+    description: Queries database table records
+  - from: pgsearchengineindexer_test
+    to: database
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: pgsearchengineindexer_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: pgsearchengineindexer
+    to: database
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: databasedocumentstore_test
+    to: pgsearchengine
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: types
+    to: pgsearchengine
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: module
+    to: pgsearchengine
+    type: direct-call
+    description: Executes local class methods / functions

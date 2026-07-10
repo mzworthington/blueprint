@@ -1,0 +1,111 @@
+name: Backstage - test-utils Components
+version: 1.0.0
+level: component
+nodes:
+  - id: testpipeline
+    type: background-worker
+    name: TestPipeline Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/test-utils/TestPipeline.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1520
+    'y': 50
+  - id: mkdocs-expanded-index
+    type: background-worker
+    name: mkdocs-expanded-index Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs/src/test-utils/fixtures/mkdocs-expanded-index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 370
+  - id: mkdocs-index
+    type: background-worker
+    name: mkdocs-index Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs/src/test-utils/fixtures/mkdocs-index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 370
+  - id: shadowdom
+    type: gateway-api
+    name: shadowDom UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs/src/test-utils/shadowDom.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 1060
+    'y': 370
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 370
+  - id: index
+    type: background-worker
+    name: index Service (index.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 50
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 1060
+    'y': 50
+  - id: transformers
+    type: background-worker
+    name: transformers Service (puppet)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-puppetdb/src/puppet/transformers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+dependencies:
+  - from: testpipeline
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: index
+    to: mkdocs-index
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index
+    to: mkdocs-expanded-index
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: shadowdom
+    type: direct-call
+    description: Renders shadowDom layout component
+  - from: shadowdom
+    to: transformers
+    type: direct-call
+    description: Executes local class methods / functions

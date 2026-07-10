@@ -187,10 +187,16 @@ pnpm analyze
 
 ### Running Tests
 
-Run the entire Vitest suite:
+Run the Vitest suite:
 
 ```bash
 pnpm test
+```
+
+Run the Playwright suite:
+
+```bash
+pnpm test:e2e
 ```
 
 ### Formatting

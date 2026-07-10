@@ -1,0 +1,145 @@
+name: Backstage - cli-module Components
+version: 1.0.0
+level: component
+nodes:
+  - id: commandgraph
+    type: background-worker
+    name: CommandGraph Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/cli-node/src/cli-module/CommandGraph.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1140
+    'y': 690
+  - id: createclimodule
+    type: background-worker
+    name: createCliModule Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/cli-node/src/cli-module/createCliModule.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 690
+  - id: runcli_test
+    type: background-worker
+    name: runCli.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/cli-node/src/cli-module/runCli.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 275
+    'y': 50
+  - id: runcli
+    type: background-worker
+    name: runCli Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/cli-node/src/cli-module/runCli.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1355
+    'y': 370
+  - id: runclimodule
+    type: background-worker
+    name: runCliModule Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/cli-node/src/cli-module/runCliModule.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1840
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1370
+    'y': 1010
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 775
+    'y': 1010
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 680
+    'y': 690
+dependencies:
+  - from: commandgraph
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: commandgraph
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: createclimodule
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createclimodule
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: runcli_test
+    to: createclimodule
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runcli_test
+    to: runcli
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runcli_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: runcli
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runcli
+    to: commandgraph
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runcli
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runcli
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: runclimodule
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runclimodule
+    to: runcli
+    type: direct-call
+    description: Executes local class methods / functions

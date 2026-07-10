@@ -1,0 +1,190 @@
+name: Backstage - errors Components
+version: 1.0.0
+level: component
+nodes:
+  - id: customerrorbase
+    type: background-worker
+    name: CustomErrorBase Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/errors/CustomErrorBase.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1190
+    'y': 690
+  - id: responseerror_test
+    type: background-worker
+    name: ResponseError.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/errors/src/errors/ResponseError.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 530
+    'y': 690
+  - id: responseerror
+    type: background-worker
+    name: ResponseError Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/errors/ResponseError.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 530
+    'y': 1010
+  - id: assertion_test
+    type: background-worker
+    name: assertion.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/errors/src/errors/assertion.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1270
+    'y': 50
+  - id: assertion
+    type: background-worker
+    name: assertion Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/errors/assertion.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1650
+    'y': 1010
+  - id: common_test
+    type: background-worker
+    name: common.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/errors/src/errors/common.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1920
+    'y': 50
+  - id: headers
+    type: background-worker
+    name: headers Service (lib)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/app-backend/src/lib/headers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1110
+    'y': 1010
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1555
+    'y': 1330
+  - id: response
+    type: background-worker
+    name: response Service (util)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-common/src/util/response.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 1330
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 1330
+  - id: common
+    type: background-worker
+    name: common Service (error-detection)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-common/src/error-detection/common.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1325
+    'y': 370
+dependencies:
+  - from: customerrorbase
+    to: assertion
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: responseerror_test
+    to: responseerror
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: responseerror_test
+    to: headers
+    type: direct-call
+    description: References class type / calls methods
+  - from: responseerror
+    to: error
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: responseerror
+    to: response
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: responseerror
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: assertion_test
+    to: assertion
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: assertion_test
+    to: common
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: assertion_test
+    to: customerrorbase
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: assertion_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: assertion
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: common_test
+    to: common
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: common_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: common
+    to: assertion
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: common
+    to: customerrorbase
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: error
+    to: assertion
+    type: direct-call
+    description: Executes local class methods / functions

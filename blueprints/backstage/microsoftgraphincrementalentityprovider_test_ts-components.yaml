@@ -1,0 +1,77 @@
+name: Backstage - MicrosoftGraphIncrementalEntityProvider.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: microsoftgraphincrementalentityprovider_test
+    type: background-worker
+    name: MicrosoftGraphIncrementalEntityProvider.test Service
+    isTest: true
+    properties:
+      filepath: >-
+        ../backstage/plugins/catalog-backend-module-msgraph-incremental/src/MicrosoftGraphIncrementalEntityProvider.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 830
+    'y': 50
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: microsoftgraphincrementalentityprovider
+    type: background-worker
+    name: MicrosoftGraphIncrementalEntityProvider Service (MicrosoftGraphIncrementalEntityProvider.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-msgraph-incremental/src/MicrosoftGraphIncrementalEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: clienthelpers
+    type: background-worker
+    name: clientHelpers Service (clientHelpers.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-msgraph-incremental/src/clientHelpers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 370
+dependencies:
+  - from: microsoftgraphincrementalentityprovider_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: microsoftgraphincrementalentityprovider_test
+    to: microsoftgraphincrementalentityprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: microsoftgraphincrementalentityprovider_test
+    to: clienthelpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: microsoftgraphincrementalentityprovider_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods

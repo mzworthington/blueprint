@@ -1,0 +1,57 @@
+name: Backstage - transforms Components
+version: 1.0.0
+level: component
+nodes:
+  - id: core-imports
+    type: background-worker
+    name: core-imports Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/codemods/transforms/core-imports.js
+      namespaces: ''
+      technology: JavaScript Domain Service
+    external: false
+    x: 600
+    'y': 370
+  - id: extension-names
+    type: background-worker
+    name: extension-names Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/codemods/transforms/extension-names.js
+      namespaces: ''
+      technology: JavaScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: core-imports_test
+    type: background-worker
+    name: core-imports.test Service (tests)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/codemods/src/tests/core-imports.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+dependencies:
+  - from: core-imports_test
+    to: core-imports
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: core-imports
+    to: error
+    type: direct-call
+    description: References class type / calls methods

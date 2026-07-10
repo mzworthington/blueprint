@@ -1,0 +1,121 @@
+name: Backstage - analyzers Components
+version: 1.0.0
+level: component
+nodes:
+  - id: githublocationanalyzer_test
+    type: background-worker
+    name: GithubLocationAnalyzer.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-github/src/analyzers/GithubLocationAnalyzer.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1100
+    'y': 50
+  - id: githublocationanalyzer
+    type: background-worker
+    name: GithubLocationAnalyzer Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-github/src/analyzers/GithubLocationAnalyzer.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 370
+  - id: testutils
+    type: background-worker
+    name: testUtils Service (testUtils.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-react/src/testUtils.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1100
+    'y': 370
+  - id: integration
+    type: background-worker
+    name: integration Service (types)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/permission-common/src/types/integration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+  - id: githubcatalogmodule_test
+    type: background-worker
+    name: githubCatalogModule.test Service (module)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-github/src/module/githubCatalogModule.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: githubcatalogmodule
+    type: background-worker
+    name: githubCatalogModule Service (module)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-github/src/module/githubCatalogModule.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+dependencies:
+  - from: githublocationanalyzer_test
+    to: githublocationanalyzer
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: githublocationanalyzer_test
+    to: testutils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: githublocationanalyzer
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: githublocationanalyzer
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: githublocationanalyzer
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: githubcatalogmodule_test
+    to: githublocationanalyzer
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: githubcatalogmodule
+    to: githublocationanalyzer
+    type: direct-call
+    description: Executes local class methods / functions

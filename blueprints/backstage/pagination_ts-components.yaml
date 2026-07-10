@@ -1,0 +1,76 @@
+name: Backstage - pagination.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: pagination
+    type: background-worker
+    name: pagination Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/bitbucket-cloud-common/src/pagination.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 370
+  - id: bitbucketcloudclient
+    type: background-worker
+    name: BitbucketCloudClient Service (BitbucketCloudClient.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/bitbucket-cloud-common/src/BitbucketCloudClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: pagination_test
+    type: background-worker
+    name: pagination.test Service (pagination.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/bitbucket-cloud-common/src/pagination.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 50
+dependencies:
+  - from: bitbucketcloudclient
+    to: pagination
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: pagination_test
+    to: pagination
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: pagination
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: types
+    to: pagination
+    type: direct-call
+    description: Executes local class methods / functions

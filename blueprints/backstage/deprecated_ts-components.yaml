@@ -1,0 +1,136 @@
+name: Backstage - deprecated.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: deprecated
+    type: background-worker
+    name: deprecated Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-common/src/deprecated.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1750
+    'y': 50
+  - id: module
+    type: background-worker
+    name: module Service (module.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-techdocs/src/module.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: githubentityprovider
+    type: background-worker
+    name: GithubEntityProvider Service (providers)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-github/src/providers/GithubEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
+  - id: githuborgentityprovider
+    type: background-worker
+    name: GithubOrgEntityProvider Service (providers)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-github/src/providers/GithubOrgEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 370
+  - id: api
+    type: background-worker
+    name: api Service (api.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/api.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 370
+  - id: permission
+    type: background-worker
+    name: permission Service (types)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/permission-common/src/types/permission.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2440
+    'y': 370
+  - id: routes
+    type: background-worker
+    name: routes Service (routes.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs/src/routes.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2900
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3360
+    'y': 370
+dependencies:
+  - from: deprecated
+    to: module
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: deprecated
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: deprecated
+    to: githubentityprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: deprecated
+    to: githuborgentityprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: deprecated
+    to: api
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: deprecated
+    to: permission
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: deprecated
+    to: routes
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: deprecated
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

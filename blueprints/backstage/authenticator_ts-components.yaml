@@ -1,0 +1,224 @@
+name: Backstage - authenticator.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: authenticator
+    type: background-worker
+    name: authenticator Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/auth-backend-module-vmware-cloud-provider/src/authenticator.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2440
+    'y': 370
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: module
+    type: background-worker
+    name: module Service (module.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-techdocs/src/module.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 50
+  - id: authenticator_test
+    type: background-worker
+    name: authenticator.test Service (authenticator.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/auth-backend-module-vmware-cloud-provider/src/authenticator.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2440
+    'y': 50
+  - id: express
+    type: rest-api
+    name: express REST Endpoint (types)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-openapi-utils/src/types/express.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 600
+    'y': 690
+  - id: strategy
+    type: background-worker
+    name: strategy Service (strategy.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/auth-backend-module-microsoft-provider/src/strategy.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 690
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2440
+    'y': 690
+  - id: helpers
+    type: background-worker
+    name: helpers Service (helpers.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/helpers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2900
+    'y': 690
+  - id: resolvers
+    type: background-worker
+    name: resolvers Service (resolvers.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/auth-backend-module-openshift-provider/src/resolvers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2900
+    'y': 50
+  - id: googlestrategy
+    type: background-worker
+    name: GoogleStrategy Service (auth)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/auth/GoogleStrategy.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3360
+    'y': 690
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3820
+    'y': 690
+  - id: oidcstrategy
+    type: background-worker
+    name: OidcStrategy Service (auth)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/auth/OidcStrategy.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 4280
+    'y': 690
+  - id: external-api-target
+    type: rest-api
+    name: External HTTP API Endpoint (External HTTP Services)
+    isTest: false
+    properties:
+      description: Generic outbound web integration endpoints.
+    external: true
+    x: 4740
+    'y': 690
+dependencies:
+  - from: authenticator
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: module
+    to: authenticator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: authenticator_test
+    to: authenticator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: authenticator
+    to: express
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: authenticator
+    to: strategy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: authenticator
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: authenticator
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: authenticator
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: authenticator
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolvers
+    to: authenticator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: authenticator
+    to: googlestrategy
+    type: direct-call
+    description: References class type / calls methods
+  - from: authenticator
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: authenticator
+    to: oidcstrategy
+    type: direct-call
+    description: References class type / calls methods
+  - from: authenticator
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests

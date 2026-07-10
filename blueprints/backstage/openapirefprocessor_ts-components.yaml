@@ -1,0 +1,61 @@
+name: Backstage - OpenApiRefProcessor.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: openapirefprocessor
+    type: background-worker
+    name: OpenApiRefProcessor Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-openapi/src/OpenApiRefProcessor.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 370
+  - id: openapirefprocessor_test
+    type: background-worker
+    name: OpenApiRefProcessor.test Service (OpenApiRefProcessor.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-openapi/src/OpenApiRefProcessor.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 50
+  - id: integration
+    type: background-worker
+    name: integration Service (types)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/permission-common/src/types/integration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: lib
+    type: background-worker
+    name: lib Service (lib.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/signals-node/src/lib.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+dependencies:
+  - from: openapirefprocessor_test
+    to: openapirefprocessor
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: openapirefprocessor
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: openapirefprocessor
+    to: lib
+    type: direct-call
+    description: Executes local class methods / functions

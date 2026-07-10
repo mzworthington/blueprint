@@ -1,0 +1,128 @@
+name: Backstage - app Components
+version: 1.0.0
+level: component
+nodes:
+  - id: props-definition
+    type: background-worker
+    name: props-definition Service
+    isTest: false
+    properties:
+      filepath: ../backstage/docs-ui/src/app/hooks/use-breakpoint/props-definition.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: snippets
+    type: background-worker
+    name: snippets Service
+    isTest: false
+    properties:
+      filepath: ../backstage/docs-ui/src/app/snippets.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: defaultconfigloader
+    type: background-worker
+    name: defaultConfigLoader Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-app-api/src/app/defaultConfigLoader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: overridebaseurlconfigs
+    type: background-worker
+    name: overrideBaseUrlConfigs Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-app-api/src/app/overrideBaseUrlConfigs.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1980
+    'y': 50
+  - id: propdefs
+    type: gateway-api
+    name: propDefs UI Component (utils)
+    isTest: false
+    properties:
+      filepath: ../backstage/docs-ui/src/utils/propDefs.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 370
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 370
+dependencies:
+  - from: props-definition
+    to: propdefs
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultconfigloader
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultconfigloader
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultconfigloader
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: overridebaseurlconfigs
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: overridebaseurlconfigs
+    to: url
+    type: direct-call
+    description: References class type / calls methods

@@ -1,0 +1,63 @@
+name: Backstage - breadcrumbs Components
+version: 1.0.0
+level: component
+nodes:
+  - id: usebreadcrumbentries_test
+    type: gateway-api
+    name: useBreadcrumbEntries.test UI Component
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/breadcrumbs/useBreadcrumbEntries.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 140
+    'y': 50
+  - id: usebreadcrumbentries
+    type: gateway-api
+    name: useBreadcrumbEntries UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/breadcrumbs/useBreadcrumbEntries.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 560
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 690
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 600
+    'y': 50
+dependencies:
+  - from: usebreadcrumbentries_test
+    to: usebreadcrumbentries
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: usebreadcrumbentries_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: usebreadcrumbentries
+    type: direct-call
+    description: Renders useBreadcrumbEntries layout component
+  - from: usebreadcrumbentries
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

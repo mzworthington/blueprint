@@ -1,0 +1,76 @@
+name: Backstage - service.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: service
+    type: background-worker
+    name: service Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/events-node/src/service.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 370
+  - id: api
+    type: background-worker
+    name: api Service (api.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/api.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: extensions
+    type: background-worker
+    name: extensions Service (extensions.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-node/src/extensions.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: lib
+    type: background-worker
+    name: lib Service (lib.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/signals-node/src/lib.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: plugin
+    type: background-worker
+    name: plugin Service (plugin.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-backend/src/plugin.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 50
+dependencies:
+  - from: service
+    to: api
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: extensions
+    to: service
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: lib
+    to: service
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plugin
+    to: service
+    type: direct-call
+    description: Executes local class methods / functions

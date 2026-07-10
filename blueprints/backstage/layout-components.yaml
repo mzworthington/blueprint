@@ -1,0 +1,248 @@
+name: Backstage - layout Components
+version: 1.0.0
+level: component
+nodes:
+  - id: proxiedsigninidentity_test
+    type: background-worker
+    name: ProxiedSignInIdentity.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/core-components/src/layout/ProxiedSignInPage/ProxiedSignInIdentity.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 640
+    'y': 50
+  - id: proxiedsigninidentity
+    type: background-worker
+    name: ProxiedSignInIdentity Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-components/src/layout/ProxiedSignInPage/ProxiedSignInIdentity.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 640
+    'y': 370
+  - id: mobilesidebarcontext
+    type: gateway-api
+    name: MobileSidebarContext UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-components/src/layout/Sidebar/MobileSidebarContext.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 1100
+    'y': 370
+  - id: localstorage_test
+    type: background-worker
+    name: localStorage.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/core-components/src/layout/Sidebar/localStorage.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2020
+    'y': 50
+  - id: localstorage
+    type: background-worker
+    name: localStorage Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-components/src/layout/Sidebar/localStorage.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1790
+    'y': 370
+  - id: guestuseridentity
+    type: background-worker
+    name: GuestUserIdentity Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-components/src/layout/SignInPage/GuestUserIdentity.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3480
+    'y': 690
+  - id: identityapisignoutproxy
+    type: background-worker
+    name: IdentityApiSignOutProxy Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-components/src/layout/SignInPage/IdentityApiSignOutProxy.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2345
+    'y': 370
+  - id: legacyuseridentity
+    type: background-worker
+    name: LegacyUserIdentity Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-components/src/layout/SignInPage/LegacyUserIdentity.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3940
+    'y': 690
+  - id: useridentity_test
+    type: background-worker
+    name: UserIdentity.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/core-components/src/layout/SignInPage/UserIdentity.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3535
+    'y': 50
+  - id: useridentity
+    type: background-worker
+    name: UserIdentity Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-components/src/layout/SignInPage/UserIdentity.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3710
+    'y': 370
+  - id: authsessionstore_test
+    type: background-worker
+    name: AuthSessionStore.test Service (lib)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/core-app-api/src/lib/AuthSessionManager/AuthSessionStore.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1560
+    'y': 50
+  - id: external-api-target
+    type: rest-api
+    name: External HTTP API Endpoint (External HTTP Services)
+    isTest: false
+    properties:
+      description: Generic outbound web integration endpoints.
+    external: true
+    x: 140
+    'y': 690
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2560
+    'y': 690
+  - id: headers
+    type: background-worker
+    name: headers Service (lib)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/app-backend/src/lib/headers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3020
+    'y': 690
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 1100
+    'y': 50
+dependencies:
+  - from: authsessionstore_test
+    to: localstorage
+    type: direct-call
+    description: References class type / calls methods
+  - from: proxiedsigninidentity_test
+    to: proxiedsigninidentity
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: proxiedsigninidentity
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests
+  - from: proxiedsigninidentity
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: proxiedsigninidentity
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: proxiedsigninidentity
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: proxiedsigninidentity
+    to: headers
+    type: direct-call
+    description: References class type / calls methods
+  - from: frontend-client
+    to: mobilesidebarcontext
+    type: direct-call
+    description: Renders MobileSidebarContext layout component
+  - from: localstorage_test
+    to: localstorage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: identityapisignoutproxy
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: useridentity_test
+    to: useridentity
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: useridentity_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: useridentity
+    to: guestuseridentity
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: useridentity
+    to: legacyuseridentity
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: useridentity
+    to: error
+    type: direct-call
+    description: References class type / calls methods

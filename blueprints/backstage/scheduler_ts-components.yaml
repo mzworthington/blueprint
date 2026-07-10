@@ -1,0 +1,76 @@
+name: Backstage - Scheduler.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: scheduler
+    type: background-worker
+    name: Scheduler Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/Scheduler.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 370
+  - id: createbackend
+    type: background-worker
+    name: CreateBackend Service (CreateBackend.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-defaults/src/CreateBackend.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: indexbuilder
+    type: background-worker
+    name: IndexBuilder Service (IndexBuilder.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/IndexBuilder.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: scheduler_test
+    type: background-worker
+    name: Scheduler.test Service (Scheduler.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/Scheduler.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 50
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+dependencies:
+  - from: createbackend
+    to: scheduler
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: indexbuilder
+    to: scheduler
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: scheduler_test
+    to: scheduler
+    type: direct-call
+    description: References class type / calls methods
+  - from: scheduler
+    to: error
+    type: direct-call
+    description: References class type / calls methods

@@ -1,0 +1,61 @@
+name: Backstage - BitbucketCloudClient.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: bitbucketcloudclient_test
+    type: background-worker
+    name: BitbucketCloudClient.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/bitbucket-cloud-common/src/BitbucketCloudClient.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: integration
+    type: background-worker
+    name: integration Service (types)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/permission-common/src/types/integration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: bitbucketcloudclient
+    type: background-worker
+    name: BitbucketCloudClient Service (BitbucketCloudClient.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/bitbucket-cloud-common/src/BitbucketCloudClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
+dependencies:
+  - from: bitbucketcloudclient_test
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: bitbucketcloudclient_test
+    to: bitbucketcloudclient
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: bitbucketcloudclient_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods

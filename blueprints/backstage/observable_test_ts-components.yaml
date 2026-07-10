@@ -1,0 +1,46 @@
+name: Backstage - observable.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: observable_test
+    type: background-worker
+    name: observable.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/types/src/observable.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 50
+  - id: observable
+    type: background-worker
+    name: observable Service (observable.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/types/src/observable.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+dependencies:
+  - from: observable_test
+    to: observable
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: observable_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods

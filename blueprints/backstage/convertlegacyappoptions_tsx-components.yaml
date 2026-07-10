@@ -1,0 +1,89 @@
+name: Backstage - convertLegacyAppOptions.tsx Components
+version: 1.0.0
+level: component
+nodes:
+  - id: convertlegacyappoptions
+    type: gateway-api
+    name: convertLegacyAppOptions UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/convertLegacyAppOptions.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 600
+    'y': 370
+  - id: convertlegacyappoptions_test
+    type: background-worker
+    name: convertLegacyAppOptions.test Service (convertLegacyAppOptions.test.tsx)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/convertLegacyAppOptions.test.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 50
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 830
+    'y': 50
+  - id: backwardscompatprovider
+    type: gateway-api
+    name: BackwardsCompatProvider UI Component (compatWrapper)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/compatWrapper/BackwardsCompatProvider.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 690
+  - id: compatwrapper
+    type: gateway-api
+    name: compatWrapper UI Component (compatWrapper)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/compatWrapper/compatWrapper.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 600
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+dependencies:
+  - from: convertlegacyappoptions_test
+    to: convertlegacyappoptions
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: convertlegacyappoptions
+    type: direct-call
+    description: Renders convertLegacyAppOptions layout component
+  - from: convertlegacyappoptions
+    to: backwardscompatprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: convertlegacyappoptions
+    to: compatwrapper
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: convertlegacyappoptions
+    to: error
+    type: direct-call
+    description: References class type / calls methods

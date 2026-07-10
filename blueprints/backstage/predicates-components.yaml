@@ -1,0 +1,99 @@
+name: Backstage - predicates Components
+version: 1.0.0
+level: component
+nodes:
+  - id: evaluate_test
+    type: background-worker
+    name: evaluate.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/filter-predicates/src/predicates/evaluate.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: evaluate
+    type: background-worker
+    name: evaluate Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/filter-predicates/src/predicates/evaluate.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 410
+    'y': 370
+  - id: getjsonvalueatpath_test
+    type: background-worker
+    name: getJsonValueAtPath.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/filter-predicates/src/predicates/getJsonValueAtPath.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 870
+    'y': 370
+  - id: getjsonvalueatpath
+    type: background-worker
+    name: getJsonValueAtPath Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/filter-predicates/src/predicates/getJsonValueAtPath.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 830
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 1010
+  - id: errors
+    type: background-worker
+    name: errors Service (errors.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-node/src/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+dependencies:
+  - from: evaluate_test
+    to: evaluate
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: evaluate_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: evaluate
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: evaluate
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: evaluate
+    to: getjsonvalueatpath
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: getjsonvalueatpath_test
+    to: getjsonvalueatpath
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: getjsonvalueatpath
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

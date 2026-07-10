@@ -1,0 +1,31 @@
+name: Backstage - defaults.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: defaults_test
+    type: background-worker
+    name: defaults.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/module-federation-common/src/defaults.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: defaults
+    type: background-worker
+    name: defaults Service (defaults.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/module-federation-common/src/defaults.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+dependencies:
+  - from: defaults_test
+    to: defaults
+    type: direct-call
+    description: Executes local class methods / functions

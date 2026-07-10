@@ -1,0 +1,61 @@
+name: Backstage - playwright Components
+version: 1.0.0
+level: component
+nodes:
+  - id: failonbrowsererrors
+    type: background-worker
+    name: failOnBrowserErrors Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/e2e-test-utils/src/playwright/failOnBrowserErrors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 640
+    'y': 50
+  - id: generateprojects
+    type: background-worker
+    name: generateProjects Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/e2e-test-utils/src/playwright/generateProjects.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: test
+    type: background-worker
+    name: test Service (commands)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/cli-module-test-jest/src/commands/repo/test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 180
+    'y': 370
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 680
+    'y': 370
+dependencies:
+  - from: failonbrowsererrors
+    to: test
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: failonbrowsererrors
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: generateprojects
+    to: test
+    type: direct-call
+    description: Executes local class methods / functions

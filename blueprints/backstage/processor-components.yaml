@@ -1,0 +1,246 @@
+name: Backstage - processor Components
+version: 1.0.0
+level: component
+nodes:
+  - id: scaffolderentitiesprocessor_test
+    type: background-worker
+    name: ScaffolderEntitiesProcessor.test Service
+    isTest: true
+    properties:
+      filepath: >-
+        ../backstage/plugins/catalog-backend-module-scaffolder-entity-model/src/processor/ScaffolderEntitiesProcessor.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: scaffolderentitiesprocessor
+    type: background-worker
+    name: ScaffolderEntitiesProcessor Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-scaffolder-entity-model/src/processor/ScaffolderEntitiesProcessor.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 315
+    'y': 370
+  - id: notificationsemailprocessor_test
+    type: background-worker
+    name: NotificationsEmailProcessor.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/notifications-backend-module-email/src/processor/NotificationsEmailProcessor.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2480
+    'y': 50
+  - id: notificationsemailprocessor
+    type: background-worker
+    name: NotificationsEmailProcessor Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/notifications-backend-module-email/src/processor/NotificationsEmailProcessor.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1425
+    'y': 370
+  - id: sendmail
+    type: background-worker
+    name: sendmail Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/notifications-backend-module-email/src/processor/transports/sendmail.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3535
+    'y': 370
+  - id: ses
+    type: background-worker
+    name: ses Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/notifications-backend-module-email/src/processor/transports/ses.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2615
+    'y': 370
+  - id: smtp
+    type: background-worker
+    name: smtp Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/notifications-backend-module-email/src/processor/transports/smtp.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2155
+    'y': 370
+  - id: stream
+    type: background-worker
+    name: stream Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/notifications-backend-module-email/src/processor/transports/stream.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: module_test
+    type: background-worker
+    name: module.test Service (module.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-techdocs/src/module.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: module
+    type: background-worker
+    name: module Service (module.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-techdocs/src/module.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 50
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3575
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1790
+    'y': 690
+  - id: testutils
+    type: background-worker
+    name: testUtils Service (testUtils.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-react/src/testUtils.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3075
+    'y': 370
+  - id: extensions
+    type: background-worker
+    name: extensions Service (extensions.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-node/src/extensions.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 410
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 870
+    'y': 690
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1330
+    'y': 690
+dependencies:
+  - from: module_test
+    to: scaffolderentitiesprocessor
+    type: direct-call
+    description: References class type / calls methods
+  - from: module
+    to: scaffolderentitiesprocessor
+    type: direct-call
+    description: References class type / calls methods
+  - from: scaffolderentitiesprocessor_test
+    to: scaffolderentitiesprocessor
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: module
+    to: notificationsemailprocessor
+    type: direct-call
+    description: References class type / calls methods
+  - from: notificationsemailprocessor_test
+    to: notificationsemailprocessor
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: notificationsemailprocessor_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: notificationsemailprocessor_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: notificationsemailprocessor_test
+    to: testutils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: notificationsemailprocessor
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: notificationsemailprocessor
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: notificationsemailprocessor
+    to: extensions
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: notificationsemailprocessor
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: notificationsemailprocessor
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: sendmail
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: ses
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: smtp
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions

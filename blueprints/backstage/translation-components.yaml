@@ -1,0 +1,279 @@
+name: Backstage - translation Components
+version: 1.0.0
+level: component
+nodes:
+  - id: refs
+    type: background-worker
+    name: refs Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/translation/__fixtures__/refs.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2290
+    'y': 370
+  - id: translationmessages_test
+    type: background-worker
+    name: TranslationMessages.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/translation/TranslationMessages.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 370
+  - id: translationmessages
+    type: background-worker
+    name: TranslationMessages Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/translation/TranslationMessages.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 830
+    'y': 1330
+  - id: translationref_test
+    type: background-worker
+    name: TranslationRef.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/translation/TranslationRef.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 830
+    'y': 370
+  - id: translationref
+    type: background-worker
+    name: TranslationRef Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/translation/TranslationRef.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1790
+    'y': 690
+  - id: translationresource_test
+    type: background-worker
+    name: TranslationResource.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/translation/TranslationResource.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1235
+    'y': 50
+  - id: translationresource
+    type: background-worker
+    name: TranslationResource Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/translation/TranslationResource.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1100
+    'y': 1010
+  - id: counting-de
+    type: background-worker
+    name: counting-de Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/translation/__fixtures__/counting-de.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: fruits-sv
+    type: background-worker
+    name: fruits-sv Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/translation/__fixtures__/fruits-sv.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3425
+    'y': 50
+  - id: usetranslationref
+    type: gateway-api
+    name: useTranslationRef UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/translation/useTranslationRef.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 2885
+    'y': 370
+  - id: i18nexttranslationapi
+    type: gateway-api
+    name: I18nextTranslationApi UI Component (apis)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-app-api/src/apis/implementations/TranslationApi/I18nextTranslationApi.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1370
+    'y': 370
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2550
+    'y': 1330
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 2885
+    'y': 50
+  - id: apis
+    type: gateway-api
+    name: apis UI Component (apis.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search/src/apis.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 2370
+    'y': 690
+  - id: translationapi
+    type: gateway-api
+    name: TranslationApi UI Component (apis)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/apis/definitions/TranslationApi.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 2830
+    'y': 690
+  - id: mocktranslationapi
+    type: background-worker
+    name: MockTranslationApi Service (testUtils)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/test-utils/src/testUtils/apis/TranslationApi/MockTranslationApi.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1830
+    'y': 370
+dependencies:
+  - from: i18nexttranslationapi
+    to: translationresource
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: i18nexttranslationapi
+    to: translationref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: translationmessages_test
+    to: translationmessages
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: translationmessages_test
+    to: translationref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: translationmessages
+    to: translationref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: translationref_test
+    to: translationref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: translationref_test
+    to: translationresource
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: translationref
+    to: translationresource
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: translationref
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: translationresource_test
+    to: translationresource
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: translationresource_test
+    to: refs
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: translationresource
+    to: translationmessages
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: translationresource
+    to: translationref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: translationresource
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: counting-de
+    to: translationmessages
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: counting-de
+    to: refs
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: fruits-sv
+    to: translationmessages
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: fruits-sv
+    to: refs
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: refs
+    to: translationref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: usetranslationref
+    type: direct-call
+    description: Renders useTranslationRef layout component
+  - from: usetranslationref
+    to: apis
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: usetranslationref
+    to: translationapi
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: usetranslationref
+    to: translationref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: usetranslationref
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: mocktranslationapi
+    to: translationref
+    type: direct-call
+    description: Executes local class methods / functions

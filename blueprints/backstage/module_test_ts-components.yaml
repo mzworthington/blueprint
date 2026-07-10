@@ -1,0 +1,168 @@
+name: Backstage - module.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: module_test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-techdocs/src/module.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2210
+    'y': 50
+  - id: module
+    type: background-worker
+    name: module Service (module.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-techdocs/src/module.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
+  - id: alpha
+    type: gateway-api
+    name: alpha UI Component (alpha.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/alpha.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1520
+    'y': 370
+  - id: giteaentityprovider
+    type: background-worker
+    name: GiteaEntityProvider Service (providers)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-gitea/src/providers/GiteaEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 370
+  - id: testeventsservice
+    type: background-worker
+    name: TestEventsService Service (testUtils)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/events-backend-test-utils/src/testUtils/TestEventsService.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2440
+    'y': 370
+  - id: processor
+    type: background-worker
+    name: processor Service (api)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-node/src/api/processor.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2900
+    'y': 370
+  - id: scaffolderentitiesprocessor
+    type: background-worker
+    name: ScaffolderEntitiesProcessor Service (processor)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-scaffolder-entity-model/src/processor/ScaffolderEntitiesProcessor.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3360
+    'y': 370
+  - id: kafkaconsumingeventpublisher
+    type: event-broker
+    name: KafkaConsumingEventPublisher Message Broker (KafkaConsumingEventPublisher)
+    isTest: false
+    properties:
+      filepath: >-
+        ../backstage/plugins/events-backend-module-kafka/src/KafkaConsumingEventPublisher/KafkaConsumingEventPublisher.ts
+      namespaces: ''
+      technology: TypeScript Event Client
+    external: true
+    x: 3820
+    'y': 370
+  - id: kafkapublishingeventconsumer
+    type: event-broker
+    name: KafkaPublishingEventConsumer Message Broker (KafkaPublishingEventConsumer)
+    isTest: false
+    properties:
+      filepath: >-
+        ../backstage/plugins/events-backend-module-kafka/src/KafkaPublishingEventConsumer/KafkaPublishingEventConsumer.ts
+      namespaces: ''
+      technology: TypeScript Event Client
+    external: true
+    x: 4280
+    'y': 370
+dependencies:
+  - from: module_test
+    to: module
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: module_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: module_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: module_test
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: module_test
+    to: giteaentityprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: module_test
+    to: testeventsservice
+    type: direct-call
+    description: References class type / calls methods
+  - from: module_test
+    to: processor
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: module_test
+    to: scaffolderentitiesprocessor
+    type: direct-call
+    description: References class type / calls methods
+  - from: module_test
+    to: kafkaconsumingeventpublisher
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: module_test
+    to: kafkapublishingeventconsumer
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics

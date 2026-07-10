@@ -1,0 +1,46 @@
+name: Backstage - resolvers.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: resolvers_test
+    type: background-worker
+    name: resolvers.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/auth-backend-module-cloudflare-access-provider/src/resolvers.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 50
+  - id: resolvers
+    type: background-worker
+    name: resolvers Service (resolvers.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/auth-backend-module-openshift-provider/src/resolvers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+dependencies:
+  - from: resolvers_test
+    to: resolvers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolvers_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

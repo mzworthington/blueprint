@@ -1,0 +1,46 @@
+name: Backstage - catalogModuleGitlabOrgDiscoveryEntityProvider.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: catalogmodulegitlaborgdiscoveryentityprovider_test
+    type: background-worker
+    name: catalogModuleGitlabOrgDiscoveryEntityProvider.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-gitlab-org/src/catalogModuleGitlabOrgDiscoveryEntityProvider.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 50
+  - id: catalogmodulegitlaborgdiscoveryentityprovider
+    type: background-worker
+    name: catalogModuleGitlabOrgDiscoveryEntityProvider Service (catalogModuleGitlabOrgDiscoveryEntityProvider.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-gitlab-org/src/catalogModuleGitlabOrgDiscoveryEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: testeventsservice
+    type: background-worker
+    name: TestEventsService Service (testUtils)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/events-backend-test-utils/src/testUtils/TestEventsService.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+dependencies:
+  - from: catalogmodulegitlaborgdiscoveryentityprovider_test
+    to: catalogmodulegitlaborgdiscoveryentityprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: catalogmodulegitlaborgdiscoveryentityprovider_test
+    to: testeventsservice
+    type: direct-call
+    description: References class type / calls methods

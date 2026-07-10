@@ -1,0 +1,104 @@
+name: Backstage - EntityPageDocs.tsx Components
+version: 1.0.0
+level: component
+nodes:
+  - id: entitypagedocs
+    type: gateway-api
+    name: EntityPageDocs UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs/src/EntityPageDocs.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 830
+    'y': 370
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 600
+    'y': 50
+  - id: plugin
+    type: background-worker
+    name: plugin Service (plugin.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-backend/src/plugin.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: techdocsreaderpagecontent
+    type: gateway-api
+    name: TechDocsReaderPageContent UI Component (reader)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs/src/reader/components/TechDocsReaderPageContent/TechDocsReaderPageContent.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 600
+    'y': 690
+  - id: techdocsreaderpagesubheader
+    type: gateway-api
+    name: TechDocsReaderPageSubheader UI Component (reader)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs/src/reader/components/TechDocsReaderPageSubheader/TechDocsReaderPageSubheader.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1060
+    'y': 690
+  - id: usetechdocslocation
+    type: gateway-api
+    name: useTechDocsLocation UI Component (search)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs/src/search/hooks/useTechDocsLocation.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1520
+    'y': 690
+  - id: router
+    type: rest-api
+    name: router REST Endpoint (service)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-backend/src/service/router.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 1060
+    'y': 50
+dependencies:
+  - from: frontend-client
+    to: entitypagedocs
+    type: direct-call
+    description: Renders EntityPageDocs layout component
+  - from: entitypagedocs
+    to: plugin
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: entitypagedocs
+    to: techdocsreaderpagecontent
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: entitypagedocs
+    to: techdocsreaderpagesubheader
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: entitypagedocs
+    to: usetechdocslocation
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: router
+    to: entitypagedocs
+    type: direct-call
+    description: Executes local class methods / functions

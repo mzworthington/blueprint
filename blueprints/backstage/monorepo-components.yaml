@@ -1,0 +1,159 @@
+name: Backstage - monorepo Components
+version: 1.0.0
+level: component
+nodes:
+  - id: lockfile_test
+    type: background-worker
+    name: Lockfile.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/cli-node/src/monorepo/Lockfile.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 465
+    'y': 370
+  - id: packagegraph_test
+    type: background-worker
+    name: PackageGraph.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/cli-node/src/monorepo/PackageGraph.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1480
+    'y': 50
+  - id: packagegraph
+    type: background-worker
+    name: PackageGraph Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/cli-node/src/monorepo/PackageGraph.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2210
+    'y': 370
+  - id: ismonorepo
+    type: background-worker
+    name: isMonoRepo Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/cli-node/src/monorepo/isMonoRepo.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 925
+    'y': 370
+  - id: ismonorepo_test
+    type: background-worker
+    name: isMonorepo.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/cli-node/src/monorepo/isMonorepo.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1020
+    'y': 50
+  - id: lockfile
+    type: background-worker
+    name: Lockfile Service (util)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/devtools-backend/src/util/Lockfile.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1560
+    'y': 690
+  - id: git
+    type: relational-database
+    name: git Database (scm)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-node/src/scm/git.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 140
+    'y': 690
+  - id: testutils
+    type: background-worker
+    name: testUtils Service (testUtils.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-react/src/testUtils.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1385
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2060
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2520
+    'y': 690
+dependencies:
+  - from: lockfile_test
+    to: lockfile
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: packagegraph_test
+    to: packagegraph
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: packagegraph_test
+    to: lockfile
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: packagegraph_test
+    to: git
+    type: read-write
+    description: Queries database table records
+  - from: packagegraph_test
+    to: testutils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: packagegraph
+    to: git
+    type: read-write
+    description: Queries database table records
+  - from: packagegraph
+    to: lockfile
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: packagegraph
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: packagegraph
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: ismonorepo_test
+    to: ismonorepo
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: ismonorepo_test
+    to: testutils
+    type: direct-call
+    description: Executes local class methods / functions

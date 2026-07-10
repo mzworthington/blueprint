@@ -1,0 +1,61 @@
+name: Backstage - jsonSchemaRefPlaceholderResolver.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: jsonschemarefplaceholderresolver_test
+    type: background-worker
+    name: jsonSchemaRefPlaceholderResolver.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-openapi/src/jsonSchemaRefPlaceholderResolver.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: jsonschemarefplaceholderresolver
+    type: background-worker
+    name: jsonSchemaRefPlaceholderResolver Service (jsonSchemaRefPlaceholderResolver.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-openapi/src/jsonSchemaRefPlaceholderResolver.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: lib
+    type: background-worker
+    name: lib Service (lib.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/signals-node/src/lib.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
+dependencies:
+  - from: jsonschemarefplaceholderresolver_test
+    to: jsonschemarefplaceholderresolver
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: jsonschemarefplaceholderresolver_test
+    to: lib
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: jsonschemarefplaceholderresolver_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods

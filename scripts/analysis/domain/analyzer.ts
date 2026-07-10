@@ -80,7 +80,7 @@ export class CodebaseAnalyzer {
 
       if (this.fileSystem.exists(pkgPath)) {
         const name = this.fileSystem.readPackageJsonName(pkgPath);
-        if (name) {
+        if (name && name !== 'root') {
           const nameWithoutScope = name.includes('/') ? name.split('/')[1] : name;
           return nameWithoutScope;
         }

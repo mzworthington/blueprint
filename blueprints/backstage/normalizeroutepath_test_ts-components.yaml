@@ -1,0 +1,31 @@
+name: Backstage - normalizeRoutePath.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: normalizeroutepath_test
+    type: background-worker
+    name: normalizeRoutePath.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/normalizeRoutePath.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: normalizeroutepath
+    type: background-worker
+    name: normalizeRoutePath Service (normalizeRoutePath.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/normalizeRoutePath.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+dependencies:
+  - from: normalizeroutepath_test
+    to: normalizeroutepath
+    type: direct-call
+    description: Executes local class methods / functions

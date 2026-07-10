@@ -1,0 +1,121 @@
+name: Backstage - GitLabDiscoveryProcessor.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: gitlabdiscoveryprocessor
+    type: background-worker
+    name: GitLabDiscoveryProcessor Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-gitlab/src/GitLabDiscoveryProcessor.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1290
+    'y': 370
+  - id: gitlabdiscoveryprocessor_test
+    type: background-worker
+    name: GitLabDiscoveryProcessor.test Service (GitLabDiscoveryProcessor.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-gitlab/src/GitLabDiscoveryProcessor.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1290
+    'y': 50
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: integration
+    type: background-worker
+    name: integration Service (types)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/permission-common/src/types/integration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: lib
+    type: background-worker
+    name: lib Service (lib.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/signals-node/src/lib.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+  - id: cache
+    type: background-worker
+    name: Cache Service (commands)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/repo-tools/src/commands/package-docs/Cache.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 690
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2440
+    'y': 690
+dependencies:
+  - from: gitlabdiscoveryprocessor_test
+    to: gitlabdiscoveryprocessor
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlabdiscoveryprocessor
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlabdiscoveryprocessor
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlabdiscoveryprocessor
+    to: lib
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlabdiscoveryprocessor
+    to: cache
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlabdiscoveryprocessor
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: gitlabdiscoveryprocessor
+    to: url
+    type: direct-call
+    description: References class type / calls methods

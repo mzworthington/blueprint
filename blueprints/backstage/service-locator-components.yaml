@@ -1,0 +1,151 @@
+name: Backstage - service-locator Components
+version: 1.0.0
+level: component
+nodes:
+  - id: catalogrelationservicelocator_test
+    type: background-worker
+    name: CatalogRelationServiceLocator.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/service-locator/CatalogRelationServiceLocator.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 370
+  - id: catalogrelationservicelocator
+    type: background-worker
+    name: CatalogRelationServiceLocator Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/service-locator/CatalogRelationServiceLocator.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 690
+  - id: multitenantservicelocator_test
+    type: background-worker
+    name: MultiTenantServiceLocator.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/service-locator/MultiTenantServiceLocator.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 370
+  - id: multitenantservicelocator
+    type: background-worker
+    name: MultiTenantServiceLocator Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/service-locator/MultiTenantServiceLocator.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 690
+  - id: singletenantservicelocator_test
+    type: background-worker
+    name: SingleTenantServiceLocator.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/service-locator/SingleTenantServiceLocator.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1980
+    'y': 370
+  - id: singletenantservicelocator
+    type: background-worker
+    name: SingleTenantServiceLocator Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/service-locator/SingleTenantServiceLocator.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1560
+    'y': 690
+  - id: builddefaultservicelocator
+    type: background-worker
+    name: buildDefaultServiceLocator Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/service-locator/buildDefaultServiceLocator.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1100
+    'y': 370
+  - id: kubernetesinitializer
+    type: background-worker
+    name: KubernetesInitializer Service (service)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/kubernetes-backend/src/service/KubernetesInitializer.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1100
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1100
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2020
+    'y': 690
+dependencies:
+  - from: kubernetesinitializer
+    to: builddefaultservicelocator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: catalogrelationservicelocator_test
+    to: catalogrelationservicelocator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: multitenantservicelocator_test
+    to: multitenantservicelocator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: singletenantservicelocator_test
+    to: singletenantservicelocator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: builddefaultservicelocator
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: builddefaultservicelocator
+    to: multitenantservicelocator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: builddefaultservicelocator
+    to: singletenantservicelocator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: builddefaultservicelocator
+    to: catalogrelationservicelocator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: builddefaultservicelocator
+    to: error
+    type: direct-call
+    description: References class type / calls methods

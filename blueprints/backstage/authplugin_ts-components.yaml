@@ -1,0 +1,91 @@
+name: Backstage - authPlugin.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: authplugin
+    type: background-worker
+    name: authPlugin Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/auth-backend/src/authPlugin.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 830
+    'y': 370
+  - id: authplugin_test
+    type: background-worker
+    name: authPlugin.test Service (authPlugin.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/auth-backend/src/authPlugin.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 830
+    'y': 50
+  - id: alpha
+    type: gateway-api
+    name: alpha UI Component (alpha.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/alpha.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 690
+  - id: router
+    type: rest-api
+    name: router REST Endpoint (service)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-backend/src/service/router.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 600
+    'y': 690
+  - id: offlineaccessservice
+    type: background-worker
+    name: OfflineAccessService Service (service)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/auth-backend/src/service/OfflineAccessService.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 690
+dependencies:
+  - from: authplugin_test
+    to: authplugin
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: authplugin
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: authplugin
+    to: router
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: authplugin
+    to: offlineaccessservice
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: authplugin
+    to: error
+    type: direct-call
+    description: References class type / calls methods

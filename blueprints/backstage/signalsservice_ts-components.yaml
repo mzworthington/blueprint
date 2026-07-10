@@ -1,0 +1,61 @@
+name: Backstage - SignalsService.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: signalsservice
+    type: background-worker
+    name: SignalsService Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/signals-node/src/SignalsService.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 370
+  - id: defaultsignalsservice
+    type: background-worker
+    name: DefaultSignalsService Service (DefaultSignalsService.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/signals-node/src/DefaultSignalsService.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 690
+  - id: lib
+    type: background-worker
+    name: lib Service (lib.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/signals-node/src/lib.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+dependencies:
+  - from: defaultsignalsservice
+    to: signalsservice
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: signalsservice
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: lib
+    to: signalsservice
+    type: direct-call
+    description: Executes local class methods / functions

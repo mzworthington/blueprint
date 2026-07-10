@@ -1,0 +1,110 @@
+name: Backstage - googleGcs Components
+version: 1.0.0
+level: component
+nodes:
+  - id: googlegcsintegration_test
+    type: background-worker
+    name: GoogleGcsIntegration.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/integration/src/googleGcs/GoogleGcsIntegration.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 870
+    'y': 50
+  - id: googlegcsintegration
+    type: background-worker
+    name: GoogleGcsIntegration Service
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/integration/src/googleGcs/GoogleGcsIntegration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 370
+  - id: scmintegrations_test
+    type: background-worker
+    name: ScmIntegrations.test Service (ScmIntegrations.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/integration/src/ScmIntegrations.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: scmintegrations
+    type: background-worker
+    name: ScmIntegrations Service (ScmIntegrations.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/integration/src/ScmIntegrations.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1330
+    'y': 50
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 410
+    'y': 690
+  - id: helpers
+    type: background-worker
+    name: helpers Service (helpers.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/helpers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 870
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1330
+    'y': 690
+dependencies:
+  - from: scmintegrations_test
+    to: googlegcsintegration
+    type: direct-call
+    description: References class type / calls methods
+  - from: scmintegrations
+    to: googlegcsintegration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googlegcsintegration_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googlegcsintegration_test
+    to: googlegcsintegration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googlegcsintegration
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googlegcsintegration
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googlegcsintegration
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions

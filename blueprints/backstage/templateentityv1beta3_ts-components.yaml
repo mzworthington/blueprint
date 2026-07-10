@@ -1,0 +1,76 @@
+name: Backstage - TemplateEntityV1beta3.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: templateentityv1beta3
+    type: background-worker
+    name: TemplateEntityV1beta3 Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-common/src/TemplateEntityV1beta3.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 370
+  - id: scaffolderclient
+    type: background-worker
+    name: ScaffolderClient Service (ScaffolderClient.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-common/src/ScaffolderClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: templateentityv1beta3_test
+    type: background-worker
+    name: TemplateEntityV1beta3.test Service (TemplateEntityV1beta3.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/scaffolder-common/src/TemplateEntityV1beta3.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: api
+    type: background-worker
+    name: api Service (api.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/api.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 50
+dependencies:
+  - from: scaffolderclient
+    to: templateentityv1beta3
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templateentityv1beta3_test
+    to: templateentityv1beta3
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templateentityv1beta3
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: api
+    to: templateentityv1beta3
+    type: direct-call
+    description: Executes local class methods / functions

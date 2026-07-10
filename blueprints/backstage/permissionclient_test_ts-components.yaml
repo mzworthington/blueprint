@@ -1,0 +1,91 @@
+name: Backstage - PermissionClient.test.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: permissionclient_test
+    type: background-worker
+    name: PermissionClient.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/permission-common/src/PermissionClient.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: config
+    type: background-worker
+    name: config Service (collators)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-catalog/src/collators/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: permissionclient
+    type: background-worker
+    name: PermissionClient Service (PermissionClient.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/permission-common/src/PermissionClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: api
+    type: background-worker
+    name: api Service (api.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/api.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
+  - id: discovery
+    type: background-worker
+    name: discovery Service (schema)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-common/src/schema/openapi/generated/types/discovery.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 370
+  - id: permissions
+    type: background-worker
+    name: permissions Service (permissions.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/scaffolder-common/src/permissions.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 370
+dependencies:
+  - from: permissionclient_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: permissionclient_test
+    to: permissionclient
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: permissionclient_test
+    to: api
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: permissionclient_test
+    to: discovery
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: permissionclient_test
+    to: permissions
+    type: direct-call
+    description: Executes local class methods / functions

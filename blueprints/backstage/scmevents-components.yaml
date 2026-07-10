@@ -1,0 +1,92 @@
+name: Backstage - scmEvents Components
+version: 1.0.0
+level: component
+nodes:
+  - id: defaultcatalogscmeventsservice_test
+    type: background-worker
+    name: DefaultCatalogScmEventsService.test Service
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-node/src/scmEvents/DefaultCatalogScmEventsService.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 50
+  - id: defaultcatalogscmeventsservice
+    type: background-worker
+    name: DefaultCatalogScmEventsService Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-node/src/scmEvents/DefaultCatalogScmEventsService.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 370
+  - id: catalogscmeventsserviceref
+    type: background-worker
+    name: catalogScmEventsServiceRef Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-node/src/scmEvents/catalogScmEventsServiceRef.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 830
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (types.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-common/src/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: api
+    type: background-worker
+    name: api Service (api.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-react/src/api.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+dependencies:
+  - from: defaultcatalogscmeventsservice_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultcatalogscmeventsservice_test
+    to: api
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultcatalogscmeventsservice_test
+    to: defaultcatalogscmeventsservice
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultcatalogscmeventsservice
+    to: api
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultcatalogscmeventsservice
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: catalogscmeventsserviceref
+    to: api
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: catalogscmeventsserviceref
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: catalogscmeventsserviceref
+    to: defaultcatalogscmeventsservice
+    type: direct-call
+    description: Executes local class methods / functions

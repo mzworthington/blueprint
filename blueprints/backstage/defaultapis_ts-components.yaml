@@ -1,0 +1,168 @@
+name: Backstage - defaultApis.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: defaultapis
+    type: gateway-api
+    name: defaultApis UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/app/src/defaultApis.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 1750
+    'y': 370
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 1520
+    'y': 50
+  - id: alertapiforwarder
+    type: background-worker
+    name: AlertApiForwarder Service (apis)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-app-api/src/apis/implementations/AlertApi/AlertApiForwarder.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: noopanalyticsapi
+    type: background-worker
+    name: NoOpAnalyticsApi Service (apis)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/apis/implementations/AnalyticsApi/NoOpAnalyticsApi.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: erroralerter
+    type: background-worker
+    name: ErrorAlerter Service (apis)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-app-api/src/apis/implementations/ErrorApi/ErrorAlerter.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 690
+  - id: errorapiforwarder
+    type: background-worker
+    name: ErrorApiForwarder Service (apis)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-app-api/src/apis/implementations/ErrorApi/ErrorApiForwarder.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 690
+  - id: oauthrequestmanager
+    type: background-worker
+    name: OAuthRequestManager Service (apis)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-app-api/src/apis/implementations/OAuthRequestApi/OAuthRequestManager.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 690
+  - id: apis
+    type: gateway-api
+    name: apis UI Component (apis.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search/src/apis.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 2440
+    'y': 690
+  - id: analyticsapi
+    type: background-worker
+    name: AnalyticsApi Service (extensions)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/app/src/extensions/AnalyticsApi.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2900
+    'y': 690
+  - id: toastapiforwarder
+    type: background-worker
+    name: ToastApiForwarder Service (apis)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/app/src/apis/ToastApiForwarder.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3360
+    'y': 690
+  - id: plugin
+    type: background-worker
+    name: plugin Service (plugin.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-backend/src/plugin.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 50
+dependencies:
+  - from: frontend-client
+    to: defaultapis
+    type: direct-call
+    description: Renders defaultApis layout component
+  - from: defaultapis
+    to: alertapiforwarder
+    type: direct-call
+    description: References class type / calls methods
+  - from: defaultapis
+    to: noopanalyticsapi
+    type: direct-call
+    description: References class type / calls methods
+  - from: defaultapis
+    to: erroralerter
+    type: direct-call
+    description: References class type / calls methods
+  - from: defaultapis
+    to: errorapiforwarder
+    type: direct-call
+    description: References class type / calls methods
+  - from: defaultapis
+    to: oauthrequestmanager
+    type: direct-call
+    description: References class type / calls methods
+  - from: frontend-client
+    to: defaultapis
+    type: direct-call
+    description: Renders defaultApis layout component
+  - from: defaultapis
+    to: apis
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultapis
+    to: analyticsapi
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultapis
+    to: toastapiforwarder
+    type: direct-call
+    description: References class type / calls methods
+  - from: plugin
+    to: defaultapis
+    type: direct-call
+    description: Executes local class methods / functions

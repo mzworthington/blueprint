@@ -1,0 +1,256 @@
+name: Backstage - compatWrapper Components
+version: 1.0.0
+level: component
+nodes:
+  - id: backwardscompatprovider
+    type: gateway-api
+    name: BackwardsCompatProvider UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/compatWrapper/BackwardsCompatProvider.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 2880
+    'y': 1010
+  - id: forwardscompatprovider
+    type: gateway-api
+    name: ForwardsCompatProvider UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/compatWrapper/ForwardsCompatProvider.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 3300
+    'y': 690
+  - id: compatwrapper_test
+    type: gateway-api
+    name: compatWrapper.test UI Component
+    isTest: true
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/compatWrapper/compatWrapper.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 275
+    'y': 50
+  - id: compatwrapper
+    type: gateway-api
+    name: compatWrapper UI Component
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/compatWrapper/compatWrapper.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 1925
+    'y': 370
+  - id: collectlegacyroutes
+    type: gateway-api
+    name: collectLegacyRoutes UI Component (collectLegacyRoutes.tsx)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/collectLegacyRoutes.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 2115
+    'y': 50
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 3300
+    'y': 50
+  - id: appcontext
+    type: gateway-api
+    name: AppContext UI Component (app)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-app-api/src/app/AppContext.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 3490
+    'y': 1330
+  - id: userouteref
+    type: gateway-api
+    name: useRouteRef UI Component (routing)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/frontend-plugin-api/src/routing/useRouteRef.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 3030
+    'y': 1330
+  - id: convertlegacyrouteref
+    type: background-worker
+    name: convertLegacyRouteRef Service (convertLegacyRouteRef.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/convertLegacyRouteRef.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2380
+    'y': 1330
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1920
+    'y': 1330
+  - id: apiprovider
+    type: gateway-api
+    name: ApiProvider UI Component (apis)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-app-api/src/apis/system/ApiProvider.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 3570
+    'y': 1010
+  - id: test-utils
+    type: gateway-api
+    name: test-utils UI Component (test-utils.tsx)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs-addons-test-utils/src/test-utils.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 370
+  - id: convertlegacyapp
+    type: gateway-api
+    name: convertLegacyApp UI Component (convertLegacyApp.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/convertLegacyApp.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1655
+    'y': 50
+  - id: convertlegacyappoptions
+    type: gateway-api
+    name: convertLegacyAppOptions UI Component (convertLegacyAppOptions.tsx)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/convertLegacyAppOptions.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1195
+    'y': 50
+  - id: convertlegacypageextension
+    type: gateway-api
+    name: convertLegacyPageExtension UI Component (convertLegacyPageExtension.tsx)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/core-compat-api/src/convertLegacyPageExtension.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 735
+    'y': 50
+dependencies:
+  - from: collectlegacyroutes
+    to: compatwrapper
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: backwardscompatprovider
+    type: direct-call
+    description: Renders BackwardsCompatProvider layout component
+  - from: backwardscompatprovider
+    to: appcontext
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: backwardscompatprovider
+    to: userouteref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: backwardscompatprovider
+    to: convertlegacyrouteref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: backwardscompatprovider
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: frontend-client
+    to: forwardscompatprovider
+    type: direct-call
+    description: Renders ForwardsCompatProvider layout component
+  - from: forwardscompatprovider
+    to: backwardscompatprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: forwardscompatprovider
+    to: apiprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: forwardscompatprovider
+    to: userouteref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: forwardscompatprovider
+    to: convertlegacyrouteref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: forwardscompatprovider
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: compatwrapper_test
+    to: compatwrapper
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: compatwrapper_test
+    to: convertlegacyrouteref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: compatwrapper_test
+    to: test-utils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: compatwrapper
+    type: direct-call
+    description: Renders compatWrapper layout component
+  - from: compatwrapper
+    to: backwardscompatprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: compatwrapper
+    to: forwardscompatprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: convertlegacyapp
+    to: compatwrapper
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: convertlegacyappoptions
+    to: backwardscompatprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: convertlegacyappoptions
+    to: compatwrapper
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: convertlegacypageextension
+    to: compatwrapper
+    type: direct-call
+    description: Executes local class methods / functions

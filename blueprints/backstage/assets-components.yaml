@@ -1,0 +1,42 @@
+name: Backstage - assets Components
+version: 1.0.0
+level: component
+nodes:
+  - id: templatebackstagelogo
+    type: background-worker
+    name: TemplateBackstageLogo Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/home/src/assets/TemplateBackstageLogo.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: templatebackstagelogoicon
+    type: background-worker
+    name: TemplateBackstageLogoIcon Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/home/src/assets/TemplateBackstageLogoIcon.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: styles
+    type: background-worker
+    name: styles Service (homePageComponents)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/home/src/homePageComponents/QuickStart/styles.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+dependencies:
+  - from: templatebackstagelogoicon
+    to: styles
+    type: direct-call
+    description: Executes local class methods / functions

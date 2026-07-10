@@ -1,0 +1,152 @@
+name: Backstage - routes.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: routes
+    type: background-worker
+    name: routes Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs/src/routes.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1520
+    'y': 370
+  - id: plugin
+    type: background-worker
+    name: plugin Service (plugin.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/user-settings-backend/src/plugin.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: wrapperproviders
+    type: relational-database
+    name: WrapperProviders Database (module)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/catalog-backend-module-incremental-ingestion/src/module/WrapperProviders.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 600
+    'y': 50
+  - id: express
+    type: rest-api
+    name: express REST Endpoint (types)
+    isTest: false
+    properties:
+      filepath: ../backstage/packages/backend-openapi-utils/src/types/express.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 1290
+    'y': 690
+  - id: incrementalingestiondatabasemanager
+    type: relational-database
+    name: IncrementalIngestionDatabaseManager Database (database)
+    isTest: false
+    properties:
+      filepath: >-
+        ../backstage/plugins/catalog-backend-module-incremental-ingestion/src/database/IncrementalIngestionDatabaseManager.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 1750
+    'y': 690
+  - id: routes_test
+    type: background-worker
+    name: routes.test Service (routes.test.ts)
+    isTest: true
+    properties:
+      filepath: ../backstage/plugins/catalog-react/src/routes.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 50
+  - id: usewebnotifications
+    type: gateway-api
+    name: useWebNotifications UI Component (hooks)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/notifications/src/hooks/useWebNotifications.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1520
+    'y': 50
+  - id: deprecated
+    type: background-worker
+    name: deprecated Service (deprecated.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-common/src/deprecated.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 50
+  - id: useexternalredirect
+    type: gateway-api
+    name: useExternalRedirect UI Component (reader)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs/src/reader/components/TechDocsReaderPage/useExternalRedirect.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 2440
+    'y': 50
+  - id: usetechdocslocation
+    type: gateway-api
+    name: useTechDocsLocation UI Component (search)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/techdocs/src/search/hooks/useTechDocsLocation.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 2900
+    'y': 50
+dependencies:
+  - from: plugin
+    to: routes
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: wrapperproviders
+    to: routes
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: routes
+    to: express
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: routes
+    to: incrementalingestiondatabasemanager
+    type: read-write
+    description: Queries database table records
+  - from: routes_test
+    to: routes
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: usewebnotifications
+    to: routes
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: deprecated
+    to: routes
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: useexternalredirect
+    to: routes
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: usetechdocslocation
+    to: routes
+    type: direct-call
+    description: Executes local class methods / functions

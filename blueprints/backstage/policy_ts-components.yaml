@@ -1,0 +1,31 @@
+name: Backstage - policy.ts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: policy
+    type: background-worker
+    name: policy Service
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/permission-backend-module-policy-allow-all/src/policy.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 370
+  - id: module
+    type: background-worker
+    name: module Service (module.ts)
+    isTest: false
+    properties:
+      filepath: ../backstage/plugins/search-backend-module-techdocs/src/module.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+dependencies:
+  - from: module
+    to: policy
+    type: direct-call
+    description: Executes local class methods / functions
