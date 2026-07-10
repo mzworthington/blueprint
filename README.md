@@ -181,6 +181,16 @@ Parses your local TypeScript/React codebase, extracts components and dependency 
 pnpm analyze
 ```
 
+#### Compiling to a Standalone Executable Binary
+
+To compile the AST analyzer into a standalone binary CLI tool using Bun:
+
+```bash
+pnpm analyze:compile
+```
+
+This compiles a single standalone binary file into the `dist/` directory as `dist/analyze-cli`. Note that you will need the `.wasm` files from `node_modules/tree-sitter-wasms/out/` in the same directory as the executable or in the target project's `node_modules` for parser features to function correctly.
+
 ---
 
 ## 🧪 Testing Environment, Code Style & Quality Control

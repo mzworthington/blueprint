@@ -8,66 +8,6 @@ nodes:
     properties:
       description: Vite app hosting server.
       technology: Vite + React
-    x: 930
-    'y': 60
-  - id: app-host
-    type: gateway-api
-    name: Application Shell
-    properties:
-      description: Entrypoint and root shell layout.
-      technology: Vite / React
-    c4Ref: ./app-host-components.yaml
-    x: 150
-    'y': 430
-  - id: frontend-ui
-    type: gateway-api
-    name: Frontend React UI
-    properties:
-      description: React Flow canvas, sidebar configuration panel, and navigation UI.
-      technology: React + TailwindCSS
-    c4Ref: ./frontend-ui-components.yaml
-    x: 670
-    'y': 430
-  - id: state-sync
-    type: cache-store
-    name: State & Sync Manager
-    properties:
-      description: Zustand global store and local directory synchronization.
-      technology: Zustand / Filesystem API
-    c4Ref: ./state-sync-components.yaml
-    x: 775
-    'y': 800
-  - id: domain-logic
-    type: background-worker
-    name: Domain Logic Layer
-    properties:
-      description: Core domain logic, schema validation rules, and graph parsing.
-      technology: TypeScript
-    c4Ref: ./domain-logic-components.yaml
-    x: 620
-    'y': 1170
-dependencies:
-  - from: app-host
-    to: state-sync
-    type: direct-call
-    description: Inter-container request / connection
-  - from: frontend-ui
-    to: state-sync
-    type: direct-call
-    description: Inter-container request / connection
-  - from: frontend-client
-    to: frontend-ui
-    type: direct-call
-    description: Inter-container request / connection
-  - from: frontend-ui
-    to: domain-logic
-    type: direct-call
-    description: Inter-container request / connection
-  - from: frontend-client
-    to: state-sync
-    type: direct-call
-    description: Inter-container request / connection
-  - from: state-sync
-    to: domain-logic
-    type: direct-call
-    description: Inter-container request / connection
+    x: 140
+    'y': 50
+dependencies: []

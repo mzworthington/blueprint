@@ -238,7 +238,7 @@ export class CodebaseAnalyzer {
     };
   }
 
-  async runAnalysis(globPattern: string = 'src/**/*.{ts,tsx}'): Promise<void> {
+  async runAnalysis(globPattern: string = 'src/**/*.{ts,tsx}', outputDir?: string): Promise<void> {
     this.logger.info('🚀 Starting AST Codebase Analysis...');
 
     const sourceFiles = await this.parser.parseSourceFiles(globPattern);
@@ -636,14 +636,15 @@ export class CodebaseAnalyzer {
     const containers = Array.from(containerNodesMap.values());
     const layoutContainers = await this.layout.computeLayout(containers, containerDependenciesList);
 
-    const rootBlueprintsDir = this.fileSystem.getAbsolutePath(
-      this.fileSystem.getCurrentWorkingDirectory(),
-      'blueprints'
-    );
+    const rootBlueprintsDir = outputDir
+      ? this.fileSystem.getAbsolutePath(outputDir)
+      : this.fileSystem.getAbsolutePath(this.fileSystem.getCurrentWorkingDirectory(), 'blueprints');
     if (!this.fileSystem.exists(rootBlueprintsDir)) {
       this.fileSystem.mkdir(rootBlueprintsDir);
     }
-    const blueprintsDir = this.fileSystem.getAbsolutePath(rootBlueprintsDir, systemName);
+    const blueprintsDir = outputDir
+      ? this.fileSystem.getAbsolutePath(outputDir, systemName)
+      : this.fileSystem.getAbsolutePath(rootBlueprintsDir, systemName);
     if (!this.fileSystem.exists(blueprintsDir)) {
       this.fileSystem.mkdir(blueprintsDir);
     }

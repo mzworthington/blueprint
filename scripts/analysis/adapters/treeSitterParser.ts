@@ -24,9 +24,30 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
     }
 
     const wasmName = `tree-sitter-${langKey}.wasm`;
-    const wasmPath = path.resolve(process.cwd(), 'node_modules/tree-sitter-wasms/out', wasmName);
 
-    if (!fs.existsSync(wasmPath)) {
+    // Resolve from node_modules in cwd, executable binary folder, or relative source folder
+    const localWasmPath = path.resolve(
+      process.cwd(),
+      'node_modules/tree-sitter-wasms/out',
+      wasmName
+    );
+    const binWasmPath = path.resolve(path.dirname(process.execPath), wasmName);
+    const relativeWasmPath = path.resolve(
+      __dirname,
+      '../../../../node_modules/tree-sitter-wasms/out',
+      wasmName
+    );
+
+    let wasmPath = '';
+    if (fs.existsSync(localWasmPath)) {
+      wasmPath = localWasmPath;
+    } else if (fs.existsSync(binWasmPath)) {
+      wasmPath = binWasmPath;
+    } else if (fs.existsSync(relativeWasmPath)) {
+      wasmPath = relativeWasmPath;
+    }
+
+    if (!wasmPath || !fs.existsSync(wasmPath)) {
       return null;
     }
 

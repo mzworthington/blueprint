@@ -1,0 +1,46 @@
+name: Blueprint - App.test.tsx Components
+version: 1.0.0
+level: component
+nodes:
+  - id: app_test
+    type: gateway-api
+    name: App.test UI Component
+    isTest: true
+    properties:
+      filepath: src/App.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 370
+    'y': 50
+  - id: app
+    type: background-worker
+    name: App Service (App.tsx)
+    isTest: false
+    properties:
+      filepath: src/App.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: store
+    type: background-worker
+    name: store Service (store)
+    isTest: false
+    properties:
+      filepath: src/store/store.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+dependencies:
+  - from: app_test
+    to: app
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: app_test
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions

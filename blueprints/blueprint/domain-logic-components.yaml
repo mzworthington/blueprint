@@ -8,9 +8,10 @@ nodes:
     isTest: true
     properties:
       filepath: src/domain/graph.test.ts
+      namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1520
+    x: 600
     'y': 50
   - id: graph
     type: background-worker
@@ -18,9 +19,32 @@ nodes:
     isTest: false
     properties:
       filepath: src/domain/graph.ts
+      namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1060
+    x: 1100
+    'y': 370
+  - id: path_test
+    type: background-worker
+    name: path.test Service
+    isTest: true
+    properties:
+      filepath: src/domain/path.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1980
+    'y': 50
+  - id: path
+    type: background-worker
+    name: path Service
+    isTest: false
+    properties:
+      filepath: src/domain/path.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2210
     'y': 370
   - id: ports
     type: background-worker
@@ -28,9 +52,10 @@ nodes:
     isTest: false
     properties:
       filepath: src/domain/ports.ts
+      namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2900
+    x: 5200
     'y': 370
   - id: schema
     type: background-worker
@@ -38,9 +63,10 @@ nodes:
     isTest: false
     properties:
       filepath: src/domain/schema.ts
+      namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 600
+    x: 1060
     'y': 50
   - id: slug_test
     type: background-worker
@@ -48,9 +74,10 @@ nodes:
     isTest: true
     properties:
       filepath: src/domain/slug.test.ts
+      namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2440
+    x: 3820
     'y': 50
   - id: slug
     type: background-worker
@@ -58,39 +85,87 @@ nodes:
     isTest: false
     properties:
       filepath: src/domain/slug.ts
+      namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2210
+    x: 4050
     'y': 370
   - id: codeviewer
     type: gateway-api
-    name: CodeViewer UI Component (Frontend React UI)
+    name: CodeViewer UI Component (components)
     isTest: false
     properties:
-      filepath: src/adapters/CodeViewer.tsx
+      filepath: src/components/CodeViewer.tsx
+      namespaces: ''
       technology: React Component
     external: true
     x: 140
     'y': 50
   - id: propertypanel
     type: gateway-api
-    name: PropertyPanel UI Component (Frontend React UI)
+    name: PropertyPanel UI Component (components)
     isTest: false
     properties:
-      filepath: src/adapters/PropertyPanel.tsx
+      filepath: src/components/PropertyPanel.tsx
+      namespaces: ''
       technology: React Component
     external: true
-    x: 1980
+    x: 3360
     'y': 50
-  - id: store
+  - id: designsystempage
     type: gateway-api
-    name: store UI Component (State & Sync Manager)
+    name: DesignSystemPage UI Component (pages)
     isTest: false
     properties:
-      filepath: src/adapters/store.ts
+      filepath: src/pages/DesignSystemPage.tsx
+      namespaces: ''
       technology: React Component
     external: true
-    x: 1060
+    x: 4280
+    'y': 50
+  - id: workspacepage
+    type: gateway-api
+    name: WorkspacePage UI Component (pages)
+    isTest: false
+    properties:
+      filepath: src/pages/WorkspacePage.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 4740
+    'y': 50
+  - id: defaultdata
+    type: background-worker
+    name: defaultData Service (store)
+    isTest: false
+    properties:
+      filepath: src/store/defaultData.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 50
+  - id: diagramslice
+    type: gateway-api
+    name: diagramSlice UI Component (store)
+    isTest: false
+    properties:
+      filepath: src/store/slices/diagramSlice.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 2440
+    'y': 50
+  - id: ioslice
+    type: background-worker
+    name: ioSlice Service (store)
+    isTest: false
+    properties:
+      filepath: src/store/slices/ioSlice.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2900
     'y': 50
   - id: filesync
     type: background-worker
@@ -98,9 +173,10 @@ nodes:
     isTest: false
     properties:
       filepath: src/adapters/fileSync.ts
+      namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2900
+    x: 5200
     'y': 50
 dependencies:
   - from: codeviewer
@@ -111,16 +187,48 @@ dependencies:
     to: slug
     type: direct-call
     description: Executes local class methods / functions
-  - from: store
-    to: graph
-    type: direct-call
-    description: Executes local class methods / functions
   - from: graph_test
     to: graph
     type: direct-call
     description: Executes local class methods / functions
+  - from: path_test
+    to: path
+    type: direct-call
+    description: Executes local class methods / functions
   - from: slug_test
     to: slug
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: designsystempage
+    to: slug
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: workspacepage
+    to: slug
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultdata
+    to: graph
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultdata
+    to: path
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: diagramslice
+    to: graph
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: diagramslice
+    to: path
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: ioslice
+    to: graph
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: ioslice
+    to: path
     type: direct-call
     description: Executes local class methods / functions
   - from: filesync

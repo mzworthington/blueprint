@@ -1,0 +1,325 @@
+name: Blueprint - components Components
+version: 1.0.0
+level: component
+nodes:
+  - id: blueprintnode_test
+    type: gateway-api
+    name: BlueprintNode.test UI Component
+    isTest: true
+    properties:
+      filepath: src/components/BlueprintNode.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 140
+    'y': 370
+  - id: blueprintnode
+    type: gateway-api
+    name: BlueprintNode UI Component
+    isTest: false
+    properties:
+      filepath: src/components/BlueprintNode.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 450
+    'y': 690
+  - id: breadcrumbs_test
+    type: gateway-api
+    name: Breadcrumbs.test UI Component
+    isTest: true
+    properties:
+      filepath: src/components/Breadcrumbs.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 1220
+    'y': 370
+  - id: breadcrumbs
+    type: gateway-api
+    name: Breadcrumbs UI Component
+    isTest: false
+    properties:
+      filepath: src/components/Breadcrumbs.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 3520
+    'y': 690
+  - id: canvas_test
+    type: gateway-api
+    name: Canvas.test UI Component
+    isTest: true
+    properties:
+      filepath: src/components/Canvas.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 2990
+    'y': 50
+  - id: canvas
+    type: gateway-api
+    name: Canvas UI Component
+    isTest: false
+    properties:
+      filepath: src/components/Canvas.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 2450
+    'y': 370
+  - id: codeviewer_test
+    type: gateway-api
+    name: CodeViewer.test UI Component
+    isTest: true
+    properties:
+      filepath: src/components/CodeViewer.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 3450
+    'y': 50
+  - id: codeviewer
+    type: gateway-api
+    name: CodeViewer UI Component
+    isTest: false
+    properties:
+      filepath: src/components/CodeViewer.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 3060
+    'y': 370
+  - id: designsystemshowcase
+    type: gateway-api
+    name: DesignSystemShowcase UI Component
+    isTest: false
+    properties:
+      filepath: src/components/DesignSystemShowcase.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 1680
+    'y': 370
+  - id: mermaidpreview
+    type: gateway-api
+    name: MermaidPreview UI Component
+    isTest: false
+    properties:
+      filepath: src/components/MermaidPreview.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 910
+    'y': 690
+  - id: propertypanel_test
+    type: gateway-api
+    name: PropertyPanel.test UI Component
+    isTest: true
+    properties:
+      filepath: src/components/PropertyPanel.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 4370
+    'y': 370
+  - id: propertypanel
+    type: gateway-api
+    name: PropertyPanel UI Component
+    isTest: false
+    properties:
+      filepath: src/components/PropertyPanel.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 4720
+    'y': 690
+  - id: store
+    type: background-worker
+    name: store Service (store)
+    isTest: false
+    properties:
+      filepath: src/store/store.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3475
+    'y': 1010
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 2290
+    'y': 50
+  - id: graph
+    type: background-worker
+    name: graph Service (Domain Logic Layer)
+    isTest: false
+    properties:
+      filepath: src/domain/graph.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3060
+    'y': 690
+  - id: slug
+    type: background-worker
+    name: slug Service (Domain Logic Layer)
+    isTest: false
+    properties:
+      filepath: src/domain/slug.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 4760
+    'y': 1010
+  - id: designsystempage
+    type: gateway-api
+    name: DesignSystemPage UI Component (pages)
+    isTest: false
+    properties:
+      filepath: src/pages/DesignSystemPage.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1315
+    'y': 50
+  - id: workspacepage
+    type: gateway-api
+    name: WorkspacePage UI Component (pages)
+    isTest: false
+    properties:
+      filepath: src/pages/WorkspacePage.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 3910
+    'y': 50
+dependencies:
+  - from: blueprintnode_test
+    to: blueprintnode
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: blueprintnode_test
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: blueprintnode
+    type: direct-call
+    description: Renders BlueprintNode layout component
+  - from: blueprintnode
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: breadcrumbs_test
+    to: breadcrumbs
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: breadcrumbs_test
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: breadcrumbs
+    type: direct-call
+    description: Renders Breadcrumbs layout component
+  - from: breadcrumbs
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: canvas_test
+    to: canvas
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: canvas_test
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: canvas
+    type: direct-call
+    description: Renders Canvas layout component
+  - from: canvas
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: canvas
+    to: blueprintnode
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: canvas
+    to: breadcrumbs
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: codeviewer_test
+    to: codeviewer
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: codeviewer_test
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: codeviewer
+    type: direct-call
+    description: Renders CodeViewer layout component
+  - from: codeviewer
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: codeviewer
+    to: graph
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: codeviewer
+    to: mermaidpreview
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: designsystemshowcase
+    type: direct-call
+    description: Renders DesignSystemShowcase layout component
+  - from: frontend-client
+    to: mermaidpreview
+    type: direct-call
+    description: Renders MermaidPreview layout component
+  - from: propertypanel_test
+    to: propertypanel
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: propertypanel_test
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: propertypanel
+    type: direct-call
+    description: Renders PropertyPanel layout component
+  - from: propertypanel
+    to: store
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: propertypanel
+    to: slug
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: designsystempage
+    to: designsystemshowcase
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: workspacepage
+    to: codeviewer
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: workspacepage
+    to: canvas
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: workspacepage
+    to: propertypanel
+    type: direct-call
+    description: Executes local class methods / functions

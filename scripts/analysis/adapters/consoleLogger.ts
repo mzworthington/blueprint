@@ -1,24 +1,52 @@
+import pc from 'picocolors';
 import type { LoggerPort } from '../domain/ports.ts';
 
 export class ConsoleLogger implements LoggerPort {
-  private formatMessage(level: string, message: string, context?: Record<string, unknown>): string {
-    const timestamp = new Date().toISOString();
-    const ctxString = context ? ` | Context: ${JSON.stringify(context)}` : '';
-    return `[BLUEPRINT - ${level}] [${timestamp}] ${message}${ctxString}`;
+  private isFirstLog = true;
+
+  private printHeader() {
+    console.log(pc.cyan('┌────────────────────────────────────────────────────────┐'));
+    console.log(
+      pc.cyan('│') +
+        pc.bold(pc.cyan('         🚀 Codebase AST Analyzer & Blueprint           ')) +
+        pc.cyan('│')
+    );
+    console.log(pc.cyan('└────────────────────────────────────────────────────────┘'));
+    this.isFirstLog = false;
   }
 
   info(message: string, context?: Record<string, unknown>): void {
-    console.log(this.formatMessage('INFO', message, context));
+    if (this.isFirstLog) {
+      this.printHeader();
+    }
+    const ctxString = context ? pc.dim(` (Context: ${JSON.stringify(context)})`) : '';
+    if (message.includes('Starting') || message.includes('Found')) {
+      console.log(pc.cyan('ℹ ') + pc.bold(message) + ctxString);
+    } else if (message.includes('Saved') || message.includes('Successfully')) {
+      console.log(pc.green('✔ ') + pc.bold(pc.green(message)) + ctxString);
+    } else {
+      console.log(pc.cyan('ℹ ') + message + ctxString);
+    }
   }
 
   warn(message: string, context?: Record<string, unknown>): void {
-    console.warn(this.formatMessage('WARN', message, context));
+    if (this.isFirstLog) {
+      this.printHeader();
+    }
+    const ctxString = context ? pc.dim(` (Context: ${JSON.stringify(context)})`) : '';
+    console.warn(pc.yellow('⚠ ') + pc.bold(pc.yellow(message)) + ctxString);
   }
 
   error(message: string, error?: unknown, context?: Record<string, unknown>): void {
+    if (this.isFirstLog) {
+      this.printHeader();
+    }
+    const ctxString = context ? pc.dim(` (Context: ${JSON.stringify(context)})`) : '';
     const errMessage = error
-      ? `\nError: ${error instanceof Error ? error.stack || error.message : JSON.stringify(error)}`
+      ? pc.red(
+          `\nError details: ${error instanceof Error ? error.stack || error.message : JSON.stringify(error)}`
+        )
       : '';
-    console.error(this.formatMessage('ERROR', message, context) + errMessage);
+    console.error(pc.red('✖ ') + pc.bold(pc.red(message)) + ctxString + errMessage);
   }
 }
