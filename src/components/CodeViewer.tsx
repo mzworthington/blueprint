@@ -107,9 +107,8 @@ export const CodeViewer: React.FC = () => {
     >
       <div className="p-4 border-b border-slate-900 flex items-center justify-between gap-2">
         <div className="flex items-center gap-2.5 min-w-0">
-          <img src="/favicon.svg" className="w-6 h-6 shrink-0" alt="Blueprint Logo" />
-          <h3 className="font-bold text-slate-100 tracking-tight text-base uppercase truncate">
-            blueprint
+          <h3 className="font-bold text-slate-400 tracking-wider text-[10px] uppercase truncate font-mono">
+            Schema Explorer
           </h3>
         </div>
         <div className="flex items-center gap-2 shrink-0">

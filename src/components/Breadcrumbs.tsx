@@ -37,6 +37,16 @@ const LEVEL_CONFIGS: Record<
   },
 };
 
+const getWorkspaceFamily = (pathStr: string) => {
+  const cleanPath = pathStr.replace(/\\/g, '/');
+  const parts = cleanPath.split('/');
+  const blueprintsIdx = parts.indexOf('blueprints');
+  if (blueprintsIdx !== -1 && blueprintsIdx < parts.length - 1) {
+    return parts[blueprintsIdx + 1];
+  }
+  return parts[0] || '';
+};
+
 export const Breadcrumbs: React.FC = () => {
   const {
     navigationStack,
@@ -217,8 +227,12 @@ export const Breadcrumbs: React.FC = () => {
           const segConfig = LEVEL_CONFIGS[seg.level];
           const SegIcon = segConfig.icon;
 
+          const currentFamily = getWorkspaceFamily(currentFilePath);
           const sameLevelSystems = loadedSystems.filter(
-            s => s.schema.level === seg.level && s.path !== seg.path
+            s =>
+              s.schema.level === seg.level &&
+              s.path !== seg.path &&
+              getWorkspaceFamily(s.path) === currentFamily
           );
 
           return (

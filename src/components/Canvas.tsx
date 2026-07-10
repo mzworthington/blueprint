@@ -226,7 +226,13 @@ export const Canvas: React.FC = () => {
           </div>
         </Panel>
 
-        <Panel position="top-left" className="m-4 max-w-[50%]">
+        <Panel position="top-left" className="m-4 flex items-center gap-2.5 max-w-[80%]">
+          <div className="flex items-center gap-2 bg-slate-950/90 border border-slate-900 px-3.5 py-2.5 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md shrink-0">
+            <img src="/favicon.svg" className="w-5 h-5 shrink-0" alt="Blueprint Logo" />
+            <span className="font-bold text-slate-100 tracking-wider text-[11px] uppercase font-mono">
+              blueprint
+            </span>
+          </div>
           <Breadcrumbs />
         </Panel>
 
