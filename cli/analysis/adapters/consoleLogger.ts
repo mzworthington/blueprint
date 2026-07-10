@@ -2,23 +2,7 @@ import pc from 'picocolors';
 import type { LoggerPort } from '../domain/ports.ts';
 
 export class ConsoleLogger implements LoggerPort {
-  private isFirstLog = true;
-
-  private printHeader() {
-    console.log(pc.cyan('┌────────────────────────────────────────────────────────┐'));
-    console.log(
-      pc.cyan('│') +
-        pc.bold(pc.cyan('         🚀 Codebase AST Analyzer & Blueprint           ')) +
-        pc.cyan('│')
-    );
-    console.log(pc.cyan('└────────────────────────────────────────────────────────┘'));
-    this.isFirstLog = false;
-  }
-
   info(message: string, context?: Record<string, unknown>): void {
-    if (this.isFirstLog) {
-      this.printHeader();
-    }
     const ctxString = context ? pc.dim(` (Context: ${JSON.stringify(context)})`) : '';
     if (message.includes('Starting') || message.includes('Found')) {
       console.log(pc.cyan('ℹ ') + pc.bold(message) + ctxString);
@@ -30,17 +14,11 @@ export class ConsoleLogger implements LoggerPort {
   }
 
   warn(message: string, context?: Record<string, unknown>): void {
-    if (this.isFirstLog) {
-      this.printHeader();
-    }
     const ctxString = context ? pc.dim(` (Context: ${JSON.stringify(context)})`) : '';
     console.warn(pc.yellow('⚠ ') + pc.bold(pc.yellow(message)) + ctxString);
   }
 
   error(message: string, error?: unknown, context?: Record<string, unknown>): void {
-    if (this.isFirstLog) {
-      this.printHeader();
-    }
     const ctxString = context ? pc.dim(` (Context: ${JSON.stringify(context)})`) : '';
     const errMessage = error
       ? pc.red(

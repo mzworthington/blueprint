@@ -1,0 +1,174 @@
+name: Blueprint - utils Components
+version: 1.0.0
+level: component
+nodes:
+  - id: edges_d
+    type: background-worker
+    name: edges.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/@xyflow/react/dist/umd/utils/edges.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: base64_d
+    type: background-worker
+    name: base64.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/utils/base64.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: imperativestate_d
+    type: background-worker
+    name: imperativeState.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/utils/imperativeState.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: imperativestate_spec_d
+    type: background-worker
+    name: imperativeState.spec.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/utils/imperativeState.spec.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1520
+    'y': 50
+  - id: linewithoffset_d
+    type: background-worker
+    name: lineWithOffset.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/utils/lineWithOffset.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2900
+    'y': 370
+  - id: sanitizedirective_d
+    type: background-worker
+    name: sanitizeDirective.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/utils/sanitizeDirective.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1980
+    'y': 50
+  - id: sanitizedirective_spec_d
+    type: background-worker
+    name: sanitizeDirective.spec.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/utils/sanitizeDirective.spec.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2440
+    'y': 50
+  - id: subgraphtitlemargins_d
+    type: background-worker
+    name: subGraphTitleMargins.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/utils/subGraphTitleMargins.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2900
+    'y': 50
+  - id: subgraphtitlemargins_spec_d
+    type: background-worker
+    name: subGraphTitleMargins.spec.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/utils/subGraphTitleMargins.spec.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3360
+    'y': 50
+  - id: general_d
+    type: gateway-api
+    name: general.d UI Component
+    isTest: false
+    properties:
+      filepath: node_modules/@xyflow/react/dist/umd/utils/general.d.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 3820
+    'y': 370
+  - id: changes_d
+    type: background-worker
+    name: changes.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/@xyflow/react/dist/umd/utils/changes.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3360
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (v3)
+    isTest: false
+    properties:
+      filepath: node_modules/zod/src/v3/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3360
+    'y': 690
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 3820
+    'y': 50
+dependencies:
+  - from: linewithoffset_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: general_d
+    type: direct-call
+    description: Renders general.d layout component
+  - from: changes_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: general_d
+    type: direct-call
+    description: Renders general.d layout component
+  - from: general_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: general_d
+    type: direct-call
+    description: Renders general.d layout component
+  - from: frontend-client
+    to: general_d
+    type: direct-call
+    description: Renders general.d layout component

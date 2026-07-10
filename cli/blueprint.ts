@@ -76,8 +76,8 @@ async function run() {
     process.env.CI;
 
   let parserType = 'ts-morph';
-  let globPattern = 'src/**/*.{ts,tsx}';
-  let outputDir = 'blueprints';
+  let globPattern = '**/*.{ts,tsx,cs,java,go}';
+  let outputDir = process.env.BLUEPRINT_OUTPUT_DIR || 'blueprints';
 
   // Headless flag overrides
   const parserArg = args.find(a => a.startsWith('--parser='));
@@ -98,7 +98,7 @@ async function run() {
   }
 
   if (!isHeadless) {
-    p.intro(pc.cyan('🚀 Codebase AST Analyzer & Blueprint'));
+    p.intro(`\n🔹 ${pc.bold(pc.cyan('blueprint'))}${pc.gray(' • system architecture generator')}`);
 
     const selectedParser = await p.select({
       message: 'Select parser adapter:',

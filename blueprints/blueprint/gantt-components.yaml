@@ -1,0 +1,79 @@
+name: Blueprint - gantt Components
+version: 1.0.0
+level: component
+nodes:
+  - id: ganttdb_d
+    type: background-worker
+    name: ganttDb.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/diagrams/gantt/ganttDb.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: ganttdb_spec_d
+    type: background-worker
+    name: ganttDb.spec.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/diagrams/gantt/ganttDb.spec.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: ganttdetector_d
+    type: background-worker
+    name: ganttDetector.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/diagrams/gantt/ganttDetector.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: ganttdiagram_d
+    type: background-worker
+    name: ganttDiagram.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/diagrams/gantt/ganttDiagram.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1520
+    'y': 50
+  - id: ganttrenderer_d
+    type: background-worker
+    name: ganttRenderer.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/diagrams/gantt/ganttRenderer.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1980
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (v3)
+    isTest: false
+    properties:
+      filepath: node_modules/zod/src/v3/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1290
+    'y': 370
+dependencies:
+  - from: ganttdetector_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: ganttdiagram_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

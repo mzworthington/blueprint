@@ -22,7 +22,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1100
+    x: 1710
     'y': 370
   - id: path_test
     type: background-worker
@@ -33,7 +33,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1980
+    x: 4740
     'y': 50
   - id: path
     type: background-worker
@@ -44,18 +44,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2210
-    'y': 370
-  - id: ports
-    type: background-worker
-    name: ports Service
-    isTest: false
-    properties:
-      filepath: src/domain/ports.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 5200
+    x: 3590
     'y': 370
   - id: schema
     type: background-worker
@@ -77,7 +66,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 3820
+    x: 7040
     'y': 50
   - id: slug
     type: background-worker
@@ -88,8 +77,30 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 4050
+    x: 6810
     'y': 370
+  - id: blueprint
+    type: background-worker
+    name: blueprint Service (Application Shell)
+    isTest: false
+    properties:
+      filepath: cli/blueprint.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 5660
+    'y': 50
+  - id: e2e_spec
+    type: background-worker
+    name: e2e.spec Service (Application Shell)
+    isTest: false
+    properties:
+      filepath: tests/e2e.spec.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 5200
+    'y': 50
   - id: codeviewer
     type: gateway-api
     name: CodeViewer UI Component (components)
@@ -99,7 +110,7 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 140
+    x: 1980
     'y': 50
   - id: propertypanel
     type: gateway-api
@@ -110,7 +121,7 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 3360
+    x: 7500
     'y': 50
   - id: designsystempage
     type: gateway-api
@@ -121,7 +132,7 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 4280
+    x: 6580
     'y': 50
   - id: workspacepage
     type: gateway-api
@@ -132,7 +143,7 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 4740
+    x: 6120
     'y': 50
   - id: defaultdata
     type: background-worker
@@ -143,7 +154,51 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1520
+    x: 2440
+    'y': 50
+  - id: nodefilesystem
+    type: background-worker
+    name: nodeFileSystem Service (adapters)
+    isTest: false
+    properties:
+      filepath: cli/analysis/adapters/nodeFileSystem.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 4280
+    'y': 50
+  - id: treesitterparser_test
+    type: background-worker
+    name: treeSitterParser.test Service (adapters)
+    isTest: true
+    properties:
+      filepath: cli/analysis/adapters/treeSitterParser.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3820
+    'y': 50
+  - id: treesitterparser
+    type: background-worker
+    name: treeSitterParser Service (adapters)
+    isTest: false
+    properties:
+      filepath: cli/analysis/adapters/treeSitterParser.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3360
+    'y': 50
+  - id: tsmorphparser
+    type: background-worker
+    name: tsMorphParser Service (adapters)
+    isTest: false
+    properties:
+      filepath: cli/analysis/adapters/tsMorphParser.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2900
     'y': 50
   - id: diagramslice
     type: gateway-api
@@ -154,7 +209,7 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 2440
+    x: 1520
     'y': 50
   - id: ioslice
     type: background-worker
@@ -165,20 +220,17 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2900
-    'y': 50
-  - id: filesync
-    type: background-worker
-    name: fileSync Service (State & Sync Manager)
-    isTest: false
-    properties:
-      filepath: src/adapters/fileSync.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 5200
+    x: 140
     'y': 50
 dependencies:
+  - from: blueprint
+    to: path
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: e2e_spec
+    to: path
+    type: direct-call
+    description: Executes local class methods / functions
   - from: codeviewer
     to: graph
     type: direct-call
@@ -215,6 +267,22 @@ dependencies:
     to: path
     type: direct-call
     description: Executes local class methods / functions
+  - from: nodefilesystem
+    to: path
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: treesitterparser_test
+    to: path
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: treesitterparser
+    to: path
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: tsmorphparser
+    to: path
+    type: direct-call
+    description: Executes local class methods / functions
   - from: diagramslice
     to: graph
     type: direct-call
@@ -231,7 +299,3 @@ dependencies:
     to: path
     type: direct-call
     description: Executes local class methods / functions
-  - from: filesync
-    to: ports
-    type: direct-call
-    description: Implements FileSystemPort interface

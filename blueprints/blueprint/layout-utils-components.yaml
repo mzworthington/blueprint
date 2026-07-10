@@ -1,0 +1,90 @@
+name: Blueprint - layout-utils Components
+version: 1.0.0
+level: component
+nodes:
+  - id: debug_d
+    type: background-worker
+    name: debug.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/rendering-util/layout-algorithms/layout-utils/debug.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: helpers_spec_d
+    type: background-worker
+    name: helpers.spec.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/rendering-util/layout-algorithms/layout-utils/helpers.spec.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: scorelayout_d
+    type: background-worker
+    name: scoreLayout.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/rendering-util/layout-algorithms/layout-utils/scoreLayout.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: scorelayout_spec_d
+    type: background-worker
+    name: scoreLayout.spec.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/rendering-util/layout-algorithms/layout-utils/scoreLayout.spec.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1520
+    'y': 50
+  - id: validatelayout_d
+    type: background-worker
+    name: validateLayout.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/rendering-util/layout-algorithms/layout-utils/validateLayout.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1980
+    'y': 50
+  - id: validatelayout_spec_d
+    type: background-worker
+    name: validateLayout.spec.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/rendering-util/layout-algorithms/layout-utils/validateLayout.spec.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2440
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (v3)
+    isTest: false
+    properties:
+      filepath: node_modules/zod/src/v3/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 370
+dependencies:
+  - from: scorelayout_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: validatelayout_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

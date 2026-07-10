@@ -1,0 +1,42 @@
+name: Blueprint - error Components
+version: 1.0.0
+level: component
+nodes:
+  - id: errordiagram_d
+    type: background-worker
+    name: errorDiagram.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/diagrams/error/errorDiagram.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: errorrenderer_d
+    type: background-worker
+    name: errorRenderer.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/diagrams/error/errorRenderer.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (v3)
+    isTest: false
+    properties:
+      filepath: node_modules/zod/src/v3/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+dependencies:
+  - from: errordiagram_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

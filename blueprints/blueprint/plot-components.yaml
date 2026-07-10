@@ -1,0 +1,121 @@
+name: Blueprint - plot Components
+version: 1.0.0
+level: component
+nodes:
+  - id: index_d
+    type: background-worker
+    name: index.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/diagrams/xychart/chartBuilder/components/plot/index.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: barplot_d
+    type: background-worker
+    name: barPlot.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/diagrams/xychart/chartBuilder/components/plot/barPlot.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1790
+    'y': 50
+  - id: lineplot_d
+    type: background-worker
+    name: linePlot.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/mermaid/dist/diagrams/xychart/chartBuilder/components/plot/linePlot.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2250
+    'y': 50
+  - id: doc
+    type: background-worker
+    name: doc Service (v4)
+    isTest: false
+    properties:
+      filepath: node_modules/zod/src/v4/core/doc.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+  - id: external
+    type: background-worker
+    name: external Service (v4)
+    isTest: false
+    properties:
+      filepath: node_modules/zod/src/v4/mini/external.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+  - id: mocker
+    type: background-worker
+    name: Mocker Service (v3)
+    isTest: false
+    properties:
+      filepath: node_modules/zod/src/v3/tests/Mocker.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
+  - id: index
+    type: background-worker
+    name: index Service (v4)
+    isTest: false
+    properties:
+      filepath: node_modules/zod/src/v4/mini/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (v3)
+    isTest: false
+    properties:
+      filepath: node_modules/zod/src/v3/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 370
+dependencies:
+  - from: index_d
+    to: doc
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index_d
+    to: external
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index_d
+    to: mocker
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index_d
+    to: index
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: barplot_d
+    to: index
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: lineplot_d
+    to: index
+    type: direct-call
+    description: Executes local class methods / functions

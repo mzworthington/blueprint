@@ -1,0 +1,121 @@
+name: Blueprint - react-dom Components
+version: 1.0.0
+level: component
+nodes:
+  - id: server_browser_d
+    type: background-worker
+    name: server.browser.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/@types/react-dom/server.browser.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: server_bun_d
+    type: background-worker
+    name: server.bun.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/@types/react-dom/server.bun.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: server_d
+    type: gateway-api
+    name: server.d UI Component
+    isTest: false
+    properties:
+      filepath: node_modules/@types/react-dom/server.d.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 3130
+    'y': 370
+  - id: server_edge_d
+    type: background-worker
+    name: server.edge.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/@types/react-dom/server.edge.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: server_node_d
+    type: background-worker
+    name: server.node.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/@types/react-dom/server.node.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1520
+    'y': 50
+  - id: static_browser_d
+    type: background-worker
+    name: static.browser.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/@types/react-dom/static.browser.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1980
+    'y': 50
+  - id: static_d
+    type: gateway-api
+    name: static.d UI Component
+    isTest: false
+    properties:
+      filepath: node_modules/@types/react-dom/static.d.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 3590
+    'y': 370
+  - id: static_edge_d
+    type: background-worker
+    name: static.edge.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/@types/react-dom/static.edge.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2440
+    'y': 50
+  - id: static_node_d
+    type: background-worker
+    name: static.node.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/@types/react-dom/static.node.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2900
+    'y': 50
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 3360
+    'y': 50
+dependencies:
+  - from: frontend-client
+    to: server_d
+    type: direct-call
+    description: Renders server.d layout component
+  - from: frontend-client
+    to: static_d
+    type: direct-call
+    description: Renders static.d layout component
