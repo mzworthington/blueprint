@@ -45,12 +45,14 @@ test.describe('Blueprint E2E Journeys', () => {
   });
 
   test('Visual C4 Navigation (Zoom In / Zoom Out / URL Routing)', async ({ page }) => {
-    await page.goto('/workspace/blueprint-container-level');
+    await page.goto('/workspace/testproject-container-level');
 
     await page.locator('button[aria-label="Toggle Right Panel"]').click();
 
-    await expect(page.locator('#workspace-name-input')).toHaveValue('Blueprint - Container Level');
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint-container-level');
+    await expect(page.locator('#workspace-name-input')).toHaveValue(
+      'TestProject - Container Level'
+    );
+    await expect(page.locator('#workspace-slug-input')).toHaveValue('testproject-container-level');
 
     await page.screenshot({ path: 'screenshots/3-container-level.png' });
 
@@ -62,20 +64,22 @@ test.describe('Blueprint E2E Journeys', () => {
     await appShellNode.dblclick();
 
     await expect(page.locator('#workspace-name-input')).toHaveValue(
-      'Blueprint - Application Shell Components'
+      'TestProject - Application Shell Components'
     );
     await expect(page.locator('#workspace-slug-input')).toHaveValue(
-      'blueprint-application-shell-components'
+      'testproject-application-shell-components'
     );
-    expect(page.url()).toContain('/workspace/blueprint-application-shell-components');
+    expect(page.url()).toContain('/workspace/testproject-application-shell-components');
 
     await page.screenshot({ path: 'screenshots/4-zoomed-in-components.png' });
 
     await page.keyboard.press('Escape');
 
-    await expect(page.locator('#workspace-name-input')).toHaveValue('Blueprint - Container Level');
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint-container-level');
-    expect(page.url()).toContain('/workspace/blueprint-container-level');
+    await expect(page.locator('#workspace-name-input')).toHaveValue(
+      'TestProject - Container Level'
+    );
+    await expect(page.locator('#workspace-slug-input')).toHaveValue('testproject-container-level');
+    expect(page.url()).toContain('/workspace/testproject-container-level');
 
     await page.screenshot({ path: 'screenshots/5-zoomed-back-out.png' });
   });
