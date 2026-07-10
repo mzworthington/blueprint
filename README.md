@@ -46,9 +46,19 @@ graph TD
         PropertyPanel[PropertyPanel.tsx - Sidebar]
     end
 
+    subgraph Store [Zustand Store - State Sync]
+        StoreEntry[store.ts - Composition Root]
+        UiSlice[uiSlice.ts - Layout & Panels]
+        DiagramSlice[diagramSlice.ts - Canvas & Navigation]
+        IoSlice[ioSlice.ts - File Systems Sync]
+        StoreEntry --> UiSlice
+        StoreEntry --> DiagramSlice
+        StoreEntry --> IoSlice
+    end
+
     subgraph Core [Application Core]
-        Store[Zustand Store - State Sync]
-        Domain[graph.ts - Domain Core Logic]
+        DomainGraph[graph.ts - Domain Core Logic]
+        DomainPath[path.ts - Path Navigation]
     end
 
     subgraph Ports [Outbound Ports]
@@ -64,9 +74,11 @@ graph TD
     Canvas --> Store
     CodeViewer --> Store
     PropertyPanel --> Store
-    Store --> Domain
-    Store --> FSPort
-    Store --> LoggerPort
+    DiagramSlice --> DomainGraph
+    DiagramSlice --> DomainPath
+    IoSlice --> DomainPath
+    IoSlice --> FSPort
+    IoSlice --> LoggerPort
     FSPort --> FSAdapter
     LoggerPort --> LogAdapter
 ```
@@ -77,6 +89,7 @@ The core domain has **zero dependencies** on external UI frameworks (React, Reac
 
 - [schema.ts](./src/domain/schema.ts): Houses types representing nodes, dependencies, properties, and verification results.
 - [graph.ts](./src/domain/graph.ts): Implements validation, Zod parsers, cycle detection routines, and Mermaid.js flowchart exports.
+- [path.ts](./src/domain/path.ts): Handles filesystem-agnostic relative C4 path resolution and closest workspace manifest matching.
 
 ### 2. Outbound Ports (`src/domain/ports.ts`)
 
@@ -91,7 +104,12 @@ Implementations of outbound ports binding visual tools to infrastructure resourc
 
 - `BrowserFileSystemAdapter`: Interacts with the file system.
 - `ConsoleLoggerAdapter`: Outputs structured timestamps and trace contexts to the browser console.
-- `useBlueprintStore` (Zustand): Synchronizes component values, validates changes, and hooks up ports to the UI.
+- `useBlueprintStore` (Zustand): Synchronizes component values, validates changes, and hooks up ports to the UI. Composed of modular slices:
+  - `UiSlice`: Manages sidebar and panel toggles.
+  - `DiagramSlice`: Manages canvas visual nodes/edges and zoom transitions.
+  - `IoSlice`: Manages directory and file writing/reading interfaces.
+- `layoutUtils.ts`: Handles stateless React Flow node/edge coordinate converters and handle styling anchors.
+- `defaultData.ts`: Eagerly compiles blueprints glob matching files at build time.
 
 ---
 
