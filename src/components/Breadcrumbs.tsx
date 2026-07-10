@@ -209,18 +209,21 @@ export const Breadcrumbs: React.FC = () => {
   return (
     <div
       ref={dropdownRef}
-      className="flex items-center gap-2.5 bg-slate-950/90 border border-slate-900 px-4 py-2.5 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md text-xs select-none"
+      className="flex flex-wrap items-center gap-y-1.5 gap-x-2.5 text-xs select-none w-full"
     >
       <div className="flex items-center gap-1.5 text-slate-400 font-medium">
-        <Folder className="w-4 h-4 text-brand-500" />
-        <span className="max-w-[120px] truncate" title={workspaceName || 'Sandbox'}>
+        <Folder className="w-3.5 h-3.5 text-brand-500" />
+        <span
+          className="max-w-[100px] sm:max-w-[150px] truncate"
+          title={workspaceName || 'Sandbox'}
+        >
           {isWorkspaceOpen ? workspaceName : 'Sandbox Workspace'}
         </span>
       </div>
 
       <ChevronRight className="w-3.5 h-3.5 text-slate-700 shrink-0" />
 
-      <div className="flex items-center gap-1.5 scroll-smooth">
+      <div className="flex flex-wrap items-center gap-1.5">
         {segments.map((seg, idx) => {
           const isLast = idx === segments.length - 1;
           const isClickable = !isLast || seg.isZoomPreview;
@@ -263,7 +266,7 @@ export const Breadcrumbs: React.FC = () => {
                   <SegIcon
                     className={`w-3.5 h-3.5 shrink-0 ${isLast && !seg.isZoomPreview ? segConfig.text : 'text-slate-600'}`}
                   />
-                  <span className="truncate max-w-[150px]">{seg.name}</span>
+                  <span className="truncate max-w-[80px] sm:max-w-[150px]">{seg.name}</span>
                 </button>
 
                 {sameLevelSystems.length > 0 && (

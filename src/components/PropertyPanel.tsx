@@ -59,6 +59,7 @@ export const PropertyPanel: React.FC = () => {
     showTests,
     toggleShowTests,
     rightCollapsed,
+    toggleRightCollapsed,
     workspaceName,
   } = useBlueprintStore();
 
@@ -120,23 +121,32 @@ export const PropertyPanel: React.FC = () => {
       className={`h-full flex flex-col bg-slate-950/80 glass-panel transition-all duration-300 ease-in-out ${
         rightCollapsed
           ? 'w-0 border-l-0 opacity-0 overflow-hidden pointer-events-none'
-          : 'w-80 border-l border-slate-900'
+          : 'w-full sm:w-80 border-l border-slate-900'
       }`}
     >
-      {/* Upper header */}
-      <div className="p-4 border-b border-slate-900 flex items-center justify-between">
-        <h3 className="font-semibold text-slate-100 tracking-tight text-base">Properties Panel</h3>
-        {selectedNodeId && (
+      <div className="p-4 border-b border-slate-900 flex items-center justify-between bg-slate-950/40">
+        <h3 className="font-bold text-[#00f0ff] uppercase tracking-wider font-mono text-xs">
+          Properties Panel
+        </h3>
+        <div className="flex items-center gap-2">
+          {selectedNodeId && (
+            <button
+              onClick={() => selectNode(null)}
+              className="text-xs font-mono text-slate-400 hover:text-brand-400 cursor-pointer transition focus:outline-none"
+            >
+              Clear Selection
+            </button>
+          )}
           <button
-            onClick={() => selectNode(null)}
-            className="text-xs text-slate-400 hover:text-slate-200"
+            onClick={toggleRightCollapsed}
+            className="sm:hidden p-1 rounded-lg bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-400 hover:text-slate-200 transition cursor-pointer flex items-center justify-center w-6 h-6 text-xs"
+            title="Close Panel"
           >
-            Clear Selection
+            ✕
           </button>
-        )}
+        </div>
       </div>
 
-      {/* Main Panel Content */}
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
         {selectedNode ? (
           <div className="space-y-6">
@@ -145,7 +155,7 @@ export const PropertyPanel: React.FC = () => {
               <div>
                 <label
                   htmlFor="component-name-input"
-                  className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5"
+                  className="block text-[10px] font-bold font-mono text-slate-400 uppercase tracking-wider mb-1.5"
                 >
                   Component Name
                 </label>
@@ -154,14 +164,14 @@ export const PropertyPanel: React.FC = () => {
                   type="text"
                   value={selectedNode.name}
                   onChange={handleNameChange}
-                  className="w-full bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition"
+                  className="w-full bg-[#040914] border border-[#00f0ff]/25 focus:border-[#00f0ff] focus:shadow-[0_0_10px_rgba(0,240,255,0.15)] rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none transition duration-200"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="component-id-input"
-                  className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5"
+                  className="block text-[10px] font-bold font-mono text-slate-400 uppercase tracking-wider mb-1.5"
                 >
                   Component ID (Schema Key)
                 </label>
@@ -170,18 +180,18 @@ export const PropertyPanel: React.FC = () => {
                   type="text"
                   value={selectedNode.id}
                   onChange={handleIdChange}
-                  className="w-full bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-2 text-sm font-mono text-slate-100 focus:outline-none focus:border-brand-500 transition"
+                  className="w-full bg-[#040914] border border-[#00f0ff]/25 focus:border-[#00f0ff] focus:shadow-[0_0_10px_rgba(0,240,255,0.15)] rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none transition duration-200"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                <label className="block text-[10px] font-bold font-mono text-slate-400 uppercase tracking-wider mb-1.5">
                   Component Type
                 </label>
                 <select
                   value={selectedNode.type}
                   onChange={handleTypeChange}
-                  className="w-full bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition"
+                  className="w-full bg-[#040914] border border-[#00f0ff]/25 focus:border-[#00f0ff] focus:shadow-[0_0_10px_rgba(0,240,255,0.15)] rounded-lg px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none transition duration-200 cursor-pointer"
                 >
                   {NODE_TYPES.map(nt => (
                     <option key={nt.type} value={nt.type}>
@@ -194,7 +204,7 @@ export const PropertyPanel: React.FC = () => {
               <div>
                 <label
                   htmlFor="component-c4ref-input"
-                  className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5"
+                  className="block text-[10px] font-bold font-mono text-slate-400 uppercase tracking-wider mb-1.5"
                 >
                   C4 Sub-Diagram Link (YAML)
                 </label>
@@ -206,14 +216,14 @@ export const PropertyPanel: React.FC = () => {
                   onChange={e =>
                     updateNode(selectedNode.id, { c4Ref: e.target.value || undefined })
                   }
-                  className="w-full bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 font-mono focus:outline-none focus:border-brand-500 transition"
+                  className="w-full bg-[#040914] border border-[#00f0ff]/25 focus:border-[#00f0ff] focus:shadow-[0_0_10px_rgba(0,240,255,0.15)] rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none transition duration-200"
                 />
               </div>
 
               <div className="flex items-center justify-between border-t border-slate-900/60 pt-3">
                 <label
                   htmlFor="component-external-checkbox"
-                  className="text-xs font-semibold text-slate-400 uppercase tracking-wider"
+                  className="text-[10px] font-bold font-mono text-slate-400 uppercase tracking-wider"
                 >
                   External System / Actor
                 </label>
@@ -222,13 +232,13 @@ export const PropertyPanel: React.FC = () => {
                   type="checkbox"
                   checked={!!selectedNode.external}
                   onChange={e => updateNode(selectedNode.id, { external: e.target.checked })}
-                  className="w-4 h-4 rounded border-slate-800 text-brand-600 focus:ring-brand-500 bg-slate-900 cursor-pointer"
+                  className="w-4 h-4 rounded border-[#00f0ff]/30 text-brand-500 focus:ring-brand-500 bg-[#040914] cursor-pointer focus:ring-offset-0 focus:outline-none"
                 />
               </div>
             </div>
 
             <div className="border-t border-slate-900 pt-4">
-              <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+              <h4 className="text-[10px] font-bold font-mono text-[#00f0ff] uppercase tracking-wider mb-3">
                 Metadata Attributes
               </h4>
 
@@ -237,15 +247,15 @@ export const PropertyPanel: React.FC = () => {
                   {Object.entries(selectedNode.properties).map(([key, val]) => (
                     <div
                       key={key}
-                      className="flex items-center justify-between bg-slate-900/40 rounded-lg px-3 py-1.5 border border-slate-900/60"
+                      className="flex items-center justify-between bg-[#040914]/60 rounded-xl px-3 py-1.5 border border-[#00f0ff]/10"
                     >
                       <div className="text-xs truncate mr-2">
-                        <span className="font-mono text-brand-100/70">{key}:</span>{' '}
+                        <span className="font-mono text-[#00f0ff]/70">{key}:</span>{' '}
                         <span className="text-slate-300 font-semibold">{val}</span>
                       </div>
                       <button
                         onClick={() => handleDeleteProperty(key)}
-                        className="text-slate-500 hover:text-red-400 transition"
+                        className="text-slate-500 hover:text-red-400 transition cursor-pointer"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -262,19 +272,19 @@ export const PropertyPanel: React.FC = () => {
                   placeholder="Key (e.g. port)"
                   value={propKey}
                   onChange={e => setPropKey(e.target.value)}
-                  className="w-1/2 bg-slate-900/90 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-100 focus:outline-none focus:border-brand-500 transition"
+                  className="w-1/2 bg-[#040914] border border-[#00f0ff]/25 focus:border-[#00f0ff] focus:shadow-[0_0_10px_rgba(0,240,255,0.15)] rounded-lg px-2.5 py-1.5 text-xs font-mono text-white focus:outline-none transition duration-200"
                 />
                 <input
                   type="text"
                   placeholder="Value"
                   value={propVal}
                   onChange={e => setPropVal(e.target.value)}
-                  className="w-1/2 bg-slate-900/90 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-100 focus:outline-none focus:border-brand-500 transition"
+                  className="w-1/2 bg-[#040914] border border-[#00f0ff]/25 focus:border-[#00f0ff] focus:shadow-[0_0_10px_rgba(0,240,255,0.15)] rounded-lg px-2.5 py-1.5 text-xs font-mono text-white focus:outline-none transition duration-200"
                 />
                 <button
                   type="submit"
                   aria-label="Add attribute"
-                  className="bg-brand-600 hover:bg-brand-700 text-white rounded-lg p-1.5 flex items-center justify-center transition"
+                  className="bg-brand-600/15 hover:bg-brand-600/30 text-brand-400 hover:text-white border border-brand-500/30 hover:border-brand-500 rounded-lg p-1.5 flex items-center justify-center transition cursor-pointer shadow-[0_0_8px_rgba(0,240,255,0.15)]"
                 >
                   <Plus className="w-4 h-4" />
                 </button>
@@ -282,7 +292,7 @@ export const PropertyPanel: React.FC = () => {
             </div>
 
             <div className="border-t border-slate-900 pt-4">
-              <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+              <h4 className="text-[10px] font-bold font-mono text-[#00f0ff] uppercase tracking-wider mb-3">
                 Active Connections
               </h4>
               {nodeConnections.length > 0 ? (
@@ -295,16 +305,16 @@ export const PropertyPanel: React.FC = () => {
                     return (
                       <div
                         key={edge.id}
-                        className="bg-slate-900/40 rounded-lg p-2.5 border border-slate-900 space-y-2"
+                        className="bg-[#040914]/60 rounded-xl p-2.5 border border-[#00f0ff]/10 space-y-2"
                       >
                         <div className="flex items-center justify-between text-xs">
-                          <span className="font-semibold text-slate-300">
+                          <span className="font-semibold text-slate-300 font-sans">
                             {isSource ? '➔ Output to' : '📥 Input from'}{' '}
-                            <span className="text-brand-100">{partnerNode?.name || partnerId}</span>
+                            <span className="text-[#00f0ff]">{partnerNode?.name || partnerId}</span>
                           </span>
                           <button
                             onClick={() => deleteDependency(edge.source, edge.target)}
-                            className="text-slate-500 hover:text-red-400 transition"
+                            className="text-slate-500 hover:text-red-400 transition cursor-pointer"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -319,7 +329,7 @@ export const PropertyPanel: React.FC = () => {
                                   type: e.target.value as any,
                                 })
                               }
-                              className="flex-1 bg-slate-950 border border-slate-900 rounded px-1.5 py-1 text-[10px] text-slate-300 focus:outline-none"
+                              className="flex-1 bg-[#040914] border border-[#00f0ff]/25 focus:border-[#00f0ff] rounded px-1.5 py-1 text-[10px] font-mono text-slate-200 focus:outline-none transition duration-200"
                             >
                               <option value="direct-call">Direct Call</option>
                               <option value="publish-subscribe">Pub/Sub (Async)</option>
@@ -335,7 +345,7 @@ export const PropertyPanel: React.FC = () => {
                                 description: e.target.value,
                               })
                             }
-                            className="w-full bg-slate-950 border border-slate-900 rounded px-2 py-1 text-[10px] text-slate-300 focus:outline-none focus:border-brand-500 transition"
+                            className="w-full bg-[#040914] border border-[#00f0ff]/25 focus:border-[#00f0ff] rounded px-2 py-1 text-[10px] font-mono text-slate-200 focus:outline-none transition duration-200 focus:shadow-[0_0_8px_rgba(0,240,255,0.15)]"
                           />
                         </div>
                       </div>
@@ -354,7 +364,7 @@ export const PropertyPanel: React.FC = () => {
                     deleteNode(selectedNode.id);
                   }
                 }}
-                className="w-full flex items-center justify-center gap-2 bg-red-950/20 border border-red-900/30 hover:border-red-900/60 text-red-400 rounded-lg py-2 text-xs font-semibold transition"
+                className="w-full flex items-center justify-center gap-2 bg-red-950/15 border border-red-900/30 hover:border-red-900/60 hover:bg-red-950/30 text-red-400 rounded-lg py-2 text-xs font-semibold transition cursor-pointer"
               >
                 <Trash2 className="w-4 h-4" />
                 Delete Component
@@ -366,7 +376,7 @@ export const PropertyPanel: React.FC = () => {
             <div>
               <label
                 htmlFor="workspace-name-input"
-                className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5"
+                className="block text-[10px] font-bold font-mono text-slate-400 uppercase tracking-wider mb-1.5"
               >
                 Workspace Name
               </label>
@@ -375,14 +385,14 @@ export const PropertyPanel: React.FC = () => {
                 type="text"
                 value={schema.name}
                 onChange={e => updateSchemaName(e.target.value)}
-                className="w-full bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition"
+                className="w-full bg-[#040914] border border-[#00f0ff]/25 focus:border-[#00f0ff] focus:shadow-[0_0_10px_rgba(0,240,255,0.15)] rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none transition duration-200"
               />
             </div>
 
             <div>
               <label
                 htmlFor="workspace-slug-input"
-                className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5"
+                className="block text-[10px] font-bold font-mono text-slate-400 uppercase tracking-wider mb-1.5"
               >
                 Workspace Slug
               </label>
@@ -391,14 +401,14 @@ export const PropertyPanel: React.FC = () => {
                 type="text"
                 readOnly
                 value={slugify(workspaceName || schema.name)}
-                className="w-full bg-slate-900/40 border border-slate-900 rounded-lg px-3 py-2 text-sm text-slate-400 focus:outline-none cursor-not-allowed transition"
+                className="w-full bg-[#040914]/40 border border-[#00f0ff]/10 rounded-lg px-3 py-2 text-xs font-mono text-slate-400 focus:outline-none cursor-not-allowed transition duration-200"
               />
             </div>
 
             <div>
               <label
                 htmlFor="workspace-level-select"
-                className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5"
+                className="block text-[10px] font-bold font-mono text-slate-400 uppercase tracking-wider mb-1.5"
               >
                 Diagram C4 Level
               </label>
@@ -406,7 +416,7 @@ export const PropertyPanel: React.FC = () => {
                 id="workspace-level-select"
                 value={schema.level}
                 onChange={e => updateSchemaLevel(e.target.value as any)}
-                className="w-full bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition cursor-pointer"
+                className="w-full bg-[#040914] border border-[#00f0ff]/25 focus:border-[#00f0ff] focus:shadow-[0_0_10px_rgba(0,240,255,0.15)] rounded-lg px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none transition duration-200 cursor-pointer"
               >
                 <option value="context">System Context</option>
                 <option value="container">Container Level</option>
@@ -416,7 +426,7 @@ export const PropertyPanel: React.FC = () => {
             </div>
 
             <div className="flex items-center justify-between border-t border-slate-900 pt-4">
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              <span className="text-[10px] font-bold font-mono text-slate-400 uppercase tracking-wider">
                 Show Test Components
               </span>
               <button
@@ -434,7 +444,7 @@ export const PropertyPanel: React.FC = () => {
             </div>
 
             <div className="border-t border-slate-900 pt-4">
-              <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+              <h4 className="text-[10px] font-bold font-mono text-[#00f0ff] uppercase tracking-wider mb-3">
                 Component Catalog
               </h4>
               <p className="text-xs text-slate-400 mb-3">
@@ -447,9 +457,9 @@ export const PropertyPanel: React.FC = () => {
                     <button
                       key={nt.type}
                       onClick={() => addNode(nt.type)}
-                      className="flex flex-col items-center gap-2 bg-slate-900/50 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-xl p-3 transition text-center"
+                      className="flex flex-col items-center gap-2 bg-[#040914]/40 hover:bg-[#061125]/80 border border-[#00f0ff]/10 hover:border-[#00f0ff]/40 rounded-xl p-3 transition text-center hover:shadow-[0_0_10px_rgba(0,240,255,0.15)] cursor-pointer group"
                     >
-                      <Icon className="w-5 h-5 text-brand-500" />
+                      <Icon className="w-5 h-5 text-[#00f0ff] filter drop-shadow-[0_0_4px_rgba(0,240,255,0.4)] group-hover:scale-105 transition" />
                       <span className="text-xs font-semibold text-slate-200">{nt.label}</span>
                     </button>
                   );
@@ -458,7 +468,7 @@ export const PropertyPanel: React.FC = () => {
             </div>
 
             <div className="border-t border-slate-900 pt-4">
-              <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+              <h4 className="text-[10px] font-bold font-mono text-[#00f0ff] uppercase tracking-wider mb-3">
                 Graph Validation
               </h4>
               {validationResult.isValid ? (

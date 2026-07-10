@@ -34,7 +34,6 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  // SVG strings for downloading/copying
   const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
   <defs>
     <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
@@ -67,7 +66,6 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
     URL.revokeObjectURL(url);
   };
 
-  // Sandbox State
   const [sandboxNodeType, setSandboxNodeType] = useState<
     'person' | 'software-system' | 'web-app' | 'database' | 'microservice'
   >('web-app');
@@ -79,7 +77,6 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
 
   return (
     <div className="fixed inset-0 z-[100] flex flex-col bg-[#040914]/98 blueprint-grid text-slate-100 overflow-y-auto animate-fade-in">
-      {/* HEADER SECTION */}
       <header className="border-b border-[#00f0ff]/20 bg-[#061125]/90 backdrop-blur-md sticky top-0 z-50 p-4 md:px-8 flex items-center justify-between shadow-lg shadow-black/30">
         <div className="flex items-center gap-3">
           <div className="p-1 border border-[#00f0ff]/40 rounded bg-cyan-950/20 shadow-[0_0_8px_rgba(0,240,255,0.2)]">
@@ -118,9 +115,7 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
         </button>
       </header>
 
-      {/* TABS CONTAINER */}
       <div className="max-w-7xl w-full mx-auto px-4 md:px-8 py-6 flex-1 flex flex-col md:flex-row gap-8">
-        {/* Sidebar Navigation */}
         <aside className="w-full md:w-64 shrink-0 flex flex-col space-y-1.5">
           <button
             onClick={() => setActiveTab('identity')}
@@ -198,9 +193,7 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
           </button>
         </aside>
 
-        {/* Content Viewer */}
         <main className="flex-1 bg-[#061125]/40 border border-[#00f0ff]/10 rounded-2xl p-6 md:p-8 backdrop-blur-sm min-h-[500px]">
-          {/* TAB 1: IDENTITY & GRID */}
           {activeTab === 'identity' && (
             <div className="space-y-6 animate-fade-in">
               <div className="border-b border-[#00f0ff]/10 pb-4">
@@ -260,7 +253,6 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
             </div>
           )}
 
-          {/* TAB 2: DESIGN TOKENS */}
           {activeTab === 'tokens' && (
             <div className="space-y-8 animate-fade-in">
               <div className="border-b border-[#00f0ff]/10 pb-4">
@@ -273,13 +265,11 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
                 </p>
               </div>
 
-              {/* Color Swatches Grid */}
               <div className="space-y-4">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
                   Color Palette
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {/* Cyan Glow */}
                   <div className="border border-[#00f0ff]/15 bg-[#061125]/30 rounded-xl p-3 flex flex-col space-y-3">
                     <div className="h-16 w-full rounded-lg bg-[#00f0ff] shadow-[0_0_12px_rgba(0,240,255,0.7)]" />
                     <div className="flex-1 flex flex-col justify-between">
@@ -306,7 +296,6 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
                     </div>
                   </div>
 
-                  {/* Blueprint Background */}
                   <div className="border border-[#00f0ff]/15 bg-[#061125]/30 rounded-xl p-3 flex flex-col space-y-3">
                     <div className="h-16 w-full rounded-lg bg-[#040914] border border-slate-900 shadow-inner" />
                     <div className="flex-1 flex flex-col justify-between">
@@ -333,7 +322,6 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
                     </div>
                   </div>
 
-                  {/* Slate Neutral */}
                   <div className="border border-[#00f0ff]/15 bg-[#061125]/30 rounded-xl p-3 flex flex-col space-y-3">
                     <div className="h-16 w-full rounded-lg bg-[#0f172a]" />
                     <div className="flex-1 flex flex-col justify-between">
@@ -360,7 +348,6 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
                     </div>
                   </div>
 
-                  {/* Glow Grid */}
                   <div className="border border-[#00f0ff]/15 bg-[#061125]/30 rounded-xl p-3 flex flex-col space-y-3">
                     <div className="h-16 w-full rounded-lg bg-[#0b2b3f]/30 border border-[#00f0ff]/20 shadow-inner" />
                     <div className="flex-1 flex flex-col justify-between">
@@ -389,13 +376,11 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
                 </div>
               </div>
 
-              {/* Typography Scale */}
               <div className="space-y-4">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
                   Typography Scale
                 </h3>
                 <div className="border border-[#00f0ff]/10 rounded-xl p-4 bg-[#040914]/40 divide-y divide-[#00f0ff]/5 space-y-4">
-                  {/* Font sans */}
                   <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 gap-2">
                     <div>
                       <div className="text-xs font-semibold text-slate-400 font-mono">
@@ -411,7 +396,7 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
                       letter-spacing: -0.02em
                     </div>
                   </div>
-                  {/* Font mono */}
+
                   <div className="flex flex-col md:flex-row md:items-center justify-between py-4 gap-2">
                     <div>
                       <div className="text-xs font-semibold text-slate-400 font-mono">
@@ -427,7 +412,7 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
                       font-weight: 500
                     </div>
                   </div>
-                  {/* Scale sizes */}
+
                   <div className="pt-4 space-y-3 font-sans">
                     <div className="flex items-baseline gap-4">
                       <span className="text-2xl font-extrabold text-white">Aa</span>
@@ -459,7 +444,6 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
             </div>
           )}
 
-          {/* TAB 3: ASSETS */}
           {activeTab === 'assets' && (
             <div className="space-y-6 animate-fade-in">
               <div className="border-b border-[#00f0ff]/10 pb-4">
@@ -473,7 +457,6 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Favicon SVG Box */}
                 <div className="border border-[#00f0ff]/10 rounded-xl p-4 bg-[#040914]/40 flex flex-col justify-between space-y-4">
                   <div>
                     <div className="flex items-center justify-between">
@@ -529,7 +512,6 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
                   </div>
                 </div>
 
-                {/* Drafting Grid Box */}
                 <div className="border border-[#00f0ff]/10 rounded-xl p-4 bg-[#040914]/40 flex flex-col justify-between space-y-4">
                   <div>
                     <div className="flex items-center justify-between">
@@ -566,7 +548,6 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
                 </div>
               </div>
 
-              {/* Blueprint Node Icons */}
               <div className="space-y-3 mt-4">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
                   Design System Schematic Icons
@@ -597,7 +578,6 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
             </div>
           )}
 
-          {/* TAB 4: UI COMPONENTS */}
           {activeTab === 'components' && (
             <div className="space-y-8 animate-fade-in max-h-[600px] overflow-y-auto pr-2">
               <div className="border-b border-[#00f0ff]/10 pb-4 sticky top-0 bg-[#061125]/90 backdrop-blur-md z-10">
@@ -610,7 +590,6 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
                 </p>
               </div>
 
-              {/* Buttons Row */}
               <div className="space-y-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
                   1. Action Buttons
@@ -630,7 +609,6 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
                 </div>
               </div>
 
-              {/* Cards / Panels */}
               <div className="space-y-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
                   2. Glassmorphic Blueprint Cards
@@ -672,7 +650,6 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
                 </div>
               </div>
 
-              {/* Badges and States */}
               <div className="space-y-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
                   3. Level Badges & Status Markers
@@ -693,7 +670,6 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
                 </div>
               </div>
 
-              {/* Forms / Text Inputs */}
               <div className="space-y-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
                   4. Terminal Form Inputs
@@ -724,7 +700,6 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
             </div>
           )}
 
-          {/* TAB 5: SANDBOX */}
           {activeTab === 'sandbox' && (
             <div className="space-y-6 animate-fade-in">
               <div className="border-b border-[#00f0ff]/10 pb-4">
@@ -885,10 +860,7 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
 
       {/* FOOTER SECTION */}
       <footer className="border-t border-[#00f0ff]/10 bg-[#061125]/90 backdrop-blur-md p-4 text-center text-[10px] text-slate-500 font-mono sticky bottom-0">
-        <div>
-          Designed by Antigravity AI Engine &copy; 2026. All Vector schematics are exported under
-          open-source MIT guidelines.
-        </div>
+        <div>Made with love.</div>
       </footer>
     </div>
   );

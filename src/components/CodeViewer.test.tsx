@@ -73,7 +73,7 @@ nodes:
 
     fireEvent.click(screen.getByRole('button', { name: /Apply Schema/i }));
 
-    expect(screen.getByRole('button', { name: /yaml/i })).toHaveClass('text-brand-100');
+    expect(screen.getByRole('button', { name: /yaml/i })).toHaveClass('text-[#00f0ff]');
     expect(useBlueprintStore.getState().schema.name).toBe('Imported System');
     expect(useBlueprintStore.getState().schema.nodes[0].id).toBe('custom-service');
   });

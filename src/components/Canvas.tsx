@@ -10,40 +10,24 @@ import {
 } from '@xyflow/react';
 import { useBlueprintStore } from '../store/store';
 import { BlueprintNode } from './BlueprintNode';
-import { Breadcrumbs } from './Breadcrumbs';
-import {
-  Download,
-  Upload,
-  AlertTriangle,
-  CheckCircle,
-  RefreshCcw,
-  Folder,
-  Layers,
-} from 'lucide-react';
+import { ActionControls } from './ActionControls';
+import { AlertTriangle } from 'lucide-react';
 
 export const Canvas: React.FC = () => {
   const {
     nodes,
     edges,
-    validationResult,
     onNodesChange,
     onEdgesChange,
     onConnect,
     selectNode,
-    initSchema,
-    saveSchema,
-    loadSchema,
     lastError,
     clearError,
     showTests,
     zoomIntoNode,
     zoomOut,
-    openWorkspaceDirectory,
-    isWorkspaceOpen,
-    saveActiveDiagram,
     loadedSystems,
     currentFilePath,
-    schema,
     selectSystem,
   } = useBlueprintStore();
 
@@ -81,30 +65,6 @@ export const Canvas: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [zoomOut]);
 
-  const handleSave = async () => {
-    if (isWorkspaceOpen) {
-      await saveActiveDiagram();
-    } else {
-      await saveSchema();
-    }
-  };
-
-  const handleLoad = async () => {
-    await loadSchema();
-  };
-
-  const handleClear = () => {
-    if (confirm('Clear the workspace and create a blank canvas?')) {
-      initSchema({
-        name: 'Empty Workspace',
-        version: '1.0.0',
-        level: 'container',
-        nodes: [],
-        dependencies: [],
-      });
-    }
-  };
-
   const filteredNodes = useMemo(() => {
     if (showTests) return nodes;
     return nodes.filter(n => !n.data.isTest);
@@ -136,22 +96,21 @@ export const Canvas: React.FC = () => {
         className="h-full"
       >
         <Background variant={BackgroundVariant.Dots} gap={24} size={1} color="#334155" />
-        <Controls position="bottom-right" />
+        <Controls position="top-right" />
 
-        {loadedSystems && loadedSystems.length > 0 && (
-          <Panel
-            position="bottom-right"
-            style={{ margin: 16, marginRight: 70 }}
-            className="flex items-center shadow-lg shadow-black/40 backdrop-blur-md"
-          >
-            <div className="flex items-center gap-2 bg-slate-950/90 border border-slate-900 px-3 py-1.5 rounded-xl text-xs">
-              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500">
+        <Panel
+          position="bottom-right"
+          className="m-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-slate-950/90 border border-slate-900 px-3.5 py-2 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md"
+        >
+          {loadedSystems && loadedSystems.length > 0 && (
+            <div className="flex items-center gap-2 bg-slate-900/40 border border-slate-850 px-2.5 py-1.5 rounded-lg text-xs shrink-0 select-none">
+              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500 hidden sm:inline">
                 System:
               </span>
               <select
                 value={currentFilePath}
                 onChange={e => selectSystem(e.target.value)}
-                className="bg-slate-900 border border-slate-850 text-slate-200 hover:text-slate-100 hover:border-slate-700 px-2.5 py-1 rounded-lg text-xs font-semibold focus:outline-none focus:border-brand-500 cursor-pointer transition duration-200"
+                className="bg-slate-950 border border-slate-850 text-slate-200 hover:text-slate-100 hover:border-slate-700 px-2 py-0.5 rounded-md text-xs font-semibold focus:outline-none focus:border-brand-500 cursor-pointer transition duration-200 max-w-[130px] truncate"
               >
                 {loadedSystems.map(sys => (
                   <option key={sys.path} value={sys.path}>
@@ -160,132 +119,30 @@ export const Canvas: React.FC = () => {
                 ))}
               </select>
             </div>
-          </Panel>
-        )}
-
-        <MiniMap
-          position="bottom-left"
-          bgColor="#0f172a"
-          nodeColor={n => {
-            if (n.type === 'blueprintNode') {
-              if (n.data?.type === 'relational-database') return '#06b6d4';
-              if (n.data?.type === 'event-broker') return '#a855f7';
-              if (n.data?.type === 'grpc-service') return '#3b82f6';
-              if (n.data?.type === 'serverless-function') return '#eab308';
-              if (n.data?.type === 'rest-api') return '#10b981';
-              if (n.data?.type === 'cache-store') return '#f97316';
-            }
-            return '#1e293b';
-          }}
-          maskColor="rgba(15, 23, 42, 0.6)"
-          className="border border-slate-800 rounded-lg overflow-hidden"
-          style={{ width: 120, height: 90 }}
-        />
-
-        <Panel
-          position="bottom-left"
-          style={{ margin: 16, marginLeft: 155 }}
-          className="flex items-center gap-2"
-        >
-          {/* Level Marker */}
-          <div className="flex items-center shadow-lg shadow-black/40 backdrop-blur-md">
-            <div
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-[11px] font-semibold ${
-                schema.level === 'context'
-                  ? 'bg-emerald-950/80 border-emerald-900/40 text-emerald-400'
-                  : schema.level === 'container'
-                    ? 'bg-blue-950/80 border-blue-900/40 text-blue-400'
-                    : schema.level === 'component'
-                      ? 'bg-purple-950/80 border-purple-900/40 text-purple-400'
-                      : 'bg-amber-950/80 border-amber-900/40 text-amber-400'
-              }`}
-            >
-              <Layers className="w-3.5 h-3.5" />
-              <span>
-                Level:{' '}
-                {schema.level
-                  ? schema.level.charAt(0).toUpperCase() + schema.level.slice(1)
-                  : 'Container'}
-              </span>
-            </div>
-          </div>
-
-          {/* Validation Status */}
-          <div className="flex items-center shadow-lg shadow-black/40 backdrop-blur-md">
-            {validationResult.isValid ? (
-              <div className="flex items-center gap-2 bg-emerald-950/80 border border-emerald-900/40 text-emerald-400 px-3.5 py-1.5 rounded-xl text-[11px] font-semibold">
-                <CheckCircle className="w-4 h-4" />
-                <span>Graph Valid</span>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2 bg-red-950/80 border border-red-900/40 text-red-400 px-3.5 py-1.5 rounded-xl text-[11px] font-semibold animate-pulse">
-                <AlertTriangle className="w-4 h-4" />
-                <span>Cycle Detected</span>
-              </div>
-            )}
-          </div>
+          )}
+          <ActionControls />
         </Panel>
 
-        <Panel position="top-left" className="m-4 flex items-center gap-2.5 max-w-[80%]">
-          <div className="flex items-center gap-2 bg-slate-950/90 border border-slate-900 px-3.5 py-2.5 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md shrink-0">
-            <img src="/favicon.svg" className="w-5 h-5 shrink-0" alt="Blueprint Logo" />
-            <span className="font-bold text-slate-100 tracking-wider text-[11px] uppercase font-mono">
-              blueprint
-            </span>
-          </div>
-          <Breadcrumbs />
-        </Panel>
-
-        <Panel position="top-right" className="m-4 flex items-center gap-3">
-          {/* Actions Bar */}
-          <div className="flex items-center gap-2 bg-slate-950/80 border border-slate-850 px-3 py-1.5 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md">
-            {isWorkspaceOpen ? (
-              <button
-                onClick={openWorkspaceDirectory}
-                className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-850 text-slate-300 hover:text-slate-100 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 transition"
-                title="Open another folder workspace"
-              >
-                <Folder className="w-3.5 h-3.5 text-brand-500" />
-                <span>Open Folder</span>
-              </button>
-            ) : (
-              <button
-                onClick={openWorkspaceDirectory}
-                className="flex items-center gap-1.5 bg-brand-600/15 border border-brand-500/30 text-brand-400 hover:bg-brand-600/30 px-3 py-1.5 rounded-lg text-xs font-semibold transition"
-                title="Open a local directory workspace"
-              >
-                <Folder className="w-3.5 h-3.5 text-brand-500" />
-                <span>Open Folder</span>
-              </button>
-            )}
-
-            <button
-              onClick={handleLoad}
-              className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-850 text-slate-300 hover:text-slate-100 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 transition"
-              title="Open single YAML from disk"
-            >
-              <Upload className="w-3.5 h-3.5" />
-              <span>Open File</span>
-            </button>
-
-            <button
-              onClick={handleSave}
-              className="flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-lg shadow-brand-600/20 transition"
-              title={isWorkspaceOpen ? 'Save diagram directly in folder' : 'Save YAML to disk'}
-            >
-              <Download className="w-3.5 h-3.5" />
-              <span>{isWorkspaceOpen ? 'Save' : 'Save Schema'}</span>
-            </button>
-
-            <button
-              onClick={handleClear}
-              className="p-1.5 rounded-lg bg-slate-900 hover:bg-red-950/20 text-slate-500 hover:text-red-400 border border-slate-800 hover:border-red-900/30 transition"
-              title="Clear canvas"
-            >
-              <RefreshCcw className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        </Panel>
+        <div className="hidden md:block">
+          <MiniMap
+            position="bottom-left"
+            bgColor="#0f172a"
+            nodeColor={n => {
+              if (n.type === 'blueprintNode') {
+                if (n.data?.type === 'relational-database') return '#06b6d4';
+                if (n.data?.type === 'event-broker') return '#a855f7';
+                if (n.data?.type === 'grpc-service') return '#3b82f6';
+                if (n.data?.type === 'serverless-function') return '#eab308';
+                if (n.data?.type === 'rest-api') return '#10b981';
+                if (n.data?.type === 'cache-store') return '#f97316';
+              }
+              return '#1e293b';
+            }}
+            maskColor="rgba(15, 23, 42, 0.6)"
+            className="border border-slate-800 rounded-lg overflow-hidden"
+            style={{ width: 120, height: 90 }}
+          />
+        </div>
 
         {lastError && (
           <Panel position="top-center" className="m-4 max-w-md w-full animate-bounce-short">
