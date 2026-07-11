@@ -10,68 +10,65 @@ Blueprint is a local-first, bi-directionally synchronized visual diagramming can
 
 ![Blueprint Interface Tour & Catalog](./screenshots/1-panels-expanded.png)
 
----
+A front-end visual canvas web application client. Double-click boundary nodes to drill down into C4 container/component levels and edit schemas side-by-side with code-viewer synchronization.
 
-## 💻 The Blueprint CLI Product
-
-Blueprint includes a powerful command-line interface (CLI) to automatically generate system diagrams directly from your existing application codebases.
-
-The CLI works as an **AST Analyzer**. It parses your local source code, extracts components and dependency relationships, calculates an optimal coordinate layout using Dagre, and outputs a valid system schema YAML file inside the `blueprints/` directory.
-
-### Running the Analyzer
-
-To scan your codebase, run the following command in the repository root:
-
-```bash
-pnpm blueprint
-```
-
-### CLI Execution Modes
-
-1. **Interactive Mode (Default):**
-   When run inside an interactive terminal, the CLI will walk you through a step-by-step prompt menu powered by `@clack/prompts`:
-   - Select your preferred parser (e.g., `ts-morph` or `tree-sitter`).
-   - Define the glob pattern to scan (supporting Tab autocompletion).
-   - Define the output directory path.
-
-2. **Headless / CI Mode:**
-   The CLI automatically switches to headless mode when executed in a non-TTY terminal, standard CI environments, or when arguments are supplied directly:
-   ```bash
-   pnpm blueprint --headless --parser=ts-morph --glob="src/**/*.ts" --output="blueprints"
-   ```
-
-### Command Options & Flags
-
-- `--headless`: Explicitly disables interactive console prompts.
-- `--parser=<ts-morph | tree-sitter>`:
-  - `ts-morph` (default): Fast, lightweight parsing for TypeScript-focused projects.
-  - `tree-sitter`: High-performance parsing supporting multi-language syntaxes.
-- `--glob="<pattern>"`: The directory or glob matching query to scan (e.g., `**/*.{ts,tsx}`).
-- `--output="<path>"`: The folder to store generated YAML blueprint files. You can also configure this by setting the `BLUEPRINT_OUTPUT_DIR` environment variable.
-
-### Compiling to a Standalone Binary
-
-You can compile the analyzer CLI tool into a single standalone executable binary using Bun:
-
-```bash
-pnpm blueprint:compile
-```
-
-This generates `dist/blueprint-cli` which can be executed directly:
-
-```bash
-./dist/blueprint-cli --headless --parser=ts-morph
-```
-
-> [!NOTE]
-> The standalone binary requires tree-sitter `.wasm` query files (found in `node_modules/tree-sitter-wasms/out/`) in either the same directory as the executable, or in the target project's `node_modules` directory for parser support.
+👉 **Learn more:** [packages/app README](./packages/app/README.md)
 
 ---
 
-## 📖 Detailed Documentation
+## 💻 The Blueprint CLI Tool
 
-Explore these dedicated files to learn more about using, designing, or contributing to Blueprint:
+![Blueprint CLI Interactive Prompts](./screenshots/cli.png)
 
-- **[E2E Journeys & Interface Tour](./docs/journeys.md):** Screenshots and workflows detailing UI panels, container navigation, and visual editing.
-- **[System Architecture & Security](./docs/architecture.md):** Deep-dive into domain layers, state store slices, outbound ports, Zod schemas, and circular dependency detection algorithms.
-- **[Setup & Local Development](./docs/setup.md):** Guide to configuring Mise, installing package dependencies, executing tests (Vitest/Playwright), and configuring Git pre-commit validation hooks.
+A powerful command-line static analysis (AST) code scanner. It parses source files, identifies components and dependency references, formats an optimal coordinate layout using Dagre, and outputs a valid system schema YAML configuration.
+
+👉 **Learn more:** [packages/cli README](./packages/cli/README.md)
+
+---
+
+## 📦 Workspace Package Catalog
+
+This repository is organized as a `pnpm` monorepo workspace:
+
+| Package               | Path                               | Description                                                         |
+| :-------------------- | :--------------------------------- | :------------------------------------------------------------------ |
+| **`@blueprint/app`**  | [packages/app/](./packages/app/)   | Front-end diagramming client (Vite, React Flow, Playwright E2E)     |
+| **`@blueprint/cli`**  | [packages/cli/](./packages/cli/)   | CLI static analysis AST scanner & standalone binary generator       |
+| **`@blueprint/core`** | [packages/core/](./packages/core/) | Shared zero-dependency domain models, validation schemas, and rules |
+
+---
+
+## 🛠️ Global Workspace Commands
+
+Run these scripts from the repository root directory to manage the workspace:
+
+```bash
+# Start the visual app dev server
+pnpm dev
+
+# Run the analyzer CLI tool interactively
+pnpm dev:cli
+
+# Compile production assets and standalone CLI binaries
+pnpm build
+
+# Run formatting checks and eslint/oxlint linters
+pnpm format:check
+pnpm lint
+
+# Execute all unit tests recursively (in Node/JSDOM contexts)
+pnpm test
+
+# Run all Playwright E2E integration tests
+pnpm test:e2e
+```
+
+---
+
+## 📖 Deep-Dive Documentation
+
+Explore these files under the `docs/` directory to learn more:
+
+- **[E2E Journeys & Interface Tour](./docs/journeys.md):** Detailed step-by-step guides, screenshots, and C4 visualization tours.
+- **[System Architecture & Security](./docs/architecture.md):** Hexagonal structure layers, Zustand state store slices, schema validation rules, and cyclic dependency checkers.
+- **[Setup & Local Development](./docs/setup.md):** Complete guide to tools installation (Mise), compiling standalone executables, and pre-commit Git validation hooks.

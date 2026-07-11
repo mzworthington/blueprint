@@ -7,6 +7,7 @@ export default defineConfig({
   base: '/',
   plugins: [react(), tailwindcss()],
   test: {
+    name: 'app',
     environment: 'jsdom',
     setupFiles: './src/setupTests.ts',
     exclude: ['**/node_modules/**', '**/dist/**', '**/tests/**'],
