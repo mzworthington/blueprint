@@ -1,0 +1,310 @@
+name: Cli - Container Level
+version: 1.0.0
+level: container
+nodes:
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client Host
+    properties:
+      description: Vite app hosting server.
+      technology: Vite + React
+    x: 260
+    'y': 50
+  - id: core
+    type: background-worker
+    name: core
+    properties:
+      description: Core domain services for core
+      technology: TypeScript
+    c4Ref: ./core-components.yaml
+    x: 1315
+    'y': 370
+  - id: blueprint_ts
+    type: background-worker
+    name: blueprint.ts
+    properties:
+      description: Core domain services for blueprint.ts
+      technology: TypeScript
+    c4Ref: ./blueprint_ts-components.yaml
+    x: 720
+    'y': 50
+  - id: picocolors
+    type: background-worker
+    name: picocolors
+    properties:
+      description: Core domain services for picocolors
+      technology: TypeScript
+    c4Ref: ./picocolors-components.yaml
+    x: 140
+    'y': 690
+  - id: v3
+    type: background-worker
+    name: v3
+    properties:
+      description: Core domain services for v3
+      technology: TypeScript
+    c4Ref: ./v3-components.yaml
+    x: 1345
+    'y': 1010
+  - id: web-tree-sitter
+    type: background-worker
+    name: web-tree-sitter
+    properties:
+      description: Core domain services for web-tree-sitter
+      technology: TypeScript
+    c4Ref: ./web-tree-sitter-components.yaml
+    x: 1180
+    'y': 50
+  - id: mini
+    type: background-worker
+    name: mini
+    properties:
+      description: Core domain services for mini
+      technology: TypeScript
+    c4Ref: ./mini-components.yaml
+    x: 2695
+    'y': 370
+  - id: node
+    type: background-worker
+    name: node
+    properties:
+      description: Core domain services for node
+      technology: TypeScript
+    c4Ref: ./node-components.yaml
+    x: 1640
+    'y': 50
+  - id: ts5_6
+    type: background-worker
+    name: ts5.6
+    properties:
+      description: Core domain services for ts5.6
+      technology: TypeScript
+    c4Ref: ./ts5_6-components.yaml
+    x: 2100
+    'y': 50
+  - id: web-globals
+    type: background-worker
+    name: web-globals
+    properties:
+      description: Core domain services for web-globals
+      technology: TypeScript
+    c4Ref: ./web-globals-components.yaml
+    x: 2560
+    'y': 50
+  - id: dist
+    type: background-worker
+    name: dist
+    properties:
+      description: Core domain services for dist
+      technology: TypeScript
+    c4Ref: ./dist-components.yaml
+    x: 3020
+    'y': 50
+  - id: lib
+    type: background-worker
+    name: lib
+    properties:
+      description: Core domain services for lib
+      technology: TypeScript
+    c4Ref: ./lib-components.yaml
+    x: 3480
+    'y': 50
+  - id: analysis
+    type: background-worker
+    name: analysis
+    properties:
+      description: Core domain services for analysis
+      technology: TypeScript
+    c4Ref: ./analysis-components.yaml
+    x: 855
+    'y': 370
+  - id: models
+    type: background-worker
+    name: models
+    properties:
+      description: Core domain services for models
+      technology: TypeScript
+    c4Ref: ./models-components.yaml
+    x: 1775
+    'y': 370
+  - id: v4
+    type: background-worker
+    name: v4
+    properties:
+      description: Core domain services for v4
+      technology: TypeScript
+    c4Ref: ./v4-components.yaml
+    x: 2355
+    'y': 690
+  - id: assert
+    type: background-worker
+    name: assert
+    properties:
+      description: Core domain services for assert
+      technology: TypeScript
+    c4Ref: ./assert-components.yaml
+    x: 3940
+    'y': 50
+  - id: timers
+    type: background-worker
+    name: timers
+    properties:
+      description: Core domain services for timers
+      technology: TypeScript
+    c4Ref: ./timers-components.yaml
+    x: 4400
+    'y': 50
+  - id: path
+    type: background-worker
+    name: path
+    properties:
+      description: Core domain services for path
+      technology: TypeScript
+    c4Ref: ./path-components.yaml
+    x: 4860
+    'y': 50
+  - id: stream
+    type: background-worker
+    name: stream
+    properties:
+      description: Core domain services for stream
+      technology: TypeScript
+    c4Ref: ./stream-components.yaml
+    x: 5320
+    'y': 50
+  - id: zlib
+    type: background-worker
+    name: zlib
+    properties:
+      description: Core domain services for zlib
+      technology: TypeScript
+    c4Ref: ./zlib-components.yaml
+    x: 5780
+    'y': 50
+  - id: test
+    type: background-worker
+    name: test
+    properties:
+      description: Core domain services for test
+      technology: TypeScript
+    c4Ref: ./test-components.yaml
+    x: 6240
+    'y': 50
+  - id: rules
+    type: background-worker
+    name: rules
+    properties:
+      description: Core domain services for rules
+      technology: TypeScript
+    c4Ref: ./rules-components.yaml
+    x: 720
+    'y': 690
+  - id: compatibility
+    type: background-worker
+    name: compatibility
+    properties:
+      description: Core domain services for compatibility
+      technology: TypeScript
+    c4Ref: ./compatibility-components.yaml
+    x: 6700
+    'y': 50
+  - id: helpers
+    type: background-worker
+    name: helpers
+    properties:
+      description: Core domain services for helpers
+      technology: TypeScript
+    c4Ref: ./helpers-components.yaml
+    x: 2235
+    'y': 370
+  - id: locales
+    type: background-worker
+    name: locales
+    properties:
+      description: Core domain services for locales
+      technology: TypeScript
+    c4Ref: ./locales-components.yaml
+    x: 3615
+    'y': 370
+  - id: classic
+    type: background-worker
+    name: classic
+    properties:
+      description: Core domain services for classic
+      technology: TypeScript
+    c4Ref: ./classic-components.yaml
+    x: 3155
+    'y': 370
+dependencies:
+  - from: core
+    to: v4
+    type: direct-call
+    description: Inter-container request / connection
+  - from: blueprint_ts
+    to: rules
+    type: direct-call
+    description: Inter-container request / connection
+  - from: blueprint_ts
+    to: analysis
+    type: direct-call
+    description: Inter-container request / connection
+  - from: picocolors
+    to: v3
+    type: direct-call
+    description: Inter-container request / connection
+  - from: analysis
+    to: v4
+    type: direct-call
+    description: Inter-container request / connection
+  - from: analysis
+    to: rules
+    type: direct-call
+    description: Inter-container request / connection
+  - from: analysis
+    to: v3
+    type: direct-call
+    description: Inter-container request / connection
+  - from: models
+    to: v3
+    type: direct-call
+    description: Inter-container request / connection
+  - from: models
+    to: v4
+    type: direct-call
+    description: Inter-container request / connection
+  - from: mini
+    to: v4
+    type: direct-call
+    description: Inter-container request / connection
+  - from: core
+    to: v3
+    type: direct-call
+    description: Inter-container request / connection
+  - from: v3
+    to: v4
+    type: direct-call
+    description: Inter-container request / connection
+  - from: v4
+    to: v3
+    type: direct-call
+    description: Inter-container request / connection
+  - from: helpers
+    to: v3
+    type: direct-call
+    description: Inter-container request / connection
+  - from: helpers
+    to: v4
+    type: direct-call
+    description: Inter-container request / connection
+  - from: locales
+    to: v3
+    type: direct-call
+    description: Inter-container request / connection
+  - from: classic
+    to: v4
+    type: direct-call
+    description: Inter-container request / connection
+  - from: locales
+    to: v4
+    type: direct-call
+    description: Inter-container request / connection

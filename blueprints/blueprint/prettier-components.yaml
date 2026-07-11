@@ -1,0 +1,31 @@
+name: Blueprint - prettier Components
+version: 1.0.0
+level: component
+nodes:
+  - id: standalone_d
+    type: background-worker
+    name: standalone.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/prettier/standalone.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: index
+    type: background-worker
+    name: index Service (v4)
+    isTest: false
+    properties:
+      filepath: packages/cli/node_modules/@blueprint/core/node_modules/zod/src/v4/mini/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+dependencies:
+  - from: standalone_d
+    to: index
+    type: direct-call
+    description: Executes local class methods / functions

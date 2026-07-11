@@ -1,0 +1,72 @@
+name: Blueprint - session Components
+version: 1.0.0
+level: component
+nodes:
+  - id: build-maps_d
+    type: background-worker
+    name: build-maps.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/knip/dist/session/build-maps.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: file-descriptor_d
+    type: background-worker
+    name: file-descriptor.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/knip/dist/session/file-descriptor.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: package-json-descriptor_d
+    type: background-worker
+    name: package-json-descriptor.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/knip/dist/session/package-json-descriptor.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: session_d
+    type: background-worker
+    name: session.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/knip/dist/session/session.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1520
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (v3)
+    isTest: false
+    properties:
+      filepath: packages/cli/node_modules/@blueprint/core/node_modules/zod/src/v3/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 370
+dependencies:
+  - from: build-maps_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: file-descriptor_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: session_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

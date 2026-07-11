@@ -1,0 +1,42 @@
+name: Blueprint - test Components
+version: 1.0.0
+level: component
+nodes:
+  - id: reporters_d
+    type: background-worker
+    name: reporters.d Service
+    isTest: false
+    properties:
+      filepath: packages/cli/node_modules/@types/node/test/reporters.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: reporter_d
+    type: background-worker
+    name: reporter.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/@playwright/test/reporter.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: mocker
+    type: background-worker
+    name: Mocker Service (v3)
+    isTest: false
+    properties:
+      filepath: packages/cli/node_modules/@blueprint/core/node_modules/zod/src/v3/tests/Mocker.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+dependencies:
+  - from: reporters_d
+    to: mocker
+    type: direct-call
+    description: Executes local class methods / functions

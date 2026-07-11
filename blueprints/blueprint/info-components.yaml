@@ -1,0 +1,113 @@
+name: Blueprint - info Components
+version: 1.0.0
+level: component
+nodes:
+  - id: info_spec_d
+    type: background-worker
+    name: info.spec.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/info/info.spec.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: infodb_d
+    type: background-worker
+    name: infoDb.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/info/infoDb.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: infodetector_d
+    type: background-worker
+    name: infoDetector.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/info/infoDetector.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: infodiagram_d
+    type: background-worker
+    name: infoDiagram.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/info/infoDiagram.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1520
+    'y': 50
+  - id: infoparser_d
+    type: background-worker
+    name: infoParser.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/info/infoParser.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1980
+    'y': 50
+  - id: inforenderer_d
+    type: background-worker
+    name: infoRenderer.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/info/infoRenderer.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2440
+    'y': 50
+  - id: infotypes_d
+    type: background-worker
+    name: infoTypes.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/info/infoTypes.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2900
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (v3)
+    isTest: false
+    properties:
+      filepath: packages/cli/node_modules/@blueprint/core/node_modules/zod/src/v3/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 370
+dependencies:
+  - from: infodetector_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: infodiagram_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: infoparser_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: inforenderer_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: infotypes_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

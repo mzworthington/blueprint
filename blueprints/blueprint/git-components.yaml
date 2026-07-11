@@ -1,0 +1,113 @@
+name: Blueprint - git Components
+version: 1.0.0
+level: component
+nodes:
+  - id: gitgraph_spec_d
+    type: background-worker
+    name: gitGraph.spec.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/git/gitGraph.spec.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: gitgraphast_d
+    type: background-worker
+    name: gitGraphAst.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/git/gitGraphAst.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: gitgraphdetector_d
+    type: background-worker
+    name: gitGraphDetector.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/git/gitGraphDetector.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: gitgraphdiagram_d
+    type: background-worker
+    name: gitGraphDiagram.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/git/gitGraphDiagram.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1520
+    'y': 50
+  - id: gitgraphparser_d
+    type: background-worker
+    name: gitGraphParser.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/git/gitGraphParser.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1980
+    'y': 50
+  - id: gitgraphrenderer_d
+    type: background-worker
+    name: gitGraphRenderer.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/git/gitGraphRenderer.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2440
+    'y': 50
+  - id: gitgraphtypes_d
+    type: background-worker
+    name: gitGraphTypes.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/git/gitGraphTypes.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2900
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (v3)
+    isTest: false
+    properties:
+      filepath: packages/cli/node_modules/@blueprint/core/node_modules/zod/src/v3/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 370
+dependencies:
+  - from: gitgraphdetector_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitgraphdiagram_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitgraphparser_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitgraphrenderer_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitgraphtypes_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

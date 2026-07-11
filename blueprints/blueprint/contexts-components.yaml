@@ -1,0 +1,55 @@
+name: Blueprint - contexts Components
+version: 1.0.0
+level: component
+nodes:
+  - id: handleconfigcontext_d
+    type: gateway-api
+    name: HandleConfigContext.d UI Component
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/@xyflow/react/dist/umd/contexts/HandleConfigContext.d.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 1060
+    'y': 370
+  - id: nodeidcontext_d
+    type: background-worker
+    name: NodeIdContext.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/@xyflow/react/dist/umd/contexts/NodeIdContext.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: storecontext_d
+    type: background-worker
+    name: StoreContext.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/@xyflow/react/dist/umd/contexts/StoreContext.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 1060
+    'y': 50
+dependencies:
+  - from: frontend-client
+    to: handleconfigcontext_d
+    type: direct-call
+    description: Renders HandleConfigContext.d layout component
+  - from: frontend-client
+    to: handleconfigcontext_d
+    type: direct-call
+    description: Renders HandleConfigContext.d layout component

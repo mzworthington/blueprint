@@ -1,0 +1,113 @@
+name: Blueprint - compilers Components
+version: 1.0.0
+level: component
+nodes:
+  - id: compilers_d
+    type: background-worker
+    name: compilers.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/knip/dist/compilers/compilers.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: less_d
+    type: background-worker
+    name: less.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/knip/dist/compilers/less.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: mdx_d
+    type: background-worker
+    name: mdx.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/knip/dist/compilers/mdx.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: scss_d
+    type: background-worker
+    name: scss.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/knip/dist/compilers/scss.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1520
+    'y': 50
+  - id: shared_d
+    type: background-worker
+    name: shared.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/knip/dist/compilers/shared.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1980
+    'y': 50
+  - id: style-preprocessors_d
+    type: background-worker
+    name: style-preprocessors.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/knip/dist/compilers/style-preprocessors.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2440
+    'y': 50
+  - id: stylus_d
+    type: background-worker
+    name: stylus.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/knip/dist/compilers/stylus.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2900
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (v3)
+    isTest: false
+    properties:
+      filepath: packages/cli/node_modules/@blueprint/core/node_modules/zod/src/v3/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 370
+dependencies:
+  - from: compilers_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: less_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: scss_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: style-preprocessors_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: stylus_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

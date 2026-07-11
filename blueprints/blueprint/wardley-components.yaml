@@ -1,0 +1,142 @@
+name: Blueprint - wardley Components
+version: 1.0.0
+level: component
+nodes:
+  - id: styles_d
+    type: background-worker
+    name: styles.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/wardley/styles.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: wardleybuilder_d
+    type: background-worker
+    name: wardleyBuilder.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/wardley/wardleyBuilder.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 50
+  - id: wardleybuilder_spec_d
+    type: background-worker
+    name: wardleyBuilder.spec.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/wardley/wardleyBuilder.spec.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 50
+  - id: wardleydb_d
+    type: background-worker
+    name: wardleyDb.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/wardley/wardleyDb.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1520
+    'y': 50
+  - id: wardleydetector_d
+    type: background-worker
+    name: wardleyDetector.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/wardley/wardleyDetector.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1980
+    'y': 50
+  - id: wardleydiagram_d
+    type: background-worker
+    name: wardleyDiagram.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/wardley/wardleyDiagram.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2440
+    'y': 50
+  - id: wardleyparser_d
+    type: background-worker
+    name: wardleyParser.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/wardley/wardleyParser.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2900
+    'y': 50
+  - id: wardleyparser_spec_d
+    type: background-worker
+    name: wardleyParser.spec.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/wardley/wardleyParser.spec.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3360
+    'y': 50
+  - id: wardleyrenderer_d
+    type: background-worker
+    name: wardleyRenderer.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/wardley/wardleyRenderer.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3820
+    'y': 50
+  - id: wardleytypes_d
+    type: background-worker
+    name: wardleyTypes.d Service
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/mermaid/dist/diagrams/wardley/wardleyTypes.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 4280
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (v3)
+    isTest: false
+    properties:
+      filepath: packages/cli/node_modules/@blueprint/core/node_modules/zod/src/v3/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2210
+    'y': 370
+dependencies:
+  - from: styles_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: wardleydetector_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: wardleydiagram_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: wardleyparser_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

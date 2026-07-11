@@ -1,0 +1,44 @@
+name: Blueprint - lucide-react Components
+version: 1.0.0
+level: component
+nodes:
+  - id: dynamic_d
+    type: gateway-api
+    name: dynamic.d UI Component
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/lucide-react/dynamic.d.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 140
+    'y': 370
+  - id: dynamiciconimports_d
+    type: gateway-api
+    name: dynamicIconImports.d UI Component
+    isTest: false
+    properties:
+      filepath: packages/app/node_modules/lucide-react/dynamicIconImports.d.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 600
+    'y': 370
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 370
+    'y': 50
+dependencies:
+  - from: frontend-client
+    to: dynamic_d
+    type: direct-call
+    description: Renders dynamic.d layout component
+  - from: frontend-client
+    to: dynamiciconimports_d
+    type: direct-call
+    description: Renders dynamicIconImports.d layout component

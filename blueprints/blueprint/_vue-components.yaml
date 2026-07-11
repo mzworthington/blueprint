@@ -1,0 +1,31 @@
+name: Blueprint - _vue Components
+version: 1.0.0
+level: component
+nodes:
+  - id: auto-import_d
+    type: background-worker
+    name: auto-import.d Service
+    isTest: false
+    properties:
+      filepath: node_modules/knip/dist/plugins/_vue/auto-import.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (v3)
+    isTest: false
+    properties:
+      filepath: packages/cli/node_modules/@blueprint/core/node_modules/zod/src/v3/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+dependencies:
+  - from: auto-import_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
