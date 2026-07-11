@@ -4,7 +4,7 @@ import * as path from 'path';
 
 test.describe('Blueprint E2E Journeys', () => {
   test.beforeAll(async () => {
-    const screenshotDir = path.join(process.cwd(), '../../screenshots');
+    const screenshotDir = path.join(process.cwd(), '../../docs/screenshots');
     if (!fs.existsSync(screenshotDir)) {
       fs.mkdirSync(screenshotDir, { recursive: true });
     }
@@ -32,7 +32,7 @@ test.describe('Blueprint E2E Journeys', () => {
     await expect(rightPanel).not.toHaveClass(/w-0/);
 
     // Take screenshot of panels expanded
-    await page.screenshot({ path: '../../screenshots/1-panels-expanded.png' });
+    await page.screenshot({ path: '../../docs/screenshots/1-panels-expanded.png' });
 
     // Collapse Panels again
     await leftPanelButton.click();
@@ -41,7 +41,7 @@ test.describe('Blueprint E2E Journeys', () => {
     await rightPanelButton.click();
     await expect(rightPanel).toHaveClass(/w-0/);
 
-    await page.screenshot({ path: '../../screenshots/2-panels-collapsed.png' });
+    await page.screenshot({ path: '../../docs/screenshots/2-panels-collapsed.png' });
   });
 
   test('Visual C4 Navigation (Zoom In / Zoom Out / URL Routing)', async ({ page }) => {
@@ -54,7 +54,7 @@ test.describe('Blueprint E2E Journeys', () => {
     );
     await expect(page.locator('#workspace-slug-input')).toHaveValue('testproject-container-level');
 
-    await page.screenshot({ path: '../../screenshots/3-container-level.png' });
+    await page.screenshot({ path: '../../docs/screenshots/3-container-level.png' });
 
     const appShellNode = page
       .locator('.react-flow__node', { hasText: 'Application Shell' })
@@ -71,7 +71,7 @@ test.describe('Blueprint E2E Journeys', () => {
     );
     expect(page.url()).toContain('/workspace/testproject-application-shell-components');
 
-    await page.screenshot({ path: '../../screenshots/4-zoomed-in-components.png' });
+    await page.screenshot({ path: '../../docs/screenshots/4-zoomed-in-components.png' });
 
     await page.keyboard.press('Escape');
 
@@ -81,6 +81,6 @@ test.describe('Blueprint E2E Journeys', () => {
     await expect(page.locator('#workspace-slug-input')).toHaveValue('testproject-container-level');
     expect(page.url()).toContain('/workspace/testproject-container-level');
 
-    await page.screenshot({ path: '../../screenshots/5-zoomed-back-out.png' });
+    await page.screenshot({ path: '../../docs/screenshots/5-zoomed-back-out.png' });
   });
 });

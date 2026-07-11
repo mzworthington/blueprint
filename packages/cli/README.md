@@ -1,6 +1,6 @@
 # `@blueprint/cli` — Command Line AST Analyzer
 
-![Blueprint CLI Interactive Prompts](../../screenshots/cli.png)
+![Blueprint CLI Interactive Prompts](../../docs/screenshots/cli.png)
 
 The Blueprint CLI tool scans local codebases, extracts module components and dependencies using static analysis (AST parsing), computes an optimal coordinate layout using Dagre, and outputs a valid system schema YAML file inside the `blueprints/` directory.
 

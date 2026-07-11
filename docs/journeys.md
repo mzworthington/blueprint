@@ -10,25 +10,25 @@ This page walks you through the core visual components and typical end-to-end (E
 
 Shows the default view with sidebar panels expanded, exposing properties and the active catalog components.
 
-![Expanded Workspace Properties & Catalog](../screenshots/1-panels-expanded.png)
+![Expanded Workspace Properties & Catalog](./screenshots/1-panels-expanded.png)
 
 ### 2. Clean Diagram Canvas View
 
 Collapses the panels to present a distraction-free, maximized view of the diagram canvas.
 
-![Clean Diagram Canvas View](../screenshots/2-panels-collapsed.png)
+![Clean Diagram Canvas View](./screenshots/2-panels-collapsed.png)
 
 ### 3. Hierarchical C4 Container Level
 
 Visualizes container relationships and boundaries at the C4 Container level of abstraction.
 
-![Hierarchical C4 Container Level](../screenshots/3-container-level.png)
+![Hierarchical C4 Container Level](./screenshots/3-container-level.png)
 
 ### 4. Recursive Zoom-In Components
 
 Allows designers to inspect internal details of components by double-clicking nodes that reference a sub-diagram (`c4Ref`).
 
-![Recursive Zoom-In Components](../screenshots/4-zoomed-in-components.png)
+![Recursive Zoom-In Components](./screenshots/4-zoomed-in-components.png)
 
 ---
 

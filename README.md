@@ -8,7 +8,7 @@ Blueprint is a local-first, bi-directionally synchronized visual diagramming can
 
 ## 📸 The Blueprint App
 
-![Blueprint Interface Tour & Catalog](./screenshots/1-panels-expanded.png)
+![Blueprint Interface Tour & Catalog](./docs/screenshots/1-panels-expanded.png)
 
 A front-end visual canvas web application client. Double-click boundary nodes to drill down into C4 container/component levels and edit schemas side-by-side with code-viewer synchronization.
 
@@ -18,7 +18,7 @@ A front-end visual canvas web application client. Double-click boundary nodes to
 
 ## 💻 The Blueprint CLI Tool
 
-![Blueprint CLI Interactive Prompts](./screenshots/cli.png)
+![Blueprint CLI Interactive Prompts](./docs/screenshots/cli.png)
 
 A powerful command-line static analysis (AST) code scanner. It parses source files, identifies components and dependency references, formats an optimal coordinate layout using Dagre, and outputs a valid system schema YAML configuration.
 
