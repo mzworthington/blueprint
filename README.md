@@ -6,7 +6,7 @@ Blueprint is a local-first, bi-directionally synchronized visual diagramming can
 
 ---
 
-## 📸 The Blureprint App
+## 📸 The Blueprint App
 
 ![Blueprint Interface Tour & Catalog](./screenshots/1-panels-expanded.png)
 
