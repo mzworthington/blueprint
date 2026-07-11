@@ -6,7 +6,7 @@ function App() {
   return (
     <Switch>
       <Route path="/design-system" component={DesignSystemPage} />
-      <Route path="/workspace/:slug" component={WorkspacePage} />
+      <Route path="/workspace/*" component={WorkspacePage} />
       <Route path="/" component={WorkspacePage} />
       <Route component={WorkspacePage} />
     </Switch>

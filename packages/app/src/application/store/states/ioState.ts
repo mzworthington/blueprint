@@ -9,8 +9,17 @@ import {
   noopLogger,
 } from '@blueprint/core';
 import type { WorkspaceManifest } from '@blueprint/core';
-import { parseSchemaFromYaml } from '@blueprint/core';
-import { getClosestManifest, getFileName, resolveWorkspaceManifestState } from '@blueprint/core';
+import {
+  parseSchemaFromYaml,
+  getClosestManifest,
+  getFileName,
+  resolveWorkspaceManifestState,
+  resolveWorkspaceEntityRefs,
+  getSystemIdFromPath,
+  isEntityRef,
+  getSchemaEntityRef,
+} from '@blueprint/core';
+import { saveBaselineSchema, saveWorkingSchema } from '../../../infrastructure/db/db';
 
 export interface IoState {
   fileSystemPort: FileSystemPort;
@@ -151,13 +160,25 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
         throw new Error('No valid blueprint schemas found in selected directory');
       }
 
-      let firstSystem = nextLoadedSystems[0];
+      const resolved = resolveWorkspaceEntityRefs(nextLoadedSystems);
+      const resolvedSystems = nextLoadedSystems.map(sys => ({
+        ...sys,
+        schema: resolved.schemas[sys.path] || sys.schema,
+      }));
+
+      let firstSystem = resolvedSystems[0];
       const initialManifest = getClosestManifest(firstSystem.path, nextLoadedManifests);
       if (initialManifest?.manifest.root) {
-        const resolvedRootName = getFileName(initialManifest.manifest.root);
-        const foundRoot = nextLoadedSystems.find(
-          s => s.path === initialManifest.manifest.root || s.path === resolvedRootName
-        );
+        const rootRef = initialManifest.manifest.root;
+        const foundRoot = resolvedSystems.find(s => {
+          if (isEntityRef(rootRef)) {
+            const schemaRef = getSchemaEntityRef(s.schema, s.path);
+            return schemaRef === rootRef;
+          } else {
+            const resolvedRootName = getFileName(rootRef);
+            return s.path === rootRef || s.path === resolvedRootName;
+          }
+        });
         if (foundRoot) {
           firstSystem = foundRoot;
         }
@@ -165,11 +186,20 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
 
       const manifestState = resolveWorkspaceManifestState(firstSystem.path, nextLoadedManifests);
 
+      // Seed baseline and working database tables in background asynchronously
+      resolvedSystems.forEach(sys => {
+        const sysId = getSystemIdFromPath(sys.path);
+        const fileRefMap = resolved.nodeRefMap[sys.path] || {};
+        saveBaselineSchema(sys.path, sys.schema, sysId, fileRefMap).catch(() => {});
+        saveWorkingSchema(sys.path, sys.schema, sysId, fileRefMap).catch(() => {});
+      });
+
       set({
         isWorkspaceOpen: true,
         workspaceName: workspacePort.getDirectoryName(),
         loadedManifests: nextLoadedManifests,
-        loadedSystems: nextLoadedSystems,
+        loadedSystems: resolvedSystems,
+        nodeRefMap: resolved.nodeRefMap,
         currentFilePath: firstSystem.path,
         navigationStack: [],
         ...manifestState,
@@ -184,7 +214,15 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
   },
 
   saveActiveDiagram: async () => {
-    const { yamlCode, currentFilePath, workspacePort, isWorkspaceOpen, logger } = get();
+    const {
+      yamlCode,
+      schema,
+      nodeRefMap,
+      currentFilePath,
+      workspacePort,
+      isWorkspaceOpen,
+      logger,
+    } = get();
     if (!isWorkspaceOpen) {
       return get().saveSchema();
     }
@@ -194,6 +232,10 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
       const success = await workspacePort.writeFile(currentFilePath, yamlCode);
       if (success) {
         logger.info('Diagram saved successfully');
+        // Update database baseline table to match the persistent file
+        const sysId = getSystemIdFromPath(currentFilePath);
+        const fileRefMap = nodeRefMap[currentFilePath] || {};
+        await saveBaselineSchema(currentFilePath, schema, sysId, fileRefMap);
       } else {
         logger.error('Failed to save diagram');
       }

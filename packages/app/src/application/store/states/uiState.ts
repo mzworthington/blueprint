@@ -3,10 +3,12 @@ export interface UiState {
   leftCollapsed: boolean;
   rightCollapsed: boolean;
   showDesignSystem: boolean;
+  isDiffOpen: boolean;
   toggleShowTests: () => void;
   toggleLeftCollapsed: () => void;
   toggleRightCollapsed: () => void;
   setShowDesignSystem: (show: boolean) => void;
+  setIsDiffOpen: (open: boolean) => void;
 }
 
 export const createUiState = (
@@ -16,8 +18,10 @@ export const createUiState = (
   leftCollapsed: true,
   rightCollapsed: true,
   showDesignSystem: false,
+  isDiffOpen: false,
   toggleShowTests: () => set(state => ({ showTests: !state.showTests })),
   toggleLeftCollapsed: () => set(state => ({ leftCollapsed: !state.leftCollapsed })),
   toggleRightCollapsed: () => set(state => ({ rightCollapsed: !state.rightCollapsed })),
   setShowDesignSystem: show => set({ showDesignSystem: show }),
+  setIsDiffOpen: open => set({ isDiffOpen: open }),
 });

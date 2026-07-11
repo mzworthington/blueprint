@@ -8,6 +8,18 @@ describe('uiState Actions & State Management', () => {
     expect(state.leftCollapsed).toBe(true);
     expect(state.rightCollapsed).toBe(true);
     expect(state.showDesignSystem).toBe(false);
+    expect(state.isDiffOpen).toBe(false);
+  });
+
+  it('should set isDiffOpen value via setIsDiffOpen action', () => {
+    const store = useBlueprintStore.getState();
+    expect(store.isDiffOpen).toBe(false);
+
+    store.setIsDiffOpen(true);
+    expect(useBlueprintStore.getState().isDiffOpen).toBe(true);
+
+    store.setIsDiffOpen(false);
+    expect(useBlueprintStore.getState().isDiffOpen).toBe(false);
   });
 
   it('should toggle showTests property via toggleShowTests action', () => {

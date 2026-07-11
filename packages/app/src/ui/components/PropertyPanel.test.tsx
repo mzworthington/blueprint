@@ -17,7 +17,11 @@ describe('PropertyPanel UI Component', () => {
       dependencies: [],
     });
 
-    useBlueprintStore.setState({ selectedNodeId: null });
+    useBlueprintStore.setState({
+      selectedNodeId: null,
+      currentFilePath: 'blueprint.yaml',
+      workspaceName: undefined,
+    });
   });
 
   it('should render Workspace config and Catalog when no node is selected', () => {
@@ -41,12 +45,12 @@ describe('PropertyPanel UI Component', () => {
     expect(useBlueprintStore.getState().schema.level).toBe('context');
   });
 
-  it('should render read-only Workspace Slug from workspaceName or schema.name', () => {
+  it('should render read-only Diagram entityRef from workspaceName or schema.name', () => {
     useBlueprintStore.setState({ workspaceName: 'Awesome Cloud Workspace' });
     render(<PropertyPanel />);
 
-    expect(screen.getByText('Workspace Slug')).toBeInTheDocument();
-    const slugInput = screen.getByLabelText(/Workspace Slug/i);
+    expect(screen.getByText('Diagram entityRef')).toBeInTheDocument();
+    const slugInput = screen.getByLabelText(/Diagram entityRef/i);
     expect(slugInput).toBeInTheDocument();
     expect(slugInput).toHaveAttribute('readonly');
     expect(slugInput).toHaveValue('awesome-cloud-workspace');
@@ -96,9 +100,7 @@ describe('PropertyPanel UI Component', () => {
     render(<PropertyPanel />);
 
     expect(screen.getByLabelText(/Component Name/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Component ID/i)).toBeInTheDocument();
     expect(screen.getByDisplayValue('Gateway API')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('gateway-api')).toBeInTheDocument();
   });
 
   it('should rename node and metadata attributes when edited in node details', () => {
@@ -109,8 +111,14 @@ describe('PropertyPanel UI Component', () => {
     const nameInput = screen.getByLabelText(/Component Name/i);
     fireEvent.change(nameInput, { target: { value: 'API Gateway Proxy' } });
 
-    const updatedNode = useBlueprintStore.getState().schema.nodes.find(n => n.id === 'gateway-api');
+    const updatedNode = useBlueprintStore
+      .getState()
+      .schema.nodes.find(n => n.id === 'api-gateway-proxy');
     expect(updatedNode?.name).toBe('API Gateway Proxy');
+    expect(updatedNode?.entityRef).toBe('default/api-gateway-proxy');
+
+    const entityRefInput = screen.getByLabelText(/Entity Reference/i);
+    expect(entityRefInput).toHaveValue('default/api-gateway-proxy');
   });
 
   it('should allow adding custom metadata attributes to the component', () => {

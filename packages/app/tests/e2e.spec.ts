@@ -16,8 +16,8 @@ test.describe('Blueprint E2E Journeys', () => {
     const leftPanelButton = page.locator('button[aria-label="Toggle Left Panel"]');
     const rightPanelButton = page.locator('button[aria-label="Toggle Right Panel"]');
 
-    const leftPanel = page.locator('.glass-panel').first();
-    const rightPanel = page.locator('.glass-panel').last();
+    const leftPanel = page.getByTestId('left-panel');
+    const rightPanel = page.getByTestId('right-panel');
 
     // Verify initially collapsed
     await expect(leftPanel).toHaveClass(/w-0/);
@@ -45,14 +45,14 @@ test.describe('Blueprint E2E Journeys', () => {
   });
 
   test('Visual C4 Navigation (Zoom In / Zoom Out / URL Routing)', async ({ page }) => {
-    await page.goto('/workspace/testproject-container-level');
+    await page.goto('/workspace/testproject');
 
     await page.locator('button[aria-label="Toggle Right Panel"]').click();
 
     await expect(page.locator('#workspace-name-input')).toHaveValue(
       'TestProject - Container Level'
     );
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('testproject-container-level');
+    await expect(page.locator('#workspace-slug-input')).toHaveValue('testproject');
 
     await page.screenshot({ path: '../../docs/screenshots/3-container-level.png' });
 
@@ -66,10 +66,8 @@ test.describe('Blueprint E2E Journeys', () => {
     await expect(page.locator('#workspace-name-input')).toHaveValue(
       'TestProject - Application Shell Components'
     );
-    await expect(page.locator('#workspace-slug-input')).toHaveValue(
-      'testproject-application-shell-components'
-    );
-    expect(page.url()).toContain('/workspace/testproject-application-shell-components');
+    await expect(page.locator('#workspace-slug-input')).toHaveValue('testproject/app-host');
+    expect(page.url()).toContain('/workspace/testproject/app-host');
 
     await page.screenshot({ path: '../../docs/screenshots/4-zoomed-in-components.png' });
 
@@ -78,8 +76,8 @@ test.describe('Blueprint E2E Journeys', () => {
     await expect(page.locator('#workspace-name-input')).toHaveValue(
       'TestProject - Container Level'
     );
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('testproject-container-level');
-    expect(page.url()).toContain('/workspace/testproject-container-level');
+    await expect(page.locator('#workspace-slug-input')).toHaveValue('testproject');
+    expect(page.url()).toContain('/workspace/testproject');
 
     await page.screenshot({ path: '../../docs/screenshots/5-zoomed-back-out.png' });
   });

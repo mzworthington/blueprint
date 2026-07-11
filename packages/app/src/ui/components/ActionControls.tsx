@@ -1,5 +1,5 @@
 import React from 'react';
-import { Folder, Upload, Download, RefreshCcw, Link } from 'lucide-react';
+import { Folder, Upload, Download, RefreshCcw, Link, GitCompare } from 'lucide-react';
 import { useBlueprintStore } from '../../application/store/store';
 
 export const ActionControls: React.FC = () => {
@@ -12,6 +12,7 @@ export const ActionControls: React.FC = () => {
     initSchema,
     schema,
     syncExternalContainers,
+    setIsDiffOpen,
   } = useBlueprintStore();
 
   const handleSave = async () => {
@@ -88,6 +89,16 @@ export const ActionControls: React.FC = () => {
           <span className="hidden sm:inline">Sync Externals</span>
         </button>
       )}
+
+      <button
+        onClick={() => setIsDiffOpen(true)}
+        className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-amber-400 hover:text-amber-300 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 hover:border-amber-900/30 transition cursor-pointer"
+        title="View pending local changes / diff"
+        id="view-pending-changes"
+      >
+        <GitCompare className="w-3.5 h-3.5" />
+        <span className="hidden sm:inline">Pending Changes</span>
+      </button>
 
       <button
         onClick={handleClear}

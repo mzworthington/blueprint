@@ -1,7 +1,8 @@
 import React from 'react';
-import { useBlueprintStore, resolveRelativePath } from '../../application/store/store';
+import { useBlueprintStore } from '../../application/store/store';
 import { Folder, ChevronRight, Layers, Compass, Code, Network, ChevronDown } from 'lucide-react';
 import type { C4Level } from '@blueprint/core';
+import { getSchemaEntityRef, getSystemIdFromPath } from '@blueprint/core';
 
 const LEVEL_CONFIGS: Record<
   C4Level,
@@ -37,16 +38,6 @@ const LEVEL_CONFIGS: Record<
   },
 };
 
-const getWorkspaceFamily = (pathStr: string) => {
-  const cleanPath = pathStr.replace(/\\/g, '/');
-  const parts = cleanPath.split('/');
-  const blueprintsIdx = parts.indexOf('blueprints');
-  if (blueprintsIdx !== -1 && blueprintsIdx < parts.length - 1) {
-    return parts[blueprintsIdx + 1];
-  }
-  return parts[0] || '';
-};
-
 export const Breadcrumbs: React.FC = () => {
   const {
     navigationStack,
@@ -59,7 +50,6 @@ export const Breadcrumbs: React.FC = () => {
     zoomIntoNode,
     selectNode,
     workspaceManifest,
-    workspaceManifestPath,
     loadedSystems,
     selectSystem,
   } = useBlueprintStore();
@@ -77,31 +67,26 @@ export const Breadcrumbs: React.FC = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const getFileName = (p: string) => p.split('/').pop() || p;
-
   const getSegmentChildren = React.useCallback(
     (segPath: string) => {
-      if (!workspaceManifest || !workspaceManifest.hierarchy) return [];
-      const manifestDir = workspaceManifestPath || currentFilePath;
+      const system = loadedSystems.find(s => s.path === segPath);
+      if (!system || !workspaceManifest || !workspaceManifest.hierarchy) return [];
 
-      const match = workspaceManifest.hierarchy.find(h => {
-        const resolvedParentPath = resolveRelativePath(manifestDir, h.parent);
-        return resolvedParentPath === segPath;
-      });
+      const segRef = getSchemaEntityRef(system.schema, system.path);
+      const match = workspaceManifest.hierarchy.find(h => h.parent === segRef);
       if (!match) return [];
 
-      return match.children.map(childPath => {
-        const resolvedChildPath = resolveRelativePath(manifestDir, childPath);
-        const system = loadedSystems.find(s => s.path === resolvedChildPath);
+      return match.children.map(childRef => {
+        const childSystem = loadedSystems.find(
+          s => getSchemaEntityRef(s.schema, s.path) === childRef
+        );
         return {
-          path: system?.path || resolvedChildPath,
-          name:
-            system?.name ||
-            getFileName(childPath).replace('-components.yaml', '').replace('.yaml', ''),
+          path: childSystem?.path || childRef,
+          name: childSystem?.name || childRef.split('/').pop() || childRef,
         };
       });
     },
-    [workspaceManifest, loadedSystems, workspaceManifestPath, currentFilePath]
+    [workspaceManifest, loadedSystems]
   );
 
   const activeLevel = schema.level || 'container';
@@ -117,37 +102,48 @@ export const Breadcrumbs: React.FC = () => {
     const list: Array<{ path: string; name: string; level: C4Level }> = [];
     if (!workspaceManifest || !workspaceManifest.hierarchy) return list;
 
-    const manifestDir = workspaceManifestPath || currentFilePath;
-    let activePath = currentFilePath;
+    const activeSystem = loadedSystems.find(s => s.path === currentFilePath);
+    if (!activeSystem) return list;
+
+    let activeRef = getSchemaEntityRef(activeSystem.schema, activeSystem.path);
     let foundParent = true;
+    const visited = new Set<string>();
 
     while (foundParent) {
       foundParent = false;
-      for (const h of workspaceManifest.hierarchy) {
-        const resolvedParentPath = resolveRelativePath(manifestDir, h.parent);
-        const resolvedChildrenPaths = h.children.map(c => resolveRelativePath(manifestDir, c));
+      if (visited.has(activeRef)) break;
+      visited.add(activeRef);
 
-        const hasChild = resolvedChildrenPaths.some(c => c === activePath);
-        if (hasChild) {
-          const parentSystem = loadedSystems.find(s => s.path === resolvedParentPath);
-          if (parentSystem) {
-            list.unshift({
-              path: parentSystem.path,
-              name: parentSystem.name,
-              level: parentSystem.schema.level || 'container',
-            });
-            activePath = resolvedParentPath;
-            foundParent = true;
-            break;
-          }
+      const match = workspaceManifest.hierarchy.find(h => h.children.includes(activeRef));
+      if (match) {
+        const parentSystem = loadedSystems.find(
+          s => getSchemaEntityRef(s.schema, s.path) === match.parent
+        );
+        if (parentSystem) {
+          list.unshift({
+            path: parentSystem.path,
+            name: parentSystem.name,
+            level: parentSystem.schema.level || 'container',
+          });
+          activeRef = match.parent;
+          foundParent = true;
         }
       }
     }
     return list;
-  }, [workspaceManifest, loadedSystems, currentFilePath, workspaceManifestPath]);
+  }, [loadedSystems, currentFilePath, workspaceManifest]);
 
   const selectedNode = selectedNodeId ? schema.nodes.find(n => n.id === selectedNodeId) : null;
-  const hasNextHierarchy = !!(selectedNode && selectedNode.c4Ref);
+
+  const hasNextHierarchy = React.useMemo(() => {
+    if (!selectedNode) return false;
+    if (selectedNode.c4Ref) return true;
+    const entityRef = selectedNode.entityRef;
+    if (!entityRef) return false;
+    return loadedSystems.some(
+      s => s.schema.parentRef === entityRef && s.schema.level === 'component'
+    );
+  }, [selectedNode, loadedSystems]);
 
   const getNextLevel = (current: C4Level): C4Level => {
     switch (current) {
@@ -192,9 +188,15 @@ export const Breadcrumbs: React.FC = () => {
   ];
 
   if (hasNextHierarchy && selectedNode) {
+    const entityRef = selectedNode.entityRef;
+    const childSystem = entityRef
+      ? loadedSystems.find(s => s.schema.parentRef === entityRef && s.schema.level === 'component')
+      : undefined;
+    const targetPath = childSystem?.path || selectedNode.c4Ref || '';
+
     segments.push({
       name: selectedNode.name || selectedNode.id,
-      path: selectedNode.c4Ref!,
+      path: targetPath,
       level: getNextLevel(activeLevel),
       onClick: () => {
         zoomIntoNode(selectedNode.id);
@@ -230,7 +232,7 @@ export const Breadcrumbs: React.FC = () => {
           const segConfig = LEVEL_CONFIGS[seg.level];
           const SegIcon = segConfig.icon;
 
-          const currentFamily = getWorkspaceFamily(currentFilePath);
+          const currentSystemId = getSystemIdFromPath(currentFilePath);
           const sameLevelSystems = loadedSystems.filter(s => {
             if (s.schema.level !== seg.level || s.path === seg.path) {
               return false;
@@ -244,7 +246,7 @@ export const Breadcrumbs: React.FC = () => {
             if (idx === 0) {
               return true;
             }
-            return getWorkspaceFamily(s.path) === currentFamily;
+            return getSystemIdFromPath(s.path) === currentSystemId;
           });
 
           return (

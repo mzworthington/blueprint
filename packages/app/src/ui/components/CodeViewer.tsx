@@ -100,6 +100,7 @@ export const CodeViewer: React.FC = () => {
 
   return (
     <div
+      data-testid="left-panel"
       className={`h-full flex flex-col bg-slate-950/80 glass-panel transition-all duration-300 ease-in-out ${
         leftCollapsed
           ? 'w-0 border-r-0 opacity-0 overflow-hidden pointer-events-none'

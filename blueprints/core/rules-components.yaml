@@ -1,107 +1,118 @@
-name: Cli - blueprint.ts Components
+name: Core - rules Components
 version: 1.0.0
 level: component
-parentRef: cli/blueprint_ts
+parentRef: core/rules
 nodes:
-  - id: blueprint
+  - id: entityref_test
     type: background-worker
-    name: blueprint Service
-    isTest: false
+    name: entityRef.test Service
+    isTest: true
     properties:
-      filepath: src/blueprint.ts
+      filepath: src/rules/entityRef.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1290
+    x: 140
     'y': 50
-  - id: tsmorphparser
+  - id: entityref
     type: background-worker
-    name: tsMorphParser Service (analysis)
+    name: entityRef Service
     isTest: false
     properties:
-      filepath: src/analysis/adapters/tsMorphParser.ts
+      filepath: src/rules/entityRef.ts
       namespaces: ''
       technology: TypeScript Domain Service
-    external: true
+    external: false
     x: 140
     'y': 370
-  - id: treesitterparser
+  - id: graph_test
     type: background-worker
-    name: treeSitterParser Service (analysis)
-    isTest: false
+    name: graph.test Service
+    isTest: true
     properties:
-      filepath: src/analysis/adapters/treeSitterParser.ts
+      filepath: src/rules/graph.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
-    external: true
+    external: false
+    x: 600
+    'y': 50
+  - id: graph
+    type: background-worker
+    name: graph Service
+    isTest: false
+    properties:
+      filepath: src/rules/graph.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
     x: 600
     'y': 370
-  - id: dagrelayout
+  - id: path_test
     type: background-worker
-    name: dagreLayout Service (analysis)
-    isTest: false
+    name: path.test Service
+    isTest: true
     properties:
-      filepath: src/analysis/adapters/dagreLayout.ts
+      filepath: src/rules/path.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
-    external: true
-    x: 1060
-    'y': 370
-  - id: nodefilesystem
-    type: background-worker
-    name: nodeFileSystem Service (analysis)
-    isTest: false
-    properties:
-      filepath: src/analysis/adapters/nodeFileSystem.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
+    external: false
     x: 1520
     'y': 370
-  - id: consolelogger
+  - id: path
     type: background-worker
-    name: consoleLogger Service (analysis)
+    name: path Service
     isTest: false
     properties:
-      filepath: src/analysis/adapters/consoleLogger.ts
+      filepath: src/rules/path.ts
       namespaces: ''
       technology: TypeScript Domain Service
-    external: true
-    x: 1980
-    'y': 370
-  - id: analyzer
+    external: false
+    x: 1480
+    'y': 690
+  - id: slug_test
     type: background-worker
-    name: analyzer Service (analysis)
+    name: slug.test Service
+    isTest: true
+    properties:
+      filepath: src/rules/slug.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 370
+  - id: slug
+    type: background-worker
+    name: slug Service
     isTest: false
     properties:
-      filepath: src/analysis/domain/analyzer.ts
+      filepath: src/rules/slug.ts
       namespaces: ''
       technology: TypeScript Domain Service
-    external: true
-    x: 2440
-    'y': 370
+    external: false
+    x: 140
+    'y': 690
 dependencies:
-  - from: blueprint
-    to: tsmorphparser
+  - from: entityref_test
+    to: entityref
     type: direct-call
     description: Executes local class methods / functions
-  - from: blueprint
-    to: treesitterparser
+  - from: entityref
+    to: slug
     type: direct-call
     description: Executes local class methods / functions
-  - from: blueprint
-    to: dagrelayout
+  - from: entityref
+    to: path
     type: direct-call
     description: Executes local class methods / functions
-  - from: blueprint
-    to: nodefilesystem
+  - from: graph_test
+    to: graph
     type: direct-call
     description: Executes local class methods / functions
-  - from: blueprint
-    to: consolelogger
+  - from: path_test
+    to: path
     type: direct-call
     description: Executes local class methods / functions
-  - from: blueprint
-    to: analyzer
+  - from: slug_test
+    to: slug
     type: direct-call
     description: Executes local class methods / functions

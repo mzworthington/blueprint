@@ -7,7 +7,8 @@ import { Canvas } from '../../components/Canvas';
 import { PropertyPanel } from '../../components/PropertyPanel';
 import { Header } from '../../components/Header';
 import { useBlueprintStore } from '../../../application/store/store';
-import { slugify } from '@blueprint/core';
+import { slugify, getSchemaEntityRef } from '@blueprint/core';
+import { DiffMenu } from '../../components/DiffMenu';
 
 export const WorkspacePage: React.FC = () => {
   const {
@@ -20,49 +21,141 @@ export const WorkspacePage: React.FC = () => {
     loadedSystems,
     selectSystem,
     currentFilePath,
+    selectedNodeId,
+    selectNode,
+    isDiffOpen,
+    setIsDiffOpen,
   } = useBlueprintStore();
 
   const [location, setLocation] = useLocation();
-  const [match, params] = useRoute('/workspace/:slug');
+  const [match, params] = useRoute('/workspace/*');
 
-  // Track the previous system file path to detect store-initiated changes
-  const prevFilePathRef = useRef(currentFilePath);
-  const storeChanged = currentFilePath !== prevFilePathRef.current;
+  const lastSyncedLocationRef = useRef<string | null>(null);
 
   useEffect(() => {
-    prevFilePathRef.current = currentFilePath;
-  }, [currentFilePath]);
-
-  useEffect(() => {
-    // If the store was updated in this render cycle, skip the URL sync effect
-    if (storeChanged) return;
-
-    if (match && params?.slug) {
-      const found = loadedSystems.find(sys => {
-        const sysName = sys.schema?.name || sys.name || sys.path;
-        return slugify(sysName) === params.slug;
-      });
-      if (found && found.path !== currentFilePath) {
-        selectSystem(found.path);
-      }
-    }
-  }, [match, params?.slug, loadedSystems, currentFilePath, selectSystem, storeChanged]);
-
-  useEffect(() => {
-    // Only redirect/sync pathname if we are on a workspace route or the root path
     const isWorkspaceRoute =
-      location.startsWith('/workspace/') || location === '/' || location === '';
+      location.startsWith('/workspace') || location === '/' || location === '';
     if (!isWorkspaceRoute) return;
 
-    const name = workspaceName || schema.name;
-    if (!name) return;
-    const slug = slugify(name);
-    const expectedPath = `/workspace/${slug}`;
-    if (location !== expectedPath) {
-      const isInitial = location === '/' || location === '';
-      setLocation(expectedPath, { replace: isInitial });
+    const entityRef = params?.['*'];
+    const isRootPath =
+      location === '/' ||
+      location === '' ||
+      location === '/workspace' ||
+      location === '/workspace/';
+    if (!isRootPath && (!match || !entityRef)) return;
+
+    const diagramEntityRef = getSchemaEntityRef(schema, currentFilePath, workspaceName);
+    if (!diagramEntityRef) return;
+
+    // Check if the current URL path represents a diagram
+    const isDiagramPath = loadedSystems.some(sys => {
+      const dRef = getSchemaEntityRef(sys.schema, sys.path, workspaceName);
+      return dRef === entityRef;
+    });
+
+    // Check if the current URL path represents a node in any loaded system schema
+    const isNodePath =
+      !isDiagramPath &&
+      loadedSystems.some(sys => sys.schema?.nodes.some(n => n.entityRef === entityRef));
+
+    const isFirstSync = lastSyncedLocationRef.current === null;
+    const isUrlChanged = !isFirstSync && location !== lastSyncedLocationRef.current;
+    const shouldSyncFromUrl = (!isFirstSync && isUrlChanged) || (isFirstSync && isNodePath);
+
+    if (shouldSyncFromUrl) {
+      let foundSystem: (typeof loadedSystems)[0] | undefined;
+      let targetNodeId: string | null = null;
+
+      for (const sys of loadedSystems) {
+        const node = sys.schema?.nodes.find(n => n.entityRef === entityRef);
+        if (node) {
+          foundSystem = sys;
+          targetNodeId = node.id;
+          break;
+        }
+      }
+
+      // Check if URL matches a system FQN
+      if (!foundSystem) {
+        foundSystem = loadedSystems.find(sys => {
+          const dRef = getSchemaEntityRef(sys.schema, sys.path, workspaceName);
+          return dRef === entityRef;
+        });
+      }
+
+      // Try legacy slug fallback
+      if (!foundSystem) {
+        foundSystem = loadedSystems.find(sys => {
+          const legacySlug = slugify(sys.schema?.name || sys.name || sys.path);
+          return legacySlug === entityRef;
+        });
+      }
+
+      if (foundSystem) {
+        if (foundSystem.path !== currentFilePath) {
+          selectSystem(foundSystem.path);
+        }
+        if (targetNodeId !== null) {
+          if (selectedNodeId !== targetNodeId) {
+            selectNode(targetNodeId);
+          }
+        } else {
+          if (selectedNodeId !== null) {
+            selectNode(null);
+          }
+        }
+      }
+
+      lastSyncedLocationRef.current = location;
+    } else {
+      if (isFirstSync && entityRef) {
+        let foundSystem = loadedSystems.find(sys => {
+          const dRef = getSchemaEntityRef(sys.schema, sys.path, workspaceName);
+          return dRef === entityRef;
+        });
+        if (!foundSystem) {
+          foundSystem = loadedSystems.find(sys => {
+            const legacySlug = slugify(sys.schema?.name || sys.name || sys.path);
+            return legacySlug === entityRef;
+          });
+        }
+        if (foundSystem && foundSystem.path !== currentFilePath) {
+          selectSystem(foundSystem.path);
+          return;
+        }
+      }
+
+      const selectedNode = schema.nodes.find(n => n.id === selectedNodeId);
+      const activeEntityRef =
+        selectedNode && selectedNode.entityRef ? selectedNode.entityRef : diagramEntityRef;
+      const expectedPath = `/workspace/${activeEntityRef}`;
+
+      if (location !== expectedPath) {
+        const isInitial =
+          location === '/' ||
+          location === '' ||
+          location === '/workspace' ||
+          location === '/workspace/';
+        setLocation(expectedPath, { replace: isInitial });
+        lastSyncedLocationRef.current = expectedPath;
+      } else {
+        lastSyncedLocationRef.current = location;
+      }
     }
-  }, [workspaceName, schema.name, location, setLocation]);
+  }, [
+    location,
+    schema,
+    currentFilePath,
+    workspaceName,
+    selectedNodeId,
+    loadedSystems,
+    selectSystem,
+    selectNode,
+    setLocation,
+    match,
+    params,
+  ]);
 
   return (
     <ReactFlowProvider>
@@ -106,6 +199,7 @@ export const WorkspacePage: React.FC = () => {
           </button>
         </div>
       </div>
+      <DiffMenu isOpen={isDiffOpen} onClose={() => setIsDiffOpen(false)} />
     </ReactFlowProvider>
   );
 };

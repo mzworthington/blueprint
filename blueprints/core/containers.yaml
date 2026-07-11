@@ -1,4 +1,4 @@
-name: Cli - Container Level
+name: Core - Container Level
 version: 1.0.0
 level: container
 nodes:
@@ -18,24 +18,28 @@ nodes:
       technology: Vite / React
     x: 670
     'y': 60
-  - id: blueprint_ts
+  - id: index_ts
     type: background-worker
-    name: blueprint.ts
+    name: index.ts
     properties:
-      description: Core domain services for blueprint.ts
+      description: Core domain services for index.ts
       technology: TypeScript
     x: 1190
     'y': 60
-  - id: analysis
+  - id: models
     type: background-worker
-    name: analysis
+    name: models
     properties:
-      description: Core domain services for analysis
+      description: Core domain services for models
       technology: TypeScript
-    x: 1190
-    'y': 430
-dependencies:
-  - from: blueprint_ts
-    to: analysis
-    type: direct-call
-    description: Inter-container request / connection
+    x: 1710
+    'y': 60
+  - id: rules
+    type: background-worker
+    name: rules
+    properties:
+      description: Core domain services for rules
+      technology: TypeScript
+    x: 2230
+    'y': 60
+dependencies: []

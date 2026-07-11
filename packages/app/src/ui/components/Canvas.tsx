@@ -85,7 +85,13 @@ export const Canvas: React.FC = () => {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         onNodeDoubleClick={(_, node) => {
-          if (node.data?.c4Ref) {
+          const hasSub =
+            node.data?.c4Ref ||
+            (node.data?.entityRef &&
+              loadedSystems.some(
+                s => s.schema.level === 'component' && s.schema.parentRef === node.data.entityRef
+              ));
+          if (hasSub) {
             zoomIntoNode(node.id);
           }
         }}

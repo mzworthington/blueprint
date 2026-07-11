@@ -169,6 +169,15 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
   const selectNode = useBlueprintStore(state => state.selectNode);
   const deleteNode = useBlueprintStore(state => state.deleteNode);
   const zoomIntoNode = useBlueprintStore(state => state.zoomIntoNode);
+  const loadedSystems = useBlueprintStore(state => state.loadedSystems);
+
+  const hasSubDiagram = React.useMemo(() => {
+    if (data.c4Ref) return true;
+    if (!data.entityRef) return false;
+    return loadedSystems.some(
+      s => s.schema.level === 'component' && s.schema.parentRef === data.entityRef
+    );
+  }, [data.c4Ref, data.entityRef, loadedSystems]);
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -263,7 +272,7 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
           <Icon className="w-5 h-5" />
         </div>
 
-        {data.c4Ref && (
+        {hasSubDiagram && (
           <button
             onClick={e => {
               e.stopPropagation();

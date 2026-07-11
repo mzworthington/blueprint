@@ -116,12 +116,13 @@ describe('Breadcrumbs Component', () => {
     expect(screen.getByText('Web Application')).toBeInTheDocument();
   });
 
-  it('reconstructs breadcrumbs hierarchy using workspace manifest when navigationStack is empty', () => {
+  it('reconstructs breadcrumbs hierarchy using workspace manifest entityRef when navigationStack is empty', () => {
     const { initSchema } = useBlueprintStore.getState();
     initSchema({
       name: 'Component Diagram',
       version: '1.0.0',
       level: 'component',
+      parentRef: 'blueprint/component',
       nodes: [],
       dependencies: [],
     });
@@ -129,11 +130,11 @@ describe('Breadcrumbs Component', () => {
     useBlueprintStore.setState({
       isWorkspaceOpen: true,
       workspaceName: 'TestWorkspace',
-      currentFilePath: 'blueprints/component.yaml',
+      currentFilePath: 'blueprints/blueprint/component.yaml',
       navigationStack: [],
       loadedSystems: [
         {
-          path: 'blueprints/containers.yaml',
+          path: 'blueprints/blueprint/containers.yaml',
           name: 'Container Diagram',
           schema: {
             name: 'Container Diagram',
@@ -144,12 +145,13 @@ describe('Breadcrumbs Component', () => {
           },
         },
         {
-          path: 'blueprints/component.yaml',
+          path: 'blueprints/blueprint/component.yaml',
           name: 'Component Diagram',
           schema: {
             name: 'Component Diagram',
             version: '1.0.0',
             level: 'component',
+            parentRef: 'blueprint/component',
             nodes: [],
             dependencies: [],
           },
@@ -157,11 +159,11 @@ describe('Breadcrumbs Component', () => {
       ],
       workspaceManifest: {
         name: 'Workspace Manifest',
-        root: './containers.yaml',
+        root: 'blueprint',
         hierarchy: [
           {
-            parent: './containers.yaml',
-            children: ['./component.yaml'],
+            parent: 'blueprint',
+            children: ['blueprint/component'],
           },
         ],
       },
@@ -186,11 +188,11 @@ describe('Breadcrumbs Component', () => {
     useBlueprintStore.setState({
       isWorkspaceOpen: true,
       workspaceName: 'TestWorkspace',
-      currentFilePath: 'blueprints/containers.yaml',
+      currentFilePath: 'blueprints/blueprint/containers.yaml',
       navigationStack: [],
       loadedSystems: [
         {
-          path: 'blueprints/containers.yaml',
+          path: 'blueprints/blueprint/containers.yaml',
           name: 'Container Diagram',
           schema: {
             name: 'Container Diagram',
@@ -201,12 +203,13 @@ describe('Breadcrumbs Component', () => {
           },
         },
         {
-          path: 'blueprints/component.yaml',
+          path: 'blueprints/blueprint/component.yaml',
           name: 'Component Diagram',
           schema: {
             name: 'Component Diagram',
             version: '1.0.0',
             level: 'component',
+            parentRef: 'blueprint/component',
             nodes: [],
             dependencies: [],
           },
@@ -214,11 +217,11 @@ describe('Breadcrumbs Component', () => {
       ],
       workspaceManifest: {
         name: 'Workspace Manifest',
-        root: './containers.yaml',
+        root: 'blueprint',
         hierarchy: [
           {
-            parent: './containers.yaml',
-            children: ['./component.yaml'],
+            parent: 'blueprint',
+            children: ['blueprint/component'],
           },
         ],
       },
@@ -242,6 +245,8 @@ describe('Breadcrumbs Component', () => {
     fireEvent.click(childOption);
 
     // Verify selectSystem is called
-    expect(useBlueprintStore.getState().currentFilePath).toBe('blueprints/component.yaml');
+    expect(useBlueprintStore.getState().currentFilePath).toBe(
+      'blueprints/blueprint/component.yaml'
+    );
   });
 });

@@ -1,0 +1,97 @@
+name: App - Container Level
+version: 1.0.0
+level: container
+nodes:
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client Host
+    properties:
+      description: Vite app hosting server.
+      technology: Vite + React
+    x: 825
+    'y': 60
+  - id: app-host
+    type: gateway-api
+    name: Application Shell
+    properties:
+      description: Entrypoint and root shell layout.
+      technology: Vite / React
+    x: 150
+    'y': 430
+  - id: app_test_tsx
+    type: background-worker
+    name: App.test.tsx
+    properties:
+      description: Core domain services for App.test.tsx
+      technology: TypeScript
+    x: 670
+    'y': 430
+  - id: app_tsx
+    type: background-worker
+    name: App.tsx
+    properties:
+      description: Core domain services for App.tsx
+      technology: TypeScript
+    x: 620
+    'y': 800
+  - id: setuptests_ts
+    type: background-worker
+    name: setupTests.ts
+    properties:
+      description: Core domain services for setupTests.ts
+      technology: TypeScript
+    x: 1345
+    'y': 60
+  - id: frontend-ui
+    type: gateway-api
+    name: Frontend React UI
+    properties:
+      description: React Flow canvas, sidebar configuration panel, and navigation UI.
+      technology: React + TailwindCSS
+    x: 1190
+    'y': 430
+  - id: state-sync
+    type: cache-store
+    name: State & Sync Manager
+    properties:
+      description: Zustand global store and local directory synchronization.
+      technology: Zustand / Filesystem API
+    x: 1345
+    'y': 800
+  - id: csharp
+    type: background-worker
+    name: csharp
+    properties:
+      description: Core domain services for csharp
+      technology: C# / .NET
+    x: 1865
+    'y': 60
+dependencies:
+  - from: frontend-client
+    to: app-host
+    type: direct-call
+    description: Inter-container request / connection
+  - from: app_test_tsx
+    to: app_tsx
+    type: direct-call
+    description: Inter-container request / connection
+  - from: app_test_tsx
+    to: state-sync
+    type: direct-call
+    description: Inter-container request / connection
+  - from: frontend-client
+    to: frontend-ui
+    type: direct-call
+    description: Inter-container request / connection
+  - from: frontend-ui
+    to: state-sync
+    type: direct-call
+    description: Inter-container request / connection
+  - from: frontend-client
+    to: state-sync
+    type: direct-call
+    description: Inter-container request / connection
+  - from: state-sync
+    to: frontend-ui
+    type: direct-call
+    description: Inter-container request / connection

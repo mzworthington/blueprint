@@ -1,6 +1,7 @@
 name: Cli - analysis Components
 version: 1.0.0
 level: component
+parentRef: cli/analysis
 nodes:
   - id: consolelogger_test
     type: background-worker
@@ -11,7 +12,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 600
+    x: 140
     'y': 50
   - id: consolelogger
     type: background-worker
@@ -22,7 +23,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1220
+    x: 140
     'y': 370
   - id: dagrelayout_test
     type: background-worker
@@ -33,7 +34,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 140
+    x: 600
     'y': 50
   - id: dagrelayout
     type: background-worker
@@ -44,7 +45,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1680
+    x: 600
     'y': 370
   - id: nodefilesystem_test
     type: background-worker
@@ -55,7 +56,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 4085
+    x: 1060
     'y': 50
   - id: nodefilesystem
     type: background-worker
@@ -66,7 +67,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2600
+    x: 1060
     'y': 370
   - id: treesitterparser_test
     type: background-worker
@@ -77,7 +78,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 4545
+    x: 2060
     'y': 50
   - id: treesitterparser
     type: background-worker
@@ -88,7 +89,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 3775
+    x: 1790
     'y': 370
   - id: tsmorphparser_test
     type: background-worker
@@ -99,7 +100,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 3180
+    x: 2520
     'y': 50
   - id: tsmorphparser
     type: background-worker
@@ -110,7 +111,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 3315
+    x: 2440
     'y': 370
   - id: analyzer_test
     type: background-worker
@@ -121,7 +122,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1060
+    x: 3020
     'y': 50
   - id: analyzer
     type: background-worker
@@ -132,8 +133,30 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2140
+    x: 3115
     'y': 370
+  - id: ports
+    type: background-worker
+    name: ports Service
+    isTest: false
+    properties:
+      filepath: src/analysis/domain/ports.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3575
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: src/analysis/domain/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2520
+    'y': 690
   - id: blueprint
     type: background-worker
     name: blueprint Service (blueprint.ts)
@@ -143,41 +166,8 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2125
+    x: 1560
     'y': 50
-  - id: core
-    type: background-worker
-    name: core Service (v4)
-    isTest: false
-    properties:
-      filepath: node_modules/@blueprint/core/node_modules/zod/src/v4/core/core.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1855
-    'y': 690
-  - id: path
-    type: background-worker
-    name: path Service (rules)
-    isTest: false
-    properties:
-      filepath: node_modules/@blueprint/core/src/rules/path.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 3775
-    'y': 690
-  - id: types
-    type: background-worker
-    name: types Service (v3)
-    isTest: false
-    properties:
-      filepath: node_modules/@blueprint/core/node_modules/zod/src/v3/types.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2895
-    'y': 690
 dependencies:
   - from: blueprint
     to: tsmorphparser
@@ -207,52 +197,16 @@ dependencies:
     to: consolelogger
     type: direct-call
     description: Executes local class methods / functions
-  - from: consolelogger
-    to: core
-    type: direct-call
-    description: Executes local class methods / functions
   - from: dagrelayout_test
     to: dagrelayout
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: dagrelayout_test
-    to: core
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: dagrelayout
-    to: core
     type: direct-call
     description: Executes local class methods / functions
   - from: nodefilesystem_test
     to: nodefilesystem
     type: direct-call
     description: Executes local class methods / functions
-  - from: nodefilesystem_test
-    to: path
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: nodefilesystem
-    to: path
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: nodefilesystem
-    to: core
-    type: direct-call
-    description: Executes local class methods / functions
   - from: treesitterparser_test
     to: treesitterparser
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: treesitterparser_test
-    to: path
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: treesitterparser
-    to: path
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: treesitterparser
-    to: core
     type: direct-call
     description: Executes local class methods / functions
   - from: treesitterparser
@@ -261,18 +215,6 @@ dependencies:
     description: Executes local class methods / functions
   - from: tsmorphparser_test
     to: tsmorphparser
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: tsmorphparser_test
-    to: path
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: tsmorphparser
-    to: path
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: tsmorphparser
-    to: core
     type: direct-call
     description: Executes local class methods / functions
   - from: tsmorphparser
@@ -287,15 +229,11 @@ dependencies:
     to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: analyzer_test
-    to: core
-    type: direct-call
-    description: Executes local class methods / functions
   - from: analyzer
     to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: analyzer
-    to: core
+  - from: ports
+    to: types
     type: direct-call
     description: Executes local class methods / functions

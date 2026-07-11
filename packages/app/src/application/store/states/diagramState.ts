@@ -12,7 +12,15 @@ import type {
   ValidationResult,
 } from '@blueprint/core';
 import { validateGraph, parseSchemaFromYaml, serializeSchemaToYaml } from '@blueprint/core';
-import { resolveRelativePath, resolveWorkspaceManifestState, getFileName } from '@blueprint/core';
+import {
+  resolveRelativePath,
+  resolveWorkspaceManifestState,
+  getFileName,
+  resolveWorkspaceEntityRefs,
+  getSystemIdFromPath,
+  isEntityRef,
+  getSchemaEntityRef,
+} from '@blueprint/core';
 import {
   mapDomainNodeToRFNode,
   mapDomainDepToRFEdge,
@@ -27,6 +35,7 @@ import {
   defaultWorkspaceManifestYaml,
   defaultInitialSchema,
 } from '../defaultData';
+import { saveWorkingSchema, saveBaselineSchema } from '../../../infrastructure/db/db';
 
 export interface DiagramState {
   schema: SystemSchema;
@@ -45,6 +54,7 @@ export interface DiagramState {
   workspaceManifestPath: string | null;
   loadedManifests: Array<{ path: string; manifest: WorkspaceManifest; yaml: string }>;
   loadedSystems: Array<{ path: string; name: string; schema: SystemSchema }>;
+  nodeRefMap: Record<string, Record<string, string>>;
 
   initSchema: (schema: SystemSchema) => void;
   updateSchemaName: (name: string) => void;
@@ -151,18 +161,83 @@ const applyStateUpdates = (
       return sys;
     }) || [];
 
+  const resolved = resolveWorkspaceEntityRefs(nextLoadedSystems);
+  const currentFilePath = get().currentFilePath;
+  const fileRefMap = resolved.nodeRefMap[currentFilePath] || {};
+  const systemId = getSystemIdFromPath(currentFilePath);
+
+  const resolvedNextNodes = nextNodes.map(node => {
+    const entityRef = fileRefMap[node.id] || `${systemId}/${node.id}`;
+    return {
+      ...node,
+      data: {
+        ...node.data,
+        entityRef,
+      },
+    };
+  });
+
+  const resolvedSchema = resolved.schemas[currentFilePath]
+    ? resolved.schemas[currentFilePath]
+    : {
+        ...nextSchema,
+        nodes: nextSchema.nodes.map(node => ({
+          ...node,
+          entityRef: fileRefMap[node.id] || `${systemId}/${node.id}`,
+        })),
+      };
+
   set({
-    nodes: nextNodes,
+    nodes: resolvedNextNodes,
     edges: highlightedEdges,
-    schema: nextSchema,
+    schema: resolvedSchema,
     validationResult,
     yamlCode,
-    loadedSystems: nextLoadedSystems,
+    loadedSystems: nextLoadedSystems.map((sys: any) => ({
+      ...sys,
+      schema: resolved.schemas[sys.path] || sys.schema,
+    })),
+    nodeRefMap: resolved.nodeRefMap,
+  });
+
+  // Sync working version to IndexedDB asynchronously
+  saveWorkingSchema(currentFilePath, resolvedSchema, systemId, fileRefMap).catch((err: any) => {
+    if (get().logger) {
+      get().logger.error('Failed to sync working schema to IndexedDB', err);
+    }
   });
 };
 
-const initialNodes = defaultInitialSchema.nodes.map(mapDomainNodeToRFNode);
-const initialEdges = defaultInitialSchema.dependencies.map(mapDomainDepToRFEdge).map(edge => {
+const resolvedInitial = resolveWorkspaceEntityRefs(
+  defaultLoadedSystems.length > 0
+    ? defaultLoadedSystems
+    : [{ path: 'blueprint.yaml', schema: defaultInitialSchema }]
+);
+const initialLoadedSystemsResolved = defaultLoadedSystems.map(sys => ({
+  ...sys,
+  schema: resolvedInitial.schemas[sys.path] || sys.schema,
+}));
+const initialSchemaResolved =
+  initialLoadedSystemsResolved.length > 0
+    ? initialLoadedSystemsResolved[0].schema
+    : defaultInitialSchema;
+
+const initialNodes = initialSchemaResolved.nodes.map(mapDomainNodeToRFNode).map(node => {
+  const defaultPath = defaultLoadedSystems[0]?.path || 'blueprint.yaml';
+  const fileRefMap = resolvedInitial.nodeRefMap[defaultPath] || {};
+  const sysId = defaultLoadedSystems[0]
+    ? getSystemIdFromPath(defaultLoadedSystems[0].path)
+    : 'default';
+  const entityRef = fileRefMap[node.id] || `${sysId}/${node.id}`;
+  return {
+    ...node,
+    data: {
+      ...node.data,
+      entityRef,
+    },
+  };
+});
+const initialEdges = initialSchemaResolved.dependencies.map(mapDomainDepToRFEdge).map(edge => {
   const sourceNode = initialNodes.find(n => n.id === edge.source);
   const targetNode = initialNodes.find(n => n.id === edge.target);
   if (!sourceNode || !targetNode) return edge;
@@ -173,13 +248,23 @@ const initialEdges = defaultInitialSchema.dependencies.map(mapDomainDepToRFEdge)
     targetHandle,
   };
 });
-const initialValidation = validateGraph(defaultInitialSchema);
-const initialYaml = serializeSchemaToYaml(defaultInitialSchema);
+const initialValidation = validateGraph(initialSchemaResolved);
+const initialYaml = serializeSchemaToYaml(initialSchemaResolved);
+
+// Seed database with default systems asynchronously on startup
+setTimeout(() => {
+  initialLoadedSystemsResolved.forEach(sys => {
+    const sysId = getSystemIdFromPath(sys.path);
+    const fileRefMap = resolvedInitial.nodeRefMap[sys.path] || {};
+    saveBaselineSchema(sys.path, sys.schema, sysId, fileRefMap).catch(() => {});
+    saveWorkingSchema(sys.path, sys.schema, sysId, fileRefMap).catch(() => {});
+  });
+}, 100);
 
 type DiagramStateDeps = DiagramState & UiState & IoState;
 
 export const createDiagramState = (set: any, get: () => DiagramStateDeps): DiagramState => ({
-  schema: defaultInitialSchema,
+  schema: initialSchemaResolved,
   nodes: initialNodes,
   edges: initialEdges,
   selectedNodeId: null,
@@ -197,7 +282,8 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
     ? defaultLoadedManifests.find(m => m.manifest === defaultWorkspaceManifest)?.path || null
     : null,
   loadedManifests: defaultLoadedManifests,
-  loadedSystems: defaultLoadedSystems,
+  loadedSystems: initialLoadedSystemsResolved,
+  nodeRefMap: resolvedInitial.nodeRefMap,
 
   selectSystem: (path: string) => {
     const { loadedSystems, loadedManifests, logger } = get();
@@ -223,6 +309,10 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   },
 
   updateSchemaName: name => {
+    const level = get().schema.level;
+    if (level === 'container' || level === 'context') {
+      set({ workspaceName: name });
+    }
     applyStateUpdates(set, get, get().nodes, get().edges, name);
   },
 
@@ -415,59 +505,91 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   },
 
   zoomIntoNode: async (nodeId: string) => {
-    const { schema, currentFilePath, navigationStack, workspacePort, isWorkspaceOpen, logger } =
-      get();
+    const {
+      schema,
+      currentFilePath,
+      navigationStack,
+      workspacePort,
+      isWorkspaceOpen,
+      loadedSystems,
+      logger,
+    } = get();
     const node = schema.nodes.find(n => n.id === nodeId);
-    if (!node || !node.c4Ref) return false;
+    if (!node) return false;
 
-    logger.info('Zooming into sub-diagram', { node: node.name, ref: node.c4Ref });
+    const entityRef = node.entityRef || `${getSystemIdFromPath(currentFilePath)}/${node.id}`;
+    const targetSystem = loadedSystems.find(
+      s => s.schema.level === 'component' && s.schema.parentRef === entityRef
+    );
 
-    const targetPath = resolveRelativePath(currentFilePath, node.c4Ref);
-
-    if (!isWorkspaceOpen) {
-      const resolvedFileName = getFileName(targetPath);
-      const found = get().loadedSystems.find(
-        s => s.path === targetPath || s.path === resolvedFileName
-      );
-      if (found) {
-        const newStack = [...navigationStack, { path: currentFilePath, schema }];
-        const manifestState = resolveWorkspaceManifestState(found.path, get().loadedManifests);
-        set({
-          currentFilePath: found.path,
-          navigationStack: newStack,
-          selectedNodeId: null,
-          ...manifestState,
-        });
-        get().initSchema(found.schema);
-        return true;
-      }
-
-      logger.warn('Cannot zoom in: workspace directory not open.');
-      set({ lastError: 'Please open a Workspace Folder to navigate C4 relative links.' });
-      return false;
-    }
-
-    try {
-      const content = await workspacePort.readFile(targetPath);
-      const subSchema = parseSchemaFromYaml(content);
-
+    if (targetSystem) {
+      logger.info('Zooming into sub-diagram via entityRef', { node: node.name, entityRef });
       const newStack = [...navigationStack, { path: currentFilePath, schema }];
-      const manifestState = resolveWorkspaceManifestState(targetPath, get().loadedManifests);
+      const manifestState = resolveWorkspaceManifestState(targetSystem.path, get().loadedManifests);
       set({
-        currentFilePath: targetPath,
+        currentFilePath: targetSystem.path,
         navigationStack: newStack,
         selectedNodeId: null,
         ...manifestState,
       });
-      get().initSchema(subSchema);
+      get().initSchema(targetSystem.schema);
       return true;
-    } catch (err) {
-      logger.error('Failed to load sub-diagram', err, { path: node.c4Ref });
-      set({
-        lastError: `Failed to load sub-diagram at ${node.c4Ref}: ${(err as Error).message}`,
-      });
-      return false;
     }
+
+    if (node.c4Ref) {
+      logger.info('Zooming into sub-diagram via legacy c4Ref path', {
+        node: node.name,
+        ref: node.c4Ref,
+      });
+      const targetPath = resolveRelativePath(currentFilePath, node.c4Ref);
+
+      if (!isWorkspaceOpen) {
+        const resolvedFileName = getFileName(targetPath);
+        const found = get().loadedSystems.find(
+          s => s.path === targetPath || s.path === resolvedFileName
+        );
+        if (found) {
+          const newStack = [...navigationStack, { path: currentFilePath, schema }];
+          const manifestState = resolveWorkspaceManifestState(found.path, get().loadedManifests);
+          set({
+            currentFilePath: found.path,
+            navigationStack: newStack,
+            selectedNodeId: null,
+            ...manifestState,
+          });
+          get().initSchema(found.schema);
+          return true;
+        }
+
+        logger.warn('Cannot zoom in: workspace directory not open.');
+        set({ lastError: 'Please open a Workspace Folder to navigate C4 relative links.' });
+        return false;
+      }
+
+      try {
+        const content = await workspacePort.readFile(targetPath);
+        const subSchema = parseSchemaFromYaml(content);
+
+        const newStack = [...navigationStack, { path: currentFilePath, schema }];
+        const manifestState = resolveWorkspaceManifestState(targetPath, get().loadedManifests);
+        set({
+          currentFilePath: targetPath,
+          navigationStack: newStack,
+          selectedNodeId: null,
+          ...manifestState,
+        });
+        get().initSchema(subSchema);
+        return true;
+      } catch (err) {
+        logger.error('Failed to load sub-diagram', err, { path: node.c4Ref });
+        set({
+          lastError: `Failed to load sub-diagram at ${node.c4Ref}: ${(err as Error).message}`,
+        });
+        return false;
+      }
+    }
+
+    return false;
   },
 
   zoomOut: async () => {
@@ -478,6 +600,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
       workspacePort,
       isWorkspaceOpen,
       workspaceManifest,
+      loadedSystems,
       logger,
     } = get();
     if (navigationStack.length > 0) {
@@ -502,6 +625,55 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
       return false;
     }
 
+    if (schema.parentRef && isEntityRef(schema.parentRef)) {
+      const parentSystem = loadedSystems.find(s =>
+        s.schema.nodes.some(n => n.entityRef === schema.parentRef)
+      );
+      if (parentSystem) {
+        logger.info('Zooming out to parent diagram via entityRef lookup', {
+          parentRef: schema.parentRef,
+        });
+        const manifestState = resolveWorkspaceManifestState(
+          parentSystem.path,
+          get().loadedManifests
+        );
+        set({
+          currentFilePath: parentSystem.path,
+          selectedNodeId: null,
+          ...manifestState,
+        });
+        get().initSchema(parentSystem.schema);
+        return true;
+      }
+    }
+
+    if (workspaceManifest && workspaceManifest.hierarchy) {
+      const currentRef = getSchemaEntityRef(schema, currentFilePath);
+      const entry = workspaceManifest.hierarchy.find(h => h.children.includes(currentRef));
+      if (entry) {
+        const parentSystem = loadedSystems.find(s => {
+          const schemaRef = getSchemaEntityRef(s.schema, s.path);
+          return schemaRef === entry.parent;
+        });
+        if (parentSystem) {
+          logger.info('Zooming out to parent diagram via workspaceManifest entityRef lookup', {
+            parent: entry.parent,
+          });
+          const manifestState = resolveWorkspaceManifestState(
+            parentSystem.path,
+            get().loadedManifests
+          );
+          set({
+            currentFilePath: parentSystem.path,
+            selectedNodeId: null,
+            ...manifestState,
+          });
+          get().initSchema(parentSystem.schema);
+          return true;
+        }
+      }
+    }
+
     let parentRefPath: string | null = null;
     if (workspaceManifest) {
       const currentName = getFileName(currentFilePath);
@@ -513,7 +685,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
       }
     }
 
-    if (!parentRefPath && schema.parentRef) {
+    if (!parentRefPath && schema.parentRef && !isEntityRef(schema.parentRef)) {
       parentRefPath = schema.parentRef;
     }
 

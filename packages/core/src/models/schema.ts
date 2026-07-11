@@ -34,6 +34,7 @@ export interface SystemNode {
   isTest?: boolean;
   x?: number;
   y?: number;
+  entityRef?: string;
 }
 
 export type DependencyType = 'direct-call' | 'publish-subscribe' | 'read-write';
