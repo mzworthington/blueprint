@@ -6,228 +6,72 @@ Blueprint is a local-first, bi-directionally synchronized visual diagramming can
 
 ---
 
-## 🚀 Key Features
+## 📸 The Blureprint App
 
-- **Bi-directional Live Synchronization:** Move nodes or wire connections on the grid to instantly update the output YAML schema. Edit or paste YAML schema in the editor to immediately redraw the canvas layout.
-- **Multi-File Workspace & System Switcher:** Eagerly loads all blueprints from the `blueprints/` directory. Provides an interactive glassmorphic dropdown switcher to swap seamlessly between different system diagrams.
-- **Recursive C4 Zoom & Hierarchical Navigation:** Double-click on components referencing a sub-diagram (`c4Ref`) to zoom in. Navigate back up using the interactive Breadcrumbs trail or via `Escape`/`Backspace` shortcuts.
-- **Circular Dependency Detection:** Runs real-time cycle validation (DFS traversal) over dependency links, highlighting offending visual edges in red and printing warnings.
-- **Local-First Persistence:** Mounts directly to your local workspace files utilizing the native browser **File System Access API**, falling back gracefully to text downloads where unsupported.
+![Blueprint Interface Tour & Catalog](./screenshots/1-panels-expanded.png)
 
 ---
 
-## 📸 Interface Tour & E2E Journeys
+## 💻 The Blueprint CLI Product
 
-### 1. Expanded Workspace Properties & Catalog
+Blueprint includes a powerful command-line interface (CLI) to automatically generate system diagrams directly from your existing application codebases.
 
-![Expanded Workspace Properties & Catalog](./screenshots/1-panels-expanded.png)
+The CLI works as an **AST Analyzer**. It parses your local source code, extracts components and dependency relationships, calculates an optimal coordinate layout using Dagre, and outputs a valid system schema YAML file inside the `blueprints/` directory.
 
-### 2. Clean Diagram Canvas View
+### Running the Analyzer
 
-![Clean Diagram Canvas View](./screenshots/2-panels-collapsed.png)
-
-### 3. Hierarchical C4 Container Level
-
-![Hierarchical C4 Container Level](./screenshots/3-container-level.png)
-
-### 4. Recursive Zoom-In Components
-
-![Recursive Zoom-In Components](./screenshots/4-zoomed-in-components.png)
-
----
-
-## 🏛️ System Architecture
-
-```mermaid
-graph TD
-    subgraph Driving [Driving UI Adapters]
-        Canvas[Canvas.tsx - React Flow]
-        CodeViewer[CodeViewer.tsx - Tabs/Editor]
-        PropertyPanel[PropertyPanel.tsx - Sidebar]
-    end
-
-    subgraph Store [Zustand Store - State Sync]
-        StoreEntry[store.ts - Composition Root]
-        UiSlice[uiSlice.ts - Layout & Panels]
-        DiagramSlice[diagramSlice.ts - Canvas & Navigation]
-        IoSlice[ioSlice.ts - File Systems Sync]
-        StoreEntry --> UiSlice
-        StoreEntry --> DiagramSlice
-        StoreEntry --> IoSlice
-    end
-
-    subgraph Core [Application Core]
-        DomainGraph[graph.ts - Domain Core Logic]
-        DomainPath[path.ts - Path Navigation]
-    end
-
-    subgraph Ports [Outbound Ports]
-        FSPort[FileSystemPort]
-        LoggerPort[LoggerPort]
-    end
-
-    subgraph Driven [Driven Infrastructure Adapters]
-        FSAdapter[BrowserFileSystemAdapter]
-        LogAdapter[ConsoleLoggerAdapter]
-    end
-
-    Canvas --> Store
-    CodeViewer --> Store
-    PropertyPanel --> Store
-    DiagramSlice --> DomainGraph
-    DiagramSlice --> DomainPath
-    IoSlice --> DomainPath
-    IoSlice --> FSPort
-    IoSlice --> LoggerPort
-    FSPort --> FSAdapter
-    LoggerPort --> LogAdapter
-```
-
-### 1. Pure Domain Layer (`src/domain/`)
-
-The core domain has **zero dependencies** on external UI frameworks (React, React Flow, Zustand):
-
-- [schema.ts](./src/domain/schema.ts): Houses types representing nodes, dependencies, properties, and verification results.
-- [graph.ts](./src/domain/graph.ts): Implements validation, Zod parsers, cycle detection routines, and Mermaid.js flowchart exports.
-- [path.ts](./src/domain/path.ts): Handles filesystem-agnostic relative C4 path resolution and closest workspace manifest matching.
-
-### 2. Outbound Ports (`src/domain/ports.ts`)
-
-Decoupled interfaces defining boundary operations for the core system:
-
-- `FileSystemPort`: Manages saving and loading of system configuration files.
-- `LoggerPort`: Manages structured trace logging.
-
-### 3. Driven Adapters (`src/adapters/`)
-
-Implementations of outbound ports binding visual tools to infrastructure resources:
-
-- `BrowserFileSystemAdapter`: Interacts with the file system.
-- `ConsoleLoggerAdapter`: Outputs structured timestamps and trace contexts to the browser console.
-- `useBlueprintStore` (Zustand): Synchronizes component values, validates changes, and hooks up ports to the UI. Composed of modular slices:
-  - `UiSlice`: Manages sidebar and panel toggles.
-  - `DiagramSlice`: Manages canvas visual nodes/edges and zoom transitions.
-  - `IoSlice`: Manages directory and file writing/reading interfaces.
-- `layoutUtils.ts`: Handles stateless React Flow node/edge coordinate converters and handle styling anchors.
-- `defaultData.ts`: Eagerly compiles blueprints glob matching files at build time.
-
----
-
-## 🔒 Security & Validation Architecture
-
-To enforce a zero-trust model at boundaries, Blueprint employs a two-tier validation approach:
-
-1. **Syntactic & Sanitization Schema Check (Zod):**
-   When YAML code is loaded, the parser validates it against a strict Zod contract:
-   - Node IDs are validated against `/^[a-zA-Z0-9_-]+$/` to ensure they are alphanumeric, preventing XSS, space errors, or SQL injection vectors.
-   - Node type strings must match valid domain enums (e.g. `rest-api`, `grpc-service`, `event-broker`, `relational-database`).
-2. **Structural & Architectural Dependency Check (DFS):**
-   Once syntax is confirmed, the graph validator evaluates constraints:
-   - Transitive circular dependency loops are flagged (`gateway` ➔ `service-a` ➔ `service-b` ➔ `gateway`).
-   - Active cyclic paths are visually highlighted on the UI canvas by blinking/animating corresponding edge routes.
-
----
-
-## 🛠️ Setup & Local Development
-
-### Environment & Tooling Setup (Mise)
-
-We use **[Mise](https://mise.jdx.dev/)** to automatically manage and activate project tool versions (Node.js and pnpm) defined in `mise.toml`.
-
-1. **Install Mise:** Refer to the [Mise Installation Guide](https://mise.jdx.dev/getting-started.html) (e.g., `brew install mise`).
-2. **Activate Mise:** Make sure Mise is activated in your shell (e.g., add `eval "$(mise activate zsh)"` to your `~/.zshrc`).
-3. **Install Tools:** Run the following in the repository root to automatically download and configure the exact Node/pnpm versions:
-   ```bash
-   mise install
-   ```
-
-_(Alternatively, you can manually use Node.js `v26.x` or later and pnpm `v11.x` or later)._
-
-### 1. Install Dependencies & Setup Husky Hooks
-
-Install project packages. This command automatically executes Husky setup:
-
-```bash
-pnpm install
-```
-
-If Git hooks are not configured automatically, you can initialize Husky manually:
-
-```bash
-pnpm run prepare
-```
-
-### 2. Run Local Development Server
-
-Launches the Vite server with Hot Module Replacement (HMR) and Tailwind compilation:
-
-```bash
-pnpm dev
-```
-
-### 3. Build Production Artifacts
-
-Compiles type definitions and generates the minified production bundle in the `dist` directory:
-
-```bash
-pnpm build
-```
-
-### 4. Auto-Generate System Diagrams (AST Analyzer)
-
-Parses your local TypeScript/React codebase, extracts components and dependency relationships, calculates optimal visual grid coordinates with Dagre, and outputs a capitalized system schema file inside the `blueprints/` directory (e.g. `blueprints/my-system.yaml`):
+To scan your codebase, run the following command in the repository root:
 
 ```bash
 pnpm blueprint
 ```
 
-#### Compiling to a Standalone Executable Binary
+### CLI Execution Modes
 
-To compile the AST analyzer into a standalone binary CLI tool using Bun:
+1. **Interactive Mode (Default):**
+   When run inside an interactive terminal, the CLI will walk you through a step-by-step prompt menu powered by `@clack/prompts`:
+   - Select your preferred parser (e.g., `ts-morph` or `tree-sitter`).
+   - Define the glob pattern to scan (supporting Tab autocompletion).
+   - Define the output directory path.
+
+2. **Headless / CI Mode:**
+   The CLI automatically switches to headless mode when executed in a non-TTY terminal, standard CI environments, or when arguments are supplied directly:
+   ```bash
+   pnpm blueprint --headless --parser=ts-morph --glob="src/**/*.ts" --output="blueprints"
+   ```
+
+### Command Options & Flags
+
+- `--headless`: Explicitly disables interactive console prompts.
+- `--parser=<ts-morph | tree-sitter>`:
+  - `ts-morph` (default): Fast, lightweight parsing for TypeScript-focused projects.
+  - `tree-sitter`: High-performance parsing supporting multi-language syntaxes.
+- `--glob="<pattern>"`: The directory or glob matching query to scan (e.g., `**/*.{ts,tsx}`).
+- `--output="<path>"`: The folder to store generated YAML blueprint files. You can also configure this by setting the `BLUEPRINT_OUTPUT_DIR` environment variable.
+
+### Compiling to a Standalone Binary
+
+You can compile the analyzer CLI tool into a single standalone executable binary using Bun:
 
 ```bash
 pnpm blueprint:compile
 ```
 
-This compiles a single standalone binary file into the `dist/` directory as `dist/blueprint-cli`. Note that you will need the `.wasm` files from `node_modules/tree-sitter-wasms/out/` in the same directory as the executable or in the target project's `node_modules` for parser features to function correctly.
+This generates `dist/blueprint-cli` which can be executed directly:
+
+```bash
+./dist/blueprint-cli --headless --parser=ts-morph
+```
+
+> [!NOTE]
+> The standalone binary requires tree-sitter `.wasm` query files (found in `node_modules/tree-sitter-wasms/out/`) in either the same directory as the executable, or in the target project's `node_modules` directory for parser support.
 
 ---
 
-## 🧪 Testing Environment, Code Style & Quality Control
+## 📖 Detailed Documentation
 
-### Running Tests
+Explore these dedicated files to learn more about using, designing, or contributing to Blueprint:
 
-Run the Vitest suite:
-
-```bash
-pnpm test
-```
-
-Run the Playwright suite:
-
-```bash
-pnpm test:e2e
-```
-
-### Formatting
-
-Run Prettier validation:
-
-```bash
-pnpm format:check
-```
-
-Apply automatic formatting to all source files:
-
-```bash
-pnpm format:write
-```
-
-### Git Commit Hooks
-
-We use **Husky** and **lint-staged** to validate commits before they are finalized:
-
-- Staged files undergo Prettier formatting check (`prettier --check`) and lint verification (`oxlint -c .oxlintrc.json`).
-- The entire codebase is checked for lint errors (`pnpm run lint`).
-- The full Vitest test suite (`pnpm test`) is run.
-- If formatting check fails, lint errors are found, or unit tests fail, the commit is blocked.
+- **[E2E Journeys & Interface Tour](./docs/journeys.md):** Screenshots and workflows detailing UI panels, container navigation, and visual editing.
+- **[System Architecture & Security](./docs/architecture.md):** Deep-dive into domain layers, state store slices, outbound ports, Zod schemas, and circular dependency detection algorithms.
+- **[Setup & Local Development](./docs/setup.md):** Guide to configuring Mise, installing package dependencies, executing tests (Vitest/Playwright), and configuring Git pre-commit validation hooks.

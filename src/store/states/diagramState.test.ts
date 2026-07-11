@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useBlueprintStore } from '../store';
 import type { NodeType } from '../../domain/schema';
 
-describe('diagramSlice Actions & State Management', () => {
+describe('diagramState Actions & State Management', () => {
   beforeEach(() => {
     const { initSchema } = useBlueprintStore.getState();
     initSchema({

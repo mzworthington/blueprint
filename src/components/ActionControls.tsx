@@ -1,5 +1,5 @@
 import React from 'react';
-import { Folder, Upload, Download, RefreshCcw } from 'lucide-react';
+import { Folder, Upload, Download, RefreshCcw, Link } from 'lucide-react';
 import { useBlueprintStore } from '../store/store';
 
 export const ActionControls: React.FC = () => {
@@ -10,6 +10,8 @@ export const ActionControls: React.FC = () => {
     loadSchema,
     saveActiveDiagram,
     initSchema,
+    schema,
+    syncExternalContainers,
   } = useBlueprintStore();
 
   const handleSave = async () => {
@@ -75,6 +77,17 @@ export const ActionControls: React.FC = () => {
         <Download className="w-3.5 h-3.5" />
         <span className="hidden sm:inline">{isWorkspaceOpen ? 'Save' : 'Save Schema'}</span>
       </button>
+
+      {isWorkspaceOpen && schema.level === 'component' && (
+        <button
+          onClick={syncExternalContainers}
+          className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-[#00f0ff] hover:text-cyan-300 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 hover:border-brand-500/20 transition cursor-pointer"
+          title="Sync related container dependencies as external nodes in this view"
+        >
+          <Link className="w-3.5 h-3.5" />
+          <span className="hidden sm:inline">Sync Externals</span>
+        </button>
+      )}
 
       <button
         onClick={handleClear}

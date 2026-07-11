@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { useBlueprintStore } from '../store';
 
-describe('uiSlice Actions & State Management', () => {
+describe('uiState Actions & State Management', () => {
   it('should initialize with correct default UI state', () => {
     const state = useBlueprintStore.getState();
     expect(state.showTests).toBe(false);

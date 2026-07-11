@@ -12,6 +12,14 @@ describe('ActionControls Component', () => {
       loadSchema: vi.fn(),
       saveActiveDiagram: vi.fn(),
       initSchema: vi.fn(),
+      schema: {
+        name: 'Test Schema',
+        version: '1.0.0',
+        level: 'container',
+        nodes: [],
+        dependencies: [],
+      },
+      syncExternalContainers: vi.fn(),
     });
   });
 
@@ -117,5 +125,28 @@ describe('ActionControls Component', () => {
     expect(initSchemaMock).not.toHaveBeenCalled();
 
     confirmSpy.mockRestore();
+  });
+
+  it('renders Sync Externals button and triggers sync when workspace is open and schema level is component', () => {
+    const syncMock = vi.fn();
+    useBlueprintStore.setState({
+      isWorkspaceOpen: true,
+      schema: {
+        name: 'Test Component Schema',
+        version: '1.0.0',
+        level: 'component',
+        nodes: [],
+        dependencies: [],
+      },
+      syncExternalContainers: syncMock,
+    });
+
+    render(<ActionControls />);
+    const syncBtn = screen.getByTitle(
+      'Sync related container dependencies as external nodes in this view'
+    );
+    expect(syncBtn).toBeInTheDocument();
+    fireEvent.click(syncBtn);
+    expect(syncMock).toHaveBeenCalledTimes(1);
   });
 });

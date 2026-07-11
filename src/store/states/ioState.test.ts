@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useBlueprintStore } from '../store';
 import { defaultLoadedSystems } from '../store';
 
-describe('ioSlice Actions & State Management', () => {
+describe('ioState Actions & State Management', () => {
   const mockFiles: Record<string, string> = {
     'blueprint.yaml': `
 name: Root Context

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
-import { createUiSlice, type UiSlice } from './slices/uiSlice';
-import { createDiagramSlice, type DiagramSlice } from './slices/diagramSlice';
-import { createIoSlice, type IoSlice } from './slices/ioSlice';
+import { createUiState, type UiState } from './states/uiState';
+import { createDiagramState, type DiagramState } from './states/diagramState';
+import { createIoState, type IoState } from './states/ioState';
 
 export type {
   BlueprintRFNode,
@@ -25,10 +25,10 @@ export {
   defaultInitialSchema,
 } from './defaultData';
 
-export interface BlueprintState extends UiSlice, DiagramSlice, IoSlice {}
+export interface BlueprintState extends UiState, DiagramState, IoState {}
 
-export const useBlueprintStore = create<BlueprintState>((set, get, store) => ({
-  ...createUiSlice(set, get, store),
-  ...createDiagramSlice(set, get, store),
-  ...createIoSlice(set, get, store),
+export const useBlueprintStore = create<BlueprintState>((set, get) => ({
+  ...createUiState(set),
+  ...createDiagramState(set, get),
+  ...createIoState(set, get),
 }));

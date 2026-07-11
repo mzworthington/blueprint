@@ -1,7 +1,7 @@
-import type { StateCreator } from 'zustand';
 import { applyNodeChanges, applyEdgeChanges } from '@xyflow/react';
 import type { NodeChange, EdgeChange, Connection } from '@xyflow/react';
-import type { BlueprintState } from '../store';
+import type { UiState } from './uiState';
+import type { IoState } from './ioState';
 import type {
   SystemSchema,
   SystemNode,
@@ -28,7 +28,7 @@ import {
   defaultInitialSchema,
 } from '../defaultData';
 
-export interface DiagramSlice {
+export interface DiagramState {
   schema: SystemSchema;
   nodes: BlueprintRFNode[];
   edges: BlueprintRFEdge[];
@@ -63,6 +63,7 @@ export interface DiagramSlice {
   zoomIntoNode: (nodeId: string) => Promise<boolean>;
   zoomOut: () => Promise<boolean>;
   selectSystem: (path: string) => void;
+  syncExternalContainers: () => void;
 }
 
 const applyStateUpdates = (
@@ -175,10 +176,15 @@ const initialEdges = defaultInitialSchema.dependencies.map(mapDomainDepToRFEdge)
 const initialValidation = validateGraph(defaultInitialSchema);
 const initialYaml = serializeSchemaToYaml(defaultInitialSchema);
 
-export const createDiagramSlice: StateCreator<BlueprintState, [], [], DiagramSlice> = (
-  set,
-  get
-) => ({
+type DiagramStateDeps = DiagramState & UiState & IoState;
+
+export const createDiagramState = (
+  set: (
+    partial: Partial<DiagramStateDeps> | ((state: DiagramStateDeps) => Partial<DiagramStateDeps>),
+    replace?: boolean
+  ) => void,
+  get: () => DiagramStateDeps
+): DiagramState => ({
   schema: defaultInitialSchema,
   nodes: initialNodes,
   edges: initialEdges,
@@ -563,5 +569,101 @@ export const createDiagramSlice: StateCreator<BlueprintState, [], [], DiagramSli
 
     logger.info('Already at root of diagram, cannot zoom out');
     return false;
+  },
+
+  syncExternalContainers: () => {
+    const { schema, currentFilePath, loadedSystems, logger } = get();
+    if (schema.level !== 'component') {
+      logger.warn('Sync external containers is only available on component-level diagrams.');
+      return;
+    }
+
+    const parentSystem = loadedSystems.find(s => s.schema.level === 'container');
+    if (!parentSystem) {
+      logger.warn('No container-level schema found in active workspace to sync with.');
+      return;
+    }
+
+    const currentFileName = getFileName(currentFilePath);
+    const activeContainerNode = parentSystem.schema.nodes.find(n => {
+      if (!n.c4Ref) return false;
+      return getFileName(n.c4Ref) === currentFileName;
+    });
+
+    if (!activeContainerNode) {
+      logger.warn(
+        `Could not map the current component diagram to any container node in parent schema. Make sure a node has c4Ref referencing this component file.`
+      );
+      return;
+    }
+
+    const relatedContainerIds = new Set<string>();
+    parentSystem.schema.dependencies.forEach(dep => {
+      if (dep.from === activeContainerNode.id) {
+        relatedContainerIds.add(dep.to);
+      } else if (dep.to === activeContainerNode.id) {
+        relatedContainerIds.add(dep.from);
+      }
+    });
+
+    if (relatedContainerIds.size === 0) {
+      logger.info('No external container dependencies found in parent schema to sync.');
+      return;
+    }
+
+    let addedCount = 0;
+    const currentNodes = [...get().nodes];
+
+    let maxX = 100;
+    let maxY = 100;
+    currentNodes.forEach(n => {
+      if (n.position.x > maxX) maxX = n.position.x;
+      if (n.position.y > maxY) maxY = n.position.y;
+    });
+
+    relatedContainerIds.forEach(extId => {
+      const existingNodeIndex = currentNodes.findIndex(n => n.id === extId);
+      if (existingNodeIndex >= 0) {
+        const node = currentNodes[existingNodeIndex];
+        if (!node.data.external) {
+          currentNodes[existingNodeIndex] = {
+            ...node,
+            data: {
+              ...node.data,
+              external: true,
+            },
+          };
+          addedCount++;
+        }
+      } else {
+        const extNode = parentSystem.schema.nodes.find(n => n.id === extId);
+        if (extNode) {
+          maxX += 180;
+          if (maxX > 600) {
+            maxX = 100;
+            maxY += 120;
+          }
+
+          const newRFNode = mapDomainNodeToRFNode({
+            id: extNode.id,
+            type: extNode.type,
+            name: `${extNode.name} (External)`,
+            external: true,
+            properties: extNode.properties,
+            x: maxX,
+            y: maxY,
+          });
+          currentNodes.push(newRFNode);
+          addedCount++;
+        }
+      }
+    });
+
+    if (addedCount > 0) {
+      logger.info(`Successfully synced and imported ${addedCount} external container nodes.`);
+      applyStateUpdates(set, get, currentNodes, get().edges);
+    } else {
+      logger.info('All external container dependencies are already mapped on the canvas.');
+    }
   },
 });

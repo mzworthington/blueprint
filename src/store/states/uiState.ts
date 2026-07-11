@@ -1,7 +1,4 @@
-import type { StateCreator } from 'zustand';
-import type { BlueprintState } from '../store';
-
-export interface UiSlice {
+export interface UiState {
   showTests: boolean;
   leftCollapsed: boolean;
   rightCollapsed: boolean;
@@ -12,7 +9,9 @@ export interface UiSlice {
   setShowDesignSystem: (show: boolean) => void;
 }
 
-export const createUiSlice: StateCreator<BlueprintState, [], [], UiSlice> = set => ({
+export const createUiState = (
+  set: (partial: Partial<UiState> | ((state: UiState) => Partial<UiState>)) => void
+): UiState => ({
   showTests: false,
   leftCollapsed: true,
   rightCollapsed: true,

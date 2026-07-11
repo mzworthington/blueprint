@@ -1,6 +1,5 @@
-import type { StateCreator } from 'zustand';
 import * as yaml from 'js-yaml';
-import type { BlueprintState } from '../store';
+import type { DiagramState } from './diagramState';
 import type { FileSystemPort, WorkspacePort, LoggerPort } from '../../domain/ports';
 import type { WorkspaceManifest } from '../../domain/schema';
 import { BrowserFileSystemAdapter, BrowserWorkspaceAdapter } from '../../adapters/fileSync';
@@ -8,7 +7,7 @@ import { ConsoleLoggerAdapter } from '../../adapters/telemetry';
 import { parseSchemaFromYaml } from '../../domain/graph';
 import { getClosestManifest, getFileName, resolveWorkspaceManifestState } from '../../domain/path';
 
-export interface IoSlice {
+export interface IoState {
   fileSystemPort: FileSystemPort;
   workspacePort: WorkspacePort;
   logger: LoggerPort;
@@ -20,7 +19,15 @@ export interface IoSlice {
   saveWorkspaceManifest: (manifestYaml: string) => Promise<boolean>;
 }
 
-export const createIoSlice: StateCreator<BlueprintState, [], [], IoSlice> = (set, get) => ({
+type IoStateDeps = IoState & DiagramState;
+
+export const createIoState = (
+  set: (
+    partial: Partial<IoStateDeps> | ((state: IoStateDeps) => Partial<IoStateDeps>),
+    replace?: boolean
+  ) => void,
+  get: () => IoStateDeps
+): IoState => ({
   fileSystemPort: BrowserFileSystemAdapter,
   workspacePort: BrowserWorkspaceAdapter,
   logger: ConsoleLoggerAdapter,
