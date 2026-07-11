@@ -25,8 +25,6 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v7
-        with:
-          fetch-depth: 0 # Fetch all history for tags resolving & diffs
 
       - name: Install pnpm
         uses: pnpm/action-setup@v6
@@ -100,10 +98,31 @@ jobs:
         with:
           path: './packages/app/dist'
 
-      # CLI Release steps (executed on push to main branch)
+  deploy:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+
+  release-cli:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # Fetch all history for tags resolving & diffs
+
       - name: Check if CLI files changed
         id: check_changes
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           git diff --name-only HEAD~1 HEAD > changed_files.txt || git show --name-only --pretty="" HEAD > changed_files.txt
           cat changed_files.txt
@@ -114,9 +133,33 @@ jobs:
             echo "should_release=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Setup Bun
+        if: steps.check_changes.outputs.should_release == 'true'
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install pnpm
+        if: steps.check_changes.outputs.should_release == 'true'
+        uses: pnpm/action-setup@v6
+        with:
+          version: 11.10.0
+          run_install: false
+
+      - name: Setup Node.js
+        if: steps.check_changes.outputs.should_release == 'true'
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        if: steps.check_changes.outputs.should_release == 'true'
+        run: pnpm install --frozen-lockfile
+
       - name: Determine Next Version
         id: versioning
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && steps.check_changes.outputs.should_release == 'true'
+        if: steps.check_changes.outputs.should_release == 'true'
         run: |
           git fetch --tags
           # Get latest tag, fallback to v0.1.0
@@ -137,7 +180,7 @@ jobs:
           echo "new_tag=$NEW_TAG" >> $GITHUB_OUTPUT
 
       - name: Compile CLI Binaries (Cross-Platform)
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && steps.check_changes.outputs.should_release == 'true'
+        if: steps.check_changes.outputs.should_release == 'true'
         run: |
           mkdir -p dist/linux-x64 dist/macos-x64 dist/macos-arm64 dist/windows-x64
           
@@ -160,7 +203,7 @@ jobs:
           zip -j dist/blueprint-windows-x64.zip dist/windows-x64/blueprint.exe
 
       - name: Create GitHub Release
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && steps.check_changes.outputs.should_release == 'true'
+        if: steps.check_changes.outputs.should_release == 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.versioning.outputs.new_tag }}
@@ -173,15 +216,3 @@ jobs:
             dist/blueprint-macos-x64.tar.gz
             dist/blueprint-macos-arm64.tar.gz
             dist/blueprint-windows-x64.zip
-
-  deploy:
-    needs: build-and-test
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
