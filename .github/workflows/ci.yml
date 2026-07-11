@@ -77,7 +77,8 @@ jobs:
         with:
           name: playwright-report
           path: |
-            playwright-report/
+            packages/app/playwright-report/
+            packages/app/screenshots/
           retention-days: 30
 
       - name: Compile Production Build
@@ -87,7 +88,7 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: actions/upload-pages-artifact@v5
         with:
-          path: './dist'
+          path: './packages/app/dist'
 
   deploy:
     needs: build-and-test
