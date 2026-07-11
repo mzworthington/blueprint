@@ -31,41 +31,41 @@ nodes:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
     external: true
-    x: 140
+    x: 1520
     'y': 50
   - id: github
     type: background-worker
-    name: github Service (schema)
+    name: github Service (actions)
     isTest: false
     properties:
-      filepath: packages/connections/src/schema/github.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 830
-    'y': 690
-  - id: storage
-    type: background-worker
-    name: storage Service (lib)
-    isTest: false
-    properties:
-      filepath: packages/cli-module-auth/src/lib/storage.ts
+      filepath: plugins/scaffolder-backend-module-github/src/actions/github.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1290
     'y': 690
-  - id: iconsapi
+  - id: storage
     type: background-worker
-    name: IconsApi Service (apis)
+    name: storage Service (auth)
     isTest: false
     properties:
-      filepath: packages/frontend-plugin-api/src/apis/definitions/IconsApi.ts
+      filepath: packages/cli-node/src/auth/storage.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 600
-    'y': 50
+    x: 830
+    'y': 690
+  - id: test-utils
+    type: gateway-api
+    name: test-utils UI Component (hooks)
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-react/src/hooks/test-utils.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 2020
+    'y': 370
   - id: favoritetoggle
     type: gateway-api
     name: FavoriteToggle UI Component (components)
@@ -86,19 +86,19 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 1520
+    x: 600
     'y': 50
-  - id: test-utils
-    type: gateway-api
-    name: test-utils UI Component (test-utils.tsx)
+  - id: iconsapi
+    type: background-worker
+    name: IconsApi Service (apis)
     isTest: false
     properties:
-      filepath: plugins/techdocs-addons-test-utils/src/test-utils.tsx
+      filepath: packages/frontend-plugin-api/src/apis/definitions/IconsApi.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
-    x: 2020
-    'y': 370
+    x: 140
+    'y': 50
 dependencies:
   - from: frontend-client
     to: icons
@@ -112,10 +112,18 @@ dependencies:
     to: storage
     type: direct-call
     description: Executes local class methods / functions
-  - from: iconsapi
+  - from: icons_test
+    to: test-utils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: icons_test
     to: icons
     type: direct-call
     description: Executes local class methods / functions
+  - from: frontend-client
+    to: icons
+    type: direct-call
+    description: Renders icons layout component
   - from: favoritetoggle
     to: icons
     type: direct-call
@@ -124,15 +132,7 @@ dependencies:
     to: icons
     type: direct-call
     description: Executes local class methods / functions
-  - from: frontend-client
-    to: icons
-    type: direct-call
-    description: Renders icons layout component
-  - from: icons_test
-    to: test-utils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: icons_test
+  - from: iconsapi
     to: icons
     type: direct-call
     description: Executes local class methods / functions

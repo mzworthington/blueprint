@@ -13,71 +13,16 @@ nodes:
     external: false
     x: 1750
     'y': 370
-  - id: gitlabissueedit_test
+  - id: util
     type: background-worker
-    name: gitlabIssueEdit.test Service (actions)
-    isTest: true
+    name: util Service (__fixtures__)
+    isTest: false
     properties:
-      filepath: plugins/scaffolder-backend-module-gitlab/src/actions/gitlabIssueEdit.test.ts
+      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/util.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 140
-    'y': 50
-  - id: gitlabissuecreate_test
-    type: background-worker
-    name: gitlabIssueCreate.test Service (actions)
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-gitlab/src/actions/gitlabIssueCreate.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 50
-  - id: gitlabissuecreate
-    type: background-worker
-    name: gitlabIssueCreate Service (actions)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-gitlab/src/actions/gitlabIssueCreate.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1060
-    'y': 50
-  - id: gitlabissueedit
-    type: background-worker
-    name: gitlabIssueEdit Service (actions)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-gitlab/src/actions/gitlabIssueEdit.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1520
-    'y': 50
-  - id: gitlabpipelinetrigger_examples
-    type: background-worker
-    name: gitlabPipelineTrigger.examples Service (actions)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-gitlab/src/actions/gitlabPipelineTrigger.examples.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1980
-    'y': 50
-  - id: gitlabissueedit_examples
-    type: background-worker
-    name: gitlabIssueEdit.examples Service (actions)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-gitlab/src/actions/gitlabIssueEdit.examples.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2440
     'y': 50
   - id: gitlabissuecreate_examples
     type: background-worker
@@ -88,21 +33,80 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2900
+    x: 600
     'y': 50
-  - id: util
+  - id: gitlabissuecreate_test
     type: background-worker
-    name: util Service (__fixtures__)
+    name: gitlabIssueCreate.test Service (actions)
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-gitlab/src/actions/gitlabIssueCreate.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 50
+  - id: gitlabissuecreate
+    type: background-worker
+    name: gitlabIssueCreate Service (actions)
     isTest: false
     properties:
-      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/util.ts
+      filepath: plugins/scaffolder-backend-module-gitlab/src/actions/gitlabIssueCreate.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 50
+  - id: gitlabissueedit_examples
+    type: background-worker
+    name: gitlabIssueEdit.examples Service (actions)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-gitlab/src/actions/gitlabIssueEdit.examples.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 50
+  - id: gitlabissueedit_test
+    type: background-worker
+    name: gitlabIssueEdit.test Service (actions)
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-gitlab/src/actions/gitlabIssueEdit.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2440
+    'y': 50
+  - id: gitlabissueedit
+    type: background-worker
+    name: gitlabIssueEdit Service (actions)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-gitlab/src/actions/gitlabIssueEdit.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2900
+    'y': 50
+  - id: gitlabpipelinetrigger_examples
+    type: background-worker
+    name: gitlabPipelineTrigger.examples Service (actions)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-gitlab/src/actions/gitlabPipelineTrigger.examples.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 3360
     'y': 50
 dependencies:
-  - from: gitlabissueedit_test
+  - from: util
+    to: commongitlabconfig
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlabissuecreate_examples
     to: commongitlabconfig
     type: direct-call
     description: Executes local class methods / functions
@@ -114,23 +118,19 @@ dependencies:
     to: commongitlabconfig
     type: direct-call
     description: Executes local class methods / functions
+  - from: gitlabissueedit_examples
+    to: commongitlabconfig
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gitlabissueedit_test
+    to: commongitlabconfig
+    type: direct-call
+    description: Executes local class methods / functions
   - from: gitlabissueedit
     to: commongitlabconfig
     type: direct-call
     description: Executes local class methods / functions
   - from: gitlabpipelinetrigger_examples
-    to: commongitlabconfig
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: gitlabissueedit_examples
-    to: commongitlabconfig
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: gitlabissuecreate_examples
-    to: commongitlabconfig
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
     to: commongitlabconfig
     type: direct-call
     description: Executes local class methods / functions

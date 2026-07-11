@@ -13,14 +13,14 @@ nodes:
     external: false
     x: 1520
     'y': 50
-  - id: mkdocs-index
-    type: background-worker
-    name: mkdocs-index Service
+  - id: shadowdom
+    type: gateway-api
+    name: shadowDom UI Component
     isTest: false
     properties:
-      filepath: plugins/techdocs/src/test-utils/fixtures/mkdocs-index.ts
+      filepath: plugins/techdocs/src/test-utils/shadowDom.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: false
     x: 140
     'y': 370
@@ -35,14 +35,14 @@ nodes:
     external: false
     x: 600
     'y': 370
-  - id: shadowdom
-    type: gateway-api
-    name: shadowDom UI Component
+  - id: mkdocs-index
+    type: background-worker
+    name: mkdocs-index Service
     isTest: false
     properties:
-      filepath: plugins/techdocs/src/test-utils/shadowDom.ts
+      filepath: plugins/techdocs/src/test-utils/fixtures/mkdocs-index.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: false
     x: 1060
     'y': 370
@@ -59,14 +59,14 @@ nodes:
     'y': 370
   - id: index
     type: background-worker
-    name: index Service (index.ts)
+    name: index Service (commands)
     isTest: false
     properties:
-      filepath: packages/frontend-test-utils/src/index.ts
+      filepath: packages/cli-module-build/src/commands/package/bundle/__fixtures__/packed/frontend/src/index.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 370
+    x: 830
     'y': 50
   - id: frontend-client
     type: gateway-api
@@ -75,7 +75,7 @@ nodes:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
     external: true
-    x: 1060
+    x: 140
     'y': 50
   - id: transformers
     type: background-worker
@@ -86,7 +86,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1060
+    x: 140
     'y': 690
 dependencies:
   - from: testpipeline

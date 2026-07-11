@@ -16,9 +16,18 @@ export class TsMorphParserAdapter implements CodebaseParserPort {
         : {}
     );
 
-    project.addSourceFilesAtPaths(path.resolve(process.cwd(), globPattern));
+    const resolvedPattern = path.resolve(process.cwd(), globPattern);
+    project.addSourceFilesAtPaths([
+      resolvedPattern,
+      '!**/node_modules/**',
+      '!**/dist/**',
+      '!**/.git/**',
+    ]);
 
-    const sourceFiles = project.getSourceFiles();
+    const sourceFiles = project.getSourceFiles().filter(sf => {
+      const fp = sf.getFilePath().replace(/\\/g, '/');
+      return !fp.includes('/node_modules/') && !fp.includes('/dist/') && !fp.includes('/.git/');
+    });
     const result: ParsedSourceFile[] = [];
 
     for (const sourceFile of sourceFiles) {

@@ -7,22 +7,44 @@ nodes:
     name: loader Service
     isTest: false
     properties:
-      filepath: packages/config-loader/src/loader.ts
+      filepath: packages/frontend-dynamic-feature-loader/src/loader.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 600
     'y': 370
-  - id: types
-    type: gateway-api
-    name: types UI Component (components)
+  - id: loader_test
+    type: background-worker
+    name: loader.test Service (loader.test.tsx)
+    isTest: true
+    properties:
+      filepath: packages/frontend-dynamic-feature-loader/src/loader.test.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 50
+  - id: config
+    type: background-worker
+    name: config Service (entrypoints)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 140
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
     'y': 690
   - id: error
     type: background-worker
@@ -32,28 +54,6 @@ nodes:
       filepath: packages/errors/src/serialization/error.ts
       namespaces: ''
       technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 690
-  - id: loader_test
-    type: background-worker
-    name: loader.test Service (loader.test.ts)
-    isTest: true
-    properties:
-      filepath: packages/config-loader/src/loader.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 370
-    'y': 50
-  - id: config
-    type: gateway-api
-    name: config UI Component (layout)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
-      namespaces: ''
-      technology: React Component
     external: true
     x: 1060
     'y': 690
@@ -69,14 +69,6 @@ nodes:
     x: 830
     'y': 50
 dependencies:
-  - from: loader
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: loader
-    to: error
-    type: direct-call
-    description: References class type / calls methods
   - from: loader_test
     to: loader
     type: direct-call
@@ -85,6 +77,14 @@ dependencies:
     to: config
     type: direct-call
     description: Executes local class methods / functions
+  - from: loader
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: loader
+    to: error
+    type: direct-call
+    description: References class type / calls methods
   - from: plugin-manager
     to: loader
     type: direct-call

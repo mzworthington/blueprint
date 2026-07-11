@@ -13,27 +13,16 @@ nodes:
     external: false
     x: 1520
     'y': 370
-  - id: serverpermissionclient
+  - id: permissionclient_test
     type: background-worker
-    name: ServerPermissionClient Service (ServerPermissionClient.ts)
-    isTest: false
+    name: PermissionClient.test Service (PermissionClient.test.ts)
+    isTest: true
     properties:
-      filepath: plugins/permission-node/src/ServerPermissionClient.ts
+      filepath: plugins/permission-common/src/PermissionClient.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1060
-    'y': 50
-  - id: identitypermissionapi
-    type: background-worker
-    name: IdentityPermissionApi Service (apis)
-    isTest: false
-    properties:
-      filepath: plugins/permission-react/src/apis/IdentityPermissionApi.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1520
     'y': 50
   - id: external-api-target
     type: rest-api
@@ -45,22 +34,22 @@ nodes:
     x: 140
     'y': 690
   - id: config
-    type: gateway-api
-    name: config UI Component (layout)
+    type: background-worker
+    name: config Service (entrypoints)
     isTest: false
     properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 690
   - id: errors
     type: background-worker
-    name: errors Service (errors.ts)
+    name: errors Service (service)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -71,7 +60,7 @@ nodes:
     name: api Service (types)
     isTest: false
     properties:
-      filepath: packages/catalog-client/src/types/api.ts
+      filepath: plugins/permission-common/src/types/api.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -79,10 +68,10 @@ nodes:
     'y': 690
   - id: discovery
     type: background-worker
-    name: discovery Service (types)
+    name: discovery Service (schema)
     isTest: false
     properties:
-      filepath: packages/repo-tools/templates/typescript-backstage-client/types/discovery.ts
+      filepath: plugins/scaffolder-common/src/schema/openapi/generated/types/discovery.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -101,35 +90,42 @@ nodes:
     'y': 690
   - id: permissions
     type: background-worker
-    name: permissions Service (permissions.ts)
+    name: permissions Service (service)
     isTest: false
     properties:
-      filepath: plugins/catalog-common/src/permissions.ts
+      filepath: plugins/scaffolder-backend/src/service/permissions.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 2900
     'y': 690
-  - id: permissionclient_test
+  - id: serverpermissionclient
     type: background-worker
-    name: PermissionClient.test Service (PermissionClient.test.ts)
-    isTest: true
+    name: ServerPermissionClient Service (ServerPermissionClient.ts)
+    isTest: false
     properties:
-      filepath: plugins/permission-common/src/PermissionClient.test.ts
+      filepath: plugins/permission-node/src/ServerPermissionClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 50
+  - id: identitypermissionapi
+    type: background-worker
+    name: IdentityPermissionApi Service (apis)
+    isTest: false
+    properties:
+      filepath: plugins/permission-react/src/apis/IdentityPermissionApi.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1980
     'y': 50
 dependencies:
-  - from: serverpermissionclient
+  - from: permissionclient_test
     to: permissionclient
     type: direct-call
-    description: References class type / calls methods
-  - from: identitypermissionapi
-    to: permissionclient
-    type: direct-call
-    description: References class type / calls methods
+    description: Executes local class methods / functions
   - from: permissionclient
     to: external-api-target
     type: direct-call
@@ -158,7 +154,11 @@ dependencies:
     to: permissions
     type: direct-call
     description: Executes local class methods / functions
-  - from: permissionclient_test
+  - from: serverpermissionclient
     to: permissionclient
     type: direct-call
-    description: Executes local class methods / functions
+    description: References class type / calls methods
+  - from: identitypermissionapi
+    to: permissionclient
+    type: direct-call
+    description: References class type / calls methods

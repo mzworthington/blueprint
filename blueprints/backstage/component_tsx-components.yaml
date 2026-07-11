@@ -1,18 +1,27 @@
-name: Backstage - Component.tsx Components
+name: Backstage - component.tsx Components
 version: 1.0.0
 level: component
 nodes:
   - id: component
-    type: background-worker
-    name: Component Service
+    type: gateway-api
+    name: component UI Component
     isTest: false
     properties:
-      filepath: packages/app-example-plugin/src/Component.tsx
+      filepath: plugins/techdocs-react/src/component.tsx
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: false
-    x: 140
+    x: 370
     'y': 370
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 140
+    'y': 50
   - id: component_test
     type: gateway-api
     name: component.test UI Component (component.test.tsx)
@@ -22,10 +31,18 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 140
+    x: 600
     'y': 50
 dependencies:
+  - from: frontend-client
+    to: component
+    type: direct-call
+    description: Renders Component layout component
   - from: component_test
     to: component
     type: direct-call
     description: Executes local class methods / functions
+  - from: frontend-client
+    to: component
+    type: direct-call
+    description: Renders component layout component

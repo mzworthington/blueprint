@@ -2,16 +2,27 @@ name: Backstage - system Components
 version: 1.0.0
 level: component
 nodes:
-  - id: getlegacyintegrations
+  - id: combineconnectionsources_test
     type: background-worker
-    name: getLegacyIntegrations Service
-    isTest: false
+    name: combineConnectionSources.test Service
+    isTest: true
     properties:
-      filepath: packages/connections/src/system/getLegacyIntegrations.ts
+      filepath: packages/connections/src/system/combineConnectionSources.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 6390
+    x: 6255
+    'y': 50
+  - id: combineconnectionsources
+    type: background-worker
+    name: combineConnectionSources Service
+    isTest: false
+    properties:
+      filepath: packages/connections/src/system/combineConnectionSources.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 6120
     'y': 370
   - id: createconnectiontype_test
     type: background-worker
@@ -33,30 +44,8 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2860
+    x: 2900
     'y': 690
-  - id: combineconnectionsources_test
-    type: background-worker
-    name: combineConnectionSources.test Service
-    isTest: true
-    properties:
-      filepath: packages/connections/src/system/combineConnectionSources.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 7445
-    'y': 50
-  - id: combineconnectionsources
-    type: background-worker
-    name: combineConnectionSources Service
-    isTest: false
-    properties:
-      filepath: packages/connections/src/system/combineConnectionSources.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 7120
-    'y': 370
   - id: getlegacyintegrations_test
     type: background-worker
     name: getLegacyIntegrations.test Service
@@ -68,39 +57,28 @@ nodes:
     external: false
     x: 3360
     'y': 50
-  - id: gitea
+  - id: getlegacyintegrations
     type: background-worker
-    name: gitea Service (schema)
+    name: getLegacyIntegrations Service
     isTest: false
     properties:
-      filepath: packages/connections/src/schema/gitea.ts
+      filepath: packages/connections/src/system/getLegacyIntegrations.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 7255
+    'y': 370
+  - id: defaultconnectionservice
+    type: background-worker
+    name: DefaultConnectionService Service (api)
+    isTest: false
+    properties:
+      filepath: packages/connections/src/api/DefaultConnectionService.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 5660
-    'y': 370
-  - id: github
-    type: background-worker
-    name: github Service (schema)
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/github.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 5200
-    'y': 370
-  - id: awss3
-    type: background-worker
-    name: awsS3 Service (schema)
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/awsS3.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 4740
-    'y': 370
+    x: 6945
+    'y': 50
   - id: awscodecommit
     type: background-worker
     name: awsCodeCommit Service (schema)
@@ -110,18 +88,106 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 4280
+    x: 5660
     'y': 370
-  - id: gerrit
-    type: background-worker
-    name: gerrit Service (schema)
+  - id: awss3
+    type: rest-api
+    name: awsS3 REST Endpoint (stages)
     isTest: false
     properties:
-      filepath: packages/connections/src/schema/gerrit.ts
+      filepath: plugins/techdocs-node/src/stages/publish/awsS3.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 5200
+    'y': 370
+  - id: azure
+    type: background-worker
+    name: azure Service (processor)
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-email/src/processor/transports/azure.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 4740
+    'y': 370
+  - id: azureblobstorage
+    type: rest-api
+    name: azureBlobStorage REST Endpoint (stages)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/publish/azureBlobStorage.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 4280
+    'y': 370
+  - id: bitbucketcloud
+    type: background-worker
+    name: bitbucketCloud Service (actions)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-bitbucket-cloud/src/actions/bitbucketCloud.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 3820
+    'y': 370
+  - id: bitbucketserver
+    type: background-worker
+    name: bitbucketServer Service (actions)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-bitbucket-server/src/actions/bitbucketServer.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3360
+    'y': 370
+  - id: gerrit
+    type: background-worker
+    name: gerrit Service (actions)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-gerrit/src/actions/gerrit.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2900
+    'y': 370
+  - id: gitea
+    type: background-worker
+    name: gitea Service (actions)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-gitea/src/actions/gitea.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2440
+    'y': 370
+  - id: github
+    type: background-worker
+    name: github Service (actions)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/github.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1980
+    'y': 370
+  - id: gitlab
+    type: background-worker
+    name: gitlab Service (actions)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-gitlab/src/actions/gitlab.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
     'y': 370
   - id: googlegcs
     type: background-worker
@@ -132,51 +198,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 3360
-    'y': 370
-  - id: bitbucketserver
-    type: background-worker
-    name: bitbucketServer Service (schema)
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/bitbucketServer.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2900
-    'y': 370
-  - id: azure
-    type: background-worker
-    name: azure Service (schema)
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/azure.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2440
-    'y': 370
-  - id: gitlab
-    type: background-worker
-    name: gitlab Service (schema)
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/gitlab.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1980
-    'y': 370
-  - id: bitbucketcloud
-    type: background-worker
-    name: bitbucketCloud Service (schema)
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/bitbucketCloud.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1520
+    x: 1060
     'y': 370
   - id: harness
     type: background-worker
@@ -187,51 +209,18 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1060
-    'y': 370
-  - id: azureblobstorage
-    type: background-worker
-    name: azureBlobStorage Service (schema)
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/azureBlobStorage.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
     x: 600
     'y': 370
-  - id: config
-    type: gateway-api
-    name: config UI Component (layout)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 5930
-    'y': 690
-  - id: types
-    type: gateway-api
-    name: types UI Component (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 6390
-    'y': 690
-  - id: url
+  - id: connection
     type: background-worker
-    name: url Service (stages)
+    name: Connection Service (api)
     isTest: false
     properties:
-      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
+      filepath: packages/connections/src/api/Connection.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 6850
+    x: 6255
     'y': 690
   - id: connectiontype
     type: background-worker
@@ -242,31 +231,78 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2860
+    x: 2900
     'y': 1010
-  - id: connection
+  - id: config
     type: background-worker
-    name: Connection Service (api)
+    name: config Service (entrypoints)
     isTest: false
     properties:
-      filepath: packages/connections/src/api/Connection.ts
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 7445
+    x: 6795
     'y': 690
-  - id: defaultconnectionservice
+  - id: types
     type: background-worker
-    name: DefaultConnectionService Service (api)
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/connections/src/api/DefaultConnectionService.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 6430
-    'y': 50
+    x: 7255
+    'y': 690
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 7715
+    'y': 690
 dependencies:
+  - from: defaultconnectionservice
+    to: getlegacyintegrations
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultconnectionservice
+    to: combineconnectionsources
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: awscodecommit
+    to: createconnectiontype
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: awss3
+    to: createconnectiontype
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: azure
+    to: createconnectiontype
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: azureblobstorage
+    to: createconnectiontype
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: bitbucketcloud
+    to: createconnectiontype
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: bitbucketserver
+    to: createconnectiontype
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: gerrit
+    to: createconnectiontype
+    type: direct-call
+    description: Executes local class methods / functions
   - from: gitea
     to: createconnectiontype
     type: direct-call
@@ -275,15 +311,7 @@ dependencies:
     to: createconnectiontype
     type: direct-call
     description: Executes local class methods / functions
-  - from: awss3
-    to: createconnectiontype
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: awscodecommit
-    to: createconnectiontype
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: gerrit
+  - from: gitlab
     to: createconnectiontype
     type: direct-call
     description: Executes local class methods / functions
@@ -291,48 +319,8 @@ dependencies:
     to: createconnectiontype
     type: direct-call
     description: Executes local class methods / functions
-  - from: bitbucketserver
-    to: createconnectiontype
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: azure
-    to: createconnectiontype
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: gitlab
-    to: createconnectiontype
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: bitbucketcloud
-    to: createconnectiontype
-    type: direct-call
-    description: Executes local class methods / functions
   - from: harness
     to: createconnectiontype
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: azureblobstorage
-    to: createconnectiontype
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: getlegacyintegrations
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: getlegacyintegrations
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: getlegacyintegrations
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: createconnectiontype_test
-    to: createconnectiontype
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createconnectiontype
-    to: connectiontype
     type: direct-call
     description: Executes local class methods / functions
   - from: combineconnectionsources_test
@@ -345,6 +333,14 @@ dependencies:
     description: Executes local class methods / functions
   - from: combineconnectionsources
     to: connection
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createconnectiontype_test
+    to: createconnectiontype
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createconnectiontype
+    to: connectiontype
     type: direct-call
     description: Executes local class methods / functions
   - from: getlegacyintegrations_test
@@ -399,11 +395,15 @@ dependencies:
     to: harness
     type: direct-call
     description: Executes local class methods / functions
-  - from: defaultconnectionservice
-    to: getlegacyintegrations
+  - from: getlegacyintegrations
+    to: config
     type: direct-call
     description: Executes local class methods / functions
-  - from: defaultconnectionservice
-    to: combineconnectionsources
+  - from: getlegacyintegrations
+    to: types
     type: direct-call
     description: Executes local class methods / functions
+  - from: getlegacyintegrations
+    to: url
+    type: direct-call
+    description: References class type / calls methods

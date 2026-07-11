@@ -11,19 +11,8 @@ nodes:
       namespaces: ''
       technology: REST Controller / Router
     external: false
-    x: 330
+    x: 370
     'y': 50
-  - id: parsewebmessageresponse
-    type: background-worker
-    name: parseWebMessageResponse Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-node/src/flow/__testUtils__/parseWebMessageResponse.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1005
-    'y': 370
   - id: sendwebmessageresponse
     type: rest-api
     name: sendWebMessageResponse REST Endpoint
@@ -35,17 +24,17 @@ nodes:
     external: false
     x: 1005
     'y': 690
-  - id: createoauthroutehandlers_test
-    type: rest-api
-    name: createOAuthRouteHandlers.test REST Endpoint (oauth)
-    isTest: true
+  - id: parsewebmessageresponse
+    type: background-worker
+    name: parseWebMessageResponse Service
+    isTest: false
     properties:
-      filepath: plugins/auth-node/src/oauth/createOAuthRouteHandlers.test.ts
+      filepath: plugins/auth-node/src/flow/__testUtils__/parseWebMessageResponse.ts
       namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 1005
-    'y': 50
+      technology: TypeScript Domain Service
+    external: false
+    x: 1425
+    'y': 370
   - id: express
     type: rest-api
     name: express REST Endpoint (types)
@@ -75,35 +64,42 @@ nodes:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
     external: true
-    x: 1465
+    x: 965
     'y': 370
   - id: types
-    type: gateway-api
-    name: types UI Component (components)
+    type: background-worker
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 870
     'y': 1010
   - id: errors
     type: background-worker
-    name: errors Service (errors.ts)
+    name: errors Service (service)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1330
     'y': 1010
+  - id: createoauthroutehandlers_test
+    type: rest-api
+    name: createOAuthRouteHandlers.test REST Endpoint (oauth)
+    isTest: true
+    properties:
+      filepath: plugins/auth-node/src/oauth/createOAuthRouteHandlers.test.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 1505
+    'y': 50
 dependencies:
-  - from: createoauthroutehandlers_test
-    to: parsewebmessageresponse
-    type: direct-call
-    description: Executes local class methods / functions
   - from: sendwebmessageresponse_test
     to: express
     type: direct-call
@@ -120,10 +116,6 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: parsewebmessageresponse
-    to: sendwebmessageresponse
-    type: direct-call
-    description: Executes local class methods / functions
   - from: frontend-client
     to: sendwebmessageresponse
     type: direct-call
@@ -138,5 +130,13 @@ dependencies:
     description: Executes local class methods / functions
   - from: sendwebmessageresponse
     to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createoauthroutehandlers_test
+    to: parsewebmessageresponse
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: parsewebmessageresponse
+    to: sendwebmessageresponse
     type: direct-call
     description: Executes local class methods / functions

@@ -2,17 +2,6 @@ name: Backstage - engine Components
 version: 1.0.0
 level: component
 nodes:
-  - id: incrementalingestionengine
-    type: background-worker
-    name: IncrementalIngestionEngine Service
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-incremental-ingestion/src/engine/IncrementalIngestionEngine.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1385
-    'y': 370
   - id: incrementalingestionengine_test
     type: background-worker
     name: IncrementalIngestionEngine.test Service
@@ -22,38 +11,38 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 680
+    x: 260
     'y': 50
-  - id: wrapperproviders
-    type: relational-database
-    name: WrapperProviders Database (module)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-incremental-ingestion/src/module/WrapperProviders.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 1465
-    'y': 50
-  - id: alpha
+  - id: incrementalingestionengine
     type: background-worker
-    name: alpha Service (alpha.ts)
+    name: IncrementalIngestionEngine Service
     isTest: false
     properties:
-      filepath: packages/core-components/src/alpha.ts
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/engine/IncrementalIngestionEngine.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1060
+    'y': 370
+  - id: types
+    type: background-worker
+    name: types Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1060
+    x: 600
     'y': 690
-  - id: types
-    type: gateway-api
-    name: types UI Component (components)
+  - id: alpha
+    type: background-worker
+    name: alpha Service (tasks)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/scaffolder-node/src/tasks/alpha.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 140
     'y': 690
@@ -66,14 +55,14 @@ nodes:
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: true
-    x: 600
+    x: 1060
     'y': 690
   - id: errors
     type: background-worker
-    name: errors Service (errors.ts)
+    name: errors Service (service)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -90,9 +79,28 @@ nodes:
     external: true
     x: 1980
     'y': 690
+  - id: wrapperproviders
+    type: relational-database
+    name: WrapperProviders Database (module)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/module/WrapperProviders.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 1100
+    'y': 50
 dependencies:
-  - from: wrapperproviders
+  - from: incrementalingestionengine_test
     to: incrementalingestionengine
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: incrementalingestionengine_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: incrementalingestionengine_test
+    to: alpha
     type: direct-call
     description: Executes local class methods / functions
   - from: incrementalingestionengine
@@ -115,15 +123,7 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: incrementalingestionengine_test
+  - from: wrapperproviders
     to: incrementalingestionengine
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: incrementalingestionengine_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: incrementalingestionengine_test
-    to: alpha
     type: direct-call
     description: Executes local class methods / functions

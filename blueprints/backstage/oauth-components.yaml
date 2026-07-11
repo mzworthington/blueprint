@@ -2,17 +2,6 @@ name: Backstage - oauth Components
 version: 1.0.0
 level: component
 nodes:
-  - id: state
-    type: rest-api
-    name: state REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/auth-node/src/oauth/state.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: false
-    x: 5185
-    'y': 1010
   - id: cookiescopemanager_test
     type: rest-api
     name: CookieScopeManager.test REST Endpoint
@@ -22,29 +11,7 @@ nodes:
       namespaces: ''
       technology: REST Controller / Router
     external: false
-    x: 2495
-    'y': 370
-  - id: oauthcookiemanager
-    type: rest-api
-    name: OAuthCookieManager REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/auth-node/src/oauth/OAuthCookieManager.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: false
-    x: 2540
-    'y': 1010
-  - id: createoauthroutehandlers
-    type: rest-api
-    name: createOAuthRouteHandlers REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/auth-node/src/oauth/createOAuthRouteHandlers.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: false
-    x: 2955
+    x: 2205
     'y': 370
   - id: cookiescopemanager
     type: rest-api
@@ -55,8 +22,52 @@ nodes:
       namespaces: ''
       technology: REST Controller / Router
     external: false
-    x: 3225
+    x: 2365
     'y': 690
+  - id: createoauthproviderfactory
+    type: background-worker
+    name: createOAuthProviderFactory Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/oauth/createOAuthProviderFactory.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2725
+    'y': 50
+  - id: createoauthroutehandlers_test
+    type: rest-api
+    name: createOAuthRouteHandlers.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/auth-node/src/oauth/createOAuthRouteHandlers.test.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: false
+    x: 3185
+    'y': 50
+  - id: createoauthroutehandlers
+    type: rest-api
+    name: createOAuthRouteHandlers REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/oauth/createOAuthRouteHandlers.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: false
+    x: 3185
+    'y': 370
+  - id: oauthcookiemanager
+    type: rest-api
+    name: OAuthCookieManager REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/oauth/OAuthCookieManager.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: false
+    x: 3725
+    'y': 1010
   - id: oauthenvironmenthandler
     type: rest-api
     name: OAuthEnvironmentHandler REST Endpoint
@@ -66,7 +77,18 @@ nodes:
       namespaces: ''
       technology: REST Controller / Router
     external: false
-    x: 4555
+    x: 3565
+    'y': 690
+  - id: passportoauthauthenticatorhelper_test
+    type: background-worker
+    name: PassportOAuthAuthenticatorHelper.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-node/src/oauth/PassportOAuthAuthenticatorHelper.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1785
     'y': 690
   - id: passportoauthauthenticatorhelper
     type: background-worker
@@ -77,50 +99,19 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 3615
+    x: 2485
     'y': 1010
-  - id: createoauthroutehandlers_test
+  - id: state
     type: rest-api
-    name: createOAuthRouteHandlers.test REST Endpoint
-    isTest: true
+    name: state REST Endpoint
+    isTest: false
     properties:
-      filepath: plugins/auth-node/src/oauth/createOAuthRouteHandlers.test.ts
+      filepath: plugins/auth-node/src/oauth/state.ts
       namespaces: ''
       technology: REST Controller / Router
     external: false
-    x: 2240
-    'y': 50
-  - id: createoauthproviderfactory
-    type: background-worker
-    name: createOAuthProviderFactory Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-node/src/oauth/createOAuthProviderFactory.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 4305
-    'y': 50
-  - id: passportoauthauthenticatorhelper_test
-    type: background-worker
-    name: PassportOAuthAuthenticatorHelper.test Service
-    isTest: true
-    properties:
-      filepath: plugins/auth-node/src/oauth/PassportOAuthAuthenticatorHelper.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2550
-    'y': 690
-  - id: frontend-client
-    type: gateway-api
-    name: Frontend Client App (Frontend Client Host)
-    properties:
-      description: The main user interface running React and Vite.
-      technology: React + TypeScript
-    external: true
-    x: 3725
-    'y': 50
+    x: 4595
+    'y': 1010
   - id: express
     type: rest-api
     name: express REST Endpoint (types)
@@ -130,51 +121,49 @@ nodes:
       namespaces: ''
       technology: REST Controller / Router
     external: true
-    x: 4670
+    x: 3215
     'y': 1330
-  - id: errors
+  - id: types
     type: background-worker
-    name: errors Service (errors.ts)
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 5950
-    'y': 1330
-  - id: types
-    type: gateway-api
-    name: types UI Component (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 3170
+    x: 1815
     'y': 1330
   - id: config
-    type: gateway-api
-    name: config UI Component (layout)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 635
-    'y': 1010
-  - id: url
     type: background-worker
-    name: url Service (stages)
+    name: config Service (entrypoints)
     isTest: false
     properties:
-      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 140
+    'y': 1010
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 3725
+    'y': 50
+  - id: errors
+    type: background-worker
+    name: errors Service (service)
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/http/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 4890
     'y': 1330
   - id: error
     type: background-worker
@@ -185,19 +174,8 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1700
+    x: 1220
     'y': 1010
-  - id: parsewebmessageresponse
-    type: background-worker
-    name: parseWebMessageResponse Service (flow)
-    isTest: false
-    properties:
-      filepath: plugins/auth-node/src/flow/__testUtils__/parseWebMessageResponse.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 985
-    'y': 370
   - id: createsigninresolverfactory
     type: background-worker
     name: createSignInResolverFactory Service (sign-in)
@@ -207,21 +185,31 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1445
+    x: 490
     'y': 370
+  - id: parsewebmessageresponse
+    type: background-worker
+    name: parseWebMessageResponse Service (flow)
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/flow/__testUtils__/parseWebMessageResponse.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 950
+    'y': 370
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 5430
+    'y': 1330
 dependencies:
-  - from: frontend-client
-    to: state
-    type: direct-call
-    description: Hits API routing gateway
-  - from: state
-    to: express
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: state
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
   - from: cookiescopemanager_test
     to: express
     type: direct-call
@@ -246,62 +234,6 @@ dependencies:
     to: config
     type: direct-call
     description: Executes local class methods / functions
-  - from: frontend-client
-    to: oauthcookiemanager
-    type: direct-call
-    description: Hits API routing gateway
-  - from: oauthcookiemanager
-    to: express
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: oauthcookiemanager
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: oauthcookiemanager
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: frontend-client
-    to: createoauthroutehandlers
-    type: direct-call
-    description: Hits API routing gateway
-  - from: createoauthroutehandlers
-    to: express
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createoauthroutehandlers
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createoauthroutehandlers
-    to: state
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createoauthroutehandlers
-    to: oauthcookiemanager
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createoauthroutehandlers
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createoauthroutehandlers
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createoauthroutehandlers
-    to: cookiescopemanager
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createoauthroutehandlers
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: createoauthroutehandlers
-    to: error
-    type: direct-call
-    description: References class type / calls methods
   - from: frontend-client
     to: cookiescopemanager
     type: direct-call
@@ -334,32 +266,24 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: frontend-client
+  - from: createoauthproviderfactory
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createoauthproviderfactory
     to: oauthenvironmenthandler
     type: direct-call
-    description: Hits API routing gateway
-  - from: oauthenvironmenthandler
-    to: express
+    description: Executes local class methods / functions
+  - from: createoauthproviderfactory
+    to: createoauthroutehandlers
     type: direct-call
     description: Executes local class methods / functions
-  - from: oauthenvironmenthandler
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: oauthenvironmenthandler
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: oauthenvironmenthandler
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: oauthenvironmenthandler
+  - from: createoauthproviderfactory
     to: state
     type: direct-call
     description: Executes local class methods / functions
-  - from: passportoauthauthenticatorhelper
-    to: types
+  - from: createoauthproviderfactory
+    to: createsigninresolverfactory
     type: direct-call
     description: Executes local class methods / functions
   - from: createoauthroutehandlers_test
@@ -394,24 +318,84 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: createoauthproviderfactory
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createoauthproviderfactory
-    to: oauthenvironmenthandler
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createoauthproviderfactory
+  - from: frontend-client
     to: createoauthroutehandlers
     type: direct-call
+    description: Hits API routing gateway
+  - from: createoauthroutehandlers
+    to: express
+    type: direct-call
     description: Executes local class methods / functions
-  - from: createoauthproviderfactory
+  - from: createoauthroutehandlers
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createoauthroutehandlers
     to: state
     type: direct-call
     description: Executes local class methods / functions
-  - from: createoauthproviderfactory
-    to: createsigninresolverfactory
+  - from: createoauthroutehandlers
+    to: oauthcookiemanager
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createoauthroutehandlers
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createoauthroutehandlers
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createoauthroutehandlers
+    to: cookiescopemanager
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createoauthroutehandlers
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: createoauthroutehandlers
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: frontend-client
+    to: oauthcookiemanager
+    type: direct-call
+    description: Hits API routing gateway
+  - from: oauthcookiemanager
+    to: express
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: oauthcookiemanager
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: oauthcookiemanager
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: frontend-client
+    to: oauthenvironmenthandler
+    type: direct-call
+    description: Hits API routing gateway
+  - from: oauthenvironmenthandler
+    to: express
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: oauthenvironmenthandler
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: oauthenvironmenthandler
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: oauthenvironmenthandler
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: oauthenvironmenthandler
+    to: state
     type: direct-call
     description: Executes local class methods / functions
   - from: passportoauthauthenticatorhelper_test
@@ -422,3 +406,19 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: passportoauthauthenticatorhelper
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: state
+    type: direct-call
+    description: Hits API routing gateway
+  - from: state
+    to: express
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: state
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions

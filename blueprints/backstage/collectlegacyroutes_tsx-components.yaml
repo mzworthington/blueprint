@@ -13,12 +13,12 @@ nodes:
     external: false
     x: 1060
     'y': 370
-  - id: convertlegacyapp
+  - id: collectlegacyroutes_test
     type: gateway-api
-    name: convertLegacyApp UI Component (convertLegacyApp.ts)
-    isTest: false
+    name: collectLegacyRoutes.test UI Component (collectLegacyRoutes.test.tsx)
+    isTest: true
     properties:
-      filepath: packages/core-compat-api/src/convertLegacyApp.ts
+      filepath: packages/core-compat-api/src/collectLegacyRoutes.test.tsx
       namespaces: ''
       technology: React Component
     external: true
@@ -88,19 +88,19 @@ nodes:
     external: true
     x: 1980
     'y': 690
-  - id: collectlegacyroutes_test
+  - id: convertlegacyapp
     type: gateway-api
-    name: collectLegacyRoutes.test UI Component (collectLegacyRoutes.test.tsx)
-    isTest: true
+    name: convertLegacyApp UI Component (convertLegacyApp.ts)
+    isTest: false
     properties:
-      filepath: packages/core-compat-api/src/collectLegacyRoutes.test.tsx
+      filepath: packages/core-compat-api/src/convertLegacyApp.ts
       namespaces: ''
       technology: React Component
     external: true
     x: 1520
     'y': 50
 dependencies:
-  - from: convertlegacyapp
+  - from: collectlegacyroutes_test
     to: collectlegacyroutes
     type: direct-call
     description: Executes local class methods / functions
@@ -128,7 +128,7 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: collectlegacyroutes_test
+  - from: convertlegacyapp
     to: collectlegacyroutes
     type: direct-call
     description: Executes local class methods / functions

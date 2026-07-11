@@ -2,6 +2,39 @@ name: Backstage - scaffolder Components
 version: 1.0.0
 level: component
 nodes:
+  - id: read
+    type: background-worker
+    name: read Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/read.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 29545
+    'y': 690
+  - id: helper_test
+    type: background-worker
+    name: helper.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/helper.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 370
+    'y': 690
+  - id: fetch_test
+    type: background-worker
+    name: fetch.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/catalog/fetch.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 830
+    'y': 690
   - id: write_test
     type: background-worker
     name: write.test Service
@@ -11,7 +44,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2900
+    x: 140
     'y': 370
   - id: write
     type: background-worker
@@ -22,183 +55,18 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2440
+    x: 15875
     'y': 690
-  - id: decoratedactionsregistry
+  - id: templateactionregistry_test
     type: background-worker
-    name: DecoratedActionsRegistry Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/dryrun/DecoratedActionsRegistry.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 7180
-    'y': 690
-  - id: createdryrunner
-    type: background-worker
-    name: createDryRunner Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/dryrun/createDryRunner.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 8775
-    'y': 370
-  - id: databasetaskstore_test
-    type: background-worker
-    name: DatabaseTaskStore.test Service
+    name: TemplateActionRegistry.test Service
     isTest: true
     properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/DatabaseTaskStore.test.ts
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/TemplateActionRegistry.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 6830
-    'y': 370
-  - id: nunjucksworkflowrunner_test
-    type: background-worker
-    name: NunjucksWorkflowRunner.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/NunjucksWorkflowRunner.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 10155
-    'y': 370
-  - id: databaseworkspaceprovider
-    type: background-worker
-    name: DatabaseWorkspaceProvider Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/DatabaseWorkspaceProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 13990
-    'y': 1010
-  - id: storagetaskbroker
-    type: background-worker
-    name: StorageTaskBroker Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/StorageTaskBroker.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 8315
-    'y': 370
-  - id: dbutil_test
-    type: relational-database
-    name: dbUtil.test Database
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/dbUtil.test.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 600
-    'y': 690
-  - id: workspaceservice
-    type: background-worker
-    name: WorkspaceService Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/WorkspaceService.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 10745
-    'y': 690
-  - id: logger
-    type: background-worker
-    name: logger Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/logger.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 18855
-    'y': 1010
-  - id: taskrecoveryhelper
-    type: background-worker
-    name: taskRecoveryHelper Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/taskRecoveryHelper.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 180
-    'y': 1010
-  - id: taskrecoveryhelper_test
-    type: background-worker
-    name: taskRecoveryHelper.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/taskRecoveryHelper.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 140
-    'y': 690
-  - id: storagetaskbroker_test
-    type: background-worker
-    name: StorageTaskBroker.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/StorageTaskBroker.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 7815
-    'y': 50
-  - id: nunjucksworkflowrunner
-    type: background-worker
-    name: NunjucksWorkflowRunner Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/NunjucksWorkflowRunner.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 14945
-    'y': 690
-  - id: dbutil
-    type: relational-database
-    name: dbUtil Database
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/dbUtil.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 640
-    'y': 1010
-  - id: databasetaskstore
-    type: relational-database
-    name: DatabaseTaskStore Database
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/DatabaseTaskStore.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: false
-    x: 6480
-    'y': 690
-  - id: logger_test
-    type: background-worker
-    name: logger.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/logger.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 18685
+    x: 1435
     'y': 690
   - id: templateactionregistry
     type: background-worker
@@ -209,18 +77,194 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 14610
+    x: 18700
     'y': 1010
-  - id: register_test
+  - id: createdryrunner
     type: background-worker
-    name: register.test Service
-    isTest: true
+    name: createDryRunner Service
+    isTest: false
     properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/catalog/register.test.ts
+      filepath: plugins/scaffolder-backend/src/scaffolder/dryrun/createDryRunner.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 13300
+    x: 4525
+    'y': 370
+  - id: decoratedactionsregistry
+    type: background-worker
+    name: DecoratedActionsRegistry Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/dryrun/DecoratedActionsRegistry.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3825
+    'y': 690
+  - id: databasetaskstore_test
+    type: background-worker
+    name: DatabaseTaskStore.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/DatabaseTaskStore.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 8715
+    'y': 370
+  - id: databasetaskstore
+    type: relational-database
+    name: DatabaseTaskStore Database
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/DatabaseTaskStore.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 32430
+    'y': 690
+  - id: databaseworkspaceprovider
+    type: background-worker
+    name: DatabaseWorkspaceProvider Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/DatabaseWorkspaceProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 34375
+    'y': 1010
+  - id: dbutil_test
+    type: relational-database
+    name: dbUtil.test Database
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/dbUtil.test.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 2365
+    'y': 690
+  - id: dbutil
+    type: relational-database
+    name: dbUtil Database
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/dbUtil.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: false
+    x: 16780
+    'y': 1010
+  - id: logger_test
+    type: background-worker
+    name: logger.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/logger.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2825
+    'y': 690
+  - id: logger
+    type: background-worker
+    name: logger Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/logger.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 11445
+    'y': 1010
+  - id: nunjucksworkflowrunner_test
+    type: background-worker
+    name: NunjucksWorkflowRunner.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/NunjucksWorkflowRunner.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 12845
+    'y': 370
+  - id: nunjucksworkflowrunner
+    type: background-worker
+    name: NunjucksWorkflowRunner Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/NunjucksWorkflowRunner.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 20830
+    'y': 690
+  - id: storagetaskbroker_test
+    type: background-worker
+    name: StorageTaskBroker.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/StorageTaskBroker.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 34570
+    'y': 50
+  - id: storagetaskbroker
+    type: background-worker
+    name: StorageTaskBroker Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/StorageTaskBroker.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 34190
+    'y': 370
+  - id: taskrecoveryhelper_test
+    type: background-worker
+    name: taskRecoveryHelper.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/taskRecoveryHelper.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3365
+    'y': 690
+  - id: taskrecoveryhelper
+    type: background-worker
+    name: taskRecoveryHelper Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/taskRecoveryHelper.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 17320
+    'y': 1010
+  - id: workspaceservice
+    type: background-worker
+    name: WorkspaceService Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/tasks/WorkspaceService.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 34310
+    'y': 690
+  - id: fetch_examples_test
+    type: background-worker
+    name: fetch.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/catalog/fetch.examples.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 4285
     'y': 690
   - id: fetch_examples
     type: background-worker
@@ -231,19 +275,8 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 29880
+    x: 1675
     'y': 1330
-  - id: fetch_examples_test
-    type: background-worker
-    name: fetch.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/catalog/fetch.examples.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 25130
-    'y': 690
   - id: register_examples_test
     type: background-worker
     name: register.examples.test Service
@@ -253,30 +286,8 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 17765
+    x: 4865
     'y': 690
-  - id: write_examples_test
-    type: background-worker
-    name: write.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/catalog/write.examples.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1610
-    'y': 370
-  - id: register
-    type: background-worker
-    name: register Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/catalog/register.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 20225
-    'y': 1010
   - id: register_examples
     type: background-worker
     name: register.examples Service
@@ -286,8 +297,41 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 29420
+    x: 3795
     'y': 1330
+  - id: register_test
+    type: background-worker
+    name: register.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/catalog/register.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 5565
+    'y': 690
+  - id: register
+    type: background-worker
+    name: register Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/catalog/register.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 5295
+    'y': 1010
+  - id: write_examples_test
+    type: background-worker
+    name: write.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/catalog/write.examples.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 15215
+    'y': 370
   - id: write_examples
     type: background-worker
     name: write.examples Service
@@ -297,371 +341,8 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1340
+    x: 15780
     'y': 1010
-  - id: read_examples
-    type: background-worker
-    name: read.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/read.examples.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 4035
-    'y': 690
-  - id: read_examples_test
-    type: background-worker
-    name: read.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/read.examples.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 3670
-    'y': 50
-  - id: delete_examples
-    type: background-worker
-    name: delete.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/delete.examples.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 30800
-    'y': 1330
-  - id: rename
-    type: background-worker
-    name: rename Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/rename.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 20925
-    'y': 1010
-  - id: rename_examples
-    type: background-worker
-    name: rename.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/rename.examples.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 30340
-    'y': 1330
-  - id: rename_test
-    type: background-worker
-    name: rename.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/rename.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 20830
-    'y': 690
-  - id: delete_test
-    type: background-worker
-    name: delete.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/delete.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 24130
-    'y': 690
-  - id: delete_examples_test
-    type: background-worker
-    name: delete.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/delete.examples.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 26760
-    'y': 690
-  - id: rename_examples_test
-    type: background-worker
-    name: rename.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/rename.examples.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 26060
-    'y': 690
-  - id: delete
-    type: background-worker
-    name: delete Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/delete.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 23750
-    'y': 1010
-  - id: template_examples_test
-    type: background-worker
-    name: template.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/template.examples.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 12070
-    'y': 370
-  - id: plainfile_examples_test
-    type: background-worker
-    name: plainFile.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/plainFile.examples.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 21830
-    'y': 690
-  - id: plain
-    type: background-worker
-    name: plain Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/plain.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 27570
-    'y': 1010
-  - id: plain_examples_test
-    type: background-worker
-    name: plain.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/plain.examples.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 22290
-    'y': 690
-  - id: template
-    type: background-worker
-    name: template Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/template.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 16185
-    'y': 690
-  - id: templatefile
-    type: background-worker
-    name: templateFile Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/templateFile.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 16645
-    'y': 690
-  - id: templatefileactionhandler
-    type: background-worker
-    name: templateFileActionHandler Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/templateFileActionHandler.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 27030
-    'y': 1010
-  - id: template_test
-    type: background-worker
-    name: template.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/template.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 18735
-    'y': 370
-  - id: workspacetemplate
-    type: background-worker
-    name: workspaceTemplate Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/workspaceTemplate.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 17145
-    'y': 690
-  - id: plainfile
-    type: background-worker
-    name: plainFile Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/plainFile.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 28110
-    'y': 1010
-  - id: plainfile_examples
-    type: background-worker
-    name: plainFile.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/plainFile.examples.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 31260
-    'y': 1330
-  - id: templatefile_examples_test
-    type: background-worker
-    name: templateFile.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/templateFile.examples.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 13025
-    'y': 370
-  - id: workspacetemplatefile_test
-    type: background-worker
-    name: workspaceTemplateFile.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/workspaceTemplateFile.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 26235
-    'y': 370
-  - id: plainfile_test
-    type: background-worker
-    name: plainFile.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/plainFile.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 20305
-    'y': 690
-  - id: templateactionhandler
-    type: background-worker
-    name: templateActionHandler Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/templateActionHandler.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 25750
-    'y': 1010
-  - id: plain_examples
-    type: background-worker
-    name: plain.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/plain.examples.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 31720
-    'y': 1330
-  - id: templatefile_examples
-    type: background-worker
-    name: templateFile.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/templateFile.examples.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2575
-    'y': 1010
-  - id: template_examples
-    type: background-worker
-    name: template.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/template.examples.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 3035
-    'y': 1010
-  - id: plain_test
-    type: background-worker
-    name: plain.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/plain.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 21290
-    'y': 690
-  - id: workspacetemplatefile
-    type: background-worker
-    name: workspaceTemplateFile Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/workspaceTemplateFile.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 18225
-    'y': 690
-  - id: templatefile_test
-    type: background-worker
-    name: templateFile.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/templateFile.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 21425
-    'y': 370
-  - id: workspacetemplate_test
-    type: background-worker
-    name: workspaceTemplate.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/workspaceTemplate.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 21885
-    'y': 370
-  - id: log_examples
-    type: background-worker
-    name: log.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/debug/log.examples.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 8110
-    'y': 690
   - id: log_examples_test
     type: background-worker
     name: log.examples.test Service
@@ -671,8 +352,19 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 7355
+    x: 15120
     'y': 50
+  - id: log_examples
+    type: background-worker
+    name: log.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/debug/log.examples.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 14755
+    'y': 690
   - id: log_test
     type: background-worker
     name: log.test Service
@@ -682,8 +374,19 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 9815
+    x: 24100
     'y': 50
+  - id: log
+    type: background-worker
+    name: log Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/debug/log.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 14755
+    'y': 370
   - id: wait_examples_test
     type: background-worker
     name: wait.examples.test Service
@@ -693,7 +396,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 3995
+    x: 17415
     'y': 370
   - id: wait_examples
     type: background-worker
@@ -704,30 +407,8 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 3765
+    x: 17780
     'y': 1010
-  - id: wait
-    type: background-worker
-    name: wait Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/debug/wait.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 4670
-    'y': 690
-  - id: log
-    type: background-worker
-    name: log Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/debug/log.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 9235
-    'y': 370
   - id: wait_test
     type: background-worker
     name: wait.test Service
@@ -737,392 +418,381 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 4820
+    x: 18375
     'y': 370
-  - id: templateactionregistry_test
+  - id: wait
     type: background-worker
-    name: TemplateActionRegistry.test Service
-    isTest: true
+    name: wait Service
+    isTest: false
     properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/TemplateActionRegistry.test.ts
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/debug/wait.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 15485
+    x: 17090
     'y': 690
-  - id: customhomepagebuttons
+  - id: plain_examples_test
     type: background-worker
-    name: CustomHomepageButtons Service (components)
-    isTest: false
-    properties:
-      filepath: plugins/home/src/components/CustomHomepage/CustomHomepageButtons.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 22750
-    'y': 690
-  - id: widgetsettingsoverlay
-    type: gateway-api
-    name: WidgetSettingsOverlay UI Component (components)
-    isTest: false
-    properties:
-      filepath: plugins/home/src/components/CustomHomepage/WidgetSettingsOverlay.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 23210
-    'y': 690
-  - id: dryrunresultslist
-    type: background-worker
-    name: DryRunResultsList Service (alpha)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder/src/alpha/components/TemplateEditorPage/DryRunResults/DryRunResultsList.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 23670
-    'y': 690
-  - id: express
-    type: rest-api
-    name: express REST Endpoint (types)
-    isTest: false
-    properties:
-      filepath: packages/backend-openapi-utils/src/types/express.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 4940
-    'y': 1010
-  - id: createentityarrayjsonstream
-    type: rest-api
-    name: createEntityArrayJsonStream REST Endpoint (service)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend/src/service/response/createEntityArrayJsonStream.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 2440
-    'y': 370
-  - id: types
-    type: gateway-api
-    name: types UI Component (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 1385
-    'y': 1330
-  - id: errors
-    type: background-worker
-    name: errors Service (errors.ts)
-    isTest: false
-    properties:
-      filepath: packages/codemods/src/errors.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 14525
-    'y': 1330
-  - id: process
-    type: background-worker
-    name: process Service (service)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend/src/service/response/process.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 5400
-    'y': 1010
-  - id: error
-    type: background-worker
-    name: error Service (serialization)
-    isTest: false
-    properties:
-      filepath: packages/errors/src/serialization/error.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 5860
-    'y': 1010
-  - id: actions
-    type: background-worker
-    name: actions Service (home)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs/src/home/components/Tables/actions.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 7315
-    'y': 1010
-  - id: alpha
-    type: background-worker
-    name: alpha Service (alpha.ts)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/alpha.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 16140
-    'y': 1330
-  - id: config
-    type: gateway-api
-    name: config UI Component (layout)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 10505
-    'y': 1010
-  - id: integration
-    type: background-worker
-    name: integration Service (types)
-    isTest: false
-    properties:
-      filepath: plugins/permission-common/src/types/integration.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 20545
-    'y': 1330
-  - id: url
-    type: background-worker
-    name: url Service (stages)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 11850
-    'y': 690
-  - id: database
-    type: background-worker
-    name: database Service (services)
-    isTest: false
-    properties:
-      filepath: packages/backend-plugin-api/src/services/utilities/database.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 12310
-    'y': 690
-  - id: helper
-    type: background-worker
-    name: helper Service (__fixtures__)
-    isTest: false
-    properties:
-      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/testUtils/helper.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 11230
-    'y': 1010
-  - id: winstonlogger
-    type: background-worker
-    name: WinstonLogger Service (entrypoints)
-    isTest: false
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/rootLogger/WinstonLogger.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 28960
-    'y': 1330
-  - id: loggertowinstonlogger
-    type: background-worker
-    name: loggerToWinstonLogger Service (actions)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-node-test-utils/src/actions/loggerToWinstonLogger.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 9695
-    'y': 370
-  - id: securetemplater
-    type: background-worker
-    name: SecureTemplater Service (lib)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/lib/templating/SecureTemplater.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 27455
-    'y': 1330
-  - id: defaultenvironment
-    type: background-worker
-    name: defaultEnvironment Service (lib)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/lib/defaultEnvironment.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 11690
-    'y': 1010
-  - id: createdefaultfilters
-    type: background-worker
-    name: createDefaultFilters Service (lib)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/lib/templating/filters/createDefaultFilters.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 27960
-    'y': 1330
-  - id: rules
-    type: background-worker
-    name: rules Service (reader)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs/src/reader/transformers/styles/rules/rules.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 12150
-    'y': 1010
-  - id: metrics
-    type: background-worker
-    name: metrics Service (metrics.ts)
-    isTest: false
-    properties:
-      filepath: plugins/mcp-actions-backend/src/metrics.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 12610
-    'y': 1010
-  - id: templating
-    type: background-worker
-    name: templating Service (util)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/util/templating.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 28500
-    'y': 1330
-  - id: taskworker
-    type: relational-database
-    name: TaskWorker Database (entrypoints)
-    isTest: false
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/scheduler/lib/TaskWorker.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 14755
-    'y': 370
-  - id: taskworker_test
-    type: background-worker
-    name: TaskWorker.test Service (entrypoints)
+    name: plain.examples.test Service
     isTest: true
     properties:
-      filepath: packages/backend-defaults/src/entrypoints/scheduler/lib/TaskWorker.test.ts
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/plain.examples.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
-    external: true
-    x: 8735
-    'y': 50
-  - id: helpers
+    external: false
+    x: 6250
+    'y': 690
+  - id: plain_examples
     type: background-worker
-    name: helpers Service (entrypoints)
+    name: plain.examples Service
     isTest: false
     properties:
-      filepath: packages/backend-defaults/src/entrypoints/auth/external/helpers.ts
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/plain.examples.ts
       namespaces: ''
       technology: TypeScript Domain Service
-    external: true
-    x: 13070
-    'y': 1010
-  - id: testutils
+    external: false
+    x: 5565
+    'y': 1330
+  - id: plain_test
     type: background-worker
-    name: testUtils Service (__fixtures__)
-    isTest: false
-    properties:
-      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/testUtils.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 13530
-    'y': 1010
-  - id: fetch
-    type: background-worker
-    name: fetch Service (types)
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/templates/typescript-backstage-client/types/fetch.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 30030
-    'y': 1010
-  - id: read
-    type: background-worker
-    name: read Service (microsoftGraph)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/read.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 3535
-    'y': 370
-  - id: router
-    type: rest-api
-    name: router REST Endpoint (router.ts)
-    isTest: false
-    properties:
-      filepath: packages/backend-openapi-utils/src/router.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 8275
-    'y': 50
-  - id: router_test
-    type: rest-api
-    name: router.test REST Endpoint (router.test.ts)
+    name: plain.test Service
     isTest: true
     properties:
-      filepath: packages/cli-module-new/templates/backend-plugin/src/router.test.ts
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/plain.test.ts
       namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 6385
-    'y': 50
-  - id: injectconfigintohtml
+      technology: TypeScript Domain Service
+    external: false
+    x: 7180
+    'y': 690
+  - id: plain
     type: background-worker
-    name: injectConfigIntoHtml Service (lib)
+    name: plain Service
     isTest: false
     properties:
-      filepath: plugins/app-backend/src/lib/config/injectConfigIntoHtml.ts
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/plain.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 7060
+    'y': 1010
+  - id: plainfile_examples_test
+    type: background-worker
+    name: plainFile.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/plainFile.examples.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 7640
+    'y': 690
+  - id: plainfile_examples
+    type: background-worker
+    name: plainFile.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/plainFile.examples.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 6645
+    'y': 1330
+  - id: plainfile_test
+    type: background-worker
+    name: plainFile.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/plainFile.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 8285
+    'y': 690
+  - id: plainfile
+    type: background-worker
+    name: plainFile Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/plainFile.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 8070
+    'y': 1010
+  - id: template_examples_test
+    type: background-worker
+    name: template.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/template.examples.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 19010
+    'y': 370
+  - id: template_examples
+    type: background-worker
+    name: template.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/template.examples.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 22990
+    'y': 1010
+  - id: template_test
+    type: background-worker
+    name: template.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/template.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 19470
+    'y': 370
+  - id: template
+    type: background-worker
+    name: template Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/template.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 23840
+    'y': 690
+  - id: templateactionhandler
+    type: background-worker
+    name: templateActionHandler Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/templateActionHandler.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 24825
+    'y': 1010
+  - id: templatefile_examples_test
+    type: background-worker
+    name: templateFile.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/templateFile.examples.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 20425
+    'y': 370
+  - id: templatefile_examples
+    type: background-worker
+    name: templateFile.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/templateFile.examples.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 24015
+    'y': 1010
+  - id: templatefile_test
+    type: background-worker
+    name: templateFile.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/templateFile.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 23610
+    'y': 370
+  - id: templatefile
+    type: background-worker
+    name: templateFile Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/templateFile.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 23300
+    'y': 690
+  - id: templatefileactionhandler
+    type: background-worker
+    name: templateFileActionHandler Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/templateFileActionHandler.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 25405
+    'y': 1010
+  - id: workspacetemplate_test
+    type: background-worker
+    name: workspaceTemplate.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/workspaceTemplate.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 24420
+    'y': 370
+  - id: workspacetemplate
+    type: background-worker
+    name: workspaceTemplate Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/workspaceTemplate.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 24555
+    'y': 690
+  - id: workspacetemplatefile_test
+    type: background-worker
+    name: workspaceTemplateFile.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/workspaceTemplateFile.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 25835
+    'y': 370
+  - id: workspacetemplatefile
+    type: background-worker
+    name: workspaceTemplateFile Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/workspaceTemplateFile.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 25970
+    'y': 690
+  - id: delete_examples_test
+    type: background-worker
+    name: delete.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/delete.examples.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 9375
+    'y': 690
+  - id: delete_examples
+    type: background-worker
+    name: delete.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/delete.examples.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 9885
+    'y': 1330
+  - id: delete_test
+    type: background-worker
+    name: delete.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/delete.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 9835
+    'y': 690
+  - id: delete
+    type: background-worker
+    name: delete Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/delete.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 12595
+    'y': 1010
+  - id: read_examples_test
+    type: background-worker
+    name: read.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/read.examples.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 26375
+    'y': 370
+  - id: read_examples
+    type: background-worker
+    name: read.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/read.examples.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 29105
+    'y': 1010
+  - id: rename_examples_test
+    type: background-worker
+    name: rename.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/rename.examples.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 10295
+    'y': 690
+  - id: rename_examples
+    type: background-worker
+    name: rename.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/rename.examples.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 7980
+    'y': 1330
+  - id: rename_test
+    type: background-worker
+    name: rename.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/rename.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 10755
+    'y': 690
+  - id: rename
+    type: background-worker
+    name: rename Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/rename.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 10105
+    'y': 1010
+  - id: createbackend
+    type: background-worker
+    name: CreateBackend Service (CreateBackend.ts)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/CreateBackend.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 15845
-    'y': 370
-  - id: failedentities
-    type: gateway-api
-    name: FailedEntities UI Component (components)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-unprocessed-entities/src/components/FailedEntities.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 24590
+    x: 11215
     'y': 690
   - id: mockservices
     type: relational-database
@@ -1133,30 +803,646 @@ nodes:
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: true
-    x: 19145
+    x: 11675
     'y': 690
-  - id: createbackend
+  - id: read_test
     type: background-worker
-    name: CreateBackend Service (CreateBackend.ts)
-    isTest: false
+    name: read.test Service (processors)
+    isTest: true
     properties:
-      filepath: packages/backend-defaults/src/CreateBackend.ts
+      filepath: plugins/catalog-backend/src/processors/codeowners/read.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 19605
+    x: 26835
+    'y': 370
+  - id: org
+    type: background-worker
+    name: org Service (microsoftGraph)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/org.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 26645
+    'y': 1010
+  - id: client
+    type: background-worker
+    name: client Service (commands)
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/package/schema/openapi/generate/client.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 27105
+    'y': 1010
+  - id: config
+    type: background-worker
+    name: config Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 14135
+    'y': 1010
+  - id: constants
+    type: background-worker
+    name: constants Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/lib/openapi/constants.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 27565
+    'y': 1010
+  - id: vendors
+    type: background-worker
+    name: vendors Service (ldap)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-ldap/src/ldap/vendors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 28025
+    'y': 1010
+  - id: types
+    type: background-worker
+    name: types Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 21490
+    'y': 1330
+  - id: util
+    type: background-worker
+    name: util Service (__fixtures__)
+    isTest: false
+    properties:
+      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/util.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 28565
+    'y': 1010
+  - id: errors
+    type: background-worker
+    name: errors Service (service)
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/http/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 17360
+    'y': 1330
+  - id: helper
+    type: background-worker
+    name: helper Service (__fixtures__)
+    isTest: false
+    properties:
+      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/testUtils/helper.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 18240
+    'y': 1010
+  - id: defaulttransformers
+    type: background-worker
+    name: defaultTransformers Service (microsoftGraph)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/defaultTransformers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 29565
+    'y': 1010
+  - id: puppetdbentityprovider_test
+    type: background-worker
+    name: PuppetDbEntityProvider.test Service (providers)
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-puppetdb/src/providers/PuppetDbEntityProvider.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 30780
+    'y': 370
+  - id: puppetdbentityprovider
+    type: background-worker
+    name: PuppetDbEntityProvider Service (providers)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-puppetdb/src/providers/PuppetDbEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 31240
+    'y': 370
+  - id: external-api-target
+    type: rest-api
+    name: External HTTP API Endpoint (External HTTP Services)
+    isTest: false
+    properties:
+      description: Generic outbound web integration endpoints.
+    external: true
+    x: 30025
+    'y': 1010
+  - id: puppetdbentityproviderconfig
+    type: background-worker
+    name: PuppetDbEntityProviderConfig Service (providers)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-puppetdb/src/providers/PuppetDbEntityProviderConfig.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 30485
+    'y': 1010
+  - id: transformers
+    type: background-worker
+    name: transformers Service (puppet)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-puppetdb/src/puppet/transformers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 30945
+    'y': 1010
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 20910
+    'y': 1010
+  - id: failedentities
+    type: gateway-api
+    name: FailedEntities UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-unprocessed-entities/src/components/FailedEntities.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 12135
     'y': 690
+  - id: router_test
+    type: gateway-api
+    name: Router.test UI Component (components)
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder/src/components/Router/Router.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 32390
+    'y': 50
+  - id: router
+    type: background-worker
+    name: router Service (schema)
+    isTest: false
+    properties:
+      filepath: plugins/search-backend/src/schema/openapi/generated/router.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 32940
+    'y': 50
+  - id: integration
+    type: background-worker
+    name: integration Service (types)
+    isTest: false
+    properties:
+      filepath: plugins/permission-common/src/types/integration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 14445
+    'y': 1330
+  - id: fetch
+    type: background-worker
+    name: fetch Service (schema)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-common/src/schema/openapi/generated/types/fetch.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1825
+    'y': 1010
+  - id: injectconfigintohtml
+    type: background-worker
+    name: injectConfigIntoHtml Service (lib)
+    isTest: false
+    properties:
+      filepath: plugins/app-backend/src/lib/config/injectConfigIntoHtml.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 31700
+    'y': 370
+  - id: resolve
+    type: background-worker
+    name: resolve Service (processors)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/processors/codeowners/resolve.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 31485
+    'y': 1010
+  - id: scm
+    type: background-worker
+    name: scm Service (processors)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/processors/codeowners/scm.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 31945
+    'y': 1010
+  - id: createentityarrayjsonstream
+    type: rest-api
+    name: createEntityArrayJsonStream REST Endpoint (service)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/service/response/createEntityArrayJsonStream.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 32160
+    'y': 370
+  - id: express
+    type: rest-api
+    name: express REST Endpoint (types)
+    isTest: false
+    properties:
+      filepath: packages/backend-openapi-utils/src/types/express.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 6520
+    'y': 1010
+  - id: process
+    type: background-worker
+    name: process Service (service)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/service/response/process.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 16320
+    'y': 1010
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 20130
+    'y': 1010
+  - id: customhomepagebuttons
+    type: background-worker
+    name: CustomHomepageButtons Service (components)
+    isTest: false
+    properties:
+      filepath: plugins/home/src/components/CustomHomepage/CustomHomepageButtons.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 12595
+    'y': 690
+  - id: widgetsettingsoverlay
+    type: gateway-api
+    name: WidgetSettingsOverlay UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/home/src/components/CustomHomepage/WidgetSettingsOverlay.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 13055
+    'y': 690
+  - id: alpha
+    type: background-worker
+    name: alpha Service (tasks)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-node/src/tasks/alpha.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 17820
+    'y': 1330
+  - id: actions
+    type: background-worker
+    name: actions Service (home)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/home/components/Tables/actions.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 5900
+    'y': 1010
+  - id: database
+    type: background-worker
+    name: database Service (services)
+    isTest: false
+    properties:
+      filepath: packages/backend-plugin-api/src/services/utilities/database.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 19590
+    'y': 690
+  - id: helpers
+    type: gateway-api
+    name: helpers UI Component (home)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/home/components/Tables/helpers.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 32805
+    'y': 1010
+  - id: winstonlogger
+    type: background-worker
+    name: WinstonLogger Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/rootLogger/WinstonLogger.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 11265
+    'y': 1330
+  - id: securetemplater
+    type: background-worker
+    name: SecureTemplater Service (lib)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/lib/templating/SecureTemplater.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 24910
+    'y': 1330
+  - id: defaultenvironment
+    type: background-worker
+    name: defaultEnvironment Service (lib)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/lib/defaultEnvironment.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 21450
+    'y': 1010
+  - id: createdefaultfilters
+    type: background-worker
+    name: createDefaultFilters Service (lib)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/lib/templating/filters/createDefaultFilters.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 24450
+    'y': 1330
+  - id: rules
+    type: background-worker
+    name: rules Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/rules.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 21990
+    'y': 1010
+  - id: metrics
+    type: background-worker
+    name: metrics Service (util)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/util/metrics.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 22450
+    'y': 1010
+  - id: templating
+    type: background-worker
+    name: templating Service (util)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/util/templating.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 26180
+    'y': 1330
+  - id: loggertowinstonlogger
+    type: background-worker
+    name: loggerToWinstonLogger Service (actions)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-node-test-utils/src/actions/loggerToWinstonLogger.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 35320
+    'y': 370
+  - id: taskworker_test
+    type: background-worker
+    name: TaskWorker.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/scheduler/lib/TaskWorker.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 35860
+    'y': 50
+  - id: taskworker
+    type: relational-database
+    name: TaskWorker Database (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/scheduler/lib/TaskWorker.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 33005
+    'y': 370
+  - id: dryrunresultslist
+    type: background-worker
+    name: DryRunResultsList Service (alpha)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/alpha/components/TemplateEditorPage/DryRunResults/DryRunResultsList.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 13595
+    'y': 690
+  - id: testutils
+    type: background-worker
+    name: testUtils Service (__fixtures__)
+    isTest: false
+    properties:
+      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/testUtils.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 4595
+    'y': 1010
 dependencies:
-  - from: customhomepagebuttons
+  - from: createbackend
+    to: logger
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: mockservices
+    to: logger
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read_test
+    to: read
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: org
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: client
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: constants
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: vendors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: util
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: helper_test
+    to: helper
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: defaulttransformers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: puppetdbentityprovider_test
+    to: read
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: puppetdbentityprovider
+    to: read
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: external-api-target
+    type: direct-call
+    description: HMR outbound query requests
+  - from: read
+    to: puppetdbentityproviderconfig
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: transformers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: failedentities
     to: delete
     type: direct-call
     description: Executes local class methods / functions
-  - from: widgetsettingsoverlay
-    to: delete
+  - from: router_test
+    to: storagetaskbroker
     type: direct-call
     description: Executes local class methods / functions
-  - from: dryrunresultslist
-    to: delete
+  - from: router_test
+    to: databasetaskstore
+    type: read-write
+    description: Queries database table records
+  - from: router
+    to: storagetaskbroker
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: fetch_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: fetch_test
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: fetch_test
+    to: fetch
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: injectconfigintohtml
+    to: template
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: resolve
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: scm
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createentityarrayjsonstream
+    to: write
     type: direct-call
     description: Executes local class methods / functions
   - from: write_test
@@ -1164,10 +1450,6 @@ dependencies:
     type: direct-call
     description: Executes local class methods / functions
   - from: write_test
-    to: write
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createentityarrayjsonstream
     to: write
     type: direct-call
     description: Executes local class methods / functions
@@ -1191,8 +1473,36 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: decoratedactionsregistry
-    to: actions
+  - from: customhomepagebuttons
+    to: delete
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: widgetsettingsoverlay
+    to: delete
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templateactionregistry_test
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templateactionregistry_test
+    to: templateactionregistry
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templateactionregistry_test
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templateactionregistry
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templateactionregistry
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templateactionregistry
+    to: types
     type: direct-call
     description: Executes local class methods / functions
   - from: createdryrunner
@@ -1231,6 +1541,10 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
+  - from: decoratedactionsregistry
+    to: actions
+    type: direct-call
+    description: Executes local class methods / functions
   - from: databasetaskstore_test
     to: database
     type: direct-call
@@ -1247,6 +1561,58 @@ dependencies:
     to: errors
     type: direct-call
     description: Executes local class methods / functions
+  - from: databasetaskstore
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: databasetaskstore
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: databasetaskstore
+    to: taskrecoveryhelper
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: databasetaskstore
+    to: dbutil
+    type: read-write
+    description: Queries database table records
+  - from: databasetaskstore
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: databasetaskstore
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: databasetaskstore
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: databaseworkspaceprovider
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: databaseworkspaceprovider
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: dbutil_test
+    to: dbutil
+    type: read-write
+    description: Queries database table records
+  - from: logger_test
+    to: logger
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: logger
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: logger
+    to: winstonlogger
+    type: direct-call
+    description: References class type / calls methods
   - from: nunjucksworkflowrunner_test
     to: nunjucksworkflowrunner
     type: direct-call
@@ -1272,98 +1638,6 @@ dependencies:
     type: direct-call
     description: Executes local class methods / functions
   - from: nunjucksworkflowrunner_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: databaseworkspaceprovider
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: databaseworkspaceprovider
-    to: alpha
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: storagetaskbroker
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: storagetaskbroker
-    to: alpha
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: storagetaskbroker
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: storagetaskbroker
-    to: workspaceservice
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: storagetaskbroker
-    to: helper
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: storagetaskbroker
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: dbutil_test
-    to: dbutil
-    type: read-write
-    description: Queries database table records
-  - from: workspaceservice
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: workspaceservice
-    to: storagetaskbroker
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: workspaceservice
-    to: alpha
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: workspaceservice
-    to: databaseworkspaceprovider
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: workspaceservice
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: logger
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: logger
-    to: winstonlogger
-    type: direct-call
-    description: References class type / calls methods
-  - from: taskrecoveryhelper_test
-    to: taskrecoveryhelper
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: storagetaskbroker_test
-    to: database
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: storagetaskbroker_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: storagetaskbroker_test
-    to: databasetaskstore
-    type: read-write
-    description: Queries database table records
-  - from: storagetaskbroker_test
-    to: storagetaskbroker
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: storagetaskbroker_test
-    to: loggertowinstonlogger
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: storagetaskbroker_test
     to: error
     type: direct-call
     description: References class type / calls methods
@@ -1427,12 +1701,56 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: taskworker
-    to: templateactionregistry
+  - from: storagetaskbroker_test
+    to: database
     type: direct-call
     description: Executes local class methods / functions
-  - from: taskworker
-    to: nunjucksworkflowrunner
+  - from: storagetaskbroker_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: storagetaskbroker_test
+    to: databasetaskstore
+    type: read-write
+    description: Queries database table records
+  - from: storagetaskbroker_test
+    to: storagetaskbroker
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: storagetaskbroker_test
+    to: loggertowinstonlogger
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: storagetaskbroker_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: storagetaskbroker
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: storagetaskbroker
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: storagetaskbroker
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: storagetaskbroker
+    to: workspaceservice
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: storagetaskbroker
+    to: helper
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: storagetaskbroker
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: taskrecoveryhelper_test
+    to: taskrecoveryhelper
     type: direct-call
     description: Executes local class methods / functions
   - from: taskworker_test
@@ -1447,70 +1765,38 @@ dependencies:
     to: nunjucksworkflowrunner
     type: direct-call
     description: Executes local class methods / functions
-  - from: databasetaskstore
-    to: types
+  - from: taskworker
+    to: templateactionregistry
     type: direct-call
     description: Executes local class methods / functions
-  - from: databasetaskstore
-    to: errors
+  - from: taskworker
+    to: nunjucksworkflowrunner
     type: direct-call
     description: Executes local class methods / functions
-  - from: databasetaskstore
-    to: taskrecoveryhelper
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: databasetaskstore
-    to: dbutil
-    type: read-write
-    description: Queries database table records
-  - from: databasetaskstore
-    to: alpha
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: databasetaskstore
-    to: helpers
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: databasetaskstore
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: logger_test
-    to: logger
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templateactionregistry
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templateactionregistry
-    to: alpha
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templateactionregistry
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: register_test
+  - from: workspaceservice
     to: config
     type: direct-call
     description: Executes local class methods / functions
-  - from: register_test
-    to: integration
+  - from: workspaceservice
+    to: storagetaskbroker
     type: direct-call
     description: Executes local class methods / functions
-  - from: register_test
-    to: register
+  - from: workspaceservice
+    to: alpha
     type: direct-call
     description: Executes local class methods / functions
-  - from: register_test
-    to: testutils
+  - from: workspaceservice
+    to: databaseworkspaceprovider
     type: direct-call
     description: Executes local class methods / functions
-  - from: register_test
-    to: error
+  - from: workspaceservice
+    to: types
     type: direct-call
-    description: References class type / calls methods
+    description: Executes local class methods / functions
+  - from: dryrunresultslist
+    to: delete
+    type: direct-call
+    description: Executes local class methods / functions
   - from: fetch_examples_test
     to: fetch
     type: direct-call
@@ -1521,6 +1807,18 @@ dependencies:
     description: Executes local class methods / functions
   - from: fetch_examples_test
     to: testutils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: fetch_test
+    to: testutils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: fetch_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: fetch
+    to: fetch_examples
     type: direct-call
     description: Executes local class methods / functions
   - from: register_examples_test
@@ -1541,6 +1839,38 @@ dependencies:
     description: Executes local class methods / functions
   - from: register_examples_test
     to: testutils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: register_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: register_test
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: register_test
+    to: register
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: register_test
+    to: testutils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: register_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: register
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: register
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: register
+    to: register_examples
     type: direct-call
     description: Executes local class methods / functions
   - from: write_examples_test
@@ -1555,294 +1885,6 @@ dependencies:
     to: write_examples
     type: direct-call
     description: Executes local class methods / functions
-  - from: register
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: register
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: register
-    to: register_examples
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: fetch
-    to: fetch_examples
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read
-    to: read_examples
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read_examples_test
-    to: read
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read_examples_test
-    to: read_examples
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: rename
-    to: rename_examples
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: rename
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: rename_test
-    to: rename
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: delete_test
-    to: delete
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: delete_examples_test
-    to: delete
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: delete_examples_test
-    to: delete_examples
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: rename_examples_test
-    to: rename
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: rename_examples_test
-    to: rename_examples
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: delete
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: delete
-    to: delete_examples
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: template_examples_test
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: template_examples_test
-    to: template
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: template_examples_test
-    to: template_examples
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plainfile_examples_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plainfile_examples_test
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plainfile_examples_test
-    to: plainfile
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plainfile_examples_test
-    to: plainfile_examples
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plain
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plain
-    to: plain_examples
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plain_examples_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plain_examples_test
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plain_examples_test
-    to: plain
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plain_examples_test
-    to: plain_examples
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: template
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: template
-    to: template_examples
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: template
-    to: templateactionhandler
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templatefile
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templatefile
-    to: templatefile_examples
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templatefile
-    to: templatefileactionhandler
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templatefileactionhandler
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templatefileactionhandler
-    to: createdefaultfilters
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templatefileactionhandler
-    to: securetemplater
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templatefileactionhandler
-    to: templating
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: template_test
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: template_test
-    to: template
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: workspacetemplate
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: workspacetemplate
-    to: template_examples
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: workspacetemplate
-    to: templateactionhandler
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plainfile
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plainfile
-    to: plainfile_examples
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templatefile_examples_test
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templatefile_examples_test
-    to: templatefile
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templatefile_examples_test
-    to: templatefile_examples
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: workspacetemplatefile_test
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: workspacetemplatefile_test
-    to: workspacetemplatefile
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: workspacetemplatefile_test
-    to: templatefileactionhandler
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plainfile_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plainfile_test
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plainfile_test
-    to: plainfile
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templateactionhandler
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templateactionhandler
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templateactionhandler
-    to: createdefaultfilters
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templateactionhandler
-    to: templating
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templateactionhandler
-    to: securetemplater
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plain_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plain_test
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plain_test
-    to: plain
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: workspacetemplatefile
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: workspacetemplatefile
-    to: templatefile_examples
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: workspacetemplatefile
-    to: templatefileactionhandler
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templatefile_test
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templatefile_test
-    to: templatefile
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: workspacetemplate_test
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: workspacetemplate_test
-    to: workspacetemplate
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: workspacetemplate_test
-    to: templateactionhandler
-    type: direct-call
-    description: Executes local class methods / functions
   - from: log_examples_test
     to: log
     type: direct-call
@@ -1855,12 +1897,20 @@ dependencies:
     to: log
     type: direct-call
     description: Executes local class methods / functions
+  - from: log
+    to: log_examples
+    type: direct-call
+    description: Executes local class methods / functions
   - from: wait_examples_test
     to: wait
     type: direct-call
     description: Executes local class methods / functions
   - from: wait_examples_test
     to: wait_examples
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: wait_test
+    to: wait
     type: direct-call
     description: Executes local class methods / functions
   - from: wait
@@ -1875,51 +1925,275 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: log
-    to: log_examples
+  - from: plain_examples_test
+    to: config
     type: direct-call
     description: Executes local class methods / functions
-  - from: wait_test
-    to: wait
+  - from: plain_examples_test
+    to: integration
     type: direct-call
     description: Executes local class methods / functions
-  - from: templateactionregistry_test
-    to: errors
+  - from: plain_examples_test
+    to: plain
     type: direct-call
     description: Executes local class methods / functions
-  - from: templateactionregistry_test
-    to: templateactionregistry
+  - from: plain_examples_test
+    to: plain_examples
     type: direct-call
     description: Executes local class methods / functions
-  - from: templateactionregistry_test
-    to: alpha
+  - from: plain_test
+    to: config
     type: direct-call
     description: Executes local class methods / functions
-  - from: router
-    to: storagetaskbroker
+  - from: plain_test
+    to: integration
     type: direct-call
     description: Executes local class methods / functions
-  - from: router_test
-    to: storagetaskbroker
+  - from: plain_test
+    to: plain
     type: direct-call
     description: Executes local class methods / functions
-  - from: router_test
-    to: databasetaskstore
-    type: read-write
-    description: Queries database table records
-  - from: injectconfigintohtml
+  - from: plain
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plain
+    to: plain_examples
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plainfile_examples_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plainfile_examples_test
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plainfile_examples_test
+    to: plainfile
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plainfile_examples_test
+    to: plainfile_examples
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plainfile_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plainfile_test
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plainfile_test
+    to: plainfile
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plainfile
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plainfile
+    to: plainfile_examples
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: template_examples_test
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: template_examples_test
     to: template
     type: direct-call
     description: Executes local class methods / functions
-  - from: failedentities
+  - from: template_examples_test
+    to: template_examples
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: template_test
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: template_test
+    to: template
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: template
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: template
+    to: template_examples
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: template
+    to: templateactionhandler
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templateactionhandler
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templateactionhandler
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templateactionhandler
+    to: createdefaultfilters
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templateactionhandler
+    to: templating
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templateactionhandler
+    to: securetemplater
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templatefile_examples_test
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templatefile_examples_test
+    to: templatefile
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templatefile_examples_test
+    to: templatefile_examples
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templatefile_test
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templatefile_test
+    to: templatefile
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templatefile
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templatefile
+    to: templatefile_examples
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templatefile
+    to: templatefileactionhandler
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templatefileactionhandler
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templatefileactionhandler
+    to: createdefaultfilters
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templatefileactionhandler
+    to: securetemplater
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: templatefileactionhandler
+    to: templating
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: workspacetemplate_test
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: workspacetemplate_test
+    to: workspacetemplate
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: workspacetemplate_test
+    to: templateactionhandler
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: workspacetemplate
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: workspacetemplate
+    to: template_examples
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: workspacetemplate
+    to: templateactionhandler
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: workspacetemplatefile_test
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: workspacetemplatefile_test
+    to: workspacetemplatefile
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: workspacetemplatefile_test
+    to: templatefileactionhandler
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: workspacetemplatefile
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: workspacetemplatefile
+    to: templatefile_examples
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: workspacetemplatefile
+    to: templatefileactionhandler
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: delete_examples_test
     to: delete
     type: direct-call
     description: Executes local class methods / functions
-  - from: mockservices
-    to: logger
+  - from: delete_examples_test
+    to: delete_examples
     type: direct-call
     description: Executes local class methods / functions
-  - from: createbackend
-    to: logger
+  - from: delete_test
+    to: delete
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: delete
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: delete
+    to: delete_examples
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read_examples_test
+    to: read
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read_examples_test
+    to: read_examples
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: read_examples
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: rename_examples_test
+    to: rename
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: rename_examples_test
+    to: rename_examples
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: rename_test
+    to: rename
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: rename
+    to: rename_examples
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: rename
+    to: errors
     type: direct-call
     description: Executes local class methods / functions

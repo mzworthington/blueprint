@@ -2,61 +2,6 @@ name: Backstage - identity Components
 version: 1.0.0
 level: component
 nodes:
-  - id: tokenfactory
-    type: background-worker
-    name: TokenFactory Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend/src/identity/TokenFactory.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 6245
-    'y': 370
-  - id: tokenfactory_test
-    type: background-worker
-    name: TokenFactory.test Service
-    isTest: true
-    properties:
-      filepath: plugins/auth-backend/src/identity/TokenFactory.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 6785
-    'y': 50
-  - id: firestorekeystore
-    type: background-worker
-    name: FirestoreKeyStore Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend/src/identity/FirestoreKeyStore.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 7105
-    'y': 690
-  - id: keystores
-    type: background-worker
-    name: KeyStores Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend/src/identity/KeyStores.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 5120
-    'y': 370
-  - id: statickeystore_test
-    type: background-worker
-    name: StaticKeyStore.test Service
-    isTest: true
-    properties:
-      filepath: plugins/auth-backend/src/identity/StaticKeyStore.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 4580
-    'y': 370
   - id: firestorekeystore_test
     type: background-worker
     name: FirestoreKeyStore.test Service
@@ -66,19 +11,30 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 7220
-    'y': 370
-  - id: statictokenissuer_test
+    x: 7595
+    'y': 690
+  - id: firestorekeystore
     type: background-worker
-    name: StaticTokenIssuer.test Service
-    isTest: true
+    name: FirestoreKeyStore Service
+    isTest: false
     properties:
-      filepath: plugins/auth-backend/src/identity/StaticTokenIssuer.test.ts
+      filepath: plugins/auth-backend/src/identity/FirestoreKeyStore.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 5030
-    'y': 50
+    x: 7325
+    'y': 1010
+  - id: issueusertoken
+    type: background-worker
+    name: issueUserToken Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/identity/issueUserToken.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 6085
+    'y': 690
   - id: keystores_test
     type: background-worker
     name: KeyStores.test Service
@@ -88,18 +44,18 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 3305
-    'y': 50
-  - id: statickeystore
+    x: 5005
+    'y': 370
+  - id: keystores
     type: background-worker
-    name: StaticKeyStore Service
+    name: KeyStores Service
     isTest: false
     properties:
-      filepath: plugins/auth-backend/src/identity/StaticKeyStore.ts
+      filepath: plugins/auth-backend/src/identity/KeyStores.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 4895
+    x: 5545
     'y': 690
   - id: memorykeystore
     type: background-worker
@@ -110,8 +66,41 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 5825
+    x: 6785
+    'y': 1010
+  - id: statickeystore_test
+    type: background-worker
+    name: StaticKeyStore.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/identity/StaticKeyStore.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 4465
     'y': 690
+  - id: statickeystore
+    type: background-worker
+    name: StaticKeyStore Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/identity/StaticKeyStore.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 5235
+    'y': 1010
+  - id: statictokenissuer_test
+    type: background-worker
+    name: StaticTokenIssuer.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/identity/StaticTokenIssuer.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 6140
+    'y': 50
   - id: statictokenissuer
     type: background-worker
     name: StaticTokenIssuer Service
@@ -121,18 +110,40 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 5660
+    x: 6140
     'y': 370
-  - id: issueusertoken
+  - id: tokenfactory_test
     type: background-worker
-    name: issueUserToken Service
-    isTest: false
+    name: TokenFactory.test Service
+    isTest: true
     properties:
-      filepath: plugins/auth-backend/src/identity/issueUserToken.ts
+      filepath: plugins/auth-backend/src/identity/TokenFactory.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 6285
+    x: 6665
+    'y': 690
+  - id: tokenfactory
+    type: background-worker
+    name: TokenFactory Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/identity/TokenFactory.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 5830
+    'y': 1010
+  - id: defaultidentityclient_test
+    type: background-worker
+    name: DefaultIdentityClient.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-node/src/identity/DefaultIdentityClient.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3100
     'y': 690
   - id: defaultidentityclient
     type: background-worker
@@ -143,74 +154,8 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1680
-    'y': 690
-  - id: preparebackstageidentityresponse
-    type: background-worker
-    name: prepareBackstageIdentityResponse Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-node/src/identity/prepareBackstageIdentityResponse.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2300
-    'y': 690
-  - id: preparebackstageidentityresponse_test
-    type: background-worker
-    name: prepareBackstageIdentityResponse.test Service
-    isTest: true
-    properties:
-      filepath: plugins/auth-node/src/identity/prepareBackstageIdentityResponse.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2300
-    'y': 370
-  - id: identityclient_test
-    type: background-worker
-    name: IdentityClient.test Service
-    isTest: true
-    properties:
-      filepath: plugins/auth-node/src/identity/IdentityClient.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2845
-    'y': 50
-  - id: defaultidentityclient_test
-    type: background-worker
-    name: DefaultIdentityClient.test Service
-    isTest: true
-    properties:
-      filepath: plugins/auth-node/src/identity/DefaultIdentityClient.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1760
-    'y': 370
-  - id: getbearertokenfromauthorizationheader
-    type: background-worker
-    name: getBearerTokenFromAuthorizationHeader Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-node/src/identity/getBearerTokenFromAuthorizationHeader.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 140
+    x: 3870
     'y': 1010
-  - id: identityclient
-    type: background-worker
-    name: IdentityClient Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-node/src/identity/IdentityClient.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2935
-    'y': 370
   - id: getbearertokenfromauthorizationheader_test
     type: background-worker
     name: getBearerTokenFromAuthorizationHeader.test Service
@@ -221,18 +166,73 @@ nodes:
       technology: TypeScript Domain Service
     external: false
     x: 140
-    'y': 690
-  - id: types
-    type: gateway-api
-    name: types UI Component (components)
+    'y': 1010
+  - id: getbearertokenfromauthorizationheader
+    type: background-worker
+    name: getBearerTokenFromAuthorizationHeader Service
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/auth-node/src/identity/getBearerTokenFromAuthorizationHeader.ts
       namespaces: ''
-      technology: React Component
-    external: true
-    x: 5660
+      technology: TypeScript Domain Service
+    external: false
+    x: 180
+    'y': 1330
+  - id: identityclient_test
+    type: background-worker
+    name: IdentityClient.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-node/src/identity/IdentityClient.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3655
+    'y': 370
+  - id: identityclient
+    type: background-worker
+    name: IdentityClient Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/identity/IdentityClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 4005
+    'y': 690
+  - id: preparebackstageidentityresponse_test
+    type: background-worker
+    name: prepareBackstageIdentityResponse.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-node/src/identity/prepareBackstageIdentityResponse.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1870
+    'y': 690
+  - id: preparebackstageidentityresponse
+    type: background-worker
+    name: prepareBackstageIdentityResponse Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/identity/prepareBackstageIdentityResponse.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1870
     'y': 1010
+  - id: types
+    type: background-worker
+    name: types Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 6435
+    'y': 1330
   - id: error
     type: background-worker
     name: error Service (serialization)
@@ -242,30 +242,30 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 7815
-    'y': 1010
+    x: 8025
+    'y': 1330
   - id: errors
     type: background-worker
-    name: errors Service (errors.ts)
+    name: errors Service (service)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2420
-    'y': 1010
+    x: 1560
+    'y': 1330
   - id: config
-    type: gateway-api
-    name: config UI Component (layout)
+    type: background-worker
+    name: config Service (entrypoints)
     isTest: false
     properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
-    x: 1590
-    'y': 1010
+    x: 640
+    'y': 1330
   - id: authdatabase
     type: relational-database
     name: AuthDatabase Database (database)
@@ -275,8 +275,8 @@ nodes:
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: true
-    x: 2760
-    'y': 690
+    x: 2330
+    'y': 1010
   - id: databasekeystore
     type: relational-database
     name: DatabaseKeyStore Database (entrypoints)
@@ -286,41 +286,19 @@ nodes:
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: true
-    x: 3260
-    'y': 690
+    x: 2790
+    'y': 1010
   - id: router
-    type: rest-api
-    name: router REST Endpoint (router.ts)
+    type: background-worker
+    name: router Service (schema)
     isTest: false
     properties:
-      filepath: packages/backend-openapi-utils/src/router.ts
+      filepath: plugins/search-backend/src/schema/openapi/generated/router.ts
       namespaces: ''
-      technology: REST Controller / Router
+      technology: TypeScript Domain Service
     external: true
-    x: 5570
+    x: 5560
     'y': 50
-  - id: identityapi
-    type: background-worker
-    name: IdentityApi Service (apis)
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/apis/definitions/IdentityApi.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1060
-    'y': 1010
-  - id: url
-    type: background-worker
-    name: url Service (stages)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 1010
   - id: node
     type: gateway-api
     name: Node UI Component (components)
@@ -330,26 +308,40 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 3720
-    'y': 690
+    x: 3410
+    'y': 1010
+  - id: identityapi
+    type: background-worker
+    name: IdentityApi Service (apis)
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/apis/definitions/IdentityApi.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1100
+    'y': 1330
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 8485
+    'y': 1330
 dependencies:
-  - from: tokenfactory
+  - from: firestorekeystore_test
+    to: firestorekeystore
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: firestorekeystore_test
     to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: tokenfactory
-    to: issueusertoken
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: tokenfactory_test
-    to: memorykeystore
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: tokenfactory_test
-    to: tokenfactory
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: tokenfactory_test
+  - from: firestorekeystore_test
     to: error
     type: direct-call
     description: References class type / calls methods
@@ -365,70 +357,18 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: keystores
-    to: config
+  - from: issueusertoken
+    to: errors
     type: direct-call
     description: Executes local class methods / functions
-  - from: keystores
-    to: authdatabase
-    type: read-write
-    description: Queries database table records
-  - from: keystores
-    to: databasekeystore
-    type: read-write
-    description: Queries database table records
-  - from: keystores
-    to: firestorekeystore
+  - from: issueusertoken
+    to: tokenfactory
     type: direct-call
     description: Executes local class methods / functions
-  - from: keystores
-    to: memorykeystore
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: keystores
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: keystores
-    to: statickeystore
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: keystores
+  - from: issueusertoken
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: statickeystore_test
-    to: statickeystore
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: statickeystore_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: statickeystore_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: firestorekeystore_test
-    to: firestorekeystore
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: firestorekeystore_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: firestorekeystore_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: statictokenissuer_test
-    to: statictokenissuer
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: statictokenissuer_test
-    to: statickeystore
-    type: direct-call
-    description: Executes local class methods / functions
   - from: keystores_test
     to: config
     type: direct-call
@@ -453,15 +393,35 @@ dependencies:
     to: memorykeystore
     type: direct-call
     description: Executes local class methods / functions
-  - from: statickeystore
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: statickeystore
+  - from: keystores
     to: config
     type: direct-call
     description: Executes local class methods / functions
-  - from: statickeystore
+  - from: keystores
+    to: authdatabase
+    type: read-write
+    description: Queries database table records
+  - from: keystores
+    to: databasekeystore
+    type: read-write
+    description: Queries database table records
+  - from: keystores
+    to: firestorekeystore
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: keystores
+    to: memorykeystore
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: keystores
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: keystores
+    to: statickeystore
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: keystores
     to: error
     type: direct-call
     description: References class type / calls methods
@@ -469,6 +429,38 @@ dependencies:
     to: types
     type: direct-call
     description: Executes local class methods / functions
+  - from: statickeystore_test
+    to: statickeystore
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: statickeystore_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: statickeystore_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: statickeystore
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: statickeystore
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: statickeystore
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: statictokenissuer_test
+    to: statictokenissuer
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: statictokenissuer_test
+    to: statickeystore
+    type: direct-call
+    description: Executes local class methods / functions
   - from: statictokenissuer
     to: types
     type: direct-call
@@ -485,18 +477,26 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: issueusertoken
-    to: errors
+  - from: tokenfactory_test
+    to: memorykeystore
     type: direct-call
     description: Executes local class methods / functions
-  - from: issueusertoken
+  - from: tokenfactory_test
     to: tokenfactory
     type: direct-call
     description: Executes local class methods / functions
-  - from: issueusertoken
+  - from: tokenfactory_test
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: tokenfactory
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: tokenfactory
+    to: issueusertoken
+    type: direct-call
+    description: Executes local class methods / functions
   - from: router
     to: keystores
     type: direct-call
@@ -511,6 +511,18 @@ dependencies:
     description: Executes local class methods / functions
   - from: router
     to: statickeystore
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultidentityclient_test
+    to: node
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultidentityclient_test
+    to: defaultidentityclient
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultidentityclient_test
+    to: identityapi
     type: direct-call
     description: Executes local class methods / functions
   - from: defaultidentityclient
@@ -533,16 +545,8 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: preparebackstageidentityresponse
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: preparebackstageidentityresponse
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: preparebackstageidentityresponse_test
-    to: preparebackstageidentityresponse
+  - from: getbearertokenfromauthorizationheader_test
+    to: getbearertokenfromauthorizationheader
     type: direct-call
     description: Executes local class methods / functions
   - from: identityclient_test
@@ -553,18 +557,6 @@ dependencies:
     to: identityclient
     type: direct-call
     description: Executes local class methods / functions
-  - from: defaultidentityclient_test
-    to: node
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultidentityclient_test
-    to: defaultidentityclient
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultidentityclient_test
-    to: identityapi
-    type: direct-call
-    description: Executes local class methods / functions
   - from: identityclient
     to: defaultidentityclient
     type: direct-call
@@ -573,7 +565,15 @@ dependencies:
     to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: getbearertokenfromauthorizationheader_test
-    to: getbearertokenfromauthorizationheader
+  - from: preparebackstageidentityresponse_test
+    to: preparebackstageidentityresponse
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: preparebackstageidentityresponse
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: preparebackstageidentityresponse
+    to: types
     type: direct-call
     description: Executes local class methods / functions

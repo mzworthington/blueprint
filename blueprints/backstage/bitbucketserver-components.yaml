@@ -11,7 +11,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 140
+    x: 910
     'y': 50
   - id: bitbucketserverintegration
     type: background-worker
@@ -22,38 +22,82 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1290
+    x: 1600
     'y': 370
-  - id: config
-    type: gateway-api
-    name: config UI Component (layout)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 140
-    'y': 690
-  - id: helpers
+  - id: helpers_test
     type: background-worker
-    name: helpers Service (entrypoints)
+    name: helpers.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/auth/external/helpers.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2750
+    'y': 50
+  - id: registry
+    type: background-worker
+    name: registry Service (registry.ts)
     isTest: false
     properties:
-      filepath: packages/backend-defaults/src/entrypoints/auth/external/helpers.ts
+      filepath: packages/integration/src/registry.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2290
+    'y': 50
+  - id: scmintegrations_test
+    type: background-worker
+    name: ScmIntegrations.test Service (ScmIntegrations.test.ts)
+    isTest: true
+    properties:
+      filepath: packages/integration/src/ScmIntegrations.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1830
+    'y': 50
+  - id: scmintegrations
+    type: background-worker
+    name: ScmIntegrations Service (ScmIntegrations.ts)
+    isTest: false
+    properties:
+      filepath: packages/integration/src/ScmIntegrations.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1370
+    'y': 50
+  - id: config
+    type: background-worker
+    name: config Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 690
-  - id: types
+  - id: helpers
     type: gateway-api
-    name: types UI Component (components)
+    name: helpers UI Component (home)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/techdocs/src/home/components/Tables/helpers.ts
       namespaces: ''
       technology: React Component
+    external: true
+    x: 140
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
     external: true
     x: 1330
     'y': 690
@@ -66,52 +110,8 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1790
+    x: 1830
     'y': 690
-  - id: scmintegrations_test
-    type: background-worker
-    name: ScmIntegrations.test Service (ScmIntegrations.test.ts)
-    isTest: true
-    properties:
-      filepath: packages/integration/src/ScmIntegrations.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 50
-  - id: registry
-    type: background-worker
-    name: registry Service (registry.ts)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/registry.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1060
-    'y': 50
-  - id: helpers_test
-    type: background-worker
-    name: helpers.test Service (entrypoints)
-    isTest: true
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/auth/external/helpers.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1520
-    'y': 50
-  - id: scmintegrations
-    type: background-worker
-    name: ScmIntegrations Service (ScmIntegrations.ts)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/ScmIntegrations.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1980
-    'y': 50
   - id: bitbucketserverurlreader_test
     type: background-worker
     name: BitbucketServerUrlReader.test Service (entrypoints)
@@ -121,9 +121,25 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2440
+    x: 450
     'y': 50
 dependencies:
+  - from: helpers_test
+    to: bitbucketserverintegration
+    type: direct-call
+    description: References class type / calls methods
+  - from: registry
+    to: bitbucketserverintegration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: scmintegrations_test
+    to: bitbucketserverintegration
+    type: direct-call
+    description: References class type / calls methods
+  - from: scmintegrations
+    to: bitbucketserverintegration
+    type: direct-call
+    description: Executes local class methods / functions
   - from: bitbucketserverintegration_test
     to: config
     type: direct-call
@@ -148,22 +164,6 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: scmintegrations_test
-    to: bitbucketserverintegration
-    type: direct-call
-    description: References class type / calls methods
-  - from: registry
-    to: bitbucketserverintegration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: helpers_test
-    to: bitbucketserverintegration
-    type: direct-call
-    description: References class type / calls methods
-  - from: scmintegrations
-    to: bitbucketserverintegration
-    type: direct-call
-    description: Executes local class methods / functions
   - from: bitbucketserverurlreader_test
     to: bitbucketserverintegration
     type: direct-call

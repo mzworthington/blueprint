@@ -4,7 +4,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 describe('TsMorphParserAdapter', () => {
-  const tempDir = path.resolve(process.cwd(), 'cli/analysis/adapters/ts_morph_test_tmp');
+  const tempDir = path.resolve(new URL('.', import.meta.url).pathname, 'ts_morph_test_tmp');
+  const relativePattern = path.relative(process.cwd(), tempDir).replace(/\\/g, '/');
   let parser: TsMorphParserAdapter;
 
   beforeAll(() => {
@@ -22,18 +23,16 @@ describe('TsMorphParserAdapter', () => {
 
   it('should parse imports, instantiations, and calls from TypeScript files', async () => {
     const tsContent = `
-      import { useState } from 'react';
-      import { Graph } from '@blueprint/core';
-      const db = new PrismaClient();
-      fetch('https://api.com');
-      axios.get('/users');
+      import React from 'react';
+      import { SystemNode } from '@blueprint/core';
+      const x = new PrismaClient();
+      fetch('url');
+      axios.get('url');
     `;
     const tsFile = path.join(tempDir, 'sample.ts');
     fs.writeFileSync(tsFile, tsContent, 'utf8');
 
-    const results = await parser.parseSourceFiles(
-      'cli/analysis/adapters/ts_morph_test_tmp/**/*.ts'
-    );
+    const results = await parser.parseSourceFiles(`${relativePattern}/**/*.ts`);
     expect(results).toHaveLength(1);
 
     const file = results[0];
@@ -56,9 +55,7 @@ describe('TsMorphParserAdapter', () => {
     const tsFile = path.join(tempDir, 'sample.test.ts');
     fs.writeFileSync(tsFile, tsContent, 'utf8');
 
-    const results = await parser.parseSourceFiles(
-      'cli/analysis/adapters/ts_morph_test_tmp/**/*.test.ts'
-    );
+    const results = await parser.parseSourceFiles(`${relativePattern}/**/*.test.ts`);
     expect(results).toHaveLength(1);
 
     const file = results[0];

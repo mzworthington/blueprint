@@ -13,14 +13,25 @@ nodes:
     external: false
     x: 370
     'y': 370
+  - id: serverpermissionclient_test
+    type: background-worker
+    name: ServerPermissionClient.test Service (ServerPermissionClient.test.ts)
+    isTest: true
+    properties:
+      filepath: plugins/permission-node/src/ServerPermissionClient.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 50
   - id: config
-    type: gateway-api
-    name: config UI Component (layout)
+    type: background-worker
+    name: config Service (entrypoints)
     isTest: false
     properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 140
     'y': 690
@@ -35,18 +46,11 @@ nodes:
     external: true
     x: 600
     'y': 690
-  - id: serverpermissionclient_test
-    type: background-worker
-    name: ServerPermissionClient.test Service (ServerPermissionClient.test.ts)
-    isTest: true
-    properties:
-      filepath: plugins/permission-node/src/ServerPermissionClient.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 370
-    'y': 50
 dependencies:
+  - from: serverpermissionclient_test
+    to: serverpermissionclient
+    type: direct-call
+    description: Executes local class methods / functions
   - from: serverpermissionclient
     to: config
     type: direct-call
@@ -55,7 +59,3 @@ dependencies:
     to: permissionclient
     type: direct-call
     description: References class type / calls methods
-  - from: serverpermissionclient_test
-    to: serverpermissionclient
-    type: direct-call
-    description: Executes local class methods / functions

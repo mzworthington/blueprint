@@ -2,17 +2,6 @@ name: Backstage - catalog Components
 version: 1.0.0
 level: component
 nodes:
-  - id: loadtestingentityprovider
-    type: background-worker
-    name: LoadTestingEntityProvider Service
-    isTest: false
-    properties:
-      filepath: contrib/catalog/LoadTestingEntityProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 140
-    'y': 50
   - id: immediateentityprovider
     type: rest-api
     name: ImmediateEntityProvider REST Endpoint
@@ -24,6 +13,17 @@ nodes:
     external: false
     x: 600
     'y': 370
+  - id: loadtestingentityprovider
+    type: background-worker
+    name: LoadTestingEntityProvider Service
+    isTest: false
+    properties:
+      filepath: contrib/catalog/LoadTestingEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
   - id: frontend-client
     type: gateway-api
     name: Frontend Client App (Frontend Client Host)
@@ -35,10 +35,10 @@ nodes:
     'y': 50
   - id: errors
     type: background-worker
-    name: errors Service (errors.ts)
+    name: errors Service (service)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true

@@ -2,17 +2,6 @@ name: Backstage - engines Components
 version: 1.0.0
 level: component
 nodes:
-  - id: elasticsearchsearchengine_test
-    type: background-worker
-    name: ElasticSearchSearchEngine.test Service
-    isTest: true
-    properties:
-      filepath: plugins/search-backend-module-elasticsearch/src/engines/ElasticSearchSearchEngine.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 5375
-    'y': 50
   - id: elasticsearchauthtransport_test
     type: background-worker
     name: ElasticSearchAuthTransport.test Service
@@ -22,8 +11,19 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 4365
+    x: 4230
     'y': 690
+  - id: elasticsearchauthtransport
+    type: background-worker
+    name: ElasticSearchAuthTransport Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-elasticsearch/src/engines/ElasticSearchAuthTransport.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3380
+    'y': 1010
   - id: elasticsearchclientoptions
     type: background-worker
     name: ElasticSearchClientOptions Service
@@ -33,19 +33,8 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 6155
+    x: 5455
     'y': 1330
-  - id: elasticsearchclientwrapper
-    type: background-worker
-    name: ElasticSearchClientWrapper Service
-    isTest: false
-    properties:
-      filepath: plugins/search-backend-module-elasticsearch/src/engines/ElasticSearchClientWrapper.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 5510
-    'y': 1010
   - id: elasticsearchclientwrapper_test
     type: background-worker
     name: ElasticSearchClientWrapper.test Service
@@ -55,8 +44,41 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 4580
+    x: 4985
     'y': 50
+  - id: elasticsearchclientwrapper
+    type: background-worker
+    name: ElasticSearchClientWrapper Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-elasticsearch/src/engines/ElasticSearchClientWrapper.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 4770
+    'y': 1010
+  - id: elasticsearchsearchengine_test
+    type: background-worker
+    name: ElasticSearchSearchEngine.test Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-elasticsearch/src/engines/ElasticSearchSearchEngine.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3895
+    'y': 50
+  - id: elasticsearchsearchengine
+    type: background-worker
+    name: ElasticSearchSearchEngine Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-elasticsearch/src/engines/ElasticSearchSearchEngine.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3475
+    'y': 370
   - id: elasticsearchsearchengineindexer_test
     type: background-worker
     name: ElasticSearchSearchEngineIndexer.test Service
@@ -66,7 +88,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 4905
+    x: 4310
     'y': 370
   - id: elasticsearchsearchengineindexer
     type: background-worker
@@ -77,30 +99,8 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 5040
+    x: 3610
     'y': 690
-  - id: elasticsearchsearchengine
-    type: background-worker
-    name: ElasticSearchSearchEngine Service
-    isTest: false
-    properties:
-      filepath: plugins/search-backend-module-elasticsearch/src/engines/ElasticSearchSearchEngine.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 3960
-    'y': 370
-  - id: elasticsearchauthtransport
-    type: background-worker
-    name: ElasticSearchAuthTransport Service
-    isTest: false
-    properties:
-      filepath: plugins/search-backend-module-elasticsearch/src/engines/ElasticSearchAuthTransport.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 3745
-    'y': 1010
   - id: lunrsearchengine_test
     type: background-worker
     name: LunrSearchEngine.test Service
@@ -110,7 +110,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2260
+    x: 1910
     'y': 690
   - id: lunrsearchengine
     type: background-worker
@@ -121,7 +121,18 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2315
+    x: 1725
+    'y': 1010
+  - id: lunrsearchengineindexer_test
+    type: background-worker
+    name: LunrSearchEngineIndexer.test Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-node/src/engines/LunrSearchEngineIndexer.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 505
     'y': 1010
   - id: lunrsearchengineindexer
     type: background-worker
@@ -132,19 +143,19 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 640
+    x: 600
     'y': 1330
-  - id: lunrsearchengineindexer_test
-    type: background-worker
-    name: LunrSearchEngineIndexer.test Service
-    isTest: true
+  - id: plugin
+    type: gateway-api
+    name: plugin UI Component (alpha)
+    isTest: false
     properties:
-      filepath: plugins/search-backend-node/src/engines/LunrSearchEngineIndexer.test.ts
+      filepath: plugins/scaffolder/src/alpha/plugin.tsx
       namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 465
-    'y': 1010
+      technology: React Component
+    external: true
+    x: 2370
+    'y': 690
   - id: module
     type: background-worker
     name: module Service (module.ts)
@@ -154,52 +165,8 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 3865
+    x: 3220
     'y': 50
-  - id: config
-    type: gateway-api
-    name: config UI Component (layout)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 2720
-    'y': 690
-  - id: error
-    type: background-worker
-    name: error Service (serialization)
-    isTest: false
-    properties:
-      filepath: packages/errors/src/serialization/error.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 4595
-    'y': 1330
-  - id: auth
-    type: background-worker
-    name: auth Service (apis)
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/apis/definitions/auth.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1775
-    'y': 1330
-  - id: types
-    type: gateway-api
-    name: types UI Component (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 3545
-    'y': 1330
   - id: indexbuilder_test
     type: background-worker
     name: IndexBuilder.test Service (IndexBuilder.test.ts)
@@ -209,14 +176,58 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 3180
+    x: 1450
+    'y': 690
+  - id: auth
+    type: background-worker
+    name: auth Service (apis)
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/apis/definitions/auth.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1765
+    'y': 1330
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 4230
+    'y': 1330
+  - id: types
+    type: background-worker
+    name: types Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2625
+    'y': 1330
+  - id: config
+    type: background-worker
+    name: config Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2935
     'y': 690
   - id: test-utils
     type: gateway-api
-    name: test-utils UI Component (test-utils.tsx)
+    name: test-utils UI Component (hooks)
     isTest: false
     properties:
-      filepath: plugins/techdocs-addons-test-utils/src/test-utils.tsx
+      filepath: plugins/kubernetes-react/src/hooks/test-utils.tsx
       namespaces: ''
       technology: React Component
     external: true
@@ -224,145 +235,138 @@ nodes:
     'y': 1330
   - id: errors
     type: background-worker
-    name: errors Service (errors.ts)
+    name: errors Service (service)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1100
+    x: 1060
     'y': 1330
-  - id: plugin
-    type: background-worker
-    name: plugin Service (plugin.tsx)
-    isTest: false
-    properties:
-      filepath: packages/app-example-plugin/src/plugin.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1775
-    'y': 690
 dependencies:
+  - from: plugin
+    to: lunrsearchengine
+    type: direct-call
+    description: References class type / calls methods
   - from: module
     to: elasticsearchsearchengine
     type: direct-call
     description: Executes local class methods / functions
-  - from: elasticsearchsearchengine_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchsearchengine_test
-    to: elasticsearchclientwrapper
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchsearchengine_test
-    to: elasticsearchsearchengine
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchsearchengine_test
-    to: elasticsearchsearchengineindexer
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchsearchengine_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: elasticsearchauthtransport_test
-    to: elasticsearchauthtransport
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchauthtransport_test
-    to: auth
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchauthtransport_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: elasticsearchclientwrapper
-    to: elasticsearchclientoptions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchclientwrapper
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchclientwrapper
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: elasticsearchclientwrapper_test
-    to: elasticsearchclientwrapper
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchclientwrapper_test
-    to: elasticsearchsearchengine
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchsearchengineindexer_test
-    to: elasticsearchclientwrapper
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchsearchengineindexer_test
-    to: elasticsearchsearchengineindexer
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchsearchengineindexer_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: elasticsearchsearchengineindexer
-    to: elasticsearchclientwrapper
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchsearchengineindexer
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: elasticsearchsearchengine
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchsearchengine
-    to: elasticsearchclientoptions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchsearchengine
-    to: elasticsearchclientwrapper
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchsearchengine
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchsearchengine
-    to: elasticsearchsearchengineindexer
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchsearchengine
-    to: auth
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchsearchengine
-    to: elasticsearchauthtransport
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchsearchengine
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: elasticsearchauthtransport
-    to: auth
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: elasticsearchauthtransport
-    to: elasticsearchclientoptions
-    type: direct-call
-    description: Executes local class methods / functions
   - from: indexbuilder_test
     to: lunrsearchengine
+    type: direct-call
+    description: References class type / calls methods
+  - from: elasticsearchauthtransport_test
+    to: elasticsearchauthtransport
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchauthtransport_test
+    to: auth
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchauthtransport_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: elasticsearchauthtransport
+    to: auth
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchauthtransport
+    to: elasticsearchclientoptions
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchclientwrapper_test
+    to: elasticsearchclientwrapper
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchclientwrapper_test
+    to: elasticsearchsearchengine
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchclientwrapper
+    to: elasticsearchclientoptions
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchclientwrapper
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchclientwrapper
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: elasticsearchsearchengine_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchsearchengine_test
+    to: elasticsearchclientwrapper
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchsearchengine_test
+    to: elasticsearchsearchengine
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchsearchengine_test
+    to: elasticsearchsearchengineindexer
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchsearchengine_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: elasticsearchsearchengine
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchsearchengine
+    to: elasticsearchclientoptions
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchsearchengine
+    to: elasticsearchclientwrapper
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchsearchengine
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchsearchengine
+    to: elasticsearchsearchengineindexer
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchsearchengine
+    to: auth
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchsearchengine
+    to: elasticsearchauthtransport
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchsearchengine
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: elasticsearchsearchengineindexer_test
+    to: elasticsearchclientwrapper
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchsearchengineindexer_test
+    to: elasticsearchsearchengineindexer
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchsearchengineindexer_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: elasticsearchsearchengineindexer
+    to: elasticsearchclientwrapper
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elasticsearchsearchengineindexer
+    to: error
     type: direct-call
     description: References class type / calls methods
   - from: lunrsearchengine_test
@@ -409,7 +413,3 @@ dependencies:
     to: lunrsearchengineindexer
     type: direct-call
     description: Executes local class methods / functions
-  - from: plugin
-    to: lunrsearchengine
-    type: direct-call
-    description: References class type / calls methods

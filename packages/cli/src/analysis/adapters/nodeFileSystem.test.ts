@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 describe('NodeFileSystemAdapter', () => {
-  const tempDir = path.resolve(process.cwd(), 'cli/analysis/adapters/fs_test_tmp');
+  const tempDir = path.resolve(new URL('.', import.meta.url).pathname, 'fs_test_tmp');
   const adapter = new NodeFileSystemAdapter();
 
   beforeAll(() => {

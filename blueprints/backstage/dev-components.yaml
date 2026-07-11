@@ -13,17 +13,6 @@ nodes:
     external: false
     x: 370
     'y': 370
-  - id: index
-    type: background-worker
-    name: index Service (index.ts)
-    isTest: false
-    properties:
-      filepath: packages/frontend-test-utils/src/index.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 370
-    'y': 50
   - id: integration
     type: background-worker
     name: integration Service (types)
@@ -46,16 +35,27 @@ nodes:
     external: true
     x: 600
     'y': 690
+  - id: index
+    type: background-worker
+    name: index Service (commands)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/bundle/__fixtures__/packed/frontend/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 50
 dependencies:
-  - from: index
-    to: devpage
-    type: direct-call
-    description: Executes local class methods / functions
   - from: devpage
     to: integration
     type: direct-call
     description: Executes local class methods / functions
   - from: devpage
     to: scmintegrationsapi
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index
+    to: devpage
     type: direct-call
     description: Executes local class methods / functions

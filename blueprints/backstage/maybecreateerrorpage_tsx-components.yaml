@@ -13,6 +13,17 @@ nodes:
     external: false
     x: 370
     'y': 370
+  - id: createapp
+    type: gateway-api
+    name: createApp UI Component (createApp.tsx)
+    isTest: false
+    properties:
+      filepath: packages/frontend-defaults/src/createApp.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 50
   - id: frontend-client
     type: gateway-api
     name: Frontend Client App (Frontend Client Host)
@@ -20,25 +31,14 @@ nodes:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
     external: true
-    x: 140
-    'y': 50
-  - id: createapp
-    type: background-worker
-    name: createApp Service (createApp.ts)
-    isTest: false
-    properties:
-      filepath: packages/create-app/src/createApp.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
     x: 600
     'y': 50
 dependencies:
-  - from: frontend-client
-    to: maybecreateerrorpage
-    type: direct-call
-    description: Renders maybeCreateErrorPage layout component
   - from: createapp
     to: maybecreateerrorpage
     type: direct-call
     description: Executes local class methods / functions
+  - from: frontend-client
+    to: maybecreateerrorpage
+    type: direct-call
+    description: Renders maybeCreateErrorPage layout component

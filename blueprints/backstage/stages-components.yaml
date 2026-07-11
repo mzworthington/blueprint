@@ -2,171 +2,72 @@ name: Backstage - stages Components
 version: 1.0.0
 level: component
 nodes:
-  - id: preparers
-    type: background-worker
-    name: preparers Service
+  - id: awss3
+    type: rest-api
+    name: awsS3 REST Endpoint
     isTest: false
     properties:
-      filepath: plugins/techdocs-node/src/stages/prepare/preparers.ts
+      filepath: plugins/techdocs-node/src/stages/publish/awsS3.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: REST Controller / Router
     external: false
-    x: 36795
-    'y': 370
-  - id: url
-    type: background-worker
-    name: url Service
-    isTest: false
-    properties:
-      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 44500
-    'y': 1330
-  - id: dir
-    type: background-worker
-    name: dir Service
-    isTest: false
-    properties:
-      filepath: plugins/techdocs-node/src/stages/prepare/dir.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 36770
+    x: 58600
     'y': 690
-  - id: dir_test
-    type: background-worker
-    name: dir.test Service
-    isTest: true
+  - id: azureblobstorage
+    type: rest-api
+    name: azureBlobStorage REST Endpoint
+    isTest: false
     properties:
-      filepath: plugins/techdocs-node/src/stages/prepare/dir.test.ts
+      filepath: plugins/techdocs-node/src/stages/publish/azureBlobStorage.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: false
+    x: 7355
+    'y': 1970
+  - id: publish
+    type: background-worker
+    name: publish Service
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/publish/publish.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 37255
+    x: 52620
     'y': 370
-  - id: publish_test
+  - id: dockercontainerrunner_test
     type: background-worker
-    name: publish.test Service
+    name: DockerContainerRunner.test Service
     isTest: true
     properties:
-      filepath: plugins/techdocs-node/src/stages/publish/publish.test.ts
+      filepath: plugins/techdocs-node/src/stages/generate/DockerContainerRunner.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 34410
+    x: 1630
+    'y': 1010
+  - id: dockercontainerrunner
+    type: background-worker
+    name: DockerContainerRunner Service
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/generate/DockerContainerRunner.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 4505
+    'y': 1330
+  - id: generators_test
+    type: background-worker
+    name: generators.test Service
+    isTest: true
+    properties:
+      filepath: plugins/techdocs-node/src/stages/generate/generators.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 4905
     'y': 50
-  - id: googlemigration
-    type: background-worker
-    name: GoogleMigration Service
-    isTest: false
-    properties:
-      filepath: plugins/techdocs-node/src/stages/publish/migrations/GoogleMigration.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2675
-    'y': 1330
-  - id: local_test
-    type: rest-api
-    name: local.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/techdocs-node/src/stages/publish/local.test.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: false
-    x: 36335
-    'y': 370
-  - id: openstackswift_test
-    type: rest-api
-    name: openStackSwift.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/techdocs-node/src/stages/publish/openStackSwift.test.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: false
-    x: 35150
-    'y': 370
-  - id: googlestorage
-    type: rest-api
-    name: googleStorage REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/techdocs-node/src/stages/publish/googleStorage.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: false
-    x: 34180
-    'y': 690
-  - id: awss3_test
-    type: rest-api
-    name: awsS3.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/techdocs-node/src/stages/publish/awsS3.test.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: false
-    x: 32610
-    'y': 690
-  - id: azureblobstorage_test
-    type: rest-api
-    name: azureBlobStorage.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/techdocs-node/src/stages/publish/azureBlobStorage.test.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: false
-    x: 32150
-    'y': 690
-  - id: googlestorage_test
-    type: rest-api
-    name: googleStorage.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/techdocs-node/src/stages/publish/googleStorage.test.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: false
-    x: 33150
-    'y': 370
-  - id: local
-    type: rest-api
-    name: local REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/techdocs-node/src/stages/publish/local.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: false
-    x: 37510
-    'y': 690
-  - id: openstackswift
-    type: rest-api
-    name: openStackSwift REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/techdocs-node/src/stages/publish/openStackSwift.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: false
-    x: 33380
-    'y': 690
-  - id: techdocs_test
-    type: background-worker
-    name: techdocs.test Service
-    isTest: true
-    properties:
-      filepath: plugins/techdocs-node/src/stages/generate/techdocs.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 34690
-    'y': 370
   - id: generators
     type: background-worker
     name: generators Service
@@ -176,7 +77,29 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 33690
+    x: 5040
+    'y': 370
+  - id: mkdocspatchers
+    type: background-worker
+    name: mkdocsPatchers Service
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/generate/mkdocsPatchers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2170
+    'y': 1010
+  - id: techdocs_test
+    type: background-worker
+    name: techdocs.test Service
+    isTest: true
+    properties:
+      filepath: plugins/techdocs-node/src/stages/generate/techdocs.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 7115
     'y': 370
   - id: techdocs
     type: background-worker
@@ -187,52 +110,162 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 3375
+    x: 4260
     'y': 690
-  - id: dockercontainerrunner
+  - id: dir_test
     type: background-worker
-    name: DockerContainerRunner Service
-    isTest: false
-    properties:
-      filepath: plugins/techdocs-node/src/stages/generate/DockerContainerRunner.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 23505
-    'y': 1010
-  - id: generators_test
-    type: background-worker
-    name: generators.test Service
+    name: dir.test Service
     isTest: true
     properties:
-      filepath: plugins/techdocs-node/src/stages/generate/generators.test.ts
+      filepath: plugins/techdocs-node/src/stages/prepare/dir.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 33195
+    x: 5885
+    'y': 370
+  - id: dir
+    type: background-worker
+    name: dir Service
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/prepare/dir.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 6425
+    'y': 690
+  - id: preparers
+    type: background-worker
+    name: preparers Service
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/prepare/preparers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 51620
+    'y': 370
+  - id: url
+    type: background-worker
+    name: url Service
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 50165
+    'y': 1330
+  - id: awss3_test
+    type: rest-api
+    name: awsS3.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/techdocs-node/src/stages/publish/awsS3.test.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: false
+    x: 55365
+    'y': 370
+  - id: azureblobstorage_test
+    type: rest-api
+    name: azureBlobStorage.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/techdocs-node/src/stages/publish/azureBlobStorage.test.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: false
+    x: 51335
+    'y': 690
+  - id: googlestorage_test
+    type: rest-api
+    name: googleStorage.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/techdocs-node/src/stages/publish/googleStorage.test.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: false
+    x: 50700
+    'y': 370
+  - id: googlestorage
+    type: rest-api
+    name: googleStorage REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/publish/googleStorage.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: false
+    x: 52310
+    'y': 690
+  - id: local_test
+    type: rest-api
+    name: local.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/techdocs-node/src/stages/publish/local.test.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: false
+    x: 60095
+    'y': 370
+  - id: local
+    type: rest-api
+    name: local REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/publish/local.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: false
+    x: 70665
+    'y': 690
+  - id: openstackswift_test
+    type: rest-api
+    name: openStackSwift.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/techdocs-node/src/stages/publish/openStackSwift.test.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: false
+    x: 59635
+    'y': 370
+  - id: openstackswift
+    type: rest-api
+    name: openStackSwift REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/publish/openStackSwift.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: false
+    x: 60000
+    'y': 690
+  - id: publish_test
+    type: background-worker
+    name: publish.test Service
+    isTest: true
+    properties:
+      filepath: plugins/techdocs-node/src/stages/publish/publish.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 58805
     'y': 50
-  - id: dockercontainerrunner_test
+  - id: googlemigration
     type: background-worker
-    name: DockerContainerRunner.test Service
-    isTest: true
-    properties:
-      filepath: plugins/techdocs-node/src/stages/generate/DockerContainerRunner.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1870
-    'y': 690
-  - id: mkdocspatchers
-    type: background-worker
-    name: mkdocsPatchers Service
+    name: GoogleMigration Service
     isTest: false
     properties:
-      filepath: plugins/techdocs-node/src/stages/generate/mkdocsPatchers.ts
+      filepath: plugins/techdocs-node/src/stages/publish/migrations/GoogleMigration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1450
-    'y': 1010
+    x: 5205
+    'y': 1970
   - id: layout
     type: background-worker
     name: layout Service (reader)
@@ -242,1009 +275,8 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 78275
+    x: 7865
     'y': 1010
-  - id: helpers
-    type: background-worker
-    name: helpers Service (entrypoints)
-    isTest: false
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/auth/external/helpers.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2220
-    'y': 1650
-  - id: bitbucketcloudentityprovider_test
-    type: background-worker
-    name: BitbucketCloudEntityProvider.test Service (providers)
-    isTest: true
-    properties:
-      filepath: plugins/catalog-backend-module-bitbucket-cloud/src/providers/BitbucketCloudEntityProvider.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 77815
-    'y': 1010
-  - id: module_test
-    type: background-worker
-    name: module.test Service (module.test.ts)
-    isTest: true
-    properties:
-      filepath: plugins/auth-backend-module-auth0-provider/src/module.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 77355
-    'y': 1010
-  - id: resolvers
-    type: background-worker
-    name: resolvers Service (resolvers.ts)
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-aws-alb-provider/src/resolvers.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 76895
-    'y': 1010
-  - id: bitbucketserverpullrequest
-    type: background-worker
-    name: bitbucketServerPullRequest Service (actions)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-bitbucket-server/src/actions/bitbucketServerPullRequest.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 76435
-    'y': 1010
-  - id: repobranchpicker
-    type: gateway-api
-    name: RepoBranchPicker UI Component (alpha)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder/src/alpha/fields/RepoBranchPicker.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 75975
-    'y': 1010
-  - id: validation
-    type: background-worker
-    name: validation Service (schema)
-    isTest: false
-    properties:
-      filepath: packages/backend-openapi-utils/src/schema/validation.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 75515
-    'y': 1010
-  - id: utils
-    type: background-worker
-    name: utils Service (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/Avatar/utils.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 75055
-    'y': 1010
-  - id: createregistercatalogentitiesaction
-    type: background-worker
-    name: createRegisterCatalogEntitiesAction Service (actions)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend/src/actions/createRegisterCatalogEntitiesAction.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 74595
-    'y': 1010
-  - id: createrouter
-    type: rest-api
-    name: createRouter REST Endpoint (service)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend/src/service/createRouter.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 74135
-    'y': 1010
-  - id: githubmultiorgentityprovider
-    type: background-worker
-    name: GithubMultiOrgEntityProvider Service (providers)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-github/src/providers/GithubMultiOrgEntityProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 73675
-    'y': 1010
-  - id: githubentityprovider
-    type: background-worker
-    name: GithubEntityProvider Service (providers)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-github/src/providers/GithubEntityProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 73215
-    'y': 1010
-  - id: githubdiscoveryprocessor
-    type: background-worker
-    name: GithubDiscoveryProcessor Service (processors)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-github/src/processors/GithubDiscoveryProcessor.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 72755
-    'y': 1010
-  - id: githubmultiorgreaderprocessor
-    type: background-worker
-    name: GithubMultiOrgReaderProcessor Service (processors)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-github/src/processors/GithubMultiOrgReaderProcessor.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 72295
-    'y': 1010
-  - id: util
-    type: background-worker
-    name: util Service (__fixtures__)
-    isTest: false
-    properties:
-      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/util.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 71835
-    'y': 1010
-  - id: authenticator_test
-    type: rest-api
-    name: authenticator.test REST Endpoint (authenticator.test.ts)
-    isTest: true
-    properties:
-      filepath: plugins/auth-backend-module-auth0-provider/src/authenticator.test.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 71375
-    'y': 1010
-  - id: authenticator
-    type: rest-api
-    name: authenticator REST Endpoint (authenticator.ts)
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-auth0-provider/src/authenticator.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 70915
-    'y': 1010
-  - id: createdryrunner
-    type: background-worker
-    name: createDryRunner Service (scaffolder)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/dryrun/createDryRunner.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 70455
-    'y': 1010
-  - id: pinnipedhelper
-    type: background-worker
-    name: PinnipedHelper Service (auth)
-    isTest: false
-    properties:
-      filepath: plugins/kubernetes-node/src/auth/PinnipedHelper.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 69995
-    'y': 1010
-  - id: consentpage
-    type: gateway-api
-    name: ConsentPage UI Component (components)
-    isTest: false
-    properties:
-      filepath: plugins/auth/src/components/ConsentPage/ConsentPage.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 69535
-    'y': 1010
-  - id: bitbucketserverclient
-    type: background-worker
-    name: BitbucketServerClient Service (lib)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-bitbucket-server/src/lib/BitbucketServerClient.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 69075
-    'y': 1010
-  - id: usegetentities_test
-    type: gateway-api
-    name: useGetEntities.test UI Component (components)
-    isTest: true
-    properties:
-      filepath: plugins/org/src/components/Cards/OwnershipCard/useGetEntities.test.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 68615
-    'y': 1010
-  - id: signalclient
-    type: gateway-api
-    name: SignalClient UI Component (api)
-    isTest: false
-    properties:
-      filepath: plugins/signals/src/api/SignalClient.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 68155
-    'y': 1010
-  - id: aboutcontent
-    type: gateway-api
-    name: AboutContent UI Component (components)
-    isTest: false
-    properties:
-      filepath: plugins/catalog/src/components/AboutCard/AboutContent.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 67695
-    'y': 1010
-  - id: injectconfigintohtml
-    type: background-worker
-    name: injectConfigIntoHtml Service (lib)
-    isTest: false
-    properties:
-      filepath: plugins/app-backend/src/lib/config/injectConfigIntoHtml.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 67235
-    'y': 1010
-  - id: fetch
-    type: background-worker
-    name: fetch Service (types)
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/templates/typescript-backstage-client/types/fetch.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 66775
-    'y': 1010
-  - id: plugin_test
-    type: background-worker
-    name: Plugin.test Service (plugin)
-    isTest: true
-    properties:
-      filepath: packages/core-plugin-api/src/plugin/Plugin.test.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 66315
-    'y': 1010
-  - id: awss3entityprovider
-    type: background-worker
-    name: AwsS3EntityProvider Service (providers)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-aws/src/providers/AwsS3EntityProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 65855
-    'y': 1010
-  - id: router
-    type: rest-api
-    name: router REST Endpoint (router.ts)
-    isTest: false
-    properties:
-      filepath: packages/backend-openapi-utils/src/router.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 65395
-    'y': 1010
-  - id: notificationsemailprocessor
-    type: background-worker
-    name: NotificationsEmailProcessor Service (processor)
-    isTest: false
-    properties:
-      filepath: plugins/notifications-backend-module-email/src/processor/NotificationsEmailProcessor.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 64935
-    'y': 1010
-  - id: oidcrouter_test
-    type: background-worker
-    name: OidcRouter.test Service (service)
-    isTest: true
-    properties:
-      filepath: plugins/auth-backend/src/service/OidcRouter.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 64475
-    'y': 1010
-  - id: oidcservice
-    type: background-worker
-    name: OidcService Service (service)
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend/src/service/OidcService.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 64015
-    'y': 1010
-  - id: oidcservice_test
-    type: background-worker
-    name: OidcService.test Service (service)
-    isTest: true
-    properties:
-      filepath: plugins/auth-backend/src/service/OidcService.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 63555
-    'y': 1010
-  - id: cimdclient
-    type: background-worker
-    name: CimdClient Service (service)
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend/src/service/CimdClient.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 63095
-    'y': 1010
-  - id: oidcrouter
-    type: rest-api
-    name: OidcRouter REST Endpoint (service)
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend/src/service/OidcRouter.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 62635
-    'y': 1010
-  - id: podexecterminal
-    type: gateway-api
-    name: PodExecTerminal UI Component (components)
-    isTest: false
-    properties:
-      filepath: plugins/kubernetes-react/src/components/PodExecTerminal/PodExecTerminal.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 62175
-    'y': 1010
-  - id: kubernetesclusterlinkformatter
-    type: background-worker
-    name: KubernetesClusterLinkFormatter Service (api)
-    isTest: false
-    properties:
-      filepath: plugins/kubernetes-react/src/api/KubernetesClusterLinkFormatter.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 61715
-    'y': 1010
-  - id: standardclusterlinksformatter
-    type: background-worker
-    name: StandardClusterLinksFormatter Service (api)
-    isTest: false
-    properties:
-      filepath: plugins/kubernetes-react/src/api/formatters/StandardClusterLinksFormatter.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 61255
-    'y': 1010
-  - id: openshiftclusterlinksformatter_test
-    type: background-worker
-    name: OpenshiftClusterLinksFormatter.test Service (api)
-    isTest: true
-    properties:
-      filepath: plugins/kubernetes-react/src/api/formatters/OpenshiftClusterLinksFormatter.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 60795
-    'y': 1010
-  - id: rancherclusterlinksformatter_test
-    type: background-worker
-    name: RancherClusterLinksFormatter.test Service (api)
-    isTest: true
-    properties:
-      filepath: plugins/kubernetes-react/src/api/formatters/RancherClusterLinksFormatter.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 60335
-    'y': 1010
-  - id: headlampclusterlinksformatter
-    type: background-worker
-    name: HeadlampClusterLinksFormatter Service (api)
-    isTest: false
-    properties:
-      filepath: plugins/kubernetes-react/src/api/formatters/HeadlampClusterLinksFormatter.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 59875
-    'y': 1010
-  - id: gkeclusterlinksformatter
-    type: background-worker
-    name: GkeClusterLinksFormatter Service (api)
-    isTest: false
-    properties:
-      filepath: plugins/kubernetes-react/src/api/formatters/GkeClusterLinksFormatter.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 59415
-    'y': 1010
-  - id: openshiftclusterlinksformatter
-    type: background-worker
-    name: OpenshiftClusterLinksFormatter Service (api)
-    isTest: false
-    properties:
-      filepath: plugins/kubernetes-react/src/api/formatters/OpenshiftClusterLinksFormatter.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 58955
-    'y': 1010
-  - id: headlampclusterlinksformatter_test
-    type: background-worker
-    name: HeadlampClusterLinksFormatter.test Service (api)
-    isTest: true
-    properties:
-      filepath: plugins/kubernetes-react/src/api/formatters/HeadlampClusterLinksFormatter.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 58495
-    'y': 1010
-  - id: eksclusterlinksformatter_test
-    type: background-worker
-    name: EksClusterLinksFormatter.test Service (api)
-    isTest: true
-    properties:
-      filepath: plugins/kubernetes-react/src/api/formatters/EksClusterLinksFormatter.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 58035
-    'y': 1010
-  - id: standardclusterlinksformatter_test
-    type: background-worker
-    name: StandardClusterLinksFormatter.test Service (api)
-    isTest: true
-    properties:
-      filepath: plugins/kubernetes-react/src/api/formatters/StandardClusterLinksFormatter.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 57575
-    'y': 1010
-  - id: aksclusterlinksformatter
-    type: background-worker
-    name: AksClusterLinksFormatter Service (api)
-    isTest: false
-    properties:
-      filepath: plugins/kubernetes-react/src/api/formatters/AksClusterLinksFormatter.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 57115
-    'y': 1010
-  - id: rancherclusterlinksformatter
-    type: background-worker
-    name: RancherClusterLinksFormatter Service (api)
-    isTest: false
-    properties:
-      filepath: plugins/kubernetes-react/src/api/formatters/RancherClusterLinksFormatter.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 56655
-    'y': 1010
-  - id: kubernetesclusterlinkformatter_test
-    type: background-worker
-    name: KubernetesClusterLinkFormatter.test Service (api)
-    isTest: true
-    properties:
-      filepath: plugins/kubernetes-react/src/api/KubernetesClusterLinkFormatter.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 56195
-    'y': 1010
-  - id: azuredevopsdiscoveryprocessor
-    type: background-worker
-    name: AzureDevOpsDiscoveryProcessor Service (processors)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-azure/src/processors/AzureDevOpsDiscoveryProcessor.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 55735
-    'y': 1010
-  - id: oauthcookiemanager
-    type: rest-api
-    name: OAuthCookieManager REST Endpoint (oauth)
-    isTest: false
-    properties:
-      filepath: plugins/auth-node/src/oauth/OAuthCookieManager.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 55275
-    'y': 1010
-  - id: createoauthroutehandlers
-    type: rest-api
-    name: createOAuthRouteHandlers REST Endpoint (oauth)
-    isTest: false
-    properties:
-      filepath: plugins/auth-node/src/oauth/createOAuthRouteHandlers.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 54815
-    'y': 1010
-  - id: createoauthroutehandlers_test
-    type: rest-api
-    name: createOAuthRouteHandlers.test REST Endpoint (oauth)
-    isTest: true
-    properties:
-      filepath: plugins/auth-node/src/oauth/createOAuthRouteHandlers.test.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 54355
-    'y': 1010
-  - id: defaultidentityclient
-    type: background-worker
-    name: DefaultIdentityClient Service (identity)
-    isTest: false
-    properties:
-      filepath: plugins/auth-node/src/identity/DefaultIdentityClient.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 53895
-    'y': 1010
-  - id: devtoolsclient
-    type: background-worker
-    name: DevToolsClient Service (api)
-    isTest: false
-    properties:
-      filepath: plugins/devtools/src/api/DevToolsClient.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 53435
-    'y': 1010
-  - id: gitlabdiscoveryprocessor
-    type: background-worker
-    name: GitLabDiscoveryProcessor Service (GitLabDiscoveryProcessor.ts)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-gitlab/src/GitLabDiscoveryProcessor.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 52975
-    'y': 1010
-  - id: client
-    type: background-worker
-    name: client Service (commands)
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/commands/package/schema/openapi/generate/client.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 52515
-    'y': 1010
-  - id: handlers
-    type: background-worker
-    name: handlers Service (__testUtils__)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-gitlab/src/__testUtils__/handlers.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 52055
-    'y': 1010
-  - id: gitlabdiscoveryprocessor_test
-    type: background-worker
-    name: GitLabDiscoveryProcessor.test Service (GitLabDiscoveryProcessor.test.ts)
-    isTest: true
-    properties:
-      filepath: plugins/catalog-backend-module-gitlab/src/GitLabDiscoveryProcessor.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 51595
-    'y': 1010
-  - id: analyzegitlabwebhookevent
-    type: background-worker
-    name: analyzeGitLabWebhookEvent Service (events)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-gitlab/src/events/analyzeGitLabWebhookEvent.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 51135
-    'y': 1010
-  - id: azuredevops
-    type: gateway-api
-    name: AzureDevops UI Component (api)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-import/src/api/AzureDevops.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 50675
-    'y': 1010
-  - id: azurerepoapiclient
-    type: background-worker
-    name: AzureRepoApiClient Service (api)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-import/src/api/AzureRepoApiClient.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 50215
-    'y': 1010
-  - id: catalogimportclient
-    type: gateway-api
-    name: CatalogImportClient UI Component (api)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-import/src/api/CatalogImportClient.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 49755
-    'y': 1010
-  - id: azurerepoapiclient_test
-    type: background-worker
-    name: AzureRepoApiClient.test Service (api)
-    isTest: true
-    properties:
-      filepath: plugins/catalog-import/src/api/AzureRepoApiClient.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 49295
-    'y': 1010
-  - id: kubernetesfetcher
-    type: background-worker
-    name: KubernetesFetcher Service (service)
-    isTest: false
-    properties:
-      filepath: plugins/kubernetes-backend/src/service/KubernetesFetcher.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 48835
-    'y': 1010
-  - id: kubernetesproxy
-    type: rest-api
-    name: KubernetesProxy REST Endpoint (service)
-    isTest: false
-    properties:
-      filepath: plugins/kubernetes-backend/src/service/KubernetesProxy.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 48375
-    'y': 1010
-  - id: read
-    type: background-worker
-    name: read Service (microsoftGraph)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/read.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 47915
-    'y': 1010
-  - id: search_result_utils
-    type: background-worker
-    name: search_result_utils Service (utils)
-    isTest: false
-    properties:
-      filepath: plugins/search-backend/src/utils/search_result_utils.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 47455
-    'y': 1010
-  - id: pagination
-    type: background-worker
-    name: pagination Service (pagination.ts)
-    isTest: false
-    properties:
-      filepath: plugins/bitbucket-cloud-common/src/pagination.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 46995
-    'y': 1010
-  - id: bitbucketcloudclient_test
-    type: background-worker
-    name: BitbucketCloudClient.test Service (BitbucketCloudClient.test.ts)
-    isTest: true
-    properties:
-      filepath: plugins/bitbucket-cloud-common/src/BitbucketCloudClient.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 46535
-    'y': 1010
-  - id: pagination_test
-    type: background-worker
-    name: pagination.test Service (pagination.test.ts)
-    isTest: true
-    properties:
-      filepath: plugins/bitbucket-cloud-common/src/pagination.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 46075
-    'y': 1010
-  - id: bitbucketcloudclient
-    type: background-worker
-    name: BitbucketCloudClient Service (BitbucketCloudClient.ts)
-    isTest: false
-    properties:
-      filepath: plugins/bitbucket-cloud-common/src/BitbucketCloudClient.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 45615
-    'y': 1010
-  - id: usenavigateurl
-    type: gateway-api
-    name: useNavigateUrl UI Component (reader)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs/src/reader/components/TechDocsReaderPageContent/useNavigateUrl.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 45155
-    'y': 1010
-  - id: dom
-    type: gateway-api
-    name: dom UI Component (reader)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs/src/reader/components/TechDocsReaderPageContent/dom.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 44695
-    'y': 1010
-  - id: addgitfeedbacklink
-    type: gateway-api
-    name: addGitFeedbackLink UI Component (reader)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs/src/reader/transformers/addGitFeedbackLink.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 44235
-    'y': 1010
-  - id: addbaseurl_test
-    type: gateway-api
-    name: addBaseUrl.test UI Component (reader)
-    isTest: true
-    properties:
-      filepath: plugins/techdocs/src/reader/transformers/addBaseUrl.test.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 43775
-    'y': 1010
-  - id: handlemetaredirects_test
-    type: gateway-api
-    name: handleMetaRedirects.test UI Component (reader)
-    isTest: true
-    properties:
-      filepath: plugins/techdocs/src/reader/transformers/handleMetaRedirects.test.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 43315
-    'y': 1010
-  - id: rewritedoclinks
-    type: background-worker
-    name: rewriteDocLinks Service (reader)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs/src/reader/transformers/rewriteDocLinks.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 42855
-    'y': 1010
-  - id: iframes
-    type: background-worker
-    name: iframes Service (reader)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs/src/reader/transformers/html/hooks/iframes.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 42395
-    'y': 1010
-  - id: handlemetaredirects
-    type: background-worker
-    name: handleMetaRedirects Service (reader)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs/src/reader/transformers/handleMetaRedirects.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 41935
-    'y': 1010
-  - id: addbaseurl
-    type: background-worker
-    name: addBaseUrl Service (reader)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs/src/reader/transformers/addBaseUrl.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 41475
-    'y': 1010
-  - id: client_test
-    type: background-worker
-    name: client.test Service (microsoftGraph)
-    isTest: true
-    properties:
-      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/client.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 41015
-    'y': 1010
-  - id: config
-    type: gateway-api
-    name: config UI Component (layout)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 37255
-    'y': 1010
-  - id: types
-    type: gateway-api
-    name: types UI Component (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 79545
-    'y': 1650
-  - id: error
-    type: background-worker
-    name: error Service (serialization)
-    isTest: false
-    properties:
-      filepath: packages/errors/src/serialization/error.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 595
-    'y': 1330
-  - id: errors
-    type: background-worker
-    name: errors Service (errors.ts)
-    isTest: false
-    properties:
-      filepath: packages/codemods/src/errors.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 78705
-    'y': 1650
-  - id: integration
-    type: background-worker
-    name: integration Service (types)
-    isTest: false
-    properties:
-      filepath: plugins/permission-common/src/types/integration.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1680
-    'y': 1330
-  - id: publish
-    type: background-worker
-    name: publish Service (commands)
-    isTest: false
-    properties:
-      filepath: packages/techdocs-cli/src/commands/publish/publish.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 35610
-    'y': 370
-  - id: awss3
-    type: background-worker
-    name: awsS3 Service (schema)
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/awsS3.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 31785
-    'y': 1010
-  - id: azureblobstorage
-    type: background-worker
-    name: azureBlobStorage Service (schema)
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/azureBlobStorage.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 32515
-    'y': 1010
-  - id: storage
-    type: background-worker
-    name: storage Service (lib)
-    isTest: false
-    properties:
-      filepath: packages/cli-module-auth/src/lib/storage.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 140
-    'y': 1650
   - id: testutils
     type: background-worker
     name: testUtils Service (__fixtures__)
@@ -1254,225 +286,73 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 18905
+    x: 8325
     'y': 1010
-  - id: express
-    type: rest-api
-    name: express REST Endpoint (types)
-    isTest: false
+  - id: catalogclient_test
+    type: background-worker
+    name: CatalogClient.test Service (CatalogClient.test.ts)
+    isTest: true
     properties:
-      filepath: packages/backend-openapi-utils/src/types/express.ts
+      filepath: packages/catalog-client/src/CatalogClient.test.ts
       namespaces: ''
-      technology: REST Controller / Router
+      technology: TypeScript Domain Service
     external: true
-    x: 34140
+    x: 8785
     'y': 1010
-  - id: frontend-client
+  - id: helpers
     type: gateway-api
-    name: Frontend Client App (Frontend Client Host)
+    name: helpers UI Component (home)
+    isTest: false
     properties:
-      description: The main user interface running React and Vite.
-      technology: React + TypeScript
+      filepath: plugins/techdocs/src/home/components/Tables/helpers.ts
+      namespaces: ''
+      technology: React Component
     external: true
-    x: 34230
+    x: 79030
+    'y': 2290
+  - id: registry
+    type: background-worker
+    name: registry Service (registry.ts)
+    isTest: false
+    properties:
+      filepath: packages/integration/src/registry.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 6465
+    'y': 1650
+  - id: scmintegrations_test
+    type: background-worker
+    name: ScmIntegrations.test Service (ScmIntegrations.test.ts)
+    isTest: true
+    properties:
+      filepath: packages/integration/src/ScmIntegrations.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 51160
     'y': 370
-  - id: migrations
-    type: relational-database
-    name: migrations Database (database)
+  - id: scmintegrations
+    type: background-worker
+    name: ScmIntegrations Service (ScmIntegrations.ts)
     isTest: false
     properties:
-      filepath: plugins/catalog-backend-module-incremental-ingestion/src/database/migrations.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 35555
-    'y': 1010
-  - id: helpers_test
-    type: background-worker
-    name: helpers.test Service (entrypoints)
-    isTest: true
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/auth/external/helpers.test.ts
+      filepath: packages/integration/src/ScmIntegrations.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1410
-    'y': 690
-  - id: mysql
-    type: relational-database
-    name: mysql Database (entrypoints)
-    isTest: false
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/database/connectors/mysql.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 40475
-    'y': 1010
-  - id: actionsclient
+    x: 7005
+    'y': 1650
+  - id: manifest
     type: background-worker
-    name: ActionsClient Service (lib)
+    name: manifest Service (manifest.ts)
     isTest: false
     properties:
-      filepath: packages/cli-module-actions/src/lib/ActionsClient.ts
+      filepath: packages/release-manifests/src/manifest.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 40015
-    'y': 1010
-  - id: configsources
-    type: background-worker
-    name: ConfigSources Service (sources)
-    isTest: false
-    properties:
-      filepath: packages/config-loader/src/sources/ConfigSources.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 39555
-    'y': 1010
-  - id: remoteconfigsource
-    type: background-worker
-    name: RemoteConfigSource Service (sources)
-    isTest: false
-    properties:
-      filepath: packages/config-loader/src/sources/RemoteConfigSource.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 39095
-    'y': 1010
-  - id: bitbucketserverintegration
-    type: background-worker
-    name: BitbucketServerIntegration Service (bitbucketServer)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/bitbucketServer/BitbucketServerIntegration.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 38635
-    'y': 1010
-  - id: defaultgitlabcredentialsprovider
-    type: background-worker
-    name: DefaultGitlabCredentialsProvider Service (gitlab)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/gitlab/DefaultGitlabCredentialsProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 38175
-    'y': 1010
-  - id: core
-    type: background-worker
-    name: core Service (gerrit)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/gerrit/core.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 37715
-    'y': 1010
-  - id: bitbucketcloudintegration
-    type: background-worker
-    name: BitbucketCloudIntegration Service (bitbucketCloud)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/bitbucketCloud/BitbucketCloudIntegration.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 33165
-    'y': 1010
-  - id: core_test
-    type: background-worker
-    name: core.test Service (gerrit)
-    isTest: true
-    properties:
-      filepath: packages/integration/src/gerrit/core.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 31325
-    'y': 1010
-  - id: defaultazuredevopscredentialsprovider
-    type: background-worker
-    name: DefaultAzureDevOpsCredentialsProvider Service (azure)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/azure/DefaultAzureDevOpsCredentialsProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 30865
-    'y': 1010
-  - id: azureintegration
-    type: background-worker
-    name: AzureIntegration Service (azure)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/azure/AzureIntegration.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 30405
-    'y': 1010
-  - id: azureurl
-    type: background-worker
-    name: AzureUrl Service (azure)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/azure/AzureUrl.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 29945
-    'y': 1010
-  - id: awscodecommitintegration
-    type: background-worker
-    name: AwsCodeCommitIntegration Service (awsCodeCommit)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/awsCodeCommit/AwsCodeCommitIntegration.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 29485
-    'y': 1010
-  - id: defaultgithubcredentialsprovider
-    type: background-worker
-    name: DefaultGithubCredentialsProvider Service (github)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/github/DefaultGithubCredentialsProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 29025
-    'y': 1010
-  - id: gerritintegration
-    type: background-worker
-    name: GerritIntegration Service (gerrit)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/gerrit/GerritIntegration.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 28565
-    'y': 1010
-  - id: commonvalidatorfunctions
-    type: background-worker
-    name: CommonValidatorFunctions Service (validation)
-    isTest: false
-    properties:
-      filepath: packages/catalog-model/src/validation/CommonValidatorFunctions.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 28105
+    x: 9245
     'y': 1010
   - id: apis
     type: gateway-api
@@ -1483,40 +363,379 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 27645
+    x: 9705
     'y': 1010
-  - id: pluginprotocolresolverfetchmiddleware
+  - id: module_test
     type: background-worker
-    name: PluginProtocolResolverFetchMiddleware Service (apis)
-    isTest: false
+    name: module.test Service (KafkaPublishingEventConsumer)
+    isTest: true
     properties:
-      filepath: packages/core-app-api/src/apis/implementations/FetchApi/PluginProtocolResolverFetchMiddleware.ts
+      filepath: plugins/events-backend-module-kafka/src/KafkaPublishingEventConsumer/module.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 27185
+    x: 10165
     'y': 1010
-  - id: urlpatterndiscovery
+  - id: authenticator
     type: background-worker
-    name: UrlPatternDiscovery Service (apis)
+    name: authenticator Service (authenticator.ts)
     isTest: false
     properties:
-      filepath: packages/core-app-api/src/apis/implementations/DiscoveryApi/UrlPatternDiscovery.ts
+      filepath: plugins/auth-backend-module-vmware-cloud-provider/src/authenticator.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 26725
+    x: 10625
     'y': 1010
-  - id: overridebaseurlconfigs
+  - id: resolvers
     type: background-worker
-    name: overrideBaseUrlConfigs Service (app)
+    name: resolvers Service (resolvers.ts)
     isTest: false
     properties:
-      filepath: packages/core-app-api/src/app/overrideBaseUrlConfigs.ts
+      filepath: plugins/auth-backend-module-openshift-provider/src/resolvers.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 26265
+    x: 11085
+    'y': 1010
+  - id: authenticator_test
+    type: background-worker
+    name: authenticator.test Service (authenticator.test.ts)
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-vmware-cloud-provider/src/authenticator.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 11545
+    'y': 1010
+  - id: bitbucketcloudclient_test
+    type: background-worker
+    name: BitbucketCloudClient.test Service (BitbucketCloudClient.test.ts)
+    isTest: true
+    properties:
+      filepath: plugins/bitbucket-cloud-common/src/BitbucketCloudClient.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 12005
+    'y': 1010
+  - id: bitbucketcloudclient
+    type: background-worker
+    name: BitbucketCloudClient Service (BitbucketCloudClient.ts)
+    isTest: false
+    properties:
+      filepath: plugins/bitbucket-cloud-common/src/BitbucketCloudClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 12465
+    'y': 1010
+  - id: pagination_test
+    type: background-worker
+    name: pagination.test Service (pagination.test.ts)
+    isTest: true
+    properties:
+      filepath: plugins/bitbucket-cloud-common/src/pagination.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 12925
+    'y': 1010
+  - id: pagination
+    type: background-worker
+    name: pagination Service (pagination.ts)
+    isTest: false
+    properties:
+      filepath: plugins/bitbucket-cloud-common/src/pagination.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 13385
+    'y': 1010
+  - id: gitlabdiscoveryprocessor_test
+    type: background-worker
+    name: GitLabDiscoveryProcessor.test Service (GitLabDiscoveryProcessor.test.ts)
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-gitlab/src/GitLabDiscoveryProcessor.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 13845
+    'y': 1010
+  - id: gitlabdiscoveryprocessor
+    type: background-worker
+    name: GitLabDiscoveryProcessor Service (GitLabDiscoveryProcessor.ts)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitlab/src/GitLabDiscoveryProcessor.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 14305
+    'y': 1010
+  - id: plugin_test
+    type: background-worker
+    name: Plugin.test Service (plugin)
+    isTest: true
+    properties:
+      filepath: packages/core-plugin-api/src/plugin/Plugin.test.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 14765
+    'y': 1010
+  - id: util
+    type: background-worker
+    name: util Service (__fixtures__)
+    isTest: false
+    properties:
+      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/util.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 15225
+    'y': 1010
+  - id: client
+    type: background-worker
+    name: client Service (commands)
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/package/schema/openapi/generate/client.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 15685
+    'y': 1010
+  - id: plugin-manager
+    type: background-worker
+    name: plugin-manager Service (manager)
+    isTest: false
+    properties:
+      filepath: packages/backend-dynamic-feature-service/src/manager/plugin-manager.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 16145
+    'y': 1010
+  - id: plugin-scanner-watcher_test
+    type: background-worker
+    name: plugin-scanner-watcher.test Service (scanner)
+    isTest: true
+    properties:
+      filepath: packages/backend-dynamic-feature-service/src/scanner/plugin-scanner-watcher.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 16605
+    'y': 1010
+  - id: parameter-validation
+    type: background-worker
+    name: parameter-validation Service (schema)
+    isTest: false
+    properties:
+      filepath: packages/backend-openapi-utils/src/schema/parameter-validation.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 17065
+    'y': 1010
+  - id: validation
+    type: gateway-api
+    name: validation UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/components/fields/RepoUrlPicker/validation.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 17525
+    'y': 1010
+  - id: mysql
+    type: relational-database
+    name: mysql Database (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/database/connectors/mysql.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 17985
+    'y': 1010
+  - id: commonvalidatorfunctions
+    type: background-worker
+    name: CommonValidatorFunctions Service (validation)
+    isTest: false
+    properties:
+      filepath: packages/catalog-model/src/validation/CommonValidatorFunctions.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 18445
+    'y': 1010
+  - id: actionsclient
+    type: background-worker
+    name: ActionsClient Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-actions/src/lib/ActionsClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 18905
+    'y': 1010
+  - id: login
+    type: background-worker
+    name: login Service (commands)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-auth/src/commands/login.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 19365
+    'y': 1010
+  - id: logout
+    type: background-worker
+    name: logout Service (commands)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-auth/src/commands/logout.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 19825
+    'y': 1010
+  - id: show
+    type: background-worker
+    name: show Service (commands)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-auth/src/commands/show.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 20285
+    'y': 1010
+  - id: localserver
+    type: background-worker
+    name: localServer Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-auth/src/lib/localServer.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 20745
+    'y': 1010
+  - id: urls
+    type: background-worker
+    name: urls Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/urls.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 21205
+    'y': 1010
+  - id: configsources
+    type: background-worker
+    name: ConfigSources Service (sources)
+    isTest: false
+    properties:
+      filepath: packages/config-loader/src/sources/ConfigSources.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 21665
+    'y': 1010
+  - id: remoteconfigsource
+    type: background-worker
+    name: RemoteConfigSource Service (sources)
+    isTest: false
+    properties:
+      filepath: packages/config-loader/src/sources/RemoteConfigSource.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 22125
+    'y': 1010
+  - id: defaultconnectionservice
+    type: background-worker
+    name: DefaultConnectionService Service (api)
+    isTest: false
+    properties:
+      filepath: packages/connections/src/api/DefaultConnectionService.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 22585
+    'y': 1010
+  - id: types
+    type: background-worker
+    name: types Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 77960
+    'y': 1650
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 58870
+    'y': 370
+  - id: createconnectiontype
+    type: background-worker
+    name: createConnectionType Service (system)
+    isTest: false
+    properties:
+      filepath: packages/connections/src/system/createConnectionType.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 80460
+    'y': 2290
+  - id: github
+    type: background-worker
+    name: github Service (actions)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/github.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 23045
+    'y': 1010
+  - id: getlegacyintegrations_test
+    type: background-worker
+    name: getLegacyIntegrations.test Service (system)
+    isTest: true
+    properties:
+      filepath: packages/connections/src/system/getLegacyIntegrations.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 52080
+    'y': 370
+  - id: getlegacyintegrations
+    type: background-worker
+    name: getLegacyIntegrations Service (system)
+    isTest: false
+    properties:
+      filepath: packages/connections/src/system/getLegacyIntegrations.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 23505
     'y': 1010
   - id: approuter
     type: gateway-api
@@ -1527,18 +746,18 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 25805
+    x: 23965
     'y': 1010
-  - id: defaultauthconnector
+  - id: overridebaseurlconfigs
     type: background-worker
-    name: DefaultAuthConnector Service (lib)
+    name: overrideBaseUrlConfigs Service (app)
     isTest: false
     properties:
-      filepath: packages/core-app-api/src/lib/AuthConnector/DefaultAuthConnector.ts
+      filepath: packages/core-app-api/src/app/overrideBaseUrlConfigs.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 25345
+    x: 24425
     'y': 1010
   - id: loginpopup
     type: background-worker
@@ -1551,137 +770,16 @@ nodes:
     external: true
     x: 24885
     'y': 1010
-  - id: plugin-manager
+  - id: getbasepath
     type: background-worker
-    name: plugin-manager Service (manager)
+    name: getBasePath Service (routing)
     isTest: false
     properties:
-      filepath: packages/backend-dynamic-feature-service/src/manager/plugin-manager.ts
+      filepath: packages/frontend-app-api/src/routing/getBasePath.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 24425
-    'y': 1010
-  - id: plugin-scanner-watcher_test
-    type: background-worker
-    name: plugin-scanner-watcher.test Service (scanner)
-    isTest: true
-    properties:
-      filepath: packages/backend-dynamic-feature-service/src/scanner/plugin-scanner-watcher.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 23965
-    'y': 1010
-  - id: localserver
-    type: background-worker
-    name: localServer Service (lib)
-    isTest: false
-    properties:
-      filepath: packages/cli-module-auth/src/lib/localServer.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 23045
-    'y': 1010
-  - id: login
-    type: background-worker
-    name: login Service (commands)
-    isTest: false
-    properties:
-      filepath: packages/cli-module-auth/src/commands/login.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 22585
-    'y': 1010
-  - id: show
-    type: background-worker
-    name: show Service (commands)
-    isTest: false
-    properties:
-      filepath: packages/cli-module-auth/src/commands/show.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 22125
-    'y': 1010
-  - id: logout
-    type: background-worker
-    name: logout Service (commands)
-    isTest: false
-    properties:
-      filepath: packages/cli-module-auth/src/commands/logout.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 21665
-    'y': 1010
-  - id: github
-    type: background-worker
-    name: github Service (schema)
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/github.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 21205
-    'y': 1010
-  - id: getlegacyintegrations
-    type: background-worker
-    name: getLegacyIntegrations Service (system)
-    isTest: false
-    properties:
-      filepath: packages/connections/src/system/getLegacyIntegrations.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 20745
-    'y': 1010
-  - id: defaultconnectionservice
-    type: background-worker
-    name: DefaultConnectionService Service (api)
-    isTest: false
-    properties:
-      filepath: packages/connections/src/api/DefaultConnectionService.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 20285
-    'y': 1010
-  - id: urls
-    type: background-worker
-    name: urls Service (lib)
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/urls.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 19825
-    'y': 1010
-  - id: parameter-validation
-    type: background-worker
-    name: parameter-validation Service (schema)
-    isTest: false
-    properties:
-      filepath: packages/backend-openapi-utils/src/schema/parameter-validation.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 19365
-    'y': 1010
-  - id: catalogclient_test
-    type: background-worker
-    name: CatalogClient.test Service (CatalogClient.test.ts)
-    isTest: true
-    properties:
-      filepath: packages/catalog-client/src/CatalogClient.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 18445
+    x: 25345
     'y': 1010
   - id: createplugininfoattacher
     type: background-worker
@@ -1692,315 +790,139 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 17985
+    x: 25805
     'y': 1010
-  - id: getbasepath
+  - id: awscodecommitintegration
     type: background-worker
-    name: getBasePath Service (routing)
+    name: AwsCodeCommitIntegration Service (awsCodeCommit)
     isTest: false
     properties:
-      filepath: packages/frontend-app-api/src/routing/getBasePath.ts
+      filepath: packages/integration/src/awsCodeCommit/AwsCodeCommitIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 17525
+    x: 26265
     'y': 1010
-  - id: manifest
+  - id: config
     type: background-worker
-    name: manifest Service (manifest.ts)
+    name: config Service (entrypoints)
     isTest: false
     properties:
-      filepath: packages/release-manifests/src/manifest.ts
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 17065
+    x: 55245
     'y': 1010
-  - id: plugintokenhandler
+  - id: azureintegration
     type: background-worker
-    name: PluginTokenHandler Service (entrypoints)
+    name: AzureIntegration Service (azure)
     isTest: false
     properties:
-      filepath: packages/backend-defaults/src/entrypoints/auth/plugin/PluginTokenHandler.ts
+      filepath: packages/integration/src/azure/AzureIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 16605
+    x: 26725
     'y': 1010
-  - id: usertokenhandler
+  - id: azureurl
     type: background-worker
-    name: UserTokenHandler Service (entrypoints)
+    name: AzureUrl Service (azure)
     isTest: false
     properties:
-      filepath: packages/backend-defaults/src/entrypoints/auth/user/UserTokenHandler.ts
+      filepath: packages/integration/src/azure/AzureUrl.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 16145
+    x: 27185
     'y': 1010
-  - id: jwks
+  - id: core_test
     type: background-worker
-    name: jwks Service (entrypoints)
-    isTest: false
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/auth/external/jwks.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 15685
-    'y': 1010
-  - id: hostdiscovery
-    type: background-worker
-    name: HostDiscovery Service (entrypoints)
-    isTest: false
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/discovery/HostDiscovery.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 15225
-    'y': 1010
-  - id: srvresolvers
-    type: background-worker
-    name: SrvResolvers Service (entrypoints)
-    isTest: false
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/discovery/SrvResolvers.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 14765
-    'y': 1010
-  - id: httpauthservicefactory
-    type: rest-api
-    name: httpAuthServiceFactory REST Endpoint (entrypoints)
-    isTest: false
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/httpAuth/httpAuthServiceFactory.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 14305
-    'y': 1010
-  - id: fetchurlreader_test
-    type: background-worker
-    name: FetchUrlReader.test Service (entrypoints)
+    name: core.test Service (providers)
     isTest: true
     properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/FetchUrlReader.test.ts
+      filepath: plugins/catalog-backend-module-gitea/src/providers/core.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 13845
+    x: 27645
     'y': 1010
-  - id: googlegcsurlreader
+  - id: defaultazuredevopscredentialsprovider
     type: background-worker
-    name: GoogleGcsUrlReader Service (entrypoints)
+    name: DefaultAzureDevOpsCredentialsProvider Service (azure)
     isTest: false
     properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GoogleGcsUrlReader.ts
+      filepath: packages/integration/src/azure/DefaultAzureDevOpsCredentialsProvider.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 13385
+    x: 28105
     'y': 1010
-  - id: gitlaburlreader
+  - id: bitbucketcloudintegration
     type: background-worker
-    name: GitlabUrlReader Service (entrypoints)
+    name: BitbucketCloudIntegration Service (bitbucketCloud)
     isTest: false
     properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GitlabUrlReader.ts
+      filepath: packages/integration/src/bitbucketCloud/BitbucketCloudIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 12925
+    x: 28565
     'y': 1010
-  - id: azureurlreader
+  - id: bitbucketserverintegration
     type: background-worker
-    name: AzureUrlReader Service (entrypoints)
+    name: BitbucketServerIntegration Service (bitbucketServer)
     isTest: false
     properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/AzureUrlReader.ts
+      filepath: packages/integration/src/bitbucketServer/BitbucketServerIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 12465
+    x: 29025
     'y': 1010
-  - id: awss3urlreader_test
+  - id: core
     type: background-worker
-    name: AwsS3UrlReader.test Service (entrypoints)
-    isTest: true
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/AwsS3UrlReader.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 12005
-    'y': 1010
-  - id: awss3urlreader
-    type: background-worker
-    name: AwsS3UrlReader Service (entrypoints)
+    name: core Service (providers)
     isTest: false
     properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/AwsS3UrlReader.ts
+      filepath: plugins/catalog-backend-module-gitea/src/providers/core.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 11545
+    x: 29485
     'y': 1010
-  - id: gerriturlreader_test
+  - id: gerritintegration
     type: background-worker
-    name: GerritUrlReader.test Service (entrypoints)
-    isTest: true
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GerritUrlReader.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 11085
-    'y': 1010
-  - id: awscodecommiturlreader
-    type: background-worker
-    name: AwsCodeCommitUrlReader Service (entrypoints)
+    name: GerritIntegration Service (gerrit)
     isTest: false
     properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/AwsCodeCommitUrlReader.ts
+      filepath: packages/integration/src/gerrit/GerritIntegration.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 10625
+    x: 29945
     'y': 1010
-  - id: githuburlreader_test
+  - id: defaultgithubcredentialsprovider
     type: background-worker
-    name: GithubUrlReader.test Service (entrypoints)
-    isTest: true
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GithubUrlReader.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 10165
-    'y': 1010
-  - id: gitlaburlreader_test
-    type: background-worker
-    name: GitlabUrlReader.test Service (entrypoints)
-    isTest: true
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GitlabUrlReader.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 9705
-    'y': 1010
-  - id: fetchurlreader
-    type: background-worker
-    name: FetchUrlReader Service (entrypoints)
+    name: DefaultGithubCredentialsProvider Service (github)
     isTest: false
     properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/FetchUrlReader.ts
+      filepath: packages/integration/src/github/DefaultGithubCredentialsProvider.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 9245
+    x: 30405
     'y': 1010
-  - id: githuburlreader
+  - id: defaultgitlabcredentialsprovider
     type: background-worker
-    name: GithubUrlReader Service (entrypoints)
+    name: DefaultGitlabCredentialsProvider Service (gitlab)
     isTest: false
     properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GithubUrlReader.ts
+      filepath: packages/integration/src/gitlab/DefaultGitlabCredentialsProvider.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 8785
-    'y': 1010
-  - id: azureblobstorageurlreader
-    type: background-worker
-    name: AzureBlobStorageUrlReader Service (entrypoints)
-    isTest: false
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/AzureBlobStorageUrlReader.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 8325
-    'y': 1010
-  - id: googlegcsurlreader_test
-    type: background-worker
-    name: GoogleGcsUrlReader.test Service (entrypoints)
-    isTest: true
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GoogleGcsUrlReader.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 7865
-    'y': 1010
-  - id: harnessurlreader_test
-    type: background-worker
-    name: HarnessUrlReader.test Service (entrypoints)
-    isTest: true
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/HarnessUrlReader.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 7405
-    'y': 1010
-  - id: urlreaderpredicatemux
-    type: background-worker
-    name: UrlReaderPredicateMux Service (entrypoints)
-    isTest: false
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/UrlReaderPredicateMux.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 6945
-    'y': 1010
-  - id: gerriturlreader
-    type: background-worker
-    name: GerritUrlReader Service (entrypoints)
-    isTest: false
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GerritUrlReader.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 6485
-    'y': 1010
-  - id: awscodecommiturlreader_test
-    type: background-worker
-    name: AwsCodeCommitUrlReader.test Service (entrypoints)
-    isTest: true
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/AwsCodeCommitUrlReader.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 6025
-    'y': 1010
-  - id: giteaurlreader_test
-    type: background-worker
-    name: GiteaUrlReader.test Service (entrypoints)
-    isTest: true
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GiteaUrlReader.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 5565
-    'y': 1010
-  - id: azureblobstorageurlreader_test
-    type: background-worker
-    name: AzureBlobStorageUrlReader.test Service (entrypoints)
-    isTest: true
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/AzureBlobStorageUrlReader.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 5105
+    x: 30865
     'y': 1010
   - id: scmauth_test
     type: background-worker
@@ -2011,7 +933,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 4645
+    x: 31325
     'y': 1010
   - id: scmauth
     type: background-worker
@@ -2022,21 +944,1206 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 4185
+    x: 31785
+    'y': 1010
+  - id: router
+    type: background-worker
+    name: router Service (schema)
+    isTest: false
+    properties:
+      filepath: plugins/search-backend/src/schema/openapi/generated/router.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 32245
+    'y': 1010
+  - id: cimdclient
+    type: background-worker
+    name: CimdClient Service (service)
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/service/CimdClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 32705
+    'y': 1010
+  - id: oidcrouter_test
+    type: background-worker
+    name: OidcRouter.test Service (service)
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/service/OidcRouter.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 33165
+    'y': 1010
+  - id: oidcrouter
+    type: rest-api
+    name: OidcRouter REST Endpoint (service)
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/service/OidcRouter.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 33625
+    'y': 1010
+  - id: oidcservice_test
+    type: background-worker
+    name: OidcService.test Service (service)
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/service/OidcService.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 34085
+    'y': 1010
+  - id: oidcservice
+    type: background-worker
+    name: OidcService Service (service)
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/service/OidcService.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 34545
+    'y': 1010
+  - id: defaultidentityclient
+    type: background-worker
+    name: DefaultIdentityClient Service (identity)
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/identity/DefaultIdentityClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 35005
+    'y': 1010
+  - id: createoauthroutehandlers_test
+    type: rest-api
+    name: createOAuthRouteHandlers.test REST Endpoint (oauth)
+    isTest: true
+    properties:
+      filepath: plugins/auth-node/src/oauth/createOAuthRouteHandlers.test.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 35465
+    'y': 1010
+  - id: createoauthroutehandlers
+    type: rest-api
+    name: createOAuthRouteHandlers REST Endpoint (oauth)
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/oauth/createOAuthRouteHandlers.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 35925
+    'y': 1010
+  - id: oauthcookiemanager
+    type: rest-api
+    name: OAuthCookieManager REST Endpoint (oauth)
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/oauth/OAuthCookieManager.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 36385
+    'y': 1010
+  - id: createregistercatalogentitiesaction
+    type: background-worker
+    name: createRegisterCatalogEntitiesAction Service (actions)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/actions/createRegisterCatalogEntitiesAction.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 36845
+    'y': 1010
+  - id: createrouter
+    type: rest-api
+    name: createRouter REST Endpoint (service)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend/src/service/createRouter.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 37305
+    'y': 1010
+  - id: awss3entityprovider
+    type: background-worker
+    name: AwsS3EntityProvider Service (providers)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-aws/src/providers/AwsS3EntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 37765
+    'y': 1010
+  - id: azuredevopsdiscoveryprocessor
+    type: background-worker
+    name: AzureDevOpsDiscoveryProcessor Service (processors)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-azure/src/processors/AzureDevOpsDiscoveryProcessor.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 38225
+    'y': 1010
+  - id: bitbucketcloudentityprovider_test
+    type: background-worker
+    name: BitbucketCloudEntityProvider.test Service (providers)
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-bitbucket-cloud/src/providers/BitbucketCloudEntityProvider.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 38685
+    'y': 1010
+  - id: bitbucketserverclient
+    type: background-worker
+    name: BitbucketServerClient Service (lib)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-bitbucket-server/src/lib/BitbucketServerClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 39145
+    'y': 1010
+  - id: githubdiscoveryprocessor
+    type: background-worker
+    name: GithubDiscoveryProcessor Service (processors)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-github/src/processors/GithubDiscoveryProcessor.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 39605
+    'y': 1010
+  - id: githubmultiorgreaderprocessor
+    type: background-worker
+    name: GithubMultiOrgReaderProcessor Service (processors)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-github/src/processors/GithubMultiOrgReaderProcessor.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 40065
+    'y': 1010
+  - id: githubentityprovider
+    type: background-worker
+    name: GithubEntityProvider Service (providers)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-github/src/providers/GithubEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 40525
+    'y': 1010
+  - id: githubmultiorgentityprovider
+    type: background-worker
+    name: GithubMultiOrgEntityProvider Service (providers)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-github/src/providers/GithubMultiOrgEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 40985
+    'y': 1010
+  - id: handlers
+    type: background-worker
+    name: handlers Service (__testUtils__)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitlab/src/__testUtils__/handlers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 41445
+    'y': 1010
+  - id: analyzegitlabwebhookevent
+    type: background-worker
+    name: analyzeGitLabWebhookEvent Service (events)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitlab/src/events/analyzeGitLabWebhookEvent.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 41905
+    'y': 1010
+  - id: client_test
+    type: background-worker
+    name: client.test Service (microsoftGraph)
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/client.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 42365
+    'y': 1010
+  - id: read
+    type: background-worker
+    name: read Service (scaffolder)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/read.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 42825
+    'y': 1010
+  - id: azuredevops
+    type: gateway-api
+    name: AzureDevops UI Component (api)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-import/src/api/AzureDevops.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 43285
+    'y': 1010
+  - id: azurerepoapiclient_test
+    type: background-worker
+    name: AzureRepoApiClient.test Service (api)
+    isTest: true
+    properties:
+      filepath: plugins/catalog-import/src/api/AzureRepoApiClient.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 43745
+    'y': 1010
+  - id: azurerepoapiclient
+    type: background-worker
+    name: AzureRepoApiClient Service (api)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-import/src/api/AzureRepoApiClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 44205
+    'y': 1010
+  - id: catalogimportclient
+    type: gateway-api
+    name: CatalogImportClient UI Component (api)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-import/src/api/CatalogImportClient.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 44665
+    'y': 1010
+  - id: devtoolsclient
+    type: background-worker
+    name: DevToolsClient Service (api)
+    isTest: false
+    properties:
+      filepath: plugins/devtools/src/api/DevToolsClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 45125
+    'y': 1010
+  - id: kubernetesfetcher
+    type: background-worker
+    name: KubernetesFetcher Service (service)
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-backend/src/service/KubernetesFetcher.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 45585
+    'y': 1010
+  - id: kubernetesproxy
+    type: rest-api
+    name: KubernetesProxy REST Endpoint (service)
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-backend/src/service/KubernetesProxy.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 46045
+    'y': 1010
+  - id: pinnipedhelper
+    type: background-worker
+    name: PinnipedHelper Service (auth)
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-node/src/auth/PinnipedHelper.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 46505
+    'y': 1010
+  - id: kubernetesclusterlinkformatter_test
+    type: background-worker
+    name: KubernetesClusterLinkFormatter.test Service (api)
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-react/src/api/KubernetesClusterLinkFormatter.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 46965
+    'y': 1010
+  - id: kubernetesclusterlinkformatter
+    type: background-worker
+    name: KubernetesClusterLinkFormatter Service (api)
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-react/src/api/KubernetesClusterLinkFormatter.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 47425
+    'y': 1010
+  - id: notificationsemailprocessor
+    type: background-worker
+    name: NotificationsEmailProcessor Service (processor)
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-email/src/processor/NotificationsEmailProcessor.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 47885
+    'y': 1010
+  - id: bitbucketserverpullrequest
+    type: background-worker
+    name: bitbucketServerPullRequest Service (actions)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-bitbucket-server/src/actions/bitbucketServerPullRequest.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 48805
+    'y': 1010
+  - id: fetch
+    type: background-worker
+    name: fetch Service (schema)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-common/src/schema/openapi/generated/types/fetch.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 49265
+    'y': 1010
+  - id: search_result_utils
+    type: background-worker
+    name: search_result_utils Service (utils)
+    isTest: false
+    properties:
+      filepath: plugins/search-backend/src/utils/search_result_utils.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 49725
+    'y': 1010
+  - id: signalclient
+    type: gateway-api
+    name: SignalClient UI Component (api)
+    isTest: false
+    properties:
+      filepath: plugins/signals/src/api/SignalClient.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 50185
+    'y': 1010
+  - id: hostdiscovery
+    type: background-worker
+    name: HostDiscovery Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/discovery/HostDiscovery.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 50645
+    'y': 1010
+  - id: srvresolvers
+    type: background-worker
+    name: SrvResolvers Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/discovery/SrvResolvers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 51105
+    'y': 1010
+  - id: httpauthservicefactory
+    type: rest-api
+    name: httpAuthServiceFactory REST Endpoint (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/httpAuth/httpAuthServiceFactory.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 51565
+    'y': 1010
+  - id: defaultauthconnector
+    type: background-worker
+    name: DefaultAuthConnector Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/core-app-api/src/lib/AuthConnector/DefaultAuthConnector.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 52025
     'y': 1010
   - id: link
     type: gateway-api
     name: Link UI Component (components)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/Link/Link.tsx
+      filepath: packages/ui/src/components/Link/Link.tsx
       namespaces: ''
       technology: React Component
     external: true
-    x: 3725
+    x: 52485
+    'y': 1010
+  - id: utility
+    type: background-worker
+    name: utility Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli/src/lib/utility.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2710
+    'y': 690
+  - id: discovery
+    type: background-worker
+    name: discovery Service (schema)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-common/src/schema/openapi/generated/types/discovery.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3170
+    'y': 690
+  - id: publisherconfig
+    type: background-worker
+    name: PublisherConfig Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli/src/lib/PublisherConfig.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3630
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1025
+    'y': 2290
+  - id: injectconfigintohtml
+    type: background-worker
+    name: injectConfigIntoHtml Service (lib)
+    isTest: false
+    properties:
+      filepath: plugins/app-backend/src/lib/config/injectConfigIntoHtml.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 52945
+    'y': 1010
+  - id: consentpage
+    type: gateway-api
+    name: ConsentPage UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/auth/src/components/ConsentPage/ConsentPage.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 53405
+    'y': 1010
+  - id: aboutcontent
+    type: gateway-api
+    name: AboutContent UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/catalog/src/components/AboutCard/AboutContent.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 53865
+    'y': 1010
+  - id: aksclusterlinksformatter
+    type: background-worker
+    name: AksClusterLinksFormatter Service (api)
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-react/src/api/formatters/AksClusterLinksFormatter.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 54325
+    'y': 1010
+  - id: eksclusterlinksformatter_test
+    type: background-worker
+    name: EksClusterLinksFormatter.test Service (api)
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-react/src/api/formatters/EksClusterLinksFormatter.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 54785
+    'y': 1010
+  - id: gkeclusterlinksformatter
+    type: background-worker
+    name: GkeClusterLinksFormatter Service (api)
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-react/src/api/formatters/GkeClusterLinksFormatter.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 55810
+    'y': 1010
+  - id: headlampclusterlinksformatter_test
+    type: background-worker
+    name: HeadlampClusterLinksFormatter.test Service (api)
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-react/src/api/formatters/HeadlampClusterLinksFormatter.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 56270
+    'y': 1010
+  - id: headlampclusterlinksformatter
+    type: background-worker
+    name: HeadlampClusterLinksFormatter Service (api)
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-react/src/api/formatters/HeadlampClusterLinksFormatter.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 56730
+    'y': 1010
+  - id: openshiftclusterlinksformatter_test
+    type: background-worker
+    name: OpenshiftClusterLinksFormatter.test Service (api)
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-react/src/api/formatters/OpenshiftClusterLinksFormatter.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 57190
+    'y': 1010
+  - id: openshiftclusterlinksformatter
+    type: background-worker
+    name: OpenshiftClusterLinksFormatter Service (api)
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-react/src/api/formatters/OpenshiftClusterLinksFormatter.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 57650
+    'y': 1010
+  - id: rancherclusterlinksformatter_test
+    type: background-worker
+    name: RancherClusterLinksFormatter.test Service (api)
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-react/src/api/formatters/RancherClusterLinksFormatter.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 58110
+    'y': 1010
+  - id: rancherclusterlinksformatter
+    type: background-worker
+    name: RancherClusterLinksFormatter Service (api)
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-react/src/api/formatters/RancherClusterLinksFormatter.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 58570
+    'y': 1010
+  - id: standardclusterlinksformatter_test
+    type: background-worker
+    name: StandardClusterLinksFormatter.test Service (api)
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-react/src/api/formatters/StandardClusterLinksFormatter.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 59030
+    'y': 1010
+  - id: standardclusterlinksformatter
+    type: background-worker
+    name: StandardClusterLinksFormatter Service (api)
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-react/src/api/formatters/StandardClusterLinksFormatter.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 59490
+    'y': 1010
+  - id: podexecterminal
+    type: gateway-api
+    name: PodExecTerminal UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-react/src/components/PodExecTerminal/PodExecTerminal.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 59950
+    'y': 1010
+  - id: createdryrunner
+    type: background-worker
+    name: createDryRunner Service (scaffolder)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/dryrun/createDryRunner.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 60410
+    'y': 1010
+  - id: addbaseurl_test
+    type: gateway-api
+    name: addBaseUrl.test UI Component (reader)
+    isTest: true
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/addBaseUrl.test.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 60870
+    'y': 1010
+  - id: addbaseurl
+    type: background-worker
+    name: addBaseUrl Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/addBaseUrl.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 61330
+    'y': 1010
+  - id: addgitfeedbacklink
+    type: gateway-api
+    name: addGitFeedbackLink UI Component (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/addGitFeedbackLink.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 61790
+    'y': 1010
+  - id: handlemetaredirects_test
+    type: gateway-api
+    name: handleMetaRedirects.test UI Component (reader)
+    isTest: true
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/handleMetaRedirects.test.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 62250
+    'y': 1010
+  - id: handlemetaredirects
+    type: background-worker
+    name: handleMetaRedirects Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/handleMetaRedirects.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 62710
+    'y': 1010
+  - id: rewritedoclinks
+    type: background-worker
+    name: rewriteDocLinks Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/rewriteDocLinks.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 63170
+    'y': 1010
+  - id: errors
+    type: background-worker
+    name: errors Service (service)
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/http/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 4515
+    'y': 2290
+  - id: helpers_test
+    type: background-worker
+    name: helpers.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/auth/external/helpers.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2075
+    'y': 690
+  - id: integration
+    type: background-worker
+    name: integration Service (types)
+    isTest: false
+    properties:
+      filepath: plugins/permission-common/src/types/integration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 450
+    'y': 1330
+  - id: express
+    type: rest-api
+    name: express REST Endpoint (types)
+    isTest: false
+    properties:
+      filepath: packages/backend-openapi-utils/src/types/express.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 79910
+    'y': 2290
+  - id: storage
+    type: background-worker
+    name: storage Service (auth)
+    isTest: false
+    properties:
+      filepath: packages/cli-node/src/auth/storage.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 2290
+  - id: migrations
+    type: relational-database
+    name: migrations Database (database)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/database/migrations.ts
+      namespaces: ''
+      technology: Prisma / SQL Database Client
+    external: true
+    x: 48345
+    'y': 1010
+  - id: jwks
+    type: background-worker
+    name: jwks Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/auth/external/jwks.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 63710
+    'y': 1010
+  - id: plugintokenhandler
+    type: background-worker
+    name: PluginTokenHandler Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/auth/plugin/PluginTokenHandler.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 64170
+    'y': 1010
+  - id: usertokenhandler
+    type: background-worker
+    name: UserTokenHandler Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/auth/user/UserTokenHandler.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 64630
+    'y': 1010
+  - id: awscodecommiturlreader_test
+    type: background-worker
+    name: AwsCodeCommitUrlReader.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/AwsCodeCommitUrlReader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 65090
+    'y': 1010
+  - id: awscodecommiturlreader
+    type: background-worker
+    name: AwsCodeCommitUrlReader Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/AwsCodeCommitUrlReader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 65550
+    'y': 1010
+  - id: awss3urlreader_test
+    type: background-worker
+    name: AwsS3UrlReader.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/AwsS3UrlReader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 66010
+    'y': 1010
+  - id: awss3urlreader
+    type: background-worker
+    name: AwsS3UrlReader Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/AwsS3UrlReader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 66470
+    'y': 1010
+  - id: azureblobstorageurlreader_test
+    type: background-worker
+    name: AzureBlobStorageUrlReader.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/AzureBlobStorageUrlReader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 66930
+    'y': 1010
+  - id: azureblobstorageurlreader
+    type: background-worker
+    name: AzureBlobStorageUrlReader Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/AzureBlobStorageUrlReader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 67390
+    'y': 1010
+  - id: azureurlreader
+    type: background-worker
+    name: AzureUrlReader Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/AzureUrlReader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 67850
+    'y': 1010
+  - id: fetchurlreader_test
+    type: background-worker
+    name: FetchUrlReader.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/FetchUrlReader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 68310
+    'y': 1010
+  - id: fetchurlreader
+    type: background-worker
+    name: FetchUrlReader Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/FetchUrlReader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 68770
+    'y': 1010
+  - id: gerriturlreader_test
+    type: background-worker
+    name: GerritUrlReader.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GerritUrlReader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 69230
+    'y': 1010
+  - id: gerriturlreader
+    type: background-worker
+    name: GerritUrlReader Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GerritUrlReader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 69690
+    'y': 1010
+  - id: giteaurlreader_test
+    type: background-worker
+    name: GiteaUrlReader.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GiteaUrlReader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 70150
+    'y': 1010
+  - id: githuburlreader_test
+    type: background-worker
+    name: GithubUrlReader.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GithubUrlReader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 70610
+    'y': 1010
+  - id: githuburlreader
+    type: background-worker
+    name: GithubUrlReader Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GithubUrlReader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 71070
+    'y': 1010
+  - id: gitlaburlreader_test
+    type: background-worker
+    name: GitlabUrlReader.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GitlabUrlReader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 71530
+    'y': 1010
+  - id: gitlaburlreader
+    type: background-worker
+    name: GitlabUrlReader Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GitlabUrlReader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 71990
+    'y': 1010
+  - id: googlegcsurlreader_test
+    type: background-worker
+    name: GoogleGcsUrlReader.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GoogleGcsUrlReader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 72450
+    'y': 1010
+  - id: googlegcsurlreader
+    type: background-worker
+    name: GoogleGcsUrlReader Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/GoogleGcsUrlReader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 72910
+    'y': 1010
+  - id: harnessurlreader_test
+    type: background-worker
+    name: HarnessUrlReader.test Service (entrypoints)
+    isTest: true
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/HarnessUrlReader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 73370
+    'y': 1010
+  - id: urlreaderpredicatemux
+    type: background-worker
+    name: UrlReaderPredicateMux Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/urlReader/lib/UrlReaderPredicateMux.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 73830
+    'y': 1010
+  - id: urlpatterndiscovery
+    type: background-worker
+    name: UrlPatternDiscovery Service (apis)
+    isTest: false
+    properties:
+      filepath: packages/core-app-api/src/apis/implementations/DiscoveryApi/UrlPatternDiscovery.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 74290
+    'y': 1010
+  - id: pluginprotocolresolverfetchmiddleware
+    type: background-worker
+    name: PluginProtocolResolverFetchMiddleware Service (apis)
+    isTest: false
+    properties:
+      filepath: packages/core-app-api/src/apis/implementations/FetchApi/PluginProtocolResolverFetchMiddleware.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 74750
+    'y': 1010
+  - id: usegetentities_test
+    type: gateway-api
+    name: useGetEntities.test UI Component (components)
+    isTest: true
+    properties:
+      filepath: plugins/org/src/components/Cards/OwnershipCard/useGetEntities.test.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 75210
+    'y': 1010
+  - id: templateeditorintro
+    type: gateway-api
+    name: TemplateEditorIntro UI Component (alpha)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/alpha/components/TemplateEditorPage/TemplateEditorIntro.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 52255
+    'y': 50
+  - id: repobranchpicker
+    type: gateway-api
+    name: RepoBranchPicker UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/components/fields/RepoBranchPicker/RepoBranchPicker.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 75670
+    'y': 1010
+  - id: utils
+    type: background-worker
+    name: utils Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/html/utils.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 76130
+    'y': 1010
+  - id: dom
+    type: gateway-api
+    name: dom UI Component (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/components/TechDocsReaderPageContent/dom.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 76590
+    'y': 1010
+  - id: usenavigateurl
+    type: gateway-api
+    name: useNavigateUrl UI Component (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/components/TechDocsReaderPageContent/useNavigateUrl.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 77050
+    'y': 1010
+  - id: iframes
+    type: background-worker
+    name: iframes Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/html/hooks/iframes.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 77510
     'y': 1010
 dependencies:
   - from: layout
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: testutils
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: catalogclient_test
     to: url
     type: direct-call
     description: References class type / calls methods
@@ -2044,7 +2151,27 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: bitbucketcloudentityprovider_test
+  - from: registry
+    to: azureblobstorage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: scmintegrations_test
+    to: awss3
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: scmintegrations_test
+    to: azureblobstorage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: scmintegrations
+    to: azureblobstorage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: manifest
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: apis
     to: url
     type: direct-call
     description: References class type / calls methods
@@ -2052,15 +2179,63 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
+  - from: authenticator
+    to: url
+    type: direct-call
+    description: References class type / calls methods
   - from: resolvers
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: bitbucketserverpullrequest
+  - from: authenticator_test
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: repobranchpicker
+  - from: bitbucketcloudclient_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: bitbucketcloudclient
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: pagination_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: pagination
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: gitlabdiscoveryprocessor_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: gitlabdiscoveryprocessor
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: plugin_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: util
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: client
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: plugin-manager
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: plugin-scanner-watcher_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: parameter-validation
     to: url
     type: direct-call
     description: References class type / calls methods
@@ -2068,7 +2243,203 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: utils
+  - from: mysql
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: commonvalidatorfunctions
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: actionsclient
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: login
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: logout
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: show
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: localserver
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: urls
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: configsources
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: remoteconfigsource
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: defaultconnectionservice
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: types
+    to: awss3
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: types
+    to: azureblobstorage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: awss3
+    type: direct-call
+    description: Hits API routing gateway
+  - from: awss3
+    to: createconnectiontype
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: azureblobstorage
+    type: direct-call
+    description: Hits API routing gateway
+  - from: azureblobstorage
+    to: createconnectiontype
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: github
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: getlegacyintegrations_test
+    to: awss3
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: getlegacyintegrations_test
+    to: azureblobstorage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: getlegacyintegrations
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: approuter
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: overridebaseurlconfigs
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: loginpopup
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: getbasepath
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: createplugininfoattacher
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: awscodecommitintegration
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: config
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: azureintegration
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: azureurl
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: core_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: defaultazuredevopscredentialsprovider
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: bitbucketcloudintegration
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: bitbucketserverintegration
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: core
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: gerritintegration
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: defaultgithubcredentialsprovider
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: defaultgitlabcredentialsprovider
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: scmauth_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: scmauth
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: router
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: cimdclient
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: oidcrouter_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: oidcrouter
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: oidcservice_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: oidcservice
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: defaultidentityclient
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: createoauthroutehandlers_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: createoauthroutehandlers
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: oauthcookiemanager
     to: url
     type: direct-call
     description: References class type / calls methods
@@ -2080,11 +2451,19 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: githubmultiorgentityprovider
+  - from: awss3entityprovider
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: githubentityprovider
+  - from: azuredevopsdiscoveryprocessor
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: bitbucketcloudentityprovider_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: bitbucketserverclient
     to: url
     type: direct-call
     description: References class type / calls methods
@@ -2096,175 +2475,11 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: util
+  - from: githubentityprovider
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: authenticator_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: authenticator
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: createdryrunner
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: pinnipedhelper
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: consentpage
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: bitbucketserverclient
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: usegetentities_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: signalclient
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: aboutcontent
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: injectconfigintohtml
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: fetch
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: plugin_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: awss3entityprovider
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: router
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: notificationsemailprocessor
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: oidcrouter_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: oidcservice
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: oidcservice_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: cimdclient
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: oidcrouter
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: podexecterminal
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: kubernetesclusterlinkformatter
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: standardclusterlinksformatter
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: openshiftclusterlinksformatter_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: rancherclusterlinksformatter_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: headlampclusterlinksformatter
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: gkeclusterlinksformatter
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: openshiftclusterlinksformatter
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: headlampclusterlinksformatter_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: eksclusterlinksformatter_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: standardclusterlinksformatter_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: aksclusterlinksformatter
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: rancherclusterlinksformatter
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: kubernetesclusterlinkformatter_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: azuredevopsdiscoveryprocessor
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: oauthcookiemanager
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: createoauthroutehandlers
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: createoauthroutehandlers_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: defaultidentityclient
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: devtoolsclient
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: gitlabdiscoveryprocessor
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: client
+  - from: githubmultiorgentityprovider
     to: url
     type: direct-call
     description: References class type / calls methods
@@ -2272,15 +2487,23 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: gitlabdiscoveryprocessor_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
   - from: analyzegitlabwebhookevent
     to: url
     type: direct-call
     description: References class type / calls methods
+  - from: client_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: read
+    to: url
+    type: direct-call
+    description: References class type / calls methods
   - from: azuredevops
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: azurerepoapiclient_test
     to: url
     type: direct-call
     description: References class type / calls methods
@@ -2292,7 +2515,7 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: azurerepoapiclient_test
+  - from: devtoolsclient
     to: url
     type: direct-call
     description: References class type / calls methods
@@ -2304,7 +2527,27 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: read
+  - from: pinnipedhelper
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: kubernetesclusterlinkformatter_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: kubernetesclusterlinkformatter
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: notificationsemailprocessor
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: bitbucketserverpullrequest
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: fetch
     to: url
     type: direct-call
     description: References class type / calls methods
@@ -2312,31 +2555,107 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: pagination
+  - from: signalclient
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: bitbucketcloudclient_test
+  - from: hostdiscovery
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: pagination_test
+  - from: srvresolvers
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: bitbucketcloudclient
+  - from: httpauthservicefactory
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: usenavigateurl
+  - from: defaultauthconnector
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: dom
+  - from: link
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: addgitfeedbacklink
+  - from: publish
+    to: utility
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: publish
+    to: discovery
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: publish
+    to: publisherconfig
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: publish
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: injectconfigintohtml
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: consentpage
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: aboutcontent
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: aksclusterlinksformatter
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: eksclusterlinksformatter_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: gkeclusterlinksformatter
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: headlampclusterlinksformatter_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: headlampclusterlinksformatter
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: openshiftclusterlinksformatter_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: openshiftclusterlinksformatter
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: rancherclusterlinksformatter_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: rancherclusterlinksformatter
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: standardclusterlinksformatter_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: standardclusterlinksformatter
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: podexecterminal
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: createdryrunner
     to: url
     type: direct-call
     description: References class type / calls methods
@@ -2344,15 +2663,15 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
+  - from: addbaseurl
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: addgitfeedbacklink
+    to: url
+    type: direct-call
+    description: References class type / calls methods
   - from: handlemetaredirects_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: rewritedoclinks
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: iframes
     to: url
     type: direct-call
     description: References class type / calls methods
@@ -2360,14 +2679,146 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: addbaseurl
+  - from: rewritedoclinks
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: client_test
-    to: url
+  - from: dockercontainerrunner_test
+    to: dockercontainerrunner
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: dockercontainerrunner_test
+    to: error
     type: direct-call
     description: References class type / calls methods
+  - from: dockercontainerrunner
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: dockercontainerrunner
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: dockercontainerrunner
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: generators_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: generators_test
+    to: generators
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: generators_test
+    to: techdocs
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: generators
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: generators
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: generators
+    to: techdocs
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: generators
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: generators
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: helpers_test
+    to: mkdocspatchers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: mkdocspatchers
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: mkdocspatchers
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: mkdocspatchers
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: mkdocspatchers
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: techdocs_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: techdocs_test
+    to: techdocs
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: techdocs
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: techdocs
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: techdocs
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: techdocs
+    to: mkdocspatchers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: techdocs
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: techdocs
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: techdocs
+    to: dockercontainerrunner
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: techdocs
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: dir_test
+    to: dir
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: dir
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: dir
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: dir
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: dir
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: dir
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
   - from: preparers
     to: config
     type: direct-call
@@ -2404,119 +2855,115 @@ dependencies:
     to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: dir
+  - from: awss3_test
     to: config
     type: direct-call
     description: Executes local class methods / functions
-  - from: dir
-    to: errors
+  - from: awss3_test
+    to: express
     type: direct-call
     description: Executes local class methods / functions
-  - from: dir
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: dir
-    to: helpers
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: dir
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: dir_test
-    to: dir
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: publish
-    to: googlestorage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: publish
-    to: local
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: publish
-    to: openstackswift
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: publish_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: publish_test
-    to: publish
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: publish_test
-    to: local
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: publish_test
-    to: googlestorage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: publish_test
+  - from: awss3_test
     to: awss3
     type: direct-call
     description: Executes local class methods / functions
-  - from: publish_test
-    to: azureblobstorage
+  - from: awss3_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: frontend-client
+    to: awss3
+    type: direct-call
+    description: Hits API routing gateway
+  - from: awss3
+    to: config
     type: direct-call
     description: Executes local class methods / functions
-  - from: publish_test
-    to: openstackswift
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: publish_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: googlemigration
+  - from: awss3
     to: errors
     type: direct-call
     description: Executes local class methods / functions
-  - from: googlemigration
-    to: storage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: googlemigration
-    to: helpers
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: local_test
-    to: testutils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: local_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: local_test
-    to: express
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: local_test
-    to: local
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: openstackswift_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: openstackswift_test
-    to: express
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: openstackswift_test
-    to: openstackswift
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: openstackswift_test
+  - from: awss3
     to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: openstackswift_test
+  - from: awss3
+    to: express
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: awss3
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: awss3
+    to: integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: awss3
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: azureblobstorage_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: azureblobstorage_test
+    to: express
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: azureblobstorage_test
+    to: azureblobstorage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: azureblobstorage_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: frontend-client
+    to: azureblobstorage
+    type: direct-call
+    description: Hits API routing gateway
+  - from: azureblobstorage
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: azureblobstorage
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: azureblobstorage
+    to: express
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: azureblobstorage
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: azureblobstorage
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: azureblobstorage
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: googlestorage_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googlestorage_test
+    to: express
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googlestorage_test
+    to: googlestorage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googlestorage_test
+    to: storage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googlestorage_test
     to: error
     type: direct-call
     description: References class type / calls methods
@@ -2556,58 +3003,22 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: awss3_test
+  - from: local_test
+    to: testutils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: local_test
     to: config
     type: direct-call
     description: Executes local class methods / functions
-  - from: awss3_test
+  - from: local_test
     to: express
     type: direct-call
     description: Executes local class methods / functions
-  - from: awss3_test
-    to: awss3
+  - from: local_test
+    to: local
     type: direct-call
     description: Executes local class methods / functions
-  - from: awss3_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: azureblobstorage_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: azureblobstorage_test
-    to: express
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: azureblobstorage_test
-    to: azureblobstorage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: azureblobstorage_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: googlestorage_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: googlestorage_test
-    to: express
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: googlestorage_test
-    to: googlestorage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: googlestorage_test
-    to: storage
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: googlestorage_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
   - from: frontend-client
     to: local
     type: direct-call
@@ -2632,6 +3043,26 @@ dependencies:
     to: errors
     type: direct-call
     description: Executes local class methods / functions
+  - from: openstackswift_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: openstackswift_test
+    to: express
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: openstackswift_test
+    to: openstackswift
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: openstackswift_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: openstackswift_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
   - from: frontend-client
     to: openstackswift
     type: direct-call
@@ -2660,275 +3091,67 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: techdocs_test
+  - from: publish_test
     to: config
     type: direct-call
     description: Executes local class methods / functions
-  - from: techdocs_test
-    to: techdocs
+  - from: publish_test
+    to: publish
     type: direct-call
     description: Executes local class methods / functions
-  - from: generators
-    to: config
+  - from: publish_test
+    to: local
     type: direct-call
     description: Executes local class methods / functions
-  - from: generators
-    to: helpers
+  - from: publish_test
+    to: googlestorage
     type: direct-call
     description: Executes local class methods / functions
-  - from: generators
-    to: techdocs
+  - from: publish_test
+    to: awss3
     type: direct-call
     description: Executes local class methods / functions
-  - from: generators
+  - from: publish_test
+    to: azureblobstorage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: publish_test
+    to: openstackswift
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: publish_test
     to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: generators
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: techdocs
+  - from: publish
     to: config
     type: direct-call
     description: Executes local class methods / functions
-  - from: techdocs
-    to: integration
+  - from: publish
+    to: awss3
     type: direct-call
     description: Executes local class methods / functions
-  - from: techdocs
-    to: helpers
+  - from: publish
+    to: azureblobstorage
     type: direct-call
     description: Executes local class methods / functions
-  - from: techdocs
-    to: mkdocspatchers
+  - from: publish
+    to: googlestorage
     type: direct-call
     description: Executes local class methods / functions
-  - from: techdocs
+  - from: publish
+    to: local
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: publish
+    to: openstackswift
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: publish
     to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: techdocs
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: techdocs
-    to: dockercontainerrunner
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: techdocs
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: helpers_test
-    to: mkdocspatchers
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: dockercontainerrunner
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: dockercontainerrunner
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: dockercontainerrunner
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: generators_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: generators_test
-    to: generators
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: generators_test
-    to: techdocs
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: dockercontainerrunner_test
-    to: dockercontainerrunner
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: dockercontainerrunner_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: mkdocspatchers
-    to: helpers
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: mkdocspatchers
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: mkdocspatchers
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: mkdocspatchers
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: mysql
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: actionsclient
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: configsources
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: remoteconfigsource
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: bitbucketserverintegration
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: defaultgitlabcredentialsprovider
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: core
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: config
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: bitbucketcloudintegration
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: core_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: defaultazuredevopscredentialsprovider
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: azureintegration
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: azureurl
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: awscodecommitintegration
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: defaultgithubcredentialsprovider
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: gerritintegration
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: commonvalidatorfunctions
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: apis
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: pluginprotocolresolverfetchmiddleware
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: urlpatterndiscovery
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: overridebaseurlconfigs
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: approuter
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: defaultauthconnector
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: loginpopup
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: plugin-manager
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: plugin-scanner-watcher_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: localserver
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: login
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: show
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: logout
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: github
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: getlegacyintegrations
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: defaultconnectionservice
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: urls
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: parameter-validation
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: testutils
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: catalogclient_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: createplugininfoattacher
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: getbasepath
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: manifest
+  - from: jwks
     to: url
     type: direct-call
     description: References class type / calls methods
@@ -2940,35 +3163,11 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: jwks
+  - from: awscodecommiturlreader_test
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: hostdiscovery
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: srvresolvers
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: httpauthservicefactory
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: fetchurlreader_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: googlegcsurlreader
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: gitlaburlreader
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: azureurlreader
+  - from: awscodecommiturlreader
     to: url
     type: direct-call
     description: References class type / calls methods
@@ -2980,27 +3179,7 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: gerriturlreader_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: awscodecommiturlreader
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: githuburlreader_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: gitlaburlreader_test
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: fetchurlreader
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: githuburlreader
+  - from: azureblobstorageurlreader_test
     to: url
     type: direct-call
     description: References class type / calls methods
@@ -3008,7 +3187,51 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
+  - from: azureurlreader
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: fetchurlreader_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: fetchurlreader
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: gerriturlreader_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: gerriturlreader
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: giteaurlreader_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: githuburlreader_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: githuburlreader
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: gitlaburlreader_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: gitlaburlreader
+    to: url
+    type: direct-call
+    description: References class type / calls methods
   - from: googlegcsurlreader_test
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: googlegcsurlreader
     to: url
     type: direct-call
     description: References class type / calls methods
@@ -3020,31 +3243,51 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: gerriturlreader
+  - from: urlpatterndiscovery
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: awscodecommiturlreader_test
+  - from: pluginprotocolresolverfetchmiddleware
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: giteaurlreader_test
+  - from: usegetentities_test
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: azureblobstorageurlreader_test
+  - from: templateeditorintro
+    to: publish
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: repobranchpicker
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: scmauth_test
+  - from: utils
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: scmauth
+  - from: dom
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: link
+  - from: usenavigateurl
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: googlemigration
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googlemigration
+    to: storage
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: googlemigration
+    to: helpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: iframes
     to: url
     type: direct-call
     description: References class type / calls methods

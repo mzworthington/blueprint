@@ -1,25 +1,49 @@
 name: Release CLI Binary
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'packages/cli/src/analysis/**'
-      - 'packages/cli/src/blueprint.ts'
-      - 'packages/core/src/models/**'
+  workflow_run:
+    workflows: ["CI & Deployment Pipeline"]
+    types:
+      - completed
 
 permissions:
   contents: write
 
 jobs:
+  check-release-trigger:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    outputs:
+      should_release: ${{ steps.check_changes.outputs.should_release }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 2
+
+      - name: Check if CLI files changed
+        id: check_changes
+        run: |
+          git diff --name-only HEAD~1 HEAD > changed_files.txt || git show --name-only --pretty="" HEAD > changed_files.txt
+          cat changed_files.txt
+          
+          if grep -qE '^(packages/cli/src/analysis/|packages/cli/src/blueprint\.ts|packages/core/src/models/)' changed_files.txt; then
+            echo "should_release=true" >> $GITHUB_OUTPUT
+          else
+            echo "should_release=false" >> $GITHUB_OUTPUT
+          fi
+
   release-cli:
+    needs: check-release-trigger
+    if: ${{ needs.check-release-trigger.outputs.should_release == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.workflow_run.head_sha }}
           fetch-depth: 0 # Fetch all history for tags resolving
 
       - name: Setup Bun

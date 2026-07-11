@@ -13,6 +13,17 @@ nodes:
     external: false
     x: 1520
     'y': 370
+  - id: scaffolderplugin_test
+    type: background-worker
+    name: ScaffolderPlugin.test Service (ScaffolderPlugin.test.ts)
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend/src/ScaffolderPlugin.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 50
   - id: integration
     type: background-worker
     name: integration Service (types)
@@ -26,23 +37,23 @@ nodes:
     'y': 690
   - id: alpha
     type: background-worker
-    name: alpha Service (alpha.ts)
+    name: alpha Service (tasks)
     isTest: false
     properties:
-      filepath: packages/core-components/src/alpha.ts
+      filepath: plugins/scaffolder-node/src/tasks/alpha.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 690
   - id: router
-    type: rest-api
-    name: router REST Endpoint (router.ts)
+    type: background-worker
+    name: router Service (schema)
     isTest: false
     properties:
-      filepath: packages/backend-openapi-utils/src/router.ts
+      filepath: plugins/search-backend/src/schema/openapi/generated/router.ts
       namespaces: ''
-      technology: REST Controller / Router
+      technology: TypeScript Domain Service
     external: true
     x: 1060
     'y': 690
@@ -90,18 +101,11 @@ nodes:
     external: true
     x: 2900
     'y': 690
-  - id: scaffolderplugin_test
-    type: background-worker
-    name: ScaffolderPlugin.test Service (ScaffolderPlugin.test.ts)
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/ScaffolderPlugin.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1520
-    'y': 50
 dependencies:
+  - from: scaffolderplugin_test
+    to: scaffolderplugin
+    type: direct-call
+    description: Executes local class methods / functions
   - from: scaffolderplugin
     to: integration
     type: direct-call
@@ -130,7 +134,3 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: scaffolderplugin_test
-    to: scaffolderplugin
-    type: direct-call
-    description: Executes local class methods / functions

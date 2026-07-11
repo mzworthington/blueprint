@@ -13,6 +13,17 @@ nodes:
     external: false
     x: 830
     'y': 370
+  - id: index
+    type: background-worker
+    name: index Service (commands)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/bundle/__fixtures__/packed/frontend/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
   - id: jsonschemarefplaceholderresolver_test
     type: background-worker
     name: jsonSchemaRefPlaceholderResolver.test Service (jsonSchemaRefPlaceholderResolver.test.ts)
@@ -22,49 +33,16 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 140
-    'y': 50
-  - id: catalogmodulejsonschemarefplaceholderresolver_test
-    type: background-worker
-    name: catalogModuleJsonSchemaRefPlaceholderResolver.test Service (module)
-    isTest: true
-    properties:
-      filepath: plugins/catalog-backend-module-openapi/src/module/catalogModuleJsonSchemaRefPlaceholderResolver.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
     x: 600
     'y': 50
-  - id: catalogmodulejsonschemarefplaceholderresolver
-    type: background-worker
-    name: catalogModuleJsonSchemaRefPlaceholderResolver Service (module)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-openapi/src/module/catalogModuleJsonSchemaRefPlaceholderResolver.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1060
-    'y': 50
-  - id: index
-    type: background-worker
-    name: index Service (index.ts)
-    isTest: false
-    properties:
-      filepath: packages/frontend-test-utils/src/index.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1520
-    'y': 50
   - id: types
-    type: gateway-api
-    name: types UI Component (components)
+    type: background-worker
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 370
     'y': 690
@@ -73,7 +51,7 @@ nodes:
     name: lib Service (lib.ts)
     isTest: false
     properties:
-      filepath: plugins/notifications-node/src/lib.ts
+      filepath: plugins/signals-node/src/lib.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -90,20 +68,34 @@ nodes:
     external: true
     x: 1290
     'y': 690
+  - id: catalogmodulejsonschemarefplaceholderresolver_test
+    type: background-worker
+    name: catalogModuleJsonSchemaRefPlaceholderResolver.test Service (module)
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-openapi/src/module/catalogModuleJsonSchemaRefPlaceholderResolver.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 50
+  - id: catalogmodulejsonschemarefplaceholderresolver
+    type: background-worker
+    name: catalogModuleJsonSchemaRefPlaceholderResolver Service (module)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-openapi/src/module/catalogModuleJsonSchemaRefPlaceholderResolver.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1520
+    'y': 50
 dependencies:
-  - from: jsonschemarefplaceholderresolver_test
-    to: jsonschemarefplaceholderresolver
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: catalogmodulejsonschemarefplaceholderresolver_test
-    to: jsonschemarefplaceholderresolver
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: catalogmodulejsonschemarefplaceholderresolver
-    to: jsonschemarefplaceholderresolver
-    type: direct-call
-    description: Executes local class methods / functions
   - from: index
+    to: jsonschemarefplaceholderresolver
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: jsonschemarefplaceholderresolver_test
     to: jsonschemarefplaceholderresolver
     type: direct-call
     description: Executes local class methods / functions
@@ -119,3 +111,11 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: catalogmodulejsonschemarefplaceholderresolver_test
+    to: jsonschemarefplaceholderresolver
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: catalogmodulejsonschemarefplaceholderresolver
+    to: jsonschemarefplaceholderresolver
+    type: direct-call
+    description: Executes local class methods / functions

@@ -11,30 +11,8 @@ nodes:
       namespaces: ''
       technology: React Component
     external: false
-    x: 1250
+    x: 1560
     'y': 370
-  - id: componenttabs
-    type: gateway-api
-    name: ComponentTabs UI Component
-    isTest: false
-    properties:
-      filepath: plugins/home/src/componentRenderers/ComponentTabs/ComponentTabs.tsx
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 140
-    'y': 370
-  - id: componenttabs_test
-    type: gateway-api
-    name: ComponentTabs.test UI Component
-    isTest: true
-    properties:
-      filepath: plugins/home/src/componentRenderers/ComponentTabs/ComponentTabs.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 140
-    'y': 50
   - id: componenttab
     type: background-worker
     name: ComponentTab Service
@@ -44,8 +22,30 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
+    x: 140
+    'y': 50
+  - id: componenttabs_test
+    type: gateway-api
+    name: ComponentTabs.test UI Component
+    isTest: true
+    properties:
+      filepath: plugins/home/src/componentRenderers/ComponentTabs/ComponentTabs.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
     x: 600
     'y': 50
+  - id: componenttabs
+    type: gateway-api
+    name: ComponentTabs UI Component
+    isTest: false
+    properties:
+      filepath: plugins/home/src/componentRenderers/ComponentTabs/ComponentTabs.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 640
+    'y': 370
   - id: frontend-client
     type: gateway-api
     name: Frontend Client App (Frontend Client Host)
@@ -53,7 +53,7 @@ nodes:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
     external: true
-    x: 1060
+    x: 1520
     'y': 50
   - id: accordion
     type: gateway-api
@@ -64,29 +64,29 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 600
+    x: 1100
     'y': 690
   - id: styles
     type: background-worker
-    name: styles Service (components)
+    name: styles Service (homePageComponents)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/LogViewer/styles.ts
+      filepath: plugins/home/src/homePageComponents/QuickStart/styles.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1060
+    x: 1560
     'y': 690
   - id: settings
     type: background-worker
-    name: Settings Service (components)
+    name: Settings Service (homePageComponents)
     isTest: false
     properties:
-      filepath: plugins/user-settings/src/components/Settings.tsx
+      filepath: plugins/home/src/homePageComponents/RandomJoke/Settings.tsx
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1520
+    x: 2020
     'y': 690
   - id: tabs
     type: gateway-api
@@ -97,7 +97,7 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 140
+    x: 640
     'y': 690
 dependencies:
   - from: frontend-client
@@ -116,15 +116,15 @@ dependencies:
     to: settings
     type: direct-call
     description: Executes local class methods / functions
+  - from: componenttabs_test
+    to: componenttabs
+    type: direct-call
+    description: Executes local class methods / functions
   - from: frontend-client
     to: componenttabs
     type: direct-call
     description: Renders ComponentTabs layout component
   - from: componenttabs
     to: tabs
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: componenttabs_test
-    to: componenttabs
     type: direct-call
     description: Executes local class methods / functions

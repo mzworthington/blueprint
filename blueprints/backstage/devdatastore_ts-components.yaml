@@ -13,17 +13,6 @@ nodes:
     external: false
     x: 140
     'y': 370
-  - id: ipcclient
-    type: background-worker
-    name: ipcClient Service (ipcClient.ts)
-    isTest: false
-    properties:
-      filepath: packages/backend-dev-utils/src/ipcClient.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 140
-    'y': 690
   - id: devdatastore_test
     type: background-worker
     name: DevDataStore.test Service (DevDataStore.test.ts)
@@ -35,12 +24,23 @@ nodes:
     external: true
     x: 140
     'y': 50
+  - id: ipcclient
+    type: background-worker
+    name: ipcClient Service (ipcClient.ts)
+    isTest: false
+    properties:
+      filepath: packages/backend-dev-utils/src/ipcClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
 dependencies:
-  - from: devdatastore
-    to: ipcclient
-    type: direct-call
-    description: Executes local class methods / functions
   - from: devdatastore_test
     to: devdatastore
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: devdatastore
+    to: ipcclient
     type: direct-call
     description: Executes local class methods / functions

@@ -13,17 +13,6 @@ nodes:
     external: false
     x: 1625
     'y': 50
-  - id: readdeclarativesigninresolver
-    type: background-worker
-    name: readDeclarativeSignInResolver Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-node/src/sign-in/readDeclarativeSignInResolver.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 450
-    'y': 50
   - id: createsigninresolverfactory
     type: background-worker
     name: createSignInResolverFactory Service
@@ -35,6 +24,17 @@ nodes:
     external: false
     x: 855
     'y': 370
+  - id: readdeclarativesigninresolver
+    type: background-worker
+    name: readDeclarativeSignInResolver Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/sign-in/readDeclarativeSignInResolver.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 450
+    'y': 50
   - id: createoauthproviderfactory
     type: background-worker
     name: createOAuthProviderFactory Service (oauth)
@@ -48,10 +48,10 @@ nodes:
     'y': 50
   - id: errors
     type: background-worker
-    name: errors Service (errors.ts)
+    name: errors Service (service)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -68,28 +68,28 @@ nodes:
     external: true
     x: 1315
     'y': 370
-  - id: config
-    type: gateway-api
-    name: config UI Component (layout)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 140
-    'y': 370
   - id: types
-    type: gateway-api
-    name: types UI Component (components)
+    type: background-worker
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 450
     'y': 690
+  - id: config
+    type: background-worker
+    name: config Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
 dependencies:
   - from: createoauthproviderfactory
     to: createsigninresolverfactory
@@ -107,6 +107,14 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: createsigninresolverfactory
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createsigninresolverfactory
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
   - from: readdeclarativesigninresolver
     to: config
     type: direct-call
@@ -123,11 +131,3 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: createsigninresolverfactory
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createsigninresolverfactory
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions

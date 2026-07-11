@@ -46,17 +46,6 @@ nodes:
     external: false
     x: 1060
     'y': 50
-  - id: playwright_config
-    type: background-worker
-    name: playwright.config Service
-    isTest: false
-    properties:
-      filepath: playwright.config.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2210
-    'y': 50
   - id: frontend-client
     type: gateway-api
     name: Frontend Client App (Frontend Client Host)
@@ -67,38 +56,16 @@ nodes:
     x: 1520
     'y': 50
   - id: types
-    type: gateway-api
-    name: types UI Component (components)
+    type: background-worker
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 1520
     'y': 690
-  - id: test
-    type: background-worker
-    name: test Service (commands)
-    isTest: false
-    properties:
-      filepath: packages/cli-module-test-jest/src/commands/package/test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1980
-    'y': 370
-  - id: playwright
-    type: background-worker
-    name: playwright Service (playwright.ts)
-    isTest: false
-    properties:
-      filepath: packages/e2e-test-utils/src/playwright.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2440
-    'y': 370
 dependencies:
   - from: frontend-client
     to: docusaurus_config
@@ -106,13 +73,5 @@ dependencies:
     description: Renders docusaurus.config layout component
   - from: docusaurus_config
     to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: playwright_config
-    to: test
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: playwright_config
-    to: playwright
     type: direct-call
     description: Executes local class methods / functions

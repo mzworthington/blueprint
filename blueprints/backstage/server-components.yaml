@@ -13,17 +13,6 @@ nodes:
     external: false
     x: 830
     'y': 370
-  - id: features
-    type: background-worker
-    name: features Service (features)
-    isTest: false
-    properties:
-      filepath: packages/backend-dynamic-feature-service/src/features/features.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 50
   - id: features_test
     type: background-worker
     name: features.test Service (features)
@@ -33,16 +22,27 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
+    x: 600
+    'y': 50
+  - id: features
+    type: background-worker
+    name: features Service (features)
+    isTest: false
+    properties:
+      filepath: packages/backend-dynamic-feature-service/src/features/features.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
     x: 1060
     'y': 50
   - id: router
-    type: rest-api
-    name: router REST Endpoint (router.ts)
+    type: background-worker
+    name: router Service (schema)
     isTest: false
     properties:
-      filepath: packages/backend-openapi-utils/src/router.ts
+      filepath: plugins/search-backend/src/schema/openapi/generated/router.ts
       namespaces: ''
-      technology: REST Controller / Router
+      technology: TypeScript Domain Service
     external: true
     x: 140
     'y': 690
@@ -69,13 +69,13 @@ nodes:
     x: 1060
     'y': 690
   - id: types
-    type: gateway-api
-    name: types UI Component (components)
+    type: background-worker
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 1520
     'y': 690
@@ -91,15 +91,11 @@ nodes:
     x: 1980
     'y': 690
 dependencies:
-  - from: features
-    to: frontendremotesserver
-    type: direct-call
-    description: Executes local class methods / functions
   - from: features_test
     to: frontendremotesserver
     type: direct-call
     description: Executes local class methods / functions
-  - from: router
+  - from: features
     to: frontendremotesserver
     type: direct-call
     description: Executes local class methods / functions
@@ -123,3 +119,7 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: router
+    to: frontendremotesserver
+    type: direct-call
+    description: Executes local class methods / functions

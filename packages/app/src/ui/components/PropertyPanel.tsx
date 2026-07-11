@@ -249,7 +249,7 @@ export const PropertyPanel: React.FC = () => {
                       key={key}
                       className="flex items-center justify-between bg-[#040914]/60 rounded-xl px-3 py-1.5 border border-[#00f0ff]/10"
                     >
-                      <div className="text-xs truncate mr-2">
+                      <div className="text-xs break-words mr-2">
                         <span className="font-mono text-[#00f0ff]/70">{key}:</span>{' '}
                         <span className="text-slate-300 font-semibold">{val}</span>
                       </div>

@@ -2,17 +2,6 @@ name: Backstage - awsS3 Components
 version: 1.0.0
 level: component
 nodes:
-  - id: awss3integration
-    type: background-worker
-    name: AwsS3Integration Service
-    isTest: false
-    properties:
-      filepath: packages/integration/src/awsS3/AwsS3Integration.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1140
-    'y': 370
   - id: awss3integration_test
     type: background-worker
     name: AwsS3Integration.test Service
@@ -22,7 +11,29 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 680
+    x: 830
+    'y': 50
+  - id: awss3integration
+    type: background-worker
+    name: AwsS3Integration Service
+    isTest: false
+    properties:
+      filepath: packages/integration/src/awsS3/AwsS3Integration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1250
+    'y': 370
+  - id: registry
+    type: background-worker
+    name: registry Service (registry.ts)
+    isTest: false
+    properties:
+      filepath: packages/integration/src/registry.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
     'y': 50
   - id: scmintegrations_test
     type: background-worker
@@ -33,18 +44,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2060
-    'y': 50
-  - id: registry
-    type: background-worker
-    name: registry Service (registry.ts)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/registry.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1600
+    x: 1290
     'y': 50
   - id: scmintegrations
     type: background-worker
@@ -55,40 +55,40 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1140
+    x: 1750
     'y': 50
-  - id: helpers
+  - id: config
     type: background-worker
-    name: helpers Service (entrypoints)
+    name: config Service (entrypoints)
     isTest: false
     properties:
-      filepath: packages/backend-defaults/src/entrypoints/auth/external/helpers.ts
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 140
+    x: 410
+    'y': 690
+  - id: helpers
+    type: gateway-api
+    name: helpers UI Component (home)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/home/components/Tables/helpers.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1290
     'y': 690
   - id: types
-    type: gateway-api
-    name: types UI Component (components)
+    type: background-worker
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
-    x: 1180
-    'y': 690
-  - id: config
-    type: gateway-api
-    name: config UI Component (layout)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 680
+    x: 1750
     'y': 690
   - id: awss3urlreader_test
     type: background-worker
@@ -99,18 +99,26 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 220
+    x: 2210
     'y': 50
 dependencies:
-  - from: scmintegrations_test
-    to: awss3integration
-    type: direct-call
-    description: Executes local class methods / functions
   - from: registry
     to: awss3integration
     type: direct-call
     description: Executes local class methods / functions
+  - from: scmintegrations_test
+    to: awss3integration
+    type: direct-call
+    description: Executes local class methods / functions
   - from: scmintegrations
+    to: awss3integration
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: awss3integration_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: awss3integration_test
     to: awss3integration
     type: direct-call
     description: Executes local class methods / functions
@@ -124,14 +132,6 @@ dependencies:
     description: Executes local class methods / functions
   - from: awss3integration
     to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: awss3integration_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: awss3integration_test
-    to: awss3integration
     type: direct-call
     description: Executes local class methods / functions
   - from: awss3urlreader_test

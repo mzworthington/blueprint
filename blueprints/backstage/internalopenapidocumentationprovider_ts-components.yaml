@@ -13,6 +13,17 @@ nodes:
     external: false
     x: 830
     'y': 370
+  - id: index
+    type: background-worker
+    name: index Service (commands)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/bundle/__fixtures__/packed/frontend/src/index.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 830
+    'y': 50
   - id: external-api-target
     type: rest-api
     name: External HTTP API Endpoint (External HTTP Services)
@@ -23,22 +34,22 @@ nodes:
     x: 140
     'y': 690
   - id: config
-    type: gateway-api
-    name: config UI Component (layout)
+    type: background-worker
+    name: config Service (entrypoints)
     isTest: false
     properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 690
   - id: errors
     type: background-worker
-    name: errors Service (errors.ts)
+    name: errors Service (service)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -55,18 +66,11 @@ nodes:
     external: true
     x: 1520
     'y': 690
-  - id: index
-    type: background-worker
-    name: index Service (index.ts)
-    isTest: false
-    properties:
-      filepath: packages/frontend-test-utils/src/index.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 830
-    'y': 50
 dependencies:
+  - from: index
+    to: internalopenapidocumentationprovider
+    type: direct-call
+    description: Executes local class methods / functions
   - from: internalopenapidocumentationprovider
     to: external-api-target
     type: direct-call
@@ -83,7 +87,3 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: index
-    to: internalopenapidocumentationprovider
-    type: direct-call
-    description: Executes local class methods / functions

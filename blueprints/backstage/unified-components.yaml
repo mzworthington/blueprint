@@ -2,39 +2,17 @@ name: Backstage - unified Components
 version: 1.0.0
 level: component
 nodes:
-  - id: useapplythemeattributes
-    type: gateway-api
-    name: useApplyThemeAttributes UI Component
-    isTest: false
-    properties:
-      filepath: packages/theme/src/unified/useApplyThemeAttributes.ts
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 180
-    'y': 1010
-  - id: unifiedthemeprovider_test
-    type: gateway-api
-    name: UnifiedThemeProvider.test UI Component
+  - id: overrides_test
+    type: background-worker
+    name: overrides.test Service
     isTest: true
     properties:
-      filepath: packages/theme/src/unified/UnifiedThemeProvider.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 2275
-    'y': 50
-  - id: unifiedtheme
-    type: background-worker
-    name: UnifiedTheme Service
-    isTest: false
-    properties:
-      filepath: packages/theme/src/unified/UnifiedTheme.tsx
+      filepath: packages/theme/src/unified/overrides.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2140
-    'y': 690
+    x: 140
+    'y': 1010
   - id: overrides
     type: gateway-api
     name: overrides UI Component
@@ -44,8 +22,30 @@ nodes:
       namespaces: ''
       technology: React Component
     external: false
-    x: 2465
+    x: 585
     'y': 1330
+  - id: unifiedtheme
+    type: background-worker
+    name: UnifiedTheme Service
+    isTest: false
+    properties:
+      filepath: packages/theme/src/unified/UnifiedTheme.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2760
+    'y': 690
+  - id: unifiedthemeprovider_test
+    type: gateway-api
+    name: UnifiedThemeProvider.test UI Component
+    isTest: true
+    properties:
+      filepath: packages/theme/src/unified/UnifiedThemeProvider.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 2220
+    'y': 50
   - id: unifiedthemeprovider
     type: gateway-api
     name: UnifiedThemeProvider UI Component
@@ -55,7 +55,7 @@ nodes:
       namespaces: ''
       technology: React Component
     external: false
-    x: 680
+    x: 1450
     'y': 690
   - id: useapplythemeattributes_test
     type: gateway-api
@@ -66,30 +66,41 @@ nodes:
       namespaces: ''
       technology: React Component
     external: false
-    x: 140
+    x: 950
     'y': 690
-  - id: overrides_test
-    type: background-worker
-    name: overrides.test Service
-    isTest: true
+  - id: useapplythemeattributes
+    type: gateway-api
+    name: useApplyThemeAttributes UI Component
+    isTest: false
     properties:
-      filepath: packages/theme/src/unified/overrides.test.ts
+      filepath: packages/theme/src/unified/useApplyThemeAttributes.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: false
-    x: 1775
+    x: 1180
     'y': 1010
   - id: overridablecomponents
     type: background-worker
-    name: overridableComponents Service (overridableComponents.ts)
+    name: overridableComponents Service (next)
     isTest: false
     properties:
-      filepath: packages/core-components/src/overridableComponents.ts
+      filepath: plugins/scaffolder-react/src/next/overridableComponents.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2855
+    x: 720
     'y': 1010
+  - id: styles
+    type: background-worker
+    name: styles Service (homePageComponents)
+    isTest: false
+    properties:
+      filepath: plugins/home/src/homePageComponents/QuickStart/styles.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1490
+    'y': 1650
   - id: frontend-client
     type: gateway-api
     name: Frontend Client App (Frontend Client Host)
@@ -97,19 +108,8 @@ nodes:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
     external: true
-    x: 450
+    x: 330
     'y': 370
-  - id: styles
-    type: background-worker
-    name: styles Service (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/LogViewer/styles.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2465
-    'y': 1650
   - id: themes
     type: background-worker
     name: themes Service (v4)
@@ -119,7 +119,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2140
+    x: 2045
     'y': 370
   - id: createbasethemeoptions
     type: background-worker
@@ -130,18 +130,18 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1315
+    x: 2895
     'y': 1010
   - id: types
-    type: gateway-api
-    name: types UI Component (components)
+    type: background-worker
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
-    x: 2235
+    x: 2355
     'y': 1010
   - id: basetheme
     type: background-worker
@@ -152,27 +152,31 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 855
+    x: 1895
     'y': 1010
 dependencies:
   - from: overridablecomponents
     to: overrides
     type: direct-call
     description: Executes local class methods / functions
-  - from: frontend-client
-    to: useapplythemeattributes
-    type: direct-call
-    description: Renders useApplyThemeAttributes layout component
-  - from: unifiedthemeprovider_test
+  - from: overrides_test
     to: styles
     type: direct-call
     description: Executes local class methods / functions
-  - from: unifiedthemeprovider_test
-    to: unifiedthemeprovider
+  - from: overrides_test
+    to: overrides
     type: direct-call
     description: Executes local class methods / functions
-  - from: unifiedthemeprovider_test
-    to: themes
+  - from: frontend-client
+    to: overrides
+    type: direct-call
+    description: Renders overrides layout component
+  - from: overrides
+    to: styles
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: themes
+    to: unifiedtheme
     type: direct-call
     description: Executes local class methods / functions
   - from: unifiedtheme
@@ -191,12 +195,16 @@ dependencies:
     to: overrides
     type: direct-call
     description: Executes local class methods / functions
-  - from: frontend-client
-    to: overrides
-    type: direct-call
-    description: Renders overrides layout component
-  - from: overrides
+  - from: unifiedthemeprovider_test
     to: styles
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: unifiedthemeprovider_test
+    to: unifiedthemeprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: unifiedthemeprovider_test
+    to: themes
     type: direct-call
     description: Executes local class methods / functions
   - from: frontend-client
@@ -219,23 +227,15 @@ dependencies:
     to: useapplythemeattributes
     type: direct-call
     description: Executes local class methods / functions
-  - from: overrides_test
-    to: styles
+  - from: frontend-client
+    to: useapplythemeattributes
     type: direct-call
-    description: Executes local class methods / functions
-  - from: overrides_test
+    description: Renders useApplyThemeAttributes layout component
+  - from: basetheme
     to: overrides
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: themes
-    to: unifiedtheme
     type: direct-call
     description: Executes local class methods / functions
   - from: types
-    to: overrides
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: basetheme
     to: overrides
     type: direct-call
     description: Executes local class methods / functions

@@ -11,52 +11,8 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 600
+    x: 140
     'y': 50
-  - id: localkubectlproxylocator
-    type: background-worker
-    name: LocalKubectlProxyLocator Service
-    isTest: false
-    properties:
-      filepath: plugins/kubernetes-backend/src/cluster-locator/LocalKubectlProxyLocator.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 640
-    'y': 370
-  - id: configclusterlocator
-    type: background-worker
-    name: ConfigClusterLocator Service
-    isTest: false
-    properties:
-      filepath: plugins/kubernetes-backend/src/cluster-locator/ConfigClusterLocator.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1870
-    'y': 370
-  - id: gkeclusterlocator_test
-    type: background-worker
-    name: GkeClusterLocator.test Service
-    isTest: true
-    properties:
-      filepath: plugins/kubernetes-backend/src/cluster-locator/GkeClusterLocator.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 3830
-    'y': 50
-  - id: gkeclusterlocator
-    type: background-worker
-    name: GkeClusterLocator Service
-    isTest: false
-    properties:
-      filepath: plugins/kubernetes-backend/src/cluster-locator/GkeClusterLocator.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2640
-    'y': 370
   - id: catalogclusterlocator
     type: background-worker
     name: CatalogClusterLocator Service
@@ -66,7 +22,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1220
+    x: 1155
     'y': 370
   - id: configclusterlocator_test
     type: background-worker
@@ -77,8 +33,52 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2425
+    x: 2330
     'y': 50
+  - id: configclusterlocator
+    type: background-worker
+    name: ConfigClusterLocator Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-backend/src/cluster-locator/ConfigClusterLocator.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1790
+    'y': 370
+  - id: gkeclusterlocator_test
+    type: background-worker
+    name: GkeClusterLocator.test Service
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-backend/src/cluster-locator/GkeClusterLocator.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3750
+    'y': 50
+  - id: gkeclusterlocator
+    type: background-worker
+    name: GkeClusterLocator Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-backend/src/cluster-locator/GkeClusterLocator.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2560
+    'y': 370
+  - id: localkubectlproxylocator
+    type: background-worker
+    name: LocalKubectlProxyLocator Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-backend/src/cluster-locator/LocalKubectlProxyLocator.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 370
   - id: testutils
     type: background-worker
     name: testUtils Service (__fixtures__)
@@ -88,18 +88,29 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 180
+    x: 140
     'y': 370
-  - id: config
-    type: gateway-api
-    name: config UI Component (layout)
+  - id: types
+    type: background-worker
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
-    x: 3220
+    x: 1155
+    'y': 690
+  - id: config
+    type: background-worker
+    name: config Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3250
     'y': 690
   - id: error
     type: background-worker
@@ -110,7 +121,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1840
+    x: 1855
     'y': 690
   - id: container
     type: gateway-api
@@ -121,18 +132,18 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 3680
+    x: 3710
     'y': 690
   - id: errors
     type: background-worker
-    name: errors Service (errors.ts)
+    name: errors Service (service)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2760
+    x: 2790
     'y': 690
   - id: runperiodically
     type: background-worker
@@ -143,29 +154,18 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2300
-    'y': 690
-  - id: types
-    type: gateway-api
-    name: types UI Component (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 1220
+    x: 2330
     'y': 690
   - id: index
     type: background-worker
-    name: index Service (index.ts)
+    name: index Service (commands)
     isTest: false
     properties:
-      filepath: packages/frontend-test-utils/src/index.ts
+      filepath: packages/cli-module-build/src/commands/package/bundle/__fixtures__/packed/frontend/src/index.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1180
+    x: 1235
     'y': 50
   - id: kubernetesproxy_test
     type: rest-api
@@ -176,7 +176,7 @@ nodes:
       namespaces: ''
       technology: REST Controller / Router
     external: true
-    x: 140
+    x: 655
     'y': 50
 dependencies:
   - from: catalogclusterlocator_test
@@ -187,6 +187,22 @@ dependencies:
     to: testutils
     type: direct-call
     description: Executes local class methods / functions
+  - from: catalogclusterlocator
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: configclusterlocator_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: configclusterlocator_test
+    to: configclusterlocator
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: configclusterlocator_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
   - from: configclusterlocator
     to: config
     type: direct-call
@@ -231,10 +247,6 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: catalogclusterlocator
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
   - from: index
     to: configclusterlocator
     type: direct-call
@@ -251,18 +263,6 @@ dependencies:
     to: localkubectlproxylocator
     type: direct-call
     description: Executes local class methods / functions
-  - from: configclusterlocator_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: configclusterlocator_test
-    to: configclusterlocator
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: configclusterlocator_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
   - from: kubernetesproxy_test
     to: localkubectlproxylocator
     type: direct-call

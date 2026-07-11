@@ -13,47 +13,14 @@ nodes:
     external: false
     x: 2670
     'y': 370
-  - id: defaultgitlabcredentialsprovider
-    type: background-worker
-    name: DefaultGitlabCredentialsProvider Service (gitlab)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/gitlab/DefaultGitlabCredentialsProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1520
-    'y': 50
-  - id: defaultazuredevopscredentialsprovider
-    type: background-worker
-    name: DefaultAzureDevOpsCredentialsProvider Service (azure)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/azure/DefaultAzureDevOpsCredentialsProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1980
-    'y': 50
-  - id: defaultgithubcredentialsprovider
-    type: background-worker
-    name: DefaultGithubCredentialsProvider Service (github)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/github/DefaultGithubCredentialsProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2440
-    'y': 50
   - id: types
-    type: gateway-api
-    name: types UI Component (components)
+    type: background-worker
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 140
     'y': 690
@@ -168,13 +135,13 @@ nodes:
     x: 4740
     'y': 690
   - id: azureblobstorage
-    type: background-worker
-    name: azureBlobStorage Service (schema)
+    type: rest-api
+    name: azureBlobStorage REST Endpoint (stages)
     isTest: false
     properties:
-      filepath: packages/connections/src/schema/azureBlobStorage.ts
+      filepath: plugins/techdocs-node/src/stages/publish/azureBlobStorage.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: REST Controller / Router
     external: true
     x: 5200
     'y': 690
@@ -187,18 +154,18 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2900
+    x: 1520
     'y': 50
-  - id: defaultazurecredentialsprovider
+  - id: defaultazuredevopscredentialsprovider
     type: background-worker
-    name: DefaultAzureCredentialsProvider Service (azureBlobStorage)
+    name: DefaultAzureDevOpsCredentialsProvider Service (azure)
     isTest: false
     properties:
-      filepath: packages/integration/src/azureBlobStorage/DefaultAzureCredentialsProvider.ts
+      filepath: packages/integration/src/azure/DefaultAzureDevOpsCredentialsProvider.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 3360
+    x: 1980
     'y': 50
   - id: defaultazurecredentialsmanager_test
     type: background-worker
@@ -209,21 +176,42 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
+    x: 2440
+    'y': 50
+  - id: defaultazurecredentialsprovider
+    type: background-worker
+    name: DefaultAzureCredentialsProvider Service (azureBlobStorage)
+    isTest: false
+    properties:
+      filepath: packages/integration/src/azureBlobStorage/DefaultAzureCredentialsProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2900
+    'y': 50
+  - id: defaultgithubcredentialsprovider
+    type: background-worker
+    name: DefaultGithubCredentialsProvider Service (github)
+    isTest: false
+    properties:
+      filepath: packages/integration/src/github/DefaultGithubCredentialsProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3360
+    'y': 50
+  - id: defaultgitlabcredentialsprovider
+    type: background-worker
+    name: DefaultGitlabCredentialsProvider Service (gitlab)
+    isTest: false
+    properties:
+      filepath: packages/integration/src/gitlab/DefaultGitlabCredentialsProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
     x: 3820
     'y': 50
 dependencies:
-  - from: defaultgitlabcredentialsprovider
-    to: registry
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultazuredevopscredentialsprovider
-    to: registry
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultgithubcredentialsprovider
-    to: registry
-    type: direct-call
-    description: Executes local class methods / functions
   - from: registry
     to: types
     type: direct-call
@@ -276,11 +264,23 @@ dependencies:
     to: registry
     type: direct-call
     description: Executes local class methods / functions
-  - from: defaultazurecredentialsprovider
+  - from: defaultazuredevopscredentialsprovider
     to: registry
     type: direct-call
     description: Executes local class methods / functions
   - from: defaultazurecredentialsmanager_test
+    to: registry
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultazurecredentialsprovider
+    to: registry
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultgithubcredentialsprovider
+    to: registry
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultgitlabcredentialsprovider
     to: registry
     type: direct-call
     description: Executes local class methods / functions

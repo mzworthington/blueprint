@@ -13,17 +13,6 @@ nodes:
     external: false
     x: 140
     'y': 50
-  - id: defaultazurecredentialsprovider
-    type: background-worker
-    name: DefaultAzureCredentialsProvider Service
-    isTest: false
-    properties:
-      filepath: packages/integration/src/azureBlobStorage/DefaultAzureCredentialsProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1910
-    'y': 370
   - id: azureblobstorageintegration
     type: background-worker
     name: AzureBlobStorageIntegration Service
@@ -46,6 +35,17 @@ nodes:
     external: false
     x: 1775
     'y': 50
+  - id: defaultazurecredentialsprovider
+    type: background-worker
+    name: DefaultAzureCredentialsProvider Service
+    isTest: false
+    properties:
+      filepath: packages/integration/src/azureBlobStorage/DefaultAzureCredentialsProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1910
+    'y': 370
   - id: scmintegrations_test
     type: background-worker
     name: ScmIntegrations.test Service (ScmIntegrations.test.ts)
@@ -58,24 +58,35 @@ nodes:
     x: 600
     'y': 50
   - id: config
-    type: gateway-api
-    name: config UI Component (layout)
+    type: background-worker
+    name: config Service (entrypoints)
     isTest: false
     properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 815
     'y': 690
-  - id: types
+  - id: helpers
     type: gateway-api
-    name: types UI Component (components)
+    name: helpers UI Component (home)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/techdocs/src/home/components/Tables/helpers.ts
       namespaces: ''
       technology: React Component
+    external: true
+    x: 140
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
     external: true
     x: 1275
     'y': 690
@@ -90,28 +101,6 @@ nodes:
     external: true
     x: 1735
     'y': 690
-  - id: error
-    type: background-worker
-    name: error Service (serialization)
-    isTest: false
-    properties:
-      filepath: packages/errors/src/serialization/error.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2220
-    'y': 690
-  - id: helpers
-    type: background-worker
-    name: helpers Service (entrypoints)
-    isTest: false
-    properties:
-      filepath: packages/backend-defaults/src/entrypoints/auth/external/helpers.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 140
-    'y': 690
   - id: scmintegrations
     type: background-worker
     name: ScmIntegrations Service (ScmIntegrations.ts)
@@ -123,6 +112,17 @@ nodes:
     external: true
     x: 2370
     'y': 370
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2220
+    'y': 690
 dependencies:
   - from: scmintegrations_test
     to: azureblobstorageintegration
@@ -136,22 +136,6 @@ dependencies:
     to: azureblobstorageintegration
     type: direct-call
     description: Executes local class methods / functions
-  - from: defaultazurecredentialsprovider
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultazurecredentialsprovider
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultazurecredentialsprovider
-    to: registry
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultazurecredentialsprovider
-    to: error
-    type: direct-call
-    description: References class type / calls methods
   - from: azureblobstorageintegration
     to: helpers
     type: direct-call
@@ -180,3 +164,19 @@ dependencies:
     to: scmintegrations
     type: direct-call
     description: Executes local class methods / functions
+  - from: defaultazurecredentialsprovider
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultazurecredentialsprovider
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultazurecredentialsprovider
+    to: registry
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultazurecredentialsprovider
+    to: error
+    type: direct-call
+    description: References class type / calls methods

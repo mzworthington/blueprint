@@ -2,28 +2,6 @@ name: Backstage - base Components
 version: 1.0.0
 level: component
 nodes:
-  - id: palettes
-    type: background-worker
-    name: palettes Service
-    isTest: false
-    properties:
-      filepath: packages/theme/src/base/palettes.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 140
-    'y': 50
-  - id: pagetheme
-    type: background-worker
-    name: pageTheme Service
-    isTest: false
-    properties:
-      filepath: packages/theme/src/base/pageTheme.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 140
-    'y': 690
   - id: createbasethemeoptions
     type: background-worker
     name: createBaseThemeOptions Service
@@ -35,25 +13,36 @@ nodes:
     external: false
     x: 600
     'y': 370
-  - id: unifiedtheme
+  - id: pagetheme
     type: background-worker
-    name: UnifiedTheme Service (unified)
+    name: pageTheme Service
     isTest: false
     properties:
-      filepath: packages/theme/src/unified/UnifiedTheme.tsx
+      filepath: packages/theme/src/base/pageTheme.ts
       namespaces: ''
       technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 50
-  - id: types
-    type: gateway-api
-    name: types UI Component (components)
+    external: false
+    x: 965
+    'y': 690
+  - id: palettes
+    type: background-worker
+    name: palettes Service
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: packages/theme/src/base/palettes.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
     external: true
     x: 735
     'y': 1010
@@ -66,17 +55,20 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 600
+    x: 505
     'y': 690
+  - id: unifiedtheme
+    type: background-worker
+    name: UnifiedTheme Service (unified)
+    isTest: false
+    properties:
+      filepath: packages/theme/src/unified/UnifiedTheme.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
 dependencies:
-  - from: unifiedtheme
-    to: createbasethemeoptions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: pagetheme
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
   - from: createbasethemeoptions
     to: types
     type: direct-call
@@ -89,3 +81,11 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: pagetheme
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: unifiedtheme
+    to: createbasethemeoptions
+    type: direct-call
+    description: Executes local class methods / functions

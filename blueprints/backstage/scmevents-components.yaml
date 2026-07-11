@@ -11,7 +11,18 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 370
+    x: 285
+    'y': 50
+  - id: defaultcatalogscmeventsservice_test
+    type: background-worker
+    name: DefaultCatalogScmEventsService.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-node/src/scmEvents/DefaultCatalogScmEventsService.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 745
     'y': 50
   - id: defaultcatalogscmeventsservice
     type: background-worker
@@ -22,40 +33,29 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 600
+    x: 720
     'y': 370
-  - id: defaultcatalogscmeventsservice_test
-    type: background-worker
-    name: DefaultCatalogScmEventsService.test Service
-    isTest: true
-    properties:
-      filepath: plugins/catalog-node/src/scmEvents/DefaultCatalogScmEventsService.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 830
-    'y': 50
   - id: api
     type: background-worker
     name: api Service (types)
     isTest: false
     properties:
-      filepath: packages/catalog-client/src/types/api.ts
+      filepath: plugins/permission-common/src/types/api.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 140
     'y': 690
   - id: types
-    type: gateway-api
-    name: types UI Component (components)
+    type: background-worker
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
-    x: 1060
+    x: 920
     'y': 690
 dependencies:
   - from: catalogscmeventsserviceref
@@ -70,14 +70,6 @@ dependencies:
     to: defaultcatalogscmeventsservice
     type: direct-call
     description: Executes local class methods / functions
-  - from: defaultcatalogscmeventsservice
-    to: api
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultcatalogscmeventsservice
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
   - from: defaultcatalogscmeventsservice_test
     to: types
     type: direct-call
@@ -88,5 +80,13 @@ dependencies:
     description: Executes local class methods / functions
   - from: defaultcatalogscmeventsservice_test
     to: defaultcatalogscmeventsservice
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultcatalogscmeventsservice
+    to: api
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: defaultcatalogscmeventsservice
+    to: types
     type: direct-call
     description: Executes local class methods / functions

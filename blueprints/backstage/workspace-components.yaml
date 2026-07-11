@@ -1,0 +1,31 @@
+name: Backstage - workspace Components
+version: 1.0.0
+level: component
+nodes:
+  - id: config_d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: contrib/catalog/read-write-split/workspace/config.d.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 370
+dependencies:
+  - from: config_d
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions

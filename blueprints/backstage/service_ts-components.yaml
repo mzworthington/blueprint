@@ -7,7 +7,7 @@ nodes:
     name: service Service
     isTest: false
     properties:
-      filepath: packages/connections/src/service.ts
+      filepath: plugins/events-node/src/service.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
@@ -18,42 +18,42 @@ nodes:
     name: api Service (types)
     isTest: false
     properties:
-      filepath: packages/catalog-client/src/types/api.ts
+      filepath: plugins/permission-common/src/types/api.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 690
-  - id: plugin
+  - id: extensions
     type: background-worker
-    name: plugin Service (plugin.tsx)
+    name: extensions Service (reader)
     isTest: false
     properties:
-      filepath: packages/app-example-plugin/src/plugin.tsx
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/extensions.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 140
-    'y': 50
-  - id: extensions
-    type: gateway-api
-    name: extensions UI Component (extensions)
-    isTest: false
-    properties:
-      filepath: packages/core-plugin-api/src/extensions/extensions.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 600
     'y': 50
   - id: lib
     type: background-worker
     name: lib Service (lib.ts)
     isTest: false
     properties:
-      filepath: plugins/notifications-node/src/lib.ts
+      filepath: plugins/signals-node/src/lib.ts
       namespaces: ''
       technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: plugin
+    type: gateway-api
+    name: plugin UI Component (alpha)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/alpha/plugin.tsx
+      namespaces: ''
+      technology: React Component
     external: true
     x: 1060
     'y': 50
@@ -62,15 +62,15 @@ dependencies:
     to: api
     type: direct-call
     description: Executes local class methods / functions
-  - from: plugin
-    to: service
-    type: direct-call
-    description: Executes local class methods / functions
   - from: extensions
     to: service
     type: direct-call
     description: Executes local class methods / functions
   - from: lib
+    to: service
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plugin
     to: service
     type: direct-call
     description: Executes local class methods / functions

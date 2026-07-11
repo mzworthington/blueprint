@@ -13,30 +13,6 @@ nodes:
     external: false
     x: 600
     'y': 370
-  - id: catalogmodulemicrosoftgraphincrementalentityprovider
-    type: background-worker
-    name: catalogModuleMicrosoftGraphIncrementalEntityProvider Service (module)
-    isTest: false
-    properties:
-      filepath: >-
-        plugins/catalog-backend-module-msgraph-incremental/src/module/catalogModuleMicrosoftGraphIncrementalEntityProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 140
-    'y': 50
-  - id: catalogmodulemicrosoftgraphincrementalentityprovider_test
-    type: background-worker
-    name: catalogModuleMicrosoftGraphIncrementalEntityProvider.test Service (module)
-    isTest: true
-    properties:
-      filepath: >-
-        plugins/catalog-backend-module-msgraph-incremental/src/module/catalogModuleMicrosoftGraphIncrementalEntityProvider.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 50
   - id: microsoftgraphincrementalentityprovider_test
     type: background-worker
     name: MicrosoftGraphIncrementalEntityProvider.test Service (MicrosoftGraphIncrementalEntityProvider.test.ts)
@@ -46,16 +22,16 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1060
+    x: 140
     'y': 50
   - id: config
-    type: gateway-api
-    name: config UI Component (layout)
+    type: background-worker
+    name: config Service (entrypoints)
     isTest: false
     properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 370
     'y': 690
@@ -70,15 +46,31 @@ nodes:
     external: true
     x: 830
     'y': 690
+  - id: catalogmodulemicrosoftgraphincrementalentityprovider_test
+    type: background-worker
+    name: catalogModuleMicrosoftGraphIncrementalEntityProvider.test Service (module)
+    isTest: true
+    properties:
+      filepath: >-
+        plugins/catalog-backend-module-msgraph-incremental/src/module/catalogModuleMicrosoftGraphIncrementalEntityProvider.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: catalogmodulemicrosoftgraphincrementalentityprovider
+    type: background-worker
+    name: catalogModuleMicrosoftGraphIncrementalEntityProvider Service (module)
+    isTest: false
+    properties:
+      filepath: >-
+        plugins/catalog-backend-module-msgraph-incremental/src/module/catalogModuleMicrosoftGraphIncrementalEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 50
 dependencies:
-  - from: catalogmodulemicrosoftgraphincrementalentityprovider
-    to: microsoftgraphincrementalentityprovider
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: catalogmodulemicrosoftgraphincrementalentityprovider_test
-    to: microsoftgraphincrementalentityprovider
-    type: direct-call
-    description: Executes local class methods / functions
   - from: microsoftgraphincrementalentityprovider_test
     to: microsoftgraphincrementalentityprovider
     type: direct-call
@@ -89,5 +81,13 @@ dependencies:
     description: Executes local class methods / functions
   - from: microsoftgraphincrementalentityprovider
     to: clienthelpers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: catalogmodulemicrosoftgraphincrementalentityprovider_test
+    to: microsoftgraphincrementalentityprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: catalogmodulemicrosoftgraphincrementalentityprovider
+    to: microsoftgraphincrementalentityprovider
     type: direct-call
     description: Executes local class methods / functions

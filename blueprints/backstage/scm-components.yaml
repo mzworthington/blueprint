@@ -11,7 +11,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 370
+    x: 1195
     'y': 50
   - id: git
     type: relational-database
@@ -22,41 +22,8 @@ nodes:
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: false
-    x: 750
+    x: 600
     'y': 370
-  - id: node
-    type: gateway-api
-    name: Node UI Component (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/DependencyGraph/Node.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 140
-    'y': 690
-  - id: error
-    type: background-worker
-    name: error Service (serialization)
-    isTest: false
-    properties:
-      filepath: packages/errors/src/serialization/error.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1330
-    'y': 690
-  - id: errors
-    type: background-worker
-    name: errors Service (errors.ts)
-    isTest: false
-    properties:
-      filepath: packages/codemods/src/errors.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 790
-    'y': 690
   - id: packagegraph_test
     type: background-worker
     name: PackageGraph.test Service (monorepo)
@@ -66,7 +33,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 830
+    x: 140
     'y': 50
   - id: packagegraph
     type: background-worker
@@ -77,9 +44,50 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1290
+    x: 600
     'y': 50
+  - id: node
+    type: gateway-api
+    name: Node UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/DependencyGraph/Node.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 870
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1425
+    'y': 690
+  - id: errors
+    type: background-worker
+    name: errors Service (service)
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/http/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 410
+    'y': 690
 dependencies:
+  - from: packagegraph_test
+    to: git
+    type: read-write
+    description: Queries database table records
+  - from: packagegraph
+    to: git
+    type: read-write
+    description: Queries database table records
   - from: git_test
     to: git
     type: read-write
@@ -104,11 +112,3 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: packagegraph_test
-    to: git
-    type: read-write
-    description: Queries database table records
-  - from: packagegraph
-    to: git
-    type: read-write
-    description: Queries database table records

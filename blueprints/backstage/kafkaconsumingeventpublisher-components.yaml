@@ -2,17 +2,6 @@ name: Backstage - KafkaConsumingEventPublisher Components
 version: 1.0.0
 level: component
 nodes:
-  - id: kafkaconsumingeventpublisher
-    type: event-broker
-    name: KafkaConsumingEventPublisher Message Broker
-    isTest: false
-    properties:
-      filepath: plugins/events-backend-module-kafka/src/KafkaConsumingEventPublisher/KafkaConsumingEventPublisher.ts
-      namespaces: ''
-      technology: TypeScript Event Client
-    external: false
-    x: 1140
-    'y': 370
   - id: kafkaconsumingeventpublisher_test
     type: event-broker
     name: KafkaConsumingEventPublisher.test Message Broker
@@ -24,39 +13,50 @@ nodes:
     external: false
     x: 315
     'y': 50
-  - id: module
-    type: background-worker
-    name: module Service (module.ts)
+  - id: kafkaconsumingeventpublisher
+    type: event-broker
+    name: KafkaConsumingEventPublisher Message Broker
     isTest: false
     properties:
-      filepath: packages/cli-module-new/templates/scaffolder-backend-module/src/module.ts
+      filepath: plugins/events-backend-module-kafka/src/KafkaConsumingEventPublisher/KafkaConsumingEventPublisher.ts
       namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1695
-    'y': 50
-  - id: module_test
+      technology: TypeScript Event Client
+    external: false
+    x: 1140
+    'y': 370
+  - id: index
     type: background-worker
-    name: module.test Service (module.test.ts)
-    isTest: true
+    name: index Service (commands)
+    isTest: false
     properties:
-      filepath: plugins/auth-backend-module-auth0-provider/src/module.test.ts
+      filepath: packages/cli-module-build/src/commands/package/bundle/__fixtures__/packed/frontend/src/index.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1235
+    x: 775
     'y': 50
   - id: config
-    type: gateway-api
-    name: config UI Component (layout)
+    type: background-worker
+    name: config Service (entrypoints)
     isTest: false
     properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 140
     'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 370
   - id: loggerserviceadapter
     type: event-broker
     name: LoggerServiceAdapter Message Broker (utils)
@@ -79,47 +79,31 @@ nodes:
     external: true
     x: 1545
     'y': 690
-  - id: error
+  - id: module_test
     type: background-worker
-    name: error Service (serialization)
-    isTest: false
+    name: module.test Service (KafkaPublishingEventConsumer)
+    isTest: true
     properties:
-      filepath: packages/errors/src/serialization/error.ts
+      filepath: plugins/events-backend-module-kafka/src/KafkaPublishingEventConsumer/module.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 370
-    'y': 370
-  - id: index
+    x: 1235
+    'y': 50
+  - id: module
     type: background-worker
-    name: index Service (index.ts)
+    name: module Service (module.ts)
     isTest: false
     properties:
-      filepath: packages/frontend-test-utils/src/index.ts
+      filepath: packages/cli-module-new/templates/scaffolder-backend-module/src/module.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 775
+    x: 1695
     'y': 50
 dependencies:
-  - from: module
+  - from: index
     to: kafkaconsumingeventpublisher
-    type: publish-subscribe
-    description: Publishes / consumes messaging topics
-  - from: module_test
-    to: kafkaconsumingeventpublisher
-    type: publish-subscribe
-    description: Publishes / consumes messaging topics
-  - from: kafkaconsumingeventpublisher
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: kafkaconsumingeventpublisher
-    to: loggerserviceadapter
-    type: publish-subscribe
-    description: Publishes / consumes messaging topics
-  - from: kafkaconsumingeventpublisher
-    to: kafkatransformers
     type: publish-subscribe
     description: Publishes / consumes messaging topics
   - from: kafkaconsumingeventpublisher_test
@@ -134,7 +118,23 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: index
+  - from: kafkaconsumingeventpublisher
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: kafkaconsumingeventpublisher
+    to: loggerserviceadapter
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: kafkaconsumingeventpublisher
+    to: kafkatransformers
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: module_test
+    to: kafkaconsumingeventpublisher
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: module
     to: kafkaconsumingeventpublisher
     type: publish-subscribe
     description: Publishes / consumes messaging topics

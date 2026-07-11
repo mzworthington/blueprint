@@ -13,6 +13,17 @@ nodes:
     external: false
     x: 1060
     'y': 370
+  - id: stub_test
+    type: rest-api
+    name: stub.test REST Endpoint (stub.test.ts)
+    isTest: true
+    properties:
+      filepath: packages/backend-openapi-utils/src/stub.test.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: true
+    x: 830
+    'y': 50
   - id: frontend-client
     type: gateway-api
     name: Frontend Client App (Frontend Client Host)
@@ -20,27 +31,27 @@ nodes:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
     external: true
-    x: 830
+    x: 1290
     'y': 50
   - id: router
-    type: rest-api
-    name: router REST Endpoint (router.ts)
+    type: background-worker
+    name: router Service (schema)
     isTest: false
     properties:
-      filepath: packages/backend-openapi-utils/src/router.ts
+      filepath: plugins/search-backend/src/schema/openapi/generated/router.ts
       namespaces: ''
-      technology: REST Controller / Router
+      technology: TypeScript Domain Service
     external: true
     x: 140
     'y': 690
   - id: types
-    type: gateway-api
-    name: types UI Component (components)
+    type: background-worker
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 690
@@ -57,10 +68,10 @@ nodes:
     'y': 690
   - id: errors
     type: background-worker
-    name: errors Service (errors.ts)
+    name: errors Service (service)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -68,27 +79,20 @@ nodes:
     'y': 690
   - id: constants
     type: background-worker
-    name: constants Service (components)
+    name: constants Service (lib)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/DependencyGraph/constants.ts
+      filepath: packages/repo-tools/src/lib/openapi/constants.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1980
     'y': 690
-  - id: stub_test
-    type: rest-api
-    name: stub.test REST Endpoint (stub.test.ts)
-    isTest: true
-    properties:
-      filepath: packages/backend-openapi-utils/src/stub.test.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 1290
-    'y': 50
 dependencies:
+  - from: stub_test
+    to: stub
+    type: direct-call
+    description: Executes local class methods / functions
   - from: frontend-client
     to: stub
     type: direct-call
@@ -111,9 +115,5 @@ dependencies:
     description: Executes local class methods / functions
   - from: stub
     to: constants
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: stub_test
-    to: stub
     type: direct-call
     description: Executes local class methods / functions

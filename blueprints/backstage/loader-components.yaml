@@ -24,6 +24,17 @@ nodes:
     external: true
     x: 140
     'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 690
   - id: plugin-manager
     type: background-worker
     name: plugin-manager Service (manager)
@@ -35,27 +46,16 @@ nodes:
     external: true
     x: 600
     'y': 50
-  - id: types
-    type: gateway-api
-    name: types UI Component (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 370
-    'y': 690
 dependencies:
   - from: features_test
     to: commonjsmoduleloader
     type: direct-call
     description: Executes local class methods / functions
-  - from: plugin-manager
-    to: commonjsmoduleloader
-    type: direct-call
-    description: Executes local class methods / functions
   - from: commonjsmoduleloader
     to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plugin-manager
+    to: commonjsmoduleloader
     type: direct-call
     description: Executes local class methods / functions

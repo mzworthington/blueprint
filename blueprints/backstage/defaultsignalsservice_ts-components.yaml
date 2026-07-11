@@ -13,14 +13,25 @@ nodes:
     external: false
     x: 370
     'y': 370
+  - id: defaultsignalsservice_test
+    type: background-worker
+    name: DefaultSignalsService.test Service (DefaultSignalsService.test.ts)
+    isTest: true
+    properties:
+      filepath: plugins/signals-node/src/DefaultSignalsService.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
   - id: types
-    type: gateway-api
-    name: types UI Component (components)
+    type: background-worker
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 140
     'y': 690
@@ -35,39 +46,28 @@ nodes:
     external: true
     x: 600
     'y': 690
-  - id: defaultsignalsservice_test
-    type: background-worker
-    name: DefaultSignalsService.test Service (DefaultSignalsService.test.ts)
-    isTest: true
-    properties:
-      filepath: plugins/signals-node/src/DefaultSignalsService.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 140
-    'y': 50
   - id: lib
     type: background-worker
     name: lib Service (lib.ts)
     isTest: false
     properties:
-      filepath: plugins/notifications-node/src/lib.ts
+      filepath: plugins/signals-node/src/lib.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 50
 dependencies:
+  - from: defaultsignalsservice_test
+    to: defaultsignalsservice
+    type: direct-call
+    description: Executes local class methods / functions
   - from: defaultsignalsservice
     to: types
     type: direct-call
     description: Executes local class methods / functions
   - from: defaultsignalsservice
     to: signalsservice
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaultsignalsservice_test
-    to: defaultsignalsservice
     type: direct-call
     description: Executes local class methods / functions
   - from: lib

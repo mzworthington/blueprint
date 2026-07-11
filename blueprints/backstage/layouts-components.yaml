@@ -11,7 +11,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 870
+    x: 830
     'y': 690
   - id: createscaffolderlayout
     type: gateway-api
@@ -22,7 +22,7 @@ nodes:
       namespaces: ''
       technology: React Component
     external: false
-    x: 180
+    x: 1520
     'y': 370
   - id: createscaffolderfieldextension
     type: background-worker
@@ -33,38 +33,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 640
-    'y': 370
-  - id: frontend-client
-    type: gateway-api
-    name: Frontend Client App (Frontend Client Host)
-    properties:
-      description: The main user interface running React and Vite.
-      technology: React + TypeScript
-    external: true
-    x: 180
-    'y': 50
-  - id: core
-    type: background-worker
-    name: core Service (gerrit)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/gerrit/core.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
     x: 140
-    'y': 690
-  - id: usecustomlayouts
-    type: background-worker
-    name: useCustomLayouts Service (hooks)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-react/src/hooks/useCustomLayouts.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1100
     'y': 370
   - id: usecustomfieldextensions
     type: background-worker
@@ -75,10 +44,49 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1560
+    x: 600
     'y': 370
+  - id: usecustomlayouts
+    type: background-worker
+    name: useCustomLayouts Service (hooks)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-react/src/hooks/useCustomLayouts.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1060
+    'y': 370
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 1520
+    'y': 50
+  - id: core
+    type: background-worker
+    name: core Service (providers)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitea/src/providers/core.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1560
+    'y': 690
 dependencies:
   - from: createscaffolderfieldextension
+    to: keys
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: usecustomfieldextensions
+    to: keys
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: usecustomlayouts
     to: keys
     type: direct-call
     description: Executes local class methods / functions
@@ -92,13 +100,5 @@ dependencies:
     description: Executes local class methods / functions
   - from: createscaffolderlayout
     to: core
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: usecustomlayouts
-    to: keys
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: usecustomfieldextensions
-    to: keys
     type: direct-call
     description: Executes local class methods / functions

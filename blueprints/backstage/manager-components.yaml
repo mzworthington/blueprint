@@ -2,17 +2,6 @@ name: Backstage - manager Components
 version: 1.0.0
 level: component
 nodes:
-  - id: plugin-manager
-    type: background-worker
-    name: plugin-manager Service
-    isTest: false
-    properties:
-      filepath: packages/backend-dynamic-feature-service/src/manager/plugin-manager.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1750
-    'y': 370
   - id: plugin-manager_test
     type: background-worker
     name: plugin-manager.test Service
@@ -22,106 +11,29 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 830
+    x: 1260
     'y': 50
-  - id: frontendremotesserver
+  - id: plugin-manager
     type: background-worker
-    name: frontendRemotesServer Service (server)
+    name: plugin-manager Service
     isTest: false
     properties:
-      filepath: packages/backend-dynamic-feature-service/src/server/frontendRemotesServer.ts
+      filepath: packages/backend-dynamic-feature-service/src/manager/plugin-manager.ts
       namespaces: ''
       technology: TypeScript Domain Service
-    external: true
-    x: 2535
-    'y': 50
-  - id: config
-    type: gateway-api
-    name: config UI Component (layout)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 140
-    'y': 690
-  - id: errors
+    external: false
+    x: 1925
+    'y': 370
+  - id: types
     type: background-worker
-    name: errors Service (errors.ts)
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1060
-    'y': 690
-  - id: types
-    type: gateway-api
-    name: types UI Component (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 600
-    'y': 690
-  - id: plugin-scanner
-    type: background-worker
-    name: plugin-scanner Service (scanner)
-    isTest: false
-    properties:
-      filepath: packages/backend-dynamic-feature-service/src/scanner/plugin-scanner.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2440
-    'y': 690
-  - id: loader
-    type: background-worker
-    name: loader Service (loader.ts)
-    isTest: false
-    properties:
-      filepath: packages/config-loader/src/loader.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1520
-    'y': 690
-  - id: commonjsmoduleloader
-    type: background-worker
-    name: CommonJSModuleLoader Service (loader)
-    isTest: false
-    properties:
-      filepath: packages/backend-dynamic-feature-service/src/loader/CommonJSModuleLoader.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1980
-    'y': 690
-  - id: url
-    type: background-worker
-    name: url Service (stages)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2900
-    'y': 690
-  - id: error
-    type: background-worker
-    name: error Service (serialization)
-    isTest: false
-    properties:
-      filepath: packages/errors/src/serialization/error.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 3360
     'y': 690
   - id: testutils
     type: background-worker
@@ -132,11 +44,111 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 680
+    x: 1140
     'y': 370
+  - id: plugin-scanner
+    type: background-worker
+    name: plugin-scanner Service (scanner)
+    isTest: false
+    properties:
+      filepath: packages/backend-dynamic-feature-service/src/scanner/plugin-scanner.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1560
+    'y': 690
+  - id: config
+    type: background-worker
+    name: config Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
+  - id: errors
+    type: background-worker
+    name: errors Service (service)
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/http/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: loader
+    type: background-worker
+    name: loader Service (loader.ts)
+    isTest: false
+    properties:
+      filepath: packages/frontend-dynamic-feature-loader/src/loader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2020
+    'y': 690
+  - id: commonjsmoduleloader
+    type: background-worker
+    name: CommonJSModuleLoader Service (loader)
+    isTest: false
+    properties:
+      filepath: packages/backend-dynamic-feature-service/src/loader/CommonJSModuleLoader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2480
+    'y': 690
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2940
+    'y': 690
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3400
+    'y': 690
+  - id: frontendremotesserver
+    type: background-worker
+    name: frontendRemotesServer Service (server)
+    isTest: false
+    properties:
+      filepath: packages/backend-dynamic-feature-service/src/server/frontendRemotesServer.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1965
+    'y': 50
 dependencies:
-  - from: frontendremotesserver
+  - from: plugin-manager_test
     to: plugin-manager
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plugin-manager_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plugin-manager_test
+    to: testutils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: plugin-manager_test
+    to: plugin-scanner
     type: direct-call
     description: Executes local class methods / functions
   - from: plugin-manager
@@ -171,19 +183,7 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: plugin-manager_test
+  - from: frontendremotesserver
     to: plugin-manager
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plugin-manager_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plugin-manager_test
-    to: testutils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plugin-manager_test
-    to: plugin-scanner
     type: direct-call
     description: Executes local class methods / functions

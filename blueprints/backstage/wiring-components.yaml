@@ -2,556 +2,6 @@ name: Backstage - wiring Components
 version: 1.0.0
 level: component
 nodes:
-  - id: servicefactorytester
-    type: background-worker
-    name: ServiceFactoryTester Service
-    isTest: false
-    properties:
-      filepath: packages/backend-test-utils/src/wiring/ServiceFactoryTester.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 3430
-    'y': 1010
-  - id: servicefactorytester_test
-    type: background-worker
-    name: ServiceFactoryTester.test Service
-    isTest: true
-    properties:
-      filepath: packages/backend-test-utils/src/wiring/ServiceFactoryTester.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 3430
-    'y': 690
-  - id: testbackend
-    type: rest-api
-    name: TestBackend REST Endpoint
-    isTest: false
-    properties:
-      filepath: packages/backend-test-utils/src/wiring/TestBackend.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: false
-    x: 8025
-    'y': 1330
-  - id: testbackend_test
-    type: rest-api
-    name: TestBackend.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: packages/backend-test-utils/src/wiring/TestBackend.test.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: false
-    x: 3890
-    'y': 1010
-  - id: opaqueextensionpointfactorymiddleware
-    type: background-worker
-    name: OpaqueExtensionPointFactoryMiddleware Service
-    isTest: false
-    properties:
-      filepath: packages/backend-internal/src/wiring/OpaqueExtensionPointFactoryMiddleware.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 24165
-    'y': 50
-  - id: version
-    type: background-worker
-    name: version Service
-    isTest: false
-    properties:
-      filepath: packages/cli/src/wiring/version.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 12315
-    'y': 3250
-  - id: createbackendmodule_test
-    type: background-worker
-    name: createBackendModule.test Service
-    isTest: true
-    properties:
-      filepath: packages/backend-plugin-api/src/wiring/createBackendModule.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 4350
-    'y': 1010
-  - id: createextensionpoint_test
-    type: background-worker
-    name: createExtensionPoint.test Service
-    isTest: true
-    properties:
-      filepath: packages/backend-plugin-api/src/wiring/createExtensionPoint.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 4810
-    'y': 1010
-  - id: createbackendfeatureloader
-    type: background-worker
-    name: createBackendFeatureLoader Service
-    isTest: false
-    properties:
-      filepath: packages/backend-plugin-api/src/wiring/createBackendFeatureLoader.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 5865
-    'y': 1330
-  - id: createbackendplugin_test
-    type: background-worker
-    name: createBackendPlugin.test Service
-    isTest: true
-    properties:
-      filepath: packages/backend-plugin-api/src/wiring/createBackendPlugin.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 5270
-    'y': 1010
-  - id: createbackendmodule
-    type: background-worker
-    name: createBackendModule Service
-    isTest: false
-    properties:
-      filepath: packages/backend-plugin-api/src/wiring/createBackendModule.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 18085
-    'y': 1330
-  - id: createextensionpoint
-    type: background-worker
-    name: createExtensionPoint Service
-    isTest: false
-    properties:
-      filepath: packages/backend-plugin-api/src/wiring/createExtensionPoint.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 6945
-    'y': 1330
-  - id: createbackendfeatureloader_test
-    type: background-worker
-    name: createBackendFeatureLoader.test Service
-    isTest: true
-    properties:
-      filepath: packages/backend-plugin-api/src/wiring/createBackendFeatureLoader.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 5730
-    'y': 1010
-  - id: createbackendplugin
-    type: background-worker
-    name: createBackendPlugin Service
-    isTest: false
-    properties:
-      filepath: packages/backend-plugin-api/src/wiring/createBackendPlugin.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 12310
-    'y': 1330
-  - id: internalappcontext
-    type: gateway-api
-    name: InternalAppContext UI Component
-    isTest: false
-    properties:
-      filepath: packages/frontend-app-api/src/wiring/InternalAppContext.ts
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 25975
-    'y': 1330
-  - id: createspecializedapp
-    type: background-worker
-    name: createSpecializedApp Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-app-api/src/wiring/createSpecializedApp.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 24705
-    'y': 370
-  - id: cliinitializer_test
-    type: background-worker
-    name: CliInitializer.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli/src/wiring/CliInitializer.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 6190
-    'y': 1010
-  - id: cliinitializer
-    type: background-worker
-    name: CliInitializer Service
-    isTest: false
-    properties:
-      filepath: packages/cli/src/wiring/CliInitializer.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 19025
-    'y': 1330
-  - id: discoverclimodules
-    type: background-worker
-    name: discoverCliModules Service
-    isTest: false
-    properties:
-      filepath: packages/cli/src/wiring/discoverCliModules.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 24030
-    'y': 1330
-  - id: factory
-    type: background-worker
-    name: factory Service
-    isTest: false
-    properties:
-      filepath: packages/cli/src/wiring/factory.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 6325
-    'y': 1330
-  - id: createfrontendfeatureloader
-    type: background-worker
-    name: createFrontendFeatureLoader Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/createFrontendFeatureLoader.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 22490
-    'y': 1330
-  - id: coreextensiondata
-    type: gateway-api
-    name: coreExtensionData UI Component
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/coreExtensionData.ts
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 21465
-    'y': 1330
-  - id: resolveextensiondefinition
-    type: background-worker
-    name: resolveExtensionDefinition Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/resolveExtensionDefinition.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 16425
-    'y': 2930
-  - id: createfrontendmodule
-    type: background-worker
-    name: createFrontendModule Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/createFrontendModule.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 17530
-    'y': 2290
-  - id: createextension
-    type: background-worker
-    name: createExtension Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/createExtension.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 13530
-    'y': 1970
-  - id: createfrontendplugin
-    type: background-worker
-    name: createFrontendPlugin Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/createFrontendPlugin.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 16990
-    'y': 2290
-  - id: createextensionblueprint_test
-    type: background-worker
-    name: createExtensionBlueprint.test Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/createExtensionBlueprint.test.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 7380
-    'y': 1010
-  - id: createextensioninput_test
-    type: background-worker
-    name: createExtensionInput.test Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/createExtensionInput.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1315
-    'y': 2930
-  - id: resolveinputoverrides
-    type: background-worker
-    name: resolveInputOverrides Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/resolveInputOverrides.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 15965
-    'y': 2930
-  - id: createfrontendmodule_test
-    type: background-worker
-    name: createFrontendModule.test Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/createFrontendModule.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 140
-    'y': 1650
-  - id: createfrontendplugin_test
-    type: gateway-api
-    name: createFrontendPlugin.test UI Component
-    isTest: true
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/createFrontendPlugin.test.ts
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 15725
-    'y': 1010
-  - id: createextension_test
-    type: background-worker
-    name: createExtension.test Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/createExtension.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 600
-    'y': 1650
-  - id: makesortedextensionsmap
-    type: background-worker
-    name: MakeSortedExtensionsMap Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/MakeSortedExtensionsMap.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 16560
-    'y': 2610
-  - id: createextensioninput
-    type: background-worker
-    name: createExtensionInput Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/createExtensionInput.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 14445
-    'y': 3250
-  - id: createfrontendfeatureloader_test
-    type: gateway-api
-    name: createFrontendFeatureLoader.test UI Component
-    isTest: true
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/createFrontendFeatureLoader.test.ts
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 18755
-    'y': 1010
-  - id: createextensiondataref_test
-    type: background-worker
-    name: createExtensionDataRef.test Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/createExtensionDataRef.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1085
-    'y': 3250
-  - id: createextensiondataref
-    type: background-worker
-    name: createExtensionDataRef Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/createExtensionDataRef.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 12995
-    'y': 3570
-  - id: createextensionblueprint
-    type: background-worker
-    name: createExtensionBlueprint Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/createExtensionBlueprint.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 13300
-    'y': 2290
-  - id: resolveextensiondefinition_test
-    type: background-worker
-    name: resolveExtensionDefinition.test Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-plugin-api/src/wiring/resolveExtensionDefinition.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2990
-    'y': 1650
-  - id: serviceregistry
-    type: background-worker
-    name: ServiceRegistry Service
-    isTest: false
-    properties:
-      filepath: packages/backend-app-api/src/wiring/ServiceRegistry.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 19565
-    'y': 1330
-  - id: backendstartuperror
-    type: background-worker
-    name: BackendStartupError Service
-    isTest: false
-    properties:
-      filepath: packages/backend-app-api/src/wiring/BackendStartupError.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 25380
-    'y': 1330
-  - id: backstagebackend
-    type: background-worker
-    name: BackstageBackend Service
-    isTest: false
-    properties:
-      filepath: packages/backend-app-api/src/wiring/BackstageBackend.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 36540
-    'y': 690
-  - id: withdeclaredconnections_test
-    type: background-worker
-    name: withDeclaredConnections.test Service
-    isTest: true
-    properties:
-      filepath: packages/backend-app-api/src/wiring/withDeclaredConnections.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 19645
-    'y': 1010
-  - id: createallowbootfailurepredicate_test
-    type: background-worker
-    name: createAllowBootFailurePredicate.test Service
-    isTest: true
-    properties:
-      filepath: packages/backend-app-api/src/wiring/createAllowBootFailurePredicate.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 7405
-    'y': 1330
-  - id: createinitializationresultcollector
-    type: background-worker
-    name: createInitializationResultCollector Service
-    isTest: false
-    properties:
-      filepath: packages/backend-app-api/src/wiring/createInitializationResultCollector.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 31345
-    'y': 1330
-  - id: withdeclaredconnections
-    type: background-worker
-    name: withDeclaredConnections Service
-    isTest: false
-    properties:
-      filepath: packages/backend-app-api/src/wiring/withDeclaredConnections.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 24760
-    'y': 1330
-  - id: serviceregistry_test
-    type: background-worker
-    name: ServiceRegistry.test Service
-    isTest: true
-    properties:
-      filepath: packages/backend-app-api/src/wiring/ServiceRegistry.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 20105
-    'y': 1010
-  - id: createspecializedbackend_test
-    type: background-worker
-    name: createSpecializedBackend.test Service
-    isTest: true
-    properties:
-      filepath: packages/backend-app-api/src/wiring/createSpecializedBackend.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 37405
-    'y': 50
-  - id: createallowbootfailurepredicate
-    type: background-worker
-    name: createAllowBootFailurePredicate Service
-    isTest: false
-    properties:
-      filepath: packages/backend-app-api/src/wiring/createAllowBootFailurePredicate.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 25610
-    'y': 1650
-  - id: createspecializedbackend
-    type: background-worker
-    name: createSpecializedBackend Service
-    isTest: false
-    properties:
-      filepath: packages/backend-app-api/src/wiring/createSpecializedBackend.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 37405
-    'y': 370
   - id: backendinitializer_test
     type: background-worker
     name: BackendInitializer.test Service
@@ -561,7 +11,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 23020
+    x: 4205
     'y': 690
   - id: backendinitializer
     type: background-worker
@@ -572,19 +22,338 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 31345
+    x: 33710
     'y': 1010
-  - id: createerrorcollector
+  - id: backendstartuperror
     type: background-worker
-    name: createErrorCollector Service
+    name: BackendStartupError Service
     isTest: false
     properties:
-      filepath: packages/frontend-app-api/src/wiring/createErrorCollector.ts
+      filepath: packages/backend-app-api/src/wiring/BackendStartupError.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 22180
-    'y': 1970
+    x: 20465
+    'y': 1330
+  - id: backstagebackend
+    type: background-worker
+    name: BackstageBackend Service
+    isTest: false
+    properties:
+      filepath: packages/backend-app-api/src/wiring/BackstageBackend.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 40395
+    'y': 690
+  - id: createallowbootfailurepredicate_test
+    type: background-worker
+    name: createAllowBootFailurePredicate.test Service
+    isTest: true
+    properties:
+      filepath: packages/backend-app-api/src/wiring/createAllowBootFailurePredicate.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1450
+    'y': 1330
+  - id: createallowbootfailurepredicate
+    type: background-worker
+    name: createAllowBootFailurePredicate Service
+    isTest: false
+    properties:
+      filepath: packages/backend-app-api/src/wiring/createAllowBootFailurePredicate.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 25725
+    'y': 1650
+  - id: createinitializationresultcollector
+    type: background-worker
+    name: createInitializationResultCollector Service
+    isTest: false
+    properties:
+      filepath: packages/backend-app-api/src/wiring/createInitializationResultCollector.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 33035
+    'y': 1330
+  - id: createspecializedbackend_test
+    type: background-worker
+    name: createSpecializedBackend.test Service
+    isTest: true
+    properties:
+      filepath: packages/backend-app-api/src/wiring/createSpecializedBackend.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 41260
+    'y': 50
+  - id: createspecializedbackend
+    type: background-worker
+    name: createSpecializedBackend Service
+    isTest: false
+    properties:
+      filepath: packages/backend-app-api/src/wiring/createSpecializedBackend.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 41260
+    'y': 370
+  - id: serviceregistry_test
+    type: background-worker
+    name: ServiceRegistry.test Service
+    isTest: true
+    properties:
+      filepath: packages/backend-app-api/src/wiring/ServiceRegistry.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1030
+    'y': 1010
+  - id: serviceregistry
+    type: background-worker
+    name: ServiceRegistry Service
+    isTest: false
+    properties:
+      filepath: packages/backend-app-api/src/wiring/ServiceRegistry.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 22250
+    'y': 1330
+  - id: withdeclaredconnections_test
+    type: background-worker
+    name: withDeclaredConnections.test Service
+    isTest: true
+    properties:
+      filepath: packages/backend-app-api/src/wiring/withDeclaredConnections.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1530
+    'y': 1010
+  - id: withdeclaredconnections
+    type: background-worker
+    name: withDeclaredConnections Service
+    isTest: false
+    properties:
+      filepath: packages/backend-app-api/src/wiring/withDeclaredConnections.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 21005
+    'y': 1330
+  - id: opaqueextensionpointfactorymiddleware
+    type: background-worker
+    name: OpaqueExtensionPointFactoryMiddleware Service
+    isTest: false
+    properties:
+      filepath: packages/backend-internal/src/wiring/OpaqueExtensionPointFactoryMiddleware.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 38960
+    'y': 50
+  - id: createbackendfeatureloader_test
+    type: background-worker
+    name: createBackendFeatureLoader.test Service
+    isTest: true
+    properties:
+      filepath: packages/backend-plugin-api/src/wiring/createBackendFeatureLoader.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1990
+    'y': 1010
+  - id: createbackendfeatureloader
+    type: background-worker
+    name: createBackendFeatureLoader Service
+    isTest: false
+    properties:
+      filepath: packages/backend-plugin-api/src/wiring/createBackendFeatureLoader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2125
+    'y': 1330
+  - id: createbackendmodule_test
+    type: background-worker
+    name: createBackendModule.test Service
+    isTest: true
+    properties:
+      filepath: packages/backend-plugin-api/src/wiring/createBackendModule.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 5335
+    'y': 1010
+  - id: createbackendmodule
+    type: background-worker
+    name: createBackendModule Service
+    isTest: false
+    properties:
+      filepath: packages/backend-plugin-api/src/wiring/createBackendModule.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 12630
+    'y': 1330
+  - id: createbackendplugin_test
+    type: background-worker
+    name: createBackendPlugin.test Service
+    isTest: true
+    properties:
+      filepath: packages/backend-plugin-api/src/wiring/createBackendPlugin.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 5795
+    'y': 1010
+  - id: createbackendplugin
+    type: background-worker
+    name: createBackendPlugin Service
+    isTest: false
+    properties:
+      filepath: packages/backend-plugin-api/src/wiring/createBackendPlugin.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 9025
+    'y': 1330
+  - id: createextensionpoint_test
+    type: background-worker
+    name: createExtensionPoint.test Service
+    isTest: true
+    properties:
+      filepath: packages/backend-plugin-api/src/wiring/createExtensionPoint.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 6255
+    'y': 1010
+  - id: createextensionpoint
+    type: background-worker
+    name: createExtensionPoint Service
+    isTest: false
+    properties:
+      filepath: packages/backend-plugin-api/src/wiring/createExtensionPoint.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 8025
+    'y': 1330
+  - id: servicefactorytester_test
+    type: background-worker
+    name: ServiceFactoryTester.test Service
+    isTest: true
+    properties:
+      filepath: packages/backend-test-utils/src/wiring/ServiceFactoryTester.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 27745
+    'y': 690
+  - id: servicefactorytester
+    type: background-worker
+    name: ServiceFactoryTester Service
+    isTest: false
+    properties:
+      filepath: packages/backend-test-utils/src/wiring/ServiceFactoryTester.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 27745
+    'y': 1010
+  - id: testbackend_test
+    type: rest-api
+    name: TestBackend.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: packages/backend-test-utils/src/wiring/TestBackend.test.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: false
+    x: 6795
+    'y': 1010
+  - id: testbackend
+    type: rest-api
+    name: TestBackend REST Endpoint
+    isTest: false
+    properties:
+      filepath: packages/backend-test-utils/src/wiring/TestBackend.ts
+      namespaces: ''
+      technology: REST Controller / Router
+    external: false
+    x: 23505
+    'y': 1330
+  - id: cliinitializer_test
+    type: background-worker
+    name: CliInitializer.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli/src/wiring/CliInitializer.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 7255
+    'y': 1010
+  - id: cliinitializer
+    type: background-worker
+    name: CliInitializer Service
+    isTest: false
+    properties:
+      filepath: packages/cli/src/wiring/CliInitializer.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 18920
+    'y': 1330
+  - id: discoverclimodules
+    type: background-worker
+    name: discoverCliModules Service
+    isTest: false
+    properties:
+      filepath: packages/cli/src/wiring/discoverCliModules.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 25785
+    'y': 1330
+  - id: factory
+    type: background-worker
+    name: factory Service
+    isTest: false
+    properties:
+      filepath: packages/cli/src/wiring/factory.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 7390
+    'y': 1330
+  - id: createspecializedapp
+    type: background-worker
+    name: createSpecializedApp Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-app-api/src/wiring/createSpecializedApp.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 38910
+    'y': 370
+  - id: internalappcontext
+    type: gateway-api
+    name: InternalAppContext UI Component
+    isTest: false
+    properties:
+      filepath: packages/frontend-app-api/src/wiring/InternalAppContext.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 30590
+    'y': 1330
   - id: apifactories_test
     type: background-worker
     name: apiFactories.test Service
@@ -594,19 +363,8 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 21815
+    x: 7715
     'y': 1010
-  - id: phaseapis
-    type: gateway-api
-    name: phaseApis UI Component
-    isTest: false
-    properties:
-      filepath: packages/frontend-app-api/src/wiring/phaseApis.tsx
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 34580
-    'y': 1330
   - id: apifactories
     type: background-worker
     name: apiFactories Service
@@ -616,7 +374,62 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 28450
+    x: 27330
+    'y': 1330
+  - id: createerrorcollector
+    type: background-worker
+    name: createErrorCollector Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-app-api/src/wiring/createErrorCollector.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 22885
+    'y': 1970
+  - id: createplugininfoattacher_test
+    type: background-worker
+    name: createPluginInfoAttacher.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-app-api/src/wiring/createPluginInfoAttacher.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 9510
+    'y': 1010
+  - id: createplugininfoattacher
+    type: background-worker
+    name: createPluginInfoAttacher Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-app-api/src/wiring/createPluginInfoAttacher.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 29790
+    'y': 1330
+  - id: createspecializedapp_test
+    type: gateway-api
+    name: createSpecializedApp.test UI Component
+    isTest: true
+    properties:
+      filepath: packages/frontend-app-api/src/wiring/createSpecializedApp.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 26935
+    'y': 50
+  - id: frontendapiregistry_test
+    type: background-worker
+    name: FrontendApiRegistry.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-app-api/src/wiring/FrontendApiRegistry.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 8565
     'y': 1330
   - id: frontendapiregistry
     type: background-worker
@@ -627,40 +440,18 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 27770
+    x: 28590
     'y': 1650
-  - id: preparespecializedapp
+  - id: phaseapis
     type: gateway-api
-    name: prepareSpecializedApp UI Component
+    name: phaseApis UI Component
     isTest: false
     properties:
-      filepath: packages/frontend-app-api/src/wiring/prepareSpecializedApp.tsx
+      filepath: packages/frontend-app-api/src/wiring/phaseApis.tsx
       namespaces: ''
       technology: React Component
     external: false
-    x: 30725
-    'y': 690
-  - id: treelifecycle
-    type: background-worker
-    name: treeLifecycle Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-app-api/src/wiring/treeLifecycle.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 33980
-    'y': 1010
-  - id: frontendapiregistry_test
-    type: background-worker
-    name: FrontendApiRegistry.test Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-app-api/src/wiring/FrontendApiRegistry.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 10185
+    x: 34710
     'y': 1330
   - id: predicates_test
     type: background-worker
@@ -671,30 +462,8 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 10645
+    x: 9645
     'y': 1330
-  - id: createplugininfoattacher_test
-    type: background-worker
-    name: createPluginInfoAttacher.test Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-app-api/src/wiring/createPluginInfoAttacher.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 22355
-    'y': 1010
-  - id: createspecializedapp_test
-    type: gateway-api
-    name: createSpecializedApp.test UI Component
-    isTest: true
-    properties:
-      filepath: packages/frontend-app-api/src/wiring/createSpecializedApp.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 31110
-    'y': 50
   - id: predicates
     type: background-worker
     name: predicates Service
@@ -704,19 +473,30 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 28230
+    x: 29130
     'y': 1650
-  - id: createplugininfoattacher
-    type: background-worker
-    name: createPluginInfoAttacher Service
+  - id: preparespecializedapp
+    type: gateway-api
+    name: prepareSpecializedApp UI Component
     isTest: false
     properties:
-      filepath: packages/frontend-app-api/src/wiring/createPluginInfoAttacher.ts
+      filepath: packages/frontend-app-api/src/wiring/prepareSpecializedApp.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 35790
+    'y': 690
+  - id: treelifecycle
+    type: background-worker
+    name: treeLifecycle Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-app-api/src/wiring/treeLifecycle.tsx
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 26650
-    'y': 1330
+    x: 37440
+    'y': 1010
   - id: createextensiondatacontainer
     type: background-worker
     name: createExtensionDataContainer Service
@@ -726,8 +506,19 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1545
+    x: 140
     'y': 3250
+  - id: internalextensiondefinition
+    type: background-worker
+    name: InternalExtensionDefinition Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-internal/src/wiring/InternalExtensionDefinition.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2975
+    'y': 1650
   - id: internalextensioninput
     type: background-worker
     name: InternalExtensionInput Service
@@ -737,18 +528,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 36025
-    'y': 50
-  - id: internalswappablecomponentref
-    type: background-worker
-    name: InternalSwappableComponentRef Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-internal/src/wiring/InternalSwappableComponentRef.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 36485
+    x: 39880
     'y': 50
   - id: internalfrontendplugin
     type: background-worker
@@ -759,30 +539,228 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 11185
+    x: 10280
     'y': 1330
-  - id: internalextensiondefinition
+  - id: internalswappablecomponentref
     type: background-worker
-    name: InternalExtensionDefinition Service
+    name: InternalSwappableComponentRef Service
     isTest: false
     properties:
-      filepath: packages/frontend-internal/src/wiring/InternalExtensionDefinition.ts
+      filepath: packages/frontend-internal/src/wiring/InternalSwappableComponentRef.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 4730
-    'y': 1650
-  - id: internalformfield
+    x: 40340
+    'y': 50
+  - id: coreextensiondata
     type: gateway-api
-    name: InternalFormField UI Component
+    name: coreExtensionData UI Component
     isTest: false
     properties:
-      filepath: packages/scaffolder-internal/src/wiring/InternalFormField.ts
+      filepath: packages/frontend-plugin-api/src/wiring/coreExtensionData.ts
       namespaces: ''
       technology: React Component
     external: false
-    x: 35540
+    x: 26575
     'y': 1330
+  - id: createextension_test
+    type: background-worker
+    name: createExtension.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/createExtension.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 3435
+    'y': 1650
+  - id: createextension
+    type: background-worker
+    name: createExtension Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/createExtension.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 14055
+    'y': 1970
+  - id: createextensionblueprint_test
+    type: background-worker
+    name: createExtensionBlueprint.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/createExtensionBlueprint.test.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 15120
+    'y': 1010
+  - id: createextensionblueprint
+    type: background-worker
+    name: createExtensionBlueprint Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/createExtensionBlueprint.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 13905
+    'y': 2290
+  - id: createextensiondataref_test
+    type: background-worker
+    name: createExtensionDataRef.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/createExtensionDataRef.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 600
+    'y': 3250
+  - id: createextensiondataref
+    type: background-worker
+    name: createExtensionDataRef Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/createExtensionDataRef.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 13865
+    'y': 3570
+  - id: createextensioninput_test
+    type: background-worker
+    name: createExtensionInput.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/createExtensionInput.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 910
+    'y': 2930
+  - id: createextensioninput
+    type: background-worker
+    name: createExtensionInput Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/createExtensionInput.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 16090
+    'y': 3250
+  - id: createfrontendfeatureloader_test
+    type: gateway-api
+    name: createFrontendFeatureLoader.test UI Component
+    isTest: true
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/createFrontendFeatureLoader.test.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 19515
+    'y': 1010
+  - id: createfrontendfeatureloader
+    type: background-worker
+    name: createFrontendFeatureLoader Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/createFrontendFeatureLoader.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 25325
+    'y': 1330
+  - id: createfrontendmodule_test
+    type: background-worker
+    name: createFrontendModule.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/createFrontendModule.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 4135
+    'y': 1650
+  - id: createfrontendmodule
+    type: background-worker
+    name: createFrontendModule Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/createFrontendModule.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 17235
+    'y': 2290
+  - id: createfrontendplugin_test
+    type: gateway-api
+    name: createFrontendPlugin.test UI Component
+    isTest: true
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/createFrontendPlugin.test.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 22815
+    'y': 1010
+  - id: createfrontendplugin
+    type: background-worker
+    name: createFrontendPlugin Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/createFrontendPlugin.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 19420
+    'y': 2290
+  - id: makesortedextensionsmap
+    type: background-worker
+    name: MakeSortedExtensionsMap Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/MakeSortedExtensionsMap.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 17880
+    'y': 2610
+  - id: resolveextensiondefinition_test
+    type: background-worker
+    name: resolveExtensionDefinition.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/resolveExtensionDefinition.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 4595
+    'y': 1650
+  - id: resolveextensiondefinition
+    type: background-worker
+    name: resolveExtensionDefinition Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/resolveExtensionDefinition.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 17100
+    'y': 2930
+  - id: resolveinputoverrides
+    type: background-worker
+    name: resolveInputOverrides Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/wiring/resolveInputOverrides.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 16495
+    'y': 2930
   - id: internalformdecorator
     type: gateway-api
     name: InternalFormDecorator UI Component
@@ -792,302 +770,40 @@ nodes:
       namespaces: ''
       technology: React Component
     external: false
-    x: 36000
+    x: 38005
     'y': 1330
-  - id: loader_test
-    type: background-worker
-    name: loader.test Service (loader.test.ts)
-    isTest: true
-    properties:
-      filepath: packages/config-loader/src/loader.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 22840
-    'y': 1010
-  - id: error
-    type: background-worker
-    name: error Service (serialization)
+  - id: internalformfield
+    type: gateway-api
+    name: InternalFormField UI Component
     isTest: false
     properties:
-      filepath: packages/errors/src/serialization/error.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 17235
-    'y': 3570
-  - id: frontend-client
-    type: gateway-api
-    name: Frontend Client App (Frontend Client Host)
-    properties:
-      description: The main user interface running React and Vite.
-      technology: React + TypeScript
-    external: true
-    x: 35040
-    'y': 370
-  - id: config
-    type: gateway-api
-    name: config UI Component (layout)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      filepath: packages/scaffolder-internal/src/wiring/InternalFormField.ts
       namespaces: ''
       technology: React Component
-    external: true
-    x: 20575
-    'y': 1970
-  - id: express
-    type: rest-api
-    name: express REST Endpoint (types)
-    isTest: false
-    properties:
-      filepath: packages/backend-openapi-utils/src/types/express.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 6190
-    'y': 1650
-  - id: types
-    type: gateway-api
-    name: types UI Component (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 21005
-    'y': 1650
-  - id: discovery
-    type: background-worker
-    name: discovery Service (types)
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/templates/typescript-backstage-client/types/discovery.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 8645
-    'y': 1650
-  - id: version_test
-    type: background-worker
-    name: version.test Service (lib)
-    isTest: true
-    properties:
-      filepath: packages/cli-module-new/src/lib/version.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2570
-    'y': 2930
-  - id: portabletemplater
-    type: background-worker
-    name: PortableTemplater Service (lib)
-    isTest: false
-    properties:
-      filepath: packages/cli-module-new/src/lib/execution/PortableTemplater.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 3030
-    'y': 2930
-  - id: resolution
-    type: background-worker
-    name: resolution Service (resolution.ts)
-    isTest: false
-    properties:
-      filepath: packages/frontend-defaults/src/resolution.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 23300
-    'y': 1010
-  - id: constants
-    type: background-worker
-    name: constants Service (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/DependencyGraph/constants.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 13015
-    'y': 2610
-  - id: describeparentcallsite
-    type: background-worker
-    name: describeParentCallSite Service (routing)
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/routing/describeParentCallSite.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 14785
-    'y': 2610
+    external: false
+    x: 38465
+    'y': 1330
   - id: index
     type: background-worker
-    name: index Service (index.ts)
+    name: index Service (commands)
     isTest: false
     properties:
-      filepath: packages/frontend-test-utils/src/index.ts
+      filepath: packages/cli-module-build/src/commands/package/bundle/__fixtures__/packed/frontend/src/index.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 23760
+    x: 24940
     'y': 1010
-  - id: appidentityproxy
-    type: background-worker
-    name: AppIdentityProxy Service (apis)
-    isTest: false
-    properties:
-      filepath: packages/core-app-api/src/apis/implementations/IdentityApi/AppIdentityProxy.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 29725
-    'y': 1650
-  - id: approuter_test
+  - id: collectentitypagecontents_test
     type: gateway-api
-    name: AppRouter.test UI Component (app)
+    name: collectEntityPageContents.test UI Component (collectEntityPageContents.test.tsx)
     isTest: true
     properties:
-      filepath: packages/core-app-api/src/app/AppRouter.test.tsx
+      filepath: packages/core-compat-api/src/collectEntityPageContents.test.tsx
       namespaces: ''
       technology: React Component
     external: true
-    x: 24220
-    'y': 1010
-  - id: appmanager
-    type: gateway-api
-    name: AppManager UI Component (app)
-    isTest: false
-    properties:
-      filepath: packages/core-app-api/src/app/AppManager.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 20980
-    'y': 1010
-  - id: approuter
-    type: gateway-api
-    name: AppRouter UI Component (app)
-    isTest: false
-    properties:
-      filepath: packages/core-app-api/src/app/AppRouter.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 24760
-    'y': 1010
-  - id: apptreeapi
-    type: background-worker
-    name: AppTreeApi Service (apis)
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/apis/definitions/AppTreeApi.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 3300
-    'y': 2610
-  - id: apiblueprint
-    type: background-worker
-    name: ApiBlueprint Service (blueprints)
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/blueprints/ApiBlueprint.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2300
-    'y': 1970
-  - id: definitions
-    type: background-worker
-    name: definitions Service (definitions.ts)
-    isTest: false
-    properties:
-      filepath: packages/ui/src/definitions.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 22180
-    'y': 1650
-  - id: routeref
-    type: background-worker
-    name: RouteRef Service (routing)
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/routing/RouteRef.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 21465
-    'y': 1650
-  - id: apis
-    type: gateway-api
-    name: apis UI Component (apis.ts)
-    isTest: false
-    properties:
-      filepath: packages/create-app/templates/legacy-app/packages/app/src/apis.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 14905
-    'y': 3250
-  - id: frontend
-    type: background-worker
-    name: frontend Service (schemas)
-    isTest: false
-    properties:
-      filepath: packages/backend-dynamic-feature-service/src/schemas/frontend.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 14975
-    'y': 3570
-  - id: createportableschema
-    type: background-worker
-    name: createPortableSchema Service (schema)
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/schema/createPortableSchema.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 14175
-    'y': 2610
-  - id: createapp
-    type: background-worker
-    name: createApp Service (createApp.ts)
-    isTest: false
-    properties:
-      filepath: packages/create-app/src/createApp.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 16855
-    'y': 1330
-  - id: test-utils
-    type: gateway-api
-    name: test-utils UI Component (test-utils.tsx)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs-addons-test-utils/src/test-utils.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 23355
-    'y': 1330
-  - id: pageblueprint
-    type: gateway-api
-    name: PageBlueprint UI Component (blueprints)
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/blueprints/PageBlueprint.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 13715
+    x: 1935
     'y': 2610
   - id: convertlegacyappoptions_test
     type: background-worker
@@ -1098,29 +814,73 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2760
+    x: 2435
     'y': 1970
-  - id: collectentitypagecontents_test
-    type: gateway-api
-    name: collectEntityPageContents.test UI Component (collectEntityPageContents.test.tsx)
-    isTest: true
-    properties:
-      filepath: packages/core-compat-api/src/collectEntityPageContents.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 3920
-    'y': 2610
-  - id: errors
+  - id: resolution
     type: background-worker
-    name: errors Service (errors.ts)
+    name: resolution Service (resolution.ts)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: packages/frontend-defaults/src/resolution.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 25340
+    x: 25400
+    'y': 1010
+  - id: loader_test
+    type: background-worker
+    name: loader.test Service (loader.test.tsx)
+    isTest: true
+    properties:
+      filepath: packages/frontend-dynamic-feature-loader/src/loader.test.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 25990
+    'y': 1010
+  - id: types
+    type: background-worker
+    name: types Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 22295
+    'y': 1650
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 16625
+    'y': 3570
+  - id: alpha
+    type: background-worker
+    name: alpha Service (tasks)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-node/src/tasks/alpha.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 33185
+    'y': 1650
+  - id: errors
+    type: background-worker
+    name: errors Service (service)
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/http/errors.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 24205
     'y': 1970
   - id: dependencygraph
     type: gateway-api
@@ -1131,227 +891,137 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 26070
-    'y': 1650
-  - id: alpha
-    type: background-worker
-    name: alpha Service (alpha.ts)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/alpha.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 31885
+    x: 27410
     'y': 1650
   - id: helpers
-    type: background-worker
-    name: helpers Service (entrypoints)
+    type: gateway-api
+    name: helpers UI Component (home)
     isTest: false
     properties:
-      filepath: packages/backend-defaults/src/entrypoints/auth/external/helpers.ts
+      filepath: plugins/techdocs/src/home/components/Tables/helpers.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: true
-    x: 31805
+    x: 33495
     'y': 1330
-  - id: instantiateappnodetree
+  - id: config
     type: background-worker
-    name: instantiateAppNodeTree Service (tree)
+    name: config Service (entrypoints)
     isTest: false
     properties:
-      filepath: packages/frontend-app-api/src/tree/instantiateAppNodeTree.ts
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 31345
-    'y': 1650
-  - id: resolveappnodespecs_test
+    x: 25725
+    'y': 1970
+  - id: describeparentcallsite
     type: background-worker
-    name: resolveAppNodeSpecs.test Service (tree)
-    isTest: true
-    properties:
-      filepath: packages/frontend-app-api/src/tree/resolveAppNodeSpecs.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 8185
-    'y': 1650
-  - id: resolveapptree
-    type: background-worker
-    name: resolveAppTree Service (tree)
+    name: describeParentCallSite Service (routing)
     isTest: false
     properties:
-      filepath: packages/frontend-app-api/src/tree/resolveAppTree.ts
+      filepath: packages/frontend-plugin-api/src/routing/describeParentCallSite.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 30265
-    'y': 1650
-  - id: instantiateappnodetree_test
+    x: 15025
+    'y': 2610
+  - id: constants
     type: background-worker
-    name: instantiateAppNodeTree.test Service (tree)
-    isTest: true
-    properties:
-      filepath: packages/frontend-app-api/src/tree/instantiateAppNodeTree.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 9105
-    'y': 1650
-  - id: resolveapptree_test
-    type: background-worker
-    name: resolveAppTree.test Service (tree)
-    isTest: true
-    properties:
-      filepath: packages/frontend-app-api/src/tree/resolveAppTree.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 9565
-    'y': 1650
-  - id: resolveappnodespecs
-    type: background-worker
-    name: resolveAppNodeSpecs Service (tree)
+    name: constants Service (lib)
     isTest: false
     properties:
-      filepath: packages/frontend-app-api/src/tree/resolveAppNodeSpecs.ts
+      filepath: packages/repo-tools/src/lib/openapi/constants.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 30725
-    'y': 1650
-  - id: routealiasresolver
-    type: background-worker
-    name: RouteAliasResolver Service (routing)
+    x: 12575
+    'y': 2610
+  - id: express
+    type: rest-api
+    name: express REST Endpoint (types)
     isTest: false
     properties:
-      filepath: packages/frontend-app-api/src/routing/RouteAliasResolver.ts
+      filepath: packages/backend-openapi-utils/src/types/express.ts
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: REST Controller / Router
     external: true
-    x: 33580
+    x: 17880
     'y': 1650
-  - id: routeresolver
+  - id: frontend-client
     type: gateway-api
-    name: RouteResolver UI Component (routing)
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 36195
+    'y': 370
+  - id: discovery
+    type: background-worker
+    name: discovery Service (schema)
     isTest: false
     properties:
-      filepath: packages/frontend-app-api/src/routing/RouteResolver.ts
+      filepath: plugins/scaffolder-common/src/schema/openapi/generated/types/discovery.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 23585
+    'y': 1650
+  - id: version
+    type: background-worker
+    name: version Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-new/src/lib/version.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 18880
+    'y': 1650
+  - id: appmanager
+    type: gateway-api
+    name: AppManager UI Component (app)
+    isTest: false
+    properties:
+      filepath: packages/core-app-api/src/app/AppManager.tsx
       namespaces: ''
       technology: React Component
     external: true
-    x: 34040
-    'y': 1650
-  - id: collectrouteids
-    type: background-worker
-    name: collectRouteIds Service (routing)
-    isTest: false
-    properties:
-      filepath: packages/frontend-app-api/src/routing/collectRouteIds.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 32505
-    'y': 1650
-  - id: extractrouteinfofromappnode
-    type: background-worker
-    name: extractRouteInfoFromAppNode Service (routing)
-    isTest: false
-    properties:
-      filepath: packages/frontend-app-api/src/routing/extractRouteInfoFromAppNode.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 34500
-    'y': 1650
-  - id: resolveroutebindings
-    type: background-worker
-    name: resolveRouteBindings Service (routing)
-    isTest: false
-    properties:
-      filepath: packages/frontend-app-api/src/routing/resolveRouteBindings.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 29185
-    'y': 1650
-  - id: getbasepath
-    type: background-worker
-    name: getBasePath Service (routing)
-    isTest: false
-    properties:
-      filepath: packages/frontend-app-api/src/routing/getBasePath.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 29535
+    x: 38735
     'y': 1010
-  - id: root
+  - id: approuter_test
     type: gateway-api
-    name: Root UI Component (components)
-    isTest: false
+    name: AppRouter.test UI Component (app)
+    isTest: true
     properties:
-      filepath: packages/create-app/templates/legacy-app/packages/app/src/components/Root/Root.tsx
+      filepath: packages/core-app-api/src/app/AppRouter.test.tsx
       namespaces: ''
       technology: React Component
     external: true
-    x: 29995
+    x: 26825
     'y': 1010
-  - id: readappextensionsconfig
-    type: background-worker
-    name: readAppExtensionsConfig Service (tree)
-    isTest: false
-    properties:
-      filepath: packages/frontend-app-api/src/tree/readAppExtensionsConfig.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 32115
-    'y': 1010
-  - id: ref
-    type: background-worker
-    name: ref Service (entity)
-    isTest: false
-    properties:
-      filepath: packages/catalog-model/src/entity/ref.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 26690
-    'y': 1650
-  - id: url
-    type: background-worker
-    name: url Service (stages)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 27150
-    'y': 1650
-  - id: resolveroutebindings_test
-    type: background-worker
-    name: resolveRouteBindings.test Service (routing)
-    isTest: true
-    properties:
-      filepath: packages/frontend-app-api/src/routing/resolveRouteBindings.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 16005
-    'y': 1650
-  - id: extractrouteinfofromappnode_test
+  - id: approuter
     type: gateway-api
-    name: extractRouteInfoFromAppNode.test UI Component (routing)
-    isTest: true
+    name: AppRouter UI Component (app)
+    isTest: false
     properties:
-      filepath: packages/frontend-app-api/src/routing/extractRouteInfoFromAppNode.test.ts
+      filepath: packages/core-app-api/src/app/AppRouter.tsx
       namespaces: ''
       technology: React Component
     external: true
-    x: 16465
+    x: 27285
+    'y': 1010
+  - id: appidentityproxy
+    type: background-worker
+    name: AppIdentityProxy Service (apis)
+    isTest: false
+    properties:
+      filepath: packages/core-app-api/src/apis/implementations/IdentityApi/AppIdentityProxy.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 32210
     'y': 1650
   - id: collectrouteids_test
     type: background-worker
@@ -1362,7 +1032,315 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 16950
+    x: 9415
+    'y': 1650
+  - id: collectrouteids
+    type: background-worker
+    name: collectRouteIds Service (routing)
+    isTest: false
+    properties:
+      filepath: packages/frontend-app-api/src/routing/collectRouteIds.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 34940
+    'y': 1650
+  - id: extractrouteinfofromappnode_test
+    type: gateway-api
+    name: extractRouteInfoFromAppNode.test UI Component (routing)
+    isTest: true
+    properties:
+      filepath: packages/frontend-app-api/src/routing/extractRouteInfoFromAppNode.test.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 9955
+    'y': 1650
+  - id: resolveroutebindings_test
+    type: background-worker
+    name: resolveRouteBindings.test Service (routing)
+    isTest: true
+    properties:
+      filepath: packages/frontend-app-api/src/routing/resolveRouteBindings.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 10415
+    'y': 1650
+  - id: resolveroutebindings
+    type: background-worker
+    name: resolveRouteBindings Service (routing)
+    isTest: false
+    properties:
+      filepath: packages/frontend-app-api/src/routing/resolveRouteBindings.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 30750
+    'y': 1650
+  - id: instantiateappnodetree_test
+    type: background-worker
+    name: instantiateAppNodeTree.test Service (tree)
+    isTest: true
+    properties:
+      filepath: packages/frontend-app-api/src/tree/instantiateAppNodeTree.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 10955
+    'y': 1650
+  - id: instantiateappnodetree
+    type: background-worker
+    name: instantiateAppNodeTree Service (tree)
+    isTest: false
+    properties:
+      filepath: packages/frontend-app-api/src/tree/instantiateAppNodeTree.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 31210
+    'y': 1650
+  - id: resolveappnodespecs_test
+    type: background-worker
+    name: resolveAppNodeSpecs.test Service (tree)
+    isTest: true
+    properties:
+      filepath: packages/frontend-app-api/src/tree/resolveAppNodeSpecs.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 11495
+    'y': 1650
+  - id: resolveappnodespecs
+    type: background-worker
+    name: resolveAppNodeSpecs Service (tree)
+    isTest: false
+    properties:
+      filepath: packages/frontend-app-api/src/tree/resolveAppNodeSpecs.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 36230
+    'y': 1650
+  - id: resolveapptree_test
+    type: background-worker
+    name: resolveAppTree.test Service (tree)
+    isTest: true
+    properties:
+      filepath: packages/frontend-app-api/src/tree/resolveAppTree.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 12035
+    'y': 1650
+  - id: resolveapptree
+    type: background-worker
+    name: resolveAppTree Service (tree)
+    isTest: false
+    properties:
+      filepath: packages/frontend-app-api/src/tree/resolveAppTree.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 31750
+    'y': 1650
+  - id: frontend
+    type: background-worker
+    name: frontend Service (schemas)
+    isTest: false
+    properties:
+      filepath: packages/backend-dynamic-feature-service/src/schemas/frontend.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 14325
+    'y': 3570
+  - id: test-utils
+    type: gateway-api
+    name: test-utils UI Component (hooks)
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-react/src/hooks/test-utils.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 21465
+    'y': 1330
+  - id: ref
+    type: background-worker
+    name: ref Service (alpha)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/alpha/api/ref.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 29830
+    'y': 1650
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 30290
+    'y': 1650
+  - id: routealiasresolver
+    type: background-worker
+    name: RouteAliasResolver Service (routing)
+    isTest: false
+    properties:
+      filepath: packages/frontend-app-api/src/routing/RouteAliasResolver.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 34020
+    'y': 1650
+  - id: routeresolver
+    type: gateway-api
+    name: RouteResolver UI Component (routing)
+    isTest: false
+    properties:
+      filepath: packages/frontend-app-api/src/routing/RouteResolver.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 34480
+    'y': 1650
+  - id: extractrouteinfofromappnode
+    type: background-worker
+    name: extractRouteInfoFromAppNode Service (routing)
+    isTest: false
+    properties:
+      filepath: packages/frontend-app-api/src/routing/extractRouteInfoFromAppNode.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 35400
+    'y': 1650
+  - id: getbasepath
+    type: background-worker
+    name: getBasePath Service (routing)
+    isTest: false
+    properties:
+      filepath: packages/frontend-app-api/src/routing/getBasePath.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 31225
+    'y': 1010
+  - id: root
+    type: gateway-api
+    name: Root UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/create-app/templates/legacy-app/packages/app/src/components/Root/Root.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 31685
+    'y': 1010
+  - id: readappextensionsconfig
+    type: background-worker
+    name: readAppExtensionsConfig Service (tree)
+    isTest: false
+    properties:
+      filepath: packages/frontend-app-api/src/tree/readAppExtensionsConfig.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 36500
+    'y': 1010
+  - id: apiblueprint
+    type: background-worker
+    name: ApiBlueprint Service (blueprints)
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/blueprints/ApiBlueprint.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3745
+    'y': 1970
+  - id: routeref
+    type: background-worker
+    name: RouteRef Service (routing)
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/routing/RouteRef.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 26630
+    'y': 1650
+  - id: apis
+    type: gateway-api
+    name: apis UI Component (apis.ts)
+    isTest: false
+    properties:
+      filepath: packages/create-app/templates/legacy-app/packages/app/src/apis.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 13945
+    'y': 3250
+  - id: createportableschema
+    type: background-worker
+    name: createPortableSchema Service (schema)
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/schema/createPortableSchema.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 15485
+    'y': 2610
+  - id: pageblueprint
+    type: gateway-api
+    name: PageBlueprint UI Component (blueprints)
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/blueprints/PageBlueprint.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 14565
+    'y': 2610
+  - id: createapp
+    type: gateway-api
+    name: createApp UI Component (createApp.tsx)
+    isTest: false
+    properties:
+      filepath: packages/frontend-defaults/src/createApp.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 20005
+    'y': 1330
+  - id: definitions
+    type: background-worker
+    name: definitions Service (definitions.ts)
+    isTest: false
+    properties:
+      filepath: packages/ui/src/definitions.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 24745
+    'y': 1650
+  - id: createextensiontester
+    type: background-worker
+    name: createExtensionTester Service (app)
+    isTest: false
+    properties:
+      filepath: packages/frontend-test-utils/src/app/createExtensionTester.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 18420
     'y': 1650
   - id: renderintestapp
     type: gateway-api
@@ -1373,19 +1351,8 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 24625
+    x: 39420
     'y': 50
-  - id: createextensiontester
-    type: background-worker
-    name: createExtensionTester Service (app)
-    isTest: false
-    properties:
-      filepath: packages/frontend-test-utils/src/app/createExtensionTester.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 17410
-    'y': 1650
   - id: rendertestapp
     type: gateway-api
     name: renderTestApp UI Component (app)
@@ -1395,233 +1362,20 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 36945
+    x: 40800
     'y': 50
+  - id: apptreeapi
+    type: background-worker
+    name: AppTreeApi Service (apis)
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/apis/definitions/AppTreeApi.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 4905
+    'y': 2610
 dependencies:
-  - from: loader_test
-    to: createfrontendfeatureloader
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: servicefactorytester
-    to: testbackend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: servicefactorytester
-    to: serviceregistry
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: servicefactorytester
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: servicefactorytester_test
-    to: servicefactorytester
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: testbackend
-    type: direct-call
-    description: Hits API routing gateway
-  - from: testbackend
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: testbackend
-    to: express
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: testbackend
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: testbackend
-    to: discovery
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: testbackend
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: testbackend_test
-    to: express
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: testbackend_test
-    to: testbackend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: testbackend_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: version_test
-    to: version
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: portabletemplater
-    to: version
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: version
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: resolution
-    to: createfrontendfeatureloader
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendmodule_test
-    to: constants
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendmodule_test
-    to: createbackendmodule
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendmodule_test
-    to: createextensionpoint
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendmodule_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensionpoint_test
-    to: createextensionpoint
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendfeatureloader
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendfeatureloader
-    to: describeparentcallsite
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendfeatureloader
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: createbackendplugin_test
-    to: constants
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendplugin_test
-    to: createbackendplugin
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendplugin_test
-    to: createextensionpoint
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendplugin_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendmodule
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendmodule
-    to: constants
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendmodule
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: createextensionpoint
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendfeatureloader_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendfeatureloader_test
-    to: createbackendfeatureloader
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendfeatureloader_test
-    to: createbackendplugin
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: index
-    to: createbackendmodule
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: index
-    to: createbackendplugin
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: index
-    to: createextensionpoint
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendplugin
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendplugin
-    to: constants
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createbackendplugin
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: frontend-client
-    to: internalappcontext
-    type: direct-call
-    description: Renders InternalAppContext layout component
-  - from: internalappcontext
-    to: appidentityproxy
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: internalappcontext
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: approuter_test
-    to: internalappcontext
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createspecializedapp
-    to: appmanager
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createspecializedapp
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: approuter
-    to: internalappcontext
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: appmanager
-    to: internalappcontext
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: cliinitializer_test
-    to: cliinitializer
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: cliinitializer_test
-    to: factory
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: cliinitializer
-    to: version
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: cliinitializer
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: cliinitializer
-    to: error
-    type: direct-call
-    description: References class type / calls methods
   - from: index
     to: cliinitializer
     type: direct-call
@@ -1630,506 +1384,22 @@ dependencies:
     to: discoverclimodules
     type: direct-call
     description: Executes local class methods / functions
-  - from: apptreeapi
+  - from: collectentitypagecontents_test
     to: resolveextensiondefinition
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: apiblueprint
-    to: createextensionblueprint
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendfeatureloader
-    to: definitions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendfeatureloader
-    to: describeparentcallsite
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendfeatureloader
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendfeatureloader
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: frontend-client
-    to: coreextensiondata
-    type: direct-call
-    description: Renders coreExtensionData layout component
-  - from: coreextensiondata
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: coreextensiondata
-    to: routeref
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: coreextensiondata
-    to: createextensiondataref
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveextensiondefinition
-    to: apis
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveextensiondefinition
-    to: createextension
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveextensiondefinition
-    to: createextensioninput
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveextensiondefinition
-    to: createextensiondataref
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveextensiondefinition
-    to: frontend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveextensiondefinition
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: createfrontendmodule
-    to: createextension
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendmodule
-    to: resolveextensiondefinition
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendmodule
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendmodule
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: createextension
-    to: apis
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextension
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextension
-    to: resolveinputoverrides
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextension
-    to: frontend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextension
-    to: createextensiondataref
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextension
-    to: createextensioninput
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextension
-    to: createportableschema
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextension
-    to: describeparentcallsite
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextension
-    to: createextensionblueprint
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextension
-    to: createfrontendplugin
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextension
-    to: createfrontendmodule
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextension
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: createfrontendplugin
-    to: frontend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendplugin
-    to: createextension
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendplugin
-    to: resolveextensiondefinition
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendplugin
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendplugin
-    to: makesortedextensionsmap
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendplugin
-    to: constants
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendplugin
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: createextensionblueprint_test
-    to: coreextensiondata
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensionblueprint_test
-    to: createextensionblueprint
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensionblueprint_test
-    to: createextensiondataref
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensionblueprint_test
-    to: createextensioninput
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensionblueprint_test
-    to: createextension
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensionblueprint_test
-    to: frontend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensionblueprint_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: createextensioninput_test
-    to: frontend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensioninput_test
-    to: createextensiondataref
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensioninput_test
-    to: createextensioninput
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveinputoverrides
-    to: apis
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveinputoverrides
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveinputoverrides
-    to: frontend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveinputoverrides
-    to: createextensiondataref
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveinputoverrides
-    to: createextensioninput
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveinputoverrides
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: createfrontendmodule_test
-    to: createextension
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendmodule_test
-    to: createfrontendmodule
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendplugin_test
-    to: createapp
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendplugin_test
-    to: createfrontendplugin
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendplugin_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendplugin_test
-    to: createextension
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendplugin_test
-    to: createextensiondataref
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendplugin_test
-    to: coreextensiondata
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendplugin_test
-    to: test-utils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendplugin_test
-    to: createextensioninput
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextension_test
-    to: createextension
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextension_test
-    to: createextensiondataref
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextension_test
-    to: createextensioninput
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: makesortedextensionsmap
-    to: createextension
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: makesortedextensionsmap
-    to: resolveextensiondefinition
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensioninput
-    to: frontend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensioninput
-    to: createextensiondataref
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensioninput
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: types
-    to: createextension
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: types
-    to: createextensiondataref
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: types
-    to: createfrontendmodule
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: types
-    to: createfrontendplugin
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendfeatureloader_test
-    to: createapp
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendfeatureloader_test
-    to: createfrontendplugin
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendfeatureloader_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendfeatureloader_test
-    to: createextension
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendfeatureloader_test
-    to: createextensiondataref
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendfeatureloader_test
-    to: coreextensiondata
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendfeatureloader_test
-    to: test-utils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendfeatureloader_test
-    to: createextensioninput
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createfrontendfeatureloader_test
-    to: createfrontendfeatureloader
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensiondataref_test
-    to: createextensiondataref
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensionblueprint
-    to: apis
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensionblueprint
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensionblueprint
-    to: createextension
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensionblueprint
-    to: createextensioninput
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensionblueprint
-    to: createextensiondataref
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensionblueprint
-    to: frontend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensionblueprint
-    to: resolveinputoverrides
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensionblueprint
-    to: pageblueprint
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensionblueprint
-    to: createportableschema
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensionblueprint
-    to: describeparentcallsite
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveextensiondefinition_test
-    to: createextension
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveextensiondefinition_test
-    to: resolveextensiondefinition
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveextensiondefinition_test
-    to: frontend
     type: direct-call
     description: Executes local class methods / functions
   - from: convertlegacyappoptions_test
     to: createfrontendmodule
     type: direct-call
     description: Executes local class methods / functions
-  - from: collectentitypagecontents_test
-    to: resolveextensiondefinition
+  - from: resolution
+    to: createfrontendfeatureloader
     type: direct-call
     description: Executes local class methods / functions
-  - from: serviceregistry
-    to: errors
+  - from: loader_test
+    to: createfrontendfeatureloader
     type: direct-call
     description: Executes local class methods / functions
-  - from: serviceregistry
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: serviceregistry
-    to: dependencygraph
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: serviceregistry
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: backendstartuperror
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: backendstartuperror
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: backstagebackend
-    to: backendinitializer
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: backstagebackend
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: withdeclaredconnections_test
-    to: withdeclaredconnections
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: withdeclaredconnections_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createallowbootfailurepredicate_test
-    to: createallowbootfailurepredicate
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createinitializationresultcollector
-    to: createallowbootfailurepredicate
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createinitializationresultcollector
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createinitializationresultcollector
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: withdeclaredconnections
-    to: alpha
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: withdeclaredconnections
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: serviceregistry_test
-    to: serviceregistry
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: serviceregistry_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: createspecializedbackend_test
-    to: createspecializedbackend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createallowbootfailurepredicate
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createspecializedbackend
-    to: backstagebackend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createspecializedbackend
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createspecializedbackend
-    to: error
-    type: direct-call
-    description: References class type / calls methods
   - from: backendinitializer_test
     to: backendinitializer
     type: direct-call
@@ -2190,6 +1460,334 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: backendstartuperror
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: backendstartuperror
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: backstagebackend
+    to: backendinitializer
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: backstagebackend
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createallowbootfailurepredicate_test
+    to: createallowbootfailurepredicate
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createallowbootfailurepredicate
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createinitializationresultcollector
+    to: createallowbootfailurepredicate
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createinitializationresultcollector
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createinitializationresultcollector
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: createspecializedbackend_test
+    to: createspecializedbackend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createspecializedbackend
+    to: backstagebackend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createspecializedbackend
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createspecializedbackend
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: serviceregistry_test
+    to: serviceregistry
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: serviceregistry_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: serviceregistry
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: serviceregistry
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: serviceregistry
+    to: dependencygraph
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: serviceregistry
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: withdeclaredconnections_test
+    to: withdeclaredconnections
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: withdeclaredconnections_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: withdeclaredconnections
+    to: alpha
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: withdeclaredconnections
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackendfeatureloader_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackendfeatureloader_test
+    to: createbackendfeatureloader
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackendfeatureloader_test
+    to: createbackendplugin
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackendfeatureloader
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackendfeatureloader
+    to: describeparentcallsite
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackendfeatureloader
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: createbackendmodule_test
+    to: constants
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackendmodule_test
+    to: createbackendmodule
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackendmodule_test
+    to: createextensionpoint
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackendmodule_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackendmodule
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackendmodule
+    to: constants
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackendmodule
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: createbackendplugin_test
+    to: constants
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackendplugin_test
+    to: createbackendplugin
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackendplugin_test
+    to: createextensionpoint
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackendplugin_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackendplugin
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackendplugin
+    to: constants
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createbackendplugin
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: createextensionpoint_test
+    to: createextensionpoint
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensionpoint
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index
+    to: createbackendmodule
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index
+    to: createbackendplugin
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index
+    to: createextensionpoint
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: servicefactorytester_test
+    to: servicefactorytester
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: servicefactorytester
+    to: testbackend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: servicefactorytester
+    to: serviceregistry
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: servicefactorytester
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: testbackend_test
+    to: express
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: testbackend_test
+    to: testbackend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: testbackend_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: frontend-client
+    to: testbackend
+    type: direct-call
+    description: Hits API routing gateway
+  - from: testbackend
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: testbackend
+    to: express
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: testbackend
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: testbackend
+    to: discovery
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: testbackend
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: cliinitializer_test
+    to: cliinitializer
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: cliinitializer_test
+    to: factory
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: cliinitializer
+    to: version
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: cliinitializer
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: cliinitializer
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: appmanager
+    to: internalappcontext
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: approuter_test
+    to: internalappcontext
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: approuter
+    to: internalappcontext
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createspecializedapp
+    to: appmanager
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createspecializedapp
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: internalappcontext
+    type: direct-call
+    description: Renders InternalAppContext layout component
+  - from: internalappcontext
+    to: appidentityproxy
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: internalappcontext
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: collectrouteids_test
+    to: createerrorcollector
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: collectrouteids
+    to: createerrorcollector
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: extractrouteinfofromappnode_test
+    to: resolveextensiondefinition
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: extractrouteinfofromappnode_test
+    to: createerrorcollector
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveroutebindings_test
+    to: createerrorcollector
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveroutebindings
+    to: createerrorcollector
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: instantiateappnodetree_test
+    to: resolveextensiondefinition
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: instantiateappnodetree_test
+    to: createerrorcollector
+    type: direct-call
+    description: Executes local class methods / functions
   - from: instantiateappnodetree
     to: createextension
     type: direct-call
@@ -2206,30 +1804,6 @@ dependencies:
     to: createerrorcollector
     type: direct-call
     description: Executes local class methods / functions
-  - from: resolveapptree
-    to: resolveextensiondefinition
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveapptree
-    to: createerrorcollector
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: instantiateappnodetree_test
-    to: resolveextensiondefinition
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: instantiateappnodetree_test
-    to: createerrorcollector
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveapptree_test
-    to: resolveextensiondefinition
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveapptree_test
-    to: createerrorcollector
-    type: direct-call
-    description: Executes local class methods / functions
   - from: resolveappnodespecs
     to: createfrontendmodule
     type: direct-call
@@ -2239,6 +1813,22 @@ dependencies:
     type: direct-call
     description: Executes local class methods / functions
   - from: resolveappnodespecs
+    to: createerrorcollector
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveapptree_test
+    to: resolveextensiondefinition
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveapptree_test
+    to: createerrorcollector
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveapptree
+    to: resolveextensiondefinition
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveapptree
     to: createerrorcollector
     type: direct-call
     description: Executes local class methods / functions
@@ -2254,6 +1844,94 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: apifactories
+    to: frontend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: apifactories
+    to: instantiateappnodetree
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: apifactories
+    to: createfrontendmodule
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: apifactories
+    to: createerrorcollector
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: apifactories
+    to: frontendapiregistry
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: apifactories
+    to: predicates
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createplugininfoattacher_test
+    to: test-utils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createplugininfoattacher_test
+    to: createplugininfoattacher
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createplugininfoattacher_test
+    to: frontend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createplugininfoattacher
+    to: frontend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createplugininfoattacher
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createplugininfoattacher
+    to: ref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createplugininfoattacher
+    to: url
+    type: direct-call
+    description: References class type / calls methods
+  - from: createspecializedapp_test
+    to: createspecializedapp
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createspecializedapp_test
+    to: preparespecializedapp
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createspecializedapp_test
+    to: test-utils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createspecializedapp_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: createspecializedapp
+    to: createplugininfoattacher
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createspecializedapp
+    to: preparespecializedapp
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontendapiregistry_test
+    to: frontendapiregistry
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontendapiregistry
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: frontend-client
+    to: internalappcontext
+    type: direct-call
+    description: Renders InternalAppContext layout component
   - from: frontend-client
     to: phaseapis
     type: direct-call
@@ -2302,35 +1980,19 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: apifactories
-    to: frontend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: apifactories
-    to: instantiateappnodetree
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: apifactories
-    to: createfrontendmodule
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: apifactories
-    to: createerrorcollector
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: apifactories
-    to: frontendapiregistry
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: apifactories
+  - from: predicates_test
     to: predicates
     type: direct-call
     description: Executes local class methods / functions
-  - from: frontend-client
-    to: internalappcontext
+  - from: predicates_test
+    to: error
     type: direct-call
-    description: Renders InternalAppContext layout component
-  - from: frontendapiregistry
+    description: References class type / calls methods
+  - from: predicates
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: predicates
     to: error
     type: direct-call
     description: References class type / calls methods
@@ -2430,120 +2092,428 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: createspecializedapp
-    to: createplugininfoattacher
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createspecializedapp
-    to: preparespecializedapp
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontendapiregistry_test
-    to: frontendapiregistry
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: predicates_test
-    to: predicates
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: predicates_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: createplugininfoattacher_test
-    to: test-utils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createplugininfoattacher_test
-    to: createplugininfoattacher
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createplugininfoattacher_test
-    to: frontend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createspecializedapp_test
-    to: createspecializedapp
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createspecializedapp_test
-    to: preparespecializedapp
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createspecializedapp_test
-    to: test-utils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createspecializedapp_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: predicates
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: predicates
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: createplugininfoattacher
-    to: frontend
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createplugininfoattacher
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createplugininfoattacher
-    to: ref
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createplugininfoattacher
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: resolveroutebindings
-    to: createerrorcollector
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolveroutebindings_test
-    to: createerrorcollector
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extractrouteinfofromappnode_test
-    to: resolveextensiondefinition
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extractrouteinfofromappnode_test
-    to: createerrorcollector
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: collectrouteids
-    to: createerrorcollector
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: collectrouteids_test
-    to: createerrorcollector
-    type: direct-call
-    description: Executes local class methods / functions
   - from: createextensiondatacontainer
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: internalfrontendplugin
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
   - from: internalextensiondefinition
     to: createextension
     type: direct-call
     description: Executes local class methods / functions
-  - from: frontend-client
-    to: internalformfield
+  - from: internalfrontendplugin
+    to: types
     type: direct-call
-    description: Renders InternalFormField layout component
-  - from: internalformfield
-    to: alpha
+    description: Executes local class methods / functions
+  - from: apiblueprint
+    to: createextensionblueprint
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: coreextensiondata
+    type: direct-call
+    description: Renders coreExtensionData layout component
+  - from: coreextensiondata
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: coreextensiondata
+    to: routeref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: coreextensiondata
+    to: createextensiondataref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextension_test
+    to: createextension
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextension_test
+    to: createextensiondataref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextension_test
+    to: createextensioninput
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextension
+    to: apis
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextension
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextension
+    to: resolveinputoverrides
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextension
+    to: frontend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextension
+    to: createextensiondataref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextension
+    to: createextensioninput
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextension
+    to: createportableschema
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextension
+    to: describeparentcallsite
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextension
+    to: createextensionblueprint
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextension
+    to: createfrontendplugin
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextension
+    to: createfrontendmodule
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextension
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: createextensionblueprint_test
+    to: coreextensiondata
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensionblueprint_test
+    to: createextensionblueprint
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensionblueprint_test
+    to: createextensiondataref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensionblueprint_test
+    to: createextensioninput
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensionblueprint_test
+    to: createextension
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensionblueprint_test
+    to: frontend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensionblueprint_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: createextensionblueprint
+    to: apis
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensionblueprint
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensionblueprint
+    to: createextension
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensionblueprint
+    to: createextensioninput
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensionblueprint
+    to: createextensiondataref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensionblueprint
+    to: frontend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensionblueprint
+    to: resolveinputoverrides
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensionblueprint
+    to: pageblueprint
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensionblueprint
+    to: createportableschema
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensionblueprint
+    to: describeparentcallsite
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensiondataref_test
+    to: createextensiondataref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensioninput_test
+    to: frontend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensioninput_test
+    to: createextensiondataref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensioninput_test
+    to: createextensioninput
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensioninput
+    to: frontend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensioninput
+    to: createextensiondataref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensioninput
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: createfrontendfeatureloader_test
+    to: createapp
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendfeatureloader_test
+    to: createfrontendplugin
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendfeatureloader_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendfeatureloader_test
+    to: createextension
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendfeatureloader_test
+    to: createextensiondataref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendfeatureloader_test
+    to: coreextensiondata
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendfeatureloader_test
+    to: test-utils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendfeatureloader_test
+    to: createextensioninput
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendfeatureloader_test
+    to: createfrontendfeatureloader
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendfeatureloader
+    to: definitions
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendfeatureloader
+    to: describeparentcallsite
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendfeatureloader
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendfeatureloader
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: createfrontendmodule_test
+    to: createextension
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendmodule_test
+    to: createfrontendmodule
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendmodule
+    to: createextension
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendmodule
+    to: resolveextensiondefinition
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendmodule
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendmodule
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: createfrontendplugin_test
+    to: createapp
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendplugin_test
+    to: createfrontendplugin
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendplugin_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendplugin_test
+    to: createextension
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendplugin_test
+    to: createextensiondataref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendplugin_test
+    to: coreextensiondata
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendplugin_test
+    to: test-utils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendplugin_test
+    to: createextensioninput
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendplugin
+    to: frontend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendplugin
+    to: createextension
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendplugin
+    to: resolveextensiondefinition
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendplugin
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendplugin
+    to: makesortedextensionsmap
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendplugin
+    to: constants
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createfrontendplugin
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: makesortedextensionsmap
+    to: createextension
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: makesortedextensionsmap
+    to: resolveextensiondefinition
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveextensiondefinition_test
+    to: createextension
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveextensiondefinition_test
+    to: resolveextensiondefinition
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveextensiondefinition_test
+    to: frontend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveextensiondefinition
+    to: apis
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveextensiondefinition
+    to: createextension
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveextensiondefinition
+    to: createextensioninput
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveextensiondefinition
+    to: createextensiondataref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveextensiondefinition
+    to: frontend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveextensiondefinition
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: resolveinputoverrides
+    to: apis
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveinputoverrides
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveinputoverrides
+    to: frontend
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveinputoverrides
+    to: createextensiondataref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveinputoverrides
+    to: createextensioninput
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolveinputoverrides
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: types
+    to: createextension
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: types
+    to: createextensiondataref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: types
+    to: createfrontendmodule
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: types
+    to: createfrontendplugin
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensiontester
+    to: resolveextensiondefinition
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: createextensiontester
+    to: createerrorcollector
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: renderintestapp
+    to: createspecializedapp
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: rendertestapp
+    to: createspecializedapp
     type: direct-call
     description: Executes local class methods / functions
   - from: frontend-client
@@ -2554,19 +2524,15 @@ dependencies:
     to: alpha
     type: direct-call
     description: Executes local class methods / functions
-  - from: renderintestapp
-    to: createspecializedapp
+  - from: frontend-client
+    to: internalformfield
+    type: direct-call
+    description: Renders InternalFormField layout component
+  - from: internalformfield
+    to: alpha
     type: direct-call
     description: Executes local class methods / functions
-  - from: createextensiontester
+  - from: apptreeapi
     to: resolveextensiondefinition
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createextensiontester
-    to: createerrorcollector
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: rendertestapp
-    to: createspecializedapp
     type: direct-call
     description: Executes local class methods / functions

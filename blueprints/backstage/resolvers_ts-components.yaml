@@ -7,18 +7,18 @@ nodes:
     name: resolvers Service
     isTest: false
     properties:
-      filepath: plugins/auth-backend-module-aws-alb-provider/src/resolvers.ts
+      filepath: plugins/auth-backend-module-openshift-provider/src/resolvers.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 1290
     'y': 370
-  - id: resolvers_test
+  - id: index
     type: background-worker
-    name: resolvers.test Service (resolvers.test.ts)
-    isTest: true
+    name: index Service (commands)
+    isTest: false
     properties:
-      filepath: plugins/auth-backend-module-cloudflare-access-provider/src/resolvers.test.ts
+      filepath: packages/cli-module-build/src/commands/package/bundle/__fixtures__/packed/frontend/src/index.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -35,17 +35,6 @@ nodes:
     external: true
     x: 1290
     'y': 50
-  - id: types
-    type: gateway-api
-    name: types UI Component (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 140
-    'y': 690
   - id: error
     type: background-worker
     name: error Service (serialization)
@@ -55,16 +44,38 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 600
+    x: 140
     'y': 690
-  - id: authenticator
-    type: rest-api
-    name: authenticator REST Endpoint (authenticator.ts)
+  - id: types
+    type: background-worker
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: plugins/auth-backend-module-auth0-provider/src/authenticator.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
-      technology: REST Controller / Router
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
+  - id: resolvers_test
+    type: background-worker
+    name: resolvers.test Service (resolvers.test.ts)
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-cloudflare-access-provider/src/resolvers.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1750
+    'y': 50
+  - id: authenticator
+    type: background-worker
+    name: authenticator Service (authenticator.ts)
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-vmware-cloud-provider/src/authenticator.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
     external: true
     x: 1060
     'y': 690
@@ -80,40 +91,29 @@ nodes:
     x: 1520
     'y': 690
   - id: config
-    type: gateway-api
-    name: config UI Component (layout)
+    type: background-worker
+    name: config Service (entrypoints)
     isTest: false
     properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 1980
     'y': 690
   - id: errors
     type: background-worker
-    name: errors Service (errors.ts)
+    name: errors Service (service)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 2440
     'y': 690
-  - id: index
-    type: background-worker
-    name: index Service (index.ts)
-    isTest: false
-    properties:
-      filepath: packages/frontend-test-utils/src/index.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1750
-    'y': 50
 dependencies:
-  - from: resolvers_test
+  - from: index
     to: resolvers
     type: direct-call
     description: Executes local class methods / functions
@@ -122,13 +122,17 @@ dependencies:
     type: direct-call
     description: Executes local class methods / functions
   - from: resolvers
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: resolvers
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: resolvers
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: resolvers_test
+    to: resolvers
+    type: direct-call
+    description: Executes local class methods / functions
   - from: resolvers
     to: authenticator
     type: direct-call
@@ -143,9 +147,5 @@ dependencies:
     description: Executes local class methods / functions
   - from: resolvers
     to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: index
-    to: resolvers
     type: direct-call
     description: Executes local class methods / functions

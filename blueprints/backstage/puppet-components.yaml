@@ -26,10 +26,10 @@ nodes:
     'y': 370
   - id: index
     type: background-worker
-    name: index Service (index.ts)
+    name: index Service (commands)
     isTest: false
     properties:
-      filepath: packages/frontend-test-utils/src/index.ts
+      filepath: packages/cli-module-build/src/commands/package/bundle/__fixtures__/packed/frontend/src/index.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -37,10 +37,10 @@ nodes:
     'y': 50
   - id: read
     type: background-worker
-    name: read Service (microsoftGraph)
+    name: read Service (scaffolder)
     isTest: false
     properties:
-      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/read.ts
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/read.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -58,33 +58,33 @@ nodes:
     x: 735
     'y': 370
   - id: types
-    type: gateway-api
-    name: types UI Component (components)
+    type: background-worker
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 1045
     'y': 690
   - id: constants
     type: background-worker
-    name: constants Service (components)
+    name: constants Service (lib)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/DependencyGraph/constants.ts
+      filepath: packages/repo-tools/src/lib/openapi/constants.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 1505
     'y': 690
-  - id: dom
+  - id: shadowdom
     type: gateway-api
-    name: dom UI Component (reader)
+    name: shadowDom UI Component (test-utils)
     isTest: false
     properties:
-      filepath: plugins/techdocs/src/reader/components/TechDocsReaderPageContent/dom.tsx
+      filepath: plugins/techdocs/src/test-utils/shadowDom.ts
       namespaces: ''
       technology: React Component
     external: true
@@ -112,12 +112,12 @@ nodes:
     external: true
     x: 2600
     'y': 50
-  - id: shadowdom
+  - id: dom
     type: gateway-api
-    name: shadowDom UI Component (test-utils)
+    name: dom UI Component (reader)
     isTest: false
     properties:
-      filepath: plugins/techdocs/src/test-utils/shadowDom.ts
+      filepath: plugins/techdocs/src/reader/components/TechDocsReaderPageContent/dom.tsx
       namespaces: ''
       technology: React Component
     external: true
@@ -156,7 +156,7 @@ dependencies:
     to: constants
     type: direct-call
     description: Executes local class methods / functions
-  - from: dom
+  - from: shadowdom
     to: transformers
     type: direct-call
     description: Executes local class methods / functions
@@ -168,7 +168,7 @@ dependencies:
     to: transformers
     type: direct-call
     description: Executes local class methods / functions
-  - from: shadowdom
+  - from: dom
     to: transformers
     type: direct-call
     description: Executes local class methods / functions

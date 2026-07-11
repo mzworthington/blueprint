@@ -3,51 +3,44 @@ version: 1.0.0
 level: component
 nodes:
   - id: strategy
-    type: rest-api
-    name: strategy REST Endpoint
+    type: background-worker
+    name: strategy Service
     isTest: false
     properties:
-      filepath: plugins/auth-backend-module-auth0-provider/src/strategy.ts
+      filepath: plugins/auth-backend-module-microsoft-provider/src/strategy.ts
       namespaces: ''
-      technology: REST Controller / Router
+      technology: TypeScript Domain Service
     external: false
-    x: 830
+    x: 600
     'y': 370
   - id: authenticator_test
-    type: rest-api
-    name: authenticator.test REST Endpoint (authenticator.test.ts)
+    type: background-worker
+    name: authenticator.test Service (authenticator.test.ts)
     isTest: true
     properties:
-      filepath: plugins/auth-backend-module-auth0-provider/src/authenticator.test.ts
+      filepath: plugins/auth-backend-module-vmware-cloud-provider/src/authenticator.test.ts
       namespaces: ''
-      technology: REST Controller / Router
+      technology: TypeScript Domain Service
     external: true
     x: 140
     'y': 50
-  - id: frontend-client
-    type: gateway-api
-    name: Frontend Client App (Frontend Client Host)
+  - id: authenticator
+    type: background-worker
+    name: authenticator Service (authenticator.ts)
+    isTest: false
     properties:
-      description: The main user interface running React and Vite.
-      technology: React + TypeScript
+      filepath: plugins/auth-backend-module-vmware-cloud-provider/src/authenticator.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 50
-  - id: external-api-target
+  - id: strategy_test
     type: rest-api
-    name: External HTTP API Endpoint (External HTTP Services)
-    isTest: false
+    name: strategy.test REST Endpoint (strategy.test.ts)
+    isTest: true
     properties:
-      description: Generic outbound web integration endpoints.
-    external: true
-    x: 370
-    'y': 690
-  - id: authenticator
-    type: rest-api
-    name: authenticator REST Endpoint (authenticator.ts)
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-auth0-provider/src/authenticator.ts
+      filepath: plugins/auth-backend-module-auth0-provider/src/strategy.test.ts
       namespaces: ''
       technology: REST Controller / Router
     external: true
@@ -62,51 +55,41 @@ nodes:
       namespaces: ''
       technology: REST Controller / Router
     external: true
-    x: 830
+    x: 140
     'y': 690
   - id: errors
     type: background-worker
-    name: errors Service (errors.ts)
+    name: errors Service (service)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1290
+    x: 600
     'y': 690
-  - id: strategy_test
+  - id: external-api-target
     type: rest-api
-    name: strategy.test REST Endpoint (strategy.test.ts)
-    isTest: true
+    name: External HTTP API Endpoint (External HTTP Services)
+    isTest: false
     properties:
-      filepath: plugins/auth-backend-module-auth0-provider/src/strategy.test.ts
-      namespaces: ''
-      technology: REST Controller / Router
+      description: Generic outbound web integration endpoints.
     external: true
-    x: 1520
-    'y': 50
+    x: 1060
+    'y': 690
 dependencies:
   - from: authenticator_test
     to: strategy
     type: direct-call
     description: References class type / calls methods
-  - from: frontend-client
-    to: strategy
-    type: direct-call
-    description: Hits API routing gateway
-  - from: strategy
-    to: external-api-target
-    type: direct-call
-    description: HMR outbound query requests
   - from: authenticator
     to: strategy
     type: direct-call
     description: Executes local class methods / functions
-  - from: frontend-client
+  - from: strategy_test
     to: strategy
     type: direct-call
-    description: Hits API routing gateway
+    description: Executes local class methods / functions
   - from: strategy
     to: express
     type: direct-call
@@ -115,7 +98,7 @@ dependencies:
     to: errors
     type: direct-call
     description: Executes local class methods / functions
-  - from: strategy_test
-    to: strategy
+  - from: strategy
+    to: external-api-target
     type: direct-call
-    description: Executes local class methods / functions
+    description: HMR outbound query requests

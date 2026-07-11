@@ -13,38 +13,16 @@ nodes:
     external: false
     x: 600
     'y': 370
-  - id: types
-    type: gateway-api
-    name: types UI Component (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 600
-    'y': 690
   - id: api
     type: background-worker
     name: api Service (types)
     isTest: false
     properties:
-      filepath: packages/catalog-client/src/types/api.ts
+      filepath: plugins/permission-common/src/types/api.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 140
-    'y': 50
-  - id: templateentityv1beta3_test
-    type: background-worker
-    name: TemplateEntityV1beta3.test Service (TemplateEntityV1beta3.test.ts)
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-common/src/TemplateEntityV1beta3.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
     'y': 50
   - id: scaffolderclient
     type: background-worker
@@ -55,14 +33,36 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
+    x: 600
+    'y': 50
+  - id: templateentityv1beta3_test
+    type: background-worker
+    name: TemplateEntityV1beta3.test Service (TemplateEntityV1beta3.test.ts)
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-common/src/TemplateEntityV1beta3.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
     x: 1060
     'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 690
 dependencies:
-  - from: templateentityv1beta3
-    to: types
+  - from: api
+    to: templateentityv1beta3
     type: direct-call
     description: Executes local class methods / functions
-  - from: api
+  - from: scaffolderclient
     to: templateentityv1beta3
     type: direct-call
     description: Executes local class methods / functions
@@ -70,7 +70,7 @@ dependencies:
     to: templateentityv1beta3
     type: direct-call
     description: Executes local class methods / functions
-  - from: scaffolderclient
-    to: templateentityv1beta3
+  - from: templateentityv1beta3
+    to: types
     type: direct-call
     description: Executes local class methods / functions

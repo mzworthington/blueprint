@@ -13,14 +13,25 @@ nodes:
     external: false
     x: 1290
     'y': 370
+  - id: gitlabdiscoveryprocessor_test
+    type: background-worker
+    name: GitLabDiscoveryProcessor.test Service (GitLabDiscoveryProcessor.test.ts)
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-gitlab/src/GitLabDiscoveryProcessor.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1290
+    'y': 50
   - id: config
-    type: gateway-api
-    name: config UI Component (layout)
+    type: background-worker
+    name: config Service (entrypoints)
     isTest: false
     properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 140
     'y': 690
@@ -40,7 +51,7 @@ nodes:
     name: lib Service (lib.ts)
     isTest: false
     properties:
-      filepath: plugins/notifications-node/src/lib.ts
+      filepath: plugins/signals-node/src/lib.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -79,18 +90,11 @@ nodes:
     external: true
     x: 2440
     'y': 690
-  - id: gitlabdiscoveryprocessor_test
-    type: background-worker
-    name: GitLabDiscoveryProcessor.test Service (GitLabDiscoveryProcessor.test.ts)
-    isTest: true
-    properties:
-      filepath: plugins/catalog-backend-module-gitlab/src/GitLabDiscoveryProcessor.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1290
-    'y': 50
 dependencies:
+  - from: gitlabdiscoveryprocessor_test
+    to: gitlabdiscoveryprocessor
+    type: direct-call
+    description: Executes local class methods / functions
   - from: gitlabdiscoveryprocessor
     to: config
     type: direct-call
@@ -115,7 +119,3 @@ dependencies:
     to: url
     type: direct-call
     description: References class type / calls methods
-  - from: gitlabdiscoveryprocessor_test
-    to: gitlabdiscoveryprocessor
-    type: direct-call
-    description: Executes local class methods / functions

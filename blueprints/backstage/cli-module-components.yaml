@@ -11,7 +11,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 600
+    x: 1140
     'y': 690
   - id: createclimodule
     type: background-worker
@@ -22,18 +22,18 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1220
+    x: 140
     'y': 690
-  - id: runclimodule
+  - id: runcli_test
     type: background-worker
-    name: runCliModule Service
-    isTest: false
+    name: runCli.test Service
+    isTest: true
     properties:
-      filepath: packages/cli-node/src/cli-module/runCliModule.ts
+      filepath: packages/cli-node/src/cli-module/runCli.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 355
+    x: 275
     'y': 50
   - id: runcli
     type: background-worker
@@ -44,29 +44,29 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 720
+    x: 1355
     'y': 370
-  - id: runcli_test
+  - id: runclimodule
     type: background-worker
-    name: runCli.test Service
-    isTest: true
+    name: runCliModule Service
+    isTest: false
     properties:
-      filepath: packages/cli-node/src/cli-module/runCli.test.ts
+      filepath: packages/cli-node/src/cli-module/runCliModule.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1370
+    x: 1840
     'y': 50
   - id: types
-    type: gateway-api
-    name: types UI Component (components)
+    type: background-worker
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
-    x: 680
+    x: 1370
     'y': 1010
   - id: error
     type: background-worker
@@ -77,18 +77,18 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1140
+    x: 775
     'y': 1010
   - id: errors
     type: background-worker
-    name: errors Service (errors.ts)
+    name: errors Service (service)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 140
+    x: 680
     'y': 690
 dependencies:
   - from: commandgraph
@@ -107,14 +107,18 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: runclimodule
-    to: types
+  - from: runcli_test
+    to: createclimodule
     type: direct-call
     description: Executes local class methods / functions
-  - from: runclimodule
+  - from: runcli_test
     to: runcli
     type: direct-call
     description: Executes local class methods / functions
+  - from: runcli_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
   - from: runcli
     to: errors
     type: direct-call
@@ -131,15 +135,11 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: runcli_test
-    to: createclimodule
+  - from: runclimodule
+    to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: runcli_test
+  - from: runclimodule
     to: runcli
     type: direct-call
     description: Executes local class methods / functions
-  - from: runcli_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods

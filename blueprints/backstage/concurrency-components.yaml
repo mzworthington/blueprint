@@ -2,28 +2,6 @@ name: Backstage - concurrency Components
 version: 1.0.0
 level: component
 nodes:
-  - id: runconcurrenttasks_test
-    type: background-worker
-    name: runConcurrentTasks.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-node/src/concurrency/runConcurrentTasks.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 140
-    'y': 50
-  - id: runworkerqueuethreads_test
-    type: background-worker
-    name: runWorkerQueueThreads.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-node/src/concurrency/runWorkerQueueThreads.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 640
-    'y': 50
   - id: concurrency
     type: background-worker
     name: concurrency Service
@@ -35,6 +13,17 @@ nodes:
     external: false
     x: 180
     'y': 690
+  - id: runconcurrenttasks_test
+    type: background-worker
+    name: runConcurrentTasks.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-node/src/concurrency/runConcurrentTasks.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 50
   - id: runconcurrenttasks
     type: background-worker
     name: runConcurrentTasks Service
@@ -46,6 +35,17 @@ nodes:
     external: false
     x: 140
     'y': 370
+  - id: runworkerqueuethreads_test
+    type: background-worker
+    name: runWorkerQueueThreads.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-node/src/concurrency/runWorkerQueueThreads.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 640
+    'y': 50
   - id: runworkerqueuethreads
     type: background-worker
     name: runWorkerQueueThreads Service
@@ -59,10 +59,10 @@ nodes:
     'y': 370
   - id: errors
     type: background-worker
-    name: errors Service (errors.ts)
+    name: errors Service (service)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -84,12 +84,12 @@ dependencies:
     to: runconcurrenttasks
     type: direct-call
     description: Executes local class methods / functions
-  - from: runworkerqueuethreads_test
-    to: runworkerqueuethreads
-    type: direct-call
-    description: Executes local class methods / functions
   - from: runconcurrenttasks
     to: concurrency
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: runworkerqueuethreads_test
+    to: runworkerqueuethreads
     type: direct-call
     description: Executes local class methods / functions
   - from: runworkerqueuethreads

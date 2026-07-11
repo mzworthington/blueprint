@@ -2,17 +2,17 @@ name: Backstage - files Components
 version: 1.0.0
 level: component
 nodes:
-  - id: serializedirectorycontents
+  - id: deserializedirectorycontents_test
     type: background-worker
-    name: serializeDirectoryContents Service
-    isTest: false
+    name: deserializeDirectoryContents.test Service
+    isTest: true
     properties:
-      filepath: plugins/scaffolder-node/src/files/serializeDirectoryContents.ts
+      filepath: plugins/scaffolder-node/src/files/deserializeDirectoryContents.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 640
-    'y': 370
+    x: 180
+    'y': 50
   - id: deserializedirectorycontents
     type: background-worker
     name: deserializeDirectoryContents Service
@@ -35,46 +35,46 @@ nodes:
     external: false
     x: 680
     'y': 50
-  - id: deserializedirectorycontents_test
+  - id: serializedirectorycontents
     type: background-worker
-    name: deserializeDirectoryContents.test Service
-    isTest: true
+    name: serializeDirectoryContents Service
+    isTest: false
     properties:
-      filepath: plugins/scaffolder-node/src/files/deserializeDirectoryContents.test.ts
+      filepath: plugins/scaffolder-node/src/files/serializeDirectoryContents.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 180
-    'y': 50
+    x: 640
+    'y': 370
   - id: types
-    type: gateway-api
-    name: types UI Component (components)
+    type: background-worker
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 180
     'y': 690
   - id: errors
     type: background-worker
-    name: errors Service (errors.ts)
+    name: errors Service (service)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 680
     'y': 690
 dependencies:
-  - from: serializedirectorycontents
-    to: types
+  - from: deserializedirectorycontents_test
+    to: deserializedirectorycontents
     type: direct-call
     description: Executes local class methods / functions
-  - from: serializedirectorycontents
-    to: errors
+  - from: deserializedirectorycontents_test
+    to: serializedirectorycontents
     type: direct-call
     description: Executes local class methods / functions
   - from: deserializedirectorycontents
@@ -85,11 +85,11 @@ dependencies:
     to: serializedirectorycontents
     type: direct-call
     description: Executes local class methods / functions
-  - from: deserializedirectorycontents_test
-    to: deserializedirectorycontents
+  - from: serializedirectorycontents
+    to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: deserializedirectorycontents_test
-    to: serializedirectorycontents
+  - from: serializedirectorycontents
+    to: errors
     type: direct-call
     description: Executes local class methods / functions

@@ -2,6 +2,28 @@ name: Backstage - PgSearchEngine Components
 version: 1.0.0
 level: component
 nodes:
+  - id: pgsearchengine_test
+    type: background-worker
+    name: PgSearchEngine.test Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1840
+    'y': 50
+  - id: pgsearchengine
+    type: background-worker
+    name: PgSearchEngine Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1625
+    'y': 370
   - id: pgsearchengineindexer_test
     type: background-worker
     name: PgSearchEngineIndexer.test Service
@@ -11,7 +33,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 140
+    x: 1125
     'y': 370
   - id: pgsearchengineindexer
     type: relational-database
@@ -22,84 +44,7 @@ nodes:
       namespaces: ''
       technology: Prisma / SQL Database Client
     external: false
-    x: 1505
-    'y': 690
-  - id: pgsearchengine
-    type: background-worker
-    name: PgSearchEngine Service
-    isTest: false
-    properties:
-      filepath: plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1410
-    'y': 370
-  - id: pgsearchengine_test
-    type: background-worker
-    name: PgSearchEngine.test Service
-    isTest: true
-    properties:
-      filepath: plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1355
-    'y': 50
-  - id: types
-    type: gateway-api
-    name: types UI Component (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 410
-    'y': 50
-  - id: databasedocumentstore_test
-    type: background-worker
-    name: DatabaseDocumentStore.test Service (database)
-    isTest: true
-    properties:
-      filepath: plugins/search-backend-module-pg/src/database/DatabaseDocumentStore.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 870
-    'y': 50
-  - id: database
-    type: background-worker
-    name: database Service (services)
-    isTest: false
-    properties:
-      filepath: packages/backend-plugin-api/src/services/utilities/database.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1450
-    'y': 1010
-  - id: error
-    type: background-worker
-    name: error Service (serialization)
-    isTest: false
-    properties:
-      filepath: packages/errors/src/serialization/error.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 275
-    'y': 690
-  - id: config
-    type: gateway-api
-    name: config UI Component (layout)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 735
+    x: 1300
     'y': 690
   - id: module
     type: background-worker
@@ -110,15 +55,102 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1815
+    x: 2420
     'y': 50
+  - id: databasedocumentstore_test
+    type: background-worker
+    name: DatabaseDocumentStore.test Service (database)
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-pg/src/database/DatabaseDocumentStore.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: config
+    type: background-worker
+    name: config Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1840
+    'y': 690
+  - id: database
+    type: background-worker
+    name: database Service (services)
+    isTest: false
+    properties:
+      filepath: packages/backend-plugin-api/src/services/utilities/database.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 1650
+    'y': 1010
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 760
+    'y': 690
 dependencies:
-  - from: types
+  - from: module
     to: pgsearchengine
     type: direct-call
     description: Executes local class methods / functions
   - from: databasedocumentstore_test
     to: pgsearchengine
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: types
+    to: pgsearchengine
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: pgsearchengine_test
+    to: config
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: pgsearchengine_test
+    to: database
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: pgsearchengine_test
+    to: pgsearchengine
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: pgsearchengine_test
+    to: pgsearchengineindexer
+    type: read-write
+    description: Queries database table records
+  - from: pgsearchengine
+    to: pgsearchengineindexer
+    type: read-write
+    description: Queries database table records
+  - from: pgsearchengine
+    to: database
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: pgsearchengine
+    to: config
     type: direct-call
     description: Executes local class methods / functions
   - from: pgsearchengineindexer_test
@@ -135,37 +167,5 @@ dependencies:
     description: References class type / calls methods
   - from: pgsearchengineindexer
     to: database
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: pgsearchengine
-    to: pgsearchengineindexer
-    type: read-write
-    description: Queries database table records
-  - from: pgsearchengine
-    to: database
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: pgsearchengine
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: pgsearchengine_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: pgsearchengine_test
-    to: database
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: pgsearchengine_test
-    to: pgsearchengine
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: pgsearchengine_test
-    to: pgsearchengineindexer
-    type: read-write
-    description: Queries database table records
-  - from: module
-    to: pgsearchengine
     type: direct-call
     description: Executes local class methods / functions

@@ -13,17 +13,6 @@ nodes:
     external: false
     x: 370
     'y': 370
-  - id: catalogclient
-    type: background-worker
-    name: CatalogClient Service (CatalogClient.ts)
-    isTest: false
-    properties:
-      filepath: packages/catalog-client/src/CatalogClient.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 370
-    'y': 690
   - id: catalogservice_test
     type: background-worker
     name: catalogService.test Service (catalogService.test.ts)
@@ -35,26 +24,37 @@ nodes:
     external: true
     x: 140
     'y': 50
-  - id: index
+  - id: catalogclient
     type: background-worker
-    name: index Service (index.ts)
+    name: CatalogClient Service (CatalogClient.ts)
     isTest: false
     properties:
-      filepath: packages/frontend-test-utils/src/index.ts
+      filepath: packages/catalog-client/src/CatalogClient.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 370
+    'y': 690
+  - id: index
+    type: background-worker
+    name: index Service (commands)
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/bundle/__fixtures__/packed/frontend/src/index.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 50
 dependencies:
-  - from: catalogservice
-    to: catalogclient
-    type: direct-call
-    description: References class type / calls methods
   - from: catalogservice_test
     to: catalogservice
     type: direct-call
     description: Executes local class methods / functions
+  - from: catalogservice
+    to: catalogclient
+    type: direct-call
+    description: References class type / calls methods
   - from: index
     to: catalogservice
     type: direct-call

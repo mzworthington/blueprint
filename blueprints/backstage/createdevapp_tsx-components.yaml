@@ -13,6 +13,17 @@ nodes:
     external: false
     x: 370
     'y': 370
+  - id: createdevapp_test
+    type: gateway-api
+    name: createDevApp.test UI Component (createDevApp.test.tsx)
+    isTest: true
+    properties:
+      filepath: packages/frontend-dev-utils/src/createDevApp.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 140
+    'y': 50
   - id: frontend-client
     type: gateway-api
     name: Frontend Client App (Frontend Client Host)
@@ -20,7 +31,7 @@ nodes:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
     external: true
-    x: 140
+    x: 600
     'y': 50
   - id: error
     type: background-worker
@@ -33,18 +44,11 @@ nodes:
     external: true
     x: 370
     'y': 690
-  - id: createdevapp_test
-    type: gateway-api
-    name: createDevApp.test UI Component (createDevApp.test.tsx)
-    isTest: true
-    properties:
-      filepath: packages/frontend-dev-utils/src/createDevApp.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 600
-    'y': 50
 dependencies:
+  - from: createdevapp_test
+    to: createdevapp
+    type: direct-call
+    description: Executes local class methods / functions
   - from: frontend-client
     to: createdevapp
     type: direct-call
@@ -53,7 +57,3 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: createdevapp_test
-    to: createdevapp
-    type: direct-call
-    description: Executes local class methods / functions

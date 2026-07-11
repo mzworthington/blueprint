@@ -2,27 +2,104 @@ name: Backstage - extensions Components
 version: 1.0.0
 level: component
 nodes:
-  - id: default
-    type: background-worker
-    name: default Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder/src/extensions/default.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 3360
-    'y': 370
-  - id: extensions
+  - id: extensions_test
     type: gateway-api
-    name: extensions UI Component
-    isTest: false
+    name: extensions.test UI Component
+    isTest: true
     properties:
-      filepath: packages/core-plugin-api/src/extensions/extensions.tsx
+      filepath: packages/core-plugin-api/src/extensions/extensions.test.tsx
       namespaces: ''
       technology: React Component
     external: false
-    x: 26780
+    x: 6520
+    'y': 50
+  - id: components_test
+    type: gateway-api
+    name: components.test UI Component
+    isTest: true
+    properties:
+      filepath: plugins/app/src/extensions/components.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 8580
+    'y': 50
+  - id: traversal_test
+    type: gateway-api
+    name: traversal.test UI Component
+    isTest: true
+    properties:
+      filepath: packages/core-app-api/src/extensions/traversal.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 600
+    'y': 50
+  - id: traversal
+    type: gateway-api
+    name: traversal UI Component
+    isTest: false
+    properties:
+      filepath: packages/core-app-api/src/extensions/traversal.ts
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 2370
+    'y': 370
+  - id: componentdata_test
+    type: background-worker
+    name: componentData.test Service
+    isTest: true
+    properties:
+      filepath: packages/core-plugin-api/src/extensions/componentData.test.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 4820
+    'y': 370
+  - id: componentdata
+    type: gateway-api
+    name: componentData UI Component
+    isTest: false
+    properties:
+      filepath: packages/core-plugin-api/src/extensions/componentData.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 7390
+    'y': 690
+  - id: pluginerrorboundary
+    type: gateway-api
+    name: PluginErrorBoundary UI Component
+    isTest: false
+    properties:
+      filepath: packages/core-plugin-api/src/extensions/PluginErrorBoundary.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 8660
+    'y': 690
+  - id: useelementfilter_test
+    type: gateway-api
+    name: useElementFilter.test UI Component
+    isTest: true
+    properties:
+      filepath: packages/core-plugin-api/src/extensions/useElementFilter.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 9795
+    'y': 50
+  - id: useelementfilter
+    type: gateway-api
+    name: useElementFilter UI Component
+    isTest: false
+    properties:
+      filepath: packages/core-plugin-api/src/extensions/useElementFilter.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 10575
     'y': 370
   - id: analyticsapi_test
     type: background-worker
@@ -33,29 +110,40 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 8420
+    x: 16035
     'y': 50
-  - id: defaultsigninpage
-    type: gateway-api
-    name: DefaultSignInPage UI Component
+  - id: applayout
+    type: background-worker
+    name: AppLayout Service
     isTest: false
     properties:
-      filepath: plugins/app/src/extensions/DefaultSignInPage.tsx
+      filepath: plugins/app/src/extensions/AppLayout.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2440
+    'y': 50
+  - id: appnav_test
+    type: gateway-api
+    name: AppNav.test UI Component
+    isTest: true
+    properties:
+      filepath: plugins/app/src/extensions/AppNav.test.tsx
       namespaces: ''
       technology: React Component
     external: false
-    x: 9380
+    x: 5740
     'y': 370
-  - id: translationsapi
+  - id: appnav
     type: gateway-api
-    name: TranslationsApi UI Component
+    name: AppNav UI Component
     isTest: false
     properties:
-      filepath: plugins/app/src/extensions/TranslationsApi.tsx
+      filepath: plugins/app/src/extensions/AppNav.tsx
       namespaces: ''
       technology: React Component
     external: false
-    x: 10300
+    x: 11955
     'y': 370
   - id: approot
     type: gateway-api
@@ -66,18 +154,29 @@ nodes:
       namespaces: ''
       technology: React Component
     external: false
-    x: 10990
+    x: 12495
     'y': 370
-  - id: appnav_test
+  - id: approutes_test
     type: gateway-api
-    name: AppNav.test UI Component
+    name: AppRoutes.test UI Component
     isTest: true
     properties:
-      filepath: plugins/app/src/extensions/AppNav.test.tsx
+      filepath: plugins/app/src/extensions/AppRoutes.test.tsx
       namespaces: ''
       technology: React Component
     external: false
-    x: 9840
+    x: 2900
+    'y': 50
+  - id: approutes
+    type: gateway-api
+    name: AppRoutes UI Component
+    isTest: false
+    properties:
+      filepath: plugins/app/src/extensions/AppRoutes.tsx
+      namespaces: ''
+      technology: React Component
+    external: false
+    x: 13280
     'y': 370
   - id: breadcrumbsregistryprovider
     type: gateway-api
@@ -88,62 +187,40 @@ nodes:
       namespaces: ''
       technology: React Component
     external: false
-    x: 12180
+    x: 12970
     'y': 690
-  - id: applayout
-    type: background-worker
-    name: AppLayout Service
+  - id: defaultsigninpage
+    type: gateway-api
+    name: DefaultSignInPage UI Component
     isTest: false
     properties:
-      filepath: plugins/app/src/extensions/AppLayout.tsx
+      filepath: plugins/app/src/extensions/DefaultSignInPage.tsx
       namespaces: ''
-      technology: TypeScript Domain Service
+      technology: React Component
     external: false
-    x: 1520
-    'y': 50
-  - id: approutes_test
+    x: 14090
+    'y': 370
+  - id: dialogdisplay_test
     type: gateway-api
-    name: AppRoutes.test UI Component
+    name: DialogDisplay.test UI Component
     isTest: true
     properties:
-      filepath: plugins/app/src/extensions/AppRoutes.test.tsx
+      filepath: plugins/app/src/extensions/DialogDisplay.test.tsx
       namespaces: ''
       technology: React Component
     external: false
-    x: 1980
-    'y': 50
-  - id: appnav
+    x: 8200
+    'y': 690
+  - id: dialogdisplay
     type: gateway-api
-    name: AppNav UI Component
+    name: DialogDisplay UI Component
     isTest: false
     properties:
-      filepath: plugins/app/src/extensions/AppNav.tsx
+      filepath: plugins/app/src/extensions/DialogDisplay.tsx
       namespaces: ''
       technology: React Component
     external: false
-    x: 13530
-    'y': 370
-  - id: approutes
-    type: gateway-api
-    name: AppRoutes UI Component
-    isTest: false
-    properties:
-      filepath: plugins/app/src/extensions/AppRoutes.tsx
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 13990
-    'y': 370
-  - id: legacycomponentsapi
-    type: gateway-api
-    name: LegacyComponentsApi UI Component
-    isTest: false
-    properties:
-      filepath: plugins/app/src/extensions/LegacyComponentsApi.ts
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 14260
+    x: 14360
     'y': 690
   - id: elements
     type: background-worker
@@ -154,29 +231,18 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 8880
+    x: 16495
     'y': 50
-  - id: dialogdisplay
+  - id: legacycomponentsapi
     type: gateway-api
-    name: DialogDisplay UI Component
+    name: LegacyComponentsApi UI Component
     isTest: false
     properties:
-      filepath: plugins/app/src/extensions/DialogDisplay.tsx
+      filepath: plugins/app/src/extensions/LegacyComponentsApi.ts
       namespaces: ''
       technology: React Component
     external: false
-    x: 14760
-    'y': 690
-  - id: dialogdisplay_test
-    type: gateway-api
-    name: DialogDisplay.test UI Component
-    isTest: true
-    properties:
-      filepath: plugins/app/src/extensions/DialogDisplay.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 1520
+    x: 14820
     'y': 690
   - id: legacynavitem
     type: background-worker
@@ -187,30 +253,19 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 11720
+    x: 9120
     'y': 690
-  - id: extensions_test
+  - id: translationsapi
     type: gateway-api
-    name: extensions.test UI Component
-    isTest: true
+    name: TranslationsApi UI Component
+    isTest: false
     properties:
-      filepath: packages/core-plugin-api/src/extensions/extensions.test.tsx
+      filepath: plugins/app/src/extensions/TranslationsApi.tsx
       namespaces: ''
       technology: React Component
     external: false
-    x: 15685
-    'y': 50
-  - id: authprovidersextensionpoint
-    type: background-worker
-    name: AuthProvidersExtensionPoint Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-node/src/extensions/AuthProvidersExtensionPoint.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2440
-    'y': 690
+    x: 15280
+    'y': 370
   - id: authownershipresolutionextensionpoint
     type: background-worker
     name: AuthOwnershipResolutionExtensionPoint Service
@@ -220,7 +275,40 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2900
+    x: 10040
+    'y': 690
+  - id: authprovidersextensionpoint
+    type: background-worker
+    name: AuthProvidersExtensionPoint Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/extensions/AuthProvidersExtensionPoint.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 10500
+    'y': 690
+  - id: default
+    type: background-worker
+    name: default Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/extensions/default.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 18350
+    'y': 370
+  - id: createscaffolderfieldextension
+    type: background-worker
+    name: createScaffolderFieldExtension Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-react/src/extensions/createScaffolderFieldExtension.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 11135
     'y': 690
   - id: rjsf
     type: gateway-api
@@ -231,919 +319,41 @@ nodes:
       namespaces: ''
       technology: React Component
     external: false
-    x: 14705
+    x: 9590
     'y': 1330
-  - id: createscaffolderfieldextension
-    type: background-worker
-    name: createScaffolderFieldExtension Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-react/src/extensions/createScaffolderFieldExtension.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 3360
-    'y': 690
-  - id: componentdata_test
-    type: background-worker
-    name: componentData.test Service
-    isTest: true
-    properties:
-      filepath: packages/core-plugin-api/src/extensions/componentData.test.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 12990
-    'y': 370
-  - id: useelementfilter
-    type: gateway-api
-    name: useElementFilter UI Component
-    isTest: false
-    properties:
-      filepath: packages/core-plugin-api/src/extensions/useElementFilter.tsx
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 16250
-    'y': 370
-  - id: useelementfilter_test
-    type: gateway-api
-    name: useElementFilter.test UI Component
-    isTest: true
-    properties:
-      filepath: packages/core-plugin-api/src/extensions/useElementFilter.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 20670
-    'y': 50
-  - id: pluginerrorboundary
-    type: gateway-api
-    name: PluginErrorBoundary UI Component
-    isTest: false
-    properties:
-      filepath: packages/core-plugin-api/src/extensions/PluginErrorBoundary.tsx
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 23495
-    'y': 690
-  - id: componentdata
-    type: gateway-api
-    name: componentData UI Component
-    isTest: false
-    properties:
-      filepath: packages/core-plugin-api/src/extensions/componentData.tsx
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 16640
-    'y': 690
-  - id: traversal
-    type: gateway-api
-    name: traversal UI Component
-    isTest: false
-    properties:
-      filepath: packages/core-app-api/src/extensions/traversal.ts
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 7040
-    'y': 370
-  - id: traversal_test
-    type: gateway-api
-    name: traversal.test UI Component
-    isTest: true
-    properties:
-      filepath: packages/core-app-api/src/extensions/traversal.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: false
-    x: 5660
-    'y': 50
-  - id: entitypicker
-    type: gateway-api
-    name: EntityPicker UI Component (alpha)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder/src/alpha/fields/EntityPicker.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 140
-    'y': 690
-  - id: entitynamepicker
-    type: gateway-api
-    name: EntityNamePicker UI Component (alpha)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder/src/alpha/fields/EntityNamePicker.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 600
-    'y': 690
-  - id: validation
-    type: background-worker
-    name: validation Service (schema)
-    isTest: false
-    properties:
-      filepath: packages/backend-openapi-utils/src/schema/validation.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1060
-    'y': 690
-  - id: entitytagspicker
-    type: gateway-api
-    name: EntityTagsPicker UI Component (alpha)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder/src/alpha/fields/EntityTagsPicker.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 1980
-    'y': 690
-  - id: ownerpicker
-    type: gateway-api
-    name: OwnerPicker UI Component (alpha)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder/src/alpha/fields/OwnerPicker.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 3820
-    'y': 690
-  - id: repourlpicker
-    type: gateway-api
-    name: RepoUrlPicker UI Component (alpha)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder/src/alpha/fields/RepoUrlPicker.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 4280
-    'y': 690
-  - id: ownedentitypicker
-    type: gateway-api
-    name: OwnedEntityPicker UI Component (alpha)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder/src/alpha/fields/OwnedEntityPicker.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 5660
-    'y': 690
-  - id: mygroupspicker
-    type: gateway-api
-    name: MyGroupsPicker UI Component (alpha)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder/src/alpha/fields/MyGroupsPicker.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 6120
-    'y': 690
-  - id: secretinput
-    type: gateway-api
-    name: SecretInput UI Component (components)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder/src/components/fields/SecretInput/SecretInput.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 6580
-    'y': 690
-  - id: multientitypicker
-    type: gateway-api
-    name: MultiEntityPicker UI Component (alpha)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder/src/alpha/fields/MultiEntityPicker.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 7040
-    'y': 690
-  - id: repobranchpicker
-    type: gateway-api
-    name: RepoBranchPicker UI Component (alpha)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder/src/alpha/fields/RepoBranchPicker.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 7500
-    'y': 690
-  - id: repoownerpicker
-    type: gateway-api
-    name: RepoOwnerPicker UI Component (alpha)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder/src/alpha/fields/RepoOwnerPicker.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 7960
-    'y': 690
-  - id: router
-    type: rest-api
-    name: router REST Endpoint (router.ts)
-    isTest: false
-    properties:
-      filepath: packages/backend-openapi-utils/src/router.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 1060
-    'y': 50
-  - id: plugin
-    type: background-worker
-    name: plugin Service (plugin.tsx)
-    isTest: false
-    properties:
-      filepath: packages/app-example-plugin/src/plugin.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 23305
-    'y': 1010
-  - id: editorsubpage_test
-    type: gateway-api
-    name: EditorSubPage.test UI Component (alpha)
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder/src/alpha/components/EditorSubPage.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 2440
-    'y': 50
-  - id: templatessubpage
-    type: gateway-api
-    name: TemplatesSubPage UI Component (alpha)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder/src/alpha/components/TemplatesSubPage.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 2900
-    'y': 50
-  - id: templateeditortoolbar_test
-    type: gateway-api
-    name: TemplateEditorToolbar.test UI Component (alpha)
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder/src/alpha/components/TemplateEditorPage/TemplateEditorToolbar.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 3360
-    'y': 50
-  - id: editorsubpage
-    type: gateway-api
-    name: EditorSubPage UI Component (alpha)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder/src/alpha/components/EditorSubPage.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 3820
-    'y': 50
-  - id: frontend-client
-    type: gateway-api
-    name: Frontend Client App (Frontend Client Host)
-    properties:
-      description: The main user interface running React and Vite.
-      technology: React + TypeScript
-    external: true
-    x: 12970
-    'y': 50
-  - id: routes
-    type: background-worker
-    name: routes Service (routes.ts)
-    isTest: false
-    properties:
-      filepath: packages/cli-module-new/templates/frontend-plugin/src/routes.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 21655
-    'y': 690
-  - id: alpha
-    type: background-worker
-    name: alpha Service (alpha.ts)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/alpha.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 22115
-    'y': 690
-  - id: api
-    type: background-worker
-    name: api Service (types)
-    isTest: false
-    properties:
-      filepath: packages/catalog-client/src/types/api.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 22575
-    'y': 690
-  - id: scaffolderclient
-    type: background-worker
-    name: ScaffolderClient Service (ScaffolderClient.ts)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-common/src/ScaffolderClient.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 23035
-    'y': 690
-  - id: analyticsapi
-    type: background-worker
-    name: AnalyticsApi Service (apis)
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/apis/definitions/AnalyticsApi.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 8420
-    'y': 370
-  - id: i18nexttranslationapi
-    type: gateway-api
-    name: I18nextTranslationApi UI Component (apis)
-    isTest: false
-    properties:
-      filepath: packages/core-app-api/src/apis/implementations/TranslationApi/I18nextTranslationApi.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 10300
-    'y': 690
-  - id: isprotectedapp
-    type: background-worker
-    name: isProtectedApp Service (app)
-    isTest: false
-    properties:
-      filepath: packages/core-app-api/src/app/isProtectedApp.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 10800
-    'y': 690
-  - id: routetracker
-    type: gateway-api
-    name: RouteTracker UI Component (routing)
-    isTest: false
-    properties:
-      filepath: packages/frontend-app-api/src/routing/RouteTracker.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 11260
-    'y': 690
-  - id: getbasepath
-    type: background-worker
-    name: getBasePath Service (routing)
-    isTest: false
-    properties:
-      filepath: packages/frontend-app-api/src/routing/getBasePath.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 12640
-    'y': 690
-  - id: error
-    type: background-worker
-    name: error Service (serialization)
-    isTest: false
-    properties:
-      filepath: packages/errors/src/serialization/error.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 16870
-    'y': 1010
-  - id: toast
-    type: gateway-api
-    name: Toast UI Component (components)
-    isTest: false
-    properties:
-      filepath: plugins/app/src/components/Toast/Toast.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 8880
-    'y': 370
-  - id: types
-    type: gateway-api
-    name: types UI Component (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 14340
-    'y': 1010
-  - id: defaultdialogapi
-    type: background-worker
-    name: DefaultDialogApi Service (apis)
-    isTest: false
-    properties:
-      filepath: plugins/app/src/apis/DefaultDialogApi.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 14800
-    'y': 1010
-  - id: pinnipedhelper_test
-    type: background-worker
-    name: PinnipedHelper.test Service (auth)
-    isTest: true
-    properties:
-      filepath: plugins/kubernetes-node/src/auth/PinnipedHelper.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 17450
-    'y': 50
-  - id: express
-    type: rest-api
-    name: express REST Endpoint (types)
-    isTest: false
-    properties:
-      filepath: packages/backend-openapi-utils/src/types/express.ts
-      namespaces: ''
-      technology: REST Controller / Router
-    external: true
-    x: 24415
-    'y': 690
-  - id: module
-    type: background-worker
-    name: module Service (module.ts)
-    isTest: false
-    properties:
-      filepath: packages/cli-module-new/templates/scaffolder-backend-module/src/module.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 17910
-    'y': 50
-  - id: slacknotificationprocessor
-    type: relational-database
-    name: SlackNotificationProcessor Database (lib)
-    isTest: false
-    properties:
-      filepath: plugins/notifications-backend-module-slack/src/lib/SlackNotificationProcessor.ts
-      namespaces: ''
-      technology: Prisma / SQL Database Client
-    external: true
-    x: 18370
-    'y': 50
-  - id: util
-    type: background-worker
-    name: util Service (__fixtures__)
-    isTest: false
-    properties:
-      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/util.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 18830
-    'y': 50
   - id: test-utils
     type: gateway-api
-    name: test-utils UI Component (test-utils.tsx)
+    name: test-utils UI Component (hooks)
     isTest: false
     properties:
-      filepath: plugins/techdocs-addons-test-utils/src/test-utils.tsx
+      filepath: plugins/kubernetes-react/src/hooks/test-utils.tsx
       namespaces: ''
       technology: React Component
     external: true
-    x: 19060
+    x: 7660
     'y': 370
-  - id: searchresultgroup
-    type: gateway-api
-    name: SearchResultGroup UI Component (components)
-    isTest: false
-    properties:
-      filepath: plugins/search-react/src/components/SearchResultGroup/SearchResultGroup.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 19290
-    'y': 50
-  - id: searchresultgroup_stories
-    type: gateway-api
-    name: SearchResultGroup.stories UI Component (components)
-    isTest: false
-    properties:
-      filepath: plugins/search-react/src/components/SearchResultGroup/SearchResultGroup.stories.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 19750
-    'y': 50
-  - id: searchresultgroup_test
-    type: gateway-api
-    name: SearchResultGroup.test UI Component (components)
-    isTest: true
-    properties:
-      filepath: plugins/search-react/src/components/SearchResultGroup/SearchResultGroup.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 20210
-    'y': 50
-  - id: searchresult_test
-    type: gateway-api
-    name: SearchResult.test UI Component (components)
-    isTest: true
-    properties:
-      filepath: plugins/search-react/src/components/SearchResult/SearchResult.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 21155
-    'y': 50
-  - id: searchresult_stories
-    type: gateway-api
-    name: SearchResult.stories UI Component (components)
-    isTest: false
-    properties:
-      filepath: plugins/search-react/src/components/SearchResult/SearchResult.stories.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 21615
-    'y': 50
-  - id: searchresult
-    type: gateway-api
-    name: SearchResult UI Component (components)
-    isTest: false
-    properties:
-      filepath: plugins/search-react/src/components/SearchResult/SearchResult.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 22075
-    'y': 50
-  - id: searchresultlist
-    type: gateway-api
-    name: SearchResultList UI Component (components)
-    isTest: false
-    properties:
-      filepath: plugins/search-react/src/components/SearchResultList/SearchResultList.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 22535
-    'y': 50
-  - id: searchresultlist_test
-    type: gateway-api
-    name: SearchResultList.test UI Component (components)
-    isTest: true
-    properties:
-      filepath: plugins/search-react/src/components/SearchResultList/SearchResultList.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 24495
-    'y': 50
-  - id: searchresultlist_stories
-    type: gateway-api
-    name: SearchResultList.stories UI Component (components)
-    isTest: false
-    properties:
-      filepath: plugins/search-react/src/components/SearchResultList/SearchResultList.stories.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 24955
-    'y': 50
-  - id: list
+  - id: extensions
     type: background-worker
-    name: list Service (commands)
+    name: extensions Service (reader)
     isTest: false
     properties:
-      filepath: packages/cli-module-auth/src/commands/list.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/extensions.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 24875
-    'y': 690
-  - id: defaultresultlistitem
-    type: gateway-api
-    name: DefaultResultListItem UI Component (components)
-    isTest: false
-    properties:
-      filepath: plugins/search-react/src/components/DefaultResultListItem/DefaultResultListItem.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 25335
-    'y': 690
-  - id: searchresultlistitemblueprint
-    type: gateway-api
-    name: SearchResultListItemBlueprint UI Component (alpha)
-    isTest: false
-    properties:
-      filepath: plugins/search-react/src/alpha/blueprints/SearchResultListItemBlueprint.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 25415
-    'y': 50
-  - id: actions
-    type: background-worker
-    name: actions Service (home)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs/src/home/components/Tables/actions.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 25795
-    'y': 690
-  - id: notificationsemailprocessor
-    type: background-worker
-    name: NotificationsEmailProcessor Service (processor)
-    isTest: false
-    properties:
-      filepath: plugins/notifications-backend-module-email/src/processor/NotificationsEmailProcessor.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 25875
-    'y': 50
-  - id: formdecoratorblueprint
-    type: background-worker
-    name: FormDecoratorBlueprint Service (next)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-react/src/next/blueprints/FormDecoratorBlueprint.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 26335
-    'y': 50
-  - id: createasyncvalidators_test
-    type: background-worker
-    name: createAsyncValidators.test Service (next)
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-react/src/next/components/Stepper/createAsyncValidators.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 26795
-    'y': 50
-  - id: stepper_test
-    type: gateway-api
-    name: Stepper.test UI Component (next)
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-react/src/next/components/Stepper/Stepper.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 27255
-    'y': 50
-  - id: utils
-    type: background-worker
-    name: utils Service (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/Avatar/utils.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 9680
-    'y': 1650
-  - id: core
-    type: background-worker
-    name: core Service (gerrit)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/gerrit/core.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 28790
-    'y': 1650
-  - id: keys
-    type: background-worker
-    name: keys Service (layouts)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-react/src/layouts/keys.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 7810
-    'y': 1010
-  - id: usecustomfieldextensions_test
-    type: gateway-api
-    name: useCustomFieldExtensions.test UI Component (hooks)
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-react/src/hooks/useCustomFieldExtensions.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 27715
-    'y': 50
-  - id: usecustomfieldextensions
-    type: background-worker
-    name: useCustomFieldExtensions Service (hooks)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-react/src/hooks/useCustomFieldExtensions.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 28175
-    'y': 50
-  - id: providestaticcatalogmodel
-    type: background-worker
-    name: provideStaticCatalogModel Service (provideStaticCatalogModel.ts)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-node/src/provideStaticCatalogModel.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 28635
-    'y': 50
-  - id: rules
-    type: background-worker
-    name: rules Service (reader)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs/src/reader/transformers/styles/rules/rules.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 29095
-    'y': 50
-  - id: settings
-    type: background-worker
-    name: Settings Service (components)
-    isTest: false
-    properties:
-      filepath: plugins/user-settings/src/components/Settings.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 26415
-    'y': 690
+    x: 5280
+    'y': 370
   - id: components
-    type: gateway-api
-    name: components UI Component (defaults)
-    isTest: false
-    properties:
-      filepath: packages/app-defaults/src/defaults/components.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 26875
-    'y': 690
-  - id: translation
     type: background-worker
-    name: translation Service (translation.ts)
+    name: components Service (app)
     isTest: false
     properties:
-      filepath: packages/core-components/src/translation.ts
+      filepath: docs-ui/src/app/hooks/use-breakpoint/components.tsx
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 28540
-    'y': 690
-  - id: homepagewidgetblueprint
-    type: gateway-api
-    name: HomePageWidgetBlueprint UI Component (alpha)
-    isTest: false
-    properties:
-      filepath: plugins/home-react/src/alpha/blueprints/HomePageWidgetBlueprint.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 29555
-    'y': 50
-  - id: datarefs
-    type: gateway-api
-    name: dataRefs UI Component (alpha)
-    isTest: false
-    properties:
-      filepath: plugins/home-react/src/alpha/dataRefs.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 30015
-    'y': 50
-  - id: techdocstypes
-    type: background-worker
-    name: techdocsTypes Service (techdocsTypes.ts)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs-node/src/techdocsTypes.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 29000
-    'y': 690
-  - id: service
-    type: background-worker
-    name: service Service (service.ts)
-    isTest: false
-    properties:
-      filepath: packages/connections/src/service.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 29460
-    'y': 690
-  - id: apis
-    type: gateway-api
-    name: apis UI Component (apis.ts)
-    isTest: false
-    properties:
-      filepath: packages/create-app/templates/legacy-app/packages/app/src/apis.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 17100
-    'y': 690
-  - id: analyticscontext
-    type: gateway-api
-    name: AnalyticsContext UI Component (analytics)
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/analytics/AnalyticsContext.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 15630
+    x: 8580
     'y': 370
-  - id: app
-    type: background-worker
-    name: App Service (App.tsx)
-    isTest: false
-    properties:
-      filepath: packages/create-app/templates/default-app/packages/app/src/App.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 23955
-    'y': 690
-  - id: localstoragefeatureflags
-    type: background-worker
-    name: LocalStorageFeatureFlags Service (apis)
-    isTest: false
-    properties:
-      filepath: packages/core-app-api/src/apis/implementations/FeatureFlagsApi/LocalStorageFeatureFlags.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 21020
-    'y': 370
-  - id: tracker
-    type: background-worker
-    name: Tracker Service (analytics)
-    isTest: false
-    properties:
-      filepath: packages/frontend-plugin-api/src/analytics/Tracker.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 29920
-    'y': 690
-  - id: errors
-    type: background-worker
-    name: errors Service (errors.ts)
-    isTest: false
-    properties:
-      filepath: packages/codemods/src/errors.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 30380
-    'y': 690
   - id: appmanager
     type: gateway-api
     name: AppManager UI Component (app)
@@ -1153,7 +363,16 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 4280
+    x: 140
+    'y': 50
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client App (Frontend Client Host)
+    properties:
+      description: The main user interface running React and Vite.
+      technology: React + TypeScript
+    external: true
+    x: 13280
     'y': 50
   - id: collectors_test
     type: gateway-api
@@ -1164,7 +383,7 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 4740
+    x: 1060
     'y': 50
   - id: collectors
     type: gateway-api
@@ -1175,7 +394,7 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 5200
+    x: 1520
     'y': 50
   - id: collectors_beta_test
     type: gateway-api
@@ -1186,40 +405,7 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 6120
-    'y': 50
-  - id: routingprovider_stable_test
-    type: gateway-api
-    name: RoutingProvider.stable.test UI Component (routing)
-    isTest: true
-    properties:
-      filepath: packages/core-app-api/src/routing/RoutingProvider.stable.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 6580
-    'y': 50
-  - id: routingprovider_beta_test
-    type: gateway-api
-    name: RoutingProvider.beta.test UI Component (routing)
-    isTest: true
-    properties:
-      filepath: packages/core-app-api/src/routing/RoutingProvider.beta.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 7040
-    'y': 50
-  - id: collectors_stable_test
-    type: gateway-api
-    name: collectors.stable.test UI Component (routing)
-    isTest: true
-    properties:
-      filepath: packages/core-app-api/src/routing/collectors.stable.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 7500
+    x: 1980
     'y': 50
   - id: collectors_compat_test
     type: gateway-api
@@ -1230,9 +416,652 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 7960
+    x: 3360
+    'y': 50
+  - id: collectors_stable_test
+    type: gateway-api
+    name: collectors.stable.test UI Component (routing)
+    isTest: true
+    properties:
+      filepath: packages/core-app-api/src/routing/collectors.stable.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 3820
+    'y': 50
+  - id: routingprovider_beta_test
+    type: gateway-api
+    name: RoutingProvider.beta.test UI Component (routing)
+    isTest: true
+    properties:
+      filepath: packages/core-app-api/src/routing/RoutingProvider.beta.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 4280
+    'y': 50
+  - id: routingprovider_stable_test
+    type: gateway-api
+    name: RoutingProvider.stable.test UI Component (routing)
+    isTest: true
+    properties:
+      filepath: packages/core-app-api/src/routing/RoutingProvider.stable.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 4740
+    'y': 50
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 10160
+    'y': 1010
+  - id: analyticscontext
+    type: gateway-api
+    name: AnalyticsContext UI Component (analytics)
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/analytics/AnalyticsContext.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 6200
+    'y': 370
+  - id: app
+    type: background-worker
+    name: App Service (App.tsx)
+    isTest: false
+    properties:
+      filepath: packages/create-app/templates/default-app/packages/app/src/App.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 6660
+    'y': 370
+  - id: plugin
+    type: gateway-api
+    name: plugin UI Component (alpha)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/alpha/plugin.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 7210
+    'y': 1010
+  - id: types
+    type: background-worker
+    name: types Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 9590
+    'y': 1010
+  - id: apis
+    type: gateway-api
+    name: apis UI Component (apis.ts)
+    isTest: false
+    properties:
+      filepath: packages/create-app/templates/legacy-app/packages/app/src/apis.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 9580
+    'y': 690
+  - id: localstoragefeatureflags
+    type: background-worker
+    name: LocalStorageFeatureFlags Service (apis)
+    isTest: false
+    properties:
+      filepath: packages/core-app-api/src/apis/implementations/FeatureFlagsApi/LocalStorageFeatureFlags.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 11035
+    'y': 370
+  - id: analyticsapi
+    type: background-worker
+    name: AnalyticsApi Service (apis)
+    isTest: false
+    properties:
+      filepath: packages/frontend-plugin-api/src/apis/definitions/AnalyticsApi.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 16035
+    'y': 370
+  - id: isprotectedapp
+    type: background-worker
+    name: isProtectedApp Service (app)
+    isTest: false
+    properties:
+      filepath: packages/core-app-api/src/app/isProtectedApp.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 12050
+    'y': 690
+  - id: routetracker
+    type: gateway-api
+    name: RouteTracker UI Component (routing)
+    isTest: false
+    properties:
+      filepath: packages/frontend-app-api/src/routing/RouteTracker.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 12510
+    'y': 690
+  - id: getbasepath
+    type: background-worker
+    name: getBasePath Service (routing)
+    isTest: false
+    properties:
+      filepath: packages/frontend-app-api/src/routing/getBasePath.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 13470
+    'y': 690
+  - id: defaultdialogapi
+    type: background-worker
+    name: DefaultDialogApi Service (apis)
+    isTest: false
+    properties:
+      filepath: plugins/app/src/apis/DefaultDialogApi.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 14550
+    'y': 1010
+  - id: toast
+    type: gateway-api
+    name: Toast UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/app/src/components/Toast/Toast.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 16495
+    'y': 370
+  - id: i18nexttranslationapi
+    type: gateway-api
+    name: I18nextTranslationApi UI Component (apis)
+    isTest: false
+    properties:
+      filepath: packages/core-app-api/src/apis/implementations/TranslationApi/I18nextTranslationApi.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 15280
+    'y': 690
+  - id: entitypicker
+    type: gateway-api
+    name: EntityPicker UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/components/fields/EntityPicker/EntityPicker.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 15820
+    'y': 690
+  - id: entitynamepicker
+    type: gateway-api
+    name: EntityNamePicker UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/components/fields/EntityNamePicker/EntityNamePicker.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 16280
+    'y': 690
+  - id: validation
+    type: gateway-api
+    name: validation UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/components/fields/RepoUrlPicker/validation.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 16740
+    'y': 690
+  - id: entitytagspicker
+    type: gateway-api
+    name: EntityTagsPicker UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/components/fields/EntityTagsPicker/EntityTagsPicker.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 17200
+    'y': 690
+  - id: ownerpicker
+    type: background-worker
+    name: OwnerPicker Service (components)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/components/fields/OwnerPicker/OwnerPicker.tsx
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 17660
+    'y': 690
+  - id: repourlpicker
+    type: gateway-api
+    name: RepoUrlPicker UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/components/fields/RepoUrlPicker/RepoUrlPicker.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 18120
+    'y': 690
+  - id: ownedentitypicker
+    type: gateway-api
+    name: OwnedEntityPicker UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/components/fields/OwnedEntityPicker/OwnedEntityPicker.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 18580
+    'y': 690
+  - id: mygroupspicker
+    type: gateway-api
+    name: MyGroupsPicker UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/components/fields/MyGroupsPicker/MyGroupsPicker.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 19040
+    'y': 690
+  - id: secretinput
+    type: gateway-api
+    name: SecretInput UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/components/fields/SecretInput/SecretInput.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 19500
+    'y': 690
+  - id: multientitypicker
+    type: gateway-api
+    name: MultiEntityPicker UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/components/fields/MultiEntityPicker/MultiEntityPicker.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 19960
+    'y': 690
+  - id: repobranchpicker
+    type: gateway-api
+    name: RepoBranchPicker UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/components/fields/RepoBranchPicker/RepoBranchPicker.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 20420
+    'y': 690
+  - id: repoownerpicker
+    type: gateway-api
+    name: RepoOwnerPicker UI Component (components)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/components/fields/RepoOwnerPicker/RepoOwnerPicker.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 20880
+    'y': 690
+  - id: utils
+    type: background-worker
+    name: utils Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/html/utils.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 9360
+    'y': 1650
+  - id: keys
+    type: background-worker
+    name: keys Service (layouts)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-react/src/layouts/keys.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 11445
+    'y': 1010
+  - id: core
+    type: background-worker
+    name: core Service (providers)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitea/src/providers/core.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 11215
+    'y': 1650
+  - id: editorsubpage_test
+    type: gateway-api
+    name: EditorSubPage.test UI Component (alpha)
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder/src/alpha/components/EditorSubPage.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 16955
+    'y': 50
+  - id: editorsubpage
+    type: gateway-api
+    name: EditorSubPage UI Component (alpha)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/alpha/components/EditorSubPage.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 17415
+    'y': 50
+  - id: templatessubpage
+    type: gateway-api
+    name: TemplatesSubPage UI Component (alpha)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder/src/alpha/components/TemplatesSubPage.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 18565
+    'y': 50
+  - id: router
+    type: background-worker
+    name: router Service (schema)
+    isTest: false
+    properties:
+      filepath: plugins/search-backend/src/schema/openapi/generated/router.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 19025
+    'y': 50
+  - id: templateeditortoolbar_test
+    type: gateway-api
+    name: TemplateEditorToolbar.test UI Component (alpha)
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder/src/alpha/components/TemplateEditorPage/TemplateEditorToolbar.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 19485
     'y': 50
 dependencies:
+  - from: extensions_test
+    to: test-utils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: extensions_test
+    to: extensions
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: components_test
+    to: components
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: appmanager
+    to: traversal
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: traversal_test
+    to: traversal
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: traversal
+    type: direct-call
+    description: Renders traversal layout component
+  - from: collectors_test
+    to: traversal
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: collectors
+    to: traversal
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: collectors_beta_test
+    to: traversal
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: collectors_compat_test
+    to: traversal
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: collectors_stable_test
+    to: traversal
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: routingprovider_beta_test
+    to: traversal
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: routingprovider_stable_test
+    to: traversal
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: componentdata_test
+    to: componentdata
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: componentdata
+    type: direct-call
+    description: Renders componentData layout component
+  - from: componentdata
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: extensions_test
+    to: analyticscontext
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: extensions_test
+    to: app
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: extensions_test
+    to: plugin
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: extensions_test
+    to: componentdata
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: extensions_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: extensions
+    to: componentdata
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: extensions
+    to: pluginerrorboundary
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: pluginerrorboundary
+    type: direct-call
+    description: Renders PluginErrorBoundary layout component
+  - from: pluginerrorboundary
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: pluginerrorboundary
+    to: plugin
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: useelementfilter_test
+    to: useelementfilter
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: useelementfilter_test
+    to: componentdata
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: useelementfilter_test
+    to: apis
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: useelementfilter_test
+    to: test-utils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: useelementfilter_test
+    to: localstoragefeatureflags
+    type: direct-call
+    description: References class type / calls methods
+  - from: frontend-client
+    to: useelementfilter
+    type: direct-call
+    description: Renders useElementFilter layout component
+  - from: useelementfilter
+    to: componentdata
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: useelementfilter
+    to: apis
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: useelementfilter
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: analyticsapi_test
+    to: analyticsapi
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: appnav_test
+    to: legacynavitem
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: appnav
+    type: direct-call
+    description: Renders AppNav layout component
+  - from: appnav
+    to: legacynavitem
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: approot
+    type: direct-call
+    description: Renders AppRoot layout component
+  - from: approot
+    to: breadcrumbsregistryprovider
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: approot
+    to: isprotectedapp
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: approot
+    to: routetracker
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: approot
+    to: getbasepath
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: approot
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: frontend-client
+    to: approutes
+    type: direct-call
+    description: Renders AppRoutes layout component
+  - from: frontend-client
+    to: breadcrumbsregistryprovider
+    type: direct-call
+    description: Renders BreadcrumbsRegistryProvider layout component
+  - from: frontend-client
+    to: defaultsigninpage
+    type: direct-call
+    description: Renders DefaultSignInPage layout component
+  - from: dialogdisplay_test
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: dialogdisplay
+    type: direct-call
+    description: Renders DialogDisplay layout component
+  - from: dialogdisplay
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: dialogdisplay
+    to: defaultdialogapi
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: elements
+    to: toast
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: frontend-client
+    to: legacycomponentsapi
+    type: direct-call
+    description: Renders LegacyComponentsApi layout component
+  - from: legacycomponentsapi
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: frontend-client
+    to: translationsapi
+    type: direct-call
+    description: Renders TranslationsApi layout component
+  - from: translationsapi
+    to: i18nexttranslationapi
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: authownershipresolutionextensionpoint
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: authprovidersextensionpoint
+    to: types
+    type: direct-call
+    description: Executes local class methods / functions
   - from: default
     to: entitypicker
     type: direct-call
@@ -1281,272 +1110,16 @@ dependencies:
     to: repoownerpicker
     type: direct-call
     description: Executes local class methods / functions
-  - from: router
-    to: default
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: plugin
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: editorsubpage_test
-    to: default
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templatessubpage
-    to: default
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: templateeditortoolbar_test
-    to: default
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: editorsubpage
-    to: default
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: extensions
-    type: direct-call
-    description: Renders extensions layout component
-  - from: extensions
-    to: routes
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extensions
-    to: alpha
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extensions
-    to: api
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extensions
-    to: scaffolderclient
-    type: direct-call
-    description: References class type / calls methods
-  - from: analyticsapi_test
-    to: analyticsapi
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: defaultsigninpage
-    type: direct-call
-    description: Renders DefaultSignInPage layout component
-  - from: frontend-client
-    to: translationsapi
-    type: direct-call
-    description: Renders TranslationsApi layout component
-  - from: translationsapi
-    to: i18nexttranslationapi
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: approot
-    type: direct-call
-    description: Renders AppRoot layout component
-  - from: approot
-    to: breadcrumbsregistryprovider
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: approot
-    to: isprotectedapp
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: approot
-    to: routetracker
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: approot
-    to: getbasepath
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: approot
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: appnav_test
-    to: legacynavitem
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: breadcrumbsregistryprovider
-    type: direct-call
-    description: Renders BreadcrumbsRegistryProvider layout component
-  - from: frontend-client
-    to: appnav
-    type: direct-call
-    description: Renders AppNav layout component
-  - from: appnav
-    to: legacynavitem
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: approutes
-    type: direct-call
-    description: Renders AppRoutes layout component
-  - from: frontend-client
-    to: legacycomponentsapi
-    type: direct-call
-    description: Renders LegacyComponentsApi layout component
-  - from: legacycomponentsapi
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: elements
-    to: toast
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: dialogdisplay
-    type: direct-call
-    description: Renders DialogDisplay layout component
-  - from: dialogdisplay
+  - from: createscaffolderfieldextension
     to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: dialogdisplay
-    to: defaultdialogapi
+  - from: createscaffolderfieldextension
+    to: utils
     type: direct-call
     description: Executes local class methods / functions
-  - from: dialogdisplay_test
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: pinnipedhelper_test
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: extensions
-    type: direct-call
-    description: Renders extensions layout component
-  - from: extensions
-    to: express
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: module
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: extensions
-    type: direct-call
-    description: Renders extensions layout component
-  - from: slacknotificationprocessor
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: util
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extensions_test
-    to: test-utils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extensions_test
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: searchresultgroup
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: searchresultgroup_stories
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: searchresultgroup_test
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: searchresult_test
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: searchresult_stories
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: searchresult
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: searchresultlist
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: searchresultlist_test
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: searchresultlist_stories
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: extensions
-    type: direct-call
-    description: Renders extensions layout component
-  - from: extensions
-    to: list
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extensions
-    to: defaultresultlistitem
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: searchresultlistitemblueprint
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: extensions
-    type: direct-call
-    description: Renders extensions layout component
-  - from: extensions
-    to: actions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: extensions
-    type: direct-call
-    description: Renders extensions layout component
-  - from: frontend-client
-    to: extensions
-    type: direct-call
-    description: Renders extensions layout component
-  - from: notificationsemailprocessor
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: extensions
-    type: direct-call
-    description: Renders extensions layout component
-  - from: authprovidersextensionpoint
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: authownershipresolutionextensionpoint
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: formdecoratorblueprint
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createasyncvalidators_test
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: stepper_test
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: utils
-    to: extensions
+  - from: createscaffolderfieldextension
+    to: keys
     type: direct-call
     description: Executes local class methods / functions
   - from: frontend-client
@@ -1561,247 +1134,27 @@ dependencies:
     to: core
     type: direct-call
     description: Executes local class methods / functions
-  - from: createscaffolderfieldextension
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createscaffolderfieldextension
-    to: utils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: createscaffolderfieldextension
-    to: keys
-    type: direct-call
-    description: Executes local class methods / functions
   - from: types
     to: rjsf
     type: direct-call
     description: Executes local class methods / functions
-  - from: usecustomfieldextensions_test
-    to: extensions
+  - from: editorsubpage_test
+    to: default
     type: direct-call
     description: Executes local class methods / functions
-  - from: usecustomfieldextensions
-    to: extensions
+  - from: editorsubpage
+    to: default
     type: direct-call
     description: Executes local class methods / functions
-  - from: providestaticcatalogmodel
-    to: extensions
+  - from: templatessubpage
+    to: default
     type: direct-call
     description: Executes local class methods / functions
-  - from: frontend-client
-    to: extensions
-    type: direct-call
-    description: Renders extensions layout component
-  - from: frontend-client
-    to: extensions
-    type: direct-call
-    description: Renders extensions layout component
-  - from: extensions
-    to: plugin
+  - from: router
+    to: default
     type: direct-call
     description: Executes local class methods / functions
-  - from: frontend-client
-    to: extensions
-    type: direct-call
-    description: Renders extensions layout component
-  - from: extensions
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: rules
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: extensions
-    type: direct-call
-    description: Renders extensions layout component
-  - from: extensions
-    to: settings
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extensions
-    to: components
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extensions
-    to: utils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extensions
-    to: translation
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: homepagewidgetblueprint
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: datarefs
-    to: extensions
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: extensions
-    type: direct-call
-    description: Renders extensions layout component
-  - from: extensions
-    to: techdocstypes
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: extensions
-    type: direct-call
-    description: Renders extensions layout component
-  - from: extensions
-    to: service
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: componentdata_test
-    to: componentdata
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: useelementfilter
-    type: direct-call
-    description: Renders useElementFilter layout component
-  - from: useelementfilter
-    to: componentdata
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: useelementfilter
-    to: apis
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: useelementfilter
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: extensions_test
-    to: analyticscontext
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extensions_test
-    to: app
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extensions_test
-    to: plugin
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extensions_test
-    to: componentdata
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extensions_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: useelementfilter_test
-    to: useelementfilter
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: useelementfilter_test
-    to: componentdata
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: useelementfilter_test
-    to: apis
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: useelementfilter_test
-    to: test-utils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: useelementfilter_test
-    to: localstoragefeatureflags
-    type: direct-call
-    description: References class type / calls methods
-  - from: frontend-client
-    to: pluginerrorboundary
-    type: direct-call
-    description: Renders PluginErrorBoundary layout component
-  - from: pluginerrorboundary
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: pluginerrorboundary
-    to: plugin
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: extensions
-    type: direct-call
-    description: Renders extensions layout component
-  - from: extensions
-    to: app
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extensions
-    to: componentdata
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extensions
-    to: pluginerrorboundary
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extensions
-    to: tracker
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extensions
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: extensions
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: frontend-client
-    to: componentdata
-    type: direct-call
-    description: Renders componentData layout component
-  - from: componentdata
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: appmanager
-    to: traversal
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: collectors_test
-    to: traversal
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: collectors
-    to: traversal
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: frontend-client
-    to: traversal
-    type: direct-call
-    description: Renders traversal layout component
-  - from: traversal_test
-    to: traversal
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: collectors_beta_test
-    to: traversal
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: routingprovider_stable_test
-    to: traversal
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: routingprovider_beta_test
-    to: traversal
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: collectors_stable_test
-    to: traversal
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: collectors_compat_test
-    to: traversal
+  - from: templateeditortoolbar_test
+    to: default
     type: direct-call
     description: Executes local class methods / functions

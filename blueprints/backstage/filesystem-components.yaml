@@ -2,17 +2,6 @@ name: Backstage - filesystem Components
 version: 1.0.0
 level: component
 nodes:
-  - id: mockdirectory
-    type: background-worker
-    name: MockDirectory Service
-    isTest: false
-    properties:
-      filepath: packages/backend-test-utils/src/filesystem/MockDirectory.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 140
-    'y': 370
   - id: mockdirectory_test
     type: background-worker
     name: MockDirectory.test Service
@@ -24,6 +13,17 @@ nodes:
     external: false
     x: 140
     'y': 50
+  - id: mockdirectory
+    type: background-worker
+    name: MockDirectory Service
+    isTest: false
+    properties:
+      filepath: packages/backend-test-utils/src/filesystem/MockDirectory.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 140
+    'y': 370
   - id: error
     type: background-worker
     name: error Service (serialization)
@@ -36,11 +36,11 @@ nodes:
     x: 140
     'y': 690
 dependencies:
-  - from: mockdirectory
-    to: error
-    type: direct-call
-    description: References class type / calls methods
   - from: mockdirectory_test
     to: mockdirectory
     type: direct-call
     description: Executes local class methods / functions
+  - from: mockdirectory
+    to: error
+    type: direct-call
+    description: References class type / calls methods

@@ -2,38 +2,27 @@ name: Backstage - microsoftGraph Components
 version: 1.0.0
 level: component
 nodes:
-  - id: read
+  - id: client_test
     type: background-worker
-    name: read Service
+    name: client.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/client.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2900
+    'y': 370
+  - id: defaulttransformers
+    type: background-worker
+    name: defaultTransformers Service
     isTest: false
     properties:
-      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/read.ts
+      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/defaultTransformers.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 5535
-    'y': 370
-  - id: read_test
-    type: background-worker
-    name: read.test Service
-    isTest: true
-    properties:
-      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/read.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 5750
-    'y': 50
-  - id: org_test
-    type: background-worker
-    name: org.test Service
-    isTest: true
-    properties:
-      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/org.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 140
+    x: 6120
     'y': 370
   - id: defaulttransformers_test
     type: background-worker
@@ -44,8 +33,19 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1520
-    'y': 370
+    x: 7135
+    'y': 50
+  - id: org_test
+    type: background-worker
+    name: org.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/org.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 7595
+    'y': 50
   - id: org
     type: background-worker
     name: org Service
@@ -55,173 +55,30 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 465
-    'y': 690
-  - id: defaulttransformers
-    type: background-worker
-    name: defaultTransformers Service
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/defaultTransformers.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1560
-    'y': 690
-  - id: helper_test
-    type: background-worker
-    name: helper.test Service
-    isTest: true
-    properties:
-      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/helper.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 11880
-    'y': 690
-  - id: client_test
-    type: background-worker
-    name: client.test Service
-    isTest: true
-    properties:
-      filepath: plugins/catalog-backend-module-msgraph/src/microsoftGraph/client.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 8130
+    x: 7120
     'y': 370
   - id: errors
     type: background-worker
-    name: errors Service (errors.ts)
+    name: errors Service (service)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2505
+    x: 140
     'y': 690
-  - id: integration
-    type: background-worker
-    name: integration Service (types)
-    isTest: false
-    properties:
-      filepath: plugins/permission-common/src/types/integration.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 2965
-    'y': 690
-  - id: resolve
-    type: background-worker
-    name: resolve Service (processors)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend/src/processors/codeowners/resolve.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 3425
-    'y': 690
-  - id: scm
-    type: background-worker
-    name: scm Service (processors)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend/src/processors/codeowners/scm.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 3885
-    'y': 690
-  - id: config
+  - id: test-utils
     type: gateway-api
-    name: config UI Component (layout)
+    name: test-utils UI Component (hooks)
     isTest: false
     properties:
-      filepath: packages/core-components/src/layout/Sidebar/config.ts
+      filepath: plugins/kubernetes-react/src/hooks/test-utils.tsx
       namespaces: ''
       technology: React Component
     external: true
-    x: 4345
+    x: 600
     'y': 690
-  - id: githuborgentityprovider
-    type: background-worker
-    name: GithubOrgEntityProvider Service (providers)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-github/src/providers/GithubOrgEntityProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1060
-    'y': 370
-  - id: github
-    type: background-worker
-    name: github Service (schema)
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/github.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1020
-    'y': 1010
-  - id: github_test
-    type: background-worker
-    name: github.test Service (schema)
-    isTest: true
-    properties:
-      filepath: packages/connections/src/schema/github.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1980
-    'y': 370
-  - id: annotation
-    type: background-worker
-    name: annotation Service (location)
-    isTest: false
-    properties:
-      filepath: packages/catalog-model/src/location/annotation.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 560
-    'y': 1010
-  - id: helper
-    type: background-worker
-    name: helper Service (__fixtures__)
-    isTest: false
-    properties:
-      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/testUtils/helper.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 6780
-    'y': 1010
-  - id: read_examples
-    type: background-worker
-    name: read.examples Service (scaffolder)
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/read.examples.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 4805
-    'y': 690
-  - id: read_examples_test
-    type: background-worker
-    name: read.examples.test Service (scaffolder)
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/read.examples.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 6415
-    'y': 50
   - id: client
     type: background-worker
     name: client Service (commands)
@@ -231,203 +88,18 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 5360
-    'y': 690
-  - id: constants
-    type: background-worker
-    name: constants Service (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/DependencyGraph/constants.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 12745
-    'y': 1010
-  - id: vendors
-    type: background-worker
-    name: vendors Service (ldap)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-ldap/src/ldap/vendors.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 5900
-    'y': 690
-  - id: types
-    type: gateway-api
-    name: types UI Component (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 12285
-    'y': 1010
-  - id: util
-    type: background-worker
-    name: util Service (__fixtures__)
-    isTest: false
-    properties:
-      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/util.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 6360
-    'y': 690
-  - id: gitlaborgdiscoveryentityprovider
-    type: background-worker
-    name: GitlabOrgDiscoveryEntityProvider Service (providers)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-gitlab/src/providers/GitlabOrgDiscoveryEntityProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 370
-  - id: node
-    type: gateway-api
-    name: Node UI Component (components)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/components/DependencyGraph/Node.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 6820
-    'y': 690
-  - id: handlers
-    type: background-worker
-    name: handlers Service (__testUtils__)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-gitlab/src/__testUtils__/handlers.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 7280
-    'y': 690
-  - id: mocks
-    type: background-worker
-    name: mocks Service (__testUtils__)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-gitlab/src/__testUtils__/mocks.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 7740
-    'y': 690
-  - id: gitlabintegration
-    type: background-worker
-    name: GitLabIntegration Service (gitlab)
-    isTest: false
-    properties:
-      filepath: packages/integration/src/gitlab/GitLabIntegration.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 8200
-    'y': 690
-  - id: puppetdbentityprovider
-    type: background-worker
-    name: PuppetDbEntityProvider Service (providers)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-puppetdb/src/providers/PuppetDbEntityProvider.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 4710
-    'y': 50
-  - id: puppetdbentityprovider_test
-    type: background-worker
-    name: PuppetDbEntityProvider.test Service (providers)
-    isTest: true
-    properties:
-      filepath: plugins/catalog-backend-module-puppetdb/src/providers/PuppetDbEntityProvider.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 4250
-    'y': 50
-  - id: external-api-target
-    type: rest-api
-    name: External HTTP API Endpoint (External HTTP Services)
-    isTest: false
-    properties:
-      description: Generic outbound web integration endpoints.
-    external: true
-    x: 8660
-    'y': 690
-  - id: puppetdbentityproviderconfig
-    type: background-worker
-    name: PuppetDbEntityProviderConfig Service (providers)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-puppetdb/src/providers/PuppetDbEntityProviderConfig.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 9120
-    'y': 690
-  - id: transformers
-    type: background-worker
-    name: transformers Service (puppet)
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-puppetdb/src/puppet/transformers.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 9580
-    'y': 690
-  - id: url
-    type: background-worker
-    name: url Service (stages)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 10040
-    'y': 690
-  - id: providers
-    type: gateway-api
-    name: providers UI Component (layout)
-    isTest: false
-    properties:
-      filepath: packages/core-components/src/layout/SignInPage/providers.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 3695
-    'y': 370
-  - id: test-utils
-    type: gateway-api
-    name: test-utils UI Component (test-utils.tsx)
-    isTest: false
-    properties:
-      filepath: plugins/techdocs-addons-test-utils/src/test-utils.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 10500
+    x: 1060
     'y': 690
   - id: mockfetchapi
     type: background-worker
-    name: MockFetchApi Service (apis)
+    name: MockFetchApi Service (testUtils)
     isTest: false
     properties:
-      filepath: packages/frontend-test-utils/src/apis/FetchApi/MockFetchApi.ts
+      filepath: packages/test-utils/src/testUtils/apis/FetchApi/MockFetchApi.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 10960
+    x: 1520
     'y': 690
   - id: error
     type: background-worker
@@ -438,51 +110,211 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 11420
+    x: 1980
+    'y': 690
+  - id: types
+    type: background-worker
+    name: types Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 5200
+    'y': 690
+  - id: constants
+    type: background-worker
+    name: constants Service (lib)
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/lib/openapi/constants.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 6120
+    'y': 690
+  - id: github
+    type: background-worker
+    name: github Service (actions)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/github.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 7215
+    'y': 690
+  - id: annotation
+    type: background-worker
+    name: annotation Service (lib)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-github/src/lib/annotation.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 6580
+    'y': 690
+  - id: github_test
+    type: background-worker
+    name: github.test Service (actions)
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/github.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 5930
+    'y': 50
+  - id: githuborgentityprovider
+    type: background-worker
+    name: GithubOrgEntityProvider Service (providers)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-github/src/providers/GithubOrgEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 6390
+    'y': 50
+  - id: config
+    type: background-worker
+    name: config Service (entrypoints)
+    isTest: false
+    properties:
+      filepath: packages/backend-defaults/src/entrypoints/rootHttpRouter/http/config.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2440
+    'y': 690
+  - id: integration
+    type: background-worker
+    name: integration Service (types)
+    isTest: false
+    properties:
+      filepath: plugins/permission-common/src/types/integration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 2900
+    'y': 690
+  - id: node
+    type: gateway-api
+    name: Node UI Component (components)
+    isTest: false
+    properties:
+      filepath: packages/core-components/src/components/DependencyGraph/Node.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 3360
+    'y': 690
+  - id: handlers
+    type: background-worker
+    name: handlers Service (__testUtils__)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitlab/src/__testUtils__/handlers.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 3820
+    'y': 690
+  - id: mocks
+    type: background-worker
+    name: mocks Service (__testUtils__)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitlab/src/__testUtils__/mocks.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 4280
+    'y': 690
+  - id: gitlabintegration
+    type: background-worker
+    name: GitLabIntegration Service (gitlab)
+    isTest: false
+    properties:
+      filepath: packages/integration/src/gitlab/GitLabIntegration.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 4740
+    'y': 690
+  - id: gitlaborgdiscoveryentityprovider
+    type: background-worker
+    name: GitlabOrgDiscoveryEntityProvider Service (providers)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitlab/src/providers/GitlabOrgDiscoveryEntityProvider.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 5010
+    'y': 50
+  - id: read
+    type: background-worker
+    name: read Service (scaffolder)
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/filesystem/read.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 5470
+    'y': 50
+  - id: url
+    type: background-worker
+    name: url Service (stages)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-node/src/stages/prepare/url.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 5660
+    'y': 690
+  - id: helper
+    type: background-worker
+    name: helper Service (__fixtures__)
+    isTest: false
+    properties:
+      filepath: packages/eslint-plugin/src/__fixtures__/monorepo/packages/self-import-pkg/src/testUtils/helper.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 7675
     'y': 690
 dependencies:
-  - from: read
+  - from: client_test
     to: errors
     type: direct-call
     description: Executes local class methods / functions
-  - from: read
-    to: integration
+  - from: client_test
+    to: test-utils
     type: direct-call
     description: Executes local class methods / functions
-  - from: read
-    to: resolve
+  - from: client_test
+    to: client
     type: direct-call
     description: Executes local class methods / functions
-  - from: read
-    to: scm
+  - from: client_test
+    to: mockfetchapi
+    type: direct-call
+    description: References class type / calls methods
+  - from: client_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: defaulttransformers
+    to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: read_test
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read_test
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read_test
-    to: integration
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read_test
-    to: read
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: githuborgentityprovider
-    to: defaulttransformers
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: githuborgentityprovider
-    to: org
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: org_test
-    to: org
+  - from: defaulttransformers
+    to: constants
     type: direct-call
     description: Executes local class methods / functions
   - from: defaulttransformers_test
@@ -491,14 +323,6 @@ dependencies:
     description: Executes local class methods / functions
   - from: defaulttransformers_test
     to: github
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: github
-    to: defaulttransformers
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: github_test
-    to: defaulttransformers
     type: direct-call
     description: Executes local class methods / functions
   - from: defaulttransformers
@@ -509,72 +333,24 @@ dependencies:
     to: github
     type: direct-call
     description: Executes local class methods / functions
-  - from: helper_test
-    to: helper
+  - from: github_test
+    to: defaulttransformers
     type: direct-call
     description: Executes local class methods / functions
-  - from: read
-    to: read_examples
+  - from: github
+    to: defaulttransformers
     type: direct-call
     description: Executes local class methods / functions
-  - from: read_examples_test
-    to: read
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read
+  - from: org_test
     to: org
     type: direct-call
     description: Executes local class methods / functions
-  - from: read
-    to: client
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read
-    to: config
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read
-    to: constants
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read
-    to: vendors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read
-    to: util
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read_test
-    to: client
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read_test
-    to: constants
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read_test
-    to: util
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read_test
-    to: vendors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaulttransformers
-    to: types
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: defaulttransformers
-    to: constants
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: gitlaborgdiscoveryentityprovider
+  - from: githuborgentityprovider
     to: defaulttransformers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: githuborgentityprovider
+    to: org
     type: direct-call
     description: Executes local class methods / functions
   - from: client_test
@@ -598,10 +374,6 @@ dependencies:
     type: direct-call
     description: Executes local class methods / functions
   - from: client_test
-    to: client
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: client_test
     to: types
     type: direct-call
     description: Executes local class methods / functions
@@ -609,56 +381,12 @@ dependencies:
     to: gitlabintegration
     type: direct-call
     description: References class type / calls methods
-  - from: puppetdbentityprovider
-    to: read
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: puppetdbentityprovider_test
-    to: read
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read
-    to: external-api-target
-    type: direct-call
-    description: HMR outbound query requests
-  - from: read
-    to: puppetdbentityproviderconfig
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read
-    to: transformers
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read
-    to: url
-    type: direct-call
-    description: References class type / calls methods
-  - from: read_test
-    to: providers
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: read_test
-    to: node
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: client_test
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: client_test
-    to: test-utils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: client_test
-    to: mockfetchapi
-    type: direct-call
-    description: References class type / calls methods
-  - from: client_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: read
+  - from: gitlaborgdiscoveryentityprovider
     to: defaulttransformers
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: org
     type: direct-call
     description: Executes local class methods / functions
   - from: client_test
@@ -667,5 +395,9 @@ dependencies:
     description: References class type / calls methods
   - from: defaulttransformers
     to: helper
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: read
+    to: defaulttransformers
     type: direct-call
     description: Executes local class methods / functions

@@ -13,25 +13,36 @@ nodes:
     external: false
     x: 600
     'y': 370
+  - id: readdurationfromconfig_test
+    type: background-worker
+    name: readDurationFromConfig.test Service (readDurationFromConfig.test.ts)
+    isTest: true
+    properties:
+      filepath: packages/config/src/readDurationFromConfig.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 600
+    'y': 50
   - id: errors
     type: background-worker
-    name: errors Service (errors.ts)
+    name: errors Service (service)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
     x: 140
     'y': 690
   - id: types
-    type: gateway-api
-    name: types UI Component (components)
+    type: background-worker
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 600
     'y': 690
@@ -46,18 +57,11 @@ nodes:
     external: true
     x: 1060
     'y': 690
-  - id: readdurationfromconfig_test
-    type: background-worker
-    name: readDurationFromConfig.test Service (readDurationFromConfig.test.ts)
-    isTest: true
-    properties:
-      filepath: packages/config/src/readDurationFromConfig.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 600
-    'y': 50
 dependencies:
+  - from: readdurationfromconfig_test
+    to: readdurationfromconfig
+    type: direct-call
+    description: Executes local class methods / functions
   - from: readdurationfromconfig
     to: errors
     type: direct-call
@@ -70,7 +74,3 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: readdurationfromconfig_test
-    to: readdurationfromconfig
-    type: direct-call
-    description: Executes local class methods / functions

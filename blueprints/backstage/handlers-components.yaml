@@ -2,17 +2,6 @@ name: Backstage - handlers Components
 version: 1.0.0
 level: component
 nodes:
-  - id: reducedependency
-    type: background-worker
-    name: reduceDependency Service
-    isTest: false
-    properties:
-      filepath: packages/yarn-plugin/src/handlers/reduceDependency.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1720
-    'y': 370
   - id: afterworkspacedependencyaddition_test
     type: background-worker
     name: afterWorkspaceDependencyAddition.test Service
@@ -35,28 +24,6 @@ nodes:
     external: false
     x: 330
     'y': 370
-  - id: beforeworkspacepacking
-    type: background-worker
-    name: beforeWorkspacePacking Service
-    isTest: false
-    properties:
-      filepath: packages/yarn-plugin/src/handlers/beforeWorkspacePacking.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 2570
-    'y': 370
-  - id: afterworkspacedependencyreplacement
-    type: background-worker
-    name: afterWorkspaceDependencyReplacement Service
-    isTest: false
-    properties:
-      filepath: packages/yarn-plugin/src/handlers/afterWorkspaceDependencyReplacement.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 870
-    'y': 370
   - id: afterworkspacedependencyreplacement_test
     type: background-worker
     name: afterWorkspaceDependencyReplacement.test Service
@@ -68,17 +35,17 @@ nodes:
     external: false
     x: 735
     'y': 50
-  - id: reducedependency_test
+  - id: afterworkspacedependencyreplacement
     type: background-worker
-    name: reduceDependency.test Service
-    isTest: true
+    name: afterWorkspaceDependencyReplacement Service
+    isTest: false
     properties:
-      filepath: packages/yarn-plugin/src/handlers/reduceDependency.test.ts
+      filepath: packages/yarn-plugin/src/handlers/afterWorkspaceDependencyReplacement.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1450
-    'y': 50
+    x: 870
+    'y': 370
   - id: beforeworkspacepacking_test
     type: background-worker
     name: beforeWorkspacePacking.test Service
@@ -88,14 +55,47 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 2395
+    x: 1450
     'y': 50
-  - id: core
+  - id: beforeworkspacepacking
     type: background-worker
-    name: core Service (gerrit)
+    name: beforeWorkspacePacking Service
     isTest: false
     properties:
-      filepath: packages/integration/src/gerrit/core.ts
+      filepath: packages/yarn-plugin/src/handlers/beforeWorkspacePacking.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1720
+    'y': 370
+  - id: reducedependency_test
+    type: background-worker
+    name: reduceDependency.test Service
+    isTest: true
+    properties:
+      filepath: packages/yarn-plugin/src/handlers/reduceDependency.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2395
+    'y': 50
+  - id: reducedependency
+    type: background-worker
+    name: reduceDependency Service
+    isTest: false
+    properties:
+      filepath: packages/yarn-plugin/src/handlers/reduceDependency.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 2570
+    'y': 370
+  - id: core
+    type: background-worker
+    name: core Service (providers)
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitea/src/providers/core.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -114,10 +114,10 @@ nodes:
     'y': 690
   - id: constants
     type: background-worker
-    name: constants Service (components)
+    name: constants Service (lib)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/DependencyGraph/constants.ts
+      filepath: packages/repo-tools/src/lib/openapi/constants.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -135,22 +135,6 @@ nodes:
     x: 2570
     'y': 690
 dependencies:
-  - from: reducedependency
-    to: core
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: reducedependency
-    to: util
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: reducedependency
-    to: constants
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: reducedependency
-    to: error
-    type: direct-call
-    description: References class type / calls methods
   - from: afterworkspacedependencyaddition_test
     to: core
     type: direct-call
@@ -171,6 +155,30 @@ dependencies:
     to: constants
     type: direct-call
     description: Executes local class methods / functions
+  - from: afterworkspacedependencyreplacement_test
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: afterworkspacedependencyreplacement_test
+    to: afterworkspacedependencyreplacement
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: afterworkspacedependencyreplacement
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: afterworkspacedependencyreplacement
+    to: constants
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: beforeworkspacepacking_test
+    to: core
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: beforeworkspacepacking_test
+    to: beforeworkspacepacking
+    type: direct-call
+    description: Executes local class methods / functions
   - from: beforeworkspacepacking
     to: core
     type: direct-call
@@ -187,22 +195,6 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: afterworkspacedependencyreplacement
-    to: core
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: afterworkspacedependencyreplacement
-    to: constants
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: afterworkspacedependencyreplacement_test
-    to: core
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: afterworkspacedependencyreplacement_test
-    to: afterworkspacedependencyreplacement
-    type: direct-call
-    description: Executes local class methods / functions
   - from: reducedependency_test
     to: core
     type: direct-call
@@ -211,11 +203,19 @@ dependencies:
     to: reducedependency
     type: direct-call
     description: Executes local class methods / functions
-  - from: beforeworkspacepacking_test
+  - from: reducedependency
     to: core
     type: direct-call
     description: Executes local class methods / functions
-  - from: beforeworkspacepacking_test
-    to: beforeworkspacepacking
+  - from: reducedependency
+    to: util
     type: direct-call
     description: Executes local class methods / functions
+  - from: reducedependency
+    to: constants
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: reducedependency
+    to: error
+    type: direct-call
+    description: References class type / calls methods

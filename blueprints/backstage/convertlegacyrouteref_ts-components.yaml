@@ -24,38 +24,16 @@ nodes:
     external: true
     x: 140
     'y': 50
-  - id: forwardscompatprovider
+  - id: convertlegacypageextension_test
     type: gateway-api
-    name: ForwardsCompatProvider UI Component (compatWrapper)
-    isTest: false
+    name: convertLegacyPageExtension.test UI Component (convertLegacyPageExtension.test.tsx)
+    isTest: true
     properties:
-      filepath: packages/core-compat-api/src/compatWrapper/ForwardsCompatProvider.tsx
+      filepath: packages/core-compat-api/src/convertLegacyPageExtension.test.tsx
       namespaces: ''
       technology: React Component
     external: true
     x: 600
-    'y': 50
-  - id: backwardscompatprovider
-    type: gateway-api
-    name: BackwardsCompatProvider UI Component (compatWrapper)
-    isTest: false
-    properties:
-      filepath: packages/core-compat-api/src/compatWrapper/BackwardsCompatProvider.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 1060
-    'y': 50
-  - id: compatwrapper_test
-    type: gateway-api
-    name: compatWrapper.test UI Component (compatWrapper)
-    isTest: true
-    properties:
-      filepath: packages/core-compat-api/src/compatWrapper/compatWrapper.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 1520
     'y': 50
   - id: convertlegacypageextension
     type: gateway-api
@@ -66,7 +44,7 @@ nodes:
       namespaces: ''
       technology: React Component
     external: true
-    x: 1980
+    x: 1060
     'y': 50
   - id: convertlegacyplugin
     type: background-worker
@@ -77,18 +55,7 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 2440
-    'y': 50
-  - id: convertlegacypageextension_test
-    type: gateway-api
-    name: convertLegacyPageExtension.test UI Component (convertLegacyPageExtension.test.tsx)
-    isTest: true
-    properties:
-      filepath: packages/core-compat-api/src/convertLegacyPageExtension.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 2900
+    x: 1520
     'y': 50
   - id: convertlegacyrouteref_test
     type: background-worker
@@ -99,16 +66,16 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 3360
+    x: 1980
     'y': 50
   - id: types
-    type: gateway-api
-    name: types UI Component (components)
+    type: background-worker
+    name: types Service (reader)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
       namespaces: ''
-      technology: React Component
+      technology: TypeScript Domain Service
     external: true
     x: 1290
     'y': 690
@@ -134,20 +101,45 @@ nodes:
     external: true
     x: 2210
     'y': 690
+  - id: backwardscompatprovider
+    type: gateway-api
+    name: BackwardsCompatProvider UI Component (compatWrapper)
+    isTest: false
+    properties:
+      filepath: packages/core-compat-api/src/compatWrapper/BackwardsCompatProvider.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 2440
+    'y': 50
+  - id: compatwrapper_test
+    type: gateway-api
+    name: compatWrapper.test UI Component (compatWrapper)
+    isTest: true
+    properties:
+      filepath: packages/core-compat-api/src/compatWrapper/compatWrapper.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 2900
+    'y': 50
+  - id: forwardscompatprovider
+    type: gateway-api
+    name: ForwardsCompatProvider UI Component (compatWrapper)
+    isTest: false
+    properties:
+      filepath: packages/core-compat-api/src/compatWrapper/ForwardsCompatProvider.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 3360
+    'y': 50
 dependencies:
   - from: collectlegacyroutes
     to: convertlegacyrouteref
     type: direct-call
     description: Executes local class methods / functions
-  - from: forwardscompatprovider
-    to: convertlegacyrouteref
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: backwardscompatprovider
-    to: convertlegacyrouteref
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: compatwrapper_test
+  - from: convertlegacypageextension_test
     to: convertlegacyrouteref
     type: direct-call
     description: Executes local class methods / functions
@@ -156,10 +148,6 @@ dependencies:
     type: direct-call
     description: Executes local class methods / functions
   - from: convertlegacyplugin
-    to: convertlegacyrouteref
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: convertlegacypageextension_test
     to: convertlegacyrouteref
     type: direct-call
     description: Executes local class methods / functions
@@ -179,3 +167,15 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: backwardscompatprovider
+    to: convertlegacyrouteref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: compatwrapper_test
+    to: convertlegacyrouteref
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: forwardscompatprovider
+    to: convertlegacyrouteref
+    type: direct-call
+    description: Executes local class methods / functions

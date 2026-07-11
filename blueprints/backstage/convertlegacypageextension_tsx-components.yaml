@@ -13,6 +13,17 @@ nodes:
     external: false
     x: 600
     'y': 370
+  - id: convertlegacypageextension_test
+    type: gateway-api
+    name: convertLegacyPageExtension.test UI Component (convertLegacyPageExtension.test.tsx)
+    isTest: true
+    properties:
+      filepath: packages/core-compat-api/src/convertLegacyPageExtension.test.tsx
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 370
+    'y': 50
   - id: frontend-client
     type: gateway-api
     name: Frontend Client App (Frontend Client Host)
@@ -20,7 +31,7 @@ nodes:
       description: The main user interface running React and Vite.
       technology: React + TypeScript
     external: true
-    x: 370
+    x: 830
     'y': 50
   - id: convertlegacyrouteref
     type: background-worker
@@ -55,18 +66,11 @@ nodes:
     external: true
     x: 1060
     'y': 690
-  - id: convertlegacypageextension_test
-    type: gateway-api
-    name: convertLegacyPageExtension.test UI Component (convertLegacyPageExtension.test.tsx)
-    isTest: true
-    properties:
-      filepath: packages/core-compat-api/src/convertLegacyPageExtension.test.tsx
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 830
-    'y': 50
 dependencies:
+  - from: convertlegacypageextension_test
+    to: convertlegacypageextension
+    type: direct-call
+    description: Executes local class methods / functions
   - from: frontend-client
     to: convertlegacypageextension
     type: direct-call
@@ -83,7 +87,3 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
-  - from: convertlegacypageextension_test
-    to: convertlegacypageextension
-    type: direct-call
-    description: Executes local class methods / functions

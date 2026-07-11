@@ -33,14 +33,14 @@ nodes:
       namespaces: ''
       technology: React Component
     external: false
-    x: 1425
+    x: 1330
     'y': 370
   - id: index
     type: background-worker
-    name: index Service (index.ts)
+    name: index Service (commands)
     isTest: false
     properties:
-      filepath: packages/frontend-test-utils/src/index.ts
+      filepath: packages/cli-module-build/src/commands/package/bundle/__fixtures__/packed/frontend/src/index.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -60,7 +60,7 @@ nodes:
     name: Link UI Component (components)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/Link/Link.tsx
+      filepath: packages/ui/src/components/Link/Link.tsx
       namespaces: ''
       technology: React Component
     external: true
@@ -158,10 +158,6 @@ dependencies:
     to: _hubspotnewadoptersform
     type: direct-call
     description: Renders _hubSpotNewAdoptersForm layout component
-  - from: index
-    to: _plugincard
-    type: direct-call
-    description: Executes local class methods / functions
   - from: frontend-client
     to: _plugincard
     type: direct-call
@@ -172,5 +168,9 @@ dependencies:
     description: Executes local class methods / functions
   - from: _plugincard
     to: simplecard
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: index
+    to: _plugincard
     type: direct-call
     description: Executes local class methods / functions

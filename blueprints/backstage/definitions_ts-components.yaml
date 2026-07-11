@@ -13,23 +13,23 @@ nodes:
     external: false
     x: 1060
     'y': 370
-  - id: connectionsservice
-    type: background-worker
-    name: ConnectionsService Service (api)
-    isTest: false
-    properties:
-      filepath: packages/connections/src/api/ConnectionsService.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 140
-    'y': 50
   - id: connection
     type: background-worker
     name: Connection Service (api)
     isTest: false
     properties:
       filepath: packages/connections/src/api/Connection.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 50
+  - id: connectionsservice
+    type: background-worker
+    name: ConnectionsService Service (api)
+    isTest: false
+    properties:
+      filepath: packages/connections/src/api/ConnectionsService.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
@@ -69,11 +69,11 @@ nodes:
     x: 1980
     'y': 50
 dependencies:
-  - from: connectionsservice
+  - from: connection
     to: definitions
     type: direct-call
     description: Executes local class methods / functions
-  - from: connection
+  - from: connectionsservice
     to: definitions
     type: direct-call
     description: Executes local class methods / functions

@@ -2,16 +2,16 @@ name: Backstage - indexing Components
 version: 1.0.0
 level: component
 nodes:
-  - id: decoratorbase_test
+  - id: batchsearchengineindexer_test
     type: background-worker
-    name: DecoratorBase.test Service
+    name: BatchSearchEngineIndexer.test Service
     isTest: true
     properties:
-      filepath: plugins/search-backend-node/src/indexing/DecoratorBase.test.ts
+      filepath: plugins/search-backend-node/src/indexing/BatchSearchEngineIndexer.test.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 370
+    x: 870
     'y': 50
   - id: batchsearchengineindexer
     type: background-worker
@@ -22,8 +22,19 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 1060
+    x: 140
     'y': 370
+  - id: decoratorbase_test
+    type: background-worker
+    name: DecoratorBase.test Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-node/src/indexing/DecoratorBase.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1330
+    'y': 50
   - id: decoratorbase
     type: background-worker
     name: DecoratorBase Service
@@ -33,29 +44,18 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
-    x: 140
+    x: 600
     'y': 370
-  - id: batchsearchengineindexer_test
-    type: background-worker
-    name: BatchSearchEngineIndexer.test Service
-    isTest: true
-    properties:
-      filepath: plugins/search-backend-node/src/indexing/BatchSearchEngineIndexer.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 1290
-    'y': 50
   - id: test-utils
     type: gateway-api
-    name: test-utils UI Component (test-utils.tsx)
+    name: test-utils UI Component (hooks)
     isTest: false
     properties:
-      filepath: plugins/techdocs-addons-test-utils/src/test-utils.tsx
+      filepath: plugins/kubernetes-react/src/hooks/test-utils.tsx
       namespaces: ''
       technology: React Component
     external: true
-    x: 600
+    x: 1060
     'y': 370
   - id: error
     type: background-worker
@@ -66,40 +66,20 @@ nodes:
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 1520
+    x: 1600
     'y': 370
   - id: errors
     type: background-worker
-    name: errors Service (errors.ts)
+    name: errors Service (service)
     isTest: false
     properties:
-      filepath: packages/codemods/src/errors.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: true
-    x: 600
+    x: 370
     'y': 690
 dependencies:
-  - from: decoratorbase_test
-    to: decoratorbase
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: decoratorbase_test
-    to: test-utils
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: decoratorbase_test
-    to: error
-    type: direct-call
-    description: References class type / calls methods
-  - from: batchsearchengineindexer
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
-  - from: decoratorbase
-    to: errors
-    type: direct-call
-    description: Executes local class methods / functions
   - from: batchsearchengineindexer_test
     to: batchsearchengineindexer
     type: direct-call
@@ -112,3 +92,23 @@ dependencies:
     to: error
     type: direct-call
     description: References class type / calls methods
+  - from: batchsearchengineindexer
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: decoratorbase_test
+    to: decoratorbase
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: decoratorbase_test
+    to: test-utils
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: decoratorbase_test
+    to: error
+    type: direct-call
+    description: References class type / calls methods
+  - from: decoratorbase
+    to: errors
+    type: direct-call
+    description: Executes local class methods / functions

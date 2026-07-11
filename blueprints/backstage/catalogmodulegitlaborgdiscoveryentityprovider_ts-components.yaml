@@ -13,17 +13,6 @@ nodes:
     external: false
     x: 140
     'y': 370
-  - id: error
-    type: background-worker
-    name: error Service (serialization)
-    isTest: false
-    properties:
-      filepath: packages/errors/src/serialization/error.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 140
-    'y': 690
   - id: catalogmodulegitlaborgdiscoveryentityprovider_test
     type: background-worker
     name: catalogModuleGitlabOrgDiscoveryEntityProvider.test Service (catalogModuleGitlabOrgDiscoveryEntityProvider.test.ts)
@@ -35,12 +24,23 @@ nodes:
     external: true
     x: 140
     'y': 50
+  - id: error
+    type: background-worker
+    name: error Service (serialization)
+    isTest: false
+    properties:
+      filepath: packages/errors/src/serialization/error.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: true
+    x: 140
+    'y': 690
 dependencies:
-  - from: catalogmodulegitlaborgdiscoveryentityprovider
-    to: error
-    type: direct-call
-    description: References class type / calls methods
   - from: catalogmodulegitlaborgdiscoveryentityprovider_test
     to: catalogmodulegitlaborgdiscoveryentityprovider
     type: direct-call
     description: Executes local class methods / functions
+  - from: catalogmodulegitlaborgdiscoveryentityprovider
+    to: error
+    type: direct-call
+    description: References class type / calls methods

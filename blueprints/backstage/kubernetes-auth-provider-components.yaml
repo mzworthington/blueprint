@@ -2,17 +2,6 @@ name: Backstage - kubernetes-auth-provider Components
 version: 1.0.0
 level: component
 nodes:
-  - id: kubernetesauthproviders_test
-    type: background-worker
-    name: KubernetesAuthProviders.test Service
-    isTest: true
-    properties:
-      filepath: plugins/kubernetes-react/src/kubernetes-auth-provider/KubernetesAuthProviders.test.ts
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: false
-    x: 545
-    'y': 50
   - id: akskubernetesauthprovider
     type: background-worker
     name: AksKubernetesAuthProvider Service
@@ -24,17 +13,28 @@ nodes:
     external: false
     x: 140
     'y': 690
-  - id: serversideauthprovider
+  - id: googlekubernetesauthprovider
     type: background-worker
-    name: ServerSideAuthProvider Service
+    name: GoogleKubernetesAuthProvider Service
     isTest: false
     properties:
-      filepath: plugins/kubernetes-react/src/kubernetes-auth-provider/ServerSideAuthProvider.ts
+      filepath: plugins/kubernetes-react/src/kubernetes-auth-provider/GoogleKubernetesAuthProvider.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 600
     'y': 690
+  - id: kubernetesauthproviders_test
+    type: background-worker
+    name: KubernetesAuthProviders.test Service
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-react/src/kubernetes-auth-provider/KubernetesAuthProviders.test.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
+    external: false
+    x: 1465
+    'y': 50
   - id: kubernetesauthproviders
     type: background-worker
     name: KubernetesAuthProviders Service
@@ -57,25 +57,47 @@ nodes:
     external: false
     x: 1140
     'y': 690
-  - id: googlekubernetesauthprovider
+  - id: serversideauthprovider
     type: background-worker
-    name: GoogleKubernetesAuthProvider Service
+    name: ServerSideAuthProvider Service
     isTest: false
     properties:
-      filepath: plugins/kubernetes-react/src/kubernetes-auth-provider/GoogleKubernetesAuthProvider.ts
+      filepath: plugins/kubernetes-react/src/kubernetes-auth-provider/ServerSideAuthProvider.ts
       namespaces: ''
       technology: TypeScript Domain Service
     external: false
     x: 2060
     'y': 690
-  - id: types
+  - id: plugin
     type: gateway-api
-    name: types UI Component (components)
+    name: plugin UI Component (alpha)
     isTest: false
     properties:
-      filepath: packages/core-components/src/components/TabbedLayout/types.ts
+      filepath: plugins/scaffolder/src/alpha/plugin.tsx
       namespaces: ''
       technology: React Component
+    external: true
+    x: 545
+    'y': 50
+  - id: apis
+    type: gateway-api
+    name: apis UI Component (apis.ts)
+    isTest: false
+    properties:
+      filepath: packages/create-app/templates/legacy-app/packages/app/src/apis.ts
+      namespaces: ''
+      technology: React Component
+    external: true
+    x: 1005
+    'y': 50
+  - id: types
+    type: background-worker
+    name: types Service (reader)
+    isTest: false
+    properties:
+      filepath: plugins/techdocs/src/reader/transformers/styles/rules/types.ts
+      namespaces: ''
+      technology: TypeScript Domain Service
     external: true
     x: 870
     'y': 1010
@@ -90,39 +112,25 @@ nodes:
     external: true
     x: 1600
     'y': 690
-  - id: plugin
-    type: background-worker
-    name: plugin Service (plugin.tsx)
-    isTest: false
-    properties:
-      filepath: packages/app-example-plugin/src/plugin.tsx
-      namespaces: ''
-      technology: TypeScript Domain Service
-    external: true
-    x: 1005
-    'y': 50
-  - id: apis
-    type: gateway-api
-    name: apis UI Component (apis.ts)
-    isTest: false
-    properties:
-      filepath: packages/create-app/templates/legacy-app/packages/app/src/apis.ts
-      namespaces: ''
-      technology: React Component
-    external: true
-    x: 1465
-    'y': 50
 dependencies:
-  - from: kubernetesauthproviders_test
+  - from: plugin
     to: kubernetesauthproviders
     type: direct-call
-    description: Executes local class methods / functions
+    description: References class type / calls methods
+  - from: apis
+    to: kubernetesauthproviders
+    type: direct-call
+    description: References class type / calls methods
   - from: akskubernetesauthprovider
     to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: serversideauthprovider
+  - from: googlekubernetesauthprovider
     to: types
+    type: direct-call
+    description: Executes local class methods / functions
+  - from: kubernetesauthproviders_test
+    to: kubernetesauthproviders
     type: direct-call
     description: Executes local class methods / functions
   - from: kubernetesauthproviders
@@ -153,15 +161,7 @@ dependencies:
     to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: googlekubernetesauthprovider
+  - from: serversideauthprovider
     to: types
     type: direct-call
     description: Executes local class methods / functions
-  - from: plugin
-    to: kubernetesauthproviders
-    type: direct-call
-    description: References class type / calls methods
-  - from: apis
-    to: kubernetesauthproviders
-    type: direct-call
-    description: References class type / calls methods
