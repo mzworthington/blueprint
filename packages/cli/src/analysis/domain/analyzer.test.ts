@@ -140,7 +140,11 @@ describe('CodebaseAnalyzer Domain Service', () => {
       '/workspace/blueprints/test-pkg/workspace.yaml'
     )!;
     expect(manifestYaml).toContain('name: Test Pkg Workspace');
-    expect(manifestYaml).toContain('root: ./containers.yaml');
+    expect(manifestYaml).toContain('root: test-pkg');
+    expect(manifestYaml).toContain('hierarchy:');
+    expect(manifestYaml).toContain('- parent: test-pkg');
+    expect(manifestYaml).toContain('- test-pkg/domain-logic');
+    expect(manifestYaml).toContain('- test-pkg/frontend-ui');
 
     // Inspect container schema content
     const containerYaml = fileSystem.writtenFiles.get(

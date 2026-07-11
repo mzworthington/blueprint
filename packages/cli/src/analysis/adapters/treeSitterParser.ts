@@ -2,8 +2,12 @@ import Parser from 'web-tree-sitter';
 import * as path from 'path';
 import * as fs from 'fs';
 import pc from 'picocolors';
+import { fileURLToPath } from 'url';
 import type { CodebaseParserPort } from '@blueprint/core';
 import type { ParsedSourceFile } from '../domain/types.ts';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export class TreeSitterParserAdapter implements CodebaseParserPort {
   private static initPromise: Promise<void> | null = null;

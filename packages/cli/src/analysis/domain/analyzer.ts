@@ -623,9 +623,7 @@ export class CodebaseAnalyzer {
             technology: info.technology,
           },
         };
-        if (info.id !== 'external-services' && info.id !== 'frontend-client') {
-          cNode.c4Ref = `./${info.id}-components.yaml`;
-        }
+        // c4Ref is omitted in favor of entityRef linkages
         containerNodesMap.set(info.id, cNode);
       }
     });
@@ -747,6 +745,7 @@ export class CodebaseAnalyzer {
         name: `${displayName} - ${containerNode.name} Components`,
         version: '1.0.0',
         level: 'component',
+        parentRef: `${systemName}/${contId}`,
         nodes: layoutSubNodes,
         dependencies: relevantEdges,
       };
@@ -767,11 +766,11 @@ export class CodebaseAnalyzer {
 
     const workspaceManifest = {
       name: `${displayName} Workspace`,
-      root: './containers.yaml',
+      root: systemName,
       hierarchy: [
         {
-          parent: './containers.yaml',
-          children: activeContainerIds.map(contId => `./${contId}-components.yaml`),
+          parent: systemName,
+          children: activeContainerIds.map(contId => `${systemName}/${contId}`),
         },
       ],
     };
