@@ -27,8 +27,8 @@ describe('PropertyPanel UI Component', () => {
   it('should render Workspace config and Catalog when no node is selected', () => {
     render(<PropertyPanel />);
 
-    expect(screen.getByText('Properties Panel')).toBeInTheDocument();
-    expect(screen.getByLabelText(/Workspace Name/i)).toBeInTheDocument();
+    expect(screen.getByText(/Properties Panel/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Name/i)).toBeInTheDocument();
     expect(screen.getByText('Component Catalog')).toBeInTheDocument();
     expect(screen.getByText('REST API')).toBeInTheDocument();
     expect(screen.getByText('Event Broker')).toBeInTheDocument();
@@ -37,7 +37,7 @@ describe('PropertyPanel UI Component', () => {
   it('should render Diagram C4 Level selector and trigger updateSchemaLevel on change', () => {
     render(<PropertyPanel />);
 
-    const select = screen.getByLabelText(/Diagram C4 Level/i);
+    const select = screen.getByLabelText(/C4 Level/i);
     expect(select).toBeInTheDocument();
     expect(select).toHaveValue('container');
 
@@ -49,8 +49,8 @@ describe('PropertyPanel UI Component', () => {
     useBlueprintStore.setState({ workspaceName: 'Awesome Cloud Workspace' });
     render(<PropertyPanel />);
 
-    expect(screen.getByText('Diagram entityRef')).toBeInTheDocument();
-    const slugInput = screen.getByLabelText(/Diagram entityRef/i);
+    expect(screen.getByText('Entity Reference')).toBeInTheDocument();
+    const slugInput = screen.getByLabelText(/Entity Reference/i);
     expect(slugInput).toBeInTheDocument();
     expect(slugInput).toHaveAttribute('readonly');
     expect(slugInput).toHaveValue('awesome-cloud-workspace');
@@ -99,7 +99,7 @@ describe('PropertyPanel UI Component', () => {
 
     render(<PropertyPanel />);
 
-    expect(screen.getByLabelText(/Component Name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Name/i)).toBeInTheDocument();
     expect(screen.getByDisplayValue('Gateway API')).toBeInTheDocument();
   });
 
@@ -108,7 +108,7 @@ describe('PropertyPanel UI Component', () => {
 
     render(<PropertyPanel />);
 
-    const nameInput = screen.getByLabelText(/Component Name/i);
+    const nameInput = screen.getByLabelText(/Name/i);
     fireEvent.change(nameInput, { target: { value: 'API Gateway Proxy' } });
 
     const updatedNode = useBlueprintStore
