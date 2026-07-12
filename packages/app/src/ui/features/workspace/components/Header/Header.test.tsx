@@ -21,6 +21,7 @@ describe('Header Component', () => {
       workspaceName: '',
       isWorkspaceOpen: false,
       validationResult: { isValid: true, issues: [] },
+      workspaceManifest: null,
     });
   });
 
@@ -59,5 +60,29 @@ describe('Header Component', () => {
 
     render(<Header />);
     expect(screen.getByText('Cycle Detected')).toBeInTheDocument();
+  });
+
+  it('shows the Overview button when manifest.overview.enabled is true', () => {
+    useBlueprintStore.setState({
+      workspaceManifest: {
+        name: 'My Platform',
+        root: 'platform.yaml',
+        hierarchy: [],
+        overview: { enabled: true },
+      },
+    });
+
+    render(<Header />);
+    // In test env the location is '/' which is treated as the overview root,
+    // so the button toggles to "Back to diagram".
+    const btn = screen.getByRole('button', { name: /back|overview/i });
+    expect(btn).toBeInTheDocument();
+  });
+
+  it('does not show the Overview button when overview is not enabled', () => {
+    useBlueprintStore.setState({ workspaceManifest: null });
+    render(<Header />);
+    expect(screen.queryByTitle('System Overview')).not.toBeInTheDocument();
+    expect(screen.queryByTitle('Back to diagram')).not.toBeInTheDocument();
   });
 });

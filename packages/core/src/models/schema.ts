@@ -71,8 +71,17 @@ export interface WorkspaceHierarchy {
   children: string[];
 }
 
+export interface WorkspaceOverview {
+  /** When true, the system overview canvas is displayed as the workspace root. */
+  enabled?: boolean;
+  /** Optional display label for the overview page heading. */
+  label?: string;
+}
+
 export interface WorkspaceManifest {
   name: string;
   root: string;
   hierarchy: WorkspaceHierarchy[];
+  /** Optional — enables the cross-system overview canvas. */
+  overview?: WorkspaceOverview;
 }
