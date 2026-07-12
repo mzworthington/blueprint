@@ -20,9 +20,9 @@ A front-end visual canvas web application client. Double-click boundary nodes to
 
 ![Blueprint CLI Interactive Prompts](./docs/screenshots/cli.png)
 
-A powerful command-line static analysis (AST) code scanner written in Rust. It parses source files, identifies components and dependency references, formats an optimal coordinate layout using a grid layout, and outputs a valid system schema YAML configuration.
+A powerful command-line static analysis (AST) codebase scanner. It parses source files, extracts modules, identifies components and dependency references, computes an optimal layout using Dagre, and outputs a valid system schema YAML configuration file inside the `blueprints/` directory.
 
-👉 **Learn more:** [cli/README.md](./cli/README.md)
+👉 **Learn more:** [app/packages/cli/README.md](./app/packages/cli/README.md)
 
 ---
 
@@ -30,11 +30,12 @@ A powerful command-line static analysis (AST) code scanner written in Rust. It p
 
 This repository is organized into distinct subdirectories:
 
-| Component                 | Path                                               | Language/Framework                     | Description                                                   |
-| :------------------------ | :------------------------------------------------- | :------------------------------------- | :------------------------------------------------------------ |
-| **`@blueprint/designer`** | [app/packages/designer/](./app/packages/designer/) | TypeScript / React / Vite / React Flow | Front-end visual diagramming client (Playwright E2E, Vitest)  |
-| **`blueprint`**           | [cli/](./cli/)                                     | Rust / Clap / Tree-Sitter / Prost      | CLI static analysis AST scanner & standalone binary generator |
-| **`core-proto`**          | [core/proto/](./core/proto/)                       | Protocol Buffers (v3)                  | Shared declarative schemas defining system diagrams           |
+| Component                  | Path                                               | Language/Framework                       | Description                                                  |
+| :------------------------- | :------------------------------------------------- | :--------------------------------------- | :----------------------------------------------------------- |
+| **`@blueprint/designer`**  | [app/packages/designer/](./app/packages/designer/) | TypeScript / React / Vite / React Flow   | Front-end visual diagramming client (Playwright E2E, Vitest) |
+| **`@blueprint/cli`**       | [app/packages/cli/](./app/packages/cli/)           | TS / Node / Bun / Ts-Morph / Tree-Sitter | TS codebase static analysis scanner & binary compiler        |
+| **`blueprint-rust` (WIP)** | [cli/](./cli/)                                     | Rust / Clap / Tree-Sitter / Prost        | Rust static analysis AST scanner (Work in Progress)          |
+| **`core-proto`**           | [core/proto/](./core/proto/)                       | Protocol Buffers (v3)                    | Shared declarative schemas defining system diagrams          |
 
 ---
 
@@ -69,9 +70,29 @@ pnpm test
 pnpm test:e2e
 ```
 
-### 🦀 Rust Static Analyzer CLI (`/cli`)
+### 💻 TypeScript Static Analyzer CLI (`/app/packages/cli`)
 
-Navigate to the `/cli` directory to run or build the scanner:
+Run and build the TypeScript CLI from the `/app` directory:
+
+```bash
+cd app
+
+# Run the analyzer CLI interactively
+pnpm dev:cli
+
+# Run with headless configuration arguments
+pnpm dev:cli --headless --glob="packages/**/*.ts" --output="blueprints"
+
+# Compile the standalone platform-native binary (generates dist/blueprint)
+pnpm --filter @blueprint/cli build
+
+# Run unit tests for the CLI
+pnpm test:cli
+```
+
+### 🦀 Rust Static Analyzer CLI (`/cli`) [Work in Progress]
+
+Navigate to the `/cli` directory if you want to experiment with the experimental Rust-based CLI scanner:
 
 ```bash
 cd cli
@@ -82,7 +103,7 @@ cargo run
 # Run with headless configuration arguments
 cargo run -- --headless --glob="src/**/*.ts" --output="blueprints"
 
-# Compile the release binary (generated at target/release/blueprint)
+# Compile the release binary (generated at target/release/blueprint-rust)
 cargo build --release
 
 # Run Rust unit/integration tests
