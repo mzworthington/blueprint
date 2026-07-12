@@ -1,102 +1,30 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React from 'react';
 import { Copy, Check, Upload, AlertCircle, Save } from 'lucide-react';
-import { useBlueprintStore } from '../../../../../application/store/store';
-import { useLocation } from 'wouter';
-import { serializeSchemaToMermaid, serializeSchemaToYaml } from '@blueprint/core';
 import { MermaidPreview } from '../../../../components/MermaidPreview';
+import { useCodeViewer } from './useCodeViewer';
 
 export const CodeViewer: React.FC = () => {
   const {
-    schema,
-    yamlCode,
-    importYaml,
+    activeTab,
+    setActiveTab,
+    copied,
+    mermaidMode,
+    setMermaidMode,
+    importText,
+    setImportText,
+    manifestText,
+    setManifestText,
+    availableTabs,
+    getCodeContent,
+    handleCopy,
+    handleImport,
+    handleSaveManifest,
+    navigateToDesignSystem,
     lastError,
     clearError,
-    logger,
-    showTests,
     leftCollapsed,
     toggleLeftCollapsed,
-    isWorkspaceOpen,
-    workspaceManifestYaml,
-    saveWorkspaceManifest,
-  } = useBlueprintStore();
-
-  const [, setLocation] = useLocation();
-
-  const [activeTab, setActiveTab] = useState<'yaml' | 'json' | 'mermaid' | 'manifest' | 'import'>(
-    'yaml'
-  );
-  const [copied, setCopied] = useState(false);
-  const [mermaidMode, setMermaidMode] = useState<'preview' | 'code'>('preview');
-  const [importText, setImportText] = useState('');
-  const [manifestText, setManifestText] = useState('');
-
-  useEffect(() => {
-    if (workspaceManifestYaml) {
-      setManifestText(workspaceManifestYaml);
-    }
-  }, [workspaceManifestYaml]);
-
-  useEffect(() => {
-    if (activeTab === 'import' && !importText) {
-      setImportText(yamlCode);
-    }
-  }, [activeTab, yamlCode, importText]);
-
-  const filteredSchema = useMemo(() => {
-    if (showTests) return schema;
-
-    const nodes = schema.nodes.filter(n => !n.isTest);
-    const visibleNodeIds = new Set(nodes.map(n => n.id));
-    const dependencies = schema.dependencies.filter(
-      d => visibleNodeIds.has(d.from) && visibleNodeIds.has(d.to)
-    );
-
-    return {
-      ...schema,
-      nodes,
-      dependencies,
-    };
-  }, [schema, showTests]);
-
-  const getCodeContent = () => {
-    switch (activeTab) {
-      case 'json':
-        return JSON.stringify(filteredSchema, null, 2);
-      case 'mermaid':
-        return serializeSchemaToMermaid(filteredSchema);
-      case 'yaml':
-      default:
-        return showTests ? yamlCode : serializeSchemaToYaml(filteredSchema);
-    }
-  };
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(getCodeContent());
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      logger.error('Failed to copy schema configuration to clipboard', err);
-    }
-  };
-
-  const handleImport = () => {
-    const success = importYaml(importText);
-    if (success) {
-      setActiveTab('yaml');
-      setImportText('');
-    }
-  };
-
-  const handleSaveManifest = async () => {
-    await saveWorkspaceManifest(manifestText);
-  };
-
-  const availableTabs =
-    isWorkspaceOpen || workspaceManifestYaml
-      ? (['yaml', 'json', 'mermaid', 'manifest', 'import'] as const)
-      : (['yaml', 'json', 'mermaid', 'import'] as const);
+  } = useCodeViewer();
 
   return (
     <div
@@ -115,7 +43,7 @@ export const CodeViewer: React.FC = () => {
         </div>
         <div className="flex items-center gap-2 shrink-0">
           <button
-            onClick={() => setLocation('/design-system')}
+            onClick={navigateToDesignSystem}
             className="p-1 px-2 border border-brand-500/30 text-brand-500 hover:text-brand-300 hover:border-brand-500 hover:bg-brand-950/20 rounded text-[10px] font-bold font-mono tracking-wider transition cursor-pointer flex items-center gap-1"
             title="Open Design System View"
           >
