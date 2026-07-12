@@ -74,6 +74,8 @@ jobs:
         uses: davelosert/vitest-coverage-report-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          json-summary-path: app/coverage/coverage-summary.json
+          json-final-path: app/coverage/coverage-final.json
 
       - name: Cache Playwright Browsers
         id: playwright-cache
@@ -126,6 +128,7 @@ jobs:
         uses: actions/deploy-pages@v5
 
   check-cli-release:
+    needs: build-and-test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     outputs:
