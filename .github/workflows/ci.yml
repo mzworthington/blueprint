@@ -37,26 +37,38 @@ jobs:
         with:
           node-version: 24
           cache: 'pnpm'
+          cache-dependency-path: app/pnpm-lock.yaml
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+      - name: Setup Rust Toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Setup Protobuf Compiler
+        uses: arduino/setup-protoc@v3
         with:
-          bun-version: latest
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
+        working-directory: app
 
       - name: Check Code Formatting
         run: pnpm format:check
+        working-directory: app
 
       - name: Check Linting Rules
         run: pnpm lint
+        working-directory: app
 
       - name: Check Unused Code & Dependencies (Knip)
         run: pnpm knip --reporter github-actions
+        working-directory: app
+
+      - name: Run Rust CLI Tests
+        run: cargo test --manifest-path cli/Cargo.toml
 
       - name: Run Test Suite with Coverage
         run: pnpm test:coverage
+        working-directory: app
 
       - name: Report Vitest Coverage
         uses: davelosert/vitest-coverage-report-action@v2
@@ -68,16 +80,18 @@ jobs:
         uses: actions/cache@v6
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-playwright-${{ hashFiles('app/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-playwright-
 
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: pnpm --filter @blueprint/app exec playwright install --with-deps chromium
+        run: pnpm --filter @blueprint/designer exec playwright install --with-deps chromium
+        working-directory: app
 
       - name: Run E2E Tests
         run: pnpm test:e2e
+        working-directory: app
 
       - name: Upload Playwright Report & Screenshots
         if: always()
@@ -85,18 +99,19 @@ jobs:
         with:
           name: playwright-report
           path: |
-            packages/app/playwright-report/
+            app/packages/designer/playwright-report/
             docs/screenshots/
           retention-days: 30
 
       - name: Compile Production Build
         run: pnpm build
+        working-directory: app
 
       - name: Upload Pages Artifact
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: actions/upload-pages-artifact@v5
         with:
-          path: './packages/app/dist'
+          path: './app/packages/designer/dist'
 
   deploy:
     needs: build-and-test
@@ -110,100 +125,129 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v5
 
-  release-cli:
-    needs: build-and-test
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  check-cli-release:
     runs-on: ubuntu-latest
-
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    outputs:
+      should_release: ${{ steps.check_changes.outputs.should_release }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v7
         with:
-          fetch-depth: 0 # Fetch all history for tags resolving & diffs
+          fetch-depth: 2
 
-      - name: Check if CLI files changed
+      - name: Check if CLI or Proto files changed
         id: check_changes
         run: |
           git diff --name-only HEAD~1 HEAD > changed_files.txt || git show --name-only --pretty="" HEAD > changed_files.txt
           cat changed_files.txt
           
-          if grep -qE '^(packages/cli/src/analysis/|packages/cli/src/blueprint\.ts|packages/core/src/models/)' changed_files.txt; then
+          if grep -qE '^(cli/|core/proto/)' changed_files.txt; then
             echo "should_release=true" >> $GITHUB_OUTPUT
           else
             echo "should_release=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Setup Bun
-        if: steps.check_changes.outputs.should_release == 'true'
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
+  build-cli-binaries:
+    needs: check-cli-release
+    if: needs.check-cli-release.outputs.should_release == 'true'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            artifact_name: blueprint-linux-x64.tar.gz
+            archive_cmd: tar -czf dist/blueprint-linux-x64.tar.gz -C cli/target/release blueprint
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            artifact_name: blueprint-macos-x64.tar.gz
+            archive_cmd: rustup target add x86_64-apple-darwin && cargo build --release --target x86_64-apple-darwin --manifest-path cli/Cargo.toml && tar -czf dist/blueprint-macos-x64.tar.gz -C cli/target/x86_64-apple-darwin/release blueprint
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            artifact_name: blueprint-macos-arm64.tar.gz
+            archive_cmd: rustup target add aarch64-apple-darwin && cargo build --release --target aarch64-apple-darwin --manifest-path cli/Cargo.toml && tar -czf dist/blueprint-macos-arm64.tar.gz -C cli/target/aarch64-apple-darwin/release blueprint
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            artifact_name: blueprint-windows-x64.zip
+            archive_cmd: powershell -Command "Compress-Archive -Path cli\target\release\blueprint.exe -DestinationPath dist\blueprint-windows-x64.zip"
 
-      - name: Install pnpm
-        if: steps.check_changes.outputs.should_release == 'true'
-        uses: pnpm/action-setup@v6
-        with:
-          version: 11.10.0
-          run_install: false
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
 
-      - name: Setup Node.js
-        if: steps.check_changes.outputs.should_release == 'true'
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: 'pnpm'
+      - name: Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
 
-      - name: Install Dependencies
-        if: steps.check_changes.outputs.should_release == 'true'
-        run: pnpm install --frozen-lockfile
+      - name: Setup Protobuf Compiler
+        uses: arduino/setup-protoc@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Compile CLI Binary
+        if: matrix.target == 'x86_64-unknown-linux-gnu' || matrix.target == 'x86_64-pc-windows-msvc'
+        run: cargo build --release --manifest-path cli/Cargo.toml
+
+      - name: Prepare Package
+        run: mkdir dist
+
+      - name: Archive Binary
+        run: ${{ matrix.archive_cmd }}
+
+      - name: Upload Binary Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: dist/${{ matrix.artifact_name }}
+
+  publish-release:
+    needs: [check-cli-release, build-cli-binaries]
+    if: needs.check-cli-release.outputs.should_release == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Download Linux Artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: blueprint-linux-x64.tar.gz
+          path: dist
+
+      - name: Download macOS x64 Artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: blueprint-macos-x64.tar.gz
+          path: dist
+
+      - name: Download macOS arm64 Artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: blueprint-macos-arm64.tar.gz
+          path: dist
+
+      - name: Download Windows Artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: blueprint-windows-x64.zip
+          path: dist
 
       - name: Determine Next Version
         id: versioning
-        if: steps.check_changes.outputs.should_release == 'true'
         run: |
           git fetch --tags
-          # Get latest tag, fallback to v0.1.0
           LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.1.0")
           echo "Latest tag found: $LATEST_TAG"
-          
-          # Remove 'v' prefix
           VERSION=${LATEST_TAG#v}
-          
-          # Parse major, minor, patch
           IFS='.' read -r major minor patch <<< "$VERSION"
-          
-          # Increment patch version
           NEW_PATCH=$((patch + 1))
           NEW_TAG="v$major.$minor.$NEW_PATCH"
           echo "Next release version: $NEW_TAG"
-          
           echo "new_tag=$NEW_TAG" >> $GITHUB_OUTPUT
 
-      - name: Compile CLI Binaries (Cross-Platform)
-        if: steps.check_changes.outputs.should_release == 'true'
-        run: |
-          mkdir -p dist/linux-x64 dist/macos-x64 dist/macos-arm64 dist/windows-x64
-          
-          echo "Compiling Linux (x64)..."
-          bun build ./packages/cli/src/blueprint.ts --compile --target=bun-linux-x64 --outfile dist/linux-x64/blueprint
-          
-          echo "Compiling macOS Intel (x64)..."
-          bun build ./packages/cli/src/blueprint.ts --compile --target=bun-darwin-x64 --outfile dist/macos-x64/blueprint
-          
-          echo "Compiling macOS Apple Silicon (arm64)..."
-          bun build ./packages/cli/src/blueprint.ts --compile --target=bun-darwin-arm64 --outfile dist/macos-arm64/blueprint
-          
-          echo "Compiling Windows (x64)..."
-          bun build ./packages/cli/src/blueprint.ts --compile --target=bun-windows-x64 --outfile dist/windows-x64/blueprint.exe
-          
-          echo "Packaging archives..."
-          tar -czf dist/blueprint-linux-x64.tar.gz -C dist/linux-x64 blueprint
-          tar -czf dist/blueprint-macos-x64.tar.gz -C dist/macos-x64 blueprint
-          tar -czf dist/blueprint-macos-arm64.tar.gz -C dist/macos-arm64 blueprint
-          zip -j dist/blueprint-windows-x64.zip dist/windows-x64/blueprint.exe
-
       - name: Create GitHub Release
-        if: steps.check_changes.outputs.should_release == 'true'
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ steps.versioning.outputs.new_tag }}

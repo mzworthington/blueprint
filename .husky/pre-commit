@@ -1,3 +1,11 @@
+# Run Rust CLI checks if CLI or Proto files are changed
+if git diff --cached --name-only | grep -qE '^(cli/|core/proto/)'; then
+  echo "Detected changes to CLI or Proto. Running Cargo checks..."
+  cd cli && cargo test && cd ..
+fi
+
+# Run Frontend checks from the app directory
+cd app
 pnpm exec lint-staged
 pnpm run lint
 pnpm vitest run --changed

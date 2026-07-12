@@ -6,16 +6,23 @@ This page covers setting up your local development environment, package installa
 
 ## ⚙️ Environment & Tooling Setup
 
-We use **[Mise](https://mise.jdx.dev/)** to automatically manage and activate project tool versions (Node.js and pnpm) defined in `mise.toml`.
+We use **[Mise](https://mise.jdx.dev/)** to automatically manage and activate project tool versions (Node.js, pnpm, and `buf` CLI) defined in `mise.toml`.
 
 1. **Install Mise:** Refer to the [Mise Installation Guide](https://mise.jdx.dev/getting-started.html) (e.g., `brew install mise`).
 2. **Activate Mise:** Make sure Mise is activated in your shell (e.g., add `eval "$(mise activate zsh)"` to your `~/.zshrc`).
-3. **Install Tools:** Run the following in the repository root to automatically download and configure the exact Node/pnpm versions:
+3. **Install Tools:** Run the following in the repository root to automatically download and configure Node, pnpm, and `buf`:
    ```bash
    mise install
    ```
 
-_(Alternatively, you can manually use Node.js `v26.x` or later and pnpm `v11.x` or later)._
+### 🦀 Rust CLI & Protobuf Compilation Prerequisites
+Because the CLI is written in Rust, compiling it requires:
+1. **Rust Toolchain:** Install Rustc/Cargo (e.g. `brew install rust` or via [rustup.rs](https://rustup.rs/)).
+2. **Protobuf compiler (`protoc`):** Used during code compilation to translate Protobuf schemas. Install it on macOS using:
+   ```bash
+   brew install protobuf
+   ```
+   *(Or make sure `protoc` is available in your PATH)*
 
 ---
 

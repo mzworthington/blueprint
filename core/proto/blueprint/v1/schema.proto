@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package blueprint.v1;
+
+import "google/protobuf/struct.proto";
+
+enum C4Level {
+  C4_LEVEL_UNSPECIFIED = 0;
+  C4_LEVEL_CONTEXT = 1;
+  C4_LEVEL_CONTAINER = 2;
+  C4_LEVEL_COMPONENT = 3;
+  C4_LEVEL_CODE = 4;
+}
+
+enum NodeType {
+  NODE_TYPE_UNSPECIFIED = 0;
+  NODE_TYPE_PERSON = 1;
+  NODE_TYPE_SOFTWARE_SYSTEM = 2;
+  NODE_TYPE_WEB_APP = 3;
+  NODE_TYPE_MOBILE_APP = 4;
+  NODE_TYPE_SINGLE_PAGE_APP = 5;
+  NODE_TYPE_MICROSERVICE = 6;
+  NODE_TYPE_DATABASE = 7;
+  NODE_TYPE_CACHE_STORE = 8;
+  NODE_TYPE_EVENT_BROKER = 9;
+  NODE_TYPE_SERVERLESS_APP = 10;
+  NODE_TYPE_COMPONENT = 11;
+  NODE_TYPE_CODE_MODULE = 12;
+  NODE_TYPE_RELATIONAL_DATABASE = 13;
+  NODE_TYPE_GRPC_SERVICE = 14;
+  NODE_TYPE_SERVERLESS_FUNCTION = 15;
+  NODE_TYPE_REST_API = 16;
+  NODE_TYPE_GATEWAY_API = 17;
+  NODE_TYPE_BACKGROUND_WORKER = 18;
+}
+
+enum DependencyType {
+  DEPENDENCY_TYPE_UNSPECIFIED = 0;
+  DEPENDENCY_TYPE_DIRECT_CALL = 1;
+  DEPENDENCY_TYPE_PUBLISH_SUBSCRIBE = 2;
+  DEPENDENCY_TYPE_READ_WRITE = 3;
+}
+
+message SystemNode {
+  string id = 1;
+  NodeType type = 2;
+  string name = 3;
+  optional string c4_ref = 4;
+  optional bool external = 5;
+  google.protobuf.Struct properties = 6;
+  optional bool is_test = 7;
+  optional double x = 8;
+  optional double y = 9;
+  optional string entity_ref = 10;
+}
+
+message SystemDependency {
+  string from = 1;
+  string to = 2;
+  DependencyType type = 3;
+  optional string description = 4;
+}
+
+message SystemSchema {
+  string name = 1;
+  string version = 2;
+  C4Level level = 3;
+  optional string parent_ref = 4;
+  repeated SystemNode nodes = 5;
+  repeated SystemDependency dependencies = 6;
+}
+
+message WorkspaceHierarchy {
+  string parent = 1;
+  repeated string children = 2;
+}
+
+message WorkspaceManifest {
+  string name = 1;
+  string root = 2;
+  repeated WorkspaceHierarchy hierarchy = 3;
+}

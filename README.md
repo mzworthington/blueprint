@@ -12,7 +12,7 @@ Blueprint is a local-first, bi-directionally synchronized visual diagramming can
 
 A front-end visual canvas web application client. Double-click boundary nodes to drill down into C4 container/component levels and edit schemas side-by-side with code-viewer synchronization.
 
-👉 **Learn more:** [packages/app README](./packages/app/README.md)
+👉 **Learn more:** [app/packages/designer/README.md](./app/packages/designer/README.md)
 
 ---
 
@@ -20,47 +20,73 @@ A front-end visual canvas web application client. Double-click boundary nodes to
 
 ![Blueprint CLI Interactive Prompts](./docs/screenshots/cli.png)
 
-A powerful command-line static analysis (AST) code scanner. It parses source files, identifies components and dependency references, formats an optimal coordinate layout using Dagre, and outputs a valid system schema YAML configuration.
+A powerful command-line static analysis (AST) code scanner written in Rust. It parses source files, identifies components and dependency references, formats an optimal coordinate layout using a grid layout, and outputs a valid system schema YAML configuration.
 
-👉 **Learn more:** [packages/cli README](./packages/cli/README.md)
-
----
-
-## 📦 Workspace Package Catalog
-
-This repository is organized as a `pnpm` monorepo workspace:
-
-| Package               | Path                               | Description                                                         |
-| :-------------------- | :--------------------------------- | :------------------------------------------------------------------ |
-| **`@blueprint/app`**  | [packages/app/](./packages/app/)   | Front-end diagramming client (Vite, React Flow, Playwright E2E)     |
-| **`@blueprint/cli`**  | [packages/cli/](./packages/cli/)   | CLI static analysis AST scanner & standalone binary generator       |
-| **`@blueprint/core`** | [packages/core/](./packages/core/) | Shared zero-dependency domain models, validation schemas, and rules |
+👉 **Learn more:** [cli/README.md](./cli/README.md)
 
 ---
 
-## 🛠️ Global Workspace Commands
+## 📦 Workspace Component Catalog
 
-Run these scripts from the repository root directory to manage the workspace:
+This repository is organized into distinct subdirectories:
+
+| Component                 | Path                                               | Language/Framework                     | Description                                                   |
+| :------------------------ | :------------------------------------------------- | :------------------------------------- | :------------------------------------------------------------ |
+| **`@blueprint/designer`** | [app/packages/designer/](./app/packages/designer/) | TypeScript / React / Vite / React Flow | Front-end visual diagramming client (Playwright E2E, Vitest)  |
+| **`blueprint`**           | [cli/](./cli/)                                     | Rust / Clap / Tree-Sitter / Prost      | CLI static analysis AST scanner & standalone binary generator |
+| **`core-proto`**          | [core/proto/](./core/proto/)                       | Protocol Buffers (v3)                  | Shared declarative schemas defining system diagrams           |
+
+---
+
+## 🛠️ Development & Build Commands
+
+Since this is a multi-language codebase, commands are run in their respective component directories:
+
+### 🎨 Visual Frontend Web Application (`/app`)
+
+Navigate to the `/app` directory to manage Node dependencies and development:
 
 ```bash
-# Start the visual app dev server
+cd app
+
+# Install dependencies
+pnpm install
+
+# Start the Vite React development server
 pnpm dev
 
-# Run the analyzer CLI tool interactively
-pnpm dev:cli
-
-# Compile production assets and standalone CLI binaries
+# Build the production assets
 pnpm build
 
-# Run formatting checks and eslint/oxlint linters
-pnpm format:check
+# Run linters (Oxlint) & code formatting checks (Prettier)
 pnpm lint
+pnpm format:check
 
-# Execute all unit tests recursively (in Node/JSDOM contexts)
+# Execute front-end unit tests (Vitest + JSDOM)
 pnpm test
 
-# Run all Playwright E2E integration tests
+# Run Playwright E2E tests
 pnpm test:e2e
+```
+
+### 🦀 Rust Static Analyzer CLI (`/cli`)
+
+Navigate to the `/cli` directory to run or build the scanner:
+
+```bash
+cd cli
+
+# Run the analyzer CLI interactively during development
+cargo run
+
+# Run with headless configuration arguments
+cargo run -- --headless --glob="src/**/*.ts" --output="blueprints"
+
+# Compile the release binary (generated at target/release/blueprint)
+cargo build --release
+
+# Run Rust unit/integration tests
+cargo test
 ```
 
 ---

@@ -57,82 +57,81 @@ graph TD
 
 ## 💻 CLI AST Analyzer Architecture Diagram
 
-The CLI product is structured similarly using a decoupled hexagonal architecture to process local codebases, calculate coordinates, and output YAML blueprint files:
+The CLI package (`packages/cli/`) is written in Rust and uses a decoupled hexagonal architecture to process local codebases, calculate coordinates, and output YAML blueprint files:
 
 ```mermaid
 graph TD
     subgraph CLI_Drivers [Driving CLI Adapters]
-        CliEntry[blueprint.ts - CLI Interactive Entry]
-        BunBinary[dist/blueprint-cli - Standalone Binary]
+        CliEntry[main.rs - CLI Entrypoint & Dialoguer Prompts]
+        RustBinary[dist/blueprint - Standalone Native Executable]
     end
 
     subgraph CLI_Core [CLI Core]
-        Analyzer[analyzer.ts - CodebaseAnalyzer]
+        Analyzer[analyzer.rs - CodebaseAnalyzer]
     end
 
     subgraph CLI_Ports [CLI Outbound Ports]
-        ParserPort[CodebaseParserPort]
+        ParserPort[ParserPort]
         LayoutPort[LayoutPort]
-        CliFsPort[AnalysisFileSystemPort]
+        CliFsPort[FileSystemPort]
         CliLogPort[LoggerPort]
     end
 
     subgraph CLI_Adapters [Driven CLI Adapters]
-        TsMorph[tsMorphParser.ts - TsMorphParserAdapter]
-        TreeSitter[treeSitterParser.ts - TreeSitterParserAdapter]
-        Dagre[dagreLayout.ts - DagreLayoutAdapter]
-        NodeFS[nodeFileSystem.ts - NodeFileSystemAdapter]
-        ConsoleLog[consoleLogger.ts - ConsoleLogger]
+        TreeSitter[tree_sitter.rs - TreeSitterParserAdapter]
+        Grid[layout.rs - SimpleGridLayoutAdapter]
+        Fs[fs.rs - StdFileSystemAdapter]
+        Logger[logger.rs - ConsoleLoggerAdapter]
     end
 
     subgraph Schema_Types [Shared Domain Definition]
-        Schema[schema.ts - Core Schema & Types]
+        Proto[schema.proto - Protobuf Schema]
+        Schema[model.rs - Mapped Rust Types]
     end
 
     CliEntry --> Analyzer
-    BunBinary --> Analyzer
+    RustBinary --> Analyzer
     Analyzer --> CLI_Ports
 
-    ParserPort --> TsMorph
     ParserPort --> TreeSitter
-    LayoutPort --> Dagre
-    CliFsPort --> NodeFS
-    CliLogPort --> ConsoleLog
+    LayoutPort --> Grid
+    CliFsPort --> Fs
+    CliLogPort --> Logger
 
-    TsMorph -.-> Schema
     TreeSitter -.-> Schema
     Analyzer -.-> Schema
 
-    NodeFS --> |Writes schema YAML| BlueprintsDir[blueprints/*.yaml]
+    Fs --> |Writes schema YAML| BlueprintsDir[blueprints/*.yaml]
 ```
 
 ### 🤝 Web-to-CLI Filesystem Bridge
 
 The two systems are bridged via the filesystem:
 
-1. The **CLI AST Analyzer** outputs computed diagram schemas as static YAML files into the local `blueprints/` folder.
+1. The **Rust CLI AST Analyzer** outputs computed diagram schemas as static YAML files into the local `blueprints/` folder.
 2. The **Web Application** requests/watches this `blueprints/` directory using the Browser File System Access API (via `BrowserFileSystemAdapter`) to live-render the layouts.
 
 ---
 
 ## 🧱 Architectural Components
 
-### 1. Pure Domain Layer (`src/domain/`)
+### 1. Pure Domain Layer (`packages/core/src/`)
 
-The core domain contains business validation logic and has **zero dependencies** on external UI frameworks (React, React Flow, Zustand):
+The core domain contains business validation logic, is shared between the TS React application and Rust CLI (using Protocol Buffers), and has **zero dependencies** on external UI frameworks:
 
-- [schema.ts](../src/domain/schema.ts): Houses types representing nodes, dependencies, properties, and verification results.
-- [graph.ts](../src/domain/graph.ts): Implements validation, Zod parsers, cycle detection routines, and Mermaid.js flowchart exports.
-- [path.ts](../src/domain/path.ts): Handles filesystem-agnostic relative C4 path resolution and closest workspace manifest matching.
+- **[schema.proto](../packages/core/proto/blueprint/v1/schema.proto):** Shared Protocol Buffers systems architecture schema serving as the source of truth for both packages.
+- **[schema.ts](../packages/core/src/models/schema.ts):** Houses types representing nodes, dependencies, properties, and verification results. Maps generated protobuf schemas to Zod contracts.
+- **[graph.ts](../packages/core/src/rules/graph.ts):** Implements validation, Zod parsers, cycle detection routines, and Mermaid.js flowchart exports.
+- **[path.ts](../packages/core/src/rules/path.ts):** Handles filesystem-agnostic relative C4 path resolution and closest workspace manifest matching.
 
-### 2. Outbound Ports (`src/domain/ports.ts`)
+### 2. Outbound Ports (`packages/core/src/models/ports.ts`)
 
 Decoupled interfaces defining boundary operations for the core system:
 
 - `FileSystemPort`: Manages saving and loading of system configuration files.
 - `LoggerPort`: Manages structured trace logging.
 
-### 3. Driven Adapters (`src/adapters/`)
+### 3. Driven Adapters (`packages/app/src/adapters/`)
 
 Implementations of outbound ports binding visual tools to infrastructure resources:
 
@@ -142,16 +141,16 @@ Implementations of outbound ports binding visual tools to infrastructure resourc
   - `UiState`: Manages sidebar and panel toggles.
   - `DiagramState`: Manages canvas visual nodes/edges and zoom transitions.
   - `IoState`: Manages directory and file writing/reading interfaces.
-- `layoutUtils.ts`: Handles stateless React Flow node/edge coordinate converters and handle styling anchors.
-- `defaultData.ts`: Eagerly compiles blueprints glob matching files at build time.
+  - `layoutUtils.ts`: Handles stateless React Flow node/edge coordinate converters and handle styling anchors.
+  - `defaultData.ts`: Eagerly compiles blueprints glob matching files at build time.
 
-### 4. CLI AST Analyzer Core & Adapters (`cli/blueprint.ts`, `cli/analysis/`)
+### 4. CLI AST Analyzer Core & Adapters (`packages/cli/src/`)
 
-- `blueprint.ts`: CLI adapter entry point. Handles interactive prompts (`@clack/prompts`) or headless CLI flags and activates the analyzer.
-- `CodebaseAnalyzer`: Central orchestrator of the codebase analyzer pipeline.
-- `CodebaseParserPort`: Outbound port specifying parsing signatures, implemented by `TsMorphParserAdapter` and `TreeSitterParserAdapter`.
-- `LayoutPort`: Outbound port specifying layout coordinate generators, implemented by `DagreLayoutAdapter`.
-- `AnalysisFileSystemPort`: Outbound port for filesystem integration, implemented by `NodeFileSystemAdapter`.
+- **[main.rs](../packages/cli/src/main.rs):** CLI adapter entry point. Handles interactive prompts (`dialoguer`) or headless CLI flags and activates the analyzer.
+- **[analyzer.rs](../packages/cli/src/domain/analyzer.rs):** Central orchestrator of the codebase analyzer pipeline.
+- **[ports.rs](../packages/cli/src/domain/ports.rs):** Outbound ports specifying parsing (`ParserPort`), layout (`LayoutPort`), file system (`FileSystemPort`), and logger (`LoggerPort`) interfaces.
+- **[tree_sitter.rs](../packages/cli/src/infrastructure/parser/tree_sitter.rs):** Driven parsing adapter utilizing native tree-sitter language libraries.
+- **[fs.rs](../packages/cli/src/infrastructure/fs.rs):** Driven file system adapter using standard I/O library and `serde_json`/`serde_yaml` serializations.
 
 ---
 
