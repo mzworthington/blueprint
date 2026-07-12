@@ -4,6 +4,7 @@ use std::path::Path;
 
 use crate::domain::ports::{ParsedImport, ParsedNewExpression, ParsedSourceFile, ParserPort};
 
+#[derive(Default)]
 pub struct TreeSitterParserAdapter;
 
 impl TreeSitterParserAdapter {
@@ -34,36 +35,34 @@ impl TreeSitterParserAdapter {
         let expanded_patterns = expand_braces(glob_pattern);
         for pattern in expanded_patterns {
             if let Ok(paths) = glob(&pattern) {
-                for entry in paths {
-                    if let Ok(path) = entry {
-                        if path.is_file() {
-                            let path_str = path.to_string_lossy().replace('\\', "/");
-                            // Ignore package dependencies, build artifacts, git folders, tests, mocks, fixtures, and stories
-                            let path_lower = path_str.to_lowercase();
-                            if path_lower.contains("/node_modules/")
-                                || path_lower.starts_with("node_modules/")
-                                || path_lower.contains("/dist/")
-                                || path_lower.starts_with("dist/")
-                                || path_lower.contains("/.git/")
-                                || path_lower.starts_with(".git/")
-                                || path_lower.contains("/target/")
-                                || path_lower.starts_with("target/")
-                                || path_lower.contains(".test.")
-                                || path_lower.contains(".spec.")
-                                || path_lower.contains("setuptests")
-                                || path_lower.contains("/tests/")
-                                || path_lower.starts_with("tests/")
-                                || path_lower.contains("/test/")
-                                || path_lower.starts_with("test/")
-                                || path_lower.contains("__tests__")
-                                || path_lower.contains("__mocks__")
-                                || path_lower.contains("__fixtures__")
-                                || path_lower.contains(".stories.")
-                            {
-                                continue;
-                            }
-                            results.push(path_str);
+                for path in paths.flatten() {
+                    if path.is_file() {
+                        let path_str = path.to_string_lossy().replace('\\', "/");
+                        // Ignore package dependencies, build artifacts, git folders, tests, mocks, fixtures, and stories
+                        let path_lower = path_str.to_lowercase();
+                        if path_lower.contains("/node_modules/")
+                            || path_lower.starts_with("node_modules/")
+                            || path_lower.contains("/dist/")
+                            || path_lower.starts_with("dist/")
+                            || path_lower.contains("/.git/")
+                            || path_lower.starts_with(".git/")
+                            || path_lower.contains("/target/")
+                            || path_lower.starts_with("target/")
+                            || path_lower.contains(".test.")
+                            || path_lower.contains(".spec.")
+                            || path_lower.contains("setuptests")
+                            || path_lower.contains("/tests/")
+                            || path_lower.starts_with("tests/")
+                            || path_lower.contains("/test/")
+                            || path_lower.starts_with("test/")
+                            || path_lower.contains("__tests__")
+                            || path_lower.contains("__mocks__")
+                            || path_lower.contains("__fixtures__")
+                            || path_lower.contains(".stories.")
+                        {
+                            continue;
                         }
+                        results.push(path_str);
                     }
                 }
             }
@@ -584,17 +583,34 @@ namespace MyNamespace.Controllers
         let parsed = &results[0];
 
         // Assert imports
-        assert!(parsed.imports.iter().any(|i| i.module_specifier == "System"));
-        assert!(parsed.imports.iter().any(|i| i.module_specifier == "MyNamespace.Data"));
+        assert!(parsed
+            .imports
+            .iter()
+            .any(|i| i.module_specifier == "System"));
+        assert!(parsed
+            .imports
+            .iter()
+            .any(|i| i.module_specifier == "MyNamespace.Data"));
 
         // Assert new expressions
-        assert!(parsed.new_expressions.iter().any(|n| n.class_name == "IOrderService"));
-        assert!(parsed.new_expressions.iter().any(|n| n.class_name == "OrderDbContext"));
+        assert!(parsed
+            .new_expressions
+            .iter()
+            .any(|n| n.class_name == "IOrderService"));
+        assert!(parsed
+            .new_expressions
+            .iter()
+            .any(|n| n.class_name == "OrderDbContext"));
 
         // Assert call expressions
-        assert!(parsed.call_expressions.contains(&"db.SaveChanges".to_string()));
+        assert!(parsed
+            .call_expressions
+            .contains(&"db.SaveChanges".to_string()));
 
         // Assert namespaces
-        assert_eq!(parsed.namespaces, vec!["MyNamespace.Controllers".to_string()]);
+        assert_eq!(
+            parsed.namespaces,
+            vec!["MyNamespace.Controllers".to_string()]
+        );
     }
 }

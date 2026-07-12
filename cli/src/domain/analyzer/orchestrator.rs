@@ -57,24 +57,25 @@ impl CodebaseAnalyzer {
         for node in &components {
             let info = get_container_info(node, node.get_property_string("filepath"));
 
-            if !container_nodes_map.contains_key(&info.id) {
-                let mut c_node = SystemNode {
-                    id: info.id.clone(),
-                    r#type: info.r#type as i32,
-                    name: info.name,
-                    c4_ref: None,
-                    external: Some(false),
-                    properties: None,
-                    is_test: Some(false),
-                    x: None,
-                    y: None,
-                    entity_ref: None,
-                };
-                c_node.set_property_string("description", &info.description);
-                c_node.set_property_string("technology", &info.technology);
-
-                container_nodes_map.insert(info.id, c_node);
-            }
+            container_nodes_map
+                .entry(info.id.clone())
+                .or_insert_with(|| {
+                    let mut c_node = SystemNode {
+                        id: info.id,
+                        r#type: info.r#type as i32,
+                        name: info.name,
+                        c4_ref: None,
+                        external: Some(false),
+                        properties: None,
+                        is_test: Some(false),
+                        x: None,
+                        y: None,
+                        entity_ref: None,
+                    };
+                    c_node.set_property_string("description", &info.description);
+                    c_node.set_property_string("technology", &info.technology);
+                    c_node
+                });
         }
 
         for edge in &dependencies_list {

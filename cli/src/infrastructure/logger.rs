@@ -1,5 +1,6 @@
 use crate::domain::ports::LoggerPort;
 
+#[derive(Default)]
 pub struct ConsoleLoggerAdapter;
 
 impl ConsoleLoggerAdapter {

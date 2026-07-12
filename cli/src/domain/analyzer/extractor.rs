@@ -65,17 +65,17 @@ pub fn extract_nodes(source_files: &[ParsedSourceFile]) -> HashMap<String, Syste
             if cn.contains("PrismaClient") || cn.contains("MongoClient") {
                 is_database = true;
             }
-            if cn.contains("Kafka") || cn.contains("Queue") || cn.contains("Client") {
-                if cn.to_lowercase().contains("queue") || cn.to_lowercase().contains("kafka") {
-                    is_event_broker = true;
-                }
+            if (cn.contains("Kafka") || cn.contains("Queue") || cn.contains("Client"))
+                && (cn.to_lowercase().contains("queue") || cn.to_lowercase().contains("kafka"))
+            {
+                is_event_broker = true;
             }
         }
 
         let file_ext = source_file
             .relative_path
             .split('.')
-            .last()
+            .next_back()
             .unwrap_or("")
             .to_lowercase();
         let mut lang_prefix = "TypeScript";

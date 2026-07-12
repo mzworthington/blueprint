@@ -96,11 +96,7 @@ pub fn get_meaningful_name(
     if let Some(base_dir) = glob_pattern.split("**").next() {
         let clean_base = base_dir.trim_end_matches('/').trim_end_matches('\\');
         if !clean_base.is_empty() {
-            if let Some(base_name) = clean_base
-                .split(&['/', '\\'][..])
-                .filter(|s| !s.is_empty())
-                .last()
-            {
+            if let Some(base_name) = clean_base.split(&['/', '\\'][..]).rfind(|s| !s.is_empty()) {
                 return base_name.to_string();
             }
         }

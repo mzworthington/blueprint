@@ -3,6 +3,7 @@ use std::path::{Path, PathBuf};
 
 use crate::domain::ports::FileSystemPort;
 
+#[derive(Default)]
 pub struct StdFileSystemAdapter;
 
 impl StdFileSystemAdapter {

@@ -1,6 +1,7 @@
 use crate::domain::model::{SystemDependency, SystemNode};
 use crate::domain::ports::LayoutPort;
 
+#[derive(Default)]
 pub struct SimpleGridLayoutAdapter;
 
 impl SimpleGridLayoutAdapter {
