@@ -39,6 +39,12 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: app/pnpm-lock.yaml
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Setup Buf
+        uses: bufbuild/buf-setup-action@v1
+
       - name: Setup Rust Toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1
 
@@ -49,6 +55,10 @@ jobs:
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
+        working-directory: app
+
+      - name: Generate TypeScript protobufs
+        run: pnpm --filter @blueprint/cli generate:proto
         working-directory: app
 
       - name: Check Code Formatting
@@ -161,19 +171,19 @@ jobs:
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             artifact_name: blueprint-linux-x64.tar.gz
-            archive_cmd: tar -czf dist/blueprint-linux-x64.tar.gz -C cli/target/release blueprint
+            archive_cmd: tar -czf dist/blueprint-linux-x64.tar.gz -C cli/target/release blueprint-rust
           - os: macos-latest
             target: x86_64-apple-darwin
             artifact_name: blueprint-macos-x64.tar.gz
-            archive_cmd: rustup target add x86_64-apple-darwin && cargo build --release --target x86_64-apple-darwin --manifest-path cli/Cargo.toml && tar -czf dist/blueprint-macos-x64.tar.gz -C cli/target/x86_64-apple-darwin/release blueprint
+            archive_cmd: rustup target add x86_64-apple-darwin && cargo build --release --target x86_64-apple-darwin --manifest-path cli/Cargo.toml && tar -czf dist/blueprint-macos-x64.tar.gz -C cli/target/x86_64-apple-darwin/release blueprint-rust
           - os: macos-latest
             target: aarch64-apple-darwin
             artifact_name: blueprint-macos-arm64.tar.gz
-            archive_cmd: rustup target add aarch64-apple-darwin && cargo build --release --target aarch64-apple-darwin --manifest-path cli/Cargo.toml && tar -czf dist/blueprint-macos-arm64.tar.gz -C cli/target/aarch64-apple-darwin/release blueprint
+            archive_cmd: rustup target add aarch64-apple-darwin && cargo build --release --target aarch64-apple-darwin --manifest-path cli/Cargo.toml && tar -czf dist/blueprint-macos-arm64.tar.gz -C cli/target/aarch64-apple-darwin/release blueprint-rust
           - os: windows-latest
             target: x86_64-pc-windows-msvc
             artifact_name: blueprint-windows-x64.zip
-            archive_cmd: powershell -Command "Compress-Archive -Path cli\target\release\blueprint.exe -DestinationPath dist\blueprint-windows-x64.zip"
+            archive_cmd: powershell -Command "Compress-Archive -Path cli\target\release\blueprint-rust.exe -DestinationPath dist\blueprint-windows-x64.zip"
 
     steps:
       - name: Checkout Code

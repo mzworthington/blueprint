@@ -5,10 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm --filter @blueprint/designer dev",
-    "build": "pnpm --filter @blueprint/designer build",
+    "dev:cli": "pnpm --filter @blueprint/cli dev",
+    "build": "pnpm --filter @blueprint/designer build && pnpm --filter @blueprint/cli build",
     "lint": "oxlint -c .oxlintrc.json",
     "preview": "pnpm --filter @blueprint/designer preview",
-    "test": "vitest run",
+    "test": "pnpm -r test",
+    "test:cli": "pnpm --filter @blueprint/cli test",
+    "test:app": "pnpm --filter @blueprint/app test",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "pnpm --filter @blueprint/designer test:e2e",
     "format:check": "prettier --config ../.prettierrc --ignore-path ../.prettierignore --check \"**/*.{ts,tsx,css,json,md}\" \"../*.md\"",
@@ -30,11 +33,11 @@
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
-      "prettier --check",
+      "prettier --write",
       "oxlint -c .oxlintrc.json"
     ],
     "**/*.{css,json,md}": [
-      "prettier --check"
+      "prettier --write"
     ]
   }
 }

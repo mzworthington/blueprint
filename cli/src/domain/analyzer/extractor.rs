@@ -3,326 +3,286 @@ use crate::domain::model::{DependencyType, NodeType, SystemDependency, SystemNod
 use crate::domain::ports::ParsedSourceFile;
 use std::collections::HashMap;
 
-pub fn extract_nodes(source_files: &[ParsedSourceFile]) -> HashMap<String, SystemNode> {
-    let mut nodes_map = HashMap::new();
+const CLIENT_ID: &str = "frontend-client";
 
-    let client_node_id = "frontend-client";
-    nodes_map.insert(
-        client_node_id.to_string(),
+const REACT_KEYWORDS: &[&str] = &["react", "@xyflow/react"];
+const DB_KEYWORDS: &[&str] = &["prisma", "knex", "pg", "mongodb"];
+const QUEUE_KEYWORDS: &[&str] = &["kafkajs", "bullmq", "amqplib", "mqtt"];
+const API_KEYWORDS: &[&str] = &["express", "fastify", "@nestjs/common"];
+const DB_CLASS_KEYWORDS: &[&str] = &["PrismaClient", "MongoClient"];
+
+fn matches_any(haystack: &str, needles: &[&str]) -> bool {
+    needles.iter().any(|n| haystack.contains(n))
+}
+
+fn import_matches(file: &ParsedSourceFile, keywords: &[&str]) -> bool {
+    file.imports
+        .iter()
+        .any(|i| matches_any(&i.module_specifier, keywords))
+}
+
+fn class_matches(file: &ParsedSourceFile, keywords: &[&str]) -> bool {
+    file.new_expressions
+        .iter()
+        .any(|e| matches_any(&e.class_name, keywords))
+}
+
+fn classify(file: &ParsedSourceFile) -> (NodeType, &'static str) {
+    if import_matches(file, REACT_KEYWORDS) {
+        return (NodeType::GatewayApi, "React Component");
+    }
+    if import_matches(file, DB_KEYWORDS) || class_matches(file, DB_CLASS_KEYWORDS) {
+        return (NodeType::RelationalDatabase, "Database Client");
+    }
+    if import_matches(file, QUEUE_KEYWORDS) {
+        return (NodeType::EventBroker, "Event Client");
+    }
+    if import_matches(file, API_KEYWORDS) {
+        return (NodeType::RestApi, "REST Controller");
+    }
+
+    // Heuristic: capitalized class name from `new` that contains queue/kafka keywords
+    for ne in &file.new_expressions {
+        let lower = ne.class_name.to_lowercase();
+        if (ne.class_name.contains("Kafka")
+            || ne.class_name.contains("Queue")
+            || ne.class_name.contains("Client"))
+            && (lower.contains("queue") || lower.contains("kafka"))
+        {
+            return (NodeType::EventBroker, "Event Client");
+        }
+    }
+
+    (NodeType::BackgroundWorker, "Domain Service")
+}
+
+fn build_node(file: &ParsedSourceFile, node_type: NodeType, tech: &str) -> SystemNode {
+    let type_label = match node_type {
+        NodeType::GatewayApi => "UI Component",
+        NodeType::RelationalDatabase => "Database",
+        NodeType::EventBroker => "Message Broker",
+        NodeType::RestApi => "REST Endpoint",
+        _ => "Service",
+    };
+
+    let mut node = SystemNode {
+        id: sanitize_id(&file.base_name),
+        r#type: node_type as i32,
+        name: format!("{} {}", file.base_name, type_label),
+        external: Some(false),
+        properties: None,
+        is_test: Some(file.is_test_file),
+        x: None,
+        y: None,
+        entity_ref: None,
+    };
+    node.set_property_string("technology", tech);
+    node.set_property_string("filepath", &file.relative_path);
+    node.set_property_string("namespaces", &file.namespaces.join(","));
+    node
+}
+
+// -- Nodes ------------------------------------------------------------------
+
+pub fn extract_nodes(source_files: &[ParsedSourceFile]) -> HashMap<String, SystemNode> {
+    let mut nodes = HashMap::new();
+
+    nodes.insert(
+        CLIENT_ID.to_string(),
         SystemNode {
-            id: client_node_id.to_string(),
+            id: CLIENT_ID.to_string(),
             r#type: NodeType::GatewayApi as i32,
             name: "React Web Application".to_string(),
-            external: Some(false),
-            properties: None,
-            is_test: Some(false),
-            x: None,
-            y: None,
-            entity_ref: None,
+            ..Default::default()
         },
     );
 
-    for source_file in source_files {
-        let clean_file_id = sanitize_id(&source_file.base_name);
-        let is_test_file = source_file.is_test_file;
-
-        if clean_file_id == "app" || clean_file_id == "main" {
-            continue;
-        }
-
-        let mut is_react_component = false;
-        let mut is_database = false;
-        let mut is_event_broker = false;
-        let mut is_api_server = false;
-
-        for imp in &source_file.imports {
-            let ms = &imp.module_specifier;
-            if ms.contains("react") || ms.contains("@xyflow/react") {
-                is_react_component = true;
-            }
-            if ms.contains("prisma")
-                || ms.contains("knex")
-                || ms.contains("pg")
-                || ms.contains("mongodb")
-            {
-                is_database = true;
-            }
-            if ms.contains("kafkajs")
-                || ms.contains("bullmq")
-                || ms.contains("amqplib")
-                || ms.contains("mqtt")
-            {
-                is_event_broker = true;
-            }
-            if ms.contains("express") || ms.contains("fastify") || ms.contains("@nestjs/common") {
-                is_api_server = true;
-            }
-        }
-
-        for new_expr in &source_file.new_expressions {
-            let cn = &new_expr.class_name;
-            if cn.contains("PrismaClient") || cn.contains("MongoClient") {
-                is_database = true;
-            }
-            if (cn.contains("Kafka") || cn.contains("Queue") || cn.contains("Client"))
-                && (cn.to_lowercase().contains("queue") || cn.to_lowercase().contains("kafka"))
-            {
-                is_event_broker = true;
-            }
-        }
-
-        let file_ext = source_file
-            .relative_path
-            .split('.')
-            .next_back()
-            .unwrap_or("")
-            .to_lowercase();
-        let mut lang_prefix = "TypeScript";
-        if file_ext == "cs" {
-            lang_prefix = "C#";
-        } else if file_ext == "py" {
-            lang_prefix = "Python";
-        } else if file_ext == "js" || file_ext == "jsx" {
-            lang_prefix = "JavaScript";
-        }
-
-        let mut node = SystemNode {
-            id: clean_file_id.clone(),
-            external: Some(false),
-            properties: None,
-            is_test: Some(is_test_file),
-            x: None,
-            y: None,
-            entity_ref: None,
-            ..Default::default()
-        };
-
-        if is_react_component {
-            let tech = if file_ext == "cs" {
-                "C# Razor/Blazor Component"
-            } else if lang_prefix == "TypeScript" || lang_prefix == "JavaScript" {
-                "React Component"
-            } else {
-                "UI Component"
-            };
-            node.r#type = NodeType::GatewayApi as i32;
-            node.name = format!("{} UI Component", source_file.base_name);
-            node.set_property_string("technology", tech);
-        } else if is_database {
-            let tech = if file_ext == "cs" {
-                "Entity Framework / DB Context"
-            } else if file_ext == "py" {
-                "SQLAlchemy / DB Client"
-            } else {
-                "Prisma / SQL Database Client"
-            };
-            node.r#type = NodeType::RelationalDatabase as i32;
-            node.name = format!("{} Database", source_file.base_name);
-            node.set_property_string("technology", tech);
-        } else if is_event_broker {
-            node.r#type = NodeType::EventBroker as i32;
-            node.name = format!("{} Message Broker", source_file.base_name);
-            node.set_property_string("technology", &format!("{} Event Client", lang_prefix));
-        } else if is_api_server {
-            let tech = if file_ext == "cs" {
-                "ASP.NET Core Controller / Minimal API"
-            } else if file_ext == "py" {
-                "FastAPI / Flask Router"
-            } else {
-                "REST Controller / Router"
-            };
-            node.r#type = NodeType::RestApi as i32;
-            node.name = format!("{} REST Endpoint", source_file.base_name);
-            node.set_property_string("technology", tech);
-        } else {
-            node.r#type = NodeType::BackgroundWorker as i32;
-            node.name = format!("{} Service", source_file.base_name);
-            node.set_property_string("technology", &format!("{} Domain Service", lang_prefix));
-        }
-
-        node.set_property_string("filepath", &source_file.relative_path);
-        node.set_property_string("namespaces", &source_file.namespaces.join(","));
-
-        nodes_map.insert(clean_file_id, node);
+    for file in source_files {
+        let (node_type, tech) = classify(file);
+        let node = build_node(file, node_type, tech);
+        nodes.insert(node.id.clone(), node);
     }
 
-    nodes_map
+    nodes
+}
+
+// -- Dependencies -----------------------------------------------------------
+
+fn dep_type_for(target: &SystemNode) -> (DependencyType, &'static str) {
+    match target.node_type() {
+        NodeType::RelationalDatabase => {
+            (DependencyType::ReadWrite, "Queries database table records")
+        }
+        NodeType::EventBroker => (
+            DependencyType::PublishSubscribe,
+            "Publishes / consumes messaging topics",
+        ),
+        _ => (
+            DependencyType::DirectCall,
+            "Executes local class methods / functions",
+        ),
+    }
+}
+
+fn push_dep(
+    from: &str,
+    to: &str,
+    kind: DependencyType,
+    desc: &str,
+    deps: &mut Vec<SystemDependency>,
+    seen: &mut HashMap<(String, String), bool>,
+) {
+    if seen.contains_key(&(from.to_string(), to.to_string())) {
+        return;
+    }
+    seen.insert((from.to_string(), to.to_string()), true);
+    deps.push(SystemDependency {
+        from: from.to_string(),
+        to: to.to_string(),
+        r#type: kind as i32,
+        description: Some(desc.to_string()),
+    });
+}
+
+fn resolve_import_id(specifier: &str) -> String {
+    let base = specifier
+        .split(&['/', '\\'][..])
+        .rfind(|s| !s.is_empty())
+        .unwrap_or("");
+    let clean = base
+        .replace(".ts", "")
+        .replace(".tsx", "")
+        .replace(".js", "")
+        .replace(".jsx", "");
+    sanitize_id(&clean)
+}
+
+fn resolve_new_expr_id(name: &str, nodes: &HashMap<String, SystemNode>) -> Option<String> {
+    let id = sanitize_id(name);
+    if nodes.contains_key(&id) {
+        return Some(id);
+    }
+    // C# interface fallback: ISomething -> Something
+    if name.starts_with('I') && name.len() > 1 {
+        let second = name.chars().nth(1).unwrap();
+        if second.is_uppercase() {
+            let stripped: String = name.chars().skip(1).collect();
+            let fallback = sanitize_id(&stripped);
+            if nodes.contains_key(&fallback) {
+                return Some(fallback);
+            }
+        }
+    }
+    None
 }
 
 pub fn extract_dependencies(
     source_files: &[ParsedSourceFile],
-    nodes_map: &mut HashMap<String, SystemNode>,
+    nodes: &mut HashMap<String, SystemNode>,
 ) -> Vec<SystemDependency> {
-    let mut dependencies_list = Vec::new();
-    let client_node_id = "frontend-client";
+    let mut deps = Vec::new();
+    let mut seen = HashMap::new();
 
-    for source_file in source_files {
-        let clean_file_id = sanitize_id(&source_file.base_name);
-        let is_test_file = source_file.is_test_file;
-
-        if clean_file_id == "app" || clean_file_id == "main" {
+    for file in source_files {
+        let id = sanitize_id(&file.base_name);
+        let Some(node) = nodes.get(&id) else {
             continue;
-        }
-
-        let node = match nodes_map.get(&clean_file_id) {
-            Some(n) => n.clone(),
-            None => continue,
         };
+        let node_type = node.node_type();
 
-        // React components and APIs get triggered by frontend client if not test files
-        if node.node_type() == NodeType::GatewayApi && !is_test_file {
-            dependencies_list.push(SystemDependency {
-                from: client_node_id.to_string(),
-                to: clean_file_id.clone(),
-                r#type: DependencyType::DirectCall as i32,
-                description: Some(format!(
-                    "Renders {} layout component",
-                    source_file.base_name
-                )),
-            });
-        } else if node.node_type() == NodeType::RestApi && !is_test_file {
-            dependencies_list.push(SystemDependency {
-                from: client_node_id.to_string(),
-                to: clean_file_id.clone(),
-                r#type: DependencyType::DirectCall as i32,
-                description: Some("Hits API routing gateway".to_string()),
-            });
-        }
-
-        // Scan references/calls
-        for call_text in &source_file.call_expressions {
-            if call_text == "fetch" || call_text.contains("axios.") {
-                dependencies_list.push(SystemDependency {
-                    from: clean_file_id.clone(),
-                    to: "external-api-target".to_string(),
-                    r#type: DependencyType::DirectCall as i32,
-                    description: Some("HMR outbound query requests".to_string()),
-                });
-
-                let mut ext_node = SystemNode {
-                    id: "external-api-target".to_string(),
-                    r#type: NodeType::RestApi as i32,
-                    name: "External HTTP API Endpoint".to_string(),
-                    external: Some(true),
-                    properties: None,
-                    is_test: Some(false),
-                    x: None,
-                    y: None,
-                    entity_ref: None,
-                };
-                ext_node.set_property_string(
-                    "description",
-                    "Generic outbound web integration endpoints.",
+        // Frontend client edges
+        if !file.is_test_file {
+            if node_type == NodeType::GatewayApi {
+                push_dep(
+                    CLIENT_ID,
+                    &id,
+                    DependencyType::DirectCall,
+                    &format!("Renders {} layout component", file.base_name),
+                    &mut deps,
+                    &mut seen,
                 );
-                nodes_map.insert("external-api-target".to_string(), ext_node);
+            } else if node_type == NodeType::RestApi {
+                push_dep(
+                    CLIENT_ID,
+                    &id,
+                    DependencyType::DirectCall,
+                    "Hits API routing gateway",
+                    &mut deps,
+                    &mut seen,
+                );
             }
         }
 
-        // Scanned imports
-        let source_import_file_names: Vec<String> = source_file
-            .imports
-            .iter()
-            .map(|imp| {
-                let parts: Vec<&str> = imp
-                    .module_specifier
-                    .split(&['/', '\\'][..])
-                    .filter(|s| !s.is_empty())
-                    .collect();
-                let base = parts.last().cloned().unwrap_or("");
-                let clean = base
-                    .replace(".ts", "")
-                    .replace(".tsx", "")
-                    .replace(".js", "")
-                    .replace(".jsx", "");
-                sanitize_id(&clean)
-            })
-            .filter(|s| !s.is_empty())
-            .collect();
-
-        for import_id in source_import_file_names {
-            if !import_id.is_empty() && import_id != clean_file_id {
-                let already_exists = dependencies_list
-                    .iter()
-                    .any(|d| d.from == clean_file_id && d.to == import_id);
-                if !already_exists && import_id != "ports" && import_id != "schema" {
-                    let mut edge_type = DependencyType::DirectCall;
-                    let mut desc = "Executes local class methods / functions".to_string();
-
-                    if let Some(target_node) = nodes_map.get(&import_id) {
-                        if target_node.node_type() == NodeType::RelationalDatabase {
-                            edge_type = DependencyType::ReadWrite;
-                            desc = "Queries database table records".to_string();
-                        } else if target_node.node_type() == NodeType::EventBroker {
-                            edge_type = DependencyType::PublishSubscribe;
-                            desc = "Publishes / consumes messaging topics".to_string();
-                        }
-
-                        dependencies_list.push(SystemDependency {
-                            from: clean_file_id.clone(),
-                            to: import_id,
-                            r#type: edge_type as i32,
-                            description: Some(desc),
-                        });
-                    }
-                }
-            }
-        }
-
-        // Scanned type instantiations
-        for new_expr in &source_file.new_expressions {
-            let mut class_name = new_expr.class_name.clone();
-            let mut target_id = sanitize_id(&class_name);
-            let mut target_node = nodes_map.get(&target_id);
-
-            // C# interface resolution fallback
-            if target_node.is_none() && class_name.starts_with('I') && class_name.len() > 1 {
-                let second_char = class_name.chars().nth(1).unwrap();
-                if second_char.is_uppercase() {
-                    class_name = class_name.chars().skip(1).collect();
-                    target_id = sanitize_id(&class_name);
-                    target_node = nodes_map.get(&target_id);
-                }
-            }
-
-            if target_node.is_some() && target_id != clean_file_id {
-                let already_exists = dependencies_list
-                    .iter()
-                    .any(|d| d.from == clean_file_id && d.to == target_id);
-                if !already_exists {
-                    let mut edge_type = DependencyType::DirectCall;
-                    let mut desc = "References class type / calls methods".to_string();
-
-                    if let Some(tn) = target_node {
-                        if tn.node_type() == NodeType::RelationalDatabase {
-                            edge_type = DependencyType::ReadWrite;
-                            desc = "Queries database table records".to_string();
-                        } else if tn.node_type() == NodeType::EventBroker {
-                            edge_type = DependencyType::PublishSubscribe;
-                            desc = "Publishes / consumes messaging topics".to_string();
-                        }
-                    }
-
-                    dependencies_list.push(SystemDependency {
-                        from: clean_file_id.clone(),
-                        to: target_id,
-                        r#type: edge_type as i32,
-                        description: Some(desc),
+        // External API edges
+        for call in &file.call_expressions {
+            if call == "fetch" || call.contains("axios.") {
+                push_dep(
+                    &id,
+                    "external-api-target",
+                    DependencyType::DirectCall,
+                    "HMR outbound query requests",
+                    &mut deps,
+                    &mut seen,
+                );
+                nodes
+                    .entry("external-api-target".to_string())
+                    .or_insert_with(|| {
+                        let mut n = SystemNode {
+                            id: "external-api-target".to_string(),
+                            r#type: NodeType::RestApi as i32,
+                            name: "External HTTP API Endpoint".to_string(),
+                            external: Some(true),
+                            ..Default::default()
+                        };
+                        n.set_property_string(
+                            "description",
+                            "Generic outbound web integration endpoints.",
+                        );
+                        n
                     });
-                }
             }
+        }
+
+        // Import edges
+        for imp in &file.imports {
+            let target_id = resolve_import_id(&imp.module_specifier);
+            if target_id == id || target_id == "ports" || target_id == "schema" {
+                continue;
+            }
+            let Some(target) = nodes.get(&target_id) else {
+                continue;
+            };
+            let (kind, desc) = dep_type_for(target);
+            push_dep(&id, &target_id, kind, desc, &mut deps, &mut seen);
+        }
+
+        // Instantiation edges
+        for ne in &file.new_expressions {
+            let Some(target_id) = resolve_new_expr_id(&ne.class_name, nodes) else {
+                continue;
+            };
+            if target_id == id {
+                continue;
+            }
+            let target = nodes.get(&target_id).unwrap();
+            let (kind, desc) = dep_type_for(target);
+            push_dep(&id, &target_id, kind, desc, &mut deps, &mut seen);
         }
     }
 
-    if nodes_map.contains_key("filesync") && nodes_map.contains_key("ports") {
-        dependencies_list.push(SystemDependency {
-            from: "filesync".to_string(),
-            to: "ports".to_string(),
-            r#type: DependencyType::DirectCall as i32,
-            description: Some("Implements FileSystemPort interface".to_string()),
-        });
+    // Hardcoded cross-cutting dependency
+    if nodes.contains_key("filesync") && nodes.contains_key("ports") {
+        push_dep(
+            "filesync",
+            "ports",
+            DependencyType::DirectCall,
+            "Implements FileSystemPort interface",
+            &mut deps,
+            &mut seen,
+        );
     }
 
-    dependencies_list
+    deps
 }
 
 #[cfg(test)]
@@ -359,7 +319,6 @@ mod tests {
 
         let mut nodes_map = extract_nodes(&source_files);
 
-        // Assert node classifications
         assert!(nodes_map.contains_key("userdatabase"));
         assert_eq!(
             nodes_map.get("userdatabase").unwrap().node_type(),
@@ -372,7 +331,6 @@ mod tests {
             NodeType::BackgroundWorker
         );
 
-        // Assert dependencies mapping
         let deps = extract_dependencies(&source_files, &mut nodes_map);
         assert!(deps
             .iter()

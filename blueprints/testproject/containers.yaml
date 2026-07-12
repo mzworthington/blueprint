@@ -1,0 +1,214 @@
+name: TestProject - Container Level
+version: 1.0.0
+level: container
+nodes:
+  - id: frontend-client
+    type: gateway-api
+    name: Frontend Client Host
+    properties:
+      description: Vite app hosting server.
+      technology: Vite + React
+    x: 1855
+    'y': 60
+  - id: app-host
+    type: gateway-api
+    name: Application Shell
+    properties:
+      description: Entrypoint and root shell layout.
+      technology: Vite / React
+    c4Ref: ./app-host-components.yaml
+    x: 670
+    'y': 1170
+  - id: testproject_services
+    type: background-worker
+    name: TestProject.Services
+    properties:
+      description: Core domain services for TestProject.Services
+      technology: C# / .NET
+    c4Ref: ./testproject_services-components.yaml
+    x: 255
+    'y': 430
+  - id: testproject_controllers
+    type: gateway-api
+    name: TestProject.Controllers
+    properties:
+      description: REST API endpoints for TestProject.Controllers
+      technology: C# / .NET
+    c4Ref: ./testproject_controllers-components.yaml
+    x: 255
+    'y': 60
+  - id: adapters
+    type: background-worker
+    name: adapters
+    properties:
+      description: Core domain services for adapters
+      technology: TypeScript
+    c4Ref: ./adapters-components.yaml
+    x: 670
+    'y': 1540
+  - id: domain
+    type: background-worker
+    name: domain
+    properties:
+      description: Core domain services for domain
+      technology: TypeScript
+    c4Ref: ./domain-components.yaml
+    x: 1190
+    'y': 2280
+  - id: domain-logic
+    type: background-worker
+    name: Domain Logic Layer
+    properties:
+      description: Core domain logic, schema validation rules, and graph parsing.
+      technology: TypeScript
+    c4Ref: ./domain-logic-components.yaml
+    x: 1550
+    'y': 1910
+  - id: app_tsx
+    type: background-worker
+    name: App.tsx
+    properties:
+      description: Core domain services for App.tsx
+      technology: TypeScript
+    c4Ref: ./app_tsx-components.yaml
+    x: 150
+    'y': 1170
+  - id: app_test_tsx
+    type: background-worker
+    name: App.test.tsx
+    properties:
+      description: Core domain services for App.test.tsx
+      technology: TypeScript
+    c4Ref: ./app_test_tsx-components.yaml
+    x: 200
+    'y': 800
+  - id: setuptests_ts
+    type: background-worker
+    name: setupTests.ts
+    properties:
+      description: Core domain services for setupTests.ts
+      technology: TypeScript
+    c4Ref: ./setuptests_ts-components.yaml
+    x: 2375
+    'y': 60
+  - id: state-sync
+    type: cache-store
+    name: State & Sync Manager
+    properties:
+      description: Zustand global store and local directory synchronization.
+      technology: Zustand / Filesystem API
+    c4Ref: ./state-sync-components.yaml
+    x: 1495
+    'y': 1540
+  - id: components
+    type: background-worker
+    name: components
+    properties:
+      description: Core domain services for components
+      technology: TypeScript
+    c4Ref: ./components-components.yaml
+    x: 1650
+    'y': 800
+  - id: pages
+    type: background-worker
+    name: pages
+    properties:
+      description: Core domain services for pages
+      technology: TypeScript
+    c4Ref: ./pages-components.yaml
+    x: 2010
+    'y': 430
+  - id: store
+    type: background-worker
+    name: store
+    properties:
+      description: Core domain services for store
+      technology: TypeScript
+    c4Ref: ./store-components.yaml
+    x: 1340
+    'y': 1170
+dependencies:
+  - from: app-host
+    to: domain-logic
+    type: direct-call
+    description: Inter-container request / connection
+  - from: testproject_controllers
+    to: testproject_services
+    type: publish-subscribe
+    description: Inter-container request / connection
+  - from: adapters
+    to: domain-logic
+    type: direct-call
+    description: Inter-container request / connection
+  - from: adapters
+    to: domain
+    type: direct-call
+    description: Inter-container request / connection
+  - from: domain-logic
+    to: domain
+    type: direct-call
+    description: Inter-container request / connection
+  - from: app-host
+    to: adapters
+    type: direct-call
+    description: Inter-container request / connection
+  - from: app-host
+    to: domain
+    type: direct-call
+    description: Inter-container request / connection
+  - from: frontend-client
+    to: app-host
+    type: direct-call
+    description: Inter-container request / connection
+  - from: app_test_tsx
+    to: app_tsx
+    type: direct-call
+    description: Inter-container request / connection
+  - from: app_test_tsx
+    to: store
+    type: direct-call
+    description: Inter-container request / connection
+  - from: components
+    to: store
+    type: direct-call
+    description: Inter-container request / connection
+  - from: frontend-client
+    to: components
+    type: direct-call
+    description: Inter-container request / connection
+  - from: components
+    to: domain-logic
+    type: direct-call
+    description: Inter-container request / connection
+  - from: frontend-client
+    to: pages
+    type: direct-call
+    description: Inter-container request / connection
+  - from: pages
+    to: components
+    type: direct-call
+    description: Inter-container request / connection
+  - from: pages
+    to: store
+    type: direct-call
+    description: Inter-container request / connection
+  - from: pages
+    to: domain-logic
+    type: direct-call
+    description: Inter-container request / connection
+  - from: frontend-client
+    to: store
+    type: direct-call
+    description: Inter-container request / connection
+  - from: store
+    to: domain-logic
+    type: direct-call
+    description: Inter-container request / connection
+  - from: store
+    to: state-sync
+    type: direct-call
+    description: Inter-container request / connection
+  - from: state-sync
+    to: domain-logic
+    type: direct-call
+    description: Inter-container request / connection
