@@ -2,13 +2,13 @@ import React, { useEffect, useRef } from 'react';
 import { ReactFlowProvider } from '@xyflow/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLocation, useRoute } from 'wouter';
-import { CodeViewer } from '../../components/CodeViewer';
-import { Canvas } from '../../components/Canvas';
-import { PropertyPanel } from '../../components/PropertyPanel';
-import { Header } from '../../components/Header';
+import { CodeViewer } from './components/CodeViewer/CodeViewer';
+import { Canvas } from './components/Canvas/Canvas';
+import { PropertyPanel } from './components/PropertyPanel/PropertyPanel';
+import { Header } from './components/Header/Header';
 import { useBlueprintStore } from '../../../application/store/store';
 import { slugify, getSchemaEntityRef } from '@blueprint/core';
-import { DiffMenu } from '../../components/DiffMenu';
+import { DiffMenu } from './components/DiffMenu/DiffMenu';
 
 export const WorkspacePage: React.FC = () => {
   const {

@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
 import { PropertyPanel } from './PropertyPanel';
-import { useBlueprintStore } from '../../application/store/store';
+import { useBlueprintStore } from '../../../../../application/store/store';
 
 describe('PropertyPanel UI Component', () => {
   beforeEach(() => {

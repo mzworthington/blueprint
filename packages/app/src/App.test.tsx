@@ -3,11 +3,11 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from './App';
 import { useBlueprintStore } from './application/store/store';
 
-vi.mock('./ui/components/Searchbar', () => ({
+vi.mock('./ui/features/workspace/components/Searchbar/Searchbar', () => ({
   Searchbar: () => <div data-testid="searchbar-mock">Searchbar Mock</div>,
 }));
 
-vi.mock('./ui/components/Canvas', () => ({
+vi.mock('./ui/features/workspace/components/Canvas/Canvas', () => ({
   Canvas: () => <div data-testid="canvas-mock">Canvas Mock</div>,
 }));
 

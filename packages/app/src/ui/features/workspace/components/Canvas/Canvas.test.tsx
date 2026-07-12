@@ -1,8 +1,8 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Canvas } from './Canvas';
-import { Header } from './Header';
-import { useBlueprintStore } from '../../application/store/store';
+import { Header } from '../Header/Header';
+import { useBlueprintStore } from '../../../../../application/store/store';
 
 vi.mock('@xyflow/react', () => {
   return {
@@ -35,11 +35,11 @@ vi.mock('@xyflow/react', () => {
   };
 });
 
-vi.mock('./Breadcrumbs', () => ({
+vi.mock('../Breadcrumbs/Breadcrumbs', () => ({
   Breadcrumbs: () => <div data-testid="breadcrumbs">Breadcrumbs Mock</div>,
 }));
 
-vi.mock('./Searchbar', () => ({
+vi.mock('../Searchbar/Searchbar', () => ({
   Searchbar: () => <div data-testid="searchbar-mock">Searchbar Mock</div>,
 }));
 

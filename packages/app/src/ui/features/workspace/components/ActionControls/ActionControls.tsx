@@ -1,6 +1,6 @@
 import React from 'react';
 import { Folder, Upload, Download, RefreshCcw, Link, GitCompare } from 'lucide-react';
-import { useBlueprintStore } from '../../application/store/store';
+import { useBlueprintStore } from '../../../../../application/store/store';
 
 export const ActionControls: React.FC = () => {
   const {

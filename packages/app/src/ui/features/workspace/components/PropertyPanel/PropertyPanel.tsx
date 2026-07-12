@@ -16,7 +16,7 @@ import {
   Smartphone,
   Code,
 } from 'lucide-react';
-import { useBlueprintStore } from '../../application/store/store';
+import { useBlueprintStore } from '../../../../../application/store/store';
 import type { NodeType, PropertyMap } from '@blueprint/core';
 import { slugify, getSchemaEntityRef } from '@blueprint/core';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useBlueprintStore } from '../../application/store/store';
+import { useBlueprintStore } from '../../../../../application/store/store';
 import { Folder, ChevronRight, Layers, Compass, Code, Network, ChevronDown } from 'lucide-react';
 import type { C4Level } from '@blueprint/core';
 import { getSchemaEntityRef, getSystemIdFromPath } from '@blueprint/core';

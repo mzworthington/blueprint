@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { GitCompare, Plus, Trash2, Edit, Check } from 'lucide-react';
-import { useBlueprintStore } from '../../application/store/store';
+import { useBlueprintStore } from '../../../../../application/store/store';
 import {
   computeSchemaDiff,
   revertWorkingSchema,
   type SchemaDiff,
-} from '../../infrastructure/db/db';
+} from '../../../../../infrastructure/db/db';
 
 interface DiffMenuProps {
   isOpen: boolean;

@@ -1,6 +1,6 @@
 import { Route, Switch } from 'wouter';
-import { WorkspacePage } from './ui/features/workspace/WorkspacePage';
-import { DesignSystemPage } from './ui/features/designSystem/DesignSystemPage';
+import { WorkspacePage } from './ui/features/workspace';
+import { DesignSystemPage } from './ui/features/designSystem';
 
 function App() {
   return (

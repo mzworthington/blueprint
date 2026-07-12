@@ -1,8 +1,8 @@
 import React from 'react';
 import { CheckCircle, AlertTriangle } from 'lucide-react';
-import { useBlueprintStore } from '../../application/store/store';
-import { Breadcrumbs } from './Breadcrumbs';
-import { Searchbar } from './Searchbar';
+import { useBlueprintStore } from '../../../../../application/store/store';
+import { Breadcrumbs } from '../Breadcrumbs/Breadcrumbs';
+import { Searchbar } from '../Searchbar/Searchbar';
 
 export const Header: React.FC = () => {
   const { schema, validationResult } = useBlueprintStore();

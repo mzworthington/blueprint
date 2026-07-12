@@ -8,9 +8,9 @@ import {
   Panel,
   useReactFlow,
 } from '@xyflow/react';
-import { useBlueprintStore } from '../../application/store/store';
+import { useBlueprintStore } from '../../../../../application/store/store';
 import { BlueprintNode } from './BlueprintNode';
-import { ActionControls } from './ActionControls';
+import { ActionControls } from '../ActionControls/ActionControls';
 import { AlertTriangle } from 'lucide-react';
 
 export const Canvas: React.FC = () => {

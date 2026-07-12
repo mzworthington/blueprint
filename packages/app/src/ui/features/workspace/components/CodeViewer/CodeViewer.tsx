@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Copy, Check, Upload, AlertCircle, Save } from 'lucide-react';
-import { useBlueprintStore } from '../../application/store/store';
+import { useBlueprintStore } from '../../../../../application/store/store';
 import { useLocation } from 'wouter';
 import { serializeSchemaToMermaid, serializeSchemaToYaml } from '@blueprint/core';
-import { MermaidPreview } from './MermaidPreview';
+import { MermaidPreview } from '../../../../components/MermaidPreview';
 
 export const CodeViewer: React.FC = () => {
   const {

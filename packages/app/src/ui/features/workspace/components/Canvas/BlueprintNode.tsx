@@ -17,8 +17,8 @@ import {
   ZoomIn,
 } from 'lucide-react';
 import type { NodeType } from '@blueprint/core';
-import { useBlueprintStore } from '../../application/store/store';
-import type { ComponentNodeData } from '../../application/store/store';
+import { useBlueprintStore } from '../../../../../application/store/store';
+import type { ComponentNodeData } from '../../../../../application/store/store';
 
 type CustomNode = Node<ComponentNodeData, 'blueprintNode'>;
 

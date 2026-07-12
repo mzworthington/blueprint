@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { Header } from './Header';
-import { useBlueprintStore } from '../../application/store/store';
+import { useBlueprintStore } from '../../../../../application/store/store';
 
-vi.mock('./Searchbar', () => ({
+vi.mock('../Searchbar/Searchbar', () => ({
   Searchbar: () => <div data-testid="searchbar-mock">Searchbar Mock</div>,
 }));
 

@@ -1,11 +1,11 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { DiffMenu } from './DiffMenu';
-import { useBlueprintStore } from '../../application/store/store';
-import { computeSchemaDiff, revertWorkingSchema } from '../../infrastructure/db/db';
+import { useBlueprintStore } from '../../../../../application/store/store';
+import { computeSchemaDiff, revertWorkingSchema } from '../../../../../infrastructure/db/db';
 
 // Mock DB operations
-vi.mock('../../infrastructure/db/db', () => ({
+vi.mock('../../../../../infrastructure/db/db', () => ({
   db: {
     originalNodes: { where: () => ({ equals: () => ({ toArray: () => Promise.resolve([]) }) }) },
     originalDependencies: {

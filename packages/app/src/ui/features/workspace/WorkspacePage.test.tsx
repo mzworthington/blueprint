@@ -15,19 +15,19 @@ vi.mock('wouter', () => ({
   useRoute: () => [mockMatch, mockParams],
 }));
 
-vi.mock('../../components/CodeViewer', () => ({
+vi.mock('./components/CodeViewer/CodeViewer', () => ({
   CodeViewer: () => <div data-testid="code-viewer">CodeViewer</div>,
 }));
 
-vi.mock('../../components/Canvas', () => ({
+vi.mock('./components/Canvas/Canvas', () => ({
   Canvas: () => <div data-testid="canvas">Canvas</div>,
 }));
 
-vi.mock('../../components/PropertyPanel', () => ({
+vi.mock('./components/PropertyPanel/PropertyPanel', () => ({
   PropertyPanel: () => <div data-testid="property-panel">PropertyPanel</div>,
 }));
 
-vi.mock('../../components/Searchbar', () => ({
+vi.mock('./components/Searchbar/Searchbar', () => ({
   Searchbar: () => <div data-testid="searchbar-mock">Searchbar Mock</div>,
 }));
 
