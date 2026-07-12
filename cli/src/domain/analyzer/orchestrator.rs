@@ -64,7 +64,6 @@ impl CodebaseAnalyzer {
                         id: info.id,
                         r#type: info.r#type as i32,
                         name: info.name,
-                        c4_ref: None,
                         external: Some(false),
                         properties: None,
                         is_test: Some(false),
@@ -209,7 +208,6 @@ impl CodebaseAnalyzer {
                         } else {
                             node.name
                         },
-                        c4_ref: node.c4_ref,
                         external: Some(node.external.unwrap_or(false) || is_external),
                         properties: node.properties,
                         is_test: node.is_test,

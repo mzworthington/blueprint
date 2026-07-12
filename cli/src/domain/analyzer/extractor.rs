@@ -13,7 +13,6 @@ pub fn extract_nodes(source_files: &[ParsedSourceFile]) -> HashMap<String, Syste
             id: client_node_id.to_string(),
             r#type: NodeType::GatewayApi as i32,
             name: "React Web Application".to_string(),
-            c4_ref: None,
             external: Some(false),
             properties: None,
             is_test: Some(false),
@@ -89,7 +88,6 @@ pub fn extract_nodes(source_files: &[ParsedSourceFile]) -> HashMap<String, Syste
 
         let mut node = SystemNode {
             id: clean_file_id.clone(),
-            c4_ref: None,
             external: Some(false),
             properties: None,
             is_test: Some(is_test_file),
@@ -205,7 +203,6 @@ pub fn extract_dependencies(
                     id: "external-api-target".to_string(),
                     r#type: NodeType::RestApi as i32,
                     name: "External HTTP API Endpoint".to_string(),
-                    c4_ref: None,
                     external: Some(true),
                     properties: None,
                     is_test: Some(false),

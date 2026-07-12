@@ -2,13 +2,12 @@ fn main() {
     let mut config = prost_build::Config::new();
 
     // Derives serde traits on all generated structs
-    config.type_attribute(".", "#[derive(serde::Serialize, serde::Deserialize)]");
+    config.type_attribute(
+        ".",
+        "#[derive(serde::Serialize, serde::Deserialize)]\n#[serde(rename_all = \"camelCase\")]",
+    );
 
     // Optional field serialization overrides to skip None values in YAML
-    config.field_attribute(
-        "blueprint.v1.SystemNode.c4_ref",
-        "#[serde(skip_serializing_if = \"Option::is_none\", default)]",
-    );
     config.field_attribute(
         "blueprint.v1.SystemNode.external",
         "#[serde(skip_serializing_if = \"Option::is_none\", default)]",

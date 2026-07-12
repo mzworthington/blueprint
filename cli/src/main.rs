@@ -1,5 +1,5 @@
 use clap::Parser;
-use dialoguer::{theme::ColorfulTheme, Input, Select};
+use dialoguer::{theme::ColorfulTheme, Input};
 use std::sync::Arc;
 
 pub mod domain;
@@ -22,9 +22,6 @@ struct CliArgs {
     #[arg(long, default_value = "false")]
     headless: bool,
 
-    #[arg(long, default_value = "tree-sitter")]
-    parser: String,
-
     #[arg(long, default_value = "**/*.{ts,tsx,py,js,jsx}")]
     glob: String,
 
@@ -46,14 +43,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         println!("\n🔹 \x1b[1;36mblueprint\x1b[0m • system architecture generator");
 
         let theme = ColorfulTheme::default();
-
-        let selections = &["tree-sitter (High performance, multi-language)"];
-
-        let _select_idx = Select::with_theme(&theme)
-            .with_prompt("Select parser adapter:")
-            .items(selections)
-            .default(0)
-            .interact()?;
 
         glob_pattern = Input::with_theme(&theme)
             .with_prompt("Glob pattern/directory to scan:")
