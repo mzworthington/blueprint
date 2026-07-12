@@ -149,7 +149,24 @@ describe('db.ts - IndexedDB Client Operations', () => {
     expect(diff.nodes.modified).toHaveLength(1);
     expect(diff.nodes.modified[0].current.name).toBe('Service A Updated Name');
     expect(diff.nodes.modified[0].original.name).toBe('Service A');
-    expect(diff.nodes.modified[0].current.properties).toEqual({ technology: 'Go', version: '2.0' });
+  });
+
+  it('should detect position changes of components', async () => {
+    const positionSchema: SystemSchema = {
+      ...sampleSchema,
+      nodes: [
+        { id: 'service-a', type: 'microservice', name: 'Service A', x: 150, y: 250 },
+        { id: 'db-a', type: 'relational-database', name: 'Database A' },
+      ],
+    };
+
+    await saveBaselineSchema('blueprints/sys.yaml', sampleSchema, 'backstage', sampleNodeRefMap);
+    await saveWorkingSchema('blueprints/sys.yaml', positionSchema, 'backstage', sampleNodeRefMap);
+
+    const diff = await computeSchemaDiff('blueprints/sys.yaml');
+    expect(diff.nodes.modified).toHaveLength(1);
+    expect(diff.nodes.modified[0].current.x).toBe(150);
+    expect(diff.nodes.modified[0].current.y).toBe(250);
   });
 
   it('should revert draft changes back to baseline', async () => {

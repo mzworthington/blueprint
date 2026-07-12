@@ -17,7 +17,11 @@ import {
   isEntityRef,
   getSchemaEntityRef,
 } from '../../../core';
-import { saveBaselineSchema, saveWorkingSchema } from '../../../infrastructure/db/db';
+import {
+  saveBaselineSchema,
+  saveWorkingSchema,
+  loadWorkingSchema,
+} from '../../../infrastructure/db/db';
 
 export interface IoState {
   fileSystemPort: FileSystemPort;
@@ -164,11 +168,38 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
         schema: resolved.schemas[sys.path] || sys.schema,
       }));
 
-      let firstSystem = resolvedSystems[0];
+      const resolvedSystemsWithDrafts = await Promise.all(
+        resolvedSystems.map(async sys => {
+          const sysId = getSystemIdFromPath(sys.path);
+          const fileRefMap = resolved.nodeRefMap[sys.path] || {};
+
+          await saveBaselineSchema(sys.path, sys.schema, sysId, fileRefMap).catch(() => {});
+
+          const workingSchema = await loadWorkingSchema(
+            sys.path,
+            sys.schema.name,
+            sys.schema.version,
+            sys.schema.level,
+            sys.schema.parentRef
+          ).catch(() => null);
+
+          if (workingSchema) {
+            return {
+              ...sys,
+              schema: workingSchema,
+            };
+          } else {
+            await saveWorkingSchema(sys.path, sys.schema, sysId, fileRefMap).catch(() => {});
+            return sys;
+          }
+        })
+      );
+
+      let firstSystem = resolvedSystemsWithDrafts[0];
       const initialManifest = getClosestManifest(firstSystem.path, nextLoadedManifests);
       if (initialManifest?.manifest.root) {
         const rootRef = initialManifest.manifest.root;
-        const foundRoot = resolvedSystems.find(s => {
+        const foundRoot = resolvedSystemsWithDrafts.find(s => {
           if (isEntityRef(rootRef)) {
             const schemaRef = getSchemaEntityRef(s.schema, s.path);
             return schemaRef === rootRef;
@@ -184,19 +215,11 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
 
       const manifestState = resolveWorkspaceManifestState(firstSystem.path, nextLoadedManifests);
 
-      // Seed baseline and working database tables in background asynchronously
-      resolvedSystems.forEach(sys => {
-        const sysId = getSystemIdFromPath(sys.path);
-        const fileRefMap = resolved.nodeRefMap[sys.path] || {};
-        saveBaselineSchema(sys.path, sys.schema, sysId, fileRefMap).catch(() => {});
-        saveWorkingSchema(sys.path, sys.schema, sysId, fileRefMap).catch(() => {});
-      });
-
       set({
         isWorkspaceOpen: true,
         workspaceName: workspacePort.getDirectoryName(),
         loadedManifests: nextLoadedManifests,
-        loadedSystems: resolvedSystems,
+        loadedSystems: resolvedSystemsWithDrafts,
         nodeRefMap: resolved.nodeRefMap,
         currentFilePath: firstSystem.path,
         navigationStack: [],

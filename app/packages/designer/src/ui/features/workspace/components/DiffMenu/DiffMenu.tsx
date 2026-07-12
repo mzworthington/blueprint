@@ -188,6 +188,20 @@ export const DiffMenu: React.FC<DiffMenuProps> = ({ isOpen, onClose }) => {
                                       </span>
                                     </div>
                                   )}
+                                  {(original.x !== current.x || original.y !== current.y) && (
+                                    <div className="flex flex-wrap gap-x-2">
+                                      <span className="text-slate-500 font-semibold">
+                                        Position:
+                                      </span>
+                                      <span className="text-rose-400/80 line-through">
+                                        ({original.x ?? 0}, {original.y ?? 0})
+                                      </span>
+                                      <span className="text-slate-400">&rarr;</span>
+                                      <span className="text-emerald-400 font-semibold">
+                                        ({current.x ?? 0}, {current.y ?? 0})
+                                      </span>
+                                    </div>
+                                  )}
                                   {JSON.stringify(original.properties) !==
                                     JSON.stringify(current.properties) && (
                                     <div className="space-y-1">

@@ -11,6 +11,9 @@ export interface DbNode {
   properties: Record<string, any>;
   x?: number;
   y?: number;
+  c4Ref?: string;
+  external?: boolean;
+  isTest?: boolean;
   filePath: string;
 }
 
@@ -82,6 +85,9 @@ export async function saveBaselineSchema(
         properties: node.properties || {},
         x: node.x,
         y: node.y,
+        c4Ref: node.c4Ref,
+        external: node.external,
+        isTest: node.isTest,
         filePath,
       };
     });
@@ -137,6 +143,9 @@ export async function saveWorkingSchema(
         properties: node.properties || {},
         x: node.x,
         y: node.y,
+        c4Ref: node.c4Ref,
+        external: node.external,
+        isTest: node.isTest,
         filePath,
       };
     });
@@ -192,8 +201,9 @@ export async function computeSchemaDiff(filePath: string): Promise<SchemaDiff> {
       const typeChanged = current.type !== original.type;
       const propertiesChanged =
         JSON.stringify(current.properties) !== JSON.stringify(original.properties);
+      const positionChanged = current.x !== original.x || current.y !== original.y;
 
-      if (nameChanged || typeChanged || propertiesChanged) {
+      if (nameChanged || typeChanged || propertiesChanged || positionChanged) {
         diff.nodes.modified.push({ original, current });
       }
     }
@@ -247,6 +257,9 @@ export async function revertWorkingSchema(
       x: n.x,
       y: n.y,
       entityRef: n.entityRef,
+      c4Ref: n.c4Ref,
+      external: n.external,
+      isTest: n.isTest,
     })),
     dependencies: originalDeps.map(d => ({
       from: d.fromRef.split('/').pop()!,
@@ -268,4 +281,47 @@ export async function revertWorkingSchema(
   });
 
   return originalSchema;
+}
+
+/**
+ * Loads the active working schema from working tables if it exists.
+ * Returns the SystemSchema or null if not found.
+ */
+export async function loadWorkingSchema(
+  filePath: string,
+  systemName?: string,
+  systemVersion?: string,
+  systemLevel?: string,
+  parentRef?: string
+): Promise<SystemSchema | null> {
+  const workingNodes = await db.workingNodes.where('filePath').equals(filePath).toArray();
+  if (workingNodes.length === 0) {
+    return null;
+  }
+  const workingDeps = await db.workingDependencies.where('filePath').equals(filePath).toArray();
+
+  return {
+    name: systemName || 'Working Schema',
+    version: systemVersion || '1.0.0',
+    level: (systemLevel as any) || 'container',
+    parentRef,
+    nodes: workingNodes.map(n => ({
+      id: n.id,
+      type: n.type as any,
+      name: n.name,
+      properties: n.properties,
+      x: n.x,
+      y: n.y,
+      entityRef: n.entityRef,
+      c4Ref: n.c4Ref,
+      external: n.external,
+      isTest: n.isTest,
+    })),
+    dependencies: workingDeps.map(d => ({
+      from: d.fromRef.split('/').pop()!,
+      to: d.toRef.split('/').pop()!,
+      type: d.type as any,
+      description: d.description,
+    })),
+  };
 }
