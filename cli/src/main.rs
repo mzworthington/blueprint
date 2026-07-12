@@ -57,7 +57,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         glob_pattern = Input::with_theme(&theme)
             .with_prompt("Glob pattern/directory to scan:")
-            .default("packages/core/src/**/*.{ts,tsx}".to_string())
+            .default(glob_pattern)
             .interact_text()?;
 
         output_dir = Input::with_theme(&theme)

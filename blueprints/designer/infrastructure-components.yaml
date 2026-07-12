@@ -1,0 +1,118 @@
+name: Designer - infrastructure Components
+version: 1.0.0
+level: component
+parent_ref: designer/infrastructure
+nodes:
+- id: appcontext
+  type: gateway-api
+  name: AppContext UI Component (application)
+  external: true
+  properties:
+    filepath: app/packages/designer/src/application/context/AppContext.tsx
+    namespaces: ''
+    technology: React Component
+  is_test: false
+  x: 100.0
+  y: 100.0
+- id: db
+  type: background-worker
+  name: db Service
+  external: false
+  properties:
+    filepath: app/packages/designer/src/infrastructure/db/db.ts
+    namespaces: ''
+    technology: TypeScript Domain Service
+  is_test: false
+  x: 420.0
+  y: 100.0
+- id: diagramstate
+  type: gateway-api
+  name: diagramState UI Component (application)
+  external: true
+  properties:
+    filepath: app/packages/designer/src/application/store/states/diagramState.ts
+    namespaces: ''
+    technology: React Component
+  is_test: false
+  x: 740.0
+  y: 100.0
+- id: diffmenu
+  type: gateway-api
+  name: DiffMenu UI Component (ui)
+  external: true
+  properties:
+    filepath: app/packages/designer/src/ui/features/workspace/components/DiffMenu/DiffMenu.tsx
+    namespaces: ''
+    technology: React Component
+  is_test: false
+  x: 1060.0
+  y: 100.0
+- id: filesync
+  type: background-worker
+  name: fileSync Service
+  external: false
+  properties:
+    filepath: app/packages/designer/src/infrastructure/fileSystem/fileSync.ts
+    namespaces: ''
+    technology: TypeScript Domain Service
+  is_test: false
+  x: 100.0
+  y: 300.0
+- id: iostate
+  type: background-worker
+  name: ioState Service (application)
+  external: true
+  properties:
+    filepath: app/packages/designer/src/application/store/states/ioState.ts
+    namespaces: ''
+    technology: TypeScript Domain Service
+  is_test: false
+  x: 420.0
+  y: 300.0
+- id: logger
+  type: background-worker
+  name: logger Service
+  external: false
+  properties:
+    filepath: app/packages/designer/src/infrastructure/logging/logger.ts
+    namespaces: ''
+    technology: TypeScript Domain Service
+  is_test: false
+  x: 740.0
+  y: 300.0
+- id: ports
+  type: background-worker
+  name: ports Service (core)
+  external: true
+  properties:
+    filepath: app/packages/designer/src/core/models/ports.ts
+    namespaces: ''
+    technology: TypeScript Domain Service
+  is_test: false
+  x: 1060.0
+  y: 300.0
+dependencies:
+- from: appcontext
+  to: filesync
+  type: direct-call
+  description: Executes local class methods / functions
+- from: appcontext
+  to: logger
+  type: direct-call
+  description: Executes local class methods / functions
+- from: diagramstate
+  to: db
+  type: direct-call
+  description: Executes local class methods / functions
+- from: iostate
+  to: db
+  type: direct-call
+  description: Executes local class methods / functions
+- from: diffmenu
+  to: db
+  type: direct-call
+  description: Executes local class methods / functions
+- from: filesync
+  to: ports
+  type: direct-call
+  description: Implements FileSystemPort interface

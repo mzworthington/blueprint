@@ -10,6 +10,12 @@ pub struct ContainerInfo {
 }
 
 pub fn get_container_info(node: &SystemNode, filepath: Option<&str>) -> ContainerInfo {
+    let file_ext = filepath
+        .and_then(|f| std::path::Path::new(f).extension())
+        .and_then(|e| e.to_str())
+        .unwrap_or("")
+        .to_lowercase();
+
     if node.id == "external-api-target" {
         return ContainerInfo {
             id: "external-services".to_string(),
@@ -36,7 +42,13 @@ pub fn get_container_info(node: &SystemNode, filepath: Option<&str>) -> Containe
                 name: "Application Shell".to_string(),
                 r#type: NodeType::GatewayApi,
                 description: "Entrypoint and root shell layout.".to_string(),
-                technology: "Vite / React".to_string(),
+                technology: if file_ext == "cs" {
+                    "C# / .NET".to_string()
+                } else if file_ext == "py" {
+                    "Python".to_string()
+                } else {
+                    "Vite / React".to_string()
+                },
             };
         }
         Some(f) => f,
@@ -171,7 +183,13 @@ pub fn get_container_info(node: &SystemNode, filepath: Option<&str>) -> Containe
             name: container_name,
             r#type: container_type,
             description: desc,
-            technology: "TypeScript / Node.js".to_string(),
+            technology: if file_ext == "cs" {
+                "C# / .NET".to_string()
+            } else if file_ext == "py" {
+                "Python".to_string()
+            } else {
+                "TypeScript / Node.js".to_string()
+            },
         };
     }
 
@@ -181,7 +199,13 @@ pub fn get_container_info(node: &SystemNode, filepath: Option<&str>) -> Containe
         name: "Application Shell".to_string(),
         r#type: NodeType::GatewayApi,
         description: "Entrypoint and root shell layout.".to_string(),
-        technology: "Node.js".to_string(),
+        technology: if file_ext == "cs" {
+            "C# / .NET".to_string()
+        } else if file_ext == "py" {
+            "Python".to_string()
+        } else {
+            "Node.js".to_string()
+        },
     }
 }
 

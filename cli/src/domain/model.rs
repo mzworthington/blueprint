@@ -205,7 +205,7 @@ pub mod properties_serde {
         S: Serializer,
     {
         if let Some(s) = value {
-            let mut map = HashMap::new();
+            let mut map = BTreeMap::new();
             for (k, v) in &s.fields {
                 if let Some(ref kind) = v.kind {
                     match kind {

@@ -55,13 +55,31 @@ pub fn get_meaningful_name(
             fs.get_current_working_directory()
         };
 
-        let mut pkg_path = fs.get_absolute_path(&[&scan_dir, "package.json"]);
-        if !fs.exists(&pkg_path) {
-            pkg_path = fs.get_absolute_path(&[&fs.get_current_working_directory(), "package.json"]);
+        let mut check_dir = std::path::PathBuf::from(&scan_dir);
+        let cwd_path = std::path::PathBuf::from(&fs.get_current_working_directory());
+        while check_dir.starts_with(&cwd_path) {
+            let pkg_path = fs.get_absolute_path(&[&check_dir.to_string_lossy(), "package.json"]);
+            if fs.exists(&pkg_path) {
+                if let Some(name) = fs.read_package_json_name(&pkg_path) {
+                    if name != "root" {
+                        let name_without_scope = if name.contains('/') {
+                            name.split('/').nth(1).unwrap_or(&name).to_string()
+                        } else {
+                            name
+                        };
+                        return name_without_scope;
+                    }
+                }
+            }
+            if !check_dir.pop() {
+                break;
+            }
         }
 
-        if fs.exists(&pkg_path) {
-            if let Some(name) = fs.read_package_json_name(&pkg_path) {
+        // Fallback check in CWD
+        let cwd_pkg = fs.get_absolute_path(&[&fs.get_current_working_directory(), "package.json"]);
+        if fs.exists(&cwd_pkg) {
+            if let Some(name) = fs.read_package_json_name(&cwd_pkg) {
                 if name != "root" {
                     let name_without_scope = if name.contains('/') {
                         name.split('/').nth(1).unwrap_or(&name).to_string()

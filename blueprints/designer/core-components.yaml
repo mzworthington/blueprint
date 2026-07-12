@@ -1,0 +1,110 @@
+name: Designer - core Components
+version: 1.0.0
+level: component
+parent_ref: designer/core
+nodes:
+- id: entityref
+  type: background-worker
+  name: entityRef Service
+  external: false
+  properties:
+    filepath: app/packages/designer/src/core/rules/entityRef.ts
+    namespaces: ''
+    technology: TypeScript Domain Service
+  is_test: false
+  x: 100.0
+  y: 100.0
+- id: filesync
+  type: background-worker
+  name: fileSync Service (infrastructure)
+  external: true
+  properties:
+    filepath: app/packages/designer/src/infrastructure/fileSystem/fileSync.ts
+    namespaces: ''
+    technology: TypeScript Domain Service
+  is_test: false
+  x: 420.0
+  y: 100.0
+- id: graph
+  type: background-worker
+  name: graph Service
+  external: false
+  properties:
+    filepath: app/packages/designer/src/core/rules/graph.ts
+    namespaces: ''
+    technology: TypeScript Domain Service
+  is_test: false
+  x: 740.0
+  y: 100.0
+- id: path
+  type: background-worker
+  name: path Service
+  external: false
+  properties:
+    filepath: app/packages/designer/src/core/rules/path.ts
+    namespaces: ''
+    technology: TypeScript Domain Service
+  is_test: false
+  x: 1060.0
+  y: 100.0
+- id: ports
+  type: background-worker
+  name: ports Service
+  external: false
+  properties:
+    filepath: app/packages/designer/src/core/models/ports.ts
+    namespaces: ''
+    technology: TypeScript Domain Service
+  is_test: false
+  x: 100.0
+  y: 300.0
+- id: schema
+  type: background-worker
+  name: schema Service
+  external: false
+  properties:
+    filepath: app/packages/designer/src/core/models/schema.ts
+    namespaces: ''
+    technology: TypeScript Domain Service
+  is_test: false
+  x: 420.0
+  y: 300.0
+- id: slug
+  type: background-worker
+  name: slug Service
+  external: false
+  properties:
+    filepath: app/packages/designer/src/core/rules/slug.ts
+    namespaces: ''
+    technology: TypeScript Domain Service
+  is_test: false
+  x: 740.0
+  y: 300.0
+- id: struct
+  type: background-worker
+  name: struct Service
+  external: false
+  properties:
+    filepath: app/packages/designer/src/core/generated/google/protobuf/struct.ts
+    namespaces: ''
+    technology: TypeScript Domain Service
+  is_test: false
+  x: 1060.0
+  y: 300.0
+dependencies:
+- from: schema
+  to: struct
+  type: direct-call
+  description: Executes local class methods / functions
+- from: entityref
+  to: slug
+  type: direct-call
+  description: Executes local class methods / functions
+- from: entityref
+  to: path
+  type: direct-call
+  description: Executes local class methods / functions
+- from: filesync
+  to: ports
+  type: direct-call
+  description: Implements FileSystemPort interface
