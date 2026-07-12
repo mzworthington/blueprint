@@ -11,6 +11,11 @@ import type {
   SystemSchema,
 } from '../../core/generated/blueprint/v1/schema.ts';
 import * as yaml from 'js-yaml';
+import type { LanguageAnalyzer } from './languageAnalyzer.ts';
+import { TypeScriptAnalyzer } from './typescriptAnalyzer.ts';
+import { CSharpAnalyzer } from './csharpAnalyzer.ts';
+import { PythonAnalyzer } from './pythonAnalyzer.ts';
+import { FallbackAnalyzer } from './fallbackAnalyzer.ts';
 
 export interface CodebaseAnalyzerDependencies {
   parser: CodebaseParserPort;
@@ -24,12 +29,25 @@ export class CodebaseAnalyzer {
   private layout: LayoutPort;
   private fileSystem: AnalysisFileSystemPort;
   private logger: LoggerPort;
+  private strategies: LanguageAnalyzer[];
 
   constructor(deps: CodebaseAnalyzerDependencies) {
     this.parser = deps.parser;
     this.layout = deps.layout;
     this.fileSystem = deps.fileSystem;
     this.logger = deps.logger;
+    this.strategies = [
+      new TypeScriptAnalyzer(),
+      new CSharpAnalyzer(),
+      new PythonAnalyzer(),
+      new FallbackAnalyzer(),
+    ];
+  }
+
+  private getStrategy(fileExt: string): LanguageAnalyzer {
+    return (
+      this.strategies.find(s => s.supports(fileExt)) || this.strategies[this.strategies.length - 1]
+    );
   }
 
   private sanitizeId(raw: string): string {
@@ -111,7 +129,7 @@ export class CodebaseAnalyzer {
     return parts[parts.length - 1] || 'blueprint';
   }
 
-  private getContainerInfo(node: SystemNode, _systemName: string, filepath?: string) {
+  private getContainerInfo(node: SystemNode, systemName: string, filepath?: string) {
     if (node.id === 'external-api-target') {
       return {
         id: 'external-services',
@@ -142,122 +160,12 @@ export class CodebaseAnalyzer {
     }
 
     const normalized = filepath.replace(/\\/g, '/');
-    const fileExt = normalized.split('.').pop()?.toLowerCase();
+    const fileExt = normalized.split('.').pop()?.toLowerCase() || '';
 
-    // Custom TypeScript blueprints mapping rules
-    if (normalized.startsWith('packages/core/') || normalized.startsWith('src/domain/')) {
-      return {
-        id: 'domain-logic',
-        name: 'Domain Logic Layer',
-        type: 'background-worker' as const,
-        description: 'Core domain logic, schema validation rules, and graph parsing.',
-        technology: 'TypeScript',
-      };
-    }
-
-    if (
-      normalized.startsWith('packages/app/src/infrastructure/') ||
-      normalized.startsWith('packages/app/src/application/') ||
-      normalized.startsWith('packages/app/src/store/') ||
-      normalized.startsWith('packages/app/src/adapters/') ||
-      normalized.startsWith('src/infrastructure/') ||
-      normalized.startsWith('src/application/') ||
-      normalized.startsWith('src/adapters/') ||
-      normalized.startsWith('src/store/')
-    ) {
-      const isStateOrSync =
-        normalized.includes('store') ||
-        normalized.includes('fileSync') ||
-        normalized.includes('telemetry') ||
-        normalized.includes('fileSystem') ||
-        normalized.includes('logging');
-      if (isStateOrSync) {
-        return {
-          id: 'state-sync',
-          name: 'State & Sync Manager',
-          type: 'cache-store' as const,
-          description: 'Zustand global store and local directory synchronization.',
-          technology: 'Zustand / Filesystem API',
-        };
-      } else {
-        return {
-          id: 'frontend-ui',
-          name: 'Frontend React UI',
-          type: 'gateway-api' as const,
-          description: 'React Flow canvas, sidebar configuration panel, and navigation UI.',
-          technology: 'React + TailwindCSS',
-        };
-      }
-    }
-
-    if (
-      normalized.startsWith('packages/app/src/ui/') ||
-      normalized.startsWith('packages/app/src/components/') ||
-      normalized.startsWith('packages/app/src/pages/') ||
-      normalized.startsWith('src/ui/') ||
-      normalized.startsWith('src/components/') ||
-      normalized.startsWith('src/pages/')
-    ) {
-      return {
-        id: 'frontend-ui',
-        name: 'Frontend React UI',
-        type: 'gateway-api' as const,
-        description: 'React Flow canvas, sidebar configuration panel, and navigation UI.',
-        technology: 'React + TailwindCSS',
-      };
-    }
-
-    // Resolve container from namespaces or folder structures
-    const namespacesStr = node.properties?.namespaces as string | undefined;
-    const namespaces = namespacesStr ? namespacesStr.split(',').filter(Boolean) : [];
-    let containerName = '';
-    let containerId = '';
-
-    // A. Use namespace if present (e.g. Basket.API.Controllers -> Basket.API)
-    if (namespaces.length > 0) {
-      const primaryNamespace = namespaces[0];
-      const parts = primaryNamespace.split('.');
-      const segment = parts.slice(0, Math.min(parts.length, 2)).join('.');
-      if (segment && segment !== 'System' && segment !== 'Microsoft') {
-        containerName = segment;
-        containerId = this.sanitizeId(segment);
-      }
-    }
-
-    // B. Fallback to folder structure (e.g. src/Basket.API/... -> Basket.API)
-    if (!containerId) {
-      const parts = normalized.split('/');
-      const srcIndex = parts.indexOf('src');
-      let folderName = '';
-      if (srcIndex !== -1 && parts.length > srcIndex + 1) {
-        folderName = parts[srcIndex + 1];
-      } else if (parts.length > 2) {
-        folderName = parts[parts.length - 2];
-      }
-
-      if (folderName && folderName !== 'src') {
-        containerName = folderName;
-        containerId = this.sanitizeId(folderName);
-      }
-    }
-
-    if (containerId) {
-      const isApi =
-        containerId.endsWith('api') ||
-        containerId.includes('controller') ||
-        containerId.includes('server');
-      const containerType = isApi ? ('gateway-api' as const) : ('background-worker' as const);
-      const desc = isApi
-        ? `REST API endpoints for ${containerName}`
-        : `Core domain services for ${containerName}`;
-
-      return {
-        id: containerId,
-        name: containerName,
-        type: containerType,
-        description: desc,
-        technology: fileExt === 'cs' ? 'C# / .NET' : fileExt === 'py' ? 'Python' : 'TypeScript',
-      };
+    const strategy = this.getStrategy(fileExt);
+    const info = strategy.getContainerInfo(node, systemName, fileExt, normalized);
+    if (info) {
+      return info;
     }
 
     // Fallback to app-host
@@ -295,153 +203,16 @@ export class CodebaseAnalyzer {
     for (const sourceFile of sourceFiles) {
       const cleanFileId = this.sanitizeId(sourceFile.baseName);
       const isTestFile = sourceFile.isTestFile;
+      const fileExt = sourceFile.relativePath.split('.').pop()?.toLowerCase() || '';
 
-      // Heuristics flags
-      let isReactComponent = false;
-      let isDatabase = false;
-      let isEventBroker = false;
-      let isApiServer = false;
-
-      // 1. Check imports for key packages
-      sourceFile.imports.forEach(imp => {
-        const moduleSpecifier = imp.moduleSpecifier;
-        if (moduleSpecifier.includes('react') || moduleSpecifier.includes('@xyflow/react')) {
-          isReactComponent = true;
-        }
-        if (
-          moduleSpecifier.includes('prisma') ||
-          moduleSpecifier.includes('knex') ||
-          moduleSpecifier.includes('pg') ||
-          moduleSpecifier.includes('mongodb')
-        ) {
-          isDatabase = true;
-        }
-        if (
-          moduleSpecifier.includes('kafkajs') ||
-          moduleSpecifier.includes('bullmq') ||
-          moduleSpecifier.includes('amqplib') ||
-          moduleSpecifier.includes('mqtt')
-        ) {
-          isEventBroker = true;
-        }
-        if (
-          moduleSpecifier.includes('express') ||
-          moduleSpecifier.includes('fastify') ||
-          moduleSpecifier.includes('@nestjs/common')
-        ) {
-          isApiServer = true;
-        }
-      });
-
-      // 2. Scan class definitions or variable instantiations
-      sourceFile.newExpressions.forEach(newExpr => {
-        const typeText = newExpr.className;
-        if (typeText.includes('PrismaClient') || typeText.includes('MongoClient')) {
-          isDatabase = true;
-        }
-        if (
-          typeText.includes('Kafka') ||
-          typeText.includes('Queue') ||
-          typeText.includes('Client')
-        ) {
-          if (
-            typeText.toLowerCase().includes('queue') ||
-            typeText.toLowerCase().includes('kafka')
-          ) {
-            isEventBroker = true;
-          }
-        }
-      });
-
-      const fileExt = sourceFile.relativePath.split('.').pop()?.toLowerCase();
-      let langPrefix = 'TypeScript';
-      if (fileExt === 'cs') {
-        langPrefix = 'C#';
-      } else if (fileExt === 'py') {
-        langPrefix = 'Python';
-      } else if (fileExt === 'js' || fileExt === 'jsx') {
-        langPrefix = 'JavaScript';
+      // Root shell / entrypoint files named app or main are excluded from component nodes
+      if (cleanFileId === 'app' || cleanFileId === 'main') {
+        continue;
       }
 
-      // Determine target node properties
-      if (isReactComponent) {
-        if (cleanFileId !== 'app' && cleanFileId !== 'main') {
-          nodesMap.set(cleanFileId, {
-            id: cleanFileId,
-            type: 'gateway-api',
-            name: `${sourceFile.baseName} UI Component`,
-            isTest: isTestFile,
-            properties: {
-              filepath: sourceFile.relativePath,
-              namespaces: (sourceFile.namespaces || []).join(','),
-              technology:
-                fileExt === 'cs'
-                  ? 'C# Razor/Blazor Component'
-                  : langPrefix === 'TypeScript' || langPrefix === 'JavaScript'
-                    ? 'React Component'
-                    : `${langPrefix} UI Component`,
-            },
-          });
-        }
-      } else if (isDatabase) {
-        nodesMap.set(cleanFileId, {
-          id: cleanFileId,
-          type: 'relational-database',
-          name: `${sourceFile.baseName} Database`,
-          isTest: isTestFile,
-          properties: {
-            filepath: sourceFile.relativePath,
-            namespaces: (sourceFile.namespaces || []).join(','),
-            technology:
-              fileExt === 'cs'
-                ? 'Entity Framework / DB Context'
-                : fileExt === 'py'
-                  ? 'SQLAlchemy / DB Client'
-                  : 'Prisma / SQL Database Client',
-          },
-        });
-      } else if (isEventBroker) {
-        nodesMap.set(cleanFileId, {
-          id: cleanFileId,
-          type: 'event-broker',
-          name: `${sourceFile.baseName} Message Broker`,
-          isTest: isTestFile,
-          properties: {
-            filepath: sourceFile.relativePath,
-            namespaces: (sourceFile.namespaces || []).join(','),
-            technology: `${langPrefix} Event Client`,
-          },
-        });
-      } else if (isApiServer) {
-        nodesMap.set(cleanFileId, {
-          id: cleanFileId,
-          type: 'rest-api',
-          name: `${sourceFile.baseName} REST Endpoint`,
-          isTest: isTestFile,
-          properties: {
-            filepath: sourceFile.relativePath,
-            namespaces: (sourceFile.namespaces || []).join(','),
-            technology:
-              fileExt === 'cs'
-                ? 'ASP.NET Core Controller / Minimal API'
-                : fileExt === 'py'
-                  ? 'FastAPI / Flask Router'
-                  : 'REST Controller / Router',
-          },
-        });
-      } else {
-        nodesMap.set(cleanFileId, {
-          id: cleanFileId,
-          type: 'background-worker',
-          name: `${sourceFile.baseName} Service`,
-          isTest: isTestFile,
-          properties: {
-            filepath: sourceFile.relativePath,
-            namespaces: (sourceFile.namespaces || []).join(','),
-            technology: `${langPrefix} Domain Service`,
-          },
-        });
-      }
+      const strategy = this.getStrategy(fileExt);
+      const node = strategy.createNode(sourceFile, cleanFileId, isTestFile);
+      nodesMap.set(cleanFileId, node);
     }
 
     // Pass 2: Establish dependencies now that all nodes are registered
@@ -627,7 +398,6 @@ export class CodebaseAnalyzer {
             technology: info.technology,
           },
         };
-        // c4Ref is omitted in favor of entityRef linkages
         containerNodesMap.set(info.id, cNode);
       }
     });
