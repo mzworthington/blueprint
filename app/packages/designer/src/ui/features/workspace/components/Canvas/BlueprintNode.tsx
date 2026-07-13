@@ -173,9 +173,7 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
 
   const hasSubDiagram = React.useMemo(() => {
     if (!data.entityRef) return false;
-    return loadedSystems.some(
-      s => s.schema.level === 'component' && s.schema.parentRef === data.entityRef
-    );
+    return loadedSystems.some(s => s.schema.parentRef === data.entityRef);
   }, [data.entityRef, loadedSystems]);
 
   const handleClick = (e: React.MouseEvent) => {
@@ -203,7 +201,6 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
         backdropFilter: 'blur(8px)',
       }}
     >
-      {/* Top handles */}
       <Handle
         type="target"
         position={Position.Top}
@@ -217,7 +214,6 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
         className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
       />
 
-      {/* Bottom handles */}
       <Handle
         type="target"
         position={Position.Bottom}
@@ -231,7 +227,6 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
         className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
       />
 
-      {/* Left handles */}
       <Handle
         type="target"
         position={Position.Left}
@@ -245,7 +240,6 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
         className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
       />
 
-      {/* Right handles */}
       <Handle
         type="target"
         position={Position.Right}
