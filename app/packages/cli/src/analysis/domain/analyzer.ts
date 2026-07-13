@@ -10,7 +10,6 @@ import type {
   SystemDependency,
   SystemSchema,
 } from '../../core/generated/blueprint/v1/schema.ts';
-import { NodeType } from '../../core/generated/blueprint/v1/schema.ts';
 import * as yaml from 'js-yaml';
 import type { LanguageAnalyzer } from './languageAnalyzer.ts';
 import { TypeScriptAnalyzer } from './typescriptAnalyzer.ts';
@@ -482,8 +481,6 @@ export class CodebaseAnalyzer {
         dependencies: [],
       };
     }
-
-    const contextSystemId = this.sanitizeId(contextSchema.name).replace(/_/g, '-');
 
     const containerSchema: SystemSchema = {
       name: `${displayName} - Container Level`,
