@@ -10,6 +10,7 @@ import type {
   SystemDependency,
   SystemSchema,
 } from '../../core/generated/blueprint/v1/schema.ts';
+import { NodeType } from '../../core/generated/blueprint/v1/schema.ts';
 import * as yaml from 'js-yaml';
 import type { LanguageAnalyzer } from './languageAnalyzer.ts';
 import { TypeScriptAnalyzer } from './typescriptAnalyzer.ts';
@@ -449,10 +450,46 @@ export class CodebaseAnalyzer {
       this.fileSystem.mkdir(blueprintsDir);
     }
 
+    // Generate/update workspace-wide context schema
+    const contextPath = this.fileSystem.getAbsolutePath(rootBlueprintsDir, 'context.yaml');
+    let contextSchema: SystemSchema;
+    if (this.fileSystem.exists(contextPath)) {
+      try {
+        const contextYaml = await this.fileSystem.readSchema(contextPath);
+        contextSchema = yaml.load(contextYaml) as SystemSchema;
+        if (!contextSchema.nodes) {
+          contextSchema.nodes = [];
+        }
+        if (!contextSchema.dependencies) {
+          contextSchema.dependencies = [];
+        }
+      } catch (e) {
+        this.logger.warn(`Failed to parse existing context.yaml: ${e}. Reinitializing.`);
+        contextSchema = {
+          name: 'Workspace Context',
+          version: '1.0.0',
+          level: 'context',
+          nodes: [],
+          dependencies: [],
+        };
+      }
+    } else {
+      contextSchema = {
+        name: 'Workspace Context',
+        version: '1.0.0',
+        level: 'context',
+        nodes: [],
+        dependencies: [],
+      };
+    }
+
+    const contextSystemId = this.sanitizeId(contextSchema.name).replace(/_/g, '-');
+
     const containerSchema: SystemSchema = {
       name: `${displayName} - Container Level`,
       version: '1.0.0',
       level: 'container',
+      parentRef: systemName,
       nodes: layoutContainers,
       dependencies: containerDependenciesList,
     };
@@ -466,6 +503,41 @@ export class CodebaseAnalyzer {
     const containerPath = this.fileSystem.getAbsolutePath(blueprintsDir, 'containers.yaml');
     await this.fileSystem.writeSchema(containerPath, containerYaml);
     this.logger.info(`📄 Saved Container-level schema: ${containerPath}`);
+
+    let found = false;
+    for (const node of contextSchema.nodes) {
+      if (node.id === systemName) {
+        node.name = displayName;
+        found = true;
+        break;
+      }
+    }
+
+    if (!found) {
+      contextSchema.nodes.push({
+        id: systemName,
+        type: 'software-system' as any,
+        name: displayName,
+        external: false,
+        properties: {},
+        isTest: false,
+      });
+    }
+
+    // Run layout on the context nodes
+    const layoutContextNodes = await this.layout.computeLayout(
+      contextSchema.nodes,
+      contextSchema.dependencies
+    );
+    contextSchema.nodes = layoutContextNodes;
+
+    const contextYaml = yaml.dump(contextSchema, {
+      indent: 2,
+      lineWidth: 120,
+      noRefs: true,
+    });
+    await this.fileSystem.writeSchema(contextPath, contextYaml);
+    this.logger.info(`📄 Saved/Updated Workspace Context schema: ${contextPath}`);
 
     const activeContainerIds = Array.from(containerNodesMap.keys()).filter(
       id => id !== 'external-services' && id !== 'frontend-client'
@@ -537,27 +609,6 @@ export class CodebaseAnalyzer {
       await this.fileSystem.writeSchema(componentPath, componentYaml);
       this.logger.info(`📄 Saved Component-level schema for ${contId}: ${componentPath}`);
     }
-
-    const workspaceManifest = {
-      name: `${displayName} Workspace`,
-      root: systemName,
-      hierarchy: [
-        {
-          parent: systemName,
-          children: activeContainerIds.map(contId => `${systemName}/${contId}`),
-        },
-      ],
-    };
-
-    const manifestYaml = yaml.dump(workspaceManifest, {
-      indent: 2,
-      lineWidth: 120,
-      noRefs: true,
-    });
-
-    const manifestPath = this.fileSystem.getAbsolutePath(blueprintsDir, 'workspace.yaml');
-    await this.fileSystem.writeSchema(manifestPath, manifestYaml);
-    this.logger.info(`📄 Saved Workspace manifest schema: ${manifestPath}`);
 
     this.logger.info(`✅ Successfully generated visual layout levels!`);
   }

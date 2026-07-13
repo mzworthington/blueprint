@@ -204,4 +204,49 @@ describe('DiffMenu Component', () => {
 
     confirmSpy.mockRestore();
   });
+
+  it('triggers commit schema operations and calls saveActiveDiagram when Commit is clicked', async () => {
+    vi.mocked(computeSchemaDiff).mockResolvedValueOnce({
+      nodes: {
+        added: [
+          {
+            entityRef: 'cli/new-service',
+            id: 'new-service',
+            systemId: 'cli',
+            type: 'microservice',
+            name: 'New Service',
+            properties: {},
+            filePath: 'blueprints/cli.yaml',
+          },
+        ],
+        modified: [],
+        deleted: [],
+      },
+      dependencies: { added: [], deleted: [] },
+    });
+
+    const mockSaveActiveDiagram = vi.fn().mockResolvedValue(true);
+    const mockSetNotification = vi.fn();
+    useBlueprintStore.setState({
+      saveActiveDiagram: mockSaveActiveDiagram,
+      setNotification: mockSetNotification,
+    });
+
+    render(<DiffMenu isOpen={true} onClose={mockOnClose} />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Commit Changes')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('Commit Changes'));
+
+    await waitFor(() => {
+      expect(mockSaveActiveDiagram).toHaveBeenCalledTimes(1);
+      expect(mockSetNotification).toHaveBeenCalledWith({
+        type: 'success',
+        title: 'Changes Committed',
+        message: 'Successfully committed pending draft changes to cli.yaml',
+      });
+    });
+  });
 });

@@ -13,7 +13,8 @@ interface DiffMenuProps {
 }
 
 export const DiffMenu: React.FC<DiffMenuProps> = ({ isOpen, onClose }) => {
-  const { currentFilePath, initSchema, loadedSystems, logger } = useBlueprintStore();
+  const { currentFilePath, initSchema, loadedSystems, logger, saveActiveDiagram, setNotification } =
+    useBlueprintStore();
   const [diff, setDiff] = useState<SchemaDiff | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -57,6 +58,30 @@ export const DiffMenu: React.FC<DiffMenuProps> = ({ isOpen, onClose }) => {
       onClose();
     } catch (err) {
       logger.error('Failed to revert active diagram draft changes', err);
+    }
+  };
+
+  const handleCommit = async () => {
+    setLoading(true);
+    try {
+      const success = await saveActiveDiagram();
+      if (success) {
+        setNotification({
+          type: 'success',
+          title: 'Changes Committed',
+          message: `Successfully committed pending draft changes to ${currentFilePath.split('/').pop()}`,
+        });
+        await fetchDiff();
+      }
+    } catch (err) {
+      logger.error('Failed to commit active diagram changes', err);
+      setNotification({
+        type: 'error',
+        title: 'Commit Failed',
+        message: (err as Error).message || 'Failed to commit draft changes.',
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -336,13 +361,22 @@ export const DiffMenu: React.FC<DiffMenuProps> = ({ isOpen, onClose }) => {
               <div className="p-4 border-t border-slate-900 bg-slate-950/40 sticky bottom-0 z-10 flex items-center justify-between shrink-0">
                 <div>
                   {hasChanges && (
-                    <button
-                      onClick={handleRevert}
-                      disabled={loading}
-                      className="flex items-center gap-1.5 bg-rose-950/15 hover:bg-rose-950/30 text-rose-400 hover:text-rose-250 border border-rose-900/30 hover:border-rose-900/60 px-4.5 py-2 rounded-lg text-xs font-semibold transition cursor-pointer"
-                    >
-                      Revert Changes
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={handleRevert}
+                        disabled={loading}
+                        className="flex items-center gap-1.5 bg-rose-950/15 hover:bg-rose-950/30 text-rose-400 hover:text-rose-250 border border-rose-900/30 hover:border-rose-900/60 px-4.5 py-2 rounded-lg text-xs font-semibold transition cursor-pointer"
+                      >
+                        Revert Changes
+                      </button>
+                      <button
+                        onClick={handleCommit}
+                        disabled={loading}
+                        className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 hover:text-white border border-emerald-500/30 text-slate-100 px-4.5 py-2 rounded-lg text-xs font-semibold transition cursor-pointer"
+                      >
+                        Commit Changes
+                      </button>
+                    </div>
                   )}
                 </div>
 

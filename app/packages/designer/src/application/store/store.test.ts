@@ -1,10 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  resolveRelativePath,
-  defaultInitialSchema,
-  defaultWorkspaceManifest,
-  defaultWorkspaceManifestYaml,
-} from './store';
+import { resolveRelativePath, defaultInitialSchema } from './store';
 
 describe('Default Initial Schema & Hierarchical C4 Linking', () => {
   it('should verify initial default workspace structure', () => {
@@ -22,11 +17,5 @@ describe('Blueprint Store Integration Helper Actions', () => {
     expect(resolveRelativePath('services/auth/components.yaml', '../billing/container.yaml')).toBe(
       'services/billing/container.yaml'
     );
-  });
-
-  it('should initialize with default workspace manifest values on startup', () => {
-    expect(defaultWorkspaceManifest).not.toBeNull();
-    expect(defaultWorkspaceManifest?.name).toBeDefined();
-    expect(defaultWorkspaceManifestYaml).toContain(`name: ${defaultWorkspaceManifest?.name}`);
   });
 });

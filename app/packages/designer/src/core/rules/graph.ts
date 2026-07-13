@@ -110,7 +110,6 @@ const systemNodeSchema = z.object({
     .regex(/^[a-zA-Z0-9_-]+$/, 'Node ID must be alphanumeric, dashes, or underscores'),
   type: nodeTypeSchema,
   name: z.string().min(1),
-  c4Ref: z.string().optional(),
   external: z.boolean().optional(),
   properties: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).optional(),
   isTest: z.boolean().optional(),
@@ -158,7 +157,6 @@ export function parseSchemaFromYaml(yamlContent: string): SystemSchema {
         id: n.id,
         type: n.type,
         name: n.name,
-        c4Ref: n.c4Ref,
         external: n.external,
         properties: n.properties || {},
         isTest: n.isTest,
@@ -190,6 +188,61 @@ export function parseSchemaFromYaml(yamlContent: string): SystemSchema {
   }
 }
 
+export function parseSchemaFromJson(jsonContent: string): SystemSchema {
+  let parsed: any;
+  try {
+    parsed = JSON.parse(jsonContent);
+  } catch (jsonErr: any) {
+    throw new Error(`Invalid schema JSON. JSON Parsing Error: ${jsonErr.message || jsonErr}`);
+  }
+
+  if (!parsed || typeof parsed !== 'object') {
+    throw new Error('Invalid schema JSON. Schema must be a valid JSON object');
+  }
+
+  try {
+    const validated = systemSchemaValidator.parse(parsed);
+
+    return {
+      name: validated.name,
+      version: validated.version,
+      level: validated.level,
+      parentRef: validated.parentRef,
+      nodes: validated.nodes.map(n => ({
+        id: n.id,
+        type: n.type,
+        name: n.name,
+        external: n.external,
+        properties: n.properties || {},
+        isTest: n.isTest,
+        x: n.x,
+        y: n.y,
+      })),
+      dependencies: validated.dependencies
+        ? validated.dependencies.map(d => ({
+            from: d.from,
+            to: d.to,
+            type: d.type,
+            description: d.description || '',
+          }))
+        : [],
+    };
+  } catch (zodErr) {
+    if (zodErr instanceof z.ZodError) {
+      const details = zodErr.issues
+        .map(issue => {
+          const path = issue.path
+            .map((p, idx) => (typeof p === 'number' ? `[${p}]` : (idx > 0 ? '.' : '') + String(p)))
+            .join('');
+          return `${path || 'root'}: ${issue.message}`;
+        })
+        .join('; ');
+      throw new Error(`Invalid schema JSON. Schema Validation Error: ${details}`);
+    }
+    throw zodErr;
+  }
+}
+
 /**
  * Serializes a SystemSchema model to a YAML string.
  */
@@ -206,7 +259,6 @@ export function serializeSchemaToYaml(schema: SystemSchema): string {
 
   cleanSchema.nodes = schema.nodes.map(n => {
     const cleaned: any = { id: n.id, type: n.type, name: n.name };
-    if (n.c4Ref) cleaned.c4Ref = n.c4Ref;
     if (n.external !== undefined) cleaned.external = n.external;
     if (n.isTest !== undefined) cleaned.isTest = n.isTest;
     if (n.properties && Object.keys(n.properties).length > 0) {

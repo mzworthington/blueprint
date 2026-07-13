@@ -1,6 +1,5 @@
-import * as yaml from 'js-yaml';
-import type { SystemSchema, WorkspaceManifest } from '../../core';
-import { parseSchemaFromYaml, getFileName, getClosestManifest } from '../../core';
+import type { SystemSchema } from '../../core';
+import { parseSchemaFromYaml, getFileName } from '../../core';
 
 export const defaultBlueprintModules = import.meta.glob<{ default: string }>(
   '../../../../../../blueprints/**/*.{yaml,yml}',
@@ -19,30 +18,13 @@ export let defaultInitialSchema: SystemSchema = {
 };
 
 export const defaultLoadedSystems: Array<{ path: string; name: string; schema: SystemSchema }> = [];
-export const defaultLoadedManifests: Array<{
-  path: string;
-  manifest: WorkspaceManifest;
-  yaml: string;
-}> = [];
-export let defaultWorkspaceManifest: WorkspaceManifest | null = null;
-export let defaultWorkspaceManifestYaml: string | null = null;
 
 Object.entries(defaultBlueprintModules).forEach(([filePath, module]) => {
   const fileName = getFileName(filePath);
   const cleanPath = filePath.replace('../../../../../blueprints/', '');
 
   if (fileName === 'workspace.yaml' || fileName.endsWith('-workspace.yaml')) {
-    try {
-      const yamlContent = module.default;
-      const parsed = yaml.load(yamlContent) as WorkspaceManifest;
-      defaultLoadedManifests.push({
-        path: cleanPath,
-        manifest: parsed,
-        yaml: yamlContent,
-      });
-    } catch (e) {
-      console.error('Failed to parse default workspace manifest:', filePath, e);
-    }
+    // Skip workspace manifest files
     return;
   }
   try {
@@ -67,32 +49,11 @@ defaultLoadedSystems.sort((a, b) => {
 });
 
 if (defaultLoadedSystems.length > 0) {
-  let initialManifest = defaultLoadedManifests.find(
-    m => m.path === 'blueprint/workspace.yaml' || m.path === 'blueprint\\workspace.yaml'
-  );
-  if (!initialManifest) {
-    initialManifest =
-      getClosestManifest(defaultLoadedSystems[0].path, defaultLoadedManifests) ?? undefined;
-  }
-
-  let resolvedRootSystem = defaultLoadedSystems[0];
-  if (initialManifest) {
-    defaultWorkspaceManifest = initialManifest.manifest;
-    defaultWorkspaceManifestYaml = initialManifest.yaml;
-    if (initialManifest.manifest.root) {
-      const resolvedRootName = getFileName(initialManifest.manifest.root);
-      const foundRoot = defaultLoadedSystems.find(
-        s =>
-          s.path === initialManifest.manifest.root ||
-          s.path === resolvedRootName ||
-          s.path.endsWith('/' + resolvedRootName)
-      );
-      if (foundRoot) {
-        resolvedRootSystem = foundRoot;
-      }
-    }
-  }
-  defaultInitialSchema = resolvedRootSystem.schema;
+  const rootSystem =
+    defaultLoadedSystems.find(s => s.schema.level === 'context') ||
+    defaultLoadedSystems.find(s => s.schema.level === 'container') ||
+    defaultLoadedSystems[0];
+  defaultInitialSchema = rootSystem.schema;
 } else {
   defaultLoadedSystems.push({
     path: 'blueprint.yaml',

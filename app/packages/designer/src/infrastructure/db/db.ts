@@ -11,7 +11,6 @@ export interface DbNode {
   properties: Record<string, any>;
   x?: number;
   y?: number;
-  c4Ref?: string;
   external?: boolean;
   isTest?: boolean;
   filePath: string;
@@ -85,7 +84,6 @@ export async function saveBaselineSchema(
         properties: node.properties || {},
         x: node.x,
         y: node.y,
-        c4Ref: node.c4Ref,
         external: node.external,
         isTest: node.isTest,
         filePath,
@@ -143,7 +141,6 @@ export async function saveWorkingSchema(
         properties: node.properties || {},
         x: node.x,
         y: node.y,
-        c4Ref: node.c4Ref,
         external: node.external,
         isTest: node.isTest,
         filePath,
@@ -257,7 +254,6 @@ export async function revertWorkingSchema(
       x: n.x,
       y: n.y,
       entityRef: n.entityRef,
-      c4Ref: n.c4Ref,
       external: n.external,
       isTest: n.isTest,
     })),
@@ -313,7 +309,6 @@ export async function loadWorkingSchema(
       x: n.x,
       y: n.y,
       entityRef: n.entityRef,
-      c4Ref: n.c4Ref,
       external: n.external,
       isTest: n.isTest,
     })),

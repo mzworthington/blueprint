@@ -11,7 +11,7 @@ import {
 import { useBlueprintStore } from '../../../../../application/store/store';
 import { BlueprintNode } from './BlueprintNode';
 import { ActionControls } from '../ActionControls/ActionControls';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, Info, AlertCircle, X } from 'lucide-react';
 
 export const Canvas: React.FC = () => {
   const {
@@ -29,6 +29,8 @@ export const Canvas: React.FC = () => {
     loadedSystems,
     currentFilePath,
     selectSystem,
+    notification,
+    setNotification,
   } = useBlueprintStore();
 
   const { fitView } = useReactFlow();
@@ -65,6 +67,15 @@ export const Canvas: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [zoomOut]);
 
+  useEffect(() => {
+    if (notification) {
+      const timer = setTimeout(() => {
+        setNotification(null);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [notification, setNotification]);
+
   const filteredNodes = useMemo(() => {
     if (showTests) return nodes;
     return nodes.filter(n => !n.data.isTest);
@@ -86,11 +97,10 @@ export const Canvas: React.FC = () => {
         onConnect={onConnect}
         onNodeDoubleClick={(_, node) => {
           const hasSub =
-            node.data?.c4Ref ||
-            (node.data?.entityRef &&
-              loadedSystems.some(
-                s => s.schema.level === 'component' && s.schema.parentRef === node.data.entityRef
-              ));
+            node.data?.entityRef &&
+            loadedSystems.some(
+              s => s.schema.level === 'component' && s.schema.parentRef === node.data.entityRef
+            );
           if (hasSub) {
             zoomIntoNode(node.id);
           }
@@ -163,6 +173,52 @@ export const Canvas: React.FC = () => {
                 className="text-red-400 hover:text-red-200 transition text-[10px] font-bold uppercase tracking-wider ml-2 shrink-0 self-center border border-red-900/40 hover:border-red-900/80 rounded px-1.5 py-0.5 bg-red-950/60"
               >
                 Dismiss
+              </button>
+            </div>
+          </Panel>
+        )}
+
+        {notification && (
+          <Panel position="top-center" className="m-4 max-w-md w-full animate-slide-in z-50">
+            <div
+              className={`flex items-start gap-3 border px-4 py-3 rounded-xl shadow-2xl backdrop-blur-md text-xs transition-all duration-300 ${
+                notification.type === 'success'
+                  ? 'bg-emerald-950/90 border-emerald-500/30 text-emerald-200'
+                  : notification.type === 'info'
+                    ? 'bg-cyan-950/90 border-cyan-900/50 text-cyan-200'
+                    : 'bg-red-950/90 border-red-900/50 text-red-200'
+              }`}
+            >
+              {notification.type === 'success' && (
+                <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+              )}
+              {notification.type === 'info' && (
+                <Info className="w-5 h-5 text-cyan-450 shrink-0 mt-0.5" />
+              )}
+              {notification.type === 'error' && (
+                <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+              )}
+              <div className="flex-1">
+                {notification.title && (
+                  <h5
+                    className={`font-bold mb-0.5 ${
+                      notification.type === 'success'
+                        ? 'text-emerald-300'
+                        : notification.type === 'info'
+                          ? 'text-cyan-300'
+                          : 'text-red-300'
+                    }`}
+                  >
+                    {notification.title}
+                  </h5>
+                )}
+                <p className="leading-relaxed">{notification.message}</p>
+              </div>
+              <button
+                onClick={() => setNotification(null)}
+                className="text-slate-450 hover:text-slate-200 transition shrink-0 p-0.5 rounded hover:bg-white/10"
+              >
+                <X className="w-4 h-4" />
               </button>
             </div>
           </Panel>

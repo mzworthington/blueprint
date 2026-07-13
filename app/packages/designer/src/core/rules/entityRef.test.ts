@@ -92,23 +92,22 @@ describe('entityRef Rules', () => {
             id: 'catalog',
             type: 'background-worker',
             name: 'Catalog Service',
-            c4Ref: './catalog-components.yaml',
           },
           {
             id: 'search',
             type: 'background-worker',
             name: 'Search Service',
-            c4Ref: './search-components.yaml',
           },
         ],
         dependencies: [],
       };
 
-      // 2. Component-level schema for Catalog (referenced via c4Ref)
+      // 2. Component-level schema for Catalog (referenced via parentRef)
       const catalogSchema: SystemSchema = {
         name: 'Backstage - catalog Components',
         version: '1.0.0',
         level: 'component',
+        parentRef: 'backstage/catalog',
         nodes: [
           {
             id: 'immediateentityprovider',

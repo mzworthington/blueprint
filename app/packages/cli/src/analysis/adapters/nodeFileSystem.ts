@@ -7,6 +7,10 @@ export class NodeFileSystemAdapter implements AnalysisFileSystemPort {
     fs.writeFileSync(filePath, yamlContent, 'utf8');
   }
 
+  async readSchema(filePath: string): Promise<string> {
+    return fs.readFileSync(filePath, 'utf8');
+  }
+
   exists(filePath: string): boolean {
     return fs.existsSync(filePath);
   }

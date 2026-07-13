@@ -103,10 +103,27 @@ describe('BlueprintNode Component', () => {
     expect(screen.getByText('(External)')).toBeInTheDocument();
   });
 
-  it('shows Zoom indicator when node has a c4Ref sub-diagram link', () => {
+  it('shows Zoom indicator when node has a sub-diagram link in loadedSystems', () => {
+    useBlueprintStore.setState({
+      loadedSystems: [
+        {
+          path: 'child.yaml',
+          name: 'Child Level',
+          schema: {
+            name: 'Child Level',
+            version: '1.0.0',
+            level: 'component',
+            parentRef: 'default/test-node-1',
+            nodes: [],
+            dependencies: [],
+          },
+        },
+      ],
+    });
+
     const props = {
       ...defaultProps,
-      data: { ...defaultProps.data, c4Ref: './child.yaml' },
+      data: { ...defaultProps.data, entityRef: 'default/test-node-1' },
     };
     render(<BlueprintNode {...props} />);
 
@@ -114,9 +131,26 @@ describe('BlueprintNode Component', () => {
   });
 
   it('triggers store zoomIntoNode when Zoom button is clicked', () => {
+    useBlueprintStore.setState({
+      loadedSystems: [
+        {
+          path: 'child.yaml',
+          name: 'Child Level',
+          schema: {
+            name: 'Child Level',
+            version: '1.0.0',
+            level: 'component',
+            parentRef: 'default/test-node-1',
+            nodes: [],
+            dependencies: [],
+          },
+        },
+      ],
+    });
+
     const props = {
       ...defaultProps,
-      data: { ...defaultProps.data, c4Ref: './child.yaml' },
+      data: { ...defaultProps.data, entityRef: 'default/test-node-1' },
     };
     const zoomSpy = vi
       .spyOn(useBlueprintStore.getState(), 'zoomIntoNode')

@@ -88,7 +88,11 @@ describe('Breadcrumbs Component', () => {
     expect(useBlueprintStore.getState().navigationStack).toHaveLength(0);
   });
 
-  it('renders next hierarchy level preview when a node with c4Ref is selected', () => {
+  it('renders next hierarchy level preview when a node with next level component schema is selected', () => {
+    useBlueprintStore.setState({
+      currentFilePath: 'blueprint/containers.yaml',
+    });
+
     const { initSchema } = useBlueprintStore.getState();
     initSchema({
       name: 'Main App System',
@@ -99,7 +103,7 @@ describe('Breadcrumbs Component', () => {
           id: 'web-app',
           type: 'web-app',
           name: 'Web Application',
-          c4Ref: 'web-app-components.yaml',
+          entityRef: 'blueprint/web-app',
           x: 100,
           y: 100,
         },
@@ -109,6 +113,20 @@ describe('Breadcrumbs Component', () => {
 
     useBlueprintStore.setState({
       selectedNodeId: 'web-app',
+      loadedSystems: [
+        {
+          path: 'web-app-components.yaml',
+          name: 'Web App Components',
+          schema: {
+            name: 'Web App Components',
+            version: '1.0.0',
+            level: 'component',
+            parentRef: 'blueprint/web-app',
+            nodes: [],
+            dependencies: [],
+          },
+        },
+      ],
     });
 
     render(<Breadcrumbs />);
@@ -116,7 +134,7 @@ describe('Breadcrumbs Component', () => {
     expect(screen.getByText('Web Application')).toBeInTheDocument();
   });
 
-  it('reconstructs breadcrumbs hierarchy using workspace manifest entityRef when navigationStack is empty', () => {
+  it('reconstructs breadcrumbs hierarchy using parentRef entityRef linkage when navigationStack is empty', () => {
     const { initSchema } = useBlueprintStore.getState();
     initSchema({
       name: 'Component Diagram',
@@ -140,7 +158,14 @@ describe('Breadcrumbs Component', () => {
             name: 'Container Diagram',
             version: '1.0.0',
             level: 'container',
-            nodes: [],
+            nodes: [
+              {
+                id: 'component',
+                type: 'web-app',
+                name: 'Component Node',
+                entityRef: 'blueprint/component',
+              },
+            ],
             dependencies: [],
           },
         },
@@ -157,16 +182,6 @@ describe('Breadcrumbs Component', () => {
           },
         },
       ],
-      workspaceManifest: {
-        name: 'Workspace Manifest',
-        root: 'blueprint',
-        hierarchy: [
-          {
-            parent: 'blueprint',
-            children: ['blueprint/component'],
-          },
-        ],
-      },
     });
 
     render(<Breadcrumbs />);
@@ -181,7 +196,14 @@ describe('Breadcrumbs Component', () => {
       name: 'Container Diagram',
       version: '1.0.0',
       level: 'container',
-      nodes: [],
+      nodes: [
+        {
+          id: 'component',
+          type: 'web-app',
+          name: 'Component Node',
+          entityRef: 'blueprint/component',
+        },
+      ],
       dependencies: [],
     });
 
@@ -198,7 +220,14 @@ describe('Breadcrumbs Component', () => {
             name: 'Container Diagram',
             version: '1.0.0',
             level: 'container',
-            nodes: [],
+            nodes: [
+              {
+                id: 'component',
+                type: 'web-app',
+                name: 'Component Node',
+                entityRef: 'blueprint/component',
+              },
+            ],
             dependencies: [],
           },
         },
@@ -215,16 +244,6 @@ describe('Breadcrumbs Component', () => {
           },
         },
       ],
-      workspaceManifest: {
-        name: 'Workspace Manifest',
-        root: 'blueprint',
-        hierarchy: [
-          {
-            parent: 'blueprint',
-            children: ['blueprint/component'],
-          },
-        ],
-      },
     });
 
     render(<Breadcrumbs />);

@@ -172,12 +172,11 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
   const loadedSystems = useBlueprintStore(state => state.loadedSystems);
 
   const hasSubDiagram = React.useMemo(() => {
-    if (data.c4Ref) return true;
     if (!data.entityRef) return false;
     return loadedSystems.some(
       s => s.schema.level === 'component' && s.schema.parentRef === data.entityRef
     );
-  }, [data.c4Ref, data.entityRef, loadedSystems]);
+  }, [data.entityRef, loadedSystems]);
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();

@@ -160,6 +160,9 @@ mod tests {
         fn write_schema(&self, _path: &str, _content: &str) -> Result<(), String> {
             Ok(())
         }
+        fn read_schema(&self, _path: &str) -> Result<String, String> {
+            Err("Not implemented".to_string())
+        }
         fn unlink(&self, _path: &str) -> Result<(), String> {
             Ok(())
         }

@@ -14,7 +14,10 @@ vi.mock('@xyflow/react', () => {
           data-testid="double-click-node"
           onClick={() =>
             onNodeDoubleClick &&
-            onNodeDoubleClick(null, { id: 'test-node-1', data: { c4Ref: './child.yaml' } })
+            onNodeDoubleClick(null, {
+              id: 'test-node-1',
+              data: { entityRef: 'default/test-node-1' },
+            })
           }
         >
           Double Click Node
@@ -176,43 +179,41 @@ describe('Canvas Component', () => {
   });
 
   it('triggers zoomIntoNode store action on double clicking a C4 node', async () => {
-    const mockFiles: Record<string, string> = {
-      'blueprint.yaml': `
-name: Root Context
-version: 1.0.0
-level: context
-nodes:
-  - id: test-node-1
-    type: web-app
-    name: Web App
-    c4Ref: ./child.yaml
-dependencies: []
-`,
-      'child.yaml': `
-name: Child Level
-version: 1.0.0
-level: container
-nodes: []
-dependencies: []
-`,
+    const parentSchema = {
+      name: 'Root Context',
+      version: '1.0.0',
+      level: 'container' as const,
+      nodes: [
+        {
+          id: 'test-node-1',
+          type: 'web-app' as const,
+          name: 'Web App',
+          entityRef: 'default/test-node-1',
+        },
+      ],
+      dependencies: [],
+    };
+
+    const childSchema = {
+      name: 'Child Level',
+      version: '1.0.0',
+      level: 'component' as const,
+      parentRef: 'default/test-node-1',
+      nodes: [],
+      dependencies: [],
     };
 
     useBlueprintStore.setState({
-      isWorkspaceOpen: true,
+      workspaceName: 'default',
+      loadedSystems: [
+        { path: 'blueprint.yaml', name: 'Root Context', schema: parentSchema },
+        { path: 'child.yaml', name: 'Child Level', schema: childSchema },
+      ],
       currentFilePath: 'blueprint.yaml',
-      workspacePort: {
-        readFile: async (path: string) => mockFiles[path],
-      } as any,
     });
 
     const { initSchema } = useBlueprintStore.getState();
-    initSchema({
-      name: 'Root Context',
-      version: '1.0.0',
-      level: 'context',
-      nodes: [{ id: 'test-node-1', type: 'web-app', name: 'Web App', c4Ref: './child.yaml' }],
-      dependencies: [],
-    });
+    initSchema(parentSchema);
 
     render(<Canvas />);
 

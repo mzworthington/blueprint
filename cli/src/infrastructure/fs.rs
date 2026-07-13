@@ -22,6 +22,11 @@ impl FileSystemPort for StdFileSystemAdapter {
         fs::write(path, content).map_err(|e| format!("Failed to write file: {}", e))
     }
 
+    fn read_schema(&self, file_path: &str) -> Result<String, String> {
+        fs::read_to_string(Path::new(file_path))
+            .map_err(|e| format!("Failed to read file: {}", e))
+    }
+
     fn exists(&self, path: &str) -> bool {
         Path::new(path).exists()
     }

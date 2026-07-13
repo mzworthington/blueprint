@@ -11,6 +11,7 @@ export interface LayoutPort {
 
 export interface AnalysisFileSystemPort {
   writeSchema(filePath: string, yamlContent: string): Promise<void>;
+  readSchema(filePath: string): Promise<string>;
   exists(filePath: string): boolean;
   mkdir(dirPath: string): void;
   unlink(filePath: string): void;

@@ -10,20 +10,9 @@ export type {
   ComponentEdgeData,
 } from './layoutUtils';
 
-export {
-  resolveRelativePath,
-  getClosestManifest,
-  resolveWorkspaceManifestState,
-  getFileName,
-} from '../../core';
+export { resolveRelativePath, getFileName } from '../../core';
 
-export {
-  defaultLoadedSystems,
-  defaultLoadedManifests,
-  defaultWorkspaceManifest,
-  defaultWorkspaceManifestYaml,
-  defaultInitialSchema,
-} from './defaultData';
+export { defaultLoadedSystems, defaultInitialSchema } from './defaultData';
 
 export interface BlueprintState extends UiState, DiagramState, IoState {}
 

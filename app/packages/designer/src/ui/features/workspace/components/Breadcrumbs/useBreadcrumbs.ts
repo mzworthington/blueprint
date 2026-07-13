@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useBlueprintStore } from '../../../../../application/store/store';
-import { getSchemaEntityRef, getSystemIdFromPath, type C4Level } from '../../../../../core';
+import { getSystemIdFromPath, type C4Level } from '../../../../../core';
 
 export interface BreadcrumbSegment {
   name: string;
@@ -41,7 +41,6 @@ export function useBreadcrumbs(): UseeBreadcrumbsReturn {
     selectedNodeId,
     zoomIntoNode,
     selectNode,
-    workspaceManifest,
     loadedSystems,
     selectSystem,
   } = useBlueprintStore();
@@ -63,23 +62,22 @@ export function useBreadcrumbs(): UseeBreadcrumbsReturn {
   const getSegmentChildren = useCallback(
     (segPath: string) => {
       const system = loadedSystems.find(s => s.path === segPath);
-      if (!system || !workspaceManifest || !workspaceManifest.hierarchy) return [];
+      if (!system) return [];
 
-      const segRef = getSchemaEntityRef(system.schema, system.path);
-      const match = workspaceManifest.hierarchy.find(h => h.parent === segRef);
-      if (!match) return [];
+      const nodeEntityRefs = new Set(
+        system.schema.nodes.map(n => n.entityRef).filter((ref): ref is string => !!ref)
+      );
 
-      return match.children.map(childRef => {
-        const childSystem = loadedSystems.find(
-          s => getSchemaEntityRef(s.schema, s.path) === childRef
-        );
-        return {
-          path: childSystem?.path || childRef,
-          name: childSystem?.name || childRef.split('/').pop() || childRef,
-        };
-      });
+      const childSystems = loadedSystems.filter(
+        s => s.schema.parentRef && nodeEntityRefs.has(s.schema.parentRef)
+      );
+
+      return childSystems.map(childSystem => ({
+        path: childSystem.path,
+        name: childSystem.name,
+      }));
     },
-    [workspaceManifest, loadedSystems]
+    [loadedSystems]
   );
 
   const activeLevel = (schema.level || 'container') as C4Level;
@@ -93,44 +91,36 @@ export function useBreadcrumbs(): UseeBreadcrumbsReturn {
 
   const ancestors = useMemo(() => {
     const list: Array<{ path: string; name: string; level: C4Level }> = [];
-    if (!workspaceManifest || !workspaceManifest.hierarchy) return list;
-
     const activeSystem = loadedSystems.find(s => s.path === currentFilePath);
     if (!activeSystem) return list;
 
-    let activeRef = getSchemaEntityRef(activeSystem.schema, activeSystem.path);
-    let foundParent = true;
+    let currentSystem = activeSystem;
     const visited = new Set<string>();
 
-    while (foundParent) {
-      foundParent = false;
-      if (visited.has(activeRef)) break;
-      visited.add(activeRef);
-
-      const match = workspaceManifest.hierarchy.find(h => h.children.includes(activeRef));
-      if (match) {
-        const parentSystem = loadedSystems.find(
-          s => getSchemaEntityRef(s.schema, s.path) === match.parent
-        );
-        if (parentSystem) {
-          list.unshift({
-            path: parentSystem.path,
-            name: parentSystem.name,
-            level: (parentSystem.schema.level || 'container') as C4Level,
-          });
-          activeRef = match.parent;
-          foundParent = true;
-        }
+    while (currentSystem.schema.parentRef && !visited.has(currentSystem.path)) {
+      visited.add(currentSystem.path);
+      const parentRef = currentSystem.schema.parentRef;
+      const parentSystem = loadedSystems.find(s =>
+        s.schema.nodes.some(n => n.entityRef === parentRef)
+      );
+      if (parentSystem) {
+        list.unshift({
+          path: parentSystem.path,
+          name: parentSystem.name,
+          level: (parentSystem.schema.level || 'container') as C4Level,
+        });
+        currentSystem = parentSystem;
+      } else {
+        break;
       }
     }
     return list;
-  }, [loadedSystems, currentFilePath, workspaceManifest]);
+  }, [loadedSystems, currentFilePath]);
 
   const selectedNode = selectedNodeId ? schema.nodes.find(n => n.id === selectedNodeId) : null;
 
   const hasNextHierarchy = useMemo(() => {
     if (!selectedNode) return false;
-    if (selectedNode.c4Ref) return true;
     const entityRef = selectedNode.entityRef;
     if (!entityRef) return false;
     return loadedSystems.some(
@@ -185,7 +175,7 @@ export function useBreadcrumbs(): UseeBreadcrumbsReturn {
     const childSystem = entityRef
       ? loadedSystems.find(s => s.schema.parentRef === entityRef && s.schema.level === 'component')
       : undefined;
-    const targetPath = childSystem?.path || selectedNode.c4Ref || '';
+    const targetPath = childSystem?.path || '';
 
     segments.push({
       name: selectedNode.name || selectedNode.id,

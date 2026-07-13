@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { PythonAnalyzer } from './pythonAnalyzer.ts';
+import { NodeType } from '../../core/generated/blueprint/v1/schema.ts';
 
 describe('PythonAnalyzer Strategy', () => {
   const analyzer = new PythonAnalyzer();
@@ -23,7 +24,7 @@ describe('PythonAnalyzer Strategy', () => {
       'main',
       false
     );
-    expect(node.type).toBe('background-worker');
+    expect(node.type).toBe(NodeType.NODE_TYPE_BACKGROUND_WORKER);
     expect(node.properties?.technology).toBe('Python Domain Service');
   });
 });

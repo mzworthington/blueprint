@@ -3,7 +3,7 @@ import { useLocation } from 'wouter';
 import { useBlueprintStore } from '../../../../../application/store/store';
 import { serializeSchemaToMermaid, serializeSchemaToYaml } from '../../../../../core';
 
-type Tab = 'yaml' | 'json' | 'mermaid' | 'manifest' | 'import';
+type Tab = 'yaml' | 'json' | 'mermaid';
 type MermaidMode = 'preview' | 'code';
 
 export interface UseCodeViewerReturn {
@@ -13,18 +13,18 @@ export interface UseCodeViewerReturn {
   copied: boolean;
   mermaidMode: MermaidMode;
   setMermaidMode: (mode: MermaidMode) => void;
-  importText: string;
-  setImportText: (text: string) => void;
-  manifestText: string;
-  setManifestText: (text: string) => void;
+  yamlText: string;
+  setYamlText: (text: string) => void;
+  jsonText: string;
+  setJsonText: (text: string) => void;
   // Derived
   availableTabs: readonly Tab[];
   filteredSchema: ReturnType<typeof buildFilteredSchema>;
   // Handlers
   getCodeContent: () => string;
   handleCopy: () => Promise<void>;
-  handleImport: () => void;
-  handleSaveManifest: () => Promise<void>;
+  handleSaveYaml: () => boolean;
+  handleSaveJson: () => boolean;
   // Navigation
   navigateToDesignSystem: () => void;
   // Store passthrough
@@ -55,6 +55,7 @@ export function useCodeViewer(): UseCodeViewerReturn {
     schema,
     yamlCode,
     importYaml,
+    importJson,
     lastError,
     clearError,
     logger,
@@ -62,8 +63,6 @@ export function useCodeViewer(): UseCodeViewerReturn {
     leftCollapsed,
     toggleLeftCollapsed,
     isWorkspaceOpen,
-    workspaceManifestYaml,
-    saveWorkspaceManifest,
   } = useBlueprintStore();
 
   const [, setLocation] = useLocation();
@@ -71,32 +70,36 @@ export function useCodeViewer(): UseCodeViewerReturn {
   const [activeTab, setActiveTab] = useState<Tab>('yaml');
   const [copied, setCopied] = useState(false);
   const [mermaidMode, setMermaidMode] = useState<MermaidMode>('preview');
-  const [importText, setImportText] = useState('');
-  const [manifestText, setManifestText] = useState('');
-
-  useEffect(() => {
-    if (workspaceManifestYaml) {
-      setManifestText(workspaceManifestYaml);
-    }
-  }, [workspaceManifestYaml]);
-
-  useEffect(() => {
-    if (activeTab === 'import' && !importText) {
-      setImportText(yamlCode);
-    }
-  }, [activeTab, yamlCode, importText]);
+  const [yamlText, setYamlText] = useState('');
+  const [jsonText, setJsonText] = useState('');
 
   const filteredSchema = useMemo(() => buildFilteredSchema(schema, showTests), [schema, showTests]);
+
+  const expectedYaml = useMemo(() => {
+    return showTests ? yamlCode : serializeSchemaToYaml(filteredSchema);
+  }, [showTests, yamlCode, filteredSchema]);
+
+  const expectedJson = useMemo(() => {
+    return showTests ? JSON.stringify(schema, null, 2) : JSON.stringify(filteredSchema, null, 2);
+  }, [showTests, schema, filteredSchema]);
+
+  useEffect(() => {
+    setYamlText(expectedYaml);
+  }, [expectedYaml]);
+
+  useEffect(() => {
+    setJsonText(expectedJson);
+  }, [expectedJson]);
 
   const getCodeContent = () => {
     switch (activeTab) {
       case 'json':
-        return JSON.stringify(filteredSchema, null, 2);
+        return jsonText;
       case 'mermaid':
         return serializeSchemaToMermaid(filteredSchema);
       case 'yaml':
       default:
-        return showTests ? yamlCode : serializeSchemaToYaml(filteredSchema);
+        return yamlText;
     }
   };
 
@@ -110,24 +113,17 @@ export function useCodeViewer(): UseCodeViewerReturn {
     }
   };
 
-  const handleImport = () => {
-    const success = importYaml(importText);
-    if (success) {
-      setActiveTab('yaml');
-      setImportText('');
-    }
+  const handleSaveYaml = () => {
+    return importYaml(yamlText);
   };
 
-  const handleSaveManifest = async () => {
-    await saveWorkspaceManifest(manifestText);
+  const handleSaveJson = () => {
+    return importJson(jsonText);
   };
 
   const navigateToDesignSystem = () => setLocation('/design-system');
 
-  const availableTabs =
-    isWorkspaceOpen || workspaceManifestYaml
-      ? (['yaml', 'json', 'mermaid', 'manifest', 'import'] as const)
-      : (['yaml', 'json', 'mermaid', 'import'] as const);
+  const availableTabs = ['yaml', 'json', 'mermaid'] as const;
 
   return {
     activeTab,
@@ -135,16 +131,16 @@ export function useCodeViewer(): UseCodeViewerReturn {
     copied,
     mermaidMode,
     setMermaidMode,
-    importText,
-    setImportText,
-    manifestText,
-    setManifestText,
+    yamlText,
+    setYamlText,
+    jsonText,
+    setJsonText,
     availableTabs,
     filteredSchema,
     getCodeContent,
     handleCopy,
-    handleImport,
-    handleSaveManifest,
+    handleSaveYaml,
+    handleSaveJson,
     navigateToDesignSystem,
     lastError,
     clearError,

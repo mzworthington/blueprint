@@ -1,5 +1,5 @@
 import React from 'react';
-import { Copy, Check, Upload, AlertCircle, Save } from 'lucide-react';
+import { Copy, Check, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { MermaidPreview } from '../../../../components/MermaidPreview';
 import { useCodeViewer } from './useCodeViewer';
 
@@ -10,15 +10,15 @@ export const CodeViewer: React.FC = () => {
     copied,
     mermaidMode,
     setMermaidMode,
-    importText,
-    setImportText,
-    manifestText,
-    setManifestText,
+    yamlText,
+    setYamlText,
+    jsonText,
+    setJsonText,
     availableTabs,
     getCodeContent,
     handleCopy,
-    handleImport,
-    handleSaveManifest,
+    handleSaveYaml,
+    handleSaveJson,
     navigateToDesignSystem,
     lastError,
     clearError,
@@ -82,17 +82,48 @@ export const CodeViewer: React.FC = () => {
       </div>
 
       <div className="flex-1 overflow-hidden flex flex-col p-4">
-        {activeTab === 'manifest' ? (
-          <div className="flex-1 flex flex-col space-y-3">
-            <p className="text-xs text-slate-400 leading-relaxed font-medium">
-              Edit the Workspace Manifest configuration below:
-            </p>
+        {activeTab === 'yaml' || activeTab === 'json' ? (
+          <div className="flex-1 flex flex-col space-y-3 overflow-hidden">
+            <div className="flex items-center justify-between shrink-0">
+              <p className="text-xs text-slate-400 leading-relaxed font-medium">
+                {activeTab === 'yaml'
+                  ? 'Edit current system schema using YAML format:'
+                  : 'Edit current system schema using JSON format:'}
+              </p>
+
+              <button
+                onClick={handleCopy}
+                className="px-2.5 py-1 rounded-lg bg-[#040914] border border-[#00f0ff]/20 hover:border-[#00f0ff]/50 hover:bg-[#00f0ff]/5 text-slate-300 hover:text-white transition flex items-center gap-1 text-[11px] font-semibold shadow-md cursor-pointer z-10"
+              >
+                {copied ? (
+                  <>
+                    <Check className="w-3 h-3 text-emerald-400" />
+                    <span className="text-emerald-400 font-bold">Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3 h-3" />
+                    <span>Copy</span>
+                  </>
+                )}
+              </button>
+            </div>
 
             <textarea
-              value={manifestText}
-              onChange={e => setManifestText(e.target.value)}
-              placeholder="name: My Workspace&#10;root: ./blueprint-containers.yaml&#10;hierarchy:&#10;  - parent: ./blueprint-containers.yaml..."
-              className="flex-1 bg-[#040914] border border-[#00f0ff]/25 focus:border-[#00f0ff] focus:shadow-[0_0_10px_rgba(0,240,255,0.15)] rounded-xl p-3 text-xs font-mono text-white focus:outline-none resize-none transition duration-200"
+              value={activeTab === 'yaml' ? yamlText : jsonText}
+              onChange={e => {
+                if (activeTab === 'yaml') {
+                  setYamlText(e.target.value);
+                } else {
+                  setJsonText(e.target.value);
+                }
+              }}
+              placeholder={
+                activeTab === 'yaml'
+                  ? 'name: My System\nversion: 1.0.0...'
+                  : '{\n  "name": "My System",\n  "version": "1.0.0"...\n}'
+              }
+              className="flex-1 bg-[#040914]/60 border border-[#00f0ff]/15 focus:border-[#00f0ff] focus:shadow-[0_0_10px_rgba(0,240,255,0.10)] rounded-xl p-3 text-xs font-mono text-white focus:outline-none resize-none transition duration-200"
             />
 
             {lastError && (
@@ -103,39 +134,11 @@ export const CodeViewer: React.FC = () => {
             )}
 
             <button
-              onClick={handleSaveManifest}
-              className="w-full flex items-center justify-center gap-2 bg-[#00f0ff]/15 hover:bg-[#00f0ff]/25 text-[#00f0ff] border border-[#00f0ff]/40 hover:border-[#00f0ff] rounded-lg py-2.5 text-xs font-bold shadow-[0_0_10px_rgba(0,240,255,0.15)] hover:shadow-[0_0_15px_rgba(0,240,255,0.35)] transition cursor-pointer"
+              onClick={activeTab === 'yaml' ? handleSaveYaml : handleSaveJson}
+              className="w-full flex items-center justify-center gap-2 bg-[#00f0ff]/15 hover:bg-[#00f0ff]/25 text-[#00f0ff] border border-[#00f0ff]/40 hover:border-[#00f0ff] rounded-lg py-2 text-xs font-bold shadow-[0_0_10px_rgba(0,240,255,0.15)] hover:shadow-[0_0_15px_rgba(0,240,255,0.35)] transition cursor-pointer"
             >
-              <Save className="w-4 h-4" />
-              Save Manifest
-            </button>
-          </div>
-        ) : activeTab === 'import' ? (
-          <div className="flex-1 flex flex-col space-y-3">
-            <p className="text-xs text-slate-400 leading-relaxed font-medium">
-              Paste your Blueprint YAML schema configuration here to re-render the workspace:
-            </p>
-
-            <textarea
-              value={importText}
-              onChange={e => setImportText(e.target.value)}
-              placeholder="name: My System&#10;version: 1.0.0&#10;nodes:&#10;  - id: api..."
-              className="flex-1 bg-[#040914] border border-[#00f0ff]/25 focus:border-[#00f0ff] focus:shadow-[0_0_10px_rgba(0,240,255,0.15)] rounded-xl p-3 text-xs font-mono text-white focus:outline-none resize-none transition duration-200"
-            />
-
-            {lastError && (
-              <div className="flex items-start gap-2 bg-red-950/20 border border-red-900/30 rounded-xl p-2.5 text-red-400 text-xs">
-                <AlertCircle className="w-4.5 h-4.5 shrink-0 mt-0.5" />
-                <span className="break-words w-full">{lastError}</span>
-              </div>
-            )}
-
-            <button
-              onClick={handleImport}
-              className="w-full flex items-center justify-center gap-2 bg-[#00f0ff]/15 hover:bg-[#00f0ff]/25 text-[#00f0ff] border border-[#00f0ff]/40 hover:border-[#00f0ff] rounded-lg py-2.5 text-xs font-bold shadow-[0_0_10px_rgba(0,240,255,0.15)] hover:shadow-[0_0_15px_rgba(0,240,255,0.35)] transition cursor-pointer"
-            >
-              <Upload className="w-4 h-4" />
-              Apply Schema
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              Apply {activeTab.toUpperCase()} Changes
             </button>
           </div>
         ) : (

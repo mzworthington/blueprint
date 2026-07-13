@@ -245,7 +245,6 @@ export interface SystemNode {
   id: string;
   type: NodeType;
   name: string;
-  c4Ref?: string | undefined;
   external?: boolean | undefined;
   properties: { [key: string]: any } | undefined;
   isTest?: boolean | undefined;
@@ -270,23 +269,11 @@ export interface SystemSchema {
   dependencies: SystemDependency[];
 }
 
-export interface WorkspaceHierarchy {
-  parent: string;
-  children: string[];
-}
-
-export interface WorkspaceManifest {
-  name: string;
-  root: string;
-  hierarchy: WorkspaceHierarchy[];
-}
-
 function createBaseSystemNode(): SystemNode {
   return {
     id: '',
     type: 0,
     name: '',
-    c4Ref: undefined,
     external: undefined,
     properties: undefined,
     isTest: undefined,
@@ -306,9 +293,6 @@ export const SystemNode: MessageFns<SystemNode> = {
     }
     if (message.name !== '') {
       writer.uint32(26).string(message.name);
-    }
-    if (message.c4Ref !== undefined) {
-      writer.uint32(34).string(message.c4Ref);
     }
     if (message.external !== undefined) {
       writer.uint32(40).bool(message.external);
@@ -360,14 +344,6 @@ export const SystemNode: MessageFns<SystemNode> = {
           }
 
           message.name = reader.string();
-          continue;
-        }
-        case 4: {
-          if (tag !== 34) {
-            break;
-          }
-
-          message.c4Ref = reader.string();
           continue;
         }
         case 5: {
@@ -432,11 +408,6 @@ export const SystemNode: MessageFns<SystemNode> = {
       id: isSet(object.id) ? globalThis.String(object.id) : '',
       type: isSet(object.type) ? nodeTypeFromJSON(object.type) : 0,
       name: isSet(object.name) ? globalThis.String(object.name) : '',
-      c4Ref: isSet(object.c4Ref)
-        ? globalThis.String(object.c4Ref)
-        : isSet(object.c4_ref)
-          ? globalThis.String(object.c4_ref)
-          : undefined,
       external: isSet(object.external) ? globalThis.Boolean(object.external) : undefined,
       properties: isObject(object.properties) ? object.properties : undefined,
       isTest: isSet(object.isTest)
@@ -464,9 +435,6 @@ export const SystemNode: MessageFns<SystemNode> = {
     }
     if (message.name !== '') {
       obj.name = message.name;
-    }
-    if (message.c4Ref !== undefined) {
-      obj.c4Ref = message.c4Ref;
     }
     if (message.external !== undefined) {
       obj.external = message.external;
@@ -497,7 +465,6 @@ export const SystemNode: MessageFns<SystemNode> = {
     message.id = object.id ?? '';
     message.type = object.type ?? 0;
     message.name = object.name ?? '';
-    message.c4Ref = object.c4Ref ?? undefined;
     message.external = object.external ?? undefined;
     message.properties = object.properties ?? undefined;
     message.isTest = object.isTest ?? undefined;
@@ -760,178 +727,6 @@ export const SystemSchema: MessageFns<SystemSchema> = {
     message.parentRef = object.parentRef ?? undefined;
     message.nodes = object.nodes?.map(e => SystemNode.fromPartial(e)) || [];
     message.dependencies = object.dependencies?.map(e => SystemDependency.fromPartial(e)) || [];
-    return message;
-  },
-};
-
-function createBaseWorkspaceHierarchy(): WorkspaceHierarchy {
-  return { parent: '', children: [] };
-}
-
-export const WorkspaceHierarchy: MessageFns<WorkspaceHierarchy> = {
-  encode(message: WorkspaceHierarchy, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.parent !== '') {
-      writer.uint32(10).string(message.parent);
-    }
-    for (const v of message.children) {
-      writer.uint32(18).string(v!);
-    }
-    return writer;
-  },
-
-  decode(input: BinaryReader | Uint8Array, length?: number): WorkspaceHierarchy {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseWorkspaceHierarchy();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1: {
-          if (tag !== 10) {
-            break;
-          }
-
-          message.parent = reader.string();
-          continue;
-        }
-        case 2: {
-          if (tag !== 18) {
-            break;
-          }
-
-          message.children.push(reader.string());
-          continue;
-        }
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): WorkspaceHierarchy {
-    return {
-      parent: isSet(object.parent) ? globalThis.String(object.parent) : '',
-      children: globalThis.Array.isArray(object?.children)
-        ? object.children.map((e: any) => globalThis.String(e))
-        : [],
-    };
-  },
-
-  toJSON(message: WorkspaceHierarchy): unknown {
-    const obj: any = {};
-    if (message.parent !== '') {
-      obj.parent = message.parent;
-    }
-    if (message.children?.length) {
-      obj.children = message.children;
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<WorkspaceHierarchy>, I>>(base?: I): WorkspaceHierarchy {
-    return WorkspaceHierarchy.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<WorkspaceHierarchy>, I>>(object: I): WorkspaceHierarchy {
-    const message = createBaseWorkspaceHierarchy();
-    message.parent = object.parent ?? '';
-    message.children = object.children?.map(e => e) || [];
-    return message;
-  },
-};
-
-function createBaseWorkspaceManifest(): WorkspaceManifest {
-  return { name: '', root: '', hierarchy: [] };
-}
-
-export const WorkspaceManifest: MessageFns<WorkspaceManifest> = {
-  encode(message: WorkspaceManifest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.name !== '') {
-      writer.uint32(10).string(message.name);
-    }
-    if (message.root !== '') {
-      writer.uint32(18).string(message.root);
-    }
-    for (const v of message.hierarchy) {
-      WorkspaceHierarchy.encode(v!, writer.uint32(26).fork()).join();
-    }
-    return writer;
-  },
-
-  decode(input: BinaryReader | Uint8Array, length?: number): WorkspaceManifest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseWorkspaceManifest();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1: {
-          if (tag !== 10) {
-            break;
-          }
-
-          message.name = reader.string();
-          continue;
-        }
-        case 2: {
-          if (tag !== 18) {
-            break;
-          }
-
-          message.root = reader.string();
-          continue;
-        }
-        case 3: {
-          if (tag !== 26) {
-            break;
-          }
-
-          message.hierarchy.push(WorkspaceHierarchy.decode(reader, reader.uint32()));
-          continue;
-        }
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): WorkspaceManifest {
-    return {
-      name: isSet(object.name) ? globalThis.String(object.name) : '',
-      root: isSet(object.root) ? globalThis.String(object.root) : '',
-      hierarchy: globalThis.Array.isArray(object?.hierarchy)
-        ? object.hierarchy.map((e: any) => WorkspaceHierarchy.fromJSON(e))
-        : [],
-    };
-  },
-
-  toJSON(message: WorkspaceManifest): unknown {
-    const obj: any = {};
-    if (message.name !== '') {
-      obj.name = message.name;
-    }
-    if (message.root !== '') {
-      obj.root = message.root;
-    }
-    if (message.hierarchy?.length) {
-      obj.hierarchy = message.hierarchy.map(e => WorkspaceHierarchy.toJSON(e));
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<WorkspaceManifest>, I>>(base?: I): WorkspaceManifest {
-    return WorkspaceManifest.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<WorkspaceManifest>, I>>(object: I): WorkspaceManifest {
-    const message = createBaseWorkspaceManifest();
-    message.name = object.name ?? '';
-    message.root = object.root ?? '';
-    message.hierarchy = object.hierarchy?.map(e => WorkspaceHierarchy.fromPartial(e)) || [];
     return message;
   },
 };

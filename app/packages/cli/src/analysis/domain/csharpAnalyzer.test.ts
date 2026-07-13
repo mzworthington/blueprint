@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { CSharpAnalyzer } from './csharpAnalyzer.ts';
+import { NodeType } from '../../core/generated/blueprint/v1/schema.ts';
 
 describe('CSharpAnalyzer Strategy', () => {
   const analyzer = new CSharpAnalyzer();
@@ -23,7 +24,7 @@ describe('CSharpAnalyzer Strategy', () => {
       'data',
       false
     );
-    expect(node.type).toBe('background-worker');
+    expect(node.type).toBe(NodeType.NODE_TYPE_BACKGROUND_WORKER);
     expect(node.properties?.technology).toBe('C# Domain Service');
   });
 
@@ -31,7 +32,7 @@ describe('CSharpAnalyzer Strategy', () => {
     const info = analyzer.getContainerInfo(
       {
         id: 'usercontroller',
-        type: 'background-worker',
+        type: NodeType.NODE_TYPE_BACKGROUND_WORKER,
         name: 'UserController',
         properties: {
           namespaces: 'TestProject.Controllers,TestProject.Services',

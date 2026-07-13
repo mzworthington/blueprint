@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { useBlueprintStore } from '../store';
 import type { NodeType } from '../../../core';
 
@@ -56,7 +56,6 @@ describe('diagramState Actions & State Management', () => {
       name: 'Updated Node A',
       properties: { port: 8080 },
       external: true,
-      c4Ref: './subsystem.yaml',
     });
 
     const updatedState = useBlueprintStore.getState();
@@ -64,10 +63,8 @@ describe('diagramState Actions & State Management', () => {
     expect(nodeA?.name).toBe('Updated Node A');
     expect(nodeA?.properties?.port).toBe(8080);
     expect(nodeA?.external).toBe(true);
-    expect(nodeA?.c4Ref).toBe('./subsystem.yaml');
     expect(updatedState.yamlCode).toContain('name: Updated Node A');
     expect(updatedState.yamlCode).toContain('external: true');
-    expect(updatedState.yamlCode).toContain('c4Ref: ./subsystem.yaml');
   });
 
   it('should rename a node ID and update referencing edges', () => {
@@ -138,80 +135,11 @@ describe('diagramState Actions & State Management', () => {
   });
 
   describe('Zoom error handling', () => {
-    it('should set lastError if zoomIntoNode file read fails', async () => {
-      const store = useBlueprintStore.getState();
-      useBlueprintStore.setState({
-        isWorkspaceOpen: true,
-        currentFilePath: 'root.yaml',
-        schema: {
-          name: 'Root Context',
-          version: '1.0.0',
-          level: 'context',
-          nodes: [{ id: 'sub', type: 'web-app', name: 'Sub', c4Ref: './sub.yaml' }],
-          dependencies: [],
-        },
-      });
-
-      const spyRead = vi.spyOn(store.workspacePort, 'readFile');
-      spyRead.mockRejectedValue(new Error('Permission denied'));
-
-      const success = await store.zoomIntoNode('sub');
-      expect(success).toBe(false);
-      expect(useBlueprintStore.getState().lastError).toContain('Failed to load sub-diagram');
-      spyRead.mockRestore();
-    });
-
-    it('should set lastError if zoomOut file read fails', async () => {
-      const store = useBlueprintStore.getState();
-      useBlueprintStore.setState({
-        isWorkspaceOpen: true,
-        currentFilePath: 'sub.yaml',
-        navigationStack: [],
-        schema: {
-          name: 'Sub System',
-          version: '1.0.0',
-          level: 'container',
-          parentRef: '../root.yaml',
-          nodes: [],
-          dependencies: [],
-        },
-      });
-
-      const spyRead = vi.spyOn(store.workspacePort, 'readFile');
-      spyRead.mockRejectedValue(new Error('File locked'));
-
-      const success = await store.zoomOut();
-      expect(success).toBe(false);
-      expect(useBlueprintStore.getState().lastError).toContain('Failed to load parent diagram');
-      spyRead.mockRestore();
-    });
-
-    it('should return false if zoomOut parent not found in default loaded systems when workspace is closed', async () => {
-      const store = useBlueprintStore.getState();
-      useBlueprintStore.setState({
-        isWorkspaceOpen: false,
-        currentFilePath: 'sub.yaml',
-        navigationStack: [],
-        schema: {
-          name: 'Sub System',
-          version: '1.0.0',
-          level: 'container',
-          parentRef: '../unknown.yaml',
-          nodes: [],
-          dependencies: [],
-        },
-      });
-
-      const success = await store.zoomOut();
-      expect(success).toBe(false);
-    });
-
     it('should return false if zooming out from root diagram', async () => {
       const store = useBlueprintStore.getState();
       useBlueprintStore.setState({
         currentFilePath: 'root.yaml',
         navigationStack: [],
-        workspaceManifest: null,
         schema: {
           name: 'Root Context',
           version: '1.0.0',

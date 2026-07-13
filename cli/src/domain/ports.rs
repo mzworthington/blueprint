@@ -41,6 +41,7 @@ pub trait LayoutPort: Send + Sync {
 
 pub trait FileSystemPort: Send + Sync {
     fn write_schema(&self, file_path: &str, content: &str) -> Result<(), String>;
+    fn read_schema(&self, file_path: &str) -> Result<String, String>;
     fn exists(&self, path: &str) -> bool;
     fn mkdir(&self, path: &str) -> Result<(), String>;
     fn unlink(&self, path: &str) -> Result<(), String>;

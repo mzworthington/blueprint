@@ -26,42 +26,40 @@ describe('CodeViewer UI Component', () => {
     render(<CodeViewer />);
 
     expect(screen.getByText(/Schema Explorer/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /yaml/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /json/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /mermaid/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /import/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^yaml$/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^json$/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /mermaid\.js/i })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /import/i })).not.toBeInTheDocument();
   });
 
   it('should render the initial schema in the YAML code block', () => {
     render(<CodeViewer />);
 
-    const codeBlock = screen.getByText(content => content.includes('name: Test Project'));
-    expect(codeBlock).toBeInTheDocument();
-    expect(codeBlock).toHaveTextContent('id: web-api');
-    expect(codeBlock).toHaveTextContent('type: rest-api');
+    const textarea = screen.getByRole('textbox') as HTMLTextAreaElement;
+    expect(textarea).toBeInTheDocument();
+    expect(textarea.value).toContain('name: Test Project');
+    expect(textarea.value).toContain('id: web-api');
+    expect(textarea.value).toContain('type: rest-api');
   });
 
   it('should switch tabs and show JSON schema representation', () => {
     render(<CodeViewer />);
 
-    fireEvent.click(screen.getByRole('button', { name: /json/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^json$/i }));
 
-    const codeBlock = screen.getByText(content => content.includes('"name": "Test Project"'));
-    expect(codeBlock).toBeInTheDocument();
+    const textarea = screen.getByRole('textbox') as HTMLTextAreaElement;
+    expect(textarea).toBeInTheDocument();
+    expect(textarea.value).toContain('"name": "Test Project"');
   });
 
-  it('should support YAML import workflow', () => {
+  it('should support YAML direct edit and apply workflow', () => {
     render(<CodeViewer />);
 
-    fireEvent.click(screen.getByRole('button', { name: /import/i }));
-
-    expect(screen.getByText(/Paste your Blueprint YAML schema/i)).toBeInTheDocument();
-
-    const textarea = screen.getByPlaceholderText(/name: My System/i);
-    expect(textarea).toBeInTheDocument();
+    const textarea = screen.getByRole('textbox') as HTMLTextAreaElement;
+    expect(textarea.value).toContain('name: Test Project');
 
     const newYaml = `
-name: Imported System
+name: Edited YAML System
 version: 2.1.0
 level: container
 nodes:
@@ -71,29 +69,67 @@ nodes:
 `;
     fireEvent.change(textarea, { target: { value: newYaml } });
 
-    fireEvent.click(screen.getByRole('button', { name: /Apply Schema/i }));
+    fireEvent.click(screen.getByRole('button', { name: /Apply YAML Changes/i }));
 
-    expect(screen.getByRole('button', { name: /yaml/i })).toHaveClass('text-[#00f0ff]');
-    expect(useBlueprintStore.getState().schema.name).toBe('Imported System');
+    expect(useBlueprintStore.getState().schema.name).toBe('Edited YAML System');
     expect(useBlueprintStore.getState().schema.nodes[0].id).toBe('custom-service');
   });
 
-  it('should show error when importing invalid YAML configuration', () => {
+  it('should support JSON direct edit and apply workflow', () => {
     render(<CodeViewer />);
 
-    fireEvent.click(screen.getByRole('button', { name: /import/i }));
-    const textarea = screen.getByPlaceholderText(/name: My System/i);
+    fireEvent.click(screen.getByRole('button', { name: /json/i }));
 
+    const textarea = screen.getByRole('textbox') as HTMLTextAreaElement;
+    expect(textarea.value).toContain('"name": "Test Project"');
+
+    const newJson = `{
+  "name": "Edited JSON System",
+  "version": "3.0.0",
+  "level": "container",
+  "nodes": [
+    {
+      "id": "new-node",
+      "type": "serverless-function",
+      "name": "New Function"
+    }
+  ],
+  "dependencies": []
+}`;
+    fireEvent.change(textarea, { target: { value: newJson } });
+
+    fireEvent.click(screen.getByRole('button', { name: /Apply JSON Changes/i }));
+
+    expect(useBlueprintStore.getState().schema.name).toBe('Edited JSON System');
+    expect(useBlueprintStore.getState().schema.nodes[0].id).toBe('new-node');
+  });
+
+  it('should show error when applying invalid YAML configuration', () => {
+    render(<CodeViewer />);
+
+    const textarea = screen.getByRole('textbox') as HTMLTextAreaElement;
     fireEvent.change(textarea, { target: { value: 'invalid: : yaml : syntax' } });
-    fireEvent.click(screen.getByRole('button', { name: /Apply Schema/i }));
+    fireEvent.click(screen.getByRole('button', { name: /Apply YAML Changes/i }));
 
     expect(screen.getByText(/Invalid schema YAML/i)).toBeInTheDocument();
+  });
+
+  it('should show error when applying invalid JSON configuration', () => {
+    render(<CodeViewer />);
+
+    fireEvent.click(screen.getByRole('button', { name: /^json$/i }));
+    const textarea = screen.getByRole('textbox') as HTMLTextAreaElement;
+
+    fireEvent.change(textarea, { target: { value: '{invalid json}' } });
+    fireEvent.click(screen.getByRole('button', { name: /Apply JSON Changes/i }));
+
+    expect(screen.getByText(/Invalid schema JSON/i)).toBeInTheDocument();
   });
 
   it('should support Mermaid preview toggle and render mock visual preview', async () => {
     render(<CodeViewer />);
 
-    fireEvent.click(screen.getByRole('button', { name: /mermaid/i }));
+    fireEvent.click(screen.getByRole('button', { name: /mermaid\.js/i }));
 
     expect(screen.getByRole('button', { name: /preview/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /code/i })).toBeInTheDocument();
@@ -123,49 +159,21 @@ nodes:
 
     const { rerender } = render(<CodeViewer />);
 
-    let yamlBlock = screen.getByText(content => content.includes('name: Filtered Project'));
-    expect(yamlBlock).toHaveTextContent('id: app');
-    expect(yamlBlock).not.toHaveTextContent('id: app-test');
+    let textarea = screen.getByRole('textbox') as HTMLTextAreaElement;
+    expect(textarea.value).toContain('id: app');
+    expect(textarea.value).not.toContain('id: app-test');
 
-    fireEvent.click(screen.getByRole('button', { name: /json/i }));
-    let jsonBlock = screen.getByText(content => content.includes('"name": "Filtered Project"'));
-    expect(jsonBlock).toHaveTextContent('"id": "app"');
-    expect(jsonBlock).not.toHaveTextContent('"id": "app-test"');
+    fireEvent.click(screen.getByRole('button', { name: /^json$/i }));
+    textarea = screen.getByRole('textbox') as HTMLTextAreaElement;
+    expect(textarea.value).toContain('"id": "app"');
+    expect(textarea.value).not.toContain('"id": "app-test"');
 
     useBlueprintStore.setState({ showTests: true });
     rerender(<CodeViewer />);
 
-    fireEvent.click(screen.getByRole('button', { name: /json/i }));
-    jsonBlock = screen.getByText(content => content.includes('"name": "Filtered Project"'));
-    expect(jsonBlock).toHaveTextContent('"id": "app"');
-    expect(jsonBlock).toHaveTextContent('"id": "app-test"');
-  });
-
-  it('should render the Manifest tab when workspace is open, allowing editing and saving', async () => {
-    const mockSaveWorkspaceManifest = vi.fn().mockResolvedValue(true);
-    useBlueprintStore.setState({
-      isWorkspaceOpen: true,
-      workspaceManifestYaml: 'name: Mock Workspace\nroot: ./root.yaml',
-      saveWorkspaceManifest: mockSaveWorkspaceManifest,
-    });
-
-    render(<CodeViewer />);
-
-    const manifestTab = screen.getByRole('button', { name: /manifest/i });
-    expect(manifestTab).toBeInTheDocument();
-
-    fireEvent.click(manifestTab);
-
-    const textarea = screen.getByDisplayValue(/Mock Workspace/);
-    expect(textarea).toBeInTheDocument();
-
-    fireEvent.change(textarea, { target: { value: 'name: Updated Workspace\nroot: ./root.yaml' } });
-
-    const saveButton = screen.getByRole('button', { name: /save manifest/i });
-    fireEvent.click(saveButton);
-
-    expect(mockSaveWorkspaceManifest).toHaveBeenCalledWith(
-      'name: Updated Workspace\nroot: ./root.yaml'
-    );
+    fireEvent.click(screen.getByRole('button', { name: /^json$/i }));
+    textarea = screen.getByRole('textbox') as HTMLTextAreaElement;
+    expect(textarea.value).toContain('"id": "app"');
+    expect(textarea.value).toContain('"id": "app-test"');
   });
 });

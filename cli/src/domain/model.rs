@@ -4,7 +4,6 @@ pub mod pb {
 
 pub use pb::{
     C4Level, DependencyType, NodeType, SystemDependency, SystemNode, SystemSchema,
-    WorkspaceHierarchy, WorkspaceManifest,
 };
 
 impl SystemNode {

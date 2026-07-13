@@ -8,18 +8,14 @@ import {
   type SystemDependency,
   type NodeType,
   type C4Level,
-  type WorkspaceManifest,
   type ValidationResult,
   validateGraph,
   parseSchemaFromYaml,
+  parseSchemaFromJson,
   serializeSchemaToYaml,
-  resolveRelativePath,
-  resolveWorkspaceManifestState,
-  getFileName,
   resolveWorkspaceEntityRefs,
   getSystemIdFromPath,
   isEntityRef,
-  getSchemaEntityRef,
 } from '../../../core';
 import {
   mapDomainNodeToRFNode,
@@ -28,13 +24,7 @@ import {
   rebuildSchemaFromCanvas,
 } from '../layoutUtils';
 import type { BlueprintRFNode, BlueprintRFEdge, ComponentEdgeData } from '../layoutUtils';
-import {
-  defaultLoadedSystems,
-  defaultLoadedManifests,
-  defaultWorkspaceManifest,
-  defaultWorkspaceManifestYaml,
-  defaultInitialSchema,
-} from '../defaultData';
+import { defaultLoadedSystems, defaultInitialSchema } from '../defaultData';
 import { saveWorkingSchema, saveBaselineSchema } from '../../../infrastructure/db/db';
 
 export interface DiagramState {
@@ -49,10 +39,6 @@ export interface DiagramState {
   navigationStack: Array<{ path: string; schema: SystemSchema }>;
   isWorkspaceOpen: boolean;
   workspaceName: string;
-  workspaceManifest: WorkspaceManifest | null;
-  workspaceManifestYaml: string | null;
-  workspaceManifestPath: string | null;
-  loadedManifests: Array<{ path: string; manifest: WorkspaceManifest; yaml: string }>;
   loadedSystems: Array<{ path: string; name: string; schema: SystemSchema }>;
   nodeRefMap: Record<string, Record<string, string>>;
 
@@ -60,6 +46,7 @@ export interface DiagramState {
   updateSchemaName: (name: string) => void;
   updateSchemaLevel: (level: C4Level) => void;
   importYaml: (yamlContent: string) => boolean;
+  importJson: (jsonContent: string) => boolean;
   clearError: () => void;
   onNodesChange: (changes: NodeChange[]) => void;
   onEdgesChange: (changes: EdgeChange[]) => void;
@@ -161,7 +148,7 @@ const applyStateUpdates = (
       return sys;
     }) || [];
 
-  const resolved = resolveWorkspaceEntityRefs(nextLoadedSystems);
+  const resolved = resolveWorkspaceEntityRefs(nextLoadedSystems, get().workspaceName);
   const currentFilePath = get().currentFilePath;
   const fileRefMap = resolved.nodeRefMap[currentFilePath] || {};
   const systemId = getSystemIdFromPath(currentFilePath);
@@ -276,28 +263,20 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   navigationStack: [],
   isWorkspaceOpen: false,
   workspaceName: '',
-  workspaceManifest: defaultWorkspaceManifest,
-  workspaceManifestYaml: defaultWorkspaceManifestYaml,
-  workspaceManifestPath: defaultWorkspaceManifest
-    ? defaultLoadedManifests.find(m => m.manifest === defaultWorkspaceManifest)?.path || null
-    : null,
-  loadedManifests: defaultLoadedManifests,
   loadedSystems: initialLoadedSystemsResolved,
   nodeRefMap: resolvedInitial.nodeRefMap,
 
   selectSystem: (path: string) => {
-    const { loadedSystems, loadedManifests, logger } = get();
+    const { loadedSystems, logger } = get();
     const system = loadedSystems.find(s => s.path === path);
     if (!system) {
       logger.warn('System path not found in loaded systems', { path });
       return;
     }
     logger.info('Switching active system', { name: system.name, path });
-    const manifestState = resolveWorkspaceManifestState(path, loadedManifests);
     set({
       currentFilePath: path,
       selectedNodeId: null,
-      ...manifestState,
     });
     get().initSchema(system.schema);
   },
@@ -335,11 +314,9 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
         newLoadedSystems.push({ path, name, schema });
       }
 
-      const manifestState = resolveWorkspaceManifestState(path, get().loadedManifests);
       set({
         currentFilePath: path,
         loadedSystems: newLoadedSystems,
-        ...manifestState,
       });
       get().initSchema(schema);
       return true;
@@ -347,6 +324,35 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
       const errorMsg = e.message || 'Failed to import YAML schema configuration';
       set({ lastError: errorMsg });
       get().logger.error('Failed to import YAML schema configuration', e);
+      return false;
+    }
+  },
+
+  importJson: jsonContent => {
+    try {
+      set({ lastError: null });
+      const schema = parseSchemaFromJson(jsonContent);
+      const name = schema.name || 'imported_schema';
+      const path = `${name.toLowerCase().replace(/[^a-z0-9_-]/g, '_')}.yaml`;
+
+      const existingIndex = get().loadedSystems.findIndex(s => s.path === path);
+      const newLoadedSystems = [...get().loadedSystems];
+      if (existingIndex >= 0) {
+        newLoadedSystems[existingIndex] = { path, name, schema };
+      } else {
+        newLoadedSystems.push({ path, name, schema });
+      }
+
+      set({
+        currentFilePath: path,
+        loadedSystems: newLoadedSystems,
+      });
+      get().initSchema(schema);
+      return true;
+    } catch (e: any) {
+      const errorMsg = e.message || 'Failed to import JSON schema configuration';
+      set({ lastError: errorMsg });
+      get().logger.error('Failed to import JSON schema configuration', e);
       return false;
     }
   },
@@ -420,7 +426,6 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
           type: updates.type ?? rn.data.type,
           properties: updates.properties ?? rn.data.properties,
           external: updates.external !== undefined ? updates.external : rn.data.external,
-          c4Ref: 'c4Ref' in updates ? updates.c4Ref : rn.data.c4Ref,
           isTest: updates.isTest !== undefined ? updates.isTest : rn.data.isTest,
         };
         return {
@@ -505,119 +510,40 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   },
 
   zoomIntoNode: async (nodeId: string) => {
-    const {
-      schema,
-      currentFilePath,
-      navigationStack,
-      workspacePort,
-      isWorkspaceOpen,
-      loadedSystems,
-      logger,
-    } = get();
+    const { schema, currentFilePath, navigationStack, loadedSystems, logger } = get();
     const node = schema.nodes.find(n => n.id === nodeId);
     if (!node) return false;
 
     const entityRef = node.entityRef || `${getSystemIdFromPath(currentFilePath)}/${node.id}`;
-    const targetSystem = loadedSystems.find(
-      s => s.schema.level === 'component' && s.schema.parentRef === entityRef
-    );
+    const targetSystem = loadedSystems.find(s => s.schema.parentRef === entityRef);
 
     if (targetSystem) {
       logger.info('Zooming into sub-diagram via entityRef', { node: node.name, entityRef });
       const newStack = [...navigationStack, { path: currentFilePath, schema }];
-      const manifestState = resolveWorkspaceManifestState(targetSystem.path, get().loadedManifests);
       set({
         currentFilePath: targetSystem.path,
         navigationStack: newStack,
         selectedNodeId: null,
-        ...manifestState,
       });
       get().initSchema(targetSystem.schema);
       return true;
-    }
-
-    if (node.c4Ref) {
-      logger.info('Zooming into sub-diagram via legacy c4Ref path', {
-        node: node.name,
-        ref: node.c4Ref,
-      });
-      const targetPath = resolveRelativePath(currentFilePath, node.c4Ref);
-
-      if (!isWorkspaceOpen) {
-        const resolvedFileName = getFileName(targetPath);
-        const found = get().loadedSystems.find(
-          s => s.path === targetPath || s.path === resolvedFileName
-        );
-        if (found) {
-          const newStack = [...navigationStack, { path: currentFilePath, schema }];
-          const manifestState = resolveWorkspaceManifestState(found.path, get().loadedManifests);
-          set({
-            currentFilePath: found.path,
-            navigationStack: newStack,
-            selectedNodeId: null,
-            ...manifestState,
-          });
-          get().initSchema(found.schema);
-          return true;
-        }
-
-        logger.warn('Cannot zoom in: workspace directory not open.');
-        set({ lastError: 'Please open a Workspace Folder to navigate C4 relative links.' });
-        return false;
-      }
-
-      try {
-        const content = await workspacePort.readFile(targetPath);
-        const subSchema = parseSchemaFromYaml(content);
-
-        const newStack = [...navigationStack, { path: currentFilePath, schema }];
-        const manifestState = resolveWorkspaceManifestState(targetPath, get().loadedManifests);
-        set({
-          currentFilePath: targetPath,
-          navigationStack: newStack,
-          selectedNodeId: null,
-          ...manifestState,
-        });
-        get().initSchema(subSchema);
-        return true;
-      } catch (err) {
-        logger.error('Failed to load sub-diagram', err, { path: node.c4Ref });
-        set({
-          lastError: `Failed to load sub-diagram at ${node.c4Ref}: ${(err as Error).message}`,
-        });
-        return false;
-      }
     }
 
     return false;
   },
 
   zoomOut: async () => {
-    const {
-      navigationStack,
-      schema,
-      currentFilePath,
-      workspacePort,
-      isWorkspaceOpen,
-      workspaceManifest,
-      loadedSystems,
-      logger,
-    } = get();
+    const { navigationStack, schema, loadedSystems, logger } = get();
     if (navigationStack.length > 0) {
       logger.info('Zooming out to parent diagram');
       const newStack = [...navigationStack];
       const parentState = newStack.pop();
 
       if (parentState) {
-        const manifestState = resolveWorkspaceManifestState(
-          parentState.path,
-          get().loadedManifests
-        );
         set({
           currentFilePath: parentState.path,
           navigationStack: newStack,
           selectedNodeId: null,
-          ...manifestState,
         });
         get().initSchema(parentState.schema);
         return true;
@@ -633,103 +559,12 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
         logger.info('Zooming out to parent diagram via entityRef lookup', {
           parentRef: schema.parentRef,
         });
-        const manifestState = resolveWorkspaceManifestState(
-          parentSystem.path,
-          get().loadedManifests
-        );
         set({
           currentFilePath: parentSystem.path,
           selectedNodeId: null,
-          ...manifestState,
         });
         get().initSchema(parentSystem.schema);
         return true;
-      }
-    }
-
-    if (workspaceManifest && workspaceManifest.hierarchy) {
-      const currentRef = getSchemaEntityRef(schema, currentFilePath);
-      const entry = workspaceManifest.hierarchy.find(h => h.children.includes(currentRef));
-      if (entry) {
-        const parentSystem = loadedSystems.find(s => {
-          const schemaRef = getSchemaEntityRef(s.schema, s.path);
-          return schemaRef === entry.parent;
-        });
-        if (parentSystem) {
-          logger.info('Zooming out to parent diagram via workspaceManifest entityRef lookup', {
-            parent: entry.parent,
-          });
-          const manifestState = resolveWorkspaceManifestState(
-            parentSystem.path,
-            get().loadedManifests
-          );
-          set({
-            currentFilePath: parentSystem.path,
-            selectedNodeId: null,
-            ...manifestState,
-          });
-          get().initSchema(parentSystem.schema);
-          return true;
-        }
-      }
-    }
-
-    let parentRefPath: string | null = null;
-    if (workspaceManifest) {
-      const currentName = getFileName(currentFilePath);
-      const entry = workspaceManifest.hierarchy.find(h =>
-        h.children.some(c => getFileName(c) === currentName)
-      );
-      if (entry) {
-        parentRefPath = entry.parent;
-      }
-    }
-
-    if (!parentRefPath && schema.parentRef && !isEntityRef(schema.parentRef)) {
-      parentRefPath = schema.parentRef;
-    }
-
-    if (parentRefPath) {
-      logger.info('Zooming out to parent diagram via path lookup', { ref: parentRefPath });
-      const targetPath = resolveRelativePath(currentFilePath, parentRefPath);
-
-      if (!isWorkspaceOpen) {
-        const resolvedFileName = getFileName(targetPath);
-        const found = defaultLoadedSystems.find(
-          s => s.path === targetPath || s.path === resolvedFileName
-        );
-        if (found) {
-          const manifestState = resolveWorkspaceManifestState(found.path, get().loadedManifests);
-          set({
-            currentFilePath: found.path,
-            selectedNodeId: null,
-            ...manifestState,
-          });
-          get().initSchema(found.schema);
-          return true;
-        }
-        logger.warn('Cannot zoom out: parent file not found in default systems.');
-        return false;
-      }
-
-      try {
-        const content = await workspacePort.readFile(targetPath);
-        const parentSchema = parseSchemaFromYaml(content);
-
-        const manifestState = resolveWorkspaceManifestState(targetPath, get().loadedManifests);
-        set({
-          currentFilePath: targetPath,
-          selectedNodeId: null,
-          ...manifestState,
-        });
-        get().initSchema(parentSchema);
-        return true;
-      } catch (err) {
-        logger.error('Failed to load parent diagram', err, { path: parentRefPath });
-        set({
-          lastError: `Failed to load parent diagram at ${parentRefPath}: ${(err as Error).message}`,
-        });
-        return false;
       }
     }
 
@@ -738,7 +573,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   },
 
   syncExternalContainers: () => {
-    const { schema, currentFilePath, loadedSystems, logger } = get();
+    const { schema, loadedSystems, logger } = get();
     if (schema.level !== 'component') {
       logger.warn('Sync external containers is only available on component-level diagrams.');
       return;
@@ -750,15 +585,13 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
       return;
     }
 
-    const currentFileName = getFileName(currentFilePath);
-    const activeContainerNode = parentSystem.schema.nodes.find(n => {
-      if (!n.c4Ref) return false;
-      return getFileName(n.c4Ref) === currentFileName;
-    });
+    const activeContainerNode = parentSystem.schema.nodes.find(
+      n => n.entityRef === schema.parentRef
+    );
 
     if (!activeContainerNode) {
       logger.warn(
-        `Could not map the current component diagram to any container node in parent schema. Make sure a node has c4Ref referencing this component file.`
+        `Could not map the current component diagram to any container node in parent schema. Make sure the schema has a valid parentRef.`
       );
       return;
     }
@@ -828,8 +661,18 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
     if (addedCount > 0) {
       logger.info(`Successfully synced and imported ${addedCount} external container nodes.`);
       applyStateUpdates(set, get, currentNodes, get().edges);
+      get().setNotification?.({
+        type: 'success',
+        title: 'Sync Externals',
+        message: `Successfully synced and imported ${addedCount} external container nodes.`,
+      });
     } else {
       logger.info('All external container dependencies are already mapped on the canvas.');
+      get().setNotification?.({
+        type: 'info',
+        title: 'Sync Externals',
+        message: 'All external container dependencies are already mapped on the canvas.',
+      });
     }
   },
 });

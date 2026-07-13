@@ -30,7 +30,6 @@ export interface SystemNode {
   id: string;
   type: NodeType;
   name: string;
-  c4Ref?: string;
   external?: boolean;
   properties?: PropertyMap;
   isTest?: boolean;
@@ -66,17 +65,6 @@ export interface ValidationIssue {
 export interface ValidationResult {
   isValid: boolean;
   issues: ValidationIssue[];
-}
-
-export interface WorkspaceHierarchy {
-  parent: string;
-  children: string[];
-}
-
-export interface WorkspaceManifest {
-  name: string;
-  root: string;
-  hierarchy: WorkspaceHierarchy[];
 }
 
 // ==========================================
@@ -230,7 +218,6 @@ export function toPbSystemNode(node: SystemNode): pb.SystemNode {
     id: node.id,
     type: toPbNodeType(node.type),
     name: node.name,
-    c4Ref: node.c4Ref ?? undefined,
     external: node.external ?? undefined,
     properties: node.properties ? { ...node.properties } : undefined,
     isTest: node.isTest ?? undefined,
@@ -246,7 +233,6 @@ export function fromPbSystemNode(node: pb.SystemNode): SystemNode {
     type: fromPbNodeType(node.type),
     name: node.name,
   };
-  if (node.c4Ref !== undefined) result.c4Ref = node.c4Ref;
   if (node.external !== undefined) result.external = node.external;
   if (node.properties !== undefined) result.properties = node.properties as PropertyMap;
   if (node.isTest !== undefined) result.isTest = node.isTest;
@@ -298,32 +284,4 @@ export function fromPbSystemSchema(schema: pb.SystemSchema): SystemSchema {
   return result;
 }
 
-export function toPbWorkspaceHierarchy(hierarchy: WorkspaceHierarchy): pb.WorkspaceHierarchy {
-  return {
-    parent: hierarchy.parent,
-    children: [...hierarchy.children],
-  };
-}
-
-export function fromPbWorkspaceHierarchy(hierarchy: pb.WorkspaceHierarchy): WorkspaceHierarchy {
-  return {
-    parent: hierarchy.parent,
-    children: [...hierarchy.children],
-  };
-}
-
-export function toPbWorkspaceManifest(manifest: WorkspaceManifest): pb.WorkspaceManifest {
-  return {
-    name: manifest.name,
-    root: manifest.root,
-    hierarchy: manifest.hierarchy.map(toPbWorkspaceHierarchy),
-  };
-}
-
-export function fromPbWorkspaceManifest(manifest: pb.WorkspaceManifest): WorkspaceManifest {
-  return {
-    name: manifest.name,
-    root: manifest.root,
-    hierarchy: manifest.hierarchy.map(fromPbWorkspaceHierarchy),
-  };
-}
+// Workspace hierarchy/manifest functions removed as they are no longer in Protobuf.

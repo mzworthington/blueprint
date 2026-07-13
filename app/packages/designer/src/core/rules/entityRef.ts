@@ -1,6 +1,5 @@
 import type { SystemSchema } from '../models/schema';
 import { slugify } from './slug';
-import { resolveRelativePath } from './path';
 
 /**
  * Extracts a human-readable system ID from a blueprint file path.
@@ -73,39 +72,48 @@ export interface ResolvedWorkspaceState {
  * and sets the resolved `entityRef` on every node. It also updates dependency targets.
  */
 export function resolveWorkspaceEntityRefs(
-  files: Array<{ path: string; schema: SystemSchema }>
+  files: Array<{ path: string; schema: SystemSchema }>,
+  workspaceName?: string | null
 ): ResolvedWorkspaceState {
   const nodeRefMapByPath = new Map<string, Map<string, string>>();
-  const parentContainerMap = new Map<string, string>();
+
+  const getSystemId = (filePath: string) => {
+    const sysId = getSystemIdFromPath(filePath);
+    if (sysId === 'default') {
+      if (workspaceName) {
+        return slugify(workspaceName).replace(/_/g, '-');
+      }
+      const file = files.find(f => f.path === filePath);
+      if (file?.schema.name) {
+        return slugify(file.schema.name).replace(/_/g, '-');
+      }
+    }
+    return sysId;
+  };
 
   for (const file of files) {
     nodeRefMapByPath.set(file.path, new Map<string, string>());
   }
 
   for (const file of files) {
-    const systemId = getSystemIdFromPath(file.path);
+    const systemId = getSystemId(file.path);
     if (file.schema.level === 'container') {
       const refMap = nodeRefMapByPath.get(file.path)!;
       for (const node of file.schema.nodes) {
         const containerFQN = `${systemId}/${node.id}`;
         refMap.set(node.id, containerFQN);
-
-        if (node.c4Ref) {
-          const resolvedChildPath = resolveRelativePath(file.path, node.c4Ref);
-          parentContainerMap.set(resolvedChildPath, containerFQN);
-        }
       }
     }
   }
 
   for (const file of files) {
-    const systemId = getSystemIdFromPath(file.path);
+    const systemId = getSystemId(file.path);
 
     if (file.schema.level === 'component') {
-      let parentContainerFQN = parentContainerMap.get(file.path);
-      if (!parentContainerFQN && file.schema.parentRef && isEntityRef(file.schema.parentRef)) {
-        parentContainerFQN = file.schema.parentRef;
-      }
+      const parentContainerFQN =
+        file.schema.parentRef && isEntityRef(file.schema.parentRef)
+          ? file.schema.parentRef
+          : undefined;
 
       const refMap = nodeRefMapByPath.get(file.path)!;
       for (const node of file.schema.nodes) {
@@ -128,7 +136,7 @@ export function resolveWorkspaceEntityRefs(
   const nodeRefMap: Record<string, Record<string, string>> = Object.create(null);
 
   for (const file of files) {
-    const systemId = getSystemIdFromPath(file.path);
+    const systemId = getSystemId(file.path);
     const fileRefMap = nodeRefMapByPath.get(file.path) ?? new Map<string, string>();
 
     const resolvedNodes = file.schema.nodes.map(node => {
@@ -138,10 +146,7 @@ export function resolveWorkspaceEntityRefs(
 
     const resolvedDeps = (file.schema.dependencies ?? []).map(dep => ({ ...dep }));
 
-    const parentRef =
-      file.schema.level === 'component'
-        ? (parentContainerMap.get(file.path) ?? file.schema.parentRef)
-        : file.schema.parentRef;
+    const parentRef = file.schema.parentRef;
 
     resolvedSchemas.set(file.path, {
       ...file.schema,

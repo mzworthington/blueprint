@@ -38,6 +38,15 @@ class MockFileSystem implements AnalysisFileSystemPort {
 
   async writeSchema(filePath: string, yamlContent: string): Promise<void> {
     this.writtenFiles.set(filePath, yamlContent);
+    this.existingFiles.add(filePath); // Automatically treat written files as existing
+  }
+
+  async readSchema(filePath: string): Promise<string> {
+    const content = this.writtenFiles.get(filePath);
+    if (content === undefined) {
+      throw new Error(`File not found: ${filePath}`);
+    }
+    return content;
   }
 
   exists(filePath: string): boolean {
@@ -133,27 +142,25 @@ describe('CodebaseAnalyzer Domain Service', () => {
     expect(writtenPaths).toContain('/workspace/blueprints/test-pkg/containers.yaml');
     expect(writtenPaths).toContain('/workspace/blueprints/test-pkg/domain-logic-components.yaml');
     expect(writtenPaths).toContain('/workspace/blueprints/test-pkg/frontend-ui-components.yaml');
-    expect(writtenPaths).toContain('/workspace/blueprints/test-pkg/workspace.yaml');
-
-    // Inspect Workspace Manifest content
-    const manifestYaml = fileSystem.writtenFiles.get(
-      '/workspace/blueprints/test-pkg/workspace.yaml'
-    )!;
-    expect(manifestYaml).toContain('name: Test Pkg Workspace');
-    expect(manifestYaml).toContain('root: test-pkg');
-    expect(manifestYaml).toContain('hierarchy:');
-    expect(manifestYaml).toContain('- parent: test-pkg');
-    expect(manifestYaml).toContain('- test-pkg/domain-logic');
-    expect(manifestYaml).toContain('- test-pkg/frontend-ui');
+    expect(writtenPaths).not.toContain('/workspace/blueprints/test-pkg/workspace.yaml');
+    expect(writtenPaths).toContain('/workspace/blueprints/context.yaml');
 
     // Inspect container schema content
     const containerYaml = fileSystem.writtenFiles.get(
       '/workspace/blueprints/test-pkg/containers.yaml'
     )!;
     expect(containerYaml).toContain('Test Pkg - Container Level');
+    expect(containerYaml).toContain('parentRef: test-pkg');
     expect(containerYaml).toContain('id: frontend-ui');
     expect(containerYaml).toContain('id: domain-logic');
     expect(containerYaml).toContain('id: external-services');
+
+    // Inspect context schema content
+    const contextYaml = fileSystem.writtenFiles.get('/workspace/blueprints/context.yaml')!;
+    expect(contextYaml).toContain('Workspace Context');
+    expect(contextYaml).toContain('id: test-pkg');
+    expect(contextYaml).toContain('name: Test Pkg');
+    expect(contextYaml).toContain('type: software-system');
   });
 
   describe('Obsolete File Deletion Fallback', () => {

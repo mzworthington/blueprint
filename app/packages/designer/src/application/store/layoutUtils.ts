@@ -14,10 +14,10 @@ export type ComponentNodeData = {
   id: string;
   type: NodeType;
   name: string;
-  c4Ref?: string;
   external?: boolean;
   isTest?: boolean;
   properties: PropertyMap;
+  entityRef?: string;
 };
 
 export type BlueprintRFNode = RFNode<ComponentNodeData, 'blueprintNode'>;
@@ -38,10 +38,10 @@ export const mapDomainNodeToRFNode = (n: SystemNode): BlueprintRFNode => ({
     id: n.id,
     type: n.type,
     name: n.name,
-    c4Ref: n.c4Ref,
     external: n.external,
     isTest: n.isTest,
     properties: n.properties || {},
+    entityRef: n.entityRef,
   },
 });
 
@@ -111,12 +111,12 @@ export const rebuildSchemaFromCanvas = (
     id: rn.id,
     type: rn.data.type,
     name: rn.data.name,
-    c4Ref: rn.data.c4Ref,
     external: rn.data.external,
     isTest: rn.data.isTest,
     properties: rn.data.properties,
     x: rn.position.x,
     y: rn.position.y,
+    entityRef: rn.data.entityRef,
   }));
 
   const dependencies: SystemDependency[] = rfEdges.map(re => ({

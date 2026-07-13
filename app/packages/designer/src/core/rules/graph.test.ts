@@ -219,7 +219,6 @@ nodes:
   - id: billing-service
     type: microservice
     name: Billing Service
-    c4Ref: ./billing/container.yaml
   - id: payment-gateway
     type: software-system
     name: External Payment Processor
@@ -236,7 +235,6 @@ dependencies:
       expect(schema.nodes).toHaveLength(2);
       expect(schema.nodes[0].id).toBe('billing-service');
       expect(schema.nodes[0].type).toBe('microservice');
-      expect(schema.nodes[0].c4Ref).toBe('./billing/container.yaml');
       expect(schema.nodes[1].external).toBe(true);
       expect(schema.dependencies[0].description).toBe('Authorize Credit Card');
     });
@@ -252,7 +250,6 @@ dependencies:
             id: 'webapp',
             type: 'web-app',
             name: 'Web Portal',
-            c4Ref: './portal/components.yaml',
           },
           {
             id: 'external_svc',
@@ -274,7 +271,6 @@ dependencies:
       const yamlContent = serializeSchemaToYaml(schema);
       expect(yamlContent).toContain('level: container');
       expect(yamlContent).toContain('parentRef: ../workspace.yaml');
-      expect(yamlContent).toContain('c4Ref: ./portal/components.yaml');
       expect(yamlContent).toContain('external: true');
 
       const mermaid = serializeSchemaToMermaid(schema);

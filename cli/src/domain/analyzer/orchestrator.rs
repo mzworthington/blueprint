@@ -5,7 +5,7 @@ use crate::domain::analyzer::container::get_container_info;
 use crate::domain::analyzer::extractor::{extract_dependencies, extract_nodes};
 use crate::domain::analyzer::naming::{get_display_name, get_meaningful_name, sanitize_id};
 use crate::domain::model::{
-    C4Level, SystemDependency, SystemNode, SystemSchema, WorkspaceHierarchy, WorkspaceManifest,
+    C4Level, NodeType, SystemDependency, SystemNode, SystemSchema,
 };
 use crate::domain::ports::{FileSystemPort, LayoutPort, LoggerPort, ParserPort};
 
@@ -130,11 +130,33 @@ impl CodebaseAnalyzer {
             self.file_system.mkdir(&blueprints_dir)?;
         }
 
+        // Generate/update workspace-wide context schema
+        let context_path = self
+            .file_system
+            .get_absolute_path(&[&root_blueprints_dir, "context.yaml"]);
+
+        let mut context_schema = if self.file_system.exists(&context_path) {
+            let context_yaml = self.file_system.read_schema(&context_path)?;
+            serde_yaml::from_str::<SystemSchema>(&context_yaml)
+                .map_err(|e| format!("Failed to parse existing context.yaml: {}", e))?
+        } else {
+            SystemSchema {
+                name: "Workspace Context".to_string(),
+                version: "1.0.0".to_string(),
+                level: C4Level::Context as i32,
+                parent_ref: None,
+                nodes: Vec::new(),
+                dependencies: Vec::new(),
+            }
+        };
+
+        let context_system_id = sanitize_id(&context_schema.name).replace('_', "-");
+
         let container_schema = SystemSchema {
             name: format!("{} - Container Level", display_name),
             version: "1.0.0".to_string(),
             level: C4Level::Container as i32,
-            parent_ref: None,
+            parent_ref: Some(system_name.clone()),
             nodes: layout_containers,
             dependencies: container_dependencies_list,
         };
@@ -150,6 +172,44 @@ impl CodebaseAnalyzer {
         self.logger.info(&format!(
             "📄 Saved Container-level schema: {}",
             container_path
+        ));
+
+        let node_id = system_name.clone();
+        let display_name_clone = display_name.clone();
+        let mut found = false;
+        for node in &mut context_schema.nodes {
+            if node.id == node_id {
+                node.name = display_name_clone.clone();
+                found = true;
+                break;
+            }
+        }
+        if !found {
+            let system_node = SystemNode {
+                id: node_id,
+                r#type: NodeType::SoftwareSystem as i32,
+                name: display_name_clone,
+                external: Some(false),
+                properties: None,
+                is_test: Some(false),
+                x: None,
+                y: None,
+                entity_ref: None,
+            };
+            context_schema.nodes.push(system_node);
+        }
+
+        let layout_context_nodes = self
+            .layout
+            .compute_layout(context_schema.nodes, context_schema.dependencies.clone())?;
+        context_schema.nodes = layout_context_nodes;
+
+        let context_yaml = serde_yaml::to_string(&context_schema)
+            .map_err(|e| format!("Failed to serialize context YAML: {}", e))?;
+        self.file_system.write_schema(&context_path, &context_yaml)?;
+        self.logger.info(&format!(
+            "📄 Saved/Updated Workspace Context schema: {}",
+            context_path
         ));
 
         let active_container_ids: Vec<String> = container_nodes_map
@@ -245,30 +305,6 @@ impl CodebaseAnalyzer {
             ));
         }
 
-        let workspace_manifest = WorkspaceManifest {
-            name: format!("{} Workspace", display_name),
-            root: system_name.clone(),
-            hierarchy: vec![WorkspaceHierarchy {
-                parent: system_name.clone(),
-                children: active_container_ids
-                    .iter()
-                    .map(|cont_id| format!("{}/{}", system_name, cont_id))
-                    .collect(),
-            }],
-        };
-
-        let manifest_yaml = serde_yaml::to_string(&workspace_manifest)
-            .map_err(|e| format!("Failed to serialize manifest YAML: {}", e))?;
-
-        let manifest_path = self
-            .file_system
-            .get_absolute_path(&[&blueprints_dir, "workspace.yaml"]);
-        self.file_system
-            .write_schema(&manifest_path, &manifest_yaml)?;
-        self.logger.info(&format!(
-            "📄 Saved Workspace manifest schema: {}",
-            manifest_path
-        ));
 
         self.logger
             .info("✅ Successfully generated visual layout levels!");

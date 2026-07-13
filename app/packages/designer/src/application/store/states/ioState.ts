@@ -1,5 +1,5 @@
-import * as yaml from 'js-yaml';
 import type { DiagramState } from './diagramState';
+import type { UiState } from './uiState';
 import {
   type FileSystemPort,
   type WorkspacePort,
@@ -7,15 +7,9 @@ import {
   noopFileSystem,
   noopWorkspace,
   noopLogger,
-  type WorkspaceManifest,
   parseSchemaFromYaml,
-  getClosestManifest,
-  getFileName,
-  resolveWorkspaceManifestState,
   resolveWorkspaceEntityRefs,
   getSystemIdFromPath,
-  isEntityRef,
-  getSchemaEntityRef,
 } from '../../../core';
 import {
   saveBaselineSchema,
@@ -39,10 +33,9 @@ export interface IoState {
   loadSchema: () => Promise<boolean>;
   openWorkspaceDirectory: () => Promise<boolean>;
   saveActiveDiagram: () => Promise<boolean>;
-  saveWorkspaceManifest: (manifestYaml: string) => Promise<boolean>;
 }
 
-type IoStateDeps = IoState & DiagramState;
+type IoStateDeps = IoState & DiagramState & UiState;
 
 export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
   fileSystemPort: noopFileSystem,
@@ -51,7 +44,7 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
   setPorts: ports => set((state: IoStateDeps) => ({ ...state, ...ports })),
 
   saveSchema: async () => {
-    const { yamlCode, schema, fileSystemPort, logger } = get();
+    const { yamlCode, schema, fileSystemPort, logger, setNotification } = get();
     const sanitizedName = schema.name.toLowerCase().replace(/[^a-z0-9_-]/g, '_');
     const start = performance.now();
     logger.info('Initiating schema file write', { file: `${sanitizedName}.yaml` });
@@ -64,6 +57,11 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
       const duration = performance.now() - start;
       if (success) {
         logger.info('Schema file written successfully', { durationMs: Math.round(duration) });
+        setNotification?.({
+          type: 'success',
+          title: 'Schema Saved',
+          message: `Successfully downloaded ${sanitizedName || 'blueprint'}.yaml`,
+        });
       } else {
         logger.warn('Schema file write cancelled or failed', {
           durationMs: Math.round(duration),
@@ -72,12 +70,17 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
       return success;
     } catch (err) {
       logger.error('Failed to save schema file', err);
+      setNotification?.({
+        type: 'error',
+        title: 'Save Error',
+        message: (err as Error).message || 'Error occurred while saving schema.',
+      });
       return false;
     }
   },
 
   loadSchema: async () => {
-    const { fileSystemPort, importYaml, logger } = get();
+    const { fileSystemPort, importYaml, logger, setNotification } = get();
     const start = performance.now();
     logger.info('Opening file dialog for schema load');
 
@@ -90,12 +93,24 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
           durationMs: Math.round(duration),
           success,
         });
+        if (success) {
+          setNotification?.({
+            type: 'success',
+            title: 'Schema Loaded',
+            message: 'Successfully loaded and parsed schema from file.',
+          });
+        }
         return success;
       }
       logger.info('Schema load cancelled by user', { durationMs: Math.round(duration) });
       return false;
     } catch (err) {
       logger.error('Failed to load schema file', err);
+      setNotification?.({
+        type: 'error',
+        title: 'Load Error',
+        message: (err as Error).message || 'Error occurred while loading schema.',
+      });
       return false;
     }
   },
@@ -112,30 +127,12 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
         throw new Error('No blueprint .yaml or .yml files found in selected directory');
       }
 
-      const manifestFiles = files.filter(
+      const schemaFiles = files.filter(
         f =>
-          f.name === 'workspace.yaml' ||
-          f.name.endsWith('/workspace.yaml') ||
-          f.name.endsWith('-workspace.yaml')
+          (f.name.endsWith('.yaml') || f.name.endsWith('.yml')) &&
+          !f.name.endsWith('workspace.yaml') &&
+          !f.name.endsWith('blueprint-workspace.yaml')
       );
-
-      const nextLoadedManifests = manifestFiles
-        .map(f => {
-          try {
-            const manifest = yaml.load(f.content) as WorkspaceManifest;
-            return {
-              path: f.name,
-              manifest,
-              yaml: f.content,
-            };
-          } catch (e) {
-            logger.error(`Failed to parse workspace manifest YAML: ${f.name}`, e);
-            return null;
-          }
-        })
-        .filter((m): m is NonNullable<typeof m> => m !== null);
-
-      const schemaFiles = files.filter(f => !manifestFiles.includes(f));
 
       const nextLoadedSystems = schemaFiles
         .map(file => {
@@ -195,35 +192,18 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
         })
       );
 
-      let firstSystem = resolvedSystemsWithDrafts[0];
-      const initialManifest = getClosestManifest(firstSystem.path, nextLoadedManifests);
-      if (initialManifest?.manifest.root) {
-        const rootRef = initialManifest.manifest.root;
-        const foundRoot = resolvedSystemsWithDrafts.find(s => {
-          if (isEntityRef(rootRef)) {
-            const schemaRef = getSchemaEntityRef(s.schema, s.path);
-            return schemaRef === rootRef;
-          } else {
-            const resolvedRootName = getFileName(rootRef);
-            return s.path === rootRef || s.path === resolvedRootName;
-          }
-        });
-        if (foundRoot) {
-          firstSystem = foundRoot;
-        }
-      }
-
-      const manifestState = resolveWorkspaceManifestState(firstSystem.path, nextLoadedManifests);
+      const firstSystem =
+        resolvedSystemsWithDrafts.find(s => s.schema.level === 'context') ||
+        resolvedSystemsWithDrafts.find(s => s.schema.level === 'container') ||
+        resolvedSystemsWithDrafts[0];
 
       set({
         isWorkspaceOpen: true,
         workspaceName: workspacePort.getDirectoryName(),
-        loadedManifests: nextLoadedManifests,
         loadedSystems: resolvedSystemsWithDrafts,
         nodeRefMap: resolved.nodeRefMap,
         currentFilePath: firstSystem.path,
         navigationStack: [],
-        ...manifestState,
       });
       get().initSchema(firstSystem.schema);
       return true;
@@ -243,6 +223,7 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
       workspacePort,
       isWorkspaceOpen,
       logger,
+      setNotification,
     } = get();
     if (!isWorkspaceOpen) {
       return get().saveSchema();
@@ -257,46 +238,30 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
         const sysId = getSystemIdFromPath(currentFilePath);
         const fileRefMap = nodeRefMap[currentFilePath] || {};
         await saveBaselineSchema(currentFilePath, schema, sysId, fileRefMap);
+        setNotification?.({
+          type: 'success',
+          title: 'Save Successful',
+          message: `Saved active diagram to ${currentFilePath.split('/').pop()}`,
+        });
       } else {
         logger.error('Failed to save diagram');
+        setNotification?.({
+          type: 'error',
+          title: 'Save Failed',
+          message: 'Failed to write active diagram to disk.',
+        });
       }
       return success;
     } catch (err) {
       logger.error('Error saving diagram in workspace', err);
+      setNotification?.({
+        type: 'error',
+        title: 'Save Error',
+        message: (err as Error).message || 'Error occurred while saving diagram.',
+      });
       return false;
     }
   },
 
-  saveWorkspaceManifest: async (manifestYaml: string) => {
-    const { workspacePort, fileSystemPort, isWorkspaceOpen, logger } = get();
-    try {
-      const parsed = yaml.load(manifestYaml) as WorkspaceManifest;
-      if (!parsed.name || !parsed.root) {
-        throw new Error('Workspace manifest must contain "name" and "root" properties');
-      }
-
-      let success = false;
-      const targetPath = get().workspaceManifestPath || 'blueprint-workspace.yaml';
-      if (isWorkspaceOpen) {
-        success = await workspacePort.writeFile(targetPath, manifestYaml);
-      } else {
-        success = await fileSystemPort.saveSchema(manifestYaml, targetPath);
-      }
-
-      if (success) {
-        set({
-          workspaceManifest: parsed,
-          workspaceManifestYaml: manifestYaml,
-          workspaceName: parsed.name,
-          lastError: null,
-        });
-        logger.info('Workspace manifest saved successfully');
-      }
-      return success;
-    } catch (err) {
-      logger.error('Failed to save workspace manifest', err);
-      set({ lastError: `Failed to save manifest: ${(err as Error).message}` });
-      return false;
-    }
-  },
+  // Manifest saving functionality removed.
 });
