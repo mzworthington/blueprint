@@ -150,8 +150,6 @@ impl CodebaseAnalyzer {
             }
         };
 
-        let context_system_id = sanitize_id(&context_schema.name).replace('_', "-");
-
         let container_schema = SystemSchema {
             name: format!("{} - Container Level", display_name),
             version: "1.0.0".to_string(),
