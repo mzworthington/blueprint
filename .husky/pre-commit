@@ -1,7 +1,7 @@
 if git diff --cached --name-only | grep -qE '^(cli/|core/proto/)'; then
   echo "Detected changes to CLI or Proto. Running Cargo checks..."
   cd cli
-  cargo fmt
+  cargo fmt --check
   cargo clippy -- -D warnings
   cargo test 
   cd ..

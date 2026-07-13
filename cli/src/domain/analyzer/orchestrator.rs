@@ -4,9 +4,7 @@ use std::sync::Arc;
 use crate::domain::analyzer::container::get_container_info;
 use crate::domain::analyzer::extractor::{extract_dependencies, extract_nodes};
 use crate::domain::analyzer::naming::{get_display_name, get_meaningful_name, sanitize_id};
-use crate::domain::model::{
-    C4Level, NodeType, SystemDependency, SystemNode, SystemSchema,
-};
+use crate::domain::model::{C4Level, NodeType, SystemDependency, SystemNode, SystemSchema};
 use crate::domain::ports::{FileSystemPort, LayoutPort, LoggerPort, ParserPort};
 
 pub struct CodebaseAnalyzerDependencies {
@@ -204,7 +202,8 @@ impl CodebaseAnalyzer {
 
         let context_yaml = serde_yaml::to_string(&context_schema)
             .map_err(|e| format!("Failed to serialize context YAML: {}", e))?;
-        self.file_system.write_schema(&context_path, &context_yaml)?;
+        self.file_system
+            .write_schema(&context_path, &context_yaml)?;
         self.logger.info(&format!(
             "📄 Saved/Updated Workspace Context schema: {}",
             context_path
@@ -302,7 +301,6 @@ impl CodebaseAnalyzer {
                 cont_id, component_path
             ));
         }
-
 
         self.logger
             .info("✅ Successfully generated visual layout levels!");

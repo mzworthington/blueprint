@@ -2,9 +2,7 @@ pub mod pb {
     include!(concat!(env!("OUT_DIR"), "/blueprint.v1.rs"));
 }
 
-pub use pb::{
-    C4Level, DependencyType, NodeType, SystemDependency, SystemNode, SystemSchema,
-};
+pub use pb::{C4Level, DependencyType, NodeType, SystemDependency, SystemNode, SystemSchema};
 
 impl SystemNode {
     pub fn node_type(&self) -> NodeType {
