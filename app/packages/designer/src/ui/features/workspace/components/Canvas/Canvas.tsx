@@ -12,6 +12,7 @@ import { useBlueprintStore } from '../../../../../application/store/store';
 import { BlueprintNode } from './BlueprintNode';
 import { ActionControls } from '../ActionControls/ActionControls';
 import { AlertTriangle, CheckCircle2, Info, AlertCircle, X } from 'lucide-react';
+import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 
 export const Canvas: React.FC = () => {
   const {
@@ -49,23 +50,8 @@ export const Canvas: React.FC = () => {
     return () => clearTimeout(timer);
   }, [currentFilePath, fitView]);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const isTyping =
-        document.activeElement?.tagName === 'INPUT' ||
-        document.activeElement?.tagName === 'TEXTAREA' ||
-        document.activeElement?.hasAttribute('contenteditable');
-
-      if (isTyping) return;
-
-      if (e.key === 'Escape' || e.key === 'Backspace') {
-        zoomOut();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [zoomOut]);
+  // Centralized keyboard navigation
+  useKeyboardNavigation({ onZoomOut: zoomOut });
 
   useEffect(() => {
     if (notification) {

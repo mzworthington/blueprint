@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useReactFlow } from '@xyflow/react';
 import { useBlueprintStore } from '../../../../../application/store/store';
+import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 
 export interface UseSearchbarReturn {
   // State
@@ -47,29 +48,14 @@ export function useSearchbar(): UseSearchbarReturn {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Global keyboard shortcuts: ⌘K / Ctrl+K / /
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const isInput =
-        document.activeElement?.tagName === 'INPUT' ||
-        document.activeElement?.tagName === 'TEXTAREA' ||
-        (document.activeElement as HTMLElement)?.isContentEditable;
-
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        setIsExpanded(true);
-        setTimeout(() => inputRef.current?.focus(), 50);
-        setIsOpen(true);
-      } else if (e.key === '/' && !isInput) {
-        e.preventDefault();
-        setIsExpanded(true);
-        setTimeout(() => inputRef.current?.focus(), 50);
-        setIsOpen(true);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  // Centralized keyboard navigation for search shortcuts
+  useKeyboardNavigation({
+    onSearchOpen: () => {
+      setIsExpanded(true);
+      setTimeout(() => inputRef.current?.focus(), 50);
+      setIsOpen(true);
+    },
+  });
 
   const filteredNodes = useMemo(() => {
     if (!searchQuery.trim()) return [];
