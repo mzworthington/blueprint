@@ -1,22 +1,26 @@
-# Experimental Rust CLI (`/cli`)
+# Experimental Rust CLI (`/cli`) — UNMAINTAINED
 
-> **Status: unmaintained.** Prefer the production TypeScript CLI at [`app/packages/cli`](../app/packages/cli/README.md).
+> **Do not use for product work.** Prefer [`app/packages/cli`](../app/packages/cli/README.md).
 >
-> This tree is kept for historical / experimental work. It is **not** run in CI, requires restored Protocol Buffer schemas that are no longer in the repo, and may not build.
+> `cargo build` **fails by default** with a redirect message. This tree is not in CI, needs restored `core/proto/` schemas that no longer exist, and is not the scanner source of truth.
+
+```bash
+# Day-to-day / CI / releases:
+cd app && pnpm dev:cli
+```
 
 ---
 
-## Why it exists
+## Why it still exists
 
-An earlier rewrite of the AST scanner in Rust (Clap, Tree-Sitter, Prost). Schema codegen previously depended on `core/proto/`, which has been removed in favor of TypeScript + Zod in `@blueprint/core`.
+Historical AST scanner rewrite (Clap, Tree-Sitter, Prost). Protocol Buffers were replaced by Zod in `@blueprint/core`.
 
-## If you still want to experiment
+## Force-building (maintainers only)
 
-You will need to restore protobuf definitions and Prost generation before `cargo build` / `cargo test` can succeed. Those steps are intentionally undocumented until someone owns them again.
-
-For day-to-day scanning and CI:
+Only if you restore protobufs and accept that this is experimental:
 
 ```bash
-cd app
-pnpm dev:cli
+BLUEPRINT_RUST_ALLOW_BUILD=1 cargo build
 ```
+
+Those steps are intentionally undocumented until someone owns this crate again.

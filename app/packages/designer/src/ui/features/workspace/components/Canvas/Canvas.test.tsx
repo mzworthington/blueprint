@@ -146,29 +146,15 @@ describe('Canvas Component', () => {
   });
 
   it('triggers openWorkspaceDirectory store action when Open Folder is clicked', async () => {
-    const selectDirectoryMock = vi.fn().mockResolvedValue(true);
-    const readDirectoryFilesMock = vi.fn().mockResolvedValue([
-      {
-        name: 'sys.yaml',
-        content:
-          'name: Loaded System\nversion: "1.0.0"\nlevel: container\nnodes: []\ndependencies: []',
-      },
-    ]);
-    useBlueprintStore.setState({
-      workspacePort: {
-        selectDirectory: selectDirectoryMock,
-        readDirectoryFiles: readDirectoryFilesMock,
-        getDirectoryName: () => 'MockedDir',
-      } as any,
-    });
+    const openWorkspaceDirectory = vi.fn().mockResolvedValue(true);
+    useBlueprintStore.setState({ openWorkspaceDirectory });
 
     render(<Canvas />);
 
     fireEvent.click(screen.getByTitle('Open a local directory workspace'));
 
-    expect(selectDirectoryMock).toHaveBeenCalled();
     await waitFor(() => {
-      expect(useBlueprintStore.getState().isWorkspaceOpen).toBe(true);
+      expect(openWorkspaceDirectory).toHaveBeenCalled();
     });
   });
 

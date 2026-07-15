@@ -33,7 +33,7 @@ A command-line static analysis (AST) codebase scanner. It parses source files, e
 | **`@blueprint/designer`** | [app/packages/designer/](./app/packages/designer/) | TypeScript / React / Vite / React Flow | Front-end visual diagramming client |
 | **`@blueprint/cli`** | [app/packages/cli/](./app/packages/cli/) | TS / Node / Bun / Ts-Morph / Tree-Sitter | Production codebase scanner & Bun binary |
 | **`@blueprint/core`** | [app/packages/core/](./app/packages/core/) | TypeScript / Zod | Shared domain types, validation, entityRef rules |
-| **`blueprint-rust` (experimental)** | [cli/](./cli/) | Rust | Unmaintained WIP scanner — not part of CI; prefer `@blueprint/cli` |
+| **`blueprint-rust` (unmaintained)** | [cli/](./cli/) | Rust | Quarantined — `cargo build` fails unless `BLUEPRINT_RUST_ALLOW_BUILD=1`; use `@blueprint/cli` |
 
 Schema source of truth is TypeScript + Zod in `@blueprint/core` (no Protocol Buffers).
 

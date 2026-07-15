@@ -2,15 +2,20 @@ import {
   validateGraph,
   serializeSchemaToYaml,
   type SystemSchema,
-  type SystemNode,
-  type SystemDependency,
   type C4Level,
   resolveWorkspaceEntityRefs,
   slugify,
 } from '@blueprint/core';
-import { getClosestHandles, rebuildSchemaFromCanvas } from '../../layoutUtils';
 import type { BlueprintRFNode, BlueprintRFEdge } from '../../layoutUtils';
 import { saveWorkingSchema } from '../../../../infrastructure/db/db';
+import {
+  attachClosestHandles,
+  resolveWorkspaceName,
+  mapSchemaToFqns,
+  highlightEdgesForValidation,
+  resolveCanvasNodeEntityRefs,
+  buildNextSchemaFromCanvas,
+} from './applyStateHelpers';
 
 /**
  * Rebuild schema from canvas nodes/edges, resolve entityRefs across the
@@ -36,19 +41,8 @@ export function applyStateUpdates(
         : customEntityRef
       : currentSchema.entityRef;
 
-  const edgesWithHandles = nextEdges.map(edge => {
-    const sourceNode = nextNodes.find(n => n.id === edge.source);
-    const targetNode = nextNodes.find(n => n.id === edge.target);
-    if (!sourceNode || !targetNode) return edge;
-    const { sourceHandle, targetHandle } = getClosestHandles(sourceNode, targetNode);
-    return {
-      ...edge,
-      sourceHandle,
-      targetHandle,
-    };
-  });
-
-  const nextSchema = rebuildSchemaFromCanvas(
+  const edgesWithHandles = attachClosestHandles(nextNodes, nextEdges);
+  const nextSchema = buildNextSchemaFromCanvas(
     name,
     version,
     level,
@@ -65,13 +59,7 @@ export function applyStateUpdates(
       return sys;
     }) || [];
 
-  let workspaceName = get().workspaceName as string;
-  const nameChanged = name !== get().schema.name;
-  if (!get().isWorkspaceOpen && nameChanged && (level === 'container' || level === 'context')) {
-    workspaceName = name;
-  } else if (!workspaceName && (level === 'container' || level === 'context')) {
-    workspaceName = name;
-  }
+  const workspaceName = resolveWorkspaceName(get, name, level);
 
   const resolved = resolveWorkspaceEntityRefs(nextLoadedSystems, workspaceName);
   const currentFilePath = get().currentFilePath as string;
@@ -80,28 +68,7 @@ export function applyStateUpdates(
   const systemId =
     activeResolvedSchema?.entityRef || slugify(workspaceName || '').replace(/_/g, '-') || 'default';
 
-  const nextSchemaMapped = {
-    ...nextSchema,
-    nodes: nextSchema.nodes.map((node: SystemNode) => ({
-      ...node,
-      entityRef:
-        node.entityRef && node.entityRef.includes('/')
-          ? node.entityRef
-          : fileRefMap[node.entityRef || ''] || `${systemId}/${node.entityRef || ''}`,
-    })),
-    dependencies: nextSchema.dependencies.map((dep: SystemDependency) => {
-      const fromFQN = dep.from.includes('/')
-        ? dep.from
-        : fileRefMap[dep.from] || `${systemId}/${dep.from}`;
-      const toFQN = dep.to.includes('/') ? dep.to : fileRefMap[dep.to] || `${systemId}/${dep.to}`;
-      return {
-        ...dep,
-        from: fromFQN,
-        to: toFQN,
-      };
-    }),
-  };
-
+  const nextSchemaMapped = mapSchemaToFqns(nextSchema, fileRefMap, systemId);
   const validationResult = validateGraph(nextSchemaMapped);
   const yamlCode = serializeSchemaToYaml(nextSchemaMapped);
 
@@ -117,53 +84,13 @@ export function applyStateUpdates(
     });
   }
 
-  const cycleNodes = new Set(
-    validationResult.issues
-      .filter(issue => issue.type === 'cycle' && issue.path)
-      .flatMap(issue => issue.path || [])
+  const highlightedEdges = highlightEdgesForValidation(
+    edgesWithHandles,
+    validationResult,
+    fileRefMap,
+    systemId
   );
-
-  const highlightedEdges = edgesWithHandles.map(edge => {
-    const sourceRef =
-      fileRefMap[edge.source] ||
-      (edge.source.includes('/') ? edge.source : `${systemId}/${edge.source}`);
-    const targetRef =
-      fileRefMap[edge.target] ||
-      (edge.target.includes('/') ? edge.target : `${systemId}/${edge.target}`);
-    const isCycleEdge = cycleNodes.has(sourceRef) && cycleNodes.has(targetRef);
-    return {
-      ...edge,
-      animated: edge.animated || isCycleEdge,
-      label: edge.data?.description || undefined,
-      labelStyle: { fill: '#94a3b8', fontSize: 10, fontWeight: 500 },
-      labelBgStyle: { fill: '#020617', fillOpacity: 0.85 },
-      labelBgPadding: [6, 4] as [number, number],
-      labelBgBorderRadius: 4,
-      style: {
-        ...edge.style,
-        stroke: isCycleEdge
-          ? '#ef4444'
-          : edge.data?.type === 'publish-subscribe'
-            ? '#c084fc'
-            : '#8b5cf6',
-        strokeWidth: isCycleEdge ? 3.5 : 2,
-      },
-    };
-  });
-
-  const resolvedNextNodes = nextNodes.map(node => {
-    const resolvedEntityRef =
-      node.data.entityRef && node.data.entityRef.includes('/')
-        ? node.data.entityRef
-        : fileRefMap[node.id] || fileRefMap[node.data.entityRef || ''] || `${systemId}/${node.id}`;
-    return {
-      ...node,
-      data: {
-        ...node.data,
-        entityRef: resolvedEntityRef,
-      },
-    };
-  });
+  const resolvedNextNodes = resolveCanvasNodeEntityRefs(nextNodes, fileRefMap, systemId);
 
   const resolvedSchema = resolved.schemas[currentFilePath]
     ? resolved.schemas[currentFilePath]

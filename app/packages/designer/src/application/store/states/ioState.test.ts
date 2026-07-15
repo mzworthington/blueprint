@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useBlueprintStore } from '../store';
+import { db } from '../../../infrastructure/db/db';
 
 describe('ioState Actions & State Management', () => {
   const mockFiles: Record<string, string> = {
@@ -46,13 +47,19 @@ dependencies: []
     },
   };
 
-  beforeEach(() => {
+  beforeEach(async () => {
     delete mockFiles['another-system.yaml'];
+    await db.originalNodes.clear();
+    await db.workingNodes.clear();
+    await db.originalDependencies.clear();
+    await db.workingDependencies.clear();
     useBlueprintStore.setState({
       workspacePort: mockWorkspacePort,
       currentFilePath: 'blueprint.yaml',
       isWorkspaceOpen: false,
       workspaceName: '',
+      lastError: null,
+      notification: null,
     });
   });
 
@@ -233,6 +240,61 @@ dependencies: []
       expect(success).toBe(false);
       expect(useBlueprintStore.getState().lastError).toContain('No valid blueprint schemas found');
       spyRead.mockRestore();
+    });
+
+    it('discards IndexedDB drafts whose topology no longer matches disk YAML', async () => {
+      const { saveWorkingSchema, loadWorkingSchema } =
+        await import('../../../infrastructure/db/db');
+
+      await saveWorkingSchema(
+        'blueprint.yaml',
+        {
+          name: 'Root Context',
+          version: '1.0.0',
+          level: 'context',
+          entityRef: 'root',
+          nodes: [
+            { entityRef: 'root/web-app', type: 'web-app', name: 'Web App' },
+            { entityRef: 'root/orphan', type: 'microservice', name: 'Stale Orphan' },
+          ],
+          dependencies: [
+            {
+              from: 'root/orphan',
+              to: 'root/web-app',
+              type: 'direct-call',
+              description: 'Part of product system',
+            },
+          ],
+        },
+        'root',
+        {}
+      );
+
+      const store = useBlueprintStore.getState();
+      const setNotification = vi.fn();
+      useBlueprintStore.setState({ setNotification });
+
+      const success = await store.openWorkspaceDirectory();
+      expect(success).toBe(true);
+
+      const state = useBlueprintStore.getState();
+      expect(state.schema.nodes.map(n => n.entityRef)).toEqual(['root/web-app']);
+      expect(state.schema.dependencies).toEqual([]);
+      expect(setNotification).toHaveBeenCalledWith(
+        expect.objectContaining({
+          title: 'Loaded files from disk',
+        })
+      );
+
+      const working = await loadWorkingSchema(
+        'blueprint.yaml',
+        'Root Context',
+        '1.0.0',
+        'context',
+        'root'
+      );
+      expect(working?.nodes).toHaveLength(1);
+      expect(working?.dependencies).toEqual([]);
     });
   });
 });

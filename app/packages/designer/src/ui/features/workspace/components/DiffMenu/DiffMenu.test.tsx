@@ -25,6 +25,7 @@ vi.mock('../../../../../infrastructure/db/db', () => ({
   revertWorkingSchema: vi.fn(),
   saveBaselineSchema: vi.fn().mockResolvedValue(undefined),
   saveWorkingSchema: vi.fn().mockResolvedValue(undefined),
+  pathHasStoredData: vi.fn().mockResolvedValue(false),
 }));
 
 describe('DiffMenu Component', () => {

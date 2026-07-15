@@ -7,7 +7,12 @@ import {
 import { mapDomainNodeToRFNode, mapDomainDepToRFEdge, getClosestHandles } from '../../layoutUtils';
 import type { BlueprintRFNode, BlueprintRFEdge } from '../../layoutUtils';
 import { defaultLoadedSystems, defaultInitialSchema } from '../../defaultData';
-import { saveWorkingSchema, saveBaselineSchema } from '../../../../infrastructure/db/db';
+import {
+  saveWorkingSchema,
+  saveBaselineSchema,
+  pathHasStoredData,
+} from '../../../../infrastructure/db/db';
+import { seedDefaultSchemasSafely } from './defaultIdbSeed';
 
 export interface DiagramInitialState {
   schema: SystemSchema;
@@ -64,15 +69,13 @@ export function createDiagramInitialState(): DiagramInitialState {
       };
     });
 
-  // Seed database with default systems asynchronously on startup
+  // Seed demo blueprints only when a path is empty — never overwrite real drafts.
   setTimeout(() => {
-    initialLoadedSystemsResolved.forEach(sys => {
-      const resolvedSysSchema = resolvedInitial.schemas[sys.path] || sys.schema;
-      const sysId = resolvedSysSchema.entityRef || 'default';
-      const fileRefMap = resolvedInitial.nodeRefMap[sys.path] || {};
-      saveBaselineSchema(sys.path, sys.schema, sysId, fileRefMap).catch(() => {});
-      saveWorkingSchema(sys.path, sys.schema, sysId, fileRefMap).catch(() => {});
-    });
+    seedDefaultSchemasSafely(initialLoadedSystemsResolved, resolvedInitial, {
+      pathHasStoredData,
+      saveBaselineSchema,
+      saveWorkingSchema,
+    }).catch(() => {});
   }, 100);
 
   return {

@@ -291,9 +291,16 @@ export async function revertWorkingSchema(
 }
 
 /**
- * Loads the active working schema from working tables if it exists.
- * Returns the SystemSchema or null if not found.
+ * True if either working or baseline tables already have rows for this path.
  */
+export async function pathHasStoredData(filePath: string): Promise<boolean> {
+  const [workingCount, originalCount] = await Promise.all([
+    db.workingNodes.where('filePath').equals(filePath).count(),
+    db.originalNodes.where('filePath').equals(filePath).count(),
+  ]);
+  return workingCount > 0 || originalCount > 0;
+}
+
 export async function loadWorkingSchema(
   filePath: string,
   systemName?: string,

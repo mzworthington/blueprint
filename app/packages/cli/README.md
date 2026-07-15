@@ -2,65 +2,114 @@
 
 ![Blueprint CLI Interactive Prompts](../../docs/screenshots/cli.png)
 
-The Blueprint CLI tool scans local codebases, extracts module components and dependencies using static analysis (AST parsing), computes an optimal coordinate layout using Dagre, and outputs a valid system schema YAML file inside the `blueprints/` directory.
+Scans a local codebase, extracts modules and dependencies via static analysis, lays them out with Dagre, and writes C4-style YAML under `blueprints/`.
+
+Supports **multi-system** / monorepo discovery, **product hubs** on the context diagram, **type hydration**, **gitignore + structural filters**, and **cancelable** runs (Ctrl+C).
 
 ---
 
-## 🚀 Running the Analyzer
+## Running the analyzer
 
-You can execute the analyzer during development using the following command at the repository root:
+From the repository `app/` directory:
 
 ```bash
 pnpm dev:cli
 ```
 
-### CLI Execution Modes
+### Modes
 
-1. **Interactive Mode (Default):**
-   When run inside an interactive terminal, the CLI will walk you through a step-by-step prompt menu powered by `@clack/prompts`:
-   - Select your preferred parser (e.g., `ts-morph` or `tree-sitter`).
-   - Define the glob pattern to scan.
-   - Define the output directory path.
+1. **Interactive (default):** step-by-step prompts for parser, glob, and output.
+2. **Headless / CI:** non-TTY, or when flags are supplied:
 
-2. **Headless / CI Mode:**
-   The CLI automatically switches to headless mode when executed in a non-TTY terminal, standard CI environments, or when arguments are supplied directly:
-   ```bash
-   pnpm dev:cli --headless --parser=ts-morph --glob="src/**/*.ts" --output="blueprints"
-   ```
+```bash
+pnpm dev:cli --headless --parser=ts-morph --glob="**/*.{ts,tsx}" --output="blueprints"
+```
 
-### Command Options & Flags
+### Flags
 
-- `--headless`: Explicitly disables interactive console prompts.
-- `--parser=<ts-morph | tree-sitter>`:
-  - `ts-morph` (default): Fast, lightweight parsing for TypeScript-focused projects.
-  - `tree-sitter`: High-performance parsing supporting multi-language syntaxes.
-- `--glob="<pattern>"`: The directory or glob matching query to scan (e.g., `**/*.{ts,tsx}`).
-- `--output="<path>"`: The folder to store generated YAML blueprint files. You can also configure this by setting the `BLUEPRINT_OUTPUT_DIR` environment variable.
+| Flag                               | Purpose                                                           |
+| ---------------------------------- | ----------------------------------------------------------------- |
+| `--headless`                       | Disable interactive prompts                                       |
+| `--parser=ts-morph \| tree-sitter` | AST engine (`ts-morph` default; `tree-sitter` for multi-language) |
+| `--glob="<pattern>"`               | Files to consider (still subject to filters)                      |
+| `--output="<path>"`                | Output folder (or `BLUEPRINT_OUTPUT_DIR`)                         |
+| `--context="<name>"`               | Context system name / entityRef root                              |
+| `--ignore="<a,b>"`                 | Extra ignore globs (comma-separated)                              |
+| `--systems="<a,b>"`                | Restrict discovery to these system roots                          |
+| `--rollup-modules`                 | Collapse `*-module-*` packages into a prefix system               |
+
+Interrupt with **Ctrl+C** (or SIGTERM). First signal aborts cooperatively; a second signal force-exits (`130`).
 
 ---
 
-## 🛠️ Building & Compiling Standalone Binaries
+## What gets generated
 
-You can compile the analyzer CLI tool into a standalone platform-native executable binary using Bun:
+| Artifact                                | Content                                                                        |
+| --------------------------------------- | ------------------------------------------------------------------------------ |
+| `blueprints/context.yaml`               | Software systems + hub→spoke “Part of product system” edges (merged on re-run) |
+| `blueprints/<system>/containers.yaml`   | Containers for that system                                                     |
+| `blueprints/<system>/*-components.yaml` | Component graphs per container                                                 |
+
+### Multi-system discovery
+
+By default the analyzer finds systems from:
+
+- `package.json` / `pnpm-workspace.yaml` workspace members
+- Standalone package roots at the scan root
+- Optional `systems` from config or `--systems=`
+
+A **product hub** node is added when multiple subsystems share a product, so Blueprint vs Backstage (different `productId`s) stay disconnected.
+
+### Filtering
+
+Files are included only if they pass **all** of:
+
+1. Glob match
+2. `.gitignore` (and nested gitignores)
+3. Built-in **structural** ignores (docs, scripts, e2e, storybook, `dist`, `build`, coverage, `.github`, …)
+4. Optional config / CLI `--ignore`
+5. Optional config `include` allow-list
+
+Test paths stay in the model and are tagged `isTest` (designer can hide them).
+
+### Type hydration
+
+After extraction, nodes/edges are classified from imports, constructors, and path cues (e.g. gateway, relational DB, event broker, REST) and connected with suitable dependency types (`read-write`, `publish-subscribe`, …).
+
+---
+
+## Config file
+
+Optional `blueprint.config.json` (or `.yml` / `.yaml`) beside the scan root:
+
+```json
+{
+  "ignore": ["**/generated/**"],
+  "include": [],
+  "systems": ["packages", "plugins"],
+  "rollupModules": false,
+  "glob": "**/*.{ts,tsx}",
+  "context": "my-product"
+}
+```
+
+---
+
+## Building standalone binaries
 
 ```bash
 pnpm --filter @blueprint/cli build
 ```
 
-This compiles a standalone binary directly to the workspace root at `dist/blueprint` (or `dist/blueprint.exe` on Windows):
+Produces `dist/blueprint` (or `dist/blueprint.exe`). Tree-sitter `.wasm` queries must sit next to the binary or in the project's `node_modules`.
 
 ```bash
 ./dist/blueprint --headless --parser=ts-morph
 ```
 
-> [!NOTE]
-> The standalone binary requires tree-sitter `.wasm` query files (found in `node_modules/tree-sitter-wasms/out/`) in either the same directory as the executable, or in the target project's `node_modules` directory for parser support.
-
 ---
 
-## 🧪 Testing
-
-To run the CLI unit test suite:
+## Testing
 
 ```bash
 pnpm test:cli

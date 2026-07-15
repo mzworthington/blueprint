@@ -1,4 +1,18 @@
 fn main() {
+    // Quarantine: this crate is unmaintained. Prefer the TypeScript CLI.
+    // Set BLUEPRINT_RUST_ALLOW_BUILD=1 only if you intentionally restore protos.
+    if std::env::var_os("BLUEPRINT_RUST_ALLOW_BUILD").is_none() {
+        panic!(
+            "\n\n\
+blueprint-rust is UNMAINTAINED and not part of CI.\n\
+Use the TypeScript CLI instead:\n\
+  cd app && pnpm dev:cli\n\
+See cli/README.md and app/packages/cli/README.md.\n\
+To force this experimental build (after restoring core/proto), set:\n\
+  BLUEPRINT_RUST_ALLOW_BUILD=1\n"
+        );
+    }
+
     let mut config = prost_build::Config::new();
 
     // Derives serde traits on all generated structs
@@ -53,5 +67,9 @@ fn main() {
             &["../core/proto/blueprint/v1/schema.proto"],
             &["../core/proto/"],
         )
-        .unwrap();
+        .unwrap_or_else(|err| {
+            panic!(
+                "prost compile failed ({err}). Protos were removed from the repo — use @blueprint/cli."
+            )
+        });
 }
