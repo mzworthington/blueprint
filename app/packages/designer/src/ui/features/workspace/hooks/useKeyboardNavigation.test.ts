@@ -42,6 +42,56 @@ describe('useKeyboardNavigation Hook', () => {
     expect(onSearchOpen).toHaveBeenCalled();
   });
 
+  it('should call onZoomOut when Escape is pressed (not typing)', () => {
+    const onZoomOut = vi.fn();
+    renderHook(() => useKeyboardNavigation({ onZoomOut }));
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    });
+
+    expect(onZoomOut).toHaveBeenCalled();
+  });
+
+  it('should call onZoomOut when Backspace is pressed (not typing)', () => {
+    const onZoomOut = vi.fn();
+    renderHook(() => useKeyboardNavigation({ onZoomOut }));
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Backspace' }));
+    });
+
+    expect(onZoomOut).toHaveBeenCalled();
+  });
+
+  it('should not call onZoomOut when typing in INPUT', () => {
+    const onZoomOut = vi.fn();
+    renderHook(() => useKeyboardNavigation({ onZoomOut }));
+
+    const input = document.createElement('input');
+    document.body.appendChild(input);
+    input.focus();
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Backspace' }));
+    });
+
+    expect(onZoomOut).not.toHaveBeenCalled();
+    document.body.removeChild(input);
+  });
+
+  it('should not call onZoomOut when the callback is omitted', () => {
+    const onZoomOut = vi.fn();
+    renderHook(() => useKeyboardNavigation({}));
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    });
+
+    expect(onZoomOut).not.toHaveBeenCalled();
+  });
+
   it('should not trigger shortcuts when typing in INPUT', () => {
     const onSearchOpen = vi.fn();
     renderHook(() => useKeyboardNavigation({ onSearchOpen }));

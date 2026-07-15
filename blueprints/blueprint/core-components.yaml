@@ -2,5 +2,179 @@ entityRef: blueprint/blueprint/core
 name: Core Service Components
 version: 1.0.0
 level: component
-nodes: []
-dependencies: []
+nodes:
+  - entityRef: blueprint/blueprint/core/vite-config
+    type: component
+    name: vite.config
+    isTest: false
+    properties:
+      filepath: app/packages/core/vite.config.ts
+      containerId: core
+    x: 140
+    'y': 50
+  - entityRef: blueprint/blueprint/core/index
+    type: component
+    name: index
+    isTest: false
+    properties:
+      filepath: app/packages/core/src/index.ts
+      containerId: core
+    x: 600
+    'y': 50
+  - entityRef: blueprint/blueprint/core/entityref-test
+    type: component
+    name: entityRef.test
+    isTest: true
+    properties:
+      filepath: app/packages/core/src/lib/entityRef.test.ts
+      containerId: core
+    x: 2115
+    'y': 370
+  - entityRef: blueprint/blueprint/core/entityref
+    type: component
+    name: entityRef
+    isTest: false
+    properties:
+      filepath: app/packages/core/src/lib/entityRef.ts
+      containerId: core
+    x: 1980
+    'y': 690
+  - entityRef: blueprint/blueprint/core/slug-test
+    type: component
+    name: slug.test
+    isTest: true
+    properties:
+      filepath: app/packages/core/src/lib/slug.test.ts
+      containerId: core
+    x: 1520
+    'y': 1010
+  - entityRef: blueprint/blueprint/core/slug
+    type: component
+    name: slug
+    isTest: false
+    properties:
+      filepath: app/packages/core/src/lib/slug.ts
+      containerId: core
+    x: 1575
+    'y': 1330
+  - entityRef: blueprint/blueprint/core/schema-test
+    type: component
+    name: schema.test
+    isTest: true
+    properties:
+      filepath: app/packages/core/src/models/schema.test.ts
+      containerId: core
+    x: 1020
+    'y': 690
+  - entityRef: blueprint/blueprint/core/schema
+    type: component
+    name: schema
+    isTest: false
+    properties:
+      filepath: app/packages/core/src/models/schema.ts
+      containerId: core
+    x: 980
+    'y': 1010
+  - entityRef: blueprint/blueprint/core/graph-test
+    type: component
+    name: graph.test
+    isTest: true
+    properties:
+      filepath: app/packages/core/src/rules/graph.test.ts
+      containerId: core
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/blueprint/core/graph
+    type: component
+    name: graph
+    isTest: false
+    properties:
+      filepath: app/packages/core/src/rules/graph.ts
+      containerId: core
+    x: 1195
+    'y': 370
+  - entityRef: blueprint/blueprint/core/path-test
+    type: component
+    name: path.test
+    isTest: true
+    properties:
+      filepath: app/packages/core/src/rules/path.test.ts
+      containerId: core
+    x: 1655
+    'y': 50
+  - entityRef: blueprint/blueprint/core/path
+    type: component
+    name: path
+    isTest: false
+    properties:
+      filepath: app/packages/core/src/rules/path.ts
+      containerId: core
+    x: 1655
+    'y': 370
+dependencies:
+  - from: blueprint/blueprint/cli/blueprint
+    to: blueprint/blueprint/core/path
+    type: direct-call
+  - from: blueprint/blueprint/designer/e2e-spec
+    to: blueprint/blueprint/core/path
+    type: direct-call
+  - from: blueprint/blueprint/core/entityref-test
+    to: blueprint/blueprint/core/entityref
+    type: direct-call
+  - from: blueprint/blueprint/core/entityref-test
+    to: blueprint/blueprint/core/schema
+    type: direct-call
+  - from: blueprint/blueprint/core/entityref
+    to: blueprint/blueprint/core/schema
+    type: direct-call
+  - from: blueprint/blueprint/core/entityref
+    to: blueprint/blueprint/core/slug
+    type: direct-call
+  - from: blueprint/blueprint/core/slug-test
+    to: blueprint/blueprint/core/slug
+    type: direct-call
+  - from: blueprint/blueprint/core/schema-test
+    to: blueprint/blueprint/core/schema
+    type: direct-call
+  - from: blueprint/blueprint/core/schema
+    to: blueprint/blueprint/core/slug
+    type: direct-call
+  - from: blueprint/blueprint/core/graph-test
+    to: blueprint/blueprint/core/graph
+    type: direct-call
+  - from: blueprint/blueprint/core/graph-test
+    to: blueprint/blueprint/core/schema
+    type: direct-call
+  - from: blueprint/blueprint/core/graph
+    to: blueprint/blueprint/core/schema
+    type: direct-call
+  - from: blueprint/blueprint/core/graph
+    to: blueprint/blueprint/core/entityref
+    type: direct-call
+  - from: blueprint/blueprint/core/path-test
+    to: blueprint/blueprint/core/path
+    type: direct-call
+  - from: blueprint/blueprint/cli/gitignorefilter-test
+    to: blueprint/blueprint/core/path
+    type: direct-call
+  - from: blueprint/blueprint/cli/gitignorefilter
+    to: blueprint/blueprint/core/path
+    type: direct-call
+  - from: blueprint/blueprint/cli/nodefilesystem-test
+    to: blueprint/blueprint/core/path
+    type: direct-call
+  - from: blueprint/blueprint/cli/nodefilesystem
+    to: blueprint/blueprint/core/path
+    type: direct-call
+  - from: blueprint/blueprint/cli/treesitterparser-test
+    to: blueprint/blueprint/core/path
+    type: direct-call
+  - from: blueprint/blueprint/cli/treesitterparser
+    to: blueprint/blueprint/core/path
+    type: direct-call
+  - from: blueprint/blueprint/cli/tsmorphparser-test
+    to: blueprint/blueprint/core/path
+    type: direct-call
+  - from: blueprint/blueprint/cli/tsmorphparser
+    to: blueprint/blueprint/core/path
+    type: direct-call

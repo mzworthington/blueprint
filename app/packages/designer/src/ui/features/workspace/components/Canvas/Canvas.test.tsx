@@ -230,9 +230,7 @@ describe('Canvas Component', () => {
     });
   });
 
-  it('navigates to parent system when Escape is pressed', async () => {
-    mockSetLocation.mockClear();
-
+  const drillInFixtures = () => {
     const parentSchema = {
       name: 'Root Context',
       version: '1.0.0',
@@ -268,10 +266,38 @@ describe('Canvas Component', () => {
 
     const { initSchema } = useBlueprintStore.getState();
     initSchema(childSchema);
+  };
 
+  it('navigates to parent system when Escape is pressed', async () => {
+    mockSetLocation.mockClear();
+    drillInFixtures();
     render(<Canvas />);
 
     fireEvent.keyDown(window, { key: 'Escape' });
+
+    await waitFor(() => {
+      expect(mockSetLocation).toHaveBeenCalledWith('/workspace/root');
+    });
+  });
+
+  it('navigates to parent system when Backspace is pressed', async () => {
+    mockSetLocation.mockClear();
+    drillInFixtures();
+    render(<Canvas />);
+
+    fireEvent.keyDown(window, { key: 'Backspace' });
+
+    await waitFor(() => {
+      expect(mockSetLocation).toHaveBeenCalledWith('/workspace/root');
+    });
+  });
+
+  it('shows a Zoom out button that navigates to the parent system', async () => {
+    mockSetLocation.mockClear();
+    drillInFixtures();
+    render(<Canvas />);
+
+    fireEvent.click(screen.getByRole('button', { name: /zoom out/i }));
 
     await waitFor(() => {
       expect(mockSetLocation).toHaveBeenCalledWith('/workspace/root');

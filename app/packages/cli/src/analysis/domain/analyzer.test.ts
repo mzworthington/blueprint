@@ -94,8 +94,8 @@ describe('CodebaseAnalyzer Domain Service', () => {
     expect(componentArgs[2]).toBe('test-pkg');
     // Verify component nodes map contains our extracted components (graph, canvas)
     const componentNodesMap = componentArgs[3];
-    expect(componentNodesMap.has('graph')).toBe(true);
-    expect(componentNodesMap.has('canvas')).toBe(true);
+    expect(componentNodesMap.has('domain/graph')).toBe(true);
+    expect(componentNodesMap.has('adapters/canvas')).toBe(true);
   });
 
   describe('Obsolete File Deletion Fallback', () => {

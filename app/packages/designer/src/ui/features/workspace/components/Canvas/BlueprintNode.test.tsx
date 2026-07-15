@@ -63,6 +63,21 @@ describe('BlueprintNode Component', () => {
     expect(screen.getByTestId('handle-source-right')).toBeInTheDocument();
   });
 
+  it('truncates long entityRefs while exposing the full value in the title tooltip', () => {
+    const longRef = 'blueprint/blueprint/designer/importschema';
+    const props = {
+      ...defaultProps,
+      id: longRef,
+      data: { ...defaultProps.data, id: longRef, entityRef: longRef },
+    };
+    render(<BlueprintNode {...props} />);
+
+    const refEl = screen.getByTitle(longRef);
+    expect(refEl).toBeInTheDocument();
+    expect(refEl).toHaveTextContent(longRef);
+    expect(refEl.className).toMatch(/truncate/);
+  });
+
   it('triggers store selectNode when clicked', () => {
     render(<BlueprintNode {...defaultProps} />);
 

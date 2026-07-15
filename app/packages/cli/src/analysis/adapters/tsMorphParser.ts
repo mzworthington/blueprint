@@ -3,6 +3,11 @@ import * as path from 'path';
 import * as fs from 'fs';
 import type { CodebaseParserPort } from '../domain/ports.ts';
 import type { ParsedSourceFile } from '../domain/types.ts';
+import {
+  createGitignoreFilter,
+  isIgnoredByGitignore,
+  isTestSourcePath,
+} from './gitignoreFilter.ts';
 
 export class TsMorphParserAdapter implements CodebaseParserPort {
   async parseSourceFiles(globPattern: string): Promise<ParsedSourceFile[]> {
@@ -16,17 +21,13 @@ export class TsMorphParserAdapter implements CodebaseParserPort {
         : {}
     );
 
+    const ig = createGitignoreFilter(process.cwd());
     const resolvedPattern = path.resolve(process.cwd(), globPattern);
-    project.addSourceFilesAtPaths([
-      resolvedPattern,
-      '!**/node_modules/**',
-      '!**/dist/**',
-      '!**/.git/**',
-    ]);
+    project.addSourceFilesAtPaths([resolvedPattern]);
 
     const sourceFiles = project.getSourceFiles().filter(sf => {
-      const fp = sf.getFilePath().replace(/\\/g, '/');
-      return !fp.includes('/node_modules/') && !fp.includes('/dist/') && !fp.includes('/.git/');
+      const relativePath = path.relative(process.cwd(), sf.getFilePath());
+      return !isIgnoredByGitignore(relativePath, ig);
     });
     const result: ParsedSourceFile[] = [];
 
@@ -34,7 +35,7 @@ export class TsMorphParserAdapter implements CodebaseParserPort {
       const filePath = sourceFile.getFilePath();
       const relativePath = path.relative(process.cwd(), filePath);
       const baseName = path.basename(relativePath, path.extname(relativePath));
-      const isTestFile = relativePath.includes('.test.') || relativePath.includes('setupTests');
+      const isTestFile = isTestSourcePath(relativePath);
 
       const imports = sourceFile.getImportDeclarations().map((imp: ImportDeclaration) => ({
         moduleSpecifier: imp.getModuleSpecifierValue(),

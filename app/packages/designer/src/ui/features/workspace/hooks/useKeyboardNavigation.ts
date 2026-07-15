@@ -2,11 +2,12 @@ import { useEffect, useCallback } from 'react';
 
 export interface UseKeyboardNavigationOptions {
   onSearchOpen?: () => void;
+  onZoomOut?: () => void;
   disabled?: boolean;
 }
 
 export function useKeyboardNavigation(options: UseKeyboardNavigationOptions = {}) {
-  const { onSearchOpen, disabled = false } = options;
+  const { onSearchOpen, onZoomOut, disabled = false } = options;
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -17,17 +18,20 @@ export function useKeyboardNavigation(options: UseKeyboardNavigationOptions = {}
         document.activeElement?.tagName === 'TEXTAREA' ||
         document.activeElement?.hasAttribute('contenteditable');
 
-      if (!isTyping) {
-        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-          e.preventDefault();
-          onSearchOpen?.();
-        } else if (e.key === '/') {
-          e.preventDefault();
-          onSearchOpen?.();
-        }
+      if (isTyping) return;
+
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        onSearchOpen?.();
+      } else if (e.key === '/') {
+        e.preventDefault();
+        onSearchOpen?.();
+      } else if ((e.key === 'Escape' || e.key === 'Backspace') && onZoomOut) {
+        e.preventDefault();
+        onZoomOut();
       }
     },
-    [disabled, onSearchOpen]
+    [disabled, onSearchOpen, onZoomOut]
   );
 
   useEffect(() => {

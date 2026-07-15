@@ -61,4 +61,15 @@ describe('TsMorphParserAdapter', () => {
     const file = results[0];
     expect(file.isTestFile).toBe(true);
   });
+
+  it('should include files under test directories and mark them as tests', async () => {
+    const testDir = path.join(tempDir, 'test');
+    fs.mkdirSync(testDir, { recursive: true });
+    fs.writeFileSync(path.join(testDir, 'helper.ts'), 'export const x = 1;', 'utf8');
+
+    const results = await parser.parseSourceFiles(`${relativePattern}/**/*.ts`);
+    const helper = results.find(f => f.relativePath.replace(/\\/g, '/').endsWith('test/helper.ts'));
+    expect(helper).toBeDefined();
+    expect(helper!.isTestFile).toBe(true);
+  });
 });

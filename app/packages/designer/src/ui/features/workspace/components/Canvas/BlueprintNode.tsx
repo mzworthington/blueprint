@@ -300,15 +300,21 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
         )}
       </div>
 
-      <div className="mt-3">
+      <div className="mt-3 min-w-0 overflow-hidden">
         <h4 className="font-semibold text-slate-100 truncate text-base leading-tight">
           {name}
           {data.external && (
             <span className="text-[10px] text-slate-500 font-normal ml-1.5">(External)</span>
           )}
         </h4>
-        <p className="text-xs text-slate-400 font-mono mt-1 select-all" title="Component ID">
-          {id}
+        <p
+          className="text-xs text-slate-400 font-mono mt-1 truncate select-all"
+          title={data.entityRef || id}
+        >
+          {/* rtl + bdi keeps the leaf segment visible when truncating long FQNs */}
+          <span dir="rtl" className="block truncate">
+            <bdi>{data.entityRef || id}</bdi>
+          </span>
         </p>
       </div>
 

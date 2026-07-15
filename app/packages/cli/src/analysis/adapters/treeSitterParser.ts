@@ -5,6 +5,12 @@ import pc from 'picocolors';
 import { fileURLToPath } from 'url';
 import type { CodebaseParserPort } from '../domain/ports.ts';
 import type { ParsedSourceFile } from '../domain/types.ts';
+import {
+  createGitignoreFilter,
+  isIgnoredByGitignore,
+  isTestSourcePath,
+} from './gitignoreFilter.ts';
+import type { Ignore } from 'ignore';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,6 +18,7 @@ const __dirname = path.dirname(__filename);
 export class TreeSitterParserAdapter implements CodebaseParserPort {
   private static initPromise: Promise<void> | null = null;
   private loadedLanguages = new Map<string, Parser.Language>();
+  private ignoreFilter: Ignore = createGitignoreFilter();
 
   private static async initTreeSitter() {
     if (!this.initPromise) {
@@ -129,11 +136,14 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
     list.forEach(file => {
       const filePath = path.join(dir, file);
       try {
+        const relativePath = path.relative(process.cwd(), filePath);
+        if (isIgnoredByGitignore(relativePath, this.ignoreFilter)) {
+          return;
+        }
+
         const stat = fs.statSync(filePath);
         if (stat && stat.isDirectory()) {
-          if (file !== 'node_modules' && !file.startsWith('.')) {
-            results.push(...this.getFilesRecursively(filePath, extensions));
-          }
+          results.push(...this.getFilesRecursively(filePath, extensions));
         } else {
           const ext = path.extname(file).toLowerCase();
           if (extensions.includes(ext)) {
@@ -149,6 +159,7 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
 
   async parseSourceFiles(globPattern: string): Promise<ParsedSourceFile[]> {
     await TreeSitterParserAdapter.initTreeSitter();
+    this.ignoreFilter = createGitignoreFilter(process.cwd());
 
     const { dir, extensions } = this.parseGlobPattern(globPattern);
     const matchedFiles = this.getFilesRecursively(dir, extensions);
@@ -174,7 +185,7 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
 
       const relativePath = path.relative(process.cwd(), filePath);
       const baseName = path.basename(relativePath, path.extname(relativePath));
-      const isTestFile = relativePath.includes('.test.') || relativePath.includes('setupTests');
+      const isTestFile = isTestSourcePath(relativePath);
 
       const imports: { moduleSpecifier: string }[] = [];
       const newExpressions: { className: string }[] = [];

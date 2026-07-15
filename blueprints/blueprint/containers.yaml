@@ -3,14 +3,30 @@ name: Blueprint Containers
 version: 1.0.0
 level: container
 nodes:
+  - entityRef: blueprint/blueprint/app
+    type: container
+    name: App Service
+    x: 150
+    'y': 60
+  - entityRef: blueprint/blueprint/cli
+    type: container
+    name: Cli Service
+    x: 670
+    'y': 60
   - entityRef: blueprint/blueprint/core
     type: container
     name: Core Service
-    x: 150
-    'y': 60
-  - entityRef: blueprint/blueprint/packages
+    x: 930
+    'y': 430
+  - entityRef: blueprint/blueprint/designer
     type: container
-    name: Packages Service
-    x: 670
+    name: Designer Service
+    x: 1190
     'y': 60
-dependencies: []
+dependencies:
+  - from: blueprint/blueprint/cli
+    to: blueprint/blueprint/core
+    type: inter-container
+  - from: blueprint/blueprint/designer
+    to: blueprint/blueprint/core
+    type: inter-container

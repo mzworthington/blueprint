@@ -1,5 +1,6 @@
 import type { SystemNode, SystemDependency } from '@blueprint/core';
 import { EntityRef, slugify } from '@blueprint/core';
+import { resolveContainerFromPath, componentMapKey } from './containerGrouping.ts';
 
 export class ModelExtractor {
   public parentRef: string;
@@ -14,21 +15,19 @@ export class ModelExtractor {
     const containerNodesMap = new Map<string, SystemNode>();
     const containerDependencies: SystemDependency[] = [];
 
-    // Grouping Components into Containers based on path depth
     for (const file of sourceFiles) {
       const componentId = slugify(file.baseName);
-      const pathParts = file.relativePath.replace(/\\/g, '/').split('/');
-      const rawContainer =
-        pathParts.length > 1 && pathParts[0] !== 'src' ? pathParts[0] : pathParts[1] || 'core';
-      const containerId = slugify(rawContainer);
+      const { containerId, displayName } = resolveContainerFromPath(file.relativePath);
+      const mapKey = componentMapKey(containerId, componentId);
 
       const containerRef = EntityRef.child(this.parentRef, containerId);
       const componentRef = EntityRef.child(containerRef, componentId);
 
-      componentNodesMap.set(componentId, {
+      componentNodesMap.set(mapKey, {
         entityRef: componentRef,
         type: 'component',
         name: file.baseName,
+        isTest: !!file.isTestFile,
         properties: { filepath: file.relativePath, containerId },
       });
 
@@ -36,17 +35,29 @@ export class ModelExtractor {
         containerNodesMap.set(containerId, {
           entityRef: containerRef,
           type: 'container',
-          name: rawContainer.charAt(0).toUpperCase() + rawContainer.slice(1) + ' Service',
+          name: `${displayName.charAt(0).toUpperCase()}${displayName.slice(1)} Service`,
         });
       }
     }
 
-    // Process edge arrays
+    const findComponent = (containerHint: string | undefined, componentId: string) => {
+      if (containerHint) {
+        const keyed = componentNodesMap.get(componentMapKey(containerHint, componentId));
+        if (keyed) return keyed;
+      }
+      for (const [key, node] of componentNodesMap) {
+        if (key.endsWith(`/${componentId}`) || key === componentId) {
+          return node;
+        }
+      }
+      return undefined;
+    };
+
     for (const file of sourceFiles) {
       const fromComponentId = slugify(file.baseName);
-      const fromComponent = componentNodesMap.get(fromComponentId);
+      const { containerId: fromContainerId } = resolveContainerFromPath(file.relativePath);
+      const fromComponent = findComponent(fromContainerId, fromComponentId);
       if (!fromComponent) continue;
-      const fromContainerId = fromComponent.properties?.containerId;
 
       file.imports.forEach((imp: any) => {
         const toComponentId = slugify(
@@ -55,20 +66,17 @@ export class ModelExtractor {
             .pop()
             ?.replace(/\.(ts|tsx|js|jsx)$/, '') || ''
         );
-        const toComponent = componentNodesMap.get(toComponentId);
+        const toComponent = findComponent(fromContainerId, toComponentId);
         if (!toComponent) return;
-        const toContainerId = toComponent.properties?.containerId;
+        const toContainerId = String(toComponent.properties?.containerId || '');
 
-        if (fromComponentId !== toComponentId) {
+        if (fromComponent.entityRef !== toComponent.entityRef) {
           const fromContainerRef = EntityRef.child(this.parentRef, fromContainerId);
           const toContainerRef = EntityRef.child(this.parentRef, toContainerId);
 
-          const fromRef = EntityRef.child(fromContainerRef, fromComponentId);
-          const toRef = EntityRef.child(toContainerRef, toComponentId);
-
           componentDependencies.push({
-            from: fromRef,
-            to: toRef,
+            from: fromComponent.entityRef,
+            to: toComponent.entityRef,
             type: 'direct-call',
           });
 
