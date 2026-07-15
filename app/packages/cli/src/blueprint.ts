@@ -127,8 +127,8 @@ async function runArchitecture(plan: BlueprintCliPlan): Promise<{
   let outputDir = plan.architecture.outputDir || process.env.BLUEPRINT_OUTPUT_DIR || 'blueprints';
   let contextName = plan.architecture.context || fileConfig.context || 'Blueprint';
   let rollupModules = plan.architecture.rollupModules || fileConfig.rollupModules;
-  const cliIgnores = plan.architecture.ignore;
-  const cliSystems = plan.architecture.systems;
+  let cliIgnores = plan.architecture.ignore;
+  let cliSystems = plan.architecture.systems;
 
   const contextArg = args.find(a => a.startsWith('--context='));
   if (contextArg) {
