@@ -5,6 +5,7 @@ import { CodeViewer } from './components/CodeViewer/CodeViewer';
 import { Canvas } from './components/Canvas/Canvas';
 import { PropertyPanel } from './components/PropertyPanel/PropertyPanel';
 import { Header } from './components/Header/Header';
+import { MobilePanelToggles } from './components/MobilePanelToggles/MobilePanelToggles';
 import { useBlueprintStore } from '../../../application/store/store';
 import { DiffMenu } from './components/DiffMenu/DiffMenu';
 import { useUrlSync } from './hooks/useUrlSync';
@@ -30,11 +31,10 @@ export const WorkspacePage: React.FC = () => {
           <Canvas />
           <PropertyPanel />
 
+          {/* Desktop: thin edge rails. Mobile: labelled chips (MobilePanelToggles). */}
           <button
             onClick={toggleLeftCollapsed}
-            className={`absolute top-1/2 -translate-y-1/2 z-50 bg-slate-900 border border-slate-850 hover:border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-850 p-2 rounded-r-xl shadow-2xl transition-all duration-300 ease-in-out focus:outline-none cursor-pointer items-center justify-center border-l-0 ${
-              leftCollapsed ? 'flex' : 'hidden sm:flex'
-            }`}
+            className="hidden sm:flex absolute top-1/2 -translate-y-1/2 z-50 bg-slate-900 border border-slate-850 hover:border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-850 p-2 rounded-r-xl shadow-2xl transition-all duration-300 ease-in-out focus:outline-none cursor-pointer items-center justify-center border-l-0"
             style={{ left: leftCollapsed ? '0px' : 'calc(min(384px, 100vw - 40px))' }}
             aria-label="Toggle Left Panel"
             title={leftCollapsed ? 'Expand Schema Explorer' : 'Collapse Schema Explorer'}
@@ -48,9 +48,7 @@ export const WorkspacePage: React.FC = () => {
 
           <button
             onClick={toggleRightCollapsed}
-            className={`absolute top-1/2 -translate-y-1/2 z-50 bg-slate-900 border border-slate-850 hover:border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-850 p-2 rounded-l-xl shadow-2xl transition-all duration-300 ease-in-out focus:outline-none cursor-pointer items-center justify-center border-r-0 ${
-              rightCollapsed ? 'flex' : 'hidden sm:flex'
-            }`}
+            className="hidden sm:flex absolute top-1/2 -translate-y-1/2 z-50 bg-slate-900 border border-slate-850 hover:border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-850 p-2 rounded-l-xl shadow-2xl transition-all duration-300 ease-in-out focus:outline-none cursor-pointer items-center justify-center border-r-0"
             style={{ right: rightCollapsed ? '0px' : 'calc(min(320px, 100vw - 40px))' }}
             aria-label="Toggle Right Panel"
             title={rightCollapsed ? 'Expand Properties Panel' : 'Collapse Properties Panel'}
@@ -61,6 +59,8 @@ export const WorkspacePage: React.FC = () => {
               <ChevronRight className="w-4 h-4" />
             )}
           </button>
+
+          <MobilePanelToggles />
         </div>
       </div>
       <DiffMenu isOpen={isDiffOpen} onClose={() => setIsDiffOpen(false)} />

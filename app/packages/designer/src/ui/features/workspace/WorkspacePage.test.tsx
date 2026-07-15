@@ -102,11 +102,11 @@ describe('WorkspacePage Component', () => {
   it('should support expanding and collapsing left and right side panels', () => {
     render(<WorkspacePage />);
 
+    // Desktop edge rails (always in the DOM; mobile uses MobilePanelToggles instead).
     const leftToggle = screen.getByLabelText('Toggle Left Panel');
     const rightToggle = screen.getByLabelText('Toggle Right Panel');
-
-    expect(useBlueprintStore.getState().leftCollapsed).toBe(true);
-    expect(useBlueprintStore.getState().rightCollapsed).toBe(true);
+    expect(screen.getByLabelText('Open Schema Explorer')).toBeInTheDocument();
+    expect(screen.getByLabelText('Open Properties Panel')).toBeInTheDocument();
 
     fireEvent.click(leftToggle);
     expect(useBlueprintStore.getState().leftCollapsed).toBe(false);

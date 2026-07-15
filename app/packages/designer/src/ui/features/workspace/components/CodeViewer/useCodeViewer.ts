@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useLocation } from 'wouter';
 import { useBlueprintStore } from '../../../../../application/store/store';
 import { serializeSchemaToMermaid, serializeSchemaToYaml } from '@blueprint/core';
 
@@ -25,8 +24,6 @@ export interface UseCodeViewerReturn {
   handleCopy: () => Promise<void>;
   handleSaveYaml: () => boolean;
   handleSaveJson: () => boolean;
-  // Navigation
-  navigateToDesignSystem: () => void;
   // Store passthrough
   lastError: string | null;
   clearError: () => void;
@@ -64,8 +61,6 @@ export function useCodeViewer(): UseCodeViewerReturn {
     toggleLeftCollapsed,
     isWorkspaceOpen,
   } = useBlueprintStore();
-
-  const [, setLocation] = useLocation();
 
   const [activeTab, setActiveTab] = useState<Tab>('yaml');
   const [copied, setCopied] = useState(false);
@@ -121,8 +116,6 @@ export function useCodeViewer(): UseCodeViewerReturn {
     return importJson(jsonText);
   };
 
-  const navigateToDesignSystem = () => setLocation('/design-system');
-
   const availableTabs = ['yaml', 'json', 'mermaid'] as const;
 
   return {
@@ -141,7 +134,6 @@ export function useCodeViewer(): UseCodeViewerReturn {
     handleCopy,
     handleSaveYaml,
     handleSaveJson,
-    navigateToDesignSystem,
     lastError,
     clearError,
     leftCollapsed,

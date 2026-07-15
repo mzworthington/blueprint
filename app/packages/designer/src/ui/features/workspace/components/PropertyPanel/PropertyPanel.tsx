@@ -139,8 +139,9 @@ export const PropertyPanel: React.FC = () => {
           )}
           <button
             onClick={toggleRightCollapsed}
-            className="sm:hidden p-1 rounded-lg bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-400 hover:text-slate-200 transition cursor-pointer flex items-center justify-center w-6 h-6 text-xs"
+            className="sm:hidden min-h-11 min-w-11 rounded-lg bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-400 hover:text-slate-200 transition cursor-pointer flex items-center justify-center text-sm"
             title="Close Panel"
+            aria-label="Close Properties Panel"
           >
             ✕
           </button>

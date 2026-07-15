@@ -19,7 +19,6 @@ export const CodeViewer: React.FC = () => {
     handleCopy,
     handleSaveYaml,
     handleSaveJson,
-    navigateToDesignSystem,
     lastError,
     clearError,
     leftCollapsed,
@@ -42,20 +41,14 @@ export const CodeViewer: React.FC = () => {
           </h3>
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          <button
-            onClick={navigateToDesignSystem}
-            className="p-1 px-2 border border-brand-500/30 text-brand-500 hover:text-brand-300 hover:border-brand-500 hover:bg-brand-950/20 rounded text-[10px] font-bold font-mono tracking-wider transition cursor-pointer flex items-center gap-1"
-            title="Open Design System View"
-          >
-            <span>SYSTEM</span>
-          </button>
           <div className="flex items-center text-[10px] bg-slate-900/80 border border-slate-850 px-1.5 py-0.5 rounded text-slate-400 font-mono">
             v1.0.0
           </div>
           <button
             onClick={toggleLeftCollapsed}
-            className="sm:hidden p-1 rounded-lg bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-400 hover:text-slate-200 transition cursor-pointer flex items-center justify-center w-6 h-6 text-xs"
+            className="sm:hidden min-h-11 min-w-11 rounded-lg bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-400 hover:text-slate-200 transition cursor-pointer flex items-center justify-center text-sm"
             title="Close Explorer"
+            aria-label="Close Schema Explorer"
           >
             ✕
           </button>
