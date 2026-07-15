@@ -6,11 +6,11 @@ Use this guide if you want to understand the product, not just the internals.
 
 ## What you get
 
-| Piece | Role |
-| --- | --- |
-| **Designer** | Local-first canvas for C4-style diagrams, property editing, and YAML/JSON sync |
-| **CLI** | Static analysis that discovers systems/containers/components and writes `blueprints/*.yaml` |
-| **Forensics** | Optional (on by default) git + complexity signals attached onto nodes as `forensics` |
+| Piece         | Role                                                                                        |
+| ------------- | ------------------------------------------------------------------------------------------- |
+| **Designer**  | Local-first canvas for C4-style diagrams, property editing, and YAML/JSON sync              |
+| **CLI**       | Static analysis that discovers systems/containers/components and writes `blueprints/*.yaml` |
+| **Forensics** | Optional (on by default) git + complexity signals attached onto nodes as `forensics`        |
 
 ## Typical flow
 

@@ -16,18 +16,18 @@ pnpm dev:cli --headless --parser=ts-morph --glob="**/*.{ts,tsx}" --output="bluep
 
 ## Useful flags
 
-| Flag | Purpose |
-| --- | --- |
-| `--headless` | No prompts |
-| `--parser=ts-morph \| tree-sitter` | AST engine |
-| `--glob` | Inclusion pattern |
-| `--output` | Output folder |
-| `--context` | Context / root name |
-| `--ignore` | Extra ignore globs (csv) |
-| `--systems` | Limit discovery to roots |
-| `--rollup-modules` | Collapse `*-module-*` packages |
-| `--git` / `--no-git` | Forensics on (default) or off |
-| `--git-since=<days>` | Lookback window (default 90) |
+| Flag                               | Purpose                        |
+| ---------------------------------- | ------------------------------ |
+| `--headless`                       | No prompts                     |
+| `--parser=ts-morph \| tree-sitter` | AST engine                     |
+| `--glob`                           | Inclusion pattern              |
+| `--output`                         | Output folder                  |
+| `--context`                        | Context / root name            |
+| `--ignore`                         | Extra ignore globs (csv)       |
+| `--systems`                        | Limit discovery to roots       |
+| `--rollup-modules`                 | Collapse `*-module-*` packages |
+| `--git` / `--no-git`               | Forensics on (default) or off  |
+| `--git-since=<days>`               | Lookback window (default 90)   |
 
 Full flag table and config: see the [CLI README](https://github.com/mzworthington/blueprint/blob/main/app/packages/cli/README.md).
 

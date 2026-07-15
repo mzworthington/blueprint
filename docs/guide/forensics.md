@@ -8,16 +8,16 @@ Git analysis is **on by default**. Pass `--no-git` to skip; set window with `--g
 
 On component nodes (joined by `properties.filepath`):
 
-| Field | Meaning |
-| --- | --- |
-| `complexity` | Cyclomatic complexity from the AST |
-| `loc` / `sloc` | Lines / source lines of code |
-| `churn` | Edits in the lookback window |
-| `authorCount` / `topAuthorPercent` | Ownership concentration |
-| `hotspotScore` | Relative risk from complexity × churn |
-| `classifications` | e.g. `hotspot`, `knowledge-silo` |
-| `coupledFiles` | Temporally coupled peers (scores + shared commits) |
-| `sinceDays` | Lookback window used for this run |
+| Field                              | Meaning                                            |
+| ---------------------------------- | -------------------------------------------------- |
+| `complexity`                       | Cyclomatic complexity from the AST                 |
+| `loc` / `sloc`                     | Lines / source lines of code                       |
+| `churn`                            | Edits in the lookback window                       |
+| `authorCount` / `topAuthorPercent` | Ownership concentration                            |
+| `hotspotScore`                     | Relative risk from complexity × churn              |
+| `classifications`                  | e.g. `hotspot`, `knowledge-silo`                   |
+| `coupledFiles`                     | Temporally coupled peers (scores + shared commits) |
+| `sinceDays`                        | Lookback window used for this run                  |
 
 Containers and context systems get **rollups** (`fileCount`, `hotspotCount`, `knowledgeSiloCount`, max/sum metrics, and the same `sinceDays`).
 
