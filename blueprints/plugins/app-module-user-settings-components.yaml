@@ -1,0 +1,67 @@
+entityRef: blueprint/plugins/app-module-user-settings
+name: App-module-user-settings Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/app-module-user-settings/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/app-module-user-settings/src/index.ts
+      containerId: app-module-user-settings
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/app-module-user-settings/module
+    type: gateway-api
+    name: module UI Component
+    isTest: false
+    properties:
+      filepath: plugins/app-module-user-settings/src/module.tsx
+      containerId: app-module-user-settings
+      technology: React Component
+      classification: ui-import
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/app-module-user-settings/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/app-module-user-settings/src/setupTests.ts
+      containerId: app-module-user-settings
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+dependencies:
+  - from: blueprint/plugins/catalog-backend-module-aws/alpha
+    to: blueprint/plugins/app-module-user-settings/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-azure/alpha
+    to: blueprint/plugins/app-module-user-settings/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/alpha
+    to: blueprint/plugins/app-module-user-settings/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-server/alpha
+    to: blueprint/plugins/app-module-user-settings/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/alpha
+    to: blueprint/plugins/app-module-user-settings/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-github/alpha
+    to: blueprint/plugins/app-module-user-settings/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-msgraph/alpha
+    to: blueprint/plugins/app-module-user-settings/module
+    type: direct-call
+    description: Calls module / service

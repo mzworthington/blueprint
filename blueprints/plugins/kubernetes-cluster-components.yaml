@@ -1,0 +1,278 @@
+entityRef: blueprint/plugins/kubernetes-cluster
+name: Kubernetes-cluster Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/kubernetes-cluster/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-cluster/src/alpha.ts
+      containerId: kubernetes-cluster
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2085
+    'y': 690
+  - entityRef: blueprint/plugins/kubernetes-cluster/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-cluster/src/components/KubernetesClusterContent/index.ts
+      containerId: kubernetes-cluster
+      technology: TypeScript Domain Service
+      classification: default
+    x: 585
+    'y': 50
+  - entityRef: blueprint/plugins/kubernetes-cluster/plugin
+    type: background-worker
+    name: plugin Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-cluster/src/plugin.ts
+      containerId: kubernetes-cluster
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1045
+    'y': 50
+  - entityRef: blueprint/plugins/kubernetes-cluster/router
+    type: gateway-api
+    name: Router UI Component
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-cluster/src/Router.tsx
+      containerId: kubernetes-cluster
+      technology: React Component
+      classification: ui-import
+    x: 1505
+    'y': 50
+  - entityRef: blueprint/plugins/kubernetes-cluster/translation
+    type: background-worker
+    name: translation Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-cluster/src/translation.ts
+      containerId: kubernetes-cluster
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2410
+    'y': 1010
+  - entityRef: blueprint/plugins/kubernetes-cluster/apiresources-test
+    type: background-worker
+    name: ApiResources.test Service
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-cluster/src/components/ApiResources/ApiResources.test.tsx
+      containerId: kubernetes-cluster
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 370
+  - entityRef: blueprint/plugins/kubernetes-cluster/apiresources
+    type: gateway-api
+    name: ApiResources UI Component
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-cluster/src/components/ApiResources/ApiResources.tsx
+      containerId: kubernetes-cluster
+      technology: React Component
+      classification: ui-import
+    x: 290
+    'y': 690
+  - entityRef: blueprint/plugins/kubernetes-cluster/useapiresources
+    type: gateway-api
+    name: useApiResources UI Component
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-cluster/src/components/ApiResources/useApiResources.ts
+      containerId: kubernetes-cluster
+      technology: React Component
+      classification: ui-import
+    x: 290
+    'y': 1010
+  - entityRef: blueprint/plugins/kubernetes-cluster/clusteroverview-test
+    type: background-worker
+    name: ClusterOverview.test Service
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-cluster/src/components/ClusterOverview/ClusterOverview.test.tsx
+      containerId: kubernetes-cluster
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 370
+  - entityRef: blueprint/plugins/kubernetes-cluster/clusteroverview
+    type: gateway-api
+    name: ClusterOverview UI Component
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-cluster/src/components/ClusterOverview/ClusterOverview.tsx
+      containerId: kubernetes-cluster
+      technology: React Component
+      classification: ui-import
+    x: 870
+    'y': 690
+  - entityRef: blueprint/plugins/kubernetes-cluster/usecluster
+    type: gateway-api
+    name: useCluster UI Component
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-cluster/src/components/ClusterOverview/useCluster.ts
+      containerId: kubernetes-cluster
+      technology: React Component
+      classification: ui-import
+    x: 750
+    'y': 1010
+  - entityRef: blueprint/plugins/kubernetes-cluster/kubernetesclustercontent
+    type: gateway-api
+    name: KubernetesClusterContent UI Component
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-cluster/src/components/KubernetesClusterContent/KubernetesClusterContent.tsx
+      containerId: kubernetes-cluster
+      technology: React Component
+      classification: ui-import
+    x: 1505
+    'y': 370
+  - entityRef: blueprint/plugins/kubernetes-cluster/kubernetesclustererrorcontext
+    type: gateway-api
+    name: KubernetesClusterErrorContext UI Component
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-cluster/src/components/KubernetesClusterErrorContext/KubernetesClusterErrorContext.tsx
+      containerId: kubernetes-cluster
+      technology: React Component
+      classification: ui-import
+    x: 1235
+    'y': 1010
+  - entityRef: blueprint/plugins/kubernetes-cluster/nodes-test
+    type: background-worker
+    name: Nodes.test Service
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-cluster/src/components/Nodes/Nodes.test.tsx
+      containerId: kubernetes-cluster
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2530
+    'y': 370
+  - entityRef: blueprint/plugins/kubernetes-cluster/nodes
+    type: gateway-api
+    name: Nodes UI Component
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-cluster/src/components/Nodes/Nodes.tsx
+      containerId: kubernetes-cluster
+      technology: React Component
+      classification: ui-import
+    x: 1625
+    'y': 690
+  - entityRef: blueprint/plugins/kubernetes-cluster/usenodes
+    type: gateway-api
+    name: useNodes UI Component
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-cluster/src/components/Nodes/useNodes.ts
+      containerId: kubernetes-cluster
+      technology: React Component
+      classification: ui-import
+    x: 1855
+    'y': 1010
+dependencies:
+  - from: blueprint/plugins/kubernetes-cluster/alpha
+    to: blueprint/plugins/kubernetes-cluster/translation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/router
+    to: blueprint/plugins/kubernetes-cluster/kubernetesclustercontent
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/translation
+    to: blueprint/plugins/kubernetes-cluster/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/apiresources-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/apiresources-test
+    to: blueprint/plugins/kubernetes-cluster/apiresources
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/apiresources
+    to: blueprint/plugins/kubernetes-cluster/useapiresources
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/apiresources
+    to: blueprint/plugins/kubernetes-cluster/kubernetesclustererrorcontext
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/apiresources
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/clusteroverview-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/clusteroverview-test
+    to: blueprint/plugins/kubernetes-cluster/clusteroverview
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/clusteroverview
+    to: blueprint/plugins/kubernetes-cluster/usecluster
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/clusteroverview
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/clusteroverview
+    to: blueprint/plugins/kubernetes-cluster/kubernetesclustererrorcontext
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/kubernetesclustercontent
+    to: blueprint/plugins/kubernetes-cluster/apiresources
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/kubernetesclustercontent
+    to: blueprint/plugins/kubernetes-cluster/nodes
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/kubernetesclustercontent
+    to: blueprint/plugins/kubernetes-cluster/clusteroverview
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/kubernetesclustercontent
+    to: blueprint/plugins/kubernetes-cluster/kubernetesclustererrorcontext
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/kubernetesclustercontent
+    to: blueprint/plugins/kubernetes-cluster/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/kubernetesclustercontent
+    to: blueprint/plugins/kubernetes-cluster/translation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/nodes-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/nodes-test
+    to: blueprint/plugins/kubernetes-cluster/nodes
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/nodes
+    to: blueprint/plugins/kubernetes-cluster/usenodes
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/nodes
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/nodes
+    to: blueprint/plugins/kubernetes-cluster/kubernetesclustererrorcontext
+    type: direct-call
+    description: Calls module / service

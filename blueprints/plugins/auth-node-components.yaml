@@ -1,0 +1,697 @@
+entityRef: blueprint/plugins/auth-node
+name: Auth-node Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/auth-node/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/sign-in/index.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1710
+    'y': 50
+  - entityRef: blueprint/plugins/auth-node/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-node/src/setupTests.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2170
+    'y': 50
+  - entityRef: blueprint/plugins/auth-node/types
+    type: rest-api
+    name: types REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/proxy/types.ts
+      containerId: auth-node
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 4760
+    'y': 1330
+  - entityRef: blueprint/plugins/auth-node/authownershipresolutionextensionpoint
+    type: background-worker
+    name: AuthOwnershipResolutionExtensionPoint Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/extensions/AuthOwnershipResolutionExtensionPoint.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 1010
+  - entityRef: blueprint/plugins/auth-node/authprovidersextensionpoint
+    type: background-worker
+    name: AuthProvidersExtensionPoint Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/extensions/AuthProvidersExtensionPoint.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 1010
+  - entityRef: blueprint/plugins/auth-node/sendwebmessageresponse-test
+    type: rest-api
+    name: sendWebMessageResponse.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/auth-node/src/flow/sendWebMessageResponse.test.ts
+      containerId: auth-node
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 925
+    'y': 370
+  - entityRef: blueprint/plugins/auth-node/sendwebmessageresponse
+    type: rest-api
+    name: sendWebMessageResponse REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/flow/sendWebMessageResponse.ts
+      containerId: auth-node
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1060
+    'y': 1010
+  - entityRef: blueprint/plugins/auth-node/defaultidentityclient-test
+    type: background-worker
+    name: DefaultIdentityClient.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-node/src/identity/DefaultIdentityClient.test.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2250
+    'y': 370
+  - entityRef: blueprint/plugins/auth-node/defaultidentityclient
+    type: background-worker
+    name: DefaultIdentityClient Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/identity/DefaultIdentityClient.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2115
+    'y': 690
+  - entityRef: blueprint/plugins/auth-node/getbearertokenfromauthorizationheader-test
+    type: background-worker
+    name: getBearerTokenFromAuthorizationHeader.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-node/src/identity/getBearerTokenFromAuthorizationHeader.test.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1655
+    'y': 690
+  - entityRef: blueprint/plugins/auth-node/getbearertokenfromauthorizationheader
+    type: background-worker
+    name: getBearerTokenFromAuthorizationHeader Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/identity/getBearerTokenFromAuthorizationHeader.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1615
+    'y': 1010
+  - entityRef: blueprint/plugins/auth-node/identityapi
+    type: rest-api
+    name: IdentityApi REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/identity/IdentityApi.ts
+      containerId: auth-node
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 2560
+    'y': 1010
+  - entityRef: blueprint/plugins/auth-node/identityclient-test
+    type: background-worker
+    name: IdentityClient.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-node/src/identity/IdentityClient.test.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2630
+    'y': 50
+  - entityRef: blueprint/plugins/auth-node/identityclient
+    type: background-worker
+    name: IdentityClient Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/identity/IdentityClient.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2710
+    'y': 370
+  - entityRef: blueprint/plugins/auth-node/preparebackstageidentityresponse-test
+    type: background-worker
+    name: prepareBackstageIdentityResponse.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-node/src/identity/prepareBackstageIdentityResponse.test.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3155
+    'y': 690
+  - entityRef: blueprint/plugins/auth-node/preparebackstageidentityresponse
+    type: background-worker
+    name: prepareBackstageIdentityResponse Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/identity/prepareBackstageIdentityResponse.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3155
+    'y': 1010
+  - entityRef: blueprint/plugins/auth-node/cookiescopemanager-test
+    type: rest-api
+    name: CookieScopeManager.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/auth-node/src/oauth/CookieScopeManager.test.ts
+      containerId: auth-node
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 3990
+    'y': 370
+  - entityRef: blueprint/plugins/auth-node/cookiescopemanager
+    type: rest-api
+    name: CookieScopeManager REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/oauth/CookieScopeManager.ts
+      containerId: auth-node
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 4220
+    'y': 690
+  - entityRef: blueprint/plugins/auth-node/createoauthproviderfactory
+    type: background-worker
+    name: createOAuthProviderFactory Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/oauth/createOAuthProviderFactory.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 4745
+    'y': 50
+  - entityRef: blueprint/plugins/auth-node/createoauthroutehandlers-test
+    type: rest-api
+    name: createOAuthRouteHandlers.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/auth-node/src/oauth/createOAuthRouteHandlers.test.ts
+      containerId: auth-node
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 3680
+    'y': 50
+  - entityRef: blueprint/plugins/auth-node/createoauthroutehandlers
+    type: rest-api
+    name: createOAuthRouteHandlers REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/oauth/createOAuthRouteHandlers.ts
+      containerId: auth-node
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 4760
+    'y': 370
+  - entityRef: blueprint/plugins/auth-node/oauthcookiemanager
+    type: rest-api
+    name: OAuthCookieManager REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/oauth/OAuthCookieManager.ts
+      containerId: auth-node
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 5840
+    'y': 1010
+  - entityRef: blueprint/plugins/auth-node/oauthenvironmenthandler
+    type: rest-api
+    name: OAuthEnvironmentHandler REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/oauth/OAuthEnvironmentHandler.ts
+      containerId: auth-node
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 5300
+    'y': 690
+  - entityRef: blueprint/plugins/auth-node/passportoauthauthenticatorhelper-test
+    type: background-worker
+    name: PassportOAuthAuthenticatorHelper.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-node/src/oauth/PassportOAuthAuthenticatorHelper.test.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 6380
+    'y': 690
+  - entityRef: blueprint/plugins/auth-node/passportoauthauthenticatorhelper
+    type: background-worker
+    name: PassportOAuthAuthenticatorHelper Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/oauth/PassportOAuthAuthenticatorHelper.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 6380
+    'y': 1010
+  - entityRef: blueprint/plugins/auth-node/state
+    type: rest-api
+    name: state REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/oauth/state.ts
+      containerId: auth-node
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 3640
+    'y': 1010
+  - entityRef: blueprint/plugins/auth-node/passporthelpers
+    type: rest-api
+    name: PassportHelpers REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/passport/PassportHelpers.ts
+      containerId: auth-node
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 6840
+    'y': 1010
+  - entityRef: blueprint/plugins/auth-node/createproxyauthproviderfactory
+    type: background-worker
+    name: createProxyAuthProviderFactory Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/proxy/createProxyAuthProviderFactory.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 7245
+    'y': 690
+  - entityRef: blueprint/plugins/auth-node/createproxyroutehandlers
+    type: rest-api
+    name: createProxyRouteHandlers REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/proxy/createProxyRouteHandlers.ts
+      containerId: auth-node
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 7380
+    'y': 1010
+  - entityRef: blueprint/plugins/auth-node/commonsigninresolvers
+    type: background-worker
+    name: commonSignInResolvers Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/sign-in/commonSignInResolvers.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 7880
+    'y': 690
+  - entityRef: blueprint/plugins/auth-node/createsigninresolverfactory
+    type: background-worker
+    name: createSignInResolverFactory Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/sign-in/createSignInResolverFactory.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 7920
+    'y': 1010
+  - entityRef: blueprint/plugins/auth-node/readdeclarativesigninresolver
+    type: background-worker
+    name: readDeclarativeSignInResolver Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/sign-in/readDeclarativeSignInResolver.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 8340
+    'y': 690
+  - entityRef: blueprint/plugins/auth-node/parsewebmessageresponse
+    type: background-worker
+    name: parseWebMessageResponse Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-node/src/flow/__testUtils__/parseWebMessageResponse.ts
+      containerId: auth-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1195
+    'y': 690
+dependencies:
+  - from: blueprint/plugins/auth-node/types
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/authownershipresolutionextensionpoint
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/authprovidersextensionpoint
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/sendwebmessageresponse-test
+    to: blueprint/plugins/auth-node/sendwebmessageresponse
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/sendwebmessageresponse-test
+    to: blueprint/plugins/auth-node/parsewebmessageresponse
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/sendwebmessageresponse
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/sendwebmessageresponse
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/defaultidentityclient-test
+    to: blueprint/plugins/auth-node/defaultidentityclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/defaultidentityclient-test
+    to: blueprint/plugins/auth-node/identityapi
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/defaultidentityclient
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/defaultidentityclient
+    to: blueprint/plugins/auth-node/getbearertokenfromauthorizationheader
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/defaultidentityclient
+    to: blueprint/plugins/auth-node/identityapi
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/defaultidentityclient
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/getbearertokenfromauthorizationheader-test
+    to: blueprint/plugins/auth-node/getbearertokenfromauthorizationheader
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/identityapi
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/identityclient-test
+    to: blueprint/plugins/auth-node/identityclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/identityclient
+    to: blueprint/plugins/auth-node/defaultidentityclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/identityclient
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/preparebackstageidentityresponse-test
+    to: blueprint/plugins/auth-node/preparebackstageidentityresponse
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/preparebackstageidentityresponse
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/preparebackstageidentityresponse
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/cookiescopemanager-test
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/cookiescopemanager-test
+    to: blueprint/plugins/auth-node/oauthcookiemanager
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/cookiescopemanager-test
+    to: blueprint/plugins/auth-node/state
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/cookiescopemanager-test
+    to: blueprint/plugins/auth-node/cookiescopemanager
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/cookiescopemanager-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/cookiescopemanager
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/cookiescopemanager
+    to: blueprint/plugins/auth-node/oauthcookiemanager
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/cookiescopemanager
+    to: blueprint/plugins/auth-node/state
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/cookiescopemanager
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/cookiescopemanager
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthproviderfactory
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthproviderfactory
+    to: blueprint/plugins/auth-node/oauthenvironmenthandler
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthproviderfactory
+    to: blueprint/plugins/auth-node/createoauthroutehandlers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthproviderfactory
+    to: blueprint/plugins/auth-node/state
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthproviderfactory
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthproviderfactory
+    to: blueprint/plugins/auth-node/createsigninresolverfactory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthroutehandlers-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthroutehandlers-test
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthroutehandlers-test
+    to: blueprint/plugins/auth-node/createoauthroutehandlers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthroutehandlers-test
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthroutehandlers-test
+    to: blueprint/plugins/auth-node/state
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthroutehandlers-test
+    to: blueprint/plugins/auth-node/parsewebmessageresponse
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthroutehandlers
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthroutehandlers
+    to: blueprint/plugins/auth-node/state
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthroutehandlers
+    to: blueprint/plugins/auth-node/oauthcookiemanager
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthroutehandlers
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthroutehandlers
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthroutehandlers
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthroutehandlers
+    to: blueprint/plugins/auth-node/cookiescopemanager
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/oauthcookiemanager
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/oauthcookiemanager
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/oauthenvironmenthandler
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/oauthenvironmenthandler
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/oauthenvironmenthandler
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/oauthenvironmenthandler
+    to: blueprint/plugins/auth-node/state
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/passportoauthauthenticatorhelper-test
+    to: blueprint/plugins/auth-node/passportoauthauthenticatorhelper
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/passportoauthauthenticatorhelper
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/passportoauthauthenticatorhelper
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/state
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/types
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/passporthelpers
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/passporthelpers
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/passporthelpers
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createproxyauthproviderfactory
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createproxyauthproviderfactory
+    to: blueprint/plugins/auth-node/createproxyroutehandlers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createproxyauthproviderfactory
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createproxyroutehandlers
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createproxyroutehandlers
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createproxyroutehandlers
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createproxyroutehandlers
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/types
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/commonsigninresolvers
+    to: blueprint/plugins/auth-node/createsigninresolverfactory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/commonsigninresolvers
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createsigninresolverfactory
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createsigninresolverfactory
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createsigninresolverfactory
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/readdeclarativesigninresolver
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/readdeclarativesigninresolver
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/readdeclarativesigninresolver
+    to: blueprint/plugins/auth-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/readdeclarativesigninresolver
+    to: blueprint/plugins/auth-node/createsigninresolverfactory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/parsewebmessageresponse
+    to: blueprint/plugins/auth-node/sendwebmessageresponse
+    type: direct-call
+    description: Calls module / service

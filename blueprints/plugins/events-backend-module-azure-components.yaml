@@ -1,0 +1,197 @@
+entityRef: blueprint/plugins/events-backend-module-azure
+name: Events-backend-module-azure Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/events-backend-module-azure/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-azure/config.d.ts
+      containerId: events-backend-module-azure
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-azure/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-azure/src/alpha.ts
+      containerId: events-backend-module-azure
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1100
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend-module-azure/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-azure/src/index.ts
+      containerId: events-backend-module-azure
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-azure/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-azure/src/setupTests.ts
+      containerId: events-backend-module-azure
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-azure/createazuredevopswebhookvalidator-test
+    type: background-worker
+    name: createAzureDevOpsWebhookValidator.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-azure/src/http/createAzureDevOpsWebhookValidator.test.ts
+      containerId: events-backend-module-azure
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1290
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-azure/createazuredevopswebhookvalidator
+    type: background-worker
+    name: createAzureDevOpsWebhookValidator Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-azure/src/http/createAzureDevOpsWebhookValidator.ts
+      containerId: events-backend-module-azure
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1750
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend-module-azure/httpintegration-test
+    type: background-worker
+    name: httpIntegration.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-azure/src/http/httpIntegration.test.ts
+      containerId: events-backend-module-azure
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-azure/azuredevopseventrouter-test
+    type: rest-api
+    name: AzureDevOpsEventRouter.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-azure/src/router/AzureDevOpsEventRouter.test.ts
+      containerId: events-backend-module-azure
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1750
+    'y': 1010
+  - entityRef: blueprint/plugins/events-backend-module-azure/azuredevopseventrouter
+    type: rest-api
+    name: AzureDevOpsEventRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-azure/src/router/AzureDevOpsEventRouter.ts
+      containerId: events-backend-module-azure
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1980
+    'y': 1330
+  - entityRef: blueprint/plugins/events-backend-module-azure/eventsmoduleazuredevopseventrouter-test
+    type: rest-api
+    name: eventsModuleAzureDevOpsEventRouter.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-azure/src/service/eventsModuleAzureDevOpsEventRouter.test.ts
+      containerId: events-backend-module-azure
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 2210
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend-module-azure/eventsmoduleazuredevopseventrouter
+    type: rest-api
+    name: eventsModuleAzureDevOpsEventRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-azure/src/service/eventsModuleAzureDevOpsEventRouter.ts
+      containerId: events-backend-module-azure
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 2210
+    'y': 1010
+  - entityRef: blueprint/plugins/events-backend-module-azure/eventsmoduleazuredevopswebhook-test
+    type: background-worker
+    name: eventsModuleAzureDevOpsWebhook.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-azure/src/service/eventsModuleAzureDevOpsWebhook.test.ts
+      containerId: events-backend-module-azure
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-azure/eventsmoduleazuredevopswebhook
+    type: background-worker
+    name: eventsModuleAzureDevOpsWebhook Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-azure/src/service/eventsModuleAzureDevOpsWebhook.ts
+      containerId: events-backend-module-azure
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1750
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/events-backend-module-azure/alpha
+    to: blueprint/plugins/events-backend-module-azure/eventsmoduleazuredevopseventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-azure/createazuredevopswebhookvalidator-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-azure/createazuredevopswebhookvalidator-test
+    to: blueprint/plugins/events-backend-module-azure/createazuredevopswebhookvalidator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-azure/createazuredevopswebhookvalidator
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-azure/httpintegration-test
+    to: blueprint/plugins/events-backend-module-azure/eventsmoduleazuredevopswebhook
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-azure/azuredevopseventrouter-test
+    to: blueprint/plugins/events-backend-module-azure/azuredevopseventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-azure/eventsmoduleazuredevopseventrouter-test
+    to: blueprint/plugins/events-backend-module-azure/eventsmoduleazuredevopseventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-azure/eventsmoduleazuredevopseventrouter
+    to: blueprint/plugins/events-backend-module-azure/azuredevopseventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-azure/eventsmoduleazuredevopswebhook-test
+    to: blueprint/plugins/events-backend-module-azure/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-azure/eventsmoduleazuredevopswebhook-test
+    to: blueprint/plugins/events-backend-module-azure/eventsmoduleazuredevopswebhook
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-azure/eventsmoduleazuredevopswebhook
+    to: blueprint/plugins/events-backend-module-azure/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-azure/eventsmoduleazuredevopswebhook
+    to: blueprint/plugins/events-backend-module-azure/createazuredevopswebhookvalidator
+    type: direct-call
+    description: Calls module / service

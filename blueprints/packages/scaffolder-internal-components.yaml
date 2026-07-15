@@ -1,0 +1,47 @@
+entityRef: blueprint/packages/scaffolder-internal
+name: Scaffolder-internal Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/scaffolder-internal/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/scaffolder-internal/src/wiring/index.ts
+      containerId: scaffolder-internal
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/scaffolder-internal/internalformdecorator
+    type: gateway-api
+    name: InternalFormDecorator UI Component
+    isTest: false
+    properties:
+      filepath: packages/scaffolder-internal/src/wiring/InternalFormDecorator.ts
+      containerId: scaffolder-internal
+      technology: React Component
+      classification: ui-import
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/scaffolder-internal/internalformfield
+    type: gateway-api
+    name: InternalFormField UI Component
+    isTest: false
+    properties:
+      filepath: packages/scaffolder-internal/src/wiring/InternalFormField.ts
+      containerId: scaffolder-internal
+      technology: React Component
+      classification: ui-import
+    x: 1060
+    'y': 50
+dependencies:
+  - from: blueprint/packages/scaffolder-internal/internalformdecorator
+    to: blueprint/packages/catalog-model/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/scaffolder-internal/internalformfield
+    to: blueprint/packages/catalog-model/alpha
+    type: direct-call
+    description: Calls module / service

@@ -1,0 +1,111 @@
+entityRef: blueprint/plugins/signals
+name: Signals Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/signals/index
+    type: rest-api
+    name: index REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/signals/src/api/index.ts
+      containerId: signals
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 370
+    'y': 50
+  - entityRef: blueprint/plugins/signals/alpha
+    type: gateway-api
+    name: alpha UI Component
+    isTest: false
+    properties:
+      filepath: plugins/signals/src/alpha.tsx
+      containerId: signals
+      technology: React Component
+      classification: ui-import
+    x: 140
+    'y': 370
+  - entityRef: blueprint/plugins/signals/plugin-test
+    type: background-worker
+    name: plugin.test Service
+    isTest: true
+    properties:
+      filepath: plugins/signals/src/plugin.test.ts
+      containerId: signals
+      technology: TypeScript Domain Service
+      classification: default
+    x: 830
+    'y': 50
+  - entityRef: blueprint/plugins/signals/plugin
+    type: gateway-api
+    name: plugin UI Component
+    isTest: false
+    properties:
+      filepath: plugins/signals/src/plugin.ts
+      containerId: signals
+      technology: React Component
+      classification: ui-import
+    x: 600
+    'y': 370
+  - entityRef: blueprint/plugins/signals/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/signals/src/setupTests.ts
+      containerId: signals
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1290
+    'y': 50
+  - entityRef: blueprint/plugins/signals/signalclient
+    type: gateway-api
+    name: SignalClient UI Component
+    isTest: false
+    properties:
+      filepath: plugins/signals/src/api/SignalClient.ts
+      containerId: signals
+      technology: React Component
+      classification: ui-import
+    x: 600
+    'y': 690
+  - entityRef: blueprint/plugins/signals/signalsclient-test
+    type: rest-api
+    name: SignalsClient.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/signals/src/api/SignalsClient.test.ts
+      containerId: signals
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1060
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/signals/index
+    to: blueprint/plugins/signals/plugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals/alpha
+    to: blueprint/plugins/signals/signalclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals/plugin-test
+    to: blueprint/plugins/signals/plugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals/plugin
+    to: blueprint/plugins/signals/signalclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals/signalclient
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals/signalsclient-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals/signalsclient-test
+    to: blueprint/plugins/signals/signalclient
+    type: direct-call
+    description: Calls module / service

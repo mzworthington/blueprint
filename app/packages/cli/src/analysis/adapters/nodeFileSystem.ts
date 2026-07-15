@@ -35,6 +35,24 @@ export class NodeFileSystemAdapter implements AnalysisFileSystemPort {
     return null;
   }
 
+  readText(filePath: string): string | null {
+    try {
+      if (!fs.existsSync(filePath)) return null;
+      return fs.readFileSync(filePath, 'utf8');
+    } catch {
+      return null;
+    }
+  }
+
+  listDirectoryNames(dirPath: string): string[] {
+    try {
+      if (!fs.existsSync(dirPath) || !fs.statSync(dirPath).isDirectory()) return [];
+      return fs.readdirSync(dirPath);
+    } catch {
+      return [];
+    }
+  }
+
   getRelativePath(from: string, to: string): string {
     return path.relative(from, to);
   }

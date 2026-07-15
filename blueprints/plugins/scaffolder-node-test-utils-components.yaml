@@ -1,0 +1,55 @@
+entityRef: blueprint/plugins/scaffolder-node-test-utils
+name: Scaffolder-node-test-utils Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/scaffolder-node-test-utils/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-node-test-utils/src/actions/index.ts
+      containerId: scaffolder-node-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-node-test-utils/loggertowinstonlogger
+    type: background-worker
+    name: loggerToWinstonLogger Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-node-test-utils/src/actions/loggerToWinstonLogger.ts
+      containerId: scaffolder-node-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-node-test-utils/mockactioncontext
+    type: background-worker
+    name: mockActionContext Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-node-test-utils/src/actions/mockActionContext.ts
+      containerId: scaffolder-node-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+dependencies:
+  - from: blueprint/plugins/scaffolder-node-test-utils/loggertowinstonlogger
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node-test-utils/mockactioncontext
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node-test-utils/mockactioncontext
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node-test-utils/mockactioncontext
+    to: blueprint/plugins/scaffolder-node-test-utils/loggertowinstonlogger
+    type: direct-call
+    description: Calls module / service

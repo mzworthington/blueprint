@@ -1,0 +1,70 @@
+entityRef: blueprint/plugins/scaffolder-backend-module-gcp
+name: Scaffolder-backend-module-gcp Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/scaffolder-backend-module-gcp/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-gcp/config.d.ts
+      containerId: scaffolder-backend-module-gcp
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-gcp/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-gcp/src/index.ts
+      containerId: scaffolder-backend-module-gcp
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-gcp/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-gcp/src/module.ts
+      containerId: scaffolder-backend-module-gcp
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-gcp/gcpbucketworkspaceprovider
+    type: background-worker
+    name: GcpBucketWorkspaceProvider Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-gcp/src/providers/GcpBucketWorkspaceProvider.ts
+      containerId: scaffolder-backend-module-gcp
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/scaffolder-backend-module-gcp/module
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gcp/module
+    to: blueprint/plugins/scaffolder-backend-module-gcp/gcpbucketworkspaceprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gcp/gcpbucketworkspaceprovider
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gcp/gcpbucketworkspaceprovider
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gcp/gcpbucketworkspaceprovider
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service

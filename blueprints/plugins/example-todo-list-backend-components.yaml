@@ -1,0 +1,92 @@
+entityRef: blueprint/plugins/example-todo-list-backend
+name: Example-todo-list-backend Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/example-todo-list-backend/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/example-todo-list-backend/src/index.ts
+      containerId: example-todo-list-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/example-todo-list-backend/plugin
+    type: background-worker
+    name: plugin Service
+    isTest: false
+    properties:
+      filepath: plugins/example-todo-list-backend/src/plugin.ts
+      containerId: example-todo-list-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/example-todo-list-backend/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/example-todo-list-backend/src/setupTests.ts
+      containerId: example-todo-list-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/example-todo-list-backend/router-test
+    type: rest-api
+    name: router.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/example-todo-list-backend/src/service/router.test.ts
+      containerId: example-todo-list-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/example-todo-list-backend/router
+    type: rest-api
+    name: router REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/example-todo-list-backend/src/service/router.ts
+      containerId: example-todo-list-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1060
+    'y': 370
+  - entityRef: blueprint/plugins/example-todo-list-backend/todos
+    type: background-worker
+    name: todos Service
+    isTest: false
+    properties:
+      filepath: plugins/example-todo-list-backend/src/service/todos.ts
+      containerId: example-todo-list-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 690
+dependencies:
+  - from: blueprint/plugins/example-todo-list-backend/plugin
+    to: blueprint/plugins/example-todo-list-backend/router
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/example-todo-list-backend/router-test
+    to: blueprint/plugins/example-todo-list-backend/router
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/example-todo-list-backend/router
+    to: blueprint/plugins/example-todo-list-backend/todos
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/example-todo-list-backend/router
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/example-todo-list-backend/todos
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service

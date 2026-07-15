@@ -1,0 +1,95 @@
+entityRef: blueprint/plugins/app-visualizer
+name: App-visualizer Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/app-visualizer/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/app-visualizer/src/components/AppVisualizerPage/index.ts
+      containerId: app-visualizer
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/app-visualizer/plugin
+    type: gateway-api
+    name: plugin UI Component
+    isTest: false
+    properties:
+      filepath: plugins/app-visualizer/src/plugin.tsx
+      containerId: app-visualizer
+      technology: React Component
+      classification: ui-import
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/app-visualizer/copytreebutton
+    type: gateway-api
+    name: CopyTreeButton UI Component
+    isTest: false
+    properties:
+      filepath: plugins/app-visualizer/src/components/CopyTreeButton.tsx
+      containerId: app-visualizer
+      technology: React Component
+      classification: ui-import
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/app-visualizer/appvisualizerpage
+    type: gateway-api
+    name: AppVisualizerPage UI Component
+    isTest: false
+    properties:
+      filepath: plugins/app-visualizer/src/components/AppVisualizerPage/AppVisualizerPage.tsx
+      containerId: app-visualizer
+      technology: React Component
+      classification: ui-import
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/app-visualizer/detailedvisualizer
+    type: gateway-api
+    name: DetailedVisualizer UI Component
+    isTest: false
+    properties:
+      filepath: plugins/app-visualizer/src/components/AppVisualizerPage/DetailedVisualizer.tsx
+      containerId: app-visualizer
+      technology: React Component
+      classification: ui-import
+    x: 830
+    'y': 370
+  - entityRef: blueprint/plugins/app-visualizer/textvisualizer
+    type: gateway-api
+    name: TextVisualizer UI Component
+    isTest: false
+    properties:
+      filepath: plugins/app-visualizer/src/components/AppVisualizerPage/TextVisualizer.tsx
+      containerId: app-visualizer
+      technology: React Component
+      classification: ui-import
+    x: 1290
+    'y': 370
+  - entityRef: blueprint/plugins/app-visualizer/treevisualizer
+    type: gateway-api
+    name: TreeVisualizer UI Component
+    isTest: false
+    properties:
+      filepath: plugins/app-visualizer/src/components/AppVisualizerPage/TreeVisualizer.tsx
+      containerId: app-visualizer
+      technology: React Component
+      classification: ui-import
+    x: 1750
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/app-visualizer/appvisualizerpage
+    to: blueprint/plugins/app-visualizer/detailedvisualizer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-visualizer/appvisualizerpage
+    to: blueprint/plugins/app-visualizer/textvisualizer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-visualizer/appvisualizerpage
+    to: blueprint/plugins/app-visualizer/treevisualizer
+    type: direct-call
+    description: Calls module / service

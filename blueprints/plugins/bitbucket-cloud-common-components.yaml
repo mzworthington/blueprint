@@ -1,0 +1,111 @@
+entityRef: blueprint/plugins/bitbucket-cloud-common
+name: Bitbucket-cloud-common Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/bitbucket-cloud-common/bitbucketcloudclient-test
+    type: background-worker
+    name: BitbucketCloudClient.test Service
+    isTest: true
+    properties:
+      filepath: plugins/bitbucket-cloud-common/src/BitbucketCloudClient.test.ts
+      containerId: bitbucket-cloud-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 235
+    'y': 50
+  - entityRef: blueprint/plugins/bitbucket-cloud-common/bitbucketcloudclient
+    type: background-worker
+    name: BitbucketCloudClient Service
+    isTest: false
+    properties:
+      filepath: plugins/bitbucket-cloud-common/src/BitbucketCloudClient.ts
+      containerId: bitbucket-cloud-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 235
+    'y': 370
+  - entityRef: blueprint/plugins/bitbucket-cloud-common/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/bitbucket-cloud-common/src/models/index.ts
+      containerId: bitbucket-cloud-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 695
+    'y': 50
+  - entityRef: blueprint/plugins/bitbucket-cloud-common/pagination-test
+    type: background-worker
+    name: pagination.test Service
+    isTest: true
+    properties:
+      filepath: plugins/bitbucket-cloud-common/src/pagination.test.ts
+      containerId: bitbucket-cloud-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 690
+  - entityRef: blueprint/plugins/bitbucket-cloud-common/pagination
+    type: background-worker
+    name: pagination Service
+    isTest: false
+    properties:
+      filepath: plugins/bitbucket-cloud-common/src/pagination.ts
+      containerId: bitbucket-cloud-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 235
+    'y': 1010
+  - entityRef: blueprint/plugins/bitbucket-cloud-common/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/bitbucket-cloud-common/src/setupTests.ts
+      containerId: bitbucket-cloud-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1155
+    'y': 50
+  - entityRef: blueprint/plugins/bitbucket-cloud-common/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/bitbucket-cloud-common/src/types.ts
+      containerId: bitbucket-cloud-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 690
+dependencies:
+  - from: blueprint/plugins/bitbucket-cloud-common/bitbucketcloudclient-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/bitbucket-cloud-common/bitbucketcloudclient-test
+    to: blueprint/plugins/bitbucket-cloud-common/bitbucketcloudclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/bitbucket-cloud-common/bitbucketcloudclient
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/bitbucket-cloud-common/bitbucketcloudclient
+    to: blueprint/plugins/bitbucket-cloud-common/pagination
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/bitbucket-cloud-common/bitbucketcloudclient
+    to: blueprint/plugins/bitbucket-cloud-common/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/bitbucket-cloud-common/pagination-test
+    to: blueprint/plugins/bitbucket-cloud-common/pagination
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/bitbucket-cloud-common/types
+    to: blueprint/plugins/bitbucket-cloud-common/pagination
+    type: direct-call
+    description: Calls module / service

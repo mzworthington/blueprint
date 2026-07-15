@@ -1,0 +1,57 @@
+entityRef: blueprint/docs-ui
+name: Docs-ui Containers
+version: 1.0.0
+level: container
+nodes:
+  - entityRef: blueprint/docs-ui/docs-ui
+    type: container
+    name: Docs-ui Service
+    x: 410
+    'y': 800
+  - entityRef: blueprint/docs-ui/app
+    type: container
+    name: App Service
+    x: 150
+    'y': 60
+  - entityRef: blueprint/docs-ui/hooks
+    type: container
+    name: Hooks Service
+    x: 670
+    'y': 60
+  - entityRef: blueprint/docs-ui/snippets
+    type: container
+    name: Snippets Service
+    x: 1190
+    'y': 60
+  - entityRef: blueprint/docs-ui/components
+    type: container
+    name: Components Service
+    x: 825
+    'y': 430
+  - entityRef: blueprint/docs-ui/changelogs
+    type: container
+    name: Changelogs Service
+    x: 410
+    'y': 1170
+dependencies:
+  - from: blueprint/docs-ui/app
+    to: blueprint/docs-ui/components
+    type: inter-container
+  - from: blueprint/docs-ui/app
+    to: blueprint/docs-ui/docs-ui
+    type: inter-container
+  - from: blueprint/docs-ui/hooks
+    to: blueprint/docs-ui/components
+    type: inter-container
+  - from: blueprint/docs-ui/hooks
+    to: blueprint/docs-ui/docs-ui
+    type: inter-container
+  - from: blueprint/docs-ui/docs-ui
+    to: blueprint/docs-ui/changelogs
+    type: inter-container
+  - from: blueprint/docs-ui/components
+    to: blueprint/docs-ui/docs-ui
+    type: inter-container
+  - from: blueprint/docs-ui/changelogs
+    to: blueprint/docs-ui/docs-ui
+    type: inter-container

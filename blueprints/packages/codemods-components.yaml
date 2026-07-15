@@ -1,0 +1,73 @@
+entityRef: blueprint/packages/codemods
+name: Codemods Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/codemods/action
+    type: background-worker
+    name: action Service
+    isTest: false
+    properties:
+      filepath: packages/codemods/src/action.ts
+      containerId: codemods
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 370
+  - entityRef: blueprint/packages/codemods/codemods
+    type: background-worker
+    name: codemods Service
+    isTest: false
+    properties:
+      filepath: packages/codemods/src/codemods.ts
+      containerId: codemods
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 370
+  - entityRef: blueprint/packages/codemods/errors
+    type: background-worker
+    name: errors Service
+    isTest: false
+    properties:
+      filepath: packages/codemods/src/errors.ts
+      containerId: codemods
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 370
+  - entityRef: blueprint/packages/codemods/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/codemods/src/index.ts
+      containerId: codemods
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/codemods/core-imports-test
+    type: background-worker
+    name: core-imports.test Service
+    isTest: true
+    properties:
+      filepath: packages/codemods/src/tests/core-imports.test.ts
+      containerId: codemods
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+dependencies:
+  - from: blueprint/packages/codemods/index
+    to: blueprint/packages/codemods/codemods
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/codemods/index
+    to: blueprint/packages/codemods/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/codemods/index
+    to: blueprint/packages/codemods/action
+    type: direct-call
+    description: Calls module / service

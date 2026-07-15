@@ -1,0 +1,43 @@
+entityRef: blueprint/plugins/connections-example-backend-module-gitlab
+name: Connections-example-backend-module-gitlab Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/connections-example-backend-module-gitlab/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/connections-example-backend-module-gitlab/src/index.ts
+      containerId: connections-example-backend-module-gitlab
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/connections-example-backend-module-gitlab/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/connections-example-backend-module-gitlab/src/module.test.ts
+      containerId: connections-example-backend-module-gitlab
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/connections-example-backend-module-gitlab/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/connections-example-backend-module-gitlab/src/module.ts
+      containerId: connections-example-backend-module-gitlab
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+dependencies:
+  - from: blueprint/plugins/connections-example-backend-module-gitlab/module
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service

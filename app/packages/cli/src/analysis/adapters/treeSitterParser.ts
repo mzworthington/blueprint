@@ -5,12 +5,10 @@ import pc from 'picocolors';
 import { fileURLToPath } from 'url';
 import type { CodebaseParserPort } from '../domain/ports.ts';
 import type { ParsedSourceFile } from '../domain/types.ts';
-import {
-  createGitignoreFilter,
-  isIgnoredByGitignore,
-  isTestSourcePath,
-} from './gitignoreFilter.ts';
-import type { Ignore } from 'ignore';
+import type { AnalysisOptions } from '../domain/analysisOptions.ts';
+import { isTestSourcePath } from './gitignoreFilter.ts';
+import { createSourcePathFilter, type SourcePathFilter } from './sourcePathFilter.ts';
+import { throwIfAborted } from '../domain/cancellation.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,7 +16,11 @@ const __dirname = path.dirname(__filename);
 export class TreeSitterParserAdapter implements CodebaseParserPort {
   private static initPromise: Promise<void> | null = null;
   private loadedLanguages = new Map<string, Parser.Language>();
-  private ignoreFilter: Ignore = createGitignoreFilter();
+  private pathFilter: SourcePathFilter = createSourcePathFilter();
+
+  constructor(
+    private options: Pick<AnalysisOptions, 'ignore' | 'include'> = { ignore: [], include: [] }
+  ) {}
 
   private static async initTreeSitter() {
     if (!this.initPromise) {
@@ -137,7 +139,7 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
       const filePath = path.join(dir, file);
       try {
         const relativePath = path.relative(process.cwd(), filePath);
-        if (isIgnoredByGitignore(relativePath, this.ignoreFilter)) {
+        if (this.pathFilter.shouldSkip(relativePath)) {
           return;
         }
 
@@ -157,9 +159,10 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
     return results;
   }
 
-  async parseSourceFiles(globPattern: string): Promise<ParsedSourceFile[]> {
+  async parseSourceFiles(globPattern: string, signal?: AbortSignal): Promise<ParsedSourceFile[]> {
+    throwIfAborted(signal);
     await TreeSitterParserAdapter.initTreeSitter();
-    this.ignoreFilter = createGitignoreFilter(process.cwd());
+    this.pathFilter = createSourcePathFilter(process.cwd(), this.options);
 
     const { dir, extensions } = this.parseGlobPattern(globPattern);
     const matchedFiles = this.getFilesRecursively(dir, extensions);
@@ -168,6 +171,7 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
     const parser = new Parser();
 
     for (const filePath of matchedFiles) {
+      throwIfAborted(signal);
       const ext = path.extname(filePath).toLowerCase();
       const lang = await this.getLanguage(ext);
       if (!lang) continue;

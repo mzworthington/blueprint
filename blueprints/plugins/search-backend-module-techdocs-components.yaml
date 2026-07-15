@@ -1,0 +1,214 @@
+entityRef: blueprint/plugins/search-backend-module-techdocs
+name: Search-backend-module-techdocs Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/search-backend-module-techdocs/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-techdocs/config.d.ts
+      containerId: search-backend-module-techdocs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend-module-techdocs/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-techdocs/src/alpha.ts
+      containerId: search-backend-module-techdocs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1315
+    'y': 370
+  - entityRef: blueprint/plugins/search-backend-module-techdocs/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-techdocs/src/collators/index.ts
+      containerId: search-backend-module-techdocs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend-module-techdocs/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-techdocs/src/module.test.ts
+      containerId: search-backend-module-techdocs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend-module-techdocs/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-techdocs/src/module.ts
+      containerId: search-backend-module-techdocs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 625
+    'y': 690
+  - entityRef: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatordocumenttransformer
+    type: background-worker
+    name: defaultTechDocsCollatorDocumentTransformer Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-techdocs/src/collators/defaultTechDocsCollatorDocumentTransformer.ts
+      containerId: search-backend-module-techdocs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1165
+    'y': 1330
+  - entityRef: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorentitytransformer-test
+    type: background-worker
+    name: defaultTechDocsCollatorEntityTransformer.test Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-techdocs/src/collators/defaultTechDocsCollatorEntityTransformer.test.ts
+      containerId: search-backend-module-techdocs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 1010
+  - entityRef: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorentitytransformer
+    type: background-worker
+    name: defaultTechDocsCollatorEntityTransformer Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-techdocs/src/collators/defaultTechDocsCollatorEntityTransformer.ts
+      containerId: search-backend-module-techdocs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 180
+    'y': 1330
+  - entityRef: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorfactory-test
+    type: background-worker
+    name: DefaultTechDocsCollatorFactory.test Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-techdocs/src/collators/DefaultTechDocsCollatorFactory.test.ts
+      containerId: search-backend-module-techdocs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1085
+    'y': 690
+  - entityRef: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorfactory
+    type: background-worker
+    name: DefaultTechDocsCollatorFactory Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-techdocs/src/collators/DefaultTechDocsCollatorFactory.ts
+      containerId: search-backend-module-techdocs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1070
+    'y': 1010
+  - entityRef: blueprint/plugins/search-backend-module-techdocs/techdocscollatordocumenttransformer
+    type: background-worker
+    name: TechDocsCollatorDocumentTransformer Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-techdocs/src/collators/TechDocsCollatorDocumentTransformer.ts
+      containerId: search-backend-module-techdocs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1420
+    'y': 1650
+  - entityRef: blueprint/plugins/search-backend-module-techdocs/techdocscollatorentitytransformer
+    type: background-worker
+    name: TechDocsCollatorEntityTransformer Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-techdocs/src/collators/TechDocsCollatorEntityTransformer.ts
+      containerId: search-backend-module-techdocs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 435
+    'y': 1650
+dependencies:
+  - from: blueprint/plugins/search-backend-module-techdocs/alpha
+    to: blueprint/plugins/search-backend-module-techdocs/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-techdocs/module-test
+    to: blueprint/plugins/search-backend-module-techdocs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-techdocs/module-test
+    to: blueprint/plugins/search-backend-module-techdocs/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-techdocs/module
+    to: blueprint/plugins/search-backend-module-techdocs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-techdocs/module
+    to: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorfactory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatordocumenttransformer
+    to: blueprint/plugins/search-backend-module-techdocs/techdocscollatordocumenttransformer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorentitytransformer-test
+    to: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorentitytransformer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorentitytransformer
+    to: blueprint/plugins/search-backend-module-techdocs/techdocscollatorentitytransformer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorfactory-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorfactory-test
+    to: blueprint/plugins/catalog-node/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorfactory-test
+    to: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorfactory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorfactory-test
+    to: blueprint/plugins/search-backend-module-techdocs/techdocscollatorentitytransformer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorfactory-test
+    to: blueprint/plugins/search-backend-module-techdocs/techdocscollatordocumenttransformer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorfactory
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorfactory
+    to: blueprint/plugins/search-backend-module-techdocs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorfactory
+    to: blueprint/plugins/search-backend-module-techdocs/techdocscollatorentitytransformer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorfactory
+    to: blueprint/plugins/search-backend-module-techdocs/techdocscollatordocumenttransformer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorfactory
+    to: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorentitytransformer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatorfactory
+    to: blueprint/plugins/search-backend-module-techdocs/defaulttechdocscollatordocumenttransformer
+    type: direct-call
+    description: Calls module / service

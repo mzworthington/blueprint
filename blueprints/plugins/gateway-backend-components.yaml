@@ -1,0 +1,73 @@
+entityRef: blueprint/plugins/gateway-backend
+name: Gateway-backend Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/gateway-backend/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/gateway-backend/src/index.ts
+      containerId: gateway-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/gateway-backend/plugin-test
+    type: rest-api
+    name: plugin.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/gateway-backend/src/plugin.test.ts
+      containerId: gateway-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/gateway-backend/plugin
+    type: rest-api
+    name: plugin REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/gateway-backend/src/plugin.ts
+      containerId: gateway-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/gateway-backend/router
+    type: rest-api
+    name: router REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/gateway-backend/src/router.ts
+      containerId: gateway-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1060
+    'y': 370
+  - entityRef: blueprint/plugins/gateway-backend/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/gateway-backend/src/setupTests.ts
+      containerId: gateway-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+dependencies:
+  - from: blueprint/plugins/gateway-backend/plugin
+    to: blueprint/plugins/gateway-backend/router
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/gateway-backend/router
+    to: blueprint/plugins/catalog-react/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/gateway-backend/router
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service

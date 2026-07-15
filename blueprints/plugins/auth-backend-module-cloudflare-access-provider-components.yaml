@@ -1,0 +1,176 @@
+entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider
+name: Auth-backend-module-cloudflare-access-provider Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-cloudflare-access-provider/config.d.ts
+      containerId: auth-backend-module-cloudflare-access-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 290
+    'y': 690
+  - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-cloudflare-access-provider/src/index.ts
+      containerId: auth-backend-module-cloudflare-access-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/authenticator-test
+    type: background-worker
+    name: authenticator.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-cloudflare-access-provider/src/authenticator.test.ts
+      containerId: auth-backend-module-cloudflare-access-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/authenticator
+    type: background-worker
+    name: authenticator Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-cloudflare-access-provider/src/authenticator.ts
+      containerId: auth-backend-module-cloudflare-access-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 640
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/helpers-test
+    type: background-worker
+    name: helpers.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-cloudflare-access-provider/src/helpers.test.ts
+      containerId: auth-backend-module-cloudflare-access-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1100
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/helpers
+    type: rest-api
+    name: helpers REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-cloudflare-access-provider/src/helpers.ts
+      containerId: auth-backend-module-cloudflare-access-provider
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1235
+    'y': 690
+  - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-cloudflare-access-provider/src/module.ts
+      containerId: auth-backend-module-cloudflare-access-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1830
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/resolvers-test
+    type: background-worker
+    name: resolvers.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-cloudflare-access-provider/src/resolvers.test.ts
+      containerId: auth-backend-module-cloudflare-access-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1600
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/resolvers
+    type: background-worker
+    name: resolvers Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-cloudflare-access-provider/src/resolvers.ts
+      containerId: auth-backend-module-cloudflare-access-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1910
+    'y': 690
+  - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-cloudflare-access-provider/src/types.ts
+      containerId: auth-backend-module-cloudflare-access-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1100
+    'y': 1010
+dependencies:
+  - from: blueprint/plugins/auth-backend-module-cloudflare-access-provider/config-d
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-cloudflare-access-provider/authenticator-test
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/authenticator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-cloudflare-access-provider/authenticator
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/helpers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-cloudflare-access-provider/authenticator
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-cloudflare-access-provider/helpers-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-cloudflare-access-provider/helpers-test
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/helpers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-cloudflare-access-provider/helpers-test
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-cloudflare-access-provider/helpers
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-cloudflare-access-provider/helpers
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-cloudflare-access-provider/helpers
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-cloudflare-access-provider/module
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/authenticator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-cloudflare-access-provider/module
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/resolvers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-cloudflare-access-provider/resolvers-test
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/resolvers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-cloudflare-access-provider/resolvers-test
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-cloudflare-access-provider/resolvers
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    type: direct-call
+    description: Calls module / service

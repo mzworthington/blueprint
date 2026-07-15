@@ -1,0 +1,133 @@
+entityRef: blueprint/plugins/catalog-common
+name: Catalog-common Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/catalog-common/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-common/src/alpha.ts
+      containerId: catalog-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-common/common
+    type: background-worker
+    name: common Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-common/src/common.ts
+      containerId: catalog-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1940
+    'y': 370
+  - entityRef: blueprint/plugins/catalog-common/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-common/src/search/index.ts
+      containerId: catalog-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-common/permissions
+    type: background-worker
+    name: permissions Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-common/src/permissions.ts
+      containerId: catalog-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-common/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-common/src/setupTests.ts
+      containerId: catalog-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-common/locationanalyzer
+    type: background-worker
+    name: LocationAnalyzer Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-common/src/ingestion/LocationAnalyzer.ts
+      containerId: catalog-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-common/recursivepartial-test
+    type: background-worker
+    name: RecursivePartial.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-common/src/ingestion/RecursivePartial.test.ts
+      containerId: catalog-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2480
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-common/recursivepartial
+    type: background-worker
+    name: RecursivePartial Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-common/src/ingestion/RecursivePartial.ts
+      containerId: catalog-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2440
+    'y': 370
+  - entityRef: blueprint/plugins/catalog-common/catalogentitydocument
+    type: background-worker
+    name: CatalogEntityDocument Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-common/src/search/CatalogEntityDocument.ts
+      containerId: catalog-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2940
+    'y': 50
+dependencies:
+  - from: blueprint/plugins/permission-common/permissionclient-test
+    to: blueprint/plugins/catalog-common/permissions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-common/permissionclient
+    to: blueprint/plugins/catalog-common/permissions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/authorizedentitiescatalog-test
+    to: blueprint/plugins/catalog-common/permissions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/catalogplugin-test
+    to: blueprint/plugins/catalog-common/permissions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-common/locationanalyzer
+    to: blueprint/plugins/catalog-common/common
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-common/locationanalyzer
+    to: blueprint/plugins/catalog-common/recursivepartial
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-common/recursivepartial-test
+    to: blueprint/plugins/catalog-common/recursivepartial
+    type: direct-call
+    description: Calls module / service

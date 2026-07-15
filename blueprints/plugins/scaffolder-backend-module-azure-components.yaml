@@ -1,0 +1,124 @@
+entityRef: blueprint/plugins/scaffolder-backend-module-azure
+name: Scaffolder-backend-module-azure Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/scaffolder-backend-module-azure/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-azure/src/actions/index.ts
+      containerId: scaffolder-backend-module-azure
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-azure/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-azure/src/module.ts
+      containerId: scaffolder-backend-module-azure
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-azure/azure-examples-test
+    type: background-worker
+    name: azure.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-azure/src/actions/azure.examples.test.ts
+      containerId: scaffolder-backend-module-azure
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-azure/azure-examples
+    type: background-worker
+    name: azure.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-azure/src/actions/azure.examples.ts
+      containerId: scaffolder-backend-module-azure
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1290
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-azure/azure-test
+    type: background-worker
+    name: azure.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-azure/src/actions/azure.test.ts
+      containerId: scaffolder-backend-module-azure
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-azure/azure
+    type: background-worker
+    name: azure Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-azure/src/actions/azure.ts
+      containerId: scaffolder-backend-module-azure
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1480
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/scaffolder-backend-module-azure/module
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-azure/module
+    to: blueprint/plugins/home/actions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-azure/azure-examples-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-azure/azure-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-azure/azure
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-azure/azure-examples-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-azure/azure-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-azure/azure-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-azure/azure-test
+    to: blueprint/plugins/scaffolder-backend-module-azure/azure
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-azure/azure-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-azure/azure-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-azure/azure
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-azure/azure
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-azure/azure
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-azure/azure
+    to: blueprint/plugins/scaffolder-backend-module-azure/azure-examples
+    type: direct-call
+    description: Calls module / service

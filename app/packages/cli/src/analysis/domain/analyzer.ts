@@ -8,20 +8,30 @@ import { ModelExtractor } from './modelExtractor.ts';
 import { ContextLevelWriter } from '../../writers/contextLevelWriter.ts';
 import { ContainerLevelWriter } from '../../writers/containerLevelWriter.ts';
 import { ComponentLevelWriter } from '../../writers/componentLevelWriter.ts';
-import { EntityRef, slugify } from '@blueprint/core';
+import { EntityRef } from '@blueprint/core';
+import { DEFAULT_ANALYSIS_OPTIONS, type AnalysisOptions } from './analysisOptions.ts';
+import { discoverSystems, partitionFilesBySystem } from './systemDiscovery.ts';
+import { throwIfAborted } from './cancellation.ts';
 
 export interface CodebaseAnalyzerDependencies {
   parser: CodebaseParserPort;
   layout: LayoutPort;
   fileSystem: AnalysisFileSystemPort;
   logger: LoggerPort;
+  analysisOptions?: AnalysisOptions;
 }
 
 export class CodebaseAnalyzer {
-  constructor(private deps: CodebaseAnalyzerDependencies) {}
+  private analysisOptions: AnalysisOptions;
+
+  constructor(private deps: CodebaseAnalyzerDependencies) {
+    this.analysisOptions = {
+      ...DEFAULT_ANALYSIS_OPTIONS,
+      ...(deps.analysisOptions ?? {}),
+    };
+  }
 
   private getMeaningfulName(sourceFiles: any[], globPattern: string): string {
-    // 1. Resolve from C# namespaces
     const topNamespaces: string[] = [];
     sourceFiles.forEach(file => {
       if (file.namespaces) {
@@ -51,7 +61,6 @@ export class CodebaseAnalyzer {
       }
     }
 
-    // 2. Resolve package.json in scanned directory or current working directory
     try {
       const baseDir = globPattern.split('**')[0].replace(/\/$/, '').replace(/\\$/, '');
       const scanDir = baseDir
@@ -80,7 +89,6 @@ export class CodebaseAnalyzer {
       // ignore
     }
 
-    // 3. Resolve from base directory name of glob pattern
     try {
       const baseDir = globPattern.split('**')[0].replace(/\/$/, '').replace(/\\$/, '');
       if (baseDir) {
@@ -93,7 +101,6 @@ export class CodebaseAnalyzer {
       // ignore
     }
 
-    // 4. Fallback to current working directory name
     const parts = this.deps.fileSystem.getCurrentWorkingDirectory().split(/[\\/]/).filter(Boolean);
     return parts[parts.length - 1] || 'blueprint';
   }
@@ -101,51 +108,118 @@ export class CodebaseAnalyzer {
   async runAnalysis(
     contextName: string,
     outputDir: string,
-    globPattern: string = 'src/**/*.{ts,tsx}'
+    globPattern: string = 'src/**/*.{ts,tsx}',
+    signal?: AbortSignal
   ): Promise<void> {
+    throwIfAborted(signal);
     this.deps.logger.info('🚀 Starting Multi-Level Codebase Analysis...');
 
-    // 1. Parse files and isolate graph extraction logic
-    const sourceFiles = await this.deps.parser.parseSourceFiles(globPattern);
-    const systemName = this.getMeaningfulName(sourceFiles, globPattern);
-    const systemId = slugify(systemName);
+    const sourceFiles = await this.deps.parser.parseSourceFiles(globPattern, signal);
+    throwIfAborted(signal);
 
-    const parentRef = EntityRef.parse(systemId, EntityRef.parse(contextName));
-    const extractor = new ModelExtractor(parentRef);
-    const { componentNodesMap, componentDependencies, containerNodesMap, containerDependencies } =
-      extractor.extractGraph(sourceFiles);
+    const fallbackName = this.getMeaningfulName(sourceFiles, globPattern);
+    const cwd = this.deps.fileSystem.getCurrentWorkingDirectory();
 
-    // 2. Resolve target directory absolute paths
+    const systems = discoverSystems(cwd, this.deps.fileSystem, {
+      systems: this.analysisOptions.systems,
+      fallbackId: fallbackName,
+    });
+
+    const workspacePackageRoots = [
+      ...new Set(
+        systems.filter(s => s.kind === 'workspace' || s.kind === 'config').map(s => s.rootPath)
+      ),
+    ].filter(Boolean);
+
+    const partitioned = partitionFilesBySystem(sourceFiles, systems);
     const rootDir = this.deps.fileSystem.getAbsolutePath(outputDir || 'blueprints');
-    const blueprintsDir = this.deps.fileSystem.getAbsolutePath(rootDir, systemId);
-
     if (!this.deps.fileSystem.exists(rootDir)) this.deps.fileSystem.mkdir(rootDir);
-    if (!this.deps.fileSystem.exists(blueprintsDir)) this.deps.fileSystem.mkdir(blueprintsDir);
 
-    // 3. Delegate generation to targeted level writers
-    await new ContextLevelWriter(this.deps.layout, this.deps.fileSystem, this.deps.logger).write(
+    const contextWriter = new ContextLevelWriter(
+      this.deps.layout,
+      this.deps.fileSystem,
+      this.deps.logger
+    );
+    const containerWriter = new ContainerLevelWriter(
+      this.deps.layout,
+      this.deps.fileSystem,
+      this.deps.logger
+    );
+    const componentWriter = new ComponentLevelWriter(
+      this.deps.layout,
+      this.deps.fileSystem,
+      this.deps.logger
+    );
+
+    const emittedSystems = systems.filter(system => {
+      const files = partitioned.get(system.id) || [];
+      // Always keep the product hub on the context diagram, even with no source files.
+      return files.length > 0 || system.kind === 'fallback' || system.kind === 'product';
+    });
+
+    throwIfAborted(signal);
+    await contextWriter.writeSystems(
       rootDir,
       contextName,
-      systemId
+      emittedSystems.map(s => ({
+        entityRef: s.id,
+        displayName: s.displayName,
+        rootPath: s.rootPath,
+        productId: s.productId,
+        isProductHub: s.kind === 'product' || s.kind === 'fallback',
+      }))
     );
 
-    await new ContainerLevelWriter(this.deps.layout, this.deps.fileSystem, this.deps.logger).write(
-      blueprintsDir,
-      contextName,
-      systemId,
-      containerNodesMap,
-      containerDependencies
-    );
+    for (const system of emittedSystems) {
+      throwIfAborted(signal);
 
-    await new ComponentLevelWriter(this.deps.layout, this.deps.fileSystem, this.deps.logger).write(
-      blueprintsDir,
-      contextName,
-      systemId,
-      componentNodesMap,
-      componentDependencies,
-      containerNodesMap
-    );
+      if (system.kind === 'product') {
+        // Hub is context-only; containers live under workspace/standalone systems.
+        continue;
+      }
 
+      const files = partitioned.get(system.id) || [];
+
+      this.deps.logger.info(
+        `📦 System [${system.id}] (${system.kind}) — ${files.length} source file(s)`
+      );
+
+      const parentRef = EntityRef.parse(system.id, EntityRef.parse(contextName));
+      const extractor = new ModelExtractor(parentRef, {
+        rollupModules: this.analysisOptions.rollupModules,
+        workspacePackageRoots: workspacePackageRoots.length > 0 ? workspacePackageRoots : undefined,
+        isPackageRoot: packageDirRelative =>
+          this.deps.fileSystem.exists(
+            this.deps.fileSystem.getAbsolutePath(cwd, packageDirRelative, 'package.json')
+          ),
+      });
+      const { componentNodesMap, componentDependencies, containerNodesMap, containerDependencies } =
+        extractor.extractGraph(files);
+
+      const blueprintsDir = this.deps.fileSystem.getAbsolutePath(rootDir, system.id);
+      if (!this.deps.fileSystem.exists(blueprintsDir)) this.deps.fileSystem.mkdir(blueprintsDir);
+
+      await containerWriter.write(
+        blueprintsDir,
+        contextName,
+        system.id,
+        containerNodesMap,
+        containerDependencies
+      );
+
+      throwIfAborted(signal);
+
+      await componentWriter.write(
+        blueprintsDir,
+        contextName,
+        system.id,
+        componentNodesMap,
+        componentDependencies,
+        containerNodesMap
+      );
+    }
+
+    throwIfAborted(signal);
     this.deps.logger.info(`✅ Multi-level structural blueprint generation complete.`);
   }
 }

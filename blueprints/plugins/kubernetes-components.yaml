@@ -1,0 +1,217 @@
+entityRef: blueprint/plugins/kubernetes
+name: Kubernetes Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/kubernetes/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes/src/alpha/index.ts
+      containerId: kubernetes
+      technology: TypeScript Domain Service
+      classification: default
+    x: 195
+    'y': 1650
+  - entityRef: blueprint/plugins/kubernetes/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes/src/alpha.ts
+      containerId: kubernetes
+      technology: TypeScript Domain Service
+      classification: default
+    x: 735
+    'y': 2290
+  - entityRef: blueprint/plugins/kubernetes/kubernetescontent-test
+    type: gateway-api
+    name: KubernetesContent.test UI Component
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes/src/KubernetesContent.test.tsx
+      containerId: kubernetes
+      technology: React Component
+      classification: ui-import
+    x: 140
+    'y': 1010
+  - entityRef: blueprint/plugins/kubernetes/kubernetescontent
+    type: gateway-api
+    name: KubernetesContent UI Component
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes/src/KubernetesContent.tsx
+      containerId: kubernetes
+      technology: React Component
+      classification: ui-import
+    x: 640
+    'y': 1330
+  - entityRef: blueprint/plugins/kubernetes/plugin-test
+    type: background-worker
+    name: plugin.test Service
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes/src/plugin.test.ts
+      containerId: kubernetes
+      technology: TypeScript Domain Service
+      classification: default
+    x: 735
+    'y': 50
+  - entityRef: blueprint/plugins/kubernetes/plugin
+    type: background-worker
+    name: plugin Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes/src/alpha/plugin.tsx
+      containerId: kubernetes
+      technology: TypeScript Domain Service
+      classification: default
+    x: 735
+    'y': 370
+  - entityRef: blueprint/plugins/kubernetes/requirekubernetespermissions
+    type: gateway-api
+    name: RequireKubernetesPermissions UI Component
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes/src/RequireKubernetesPermissions.tsx
+      containerId: kubernetes
+      technology: React Component
+      classification: ui-import
+    x: 1100
+    'y': 1650
+  - entityRef: blueprint/plugins/kubernetes/router
+    type: gateway-api
+    name: Router UI Component
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes/src/Router.tsx
+      containerId: kubernetes
+      technology: React Component
+      classification: ui-import
+    x: 600
+    'y': 1010
+  - entityRef: blueprint/plugins/kubernetes/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes/src/setupTests.ts
+      containerId: kubernetes
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1195
+    'y': 50
+  - entityRef: blueprint/plugins/kubernetes/apis
+    type: gateway-api
+    name: apis UI Component
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes/src/alpha/apis.tsx
+      containerId: kubernetes
+      technology: React Component
+      classification: ui-import
+    x: 505
+    'y': 690
+  - entityRef: blueprint/plugins/kubernetes/entitycontents
+    type: gateway-api
+    name: entityContents UI Component
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes/src/alpha/entityContents.tsx
+      containerId: kubernetes
+      technology: React Component
+      classification: ui-import
+    x: 1140
+    'y': 690
+  - entityRef: blueprint/plugins/kubernetes/kubernetescontentpage
+    type: gateway-api
+    name: KubernetesContentPage UI Component
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes/src/alpha/KubernetesContentPage.tsx
+      containerId: kubernetes
+      technology: React Component
+      classification: ui-import
+    x: 1100
+    'y': 1010
+  - entityRef: blueprint/plugins/kubernetes/translation
+    type: background-worker
+    name: translation Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes/src/alpha/translation.ts
+      containerId: kubernetes
+      technology: TypeScript Domain Service
+      classification: default
+    x: 330
+    'y': 1970
+dependencies:
+  - from: blueprint/plugins/kubernetes/index
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes/kubernetescontent-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes/kubernetescontent-test
+    to: blueprint/plugins/kubernetes/kubernetescontent
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes/kubernetescontent
+    to: blueprint/plugins/kubernetes/requirekubernetespermissions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes/kubernetescontent
+    to: blueprint/plugins/kubernetes/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes/kubernetescontent
+    to: blueprint/plugins/kubernetes/translation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes/plugin-test
+    to: blueprint/plugins/kubernetes/plugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes/requirekubernetespermissions
+    to: blueprint/plugins/kubernetes/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes/requirekubernetespermissions
+    to: blueprint/plugins/kubernetes/translation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes/router
+    to: blueprint/plugins/kubernetes/kubernetescontent
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes/entitycontents
+    to: blueprint/plugins/kubernetes/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes/entitycontents
+    to: blueprint/plugins/kubernetes/router
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes/index
+    to: blueprint/plugins/kubernetes/translation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes/kubernetescontentpage
+    to: blueprint/plugins/kubernetes/kubernetescontent
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes/plugin
+    to: blueprint/plugins/kubernetes/entitycontents
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes/plugin
+    to: blueprint/plugins/kubernetes/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes/translation
+    to: blueprint/plugins/kubernetes/alpha
+    type: direct-call
+    description: Calls module / service

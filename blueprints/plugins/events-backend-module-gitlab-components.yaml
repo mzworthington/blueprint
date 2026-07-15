@@ -1,0 +1,167 @@
+entityRef: blueprint/plugins/events-backend-module-gitlab
+name: Events-backend-module-gitlab Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/events-backend-module-gitlab/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-gitlab/config.d.ts
+      containerId: events-backend-module-gitlab
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-gitlab/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-gitlab/src/index.ts
+      containerId: events-backend-module-gitlab
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-gitlab/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-gitlab/src/setupTests.ts
+      containerId: events-backend-module-gitlab
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-gitlab/creategitlabtokenvalidator-test
+    type: background-worker
+    name: createGitlabTokenValidator.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-gitlab/src/http/createGitlabTokenValidator.test.ts
+      containerId: events-backend-module-gitlab
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-gitlab/creategitlabtokenvalidator
+    type: background-worker
+    name: createGitlabTokenValidator Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-gitlab/src/http/createGitlabTokenValidator.ts
+      containerId: events-backend-module-gitlab
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2210
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend-module-gitlab/gitlabeventrouter-test
+    type: rest-api
+    name: GitlabEventRouter.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-gitlab/src/router/GitlabEventRouter.test.ts
+      containerId: events-backend-module-gitlab
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1060
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-gitlab/gitlabeventrouter
+    type: rest-api
+    name: GitlabEventRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-gitlab/src/router/GitlabEventRouter.ts
+      containerId: events-backend-module-gitlab
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1290
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabeventrouter-test
+    type: rest-api
+    name: eventsModuleGitlabEventRouter.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-gitlab/src/service/eventsModuleGitlabEventRouter.test.ts
+      containerId: events-backend-module-gitlab
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabeventrouter
+    type: rest-api
+    name: eventsModuleGitlabEventRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-gitlab/src/service/eventsModuleGitlabEventRouter.ts
+      containerId: events-backend-module-gitlab
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1520
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabwebhook-test
+    type: background-worker
+    name: eventsModuleGitlabWebhook.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-gitlab/src/service/eventsModuleGitlabWebhook.test.ts
+      containerId: events-backend-module-gitlab
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabwebhook
+    type: background-worker
+    name: eventsModuleGitlabWebhook Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-gitlab/src/service/eventsModuleGitlabWebhook.ts
+      containerId: events-backend-module-gitlab
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2440
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/events-backend-module-gitlab/creategitlabtokenvalidator-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-gitlab/creategitlabtokenvalidator-test
+    to: blueprint/plugins/events-backend-module-gitlab/creategitlabtokenvalidator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-gitlab/creategitlabtokenvalidator
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-gitlab/gitlabeventrouter-test
+    to: blueprint/plugins/events-backend-module-gitlab/gitlabeventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabeventrouter-test
+    to: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabeventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabeventrouter
+    to: blueprint/plugins/events-backend-module-gitlab/gitlabeventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabwebhook-test
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabwebhook-test
+    to: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabwebhook
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabwebhook
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabwebhook
+    to: blueprint/plugins/events-backend-module-gitlab/creategitlabtokenvalidator
+    type: direct-call
+    description: Calls module / service

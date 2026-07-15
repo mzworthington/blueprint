@@ -1,0 +1,157 @@
+entityRef: blueprint/plugins/permission-react
+name: Permission-react Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/permission-react/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/permission-react/src/hooks/index.ts
+      containerId: permission-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/permission-react/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/permission-react/src/setupTests.ts
+      containerId: permission-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/permission-react/identitypermissionapi-test
+    type: background-worker
+    name: IdentityPermissionApi.test Service
+    isTest: true
+    properties:
+      filepath: plugins/permission-react/src/apis/IdentityPermissionApi.test.ts
+      containerId: permission-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/permission-react/identitypermissionapi
+    type: background-worker
+    name: IdentityPermissionApi Service
+    isTest: false
+    properties:
+      filepath: plugins/permission-react/src/apis/IdentityPermissionApi.ts
+      containerId: permission-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 370
+  - entityRef: blueprint/plugins/permission-react/permissionapi
+    type: background-worker
+    name: PermissionApi Service
+    isTest: false
+    properties:
+      filepath: plugins/permission-react/src/apis/PermissionApi.ts
+      containerId: permission-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 690
+  - entityRef: blueprint/plugins/permission-react/requirepermission-test
+    type: background-worker
+    name: RequirePermission.test Service
+    isTest: true
+    properties:
+      filepath: plugins/permission-react/src/components/RequirePermission.test.tsx
+      containerId: permission-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/permission-react/requirepermission
+    type: gateway-api
+    name: RequirePermission UI Component
+    isTest: false
+    properties:
+      filepath: plugins/permission-react/src/components/RequirePermission.tsx
+      containerId: permission-react
+      technology: React Component
+      classification: ui-import
+    x: 1520
+    'y': 370
+  - entityRef: blueprint/plugins/permission-react/usepermission-test
+    type: gateway-api
+    name: usePermission.test UI Component
+    isTest: true
+    properties:
+      filepath: plugins/permission-react/src/hooks/usePermission.test.tsx
+      containerId: permission-react
+      technology: React Component
+      classification: ui-import
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/permission-react/usepermission
+    type: background-worker
+    name: usePermission Service
+    isTest: false
+    properties:
+      filepath: plugins/permission-react/src/hooks/usePermission.ts
+      containerId: permission-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/permission-react/identitypermissionapi-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-react/identitypermissionapi-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-react/identitypermissionapi-test
+    to: blueprint/plugins/permission-react/identitypermissionapi
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-react/identitypermissionapi
+    to: blueprint/plugins/permission-react/permissionapi
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-react/identitypermissionapi
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-react/requirepermission-test
+    to: blueprint/plugins/permission-react/requirepermission
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-react/requirepermission-test
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-react/requirepermission-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-react/requirepermission
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-react/usepermission-test
+    to: blueprint/plugins/permission-react/usepermission
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-react/usepermission-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-react/usepermission-test
+    to: blueprint/plugins/search/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-react/usepermission
+    to: blueprint/plugins/search/apis
+    type: direct-call
+    description: Calls module / service

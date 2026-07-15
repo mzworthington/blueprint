@@ -1,0 +1,36 @@
+entityRef: blueprint/packages/cli-module-github
+name: Cli-module-github Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/cli-module-github/index
+    type: gateway-api
+    name: index UI Component
+    isTest: false
+    properties:
+      filepath: packages/cli-module-github/src/commands/create-github-app/index.ts
+      containerId: cli-module-github
+      technology: React Component
+      classification: ui-import
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-github/githubcreateappserver
+    type: gateway-api
+    name: GithubCreateAppServer UI Component
+    isTest: false
+    properties:
+      filepath: packages/cli-module-github/src/commands/create-github-app/GithubCreateAppServer.ts
+      containerId: cli-module-github
+      technology: React Component
+      classification: ui-import
+    x: 140
+    'y': 370
+dependencies:
+  - from: blueprint/packages/cli-module-github/githubcreateappserver
+    to: blueprint/packages/backend-openapi-utils/express
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-github/index
+    to: blueprint/packages/cli-module-github/githubcreateappserver
+    type: direct-call
+    description: Calls module / service

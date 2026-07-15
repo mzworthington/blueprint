@@ -1,0 +1,328 @@
+entityRef: blueprint/plugins/notifications-backend
+name: Notifications-backend Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/notifications-backend/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend/config.d.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/notifications-backend/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend/src/schema/openapi/index.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/notifications-backend/plugin
+    type: background-worker
+    name: plugin Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend/src/plugin.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/notifications-backend/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/notifications-backend/src/setupTests.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/notifications-backend/creategetnotificationsaction-test
+    type: background-worker
+    name: createGetNotificationsAction.test Service
+    isTest: true
+    properties:
+      filepath: plugins/notifications-backend/src/actions/createGetNotificationsAction.test.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/notifications-backend/creategetnotificationsaction
+    type: background-worker
+    name: createGetNotificationsAction Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend/src/actions/createGetNotificationsAction.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 370
+  - entityRef: blueprint/plugins/notifications-backend/databasenotificationsstore-test
+    type: relational-database
+    name: DatabaseNotificationsStore.test Database
+    isTest: true
+    properties:
+      filepath: plugins/notifications-backend/src/database/DatabaseNotificationsStore.test.ts
+      containerId: notifications-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 3360
+    'y': 50
+  - entityRef: blueprint/plugins/notifications-backend/databasenotificationsstore
+    type: relational-database
+    name: DatabaseNotificationsStore Database
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend/src/database/DatabaseNotificationsStore.ts
+      containerId: notifications-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 3360
+    'y': 370
+  - entityRef: blueprint/plugins/notifications-backend/notificationsstore
+    type: relational-database
+    name: NotificationsStore Database
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend/src/database/NotificationsStore.ts
+      containerId: notifications-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 3360
+    'y': 690
+  - entityRef: blueprint/plugins/notifications-backend/defaultnotificationrecipientresolver-test
+    type: background-worker
+    name: DefaultNotificationRecipientResolver.test Service
+    isTest: true
+    properties:
+      filepath: plugins/notifications-backend/src/service/DefaultNotificationRecipientResolver.test.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 370
+  - entityRef: blueprint/plugins/notifications-backend/defaultnotificationrecipientresolver
+    type: background-worker
+    name: DefaultNotificationRecipientResolver Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend/src/service/DefaultNotificationRecipientResolver.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2900
+    'y': 690
+  - entityRef: blueprint/plugins/notifications-backend/notificationcleaner-test
+    type: background-worker
+    name: NotificationCleaner.test Service
+    isTest: true
+    properties:
+      filepath: plugins/notifications-backend/src/service/NotificationCleaner.test.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/plugins/notifications-backend/notificationcleaner
+    type: background-worker
+    name: NotificationCleaner Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend/src/service/NotificationCleaner.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 370
+  - entityRef: blueprint/plugins/notifications-backend/parseentityorderfieldparams-test
+    type: background-worker
+    name: parseEntityOrderFieldParams.test Service
+    isTest: true
+    properties:
+      filepath: plugins/notifications-backend/src/service/parseEntityOrderFieldParams.test.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 370
+  - entityRef: blueprint/plugins/notifications-backend/parseentityorderfieldparams
+    type: background-worker
+    name: parseEntityOrderFieldParams Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend/src/service/parseEntityOrderFieldParams.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 690
+  - entityRef: blueprint/plugins/notifications-backend/router-test
+    type: rest-api
+    name: router.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/notifications-backend/src/service/router.test.ts
+      containerId: notifications-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 2900
+    'y': 50
+  - entityRef: blueprint/plugins/notifications-backend/router
+    type: rest-api
+    name: router REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend/src/service/router.ts
+      containerId: notifications-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 2860
+    'y': 370
+  - entityRef: blueprint/plugins/notifications-backend/migrations-test
+    type: relational-database
+    name: migrations.test Database
+    isTest: true
+    properties:
+      filepath: plugins/notifications-backend/src/tests/migrations.test.ts
+      containerId: notifications-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 3820
+    'y': 50
+dependencies:
+  - from: blueprint/plugins/notifications-backend/config-d
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/plugin
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/plugin
+    to: blueprint/plugins/notifications-backend/router
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/plugin
+    to: blueprint/plugins/home/actions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/plugin
+    to: blueprint/plugins/notifications-backend/notificationcleaner
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/creategetnotificationsaction-test
+    to: blueprint/plugins/notifications-backend/creategetnotificationsaction
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/creategetnotificationsaction-test
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/creategetnotificationsaction
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/creategetnotificationsaction
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/index
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/index
+    to: blueprint/plugins/notifications-backend/creategetnotificationsaction
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/databasenotificationsstore-test
+    to: blueprint/plugins/notifications-backend/databasenotificationsstore
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/notifications-backend/databasenotificationsstore
+    to: blueprint/plugins/notifications-backend/notificationsstore
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/notifications-backend/databasenotificationsstore
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/notificationsstore
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/defaultnotificationrecipientresolver-test
+    to: blueprint/plugins/catalog-node/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/defaultnotificationrecipientresolver-test
+    to: blueprint/plugins/notifications-backend/defaultnotificationrecipientresolver
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/notificationcleaner-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/notificationcleaner-test
+    to: blueprint/plugins/notifications-backend/notificationcleaner
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/notificationcleaner
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/notificationcleaner
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/notificationcleaner
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/parseentityorderfieldparams-test
+    to: blueprint/plugins/notifications-backend/parseentityorderfieldparams
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/parseentityorderfieldparams
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/router-test
+    to: blueprint/plugins/notifications-backend/router
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/router-test
+    to: blueprint/plugins/catalog-node/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/router
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/router
+    to: blueprint/plugins/notifications-backend/parseentityorderfieldparams
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/router
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/router
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/router
+    to: blueprint/plugins/notifications-backend/defaultnotificationrecipientresolver
+    type: direct-call
+    description: Calls module / service

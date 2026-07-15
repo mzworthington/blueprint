@@ -1,0 +1,147 @@
+entityRef: blueprint/plugins/scaffolder-backend-module-cookiecutter
+name: Scaffolder-backend-module-cookiecutter Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/scaffolder-backend-module-cookiecutter/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-cookiecutter/src/actions/fetch/index.ts
+      containerId: scaffolder-backend-module-cookiecutter
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-cookiecutter/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-cookiecutter/src/module.ts
+      containerId: scaffolder-backend-module-cookiecutter
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-cookiecutter/containerrunner
+    type: background-worker
+    name: ContainerRunner Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-cookiecutter/src/actions/fetch/ContainerRunner.ts
+      containerId: scaffolder-backend-module-cookiecutter
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1560
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter-examples-test
+    type: background-worker
+    name: cookiecutter.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-cookiecutter/src/actions/fetch/cookiecutter.examples.test.ts
+      containerId: scaffolder-backend-module-cookiecutter
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter-examples
+    type: background-worker
+    name: cookiecutter.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-cookiecutter/src/actions/fetch/cookiecutter.examples.ts
+      containerId: scaffolder-backend-module-cookiecutter
+      technology: TypeScript Domain Service
+      classification: default
+    x: 900
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter-test
+    type: background-worker
+    name: cookiecutter.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-cookiecutter/src/actions/fetch/cookiecutter.test.ts
+      containerId: scaffolder-backend-module-cookiecutter
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter
+    type: background-worker
+    name: cookiecutter Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-cookiecutter/src/actions/fetch/cookiecutter.ts
+      containerId: scaffolder-backend-module-cookiecutter
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1290
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/scaffolder-backend-module-cookiecutter/module
+    to: blueprint/plugins/home/actions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-cookiecutter/module
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter-examples-test
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter-examples-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-cookiecutter/containerrunner
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter-test
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter-test
+    to: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter-test
+    to: blueprint/plugins/scaffolder-backend-module-cookiecutter/containerrunner
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter
+    to: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter
+    to: blueprint/plugins/scaffolder-backend-module-cookiecutter/containerrunner
+    type: direct-call
+    description: Calls module / service

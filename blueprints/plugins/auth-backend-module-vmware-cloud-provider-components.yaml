@@ -1,0 +1,96 @@
+entityRef: blueprint/plugins/auth-backend-module-vmware-cloud-provider
+name: Auth-backend-module-vmware-cloud-provider Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/auth-backend-module-vmware-cloud-provider/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-vmware-cloud-provider/config.d.ts
+      containerId: auth-backend-module-vmware-cloud-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-vmware-cloud-provider/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-vmware-cloud-provider/src/index.ts
+      containerId: auth-backend-module-vmware-cloud-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-vmware-cloud-provider/authenticator-test
+    type: background-worker
+    name: authenticator.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-vmware-cloud-provider/src/authenticator.test.ts
+      containerId: auth-backend-module-vmware-cloud-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-vmware-cloud-provider/authenticator
+    type: background-worker
+    name: authenticator Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-vmware-cloud-provider/src/authenticator.ts
+      containerId: auth-backend-module-vmware-cloud-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 830
+    'y': 690
+  - entityRef: blueprint/plugins/auth-backend-module-vmware-cloud-provider/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-vmware-cloud-provider/src/module.test.ts
+      containerId: auth-backend-module-vmware-cloud-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-vmware-cloud-provider/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-vmware-cloud-provider/src/module.ts
+      containerId: auth-backend-module-vmware-cloud-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/auth-backend-module-vmware-cloud-provider/config-d
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-vmware-cloud-provider/authenticator-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-vmware-cloud-provider/authenticator-test
+    to: blueprint/plugins/auth-backend-module-vmware-cloud-provider/authenticator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-vmware-cloud-provider/module-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-vmware-cloud-provider/module-test
+    to: blueprint/plugins/auth-backend-module-vmware-cloud-provider/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-vmware-cloud-provider/module
+    to: blueprint/plugins/auth-backend-module-vmware-cloud-provider/authenticator
+    type: direct-call
+    description: Calls module / service

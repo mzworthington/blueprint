@@ -1,0 +1,212 @@
+entityRef: blueprint/plugins/scaffolder-backend-module-bitbucket-server
+name: Scaffolder-backend-module-bitbucket-server Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/scaffolder-backend-module-bitbucket-server/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-bitbucket-server/src/actions/index.ts
+      containerId: scaffolder-backend-module-bitbucket-server
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-bitbucket-server/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-bitbucket-server/src/module.ts
+      containerId: scaffolder-backend-module-bitbucket-server
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver-examples-test
+    type: background-worker
+    name: bitbucketServer.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-bitbucket-server/src/actions/bitbucketServer.examples.test.ts
+      containerId: scaffolder-backend-module-bitbucket-server
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver-examples
+    type: background-worker
+    name: bitbucketServer.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-bitbucket-server/src/actions/bitbucketServer.examples.ts
+      containerId: scaffolder-backend-module-bitbucket-server
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1290
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver-test
+    type: background-worker
+    name: bitbucketServer.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-bitbucket-server/src/actions/bitbucketServer.test.ts
+      containerId: scaffolder-backend-module-bitbucket-server
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver
+    type: background-worker
+    name: bitbucketServer Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-bitbucket-server/src/actions/bitbucketServer.ts
+      containerId: scaffolder-backend-module-bitbucket-server
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1480
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest-examples-test
+    type: background-worker
+    name: bitbucketServerPullRequest.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-bitbucket-server/src/actions/bitbucketServerPullRequest.examples.test.ts
+      containerId: scaffolder-backend-module-bitbucket-server
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest-examples
+    type: background-worker
+    name: bitbucketServerPullRequest.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-bitbucket-server/src/actions/bitbucketServerPullRequest.examples.ts
+      containerId: scaffolder-backend-module-bitbucket-server
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2210
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest-test
+    type: background-worker
+    name: bitbucketServerPullRequest.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-bitbucket-server/src/actions/bitbucketServerPullRequest.test.ts
+      containerId: scaffolder-backend-module-bitbucket-server
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest
+    type: background-worker
+    name: bitbucketServerPullRequest Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-bitbucket-server/src/actions/bitbucketServerPullRequest.ts
+      containerId: scaffolder-backend-module-bitbucket-server
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2400
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/module
+    to: blueprint/plugins/home/actions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/module
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver-examples-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver-examples-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver-test
+    to: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver
+    to: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest-examples-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest-examples-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest-test
+    to: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest
+    to: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest-examples
+    type: direct-call
+    description: Calls module / service

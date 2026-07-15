@@ -1,15 +1,23 @@
 import type { SystemNode, SystemDependency } from '@blueprint/core';
 import { EntityRef, slugify } from '@blueprint/core';
-import { resolveContainerFromPath, componentMapKey } from './containerGrouping.ts';
+import {
+  resolveContainerFromPath,
+  componentMapKey,
+  type ResolveContainerOptions,
+} from './containerGrouping.ts';
+import type { ParsedSourceFile } from './types.ts';
+import { classifyParsedSource, dependencyTypeForTarget } from './nodeTypeHydrator.ts';
 
 export class ModelExtractor {
   public parentRef: string;
+  private resolveOptions: ResolveContainerOptions;
 
-  constructor(parentRef: string) {
+  constructor(parentRef: string, resolveOptions: ResolveContainerOptions = {}) {
     this.parentRef = parentRef;
+    this.resolveOptions = resolveOptions;
   }
 
-  public extractGraph(sourceFiles: any[]) {
+  public extractGraph(sourceFiles: ParsedSourceFile[]) {
     const componentNodesMap = new Map<string, SystemNode>();
     const componentDependencies: SystemDependency[] = [];
     const containerNodesMap = new Map<string, SystemNode>();
@@ -17,18 +25,27 @@ export class ModelExtractor {
 
     for (const file of sourceFiles) {
       const componentId = slugify(file.baseName);
-      const { containerId, displayName } = resolveContainerFromPath(file.relativePath);
+      const { containerId, displayName } = resolveContainerFromPath(
+        file.relativePath,
+        this.resolveOptions
+      );
       const mapKey = componentMapKey(containerId, componentId);
 
       const containerRef = EntityRef.child(this.parentRef, containerId);
       const componentRef = EntityRef.child(containerRef, componentId);
+      const hydration = classifyParsedSource(file);
 
       componentNodesMap.set(mapKey, {
         entityRef: componentRef,
-        type: 'component',
-        name: file.baseName,
+        type: hydration.type,
+        name: hydration.label,
         isTest: !!file.isTestFile,
-        properties: { filepath: file.relativePath, containerId },
+        properties: {
+          filepath: file.relativePath,
+          containerId,
+          technology: hydration.technology,
+          classification: hydration.reason,
+        },
       });
 
       if (!containerNodesMap.has(containerId)) {
@@ -55,16 +72,19 @@ export class ModelExtractor {
 
     for (const file of sourceFiles) {
       const fromComponentId = slugify(file.baseName);
-      const { containerId: fromContainerId } = resolveContainerFromPath(file.relativePath);
+      const { containerId: fromContainerId } = resolveContainerFromPath(
+        file.relativePath,
+        this.resolveOptions
+      );
       const fromComponent = findComponent(fromContainerId, fromComponentId);
       if (!fromComponent) continue;
 
-      file.imports.forEach((imp: any) => {
+      file.imports.forEach(imp => {
         const toComponentId = slugify(
           imp.moduleSpecifier
             .split(/[\\/]/)
             .pop()
-            ?.replace(/\.(ts|tsx|js|jsx)$/, '') || ''
+            ?.replace(/\.(ts|tsx|js|jsx|cs|py)$/, '') || ''
         );
         const toComponent = findComponent(fromContainerId, toComponentId);
         if (!toComponent) return;
@@ -73,11 +93,13 @@ export class ModelExtractor {
         if (fromComponent.entityRef !== toComponent.entityRef) {
           const fromContainerRef = EntityRef.child(this.parentRef, fromContainerId);
           const toContainerRef = EntityRef.child(this.parentRef, toContainerId);
+          const edge = dependencyTypeForTarget(toComponent);
 
           componentDependencies.push({
             from: fromComponent.entityRef,
             to: toComponent.entityRef,
-            type: 'direct-call',
+            type: edge.type,
+            description: edge.description,
           });
 
           if (fromContainerId && toContainerId && fromContainerId !== toContainerId) {

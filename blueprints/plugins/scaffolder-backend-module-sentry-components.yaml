@@ -1,0 +1,226 @@
+entityRef: blueprint/plugins/scaffolder-backend-module-sentry
+name: Scaffolder-backend-module-sentry Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/scaffolder-backend-module-sentry/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-sentry/config.d.ts
+      containerId: scaffolder-backend-module-sentry
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-sentry/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-sentry/src/alpha.ts
+      containerId: scaffolder-backend-module-sentry
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-sentry/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-sentry/src/index.ts
+      containerId: scaffolder-backend-module-sentry
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-sentry/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-sentry/src/module.ts
+      containerId: scaffolder-backend-module-sentry
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-sentry/createproject-examples-test
+    type: background-worker
+    name: createProject.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-sentry/src/actions/createProject.examples.test.ts
+      containerId: scaffolder-backend-module-sentry
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-sentry/createproject-examples
+    type: background-worker
+    name: createProject.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-sentry/src/actions/createProject.examples.ts
+      containerId: scaffolder-backend-module-sentry
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2400
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-sentry/createproject-test
+    type: background-worker
+    name: createProject.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-sentry/src/actions/createProject.test.ts
+      containerId: scaffolder-backend-module-sentry
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-sentry/createproject
+    type: background-worker
+    name: createProject Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-sentry/src/actions/createProject.ts
+      containerId: scaffolder-backend-module-sentry
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1940
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn-examples-test
+    type: background-worker
+    name: fetchDSN.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-sentry/src/actions/fetchDSN.examples.test.ts
+      containerId: scaffolder-backend-module-sentry
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3400
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn-examples
+    type: background-worker
+    name: fetchDSN.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-sentry/src/actions/fetchDSN.examples.ts
+      containerId: scaffolder-backend-module-sentry
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3440
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn-test
+    type: background-worker
+    name: fetchDSN.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-sentry/src/actions/fetchDSN.test.ts
+      containerId: scaffolder-backend-module-sentry
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2940
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn
+    type: background-worker
+    name: fetchDSN Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-sentry/src/actions/fetchDSN.ts
+      containerId: scaffolder-backend-module-sentry
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2900
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/module
+    to: blueprint/plugins/scaffolder-backend-module-sentry/createproject
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/module
+    to: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/createproject-examples-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/createproject-examples-test
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/createproject-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-sentry/createproject
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/createproject-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-sentry/createproject-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/createproject-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/createproject-test
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/createproject-test
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/createproject-test
+    to: blueprint/plugins/scaffolder-backend-module-sentry/createproject
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/createproject
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/createproject
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn-examples-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn-examples-test
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn-test
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn-test
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn-test
+    to: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service

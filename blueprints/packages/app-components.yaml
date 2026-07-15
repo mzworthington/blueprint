@@ -1,0 +1,276 @@
+entityRef: blueprint/packages/app
+name: App Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/app/app-test
+    type: background-worker
+    name: App.test Service
+    isTest: true
+    properties:
+      filepath: packages/app/src/App.test.tsx
+      containerId: app
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/app/homepage-test
+    type: background-worker
+    name: HomePage.test Service
+    isTest: true
+    properties:
+      filepath: packages/app/e2e-tests/HomePage.test.ts
+      containerId: app
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/app/searchpage-test
+    type: background-worker
+    name: SearchPage.test Service
+    isTest: true
+    properties:
+      filepath: packages/app/e2e-tests/SearchPage.test.ts
+      containerId: app
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/packages/app/app
+    type: gateway-api
+    name: App UI Component
+    isTest: false
+    properties:
+      filepath: packages/app/src/App.tsx
+      containerId: app
+      technology: React Component
+      classification: ui-import
+    x: 2440
+    'y': 370
+  - entityRef: blueprint/packages/app/homepage
+    type: background-worker
+    name: HomePage Service
+    isTest: false
+    properties:
+      filepath: packages/app/src/HomePage.tsx
+      containerId: app
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/packages/app/index-public-experimental
+    type: gateway-api
+    name: index-public-experimental UI Component
+    isTest: false
+    properties:
+      filepath: packages/app/src/index-public-experimental.tsx
+      containerId: app
+      technology: React Component
+      classification: ui-import
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/packages/app/index
+    type: gateway-api
+    name: index UI Component
+    isTest: false
+    properties:
+      filepath: packages/app/src/index.tsx
+      containerId: app
+      technology: React Component
+      classification: ui-import
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/packages/app/plugininforesolver
+    type: background-worker
+    name: pluginInfoResolver Service
+    isTest: false
+    properties:
+      filepath: packages/app/src/pluginInfoResolver.ts
+      containerId: app
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2440
+    'y': 690
+  - entityRef: blueprint/packages/app/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: packages/app/src/setupTests.ts
+      containerId: app
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2900
+    'y': 50
+  - entityRef: blueprint/packages/app/notfounderrorpageextension
+    type: gateway-api
+    name: notFoundErrorPageExtension UI Component
+    isTest: false
+    properties:
+      filepath: packages/app/src/examples/notFoundErrorPageExtension.tsx
+      containerId: app
+      technology: React Component
+      classification: ui-import
+    x: 1980
+    'y': 690
+  - entityRef: blueprint/packages/app/pagesplugin
+    type: gateway-api
+    name: pagesPlugin UI Component
+    isTest: false
+    properties:
+      filepath: packages/app/src/examples/pagesPlugin.tsx
+      containerId: app
+      technology: React Component
+      classification: ui-import
+    x: 1520
+    'y': 690
+  - entityRef: blueprint/packages/app/appmodulenav
+    type: gateway-api
+    name: appModuleNav UI Component
+    isTest: false
+    properties:
+      filepath: packages/app/src/modules/appModuleNav.tsx
+      containerId: app
+      technology: React Component
+      classification: ui-import
+    x: 2900
+    'y': 690
+  - entityRef: blueprint/packages/app/appmodulescaffolder
+    type: gateway-api
+    name: appModuleScaffolder UI Component
+    isTest: false
+    properties:
+      filepath: packages/app/src/modules/appModuleScaffolder.tsx
+      containerId: app
+      technology: React Component
+      classification: ui-import
+    x: 3360
+    'y': 690
+  - entityRef: blueprint/packages/app/buitemplatecard
+    type: gateway-api
+    name: BuiTemplateCard UI Component
+    isTest: false
+    properties:
+      filepath: packages/app/src/modules/BuiTemplateCard.tsx
+      containerId: app
+      technology: React Component
+      classification: ui-import
+    x: 3360
+    'y': 50
+dependencies:
+  - from: blueprint/packages/app/app-test
+    to: blueprint/packages/cli-module-test-jest/test
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/homepage-test
+    to: blueprint/packages/cli-module-test-jest/test
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/searchpage-test
+    to: blueprint/packages/cli-module-test-jest/test
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/app
+    to: blueprint/packages/app/pagesplugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/app
+    to: blueprint/packages/app/notfounderrorpageextension
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/app
+    to: blueprint/packages/catalog-model/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/app
+    to: blueprint/packages/catalog-model/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/app
+    to: blueprint/packages/catalog-model/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/app
+    to: blueprint/packages/catalog-model/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/app
+    to: blueprint/packages/catalog-model/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/app
+    to: blueprint/packages/app/plugininforesolver
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/app
+    to: blueprint/packages/app/appmodulenav
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/app
+    to: blueprint/packages/app/appmodulescaffolder
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/app
+    to: blueprint/packages/catalog-model/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/app
+    to: blueprint/packages/cli-module-info/info
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/index-public-experimental
+    to: blueprint/packages/repo-tools/client
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/index-public-experimental
+    to: blueprint/packages/catalog-model/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/index
+    to: blueprint/packages/repo-tools/client
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/index
+    to: blueprint/packages/app/app
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/notfounderrorpageextension
+    to: blueprint/packages/ui/box
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/appmodulenav
+    to: blueprint/packages/ui/menu
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/appmodulenav
+    to: blueprint/packages/core-components/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/appmodulescaffolder
+    to: blueprint/packages/catalog-model/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/buitemplatecard
+    to: blueprint/packages/catalog-model/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/flatroutes-beta-test
+    to: blueprint/packages/app/app
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/flatroutes-compat-test
+    to: blueprint/packages/app/app
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/flatroutes-stable-test
+    to: blueprint/packages/app/app
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-plugin-api/extensions-test
+    to: blueprint/packages/app/app
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-plugin-api/extensions
+    to: blueprint/packages/app/app
+    type: direct-call
+    description: Calls module / service

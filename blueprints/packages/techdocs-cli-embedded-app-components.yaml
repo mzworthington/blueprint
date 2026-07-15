@@ -1,0 +1,245 @@
+entityRef: blueprint/packages/techdocs-cli-embedded-app
+name: Techdocs-cli-embedded-app Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/techdocs-cli-embedded-app/addons
+    type: gateway-api
+    name: addons UI Component
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli-embedded-app/src/addons.tsx
+      containerId: techdocs-cli-embedded-app
+      technology: React Component
+      classification: ui-import
+    x: 1735
+    'y': 690
+  - entityRef: blueprint/packages/techdocs-cli-embedded-app/apis
+    type: gateway-api
+    name: apis UI Component
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli-embedded-app/src/apis.ts
+      containerId: techdocs-cli-embedded-app
+      technology: React Component
+      classification: ui-import
+    x: 140
+    'y': 690
+  - entityRef: blueprint/packages/techdocs-cli-embedded-app/app-test
+    type: background-worker
+    name: App.test Service
+    isTest: true
+    properties:
+      filepath: packages/techdocs-cli-embedded-app/src/App.test.tsx
+      containerId: techdocs-cli-embedded-app
+      technology: TypeScript Domain Service
+      classification: default
+    x: 640
+    'y': 50
+  - entityRef: blueprint/packages/techdocs-cli-embedded-app/app
+    type: background-worker
+    name: App Service
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli-embedded-app/src/App.tsx
+      containerId: techdocs-cli-embedded-app
+      technology: TypeScript Domain Service
+      classification: default
+    x: 870
+    'y': 370
+  - entityRef: blueprint/packages/techdocs-cli-embedded-app/config
+    type: background-worker
+    name: config Service
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli-embedded-app/src/config.ts
+      containerId: techdocs-cli-embedded-app
+      technology: TypeScript Domain Service
+      classification: default
+    x: 275
+    'y': 1010
+  - entityRef: blueprint/packages/techdocs-cli-embedded-app/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli-embedded-app/src/components/TechDocsPage/index.ts
+      containerId: techdocs-cli-embedded-app
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1100
+    'y': 50
+  - entityRef: blueprint/packages/techdocs-cli-embedded-app/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: packages/techdocs-cli-embedded-app/src/setupTests.ts
+      containerId: techdocs-cli-embedded-app
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1560
+    'y': 50
+  - entityRef: blueprint/packages/techdocs-cli-embedded-app/livereloadaddon-test
+    type: gateway-api
+    name: LiveReloadAddon.test UI Component
+    isTest: true
+    properties:
+      filepath: packages/techdocs-cli-embedded-app/src/components/LiveReload/LiveReloadAddon.test.tsx
+      containerId: techdocs-cli-embedded-app
+      technology: React Component
+      classification: ui-import
+    x: 2235
+    'y': 690
+  - entityRef: blueprint/packages/techdocs-cli-embedded-app/livereloadaddon
+    type: gateway-api
+    name: LiveReloadAddon UI Component
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli-embedded-app/src/components/LiveReload/LiveReloadAddon.tsx
+      containerId: techdocs-cli-embedded-app
+      technology: React Component
+      classification: ui-import
+    x: 2195
+    'y': 1010
+  - entityRef: blueprint/packages/techdocs-cli-embedded-app/logofull
+    type: background-worker
+    name: LogoFull Service
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli-embedded-app/src/components/Sidebar/LogoFull.tsx
+      containerId: techdocs-cli-embedded-app
+      technology: TypeScript Domain Service
+      classification: default
+    x: 775
+    'y': 1010
+  - entityRef: blueprint/packages/techdocs-cli-embedded-app/logoicon
+    type: background-worker
+    name: LogoIcon Service
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli-embedded-app/src/components/Sidebar/LogoIcon.tsx
+      containerId: techdocs-cli-embedded-app
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1235
+    'y': 1010
+  - entityRef: blueprint/packages/techdocs-cli-embedded-app/sidebar
+    type: gateway-api
+    name: Sidebar UI Component
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli-embedded-app/src/components/Sidebar/Sidebar.tsx
+      containerId: techdocs-cli-embedded-app
+      technology: React Component
+      classification: ui-import
+    x: 1005
+    'y': 690
+  - entityRef: blueprint/packages/techdocs-cli-embedded-app/techdocspage
+    type: gateway-api
+    name: TechDocsPage UI Component
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli-embedded-app/src/components/TechDocsPage/TechDocsPage.tsx
+      containerId: techdocs-cli-embedded-app
+      technology: React Component
+      classification: ui-import
+    x: 1695
+    'y': 1010
+dependencies:
+  - from: blueprint/packages/techdocs-cli-embedded-app/addons
+    to: blueprint/packages/catalog-model/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/addons
+    to: blueprint/packages/techdocs-cli-embedded-app/techdocspage
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/addons
+    to: blueprint/packages/techdocs-cli-embedded-app/livereloadaddon
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/apis
+    to: blueprint/packages/techdocs-cli-embedded-app/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/app-test
+    to: blueprint/packages/techdocs-cli-embedded-app/app
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/app
+    to: blueprint/packages/catalog-model/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/app
+    to: blueprint/packages/catalog-model/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/app
+    to: blueprint/packages/techdocs-cli-embedded-app/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/app
+    to: blueprint/packages/techdocs-cli-embedded-app/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/app
+    to: blueprint/packages/techdocs-cli-embedded-app/sidebar
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/app
+    to: blueprint/packages/techdocs-cli-embedded-app/addons
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/index
+    to: blueprint/packages/repo-tools/client
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/index
+    to: blueprint/packages/techdocs-cli-embedded-app/app
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/root
+    to: blueprint/packages/techdocs-cli-embedded-app/logoicon
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-components/header
+    to: blueprint/packages/techdocs-cli-embedded-app/sidebar
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/livereloadaddon-test
+    to: blueprint/packages/techdocs-cli-embedded-app/livereloadaddon
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/logofull
+    to: blueprint/packages/core-components/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/logoicon
+    to: blueprint/packages/core-components/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/sidebar
+    to: blueprint/packages/core-components/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/sidebar
+    to: blueprint/packages/techdocs-cli-embedded-app/logofull
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/sidebar
+    to: blueprint/packages/techdocs-cli-embedded-app/logoicon
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/techdocspage
+    to: blueprint/packages/core-components/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/techdocspage
+    to: blueprint/packages/ui/box
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/techdocspage
+    to: blueprint/packages/ui/tooltip
+    type: direct-call
+    description: Calls module / service

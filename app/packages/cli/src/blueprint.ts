@@ -9,6 +9,11 @@ import { DagreLayoutAdapter } from './analysis/adapters/dagreLayout.ts';
 import { NodeFileSystemAdapter } from './analysis/adapters/nodeFileSystem.ts';
 import { ConsoleLogger } from './analysis/adapters/consoleLogger.ts';
 import { CodebaseAnalyzer } from './analysis/domain/analyzer.ts';
+import {
+  loadAnalysisConfig,
+  mergeAnalysisOptions,
+} from './analysis/adapters/loadAnalysisConfig.ts';
+import { createCliCancellation, isCancellationError } from './analysis/domain/cancellation.ts';
 
 function askPathWithTabComplete(message: string, defaultValue: string): Promise<string> {
   return new Promise(resolve => {
@@ -73,13 +78,21 @@ async function run() {
     args.some(a => a.startsWith('--glob=')) ||
     args.some(a => a.startsWith('--output=')) ||
     args.some(a => a.startsWith('--context=')) ||
+    args.includes('--rollup-modules') ||
+    args.some(a => a.startsWith('--ignore=')) ||
+    args.some(a => a.startsWith('--systems=')) ||
     !process.stdout.isTTY ||
     process.env.CI;
 
+  const fileConfig = loadAnalysisConfig(process.cwd());
+
   let parserType = 'ts-morph';
-  let globPattern = '**/*.{ts,tsx,cs,java,go}';
+  let globPattern = fileConfig.glob || '**/*.{ts,tsx,cs,java,go}';
   let outputDir = process.env.BLUEPRINT_OUTPUT_DIR || 'blueprints';
-  let contextName = 'Blueprint';
+  let contextName = fileConfig.context || 'Blueprint';
+  let rollupModules = fileConfig.rollupModules;
+  let cliIgnores: string[] = [];
+  let cliSystems: string[] | undefined;
 
   // Headless flag overrides
   const parserArg = args.find(a => a.startsWith('--parser='));
@@ -104,8 +117,34 @@ async function run() {
     contextName = contextArg.split('=')[1];
   }
 
+  if (args.includes('--rollup-modules')) {
+    rollupModules = true;
+  }
+
+  const ignoreArg = args.find(a => a.startsWith('--ignore='));
+  if (ignoreArg) {
+    cliIgnores = ignoreArg
+      .slice('--ignore='.length)
+      .split(',')
+      .map(s => s.trim())
+      .filter(Boolean);
+  }
+
+  const systemsArg = args.find(a => a.startsWith('--systems='));
+  if (systemsArg) {
+    cliSystems = systemsArg
+      .slice('--systems='.length)
+      .split(',')
+      .map(s => s.trim())
+      .filter(Boolean);
+  }
+
   if (!isHeadless) {
     p.intro(`\n🔹 ${pc.bold(pc.cyan('blueprint'))}${pc.gray(' • system architecture generator')}`);
+
+    if (fileConfig.configPath) {
+      p.log.info(`Loaded config ${pc.dim(fileConfig.configPath)}`);
+    }
 
     const selectedParser = await p.select({
       message: 'Select parser adapter:',
@@ -124,15 +163,15 @@ async function run() {
 
     const contextNameInput = await p.text({
       message: 'Enter context name:',
-      placeholder: 'Blueprint',
-      defaultValue: 'Blueprint',
+      placeholder: contextName,
+      defaultValue: contextName,
     });
 
     if (p.isCancel(contextNameInput)) {
       p.cancel('Analysis cancelled.');
       process.exit(0);
     }
-    contextName = (contextNameInput as string) || 'Blueprint';
+    contextName = (contextNameInput as string) || contextName;
 
     globPattern = await askPathWithTabComplete('Glob pattern/directory to scan:', globPattern);
     outputDir = await askPathWithTabComplete('Directory to output schemas:', outputDir);
@@ -140,8 +179,17 @@ async function run() {
     console.log(pc.cyan('│'));
   }
 
+  const analysisOptions = mergeAnalysisOptions(fileConfig, {
+    ignore: cliIgnores,
+    include: fileConfig.include,
+    systems: cliSystems,
+    rollupModules,
+  });
+
   const parser =
-    parserType === 'tree-sitter' ? new TreeSitterParserAdapter() : new TsMorphParserAdapter();
+    parserType === 'tree-sitter'
+      ? new TreeSitterParserAdapter(analysisOptions)
+      : new TsMorphParserAdapter(analysisOptions);
   const layout = new DagreLayoutAdapter();
   const fileSystem = new NodeFileSystemAdapter();
   const logger = new ConsoleLogger();
@@ -151,27 +199,44 @@ async function run() {
     layout,
     fileSystem,
     logger,
+    analysisOptions,
   });
 
   const spinner = isHeadless ? null : p.spinner();
+  const cancellation = createCliCancellation();
+  const disposeCancellation = cancellation.install();
 
   try {
     if (spinner) {
-      spinner.start('Analyzing codebase structure...');
+      spinner.start('Analyzing codebase structure… (Ctrl+C to cancel)');
     }
     const absoluteOutputDir = path.resolve(process.cwd(), outputDir);
-    await analyzer.runAnalysis(contextName, outputDir, globPattern);
+    await analyzer.runAnalysis(contextName, outputDir, globPattern, cancellation.signal);
     if (spinner) {
       spinner.stop(
         pc.green(`Successfully generated visual layout levels inside: ${absoluteOutputDir}`)
       );
     }
   } catch (error) {
+    if (isCancellationError(error)) {
+      if (spinner) {
+        spinner.stop(pc.yellow('Analysis cancelled'));
+      } else {
+        console.log(pc.yellow('\nAnalysis cancelled.'));
+      }
+      if (!isHeadless) {
+        p.cancel('Analysis cancelled.');
+      }
+      process.exit(130);
+    }
+
     if (spinner) {
       spinner.stop(pc.red('Failed to complete analysis'));
     }
     logger.error('Failed to run AST analysis', error);
     process.exit(1);
+  } finally {
+    disposeCancellation();
   }
 }
 

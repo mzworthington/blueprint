@@ -1,0 +1,104 @@
+entityRef: blueprint/packages/module-federation-common
+name: Module-federation-common Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/module-federation-common/defaults-test
+    type: background-worker
+    name: defaults.test Service
+    isTest: true
+    properties:
+      filepath: packages/module-federation-common/src/defaults.test.ts
+      containerId: module-federation-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/module-federation-common/defaults
+    type: background-worker
+    name: defaults Service
+    isTest: false
+    properties:
+      filepath: packages/module-federation-common/src/defaults.ts
+      containerId: module-federation-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 370
+  - entityRef: blueprint/packages/module-federation-common/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/module-federation-common/src/index.ts
+      containerId: module-federation-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/module-federation-common/loadmodulefederationhostshared-test
+    type: background-worker
+    name: loadModuleFederationHostShared.test Service
+    isTest: true
+    properties:
+      filepath: packages/module-federation-common/src/loadModuleFederationHostShared.test.ts
+      containerId: module-federation-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/packages/module-federation-common/loadmodulefederationhostshared
+    type: background-worker
+    name: loadModuleFederationHostShared Service
+    isTest: false
+    properties:
+      filepath: packages/module-federation-common/src/loadModuleFederationHostShared.ts
+      containerId: module-federation-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1195
+    'y': 370
+  - entityRef: blueprint/packages/module-federation-common/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: packages/module-federation-common/src/types.ts
+      containerId: module-federation-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 735
+    'y': 690
+dependencies:
+  - from: blueprint/packages/app-defaults/createapp
+    to: blueprint/packages/module-federation-common/defaults
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/module-federation-common/defaults-test
+    to: blueprint/packages/module-federation-common/defaults
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/module-federation-common/defaults
+    to: blueprint/packages/module-federation-common/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/module-federation-common/loadmodulefederationhostshared-test
+    to: blueprint/packages/module-federation-common/loadmodulefederationhostshared
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/module-federation-common/loadmodulefederationhostshared-test
+    to: blueprint/packages/module-federation-common/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/module-federation-common/loadmodulefederationhostshared-test
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/module-federation-common/loadmodulefederationhostshared
+    to: blueprint/packages/module-federation-common/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/module-federation-common/loadmodulefederationhostshared
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service

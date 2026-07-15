@@ -1,0 +1,47 @@
+entityRef: blueprint/plugins/permission-backend-module-policy-allow-all
+name: Permission-backend-module-policy-allow-all Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/permission-backend-module-policy-allow-all/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/permission-backend-module-policy-allow-all/src/index.ts
+      containerId: permission-backend-module-policy-allow-all
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/permission-backend-module-policy-allow-all/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/permission-backend-module-policy-allow-all/src/module.ts
+      containerId: permission-backend-module-policy-allow-all
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/permission-backend-module-policy-allow-all/policy
+    type: background-worker
+    name: policy Service
+    isTest: false
+    properties:
+      filepath: plugins/permission-backend-module-policy-allow-all/src/policy.ts
+      containerId: permission-backend-module-policy-allow-all
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/permission-backend-module-policy-allow-all/module
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-backend-module-policy-allow-all/module
+    to: blueprint/plugins/permission-backend-module-policy-allow-all/policy
+    type: direct-call
+    description: Calls module / service

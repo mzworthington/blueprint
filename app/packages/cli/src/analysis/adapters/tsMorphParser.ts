@@ -3,14 +3,19 @@ import * as path from 'path';
 import * as fs from 'fs';
 import type { CodebaseParserPort } from '../domain/ports.ts';
 import type { ParsedSourceFile } from '../domain/types.ts';
-import {
-  createGitignoreFilter,
-  isIgnoredByGitignore,
-  isTestSourcePath,
-} from './gitignoreFilter.ts';
+import type { AnalysisOptions } from '../domain/analysisOptions.ts';
+import { isTestSourcePath } from './gitignoreFilter.ts';
+import { createSourcePathFilter } from './sourcePathFilter.ts';
+import { throwIfAborted } from '../domain/cancellation.ts';
 
 export class TsMorphParserAdapter implements CodebaseParserPort {
-  async parseSourceFiles(globPattern: string): Promise<ParsedSourceFile[]> {
+  constructor(
+    private options: Pick<AnalysisOptions, 'ignore' | 'include'> = { ignore: [], include: [] }
+  ) {}
+
+  async parseSourceFiles(globPattern: string, signal?: AbortSignal): Promise<ParsedSourceFile[]> {
+    throwIfAborted(signal);
+
     const tsConfigPath = path.resolve(process.cwd(), 'tsconfig.json');
     const project = new Project(
       fs.existsSync(tsConfigPath)
@@ -21,17 +26,19 @@ export class TsMorphParserAdapter implements CodebaseParserPort {
         : {}
     );
 
-    const ig = createGitignoreFilter(process.cwd());
+    const pathFilter = createSourcePathFilter(process.cwd(), this.options);
     const resolvedPattern = path.resolve(process.cwd(), globPattern);
     project.addSourceFilesAtPaths([resolvedPattern]);
 
     const sourceFiles = project.getSourceFiles().filter(sf => {
       const relativePath = path.relative(process.cwd(), sf.getFilePath());
-      return !isIgnoredByGitignore(relativePath, ig);
+      return !pathFilter.shouldSkip(relativePath);
     });
     const result: ParsedSourceFile[] = [];
 
     for (const sourceFile of sourceFiles) {
+      throwIfAborted(signal);
+
       const filePath = sourceFile.getFilePath();
       const relativePath = path.relative(process.cwd(), filePath);
       const baseName = path.basename(relativePath, path.extname(relativePath));

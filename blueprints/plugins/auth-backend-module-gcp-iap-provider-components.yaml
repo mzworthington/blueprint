@@ -1,0 +1,149 @@
+entityRef: blueprint/plugins/auth-backend-module-gcp-iap-provider
+name: Auth-backend-module-gcp-iap-provider Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/auth-backend-module-gcp-iap-provider/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-gcp-iap-provider/config.d.ts
+      containerId: auth-backend-module-gcp-iap-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 690
+  - entityRef: blueprint/plugins/auth-backend-module-gcp-iap-provider/authenticator-test
+    type: rest-api
+    name: authenticator.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-gcp-iap-provider/src/authenticator.test.ts
+      containerId: auth-backend-module-gcp-iap-provider
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 410
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-gcp-iap-provider/authenticator
+    type: background-worker
+    name: authenticator Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-gcp-iap-provider/src/authenticator.ts
+      containerId: auth-backend-module-gcp-iap-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 450
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-gcp-iap-provider/helpers-test
+    type: background-worker
+    name: helpers.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-gcp-iap-provider/src/helpers.test.ts
+      containerId: auth-backend-module-gcp-iap-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1045
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-gcp-iap-provider/helpers
+    type: background-worker
+    name: helpers Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-gcp-iap-provider/src/helpers.ts
+      containerId: auth-backend-module-gcp-iap-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 950
+    'y': 690
+  - entityRef: blueprint/plugins/auth-backend-module-gcp-iap-provider/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-gcp-iap-provider/src/index.ts
+      containerId: auth-backend-module-gcp-iap-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 870
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-gcp-iap-provider/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-gcp-iap-provider/src/module.ts
+      containerId: auth-backend-module-gcp-iap-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1370
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-gcp-iap-provider/resolvers
+    type: background-worker
+    name: resolvers Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-gcp-iap-provider/src/resolvers.ts
+      containerId: auth-backend-module-gcp-iap-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1410
+    'y': 690
+  - entityRef: blueprint/plugins/auth-backend-module-gcp-iap-provider/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-gcp-iap-provider/src/types.ts
+      containerId: auth-backend-module-gcp-iap-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 680
+    'y': 1010
+dependencies:
+  - from: blueprint/plugins/auth-backend-module-gcp-iap-provider/config-d
+    to: blueprint/plugins/auth-backend-module-gcp-iap-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-gcp-iap-provider/authenticator-test
+    to: blueprint/plugins/auth-backend-module-gcp-iap-provider/authenticator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-gcp-iap-provider/authenticator
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-gcp-iap-provider/authenticator
+    to: blueprint/plugins/auth-backend-module-gcp-iap-provider/helpers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-gcp-iap-provider/authenticator
+    to: blueprint/plugins/auth-backend-module-gcp-iap-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-gcp-iap-provider/helpers-test
+    to: blueprint/plugins/auth-backend-module-gcp-iap-provider/helpers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-gcp-iap-provider/helpers
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-gcp-iap-provider/helpers
+    to: blueprint/plugins/auth-backend-module-gcp-iap-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-gcp-iap-provider/module
+    to: blueprint/plugins/auth-backend-module-gcp-iap-provider/authenticator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-gcp-iap-provider/module
+    to: blueprint/plugins/auth-backend-module-gcp-iap-provider/resolvers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-gcp-iap-provider/resolvers
+    to: blueprint/plugins/auth-backend-module-gcp-iap-provider/types
+    type: direct-call
+    description: Calls module / service

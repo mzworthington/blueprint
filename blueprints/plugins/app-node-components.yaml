@@ -1,0 +1,78 @@
+entityRef: blueprint/plugins/app-node
+name: App-node Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/app-node/extensions
+    type: rest-api
+    name: extensions REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/app-node/src/extensions.ts
+      containerId: app-node
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/app-node/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/app-node/src/index.ts
+      containerId: app-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/app-node/schema
+    type: background-worker
+    name: schema Service
+    isTest: false
+    properties:
+      filepath: plugins/app-node/src/schema.ts
+      containerId: app-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/app-node/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/app-node/src/setupTests.ts
+      containerId: app-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+dependencies:
+  - from: blueprint/plugins/app/plugin
+    to: blueprint/plugins/app-node/extensions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/utils
+    to: blueprint/plugins/app-node/extensions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/usecustomfieldextensions-test
+    to: blueprint/plugins/app-node/extensions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/usecustomfieldextensions
+    to: blueprint/plugins/app-node/extensions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/formdecoratorblueprint
+    to: blueprint/plugins/app-node/extensions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/createasyncvalidators-test
+    to: blueprint/plugins/app-node/extensions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/stepper-test
+    to: blueprint/plugins/app-node/extensions
+    type: direct-call
+    description: Calls module / service

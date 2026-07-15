@@ -1,0 +1,160 @@
+entityRef: blueprint/plugins/events-backend-module-aws-sqs
+name: Events-backend-module-aws-sqs Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/events-backend-module-aws-sqs/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-aws-sqs/config.d.ts
+      containerId: events-backend-module-aws-sqs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-aws-sqs/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-aws-sqs/src/alpha.ts
+      containerId: events-backend-module-aws-sqs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-aws-sqs/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-aws-sqs/src/index.ts
+      containerId: events-backend-module-aws-sqs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-aws-sqs/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-aws-sqs/src/setupTests.ts
+      containerId: events-backend-module-aws-sqs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-aws-sqs/awssqsconsumingeventpublisher-test
+    type: background-worker
+    name: AwsSqsConsumingEventPublisher.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-aws-sqs/src/publisher/AwsSqsConsumingEventPublisher.test.ts
+      containerId: events-backend-module-aws-sqs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 830
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-aws-sqs/awssqsconsumingeventpublisher
+    type: background-worker
+    name: AwsSqsConsumingEventPublisher Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-aws-sqs/src/publisher/AwsSqsConsumingEventPublisher.ts
+      containerId: events-backend-module-aws-sqs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1195
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend-module-aws-sqs/config-test
+    type: background-worker
+    name: config.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-aws-sqs/src/publisher/config.test.ts
+      containerId: events-backend-module-aws-sqs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1655
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend-module-aws-sqs/config
+    type: background-worker
+    name: config Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-aws-sqs/src/publisher/config.ts
+      containerId: events-backend-module-aws-sqs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1195
+    'y': 1010
+  - entityRef: blueprint/plugins/events-backend-module-aws-sqs/eventsmoduleawssqsconsumingeventpublisher-test
+    type: background-worker
+    name: eventsModuleAwsSqsConsumingEventPublisher.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-aws-sqs/src/service/eventsModuleAwsSqsConsumingEventPublisher.test.ts
+      containerId: events-backend-module-aws-sqs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-aws-sqs/eventsmoduleawssqsconsumingeventpublisher
+    type: background-worker
+    name: eventsModuleAwsSqsConsumingEventPublisher Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-aws-sqs/src/service/eventsModuleAwsSqsConsumingEventPublisher.ts
+      containerId: events-backend-module-aws-sqs
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1290
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/events-backend-module-aws-sqs/config-d
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-aws-sqs/alpha
+    to: blueprint/plugins/events-backend-module-aws-sqs/eventsmoduleawssqsconsumingeventpublisher
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-aws-sqs/awssqsconsumingeventpublisher-test
+    to: blueprint/plugins/events-backend-module-aws-sqs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-aws-sqs/awssqsconsumingeventpublisher-test
+    to: blueprint/plugins/events-backend-module-aws-sqs/awssqsconsumingeventpublisher
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-aws-sqs/awssqsconsumingeventpublisher
+    to: blueprint/plugins/events-backend-module-aws-sqs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-aws-sqs/awssqsconsumingeventpublisher
+    to: blueprint/plugins/events-backend-module-aws-sqs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-aws-sqs/config-test
+    to: blueprint/plugins/events-backend-module-aws-sqs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-aws-sqs/config-test
+    to: blueprint/plugins/events-backend-module-aws-sqs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-aws-sqs/config
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-aws-sqs/eventsmoduleawssqsconsumingeventpublisher-test
+    to: blueprint/plugins/events-backend-module-aws-sqs/eventsmoduleawssqsconsumingeventpublisher
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-aws-sqs/eventsmoduleawssqsconsumingeventpublisher
+    to: blueprint/plugins/events-backend-module-aws-sqs/awssqsconsumingeventpublisher
+    type: direct-call
+    description: Calls module / service

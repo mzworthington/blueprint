@@ -1,0 +1,92 @@
+entityRef: blueprint/plugins/kubernetes-node
+name: Kubernetes-node Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/kubernetes-node/extensions
+    type: rest-api
+    name: extensions REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-node/src/extensions.ts
+      containerId: kubernetes-node
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 655
+    'y': 370
+  - entityRef: blueprint/plugins/kubernetes-node/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-node/src/types/index.ts
+      containerId: kubernetes-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/kubernetes-node/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-node/src/setupTests.ts
+      containerId: kubernetes-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/kubernetes-node/pinnipedhelper-test
+    type: background-worker
+    name: PinnipedHelper.test Service
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-node/src/auth/PinnipedHelper.test.ts
+      containerId: kubernetes-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/kubernetes-node/pinnipedhelper
+    type: background-worker
+    name: PinnipedHelper Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-node/src/auth/PinnipedHelper.ts
+      containerId: kubernetes-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1195
+    'y': 370
+  - entityRef: blueprint/plugins/kubernetes-node/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-node/src/types/types.ts
+      containerId: kubernetes-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 690
+dependencies:
+  - from: blueprint/plugins/kubernetes-node/pinnipedhelper-test
+    to: blueprint/plugins/kubernetes-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-node/pinnipedhelper-test
+    to: blueprint/plugins/kubernetes-node/extensions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-node/pinnipedhelper-test
+    to: blueprint/plugins/kubernetes-node/pinnipedhelper
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-node/pinnipedhelper-test
+    to: blueprint/plugins/kubernetes-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-node/pinnipedhelper
+    to: blueprint/plugins/kubernetes-node/types
+    type: direct-call
+    description: Calls module / service

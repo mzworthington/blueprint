@@ -1,0 +1,130 @@
+entityRef: blueprint/plugins/proxy-backend
+name: Proxy-backend Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/proxy-backend/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/proxy-backend/config.d.ts
+      containerId: proxy-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/proxy-backend/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/proxy-backend/src/service/index.ts
+      containerId: proxy-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/proxy-backend/plugin
+    type: background-worker
+    name: plugin Service
+    isTest: false
+    properties:
+      filepath: plugins/proxy-backend/src/plugin.ts
+      containerId: proxy-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/proxy-backend/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/proxy-backend/src/setupTests.ts
+      containerId: proxy-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/proxy-backend/router-config-test
+    type: rest-api
+    name: router.config.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/proxy-backend/src/service/router.config.test.ts
+      containerId: proxy-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/proxy-backend/router-credentials-test
+    type: rest-api
+    name: router.credentials.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/proxy-backend/src/service/router.credentials.test.ts
+      containerId: proxy-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/plugins/proxy-backend/router-test
+    type: rest-api
+    name: router.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/proxy-backend/src/service/router.test.ts
+      containerId: proxy-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 2900
+    'y': 50
+  - entityRef: blueprint/plugins/proxy-backend/router
+    type: rest-api
+    name: router REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/proxy-backend/src/service/router.ts
+      containerId: proxy-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1980
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/proxy-backend/index
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/proxy-backend/plugin
+    to: blueprint/plugins/proxy-backend/router
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/proxy-backend/plugin
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/proxy-backend/router-credentials-test
+    to: blueprint/plugins/search-backend-module-elasticsearch/auth
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/proxy-backend/router-credentials-test
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/proxy-backend/router-credentials-test
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/proxy-backend/router-test
+    to: blueprint/plugins/proxy-backend/router
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/proxy-backend/router
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/proxy-backend/router
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service

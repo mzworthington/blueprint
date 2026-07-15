@@ -3,9 +3,103 @@ name: Blueprint Context
 version: 1.0.0
 level: context
 nodes:
+  - entityRef: blueprint/backstage
+    type: software-system
+    name: Backstage System
+    properties:
+      rootPath: ''
+      productId: backstage
+      role: product-hub
+    x: 830
+    'y': 50
+  - entityRef: blueprint/packages
+    type: software-system
+    name: Packages System
+    properties:
+      rootPath: packages
+      productId: backstage
+      role: subsystem
+    x: 140
+    'y': 370
+  - entityRef: blueprint/plugins
+    type: software-system
+    name: Plugins System
+    properties:
+      rootPath: plugins
+      productId: backstage
+      role: subsystem
+    x: 600
+    'y': 370
+  - entityRef: blueprint/docs-ui
+    type: software-system
+    name: Docs Ui System
+    properties:
+      rootPath: docs-ui
+      productId: backstage
+      role: subsystem
+    x: 1060
+    'y': 370
+  - entityRef: blueprint/microsite
+    type: software-system
+    name: Microsite System
+    properties:
+      rootPath: microsite
+      productId: backstage
+      role: subsystem
+    x: 1520
+    'y': 370
   - entityRef: blueprint/blueprint
     type: software-system
     name: Blueprint System
-    x: 140
+    properties:
+      rootPath: ''
+      productId: blueprint
+      role: product-hub
+    x: 1980
     'y': 50
-dependencies: []
+  - entityRef: blueprint/app
+    type: software-system
+    name: App System
+    properties:
+      rootPath: app
+      productId: blueprint
+      role: subsystem
+    x: 1980
+    'y': 370
+dependencies:
+  - from: blueprint/backstage
+    to: blueprint/packages
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/plugins
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/docs-ui
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/microsite
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/packages
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/plugins
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/docs-ui
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/microsite
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/blueprint
+    to: blueprint/app
+    type: direct-call
+    description: Part of product system

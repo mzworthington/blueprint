@@ -1,0 +1,183 @@
+entityRef: blueprint/plugins/catalog-backend-module-gerrit
+name: Catalog-backend-module-gerrit Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gerrit/config.d.ts
+      containerId: catalog-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gerrit/src/alpha.ts
+      containerId: catalog-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gerrit/src/module/index.ts
+      containerId: catalog-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-gerrit/src/setupTests.ts
+      containerId: catalog-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/catalogmodulegerritentityprovider-test
+    type: background-worker
+    name: catalogModuleGerritEntityProvider.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-gerrit/src/module/catalogModuleGerritEntityProvider.test.ts
+      containerId: catalog-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/catalogmodulegerritentityprovider
+    type: background-worker
+    name: catalogModuleGerritEntityProvider Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gerrit/src/module/catalogModuleGerritEntityProvider.ts
+      containerId: catalog-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1615
+    'y': 370
+  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/config-test
+    type: background-worker
+    name: config.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-gerrit/src/providers/config.test.ts
+      containerId: catalog-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1765
+    'y': 690
+  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/config
+    type: background-worker
+    name: config Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gerrit/src/providers/config.ts
+      containerId: catalog-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1940
+    'y': 1010
+  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider-test
+    type: background-worker
+    name: GerritEntityProvider.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-gerrit/src/providers/GerritEntityProvider.test.ts
+      containerId: catalog-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2075
+    'y': 370
+  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
+    type: background-worker
+    name: GerritEntityProvider Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gerrit/src/providers/GerritEntityProvider.ts
+      containerId: catalog-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2345
+    'y': 690
+  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gerrit/src/providers/types.ts
+      containerId: catalog-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2075
+    'y': 1330
+dependencies:
+  - from: blueprint/plugins/catalog-backend-module-gerrit/alpha
+    to: blueprint/plugins/app-module-user-settings/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/catalogmodulegerritentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-gerrit/catalogmodulegerritentityprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/catalogmodulegerritentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/catalogmodulegerritentityprovider
+    to: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/config-test
+    to: blueprint/plugins/catalog-backend-module-gerrit/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/config-test
+    to: blueprint/plugins/catalog-backend-module-gerrit/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/config
+    to: blueprint/plugins/catalog-backend-module-gerrit/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-gerrit/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
+    to: blueprint/plugins/catalog-backend-module-gerrit/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
+    to: blueprint/plugins/catalog-backend-module-gerrit/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
+    to: blueprint/plugins/catalog-backend-module-gerrit/types
+    type: direct-call
+    description: Calls module / service

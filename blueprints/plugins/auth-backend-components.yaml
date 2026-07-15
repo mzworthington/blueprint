@@ -1,0 +1,1086 @@
+entityRef: blueprint/plugins/auth-backend
+name: Auth-backend Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/auth-backend/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/config.d.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 6995
+    'y': 1650
+  - entityRef: blueprint/plugins/auth-backend/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/actions/index.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3795
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend/authplugin-test
+    type: background-worker
+    name: authPlugin.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/authPlugin.test.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1955
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend/authplugin
+    type: background-worker
+    name: authPlugin Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/authPlugin.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1955
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend/migrations-test
+    type: relational-database
+    name: migrations.test Database
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/migrations.test.ts
+      containerId: auth-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 2875
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/setupTests.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3335
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend/createwhoamiaction-test
+    type: background-worker
+    name: createWhoAmIAction.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/actions/createWhoAmIAction.test.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2415
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend/createwhoamiaction
+    type: background-worker
+    name: createWhoAmIAction Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/actions/createWhoAmIAction.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3295
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend/authdatabase
+    type: relational-database
+    name: AuthDatabase Database
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/database/AuthDatabase.ts
+      containerId: auth-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 1795
+    'y': 1970
+  - entityRef: blueprint/plugins/auth-backend/offlinesessiondatabase-test
+    type: relational-database
+    name: OfflineSessionDatabase.test Database
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/database/OfflineSessionDatabase.test.ts
+      containerId: auth-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 140
+    'y': 1650
+  - entityRef: blueprint/plugins/auth-backend/offlinesessiondatabase
+    type: relational-database
+    name: OfflineSessionDatabase Database
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/database/OfflineSessionDatabase.ts
+      containerId: auth-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 180
+    'y': 1970
+  - entityRef: blueprint/plugins/auth-backend/oidcdatabase-test
+    type: relational-database
+    name: OidcDatabase.test Database
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/database/OidcDatabase.test.ts
+      containerId: auth-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 910
+    'y': 1330
+  - entityRef: blueprint/plugins/auth-backend/oidcdatabase
+    type: relational-database
+    name: OidcDatabase Database
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/database/OidcDatabase.ts
+      containerId: auth-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 1300
+    'y': 1650
+  - entityRef: blueprint/plugins/auth-backend/userinfodatabase-test
+    type: relational-database
+    name: UserInfoDatabase.test Database
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/database/UserInfoDatabase.test.ts
+      containerId: auth-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 2360
+    'y': 1330
+  - entityRef: blueprint/plugins/auth-backend/userinfodatabase
+    type: relational-database
+    name: UserInfoDatabase Database
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/database/UserInfoDatabase.ts
+      containerId: auth-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 4220
+    'y': 1650
+  - entityRef: blueprint/plugins/auth-backend/databasekeystore-test
+    type: relational-database
+    name: DatabaseKeyStore.test Database
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/identity/DatabaseKeyStore.test.ts
+      containerId: auth-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 4245
+    'y': 1330
+  - entityRef: blueprint/plugins/auth-backend/databasekeystore
+    type: relational-database
+    name: DatabaseKeyStore Database
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/identity/DatabaseKeyStore.ts
+      containerId: auth-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 7455
+    'y': 1650
+  - entityRef: blueprint/plugins/auth-backend/firestorekeystore-test
+    type: background-worker
+    name: FirestoreKeyStore.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/identity/FirestoreKeyStore.test.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 8145
+    'y': 1330
+  - entityRef: blueprint/plugins/auth-backend/firestorekeystore
+    type: background-worker
+    name: FirestoreKeyStore Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/identity/FirestoreKeyStore.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 8415
+    'y': 1650
+  - entityRef: blueprint/plugins/auth-backend/issueusertoken
+    type: background-worker
+    name: issueUserToken Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/identity/issueUserToken.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 13050
+    'y': 1970
+  - entityRef: blueprint/plugins/auth-backend/keystores-test
+    type: background-worker
+    name: KeyStores.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/identity/KeyStores.test.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 6375
+    'y': 1010
+  - entityRef: blueprint/plugins/auth-backend/keystores
+    type: background-worker
+    name: KeyStores Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/identity/KeyStores.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 7685
+    'y': 1330
+  - entityRef: blueprint/plugins/auth-backend/memorykeystore
+    type: background-worker
+    name: MemoryKeyStore Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/identity/MemoryKeyStore.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 9115
+    'y': 1650
+  - entityRef: blueprint/plugins/auth-backend/statickeystore-test
+    type: background-worker
+    name: StaticKeyStore.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/identity/StaticKeyStore.test.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 9465
+    'y': 1330
+  - entityRef: blueprint/plugins/auth-backend/statickeystore
+    type: background-worker
+    name: StaticKeyStore Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/identity/StaticKeyStore.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 9735
+    'y': 1650
+  - entityRef: blueprint/plugins/auth-backend/statictokenissuer-test
+    type: background-worker
+    name: StaticTokenIssuer.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/identity/StaticTokenIssuer.test.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 10705
+    'y': 1010
+  - entityRef: blueprint/plugins/auth-backend/statictokenissuer
+    type: background-worker
+    name: StaticTokenIssuer Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/identity/StaticTokenIssuer.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 11325
+    'y': 1330
+  - entityRef: blueprint/plugins/auth-backend/tokenfactory-test
+    type: background-worker
+    name: TokenFactory.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/identity/TokenFactory.test.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 10165
+    'y': 1330
+  - entityRef: blueprint/plugins/auth-backend/tokenfactory
+    type: background-worker
+    name: TokenFactory Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/identity/TokenFactory.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 12500
+    'y': 1650
+  - entityRef: blueprint/plugins/auth-backend/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/identity/types.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 10180
+    'y': 1970
+  - entityRef: blueprint/plugins/auth-backend/refreshtoken-test
+    type: background-worker
+    name: refreshToken.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/lib/refreshToken.test.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 1650
+  - entityRef: blueprint/plugins/auth-backend/refreshtoken
+    type: background-worker
+    name: refreshToken Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/lib/refreshToken.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 640
+    'y': 1970
+  - entityRef: blueprint/plugins/auth-backend/router-test
+    type: rest-api
+    name: router.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/providers/router.test.ts
+      containerId: auth-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 8370
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend/router
+    type: relational-database
+    name: router Database
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/service/router.ts
+      containerId: auth-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 8330
+    'y': 690
+  - entityRef: blueprint/plugins/auth-backend/cimdclient-test
+    type: background-worker
+    name: CimdClient.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/service/CimdClient.test.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 4945
+    'y': 1330
+  - entityRef: blueprint/plugins/auth-backend/cimdclient
+    type: background-worker
+    name: CimdClient Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/service/CimdClient.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 5620
+    'y': 1650
+  - entityRef: blueprint/plugins/auth-backend/offlineaccessservice
+    type: background-worker
+    name: OfflineAccessService Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/service/OfflineAccessService.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2940
+    'y': 1650
+  - entityRef: blueprint/plugins/auth-backend/oidcerror
+    type: rest-api
+    name: OidcError REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/service/OidcError.ts
+      containerId: auth-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 2820
+    'y': 1330
+  - entityRef: blueprint/plugins/auth-backend/oidcrouter-test
+    type: rest-api
+    name: OidcRouter.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/service/OidcRouter.test.ts
+      containerId: auth-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 4595
+    'y': 690
+  - entityRef: blueprint/plugins/auth-backend/oidcrouter
+    type: rest-api
+    name: OidcRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/service/OidcRouter.ts
+      containerId: auth-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 3975
+    'y': 1010
+  - entityRef: blueprint/plugins/auth-backend/oidcservice-test
+    type: background-worker
+    name: OidcService.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/service/OidcService.test.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 5445
+    'y': 1010
+  - entityRef: blueprint/plugins/auth-backend/oidcservice
+    type: background-worker
+    name: OidcService Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/service/OidcService.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 5405
+    'y': 1330
+  - entityRef: blueprint/plugins/auth-backend/readtokenexpiration-test
+    type: background-worker
+    name: readTokenExpiration.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/service/readTokenExpiration.test.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 11905
+    'y': 1330
+  - entityRef: blueprint/plugins/auth-backend/readtokenexpiration
+    type: background-worker
+    name: readTokenExpiration Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/service/readTokenExpiration.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 12040
+    'y': 1650
+  - entityRef: blueprint/plugins/auth-backend/catalogidentityclient-test
+    type: background-worker
+    name: CatalogIdentityClient.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/lib/catalog/CatalogIdentityClient.test.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 6415
+    'y': 1330
+  - entityRef: blueprint/plugins/auth-backend/catalogidentityclient
+    type: background-worker
+    name: CatalogIdentityClient Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/lib/catalog/CatalogIdentityClient.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 6455
+    'y': 1650
+  - entityRef: blueprint/plugins/auth-backend/catalogauthresolvercontext-test
+    type: background-worker
+    name: CatalogAuthResolverContext.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend/src/lib/resolvers/CatalogAuthResolverContext.test.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 8860
+    'y': 1010
+  - entityRef: blueprint/plugins/auth-backend/catalogauthresolvercontext
+    type: background-worker
+    name: CatalogAuthResolverContext Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend/src/lib/resolvers/CatalogAuthResolverContext.ts
+      containerId: auth-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 8725
+    'y': 1330
+dependencies:
+  - from: blueprint/plugins/auth-backend/config-d
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/authplugin-test
+    to: blueprint/plugins/auth-backend/authplugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/authplugin-test
+    to: blueprint/plugins/search-backend-module-elasticsearch/auth
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/authplugin
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/authplugin
+    to: blueprint/plugins/home/actions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/authplugin
+    to: blueprint/plugins/auth-backend/router
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/authplugin
+    to: blueprint/plugins/auth-backend/offlineaccessservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/createwhoamiaction-test
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/createwhoamiaction-test
+    to: blueprint/plugins/catalog-node/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/createwhoamiaction-test
+    to: blueprint/plugins/auth-backend/createwhoamiaction
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/createwhoamiaction
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/createwhoamiaction
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/index
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/index
+    to: blueprint/plugins/auth-backend/createwhoamiaction
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/offlinesessiondatabase-test
+    to: blueprint/plugins/auth-backend/offlinesessiondatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/oidcdatabase-test
+    to: blueprint/plugins/auth-backend/authdatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/oidcdatabase-test
+    to: blueprint/plugins/auth-backend/oidcdatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/oidcdatabase
+    to: blueprint/plugins/auth-backend/authdatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/userinfodatabase-test
+    to: blueprint/plugins/auth-backend/userinfodatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/userinfodatabase-test
+    to: blueprint/plugins/auth-backend/authdatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/userinfodatabase
+    to: blueprint/plugins/auth-backend/authdatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/userinfodatabase
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/databasekeystore-test
+    to: blueprint/plugins/auth-backend/authdatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/databasekeystore-test
+    to: blueprint/plugins/auth-backend/databasekeystore
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/databasekeystore
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/firestorekeystore-test
+    to: blueprint/plugins/auth-backend/firestorekeystore
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/firestorekeystore-test
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/firestorekeystore
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/firestorekeystore
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/issueusertoken
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/issueusertoken
+    to: blueprint/plugins/auth-backend/tokenfactory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/keystores-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/keystores-test
+    to: blueprint/plugins/auth-backend/authdatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/keystores-test
+    to: blueprint/plugins/auth-backend/databasekeystore
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/keystores-test
+    to: blueprint/plugins/auth-backend/firestorekeystore
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/keystores-test
+    to: blueprint/plugins/auth-backend/keystores
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/keystores-test
+    to: blueprint/plugins/auth-backend/memorykeystore
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/keystores
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/keystores
+    to: blueprint/plugins/auth-backend/authdatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/keystores
+    to: blueprint/plugins/auth-backend/databasekeystore
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/keystores
+    to: blueprint/plugins/auth-backend/firestorekeystore
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/keystores
+    to: blueprint/plugins/auth-backend/memorykeystore
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/keystores
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/keystores
+    to: blueprint/plugins/auth-backend/statickeystore
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/memorykeystore
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/statickeystore-test
+    to: blueprint/plugins/auth-backend/statickeystore
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/statickeystore-test
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/statickeystore-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/statickeystore
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/statickeystore
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/statictokenissuer-test
+    to: blueprint/plugins/auth-backend/statictokenissuer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/statictokenissuer-test
+    to: blueprint/plugins/auth-backend/statickeystore
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/statictokenissuer
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/statictokenissuer
+    to: blueprint/plugins/auth-backend/statickeystore
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/statictokenissuer
+    to: blueprint/plugins/auth-backend/issueusertoken
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/tokenfactory-test
+    to: blueprint/plugins/auth-backend/memorykeystore
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/tokenfactory-test
+    to: blueprint/plugins/auth-backend/tokenfactory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/tokenfactory
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/tokenfactory
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/tokenfactory
+    to: blueprint/plugins/auth-backend/issueusertoken
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/refreshtoken-test
+    to: blueprint/plugins/auth-backend/refreshtoken
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/router-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/router-test
+    to: blueprint/plugins/auth-backend/router
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/auth-backend/catalogauthresolvercontext
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/auth-backend/userinfodatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/cimdclient-test
+    to: blueprint/plugins/auth-backend/cimdclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/cimdclient
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/offlineaccessservice
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/offlineaccessservice
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/offlineaccessservice
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/offlineaccessservice
+    to: blueprint/plugins/auth-backend/offlinesessiondatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/offlineaccessservice
+    to: blueprint/plugins/auth-backend/refreshtoken
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/offlineaccessservice
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcerror
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcrouter-test
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcrouter-test
+    to: blueprint/plugins/auth-backend/oidcrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcrouter-test
+    to: blueprint/plugins/auth-backend/userinfodatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/oidcrouter-test
+    to: blueprint/plugins/auth-backend/oidcdatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/oidcrouter-test
+    to: blueprint/plugins/auth-backend/authdatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/oidcrouter-test
+    to: blueprint/plugins/auth-backend/oidcservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcrouter-test
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcrouter-test
+    to: blueprint/plugins/auth-backend/offlineaccessservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcrouter-test
+    to: blueprint/plugins/auth-backend/cimdclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcrouter-test
+    to: blueprint/plugins/catalog-node/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcrouter-test
+    to: blueprint/plugins/auth-backend/cimdclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcrouter
+    to: blueprint/plugins/auth-backend/oidcservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcrouter
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcrouter
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcrouter
+    to: blueprint/plugins/auth-backend/userinfodatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/oidcrouter
+    to: blueprint/plugins/auth-backend/oidcdatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/oidcrouter
+    to: blueprint/plugins/auth-backend/offlineaccessservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcrouter
+    to: blueprint/plugins/auth-backend/oidcerror
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcservice-test
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcservice-test
+    to: blueprint/plugins/auth-backend/oidcservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcservice-test
+    to: blueprint/plugins/auth-backend/offlineaccessservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcservice-test
+    to: blueprint/plugins/auth-backend/authdatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/oidcservice-test
+    to: blueprint/plugins/auth-backend/oidcdatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/oidcservice-test
+    to: blueprint/plugins/auth-backend/userinfodatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/oidcservice-test
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcservice-test
+    to: blueprint/plugins/auth-backend/cimdclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcservice-test
+    to: blueprint/plugins/auth-backend/cimdclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcservice
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcservice
+    to: blueprint/plugins/auth-backend/userinfodatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/oidcservice
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcservice
+    to: blueprint/plugins/auth-backend/oidcdatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/oidcservice
+    to: blueprint/plugins/auth-backend/offlineaccessservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcservice
+    to: blueprint/plugins/auth-backend/cimdclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/readtokenexpiration-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/readtokenexpiration-test
+    to: blueprint/plugins/auth-backend/readtokenexpiration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/readtokenexpiration
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/readtokenexpiration
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/auth-backend/keystores
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/auth-backend/tokenfactory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/auth-backend/userinfodatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/auth-backend/authdatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/auth-backend/readtokenexpiration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/auth-backend/statictokenissuer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/auth-backend/statickeystore
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/auth-backend/oidcrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/auth-backend/oidcdatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/auth-backend/offlineaccessservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/catalogidentityclient-test
+    to: blueprint/plugins/catalog-node/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/catalogidentityclient-test
+    to: blueprint/plugins/auth-backend/catalogidentityclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/catalogidentityclient
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/catalogauthresolvercontext-test
+    to: blueprint/plugins/auth-backend/catalogauthresolvercontext
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/catalogauthresolvercontext-test
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/catalogauthresolvercontext-test
+    to: blueprint/plugins/catalog-node/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/catalogauthresolvercontext-test
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/catalogauthresolvercontext-test
+    to: blueprint/plugins/auth-backend/userinfodatabase
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/auth-backend/catalogauthresolvercontext
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/catalogauthresolvercontext
+    to: blueprint/plugins/auth-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/catalogauthresolvercontext
+    to: blueprint/plugins/auth-backend/catalogidentityclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/catalogauthresolvercontext
+    to: blueprint/plugins/auth-backend/userinfodatabase
+    type: read-write
+    description: Queries datastore records

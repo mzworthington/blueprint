@@ -1,0 +1,69 @@
+entityRef: blueprint/plugins/catalog-unprocessed-entities-common
+name: Catalog-unprocessed-entities-common Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/catalog-unprocessed-entities-common/index
+    type: rest-api
+    name: index REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/catalog-unprocessed-entities-common/src/api/index.ts
+      containerId: catalog-unprocessed-entities-common
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-unprocessed-entities-common/permissions
+    type: background-worker
+    name: permissions Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-unprocessed-entities-common/src/permissions.ts
+      containerId: catalog-unprocessed-entities-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-unprocessed-entities-common/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-unprocessed-entities-common/src/setupTests.ts
+      containerId: catalog-unprocessed-entities-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-unprocessed-entities-common/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-unprocessed-entities-common/src/types.ts
+      containerId: catalog-unprocessed-entities-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 370
+  - entityRef: blueprint/plugins/catalog-unprocessed-entities-common/api
+    type: rest-api
+    name: api REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/catalog-unprocessed-entities-common/src/api/api.ts
+      containerId: catalog-unprocessed-entities-common
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1520
+    'y': 50
+dependencies:
+  - from: blueprint/plugins/catalog-unprocessed-entities-common/api
+    to: blueprint/plugins/catalog-unprocessed-entities-common/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-unprocessed-entities-common/api
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service

@@ -1,0 +1,303 @@
+entityRef: blueprint/plugins/events-backend
+name: Events-backend Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/events-backend/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/config.d.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/http/validation/index.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/alpha.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 4280
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend/migrations-test
+    type: relational-database
+    name: migrations.test Database
+    isTest: true
+    properties:
+      filepath: plugins/events-backend/src/migrations.test.ts
+      containerId: events-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend/src/setupTests.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend/eventsplugin-test
+    type: background-worker
+    name: EventsPlugin.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend/src/service/EventsPlugin.test.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 4550
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend/eventsplugin
+    type: rest-api
+    name: EventsPlugin REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/EventsPlugin.ts
+      containerId: events-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 4415
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend/errors
+    type: background-worker
+    name: errors Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/http/errors.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2210
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend/httppostingresseventpublisher-test
+    type: rest-api
+    name: HttpPostIngressEventPublisher.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/events-backend/src/service/http/HttpPostIngressEventPublisher.test.ts
+      containerId: events-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend/httppostingresseventpublisher
+    type: rest-api
+    name: HttpPostIngressEventPublisher REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/http/HttpPostIngressEventPublisher.ts
+      containerId: events-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 600
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend/createeventbusrouter
+    type: rest-api
+    name: createEventBusRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/hub/createEventBusRouter.ts
+      containerId: events-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 2900
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend/databaseeventbusstore-test
+    type: relational-database
+    name: DatabaseEventBusStore.test Database
+    isTest: true
+    properties:
+      filepath: plugins/events-backend/src/service/hub/DatabaseEventBusStore.test.ts
+      containerId: events-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend/databaseeventbusstore
+    type: relational-database
+    name: DatabaseEventBusStore Database
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/hub/DatabaseEventBusStore.ts
+      containerId: events-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 2170
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend/memoryeventbusstore-test
+    type: background-worker
+    name: MemoryEventBusStore.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend/src/service/hub/MemoryEventBusStore.test.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3360
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend/memoryeventbusstore
+    type: background-worker
+    name: MemoryEventBusStore Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/hub/MemoryEventBusStore.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2820
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/hub/types.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2860
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend/httpapplicationjsonbodyparser
+    type: background-worker
+    name: HttpApplicationJsonBodyParser Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/http/body-parser/HttpApplicationJsonBodyParser.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1710
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend/requestvalidationcontextimpl-test
+    type: background-worker
+    name: RequestValidationContextImpl.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend/src/service/http/validation/RequestValidationContextImpl.test.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3820
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend/requestvalidationcontextimpl
+    type: background-worker
+    name: RequestValidationContextImpl Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/http/validation/RequestValidationContextImpl.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3820
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/events-backend/alpha
+    to: blueprint/plugins/events-backend/eventsplugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/eventsplugin-test
+    to: blueprint/plugins/events-backend/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/eventsplugin-test
+    to: blueprint/plugins/events-backend/eventsplugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/eventsplugin
+    to: blueprint/plugins/events-backend/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/httppostingresseventpublisher-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/httppostingresseventpublisher-test
+    to: blueprint/plugins/events-backend/httppostingresseventpublisher
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/httppostingresseventpublisher
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/httppostingresseventpublisher
+    to: blueprint/plugins/scaffolder/validation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/httppostingresseventpublisher
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/createeventbusrouter
+    to: blueprint/plugins/events-backend/memoryeventbusstore
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/createeventbusrouter
+    to: blueprint/plugins/events-backend/databaseeventbusstore
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/events-backend/createeventbusrouter
+    to: blueprint/plugins/events-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/databaseeventbusstore-test
+    to: blueprint/plugins/events-backend/databaseeventbusstore
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/events-backend/databaseeventbusstore
+    to: blueprint/plugins/events-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/databaseeventbusstore
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/databaseeventbusstore
+    to: blueprint/plugins/events-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/memoryeventbusstore-test
+    to: blueprint/plugins/events-backend/memoryeventbusstore
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/memoryeventbusstore
+    to: blueprint/plugins/events-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/memoryeventbusstore
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/httpapplicationjsonbodyparser
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/index
+    to: blueprint/plugins/events-backend/httpapplicationjsonbodyparser
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/requestvalidationcontextimpl-test
+    to: blueprint/plugins/events-backend/requestvalidationcontextimpl
+    type: direct-call
+    description: Calls module / service

@@ -1,0 +1,513 @@
+entityRef: blueprint/plugins/techdocs-react
+name: Techdocs-react Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/techdocs-react/addons
+    type: gateway-api
+    name: addons UI Component
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-react/src/addons.tsx
+      containerId: techdocs-react
+      technology: React Component
+      classification: ui-import
+    x: 410
+    'y': 1010
+  - entityRef: blueprint/plugins/techdocs-react/alpha
+    type: gateway-api
+    name: alpha UI Component
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-react/src/alpha.ts
+      containerId: techdocs-react
+      technology: React Component
+      classification: ui-import
+    x: 140
+    'y': 690
+  - entityRef: blueprint/plugins/techdocs-react/api
+    type: background-worker
+    name: api Service
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-react/src/api.ts
+      containerId: techdocs-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 870
+    'y': 1010
+  - entityRef: blueprint/plugins/techdocs-react/component-test
+    type: gateway-api
+    name: component.test UI Component
+    isTest: true
+    properties:
+      filepath: plugins/techdocs-react/src/component.test.tsx
+      containerId: techdocs-react
+      technology: React Component
+      classification: ui-import
+    x: 680
+    'y': 50
+  - entityRef: blueprint/plugins/techdocs-react/component
+    type: gateway-api
+    name: component UI Component
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-react/src/component.tsx
+      containerId: techdocs-react
+      technology: React Component
+      classification: ui-import
+    x: 680
+    'y': 370
+  - entityRef: blueprint/plugins/techdocs-react/context-test
+    type: gateway-api
+    name: context.test UI Component
+    isTest: true
+    properties:
+      filepath: plugins/techdocs-react/src/context.test.tsx
+      containerId: techdocs-react
+      technology: React Component
+      classification: ui-import
+    x: 1140
+    'y': 370
+  - entityRef: blueprint/plugins/techdocs-react/context
+    type: gateway-api
+    name: context UI Component
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-react/src/context.tsx
+      containerId: techdocs-react
+      technology: React Component
+      classification: ui-import
+    x: 1140
+    'y': 690
+  - entityRef: blueprint/plugins/techdocs-react/helpers
+    type: background-worker
+    name: helpers Service
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-react/src/helpers.ts
+      containerId: techdocs-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1410
+    'y': 1010
+  - entityRef: blueprint/plugins/techdocs-react/hooks-test
+    type: gateway-api
+    name: hooks.test UI Component
+    isTest: true
+    properties:
+      filepath: plugins/techdocs-react/src/hooks.test.ts
+      containerId: techdocs-react
+      technology: React Component
+      classification: ui-import
+    x: 1760
+    'y': 50
+  - entityRef: blueprint/plugins/techdocs-react/hooks
+    type: gateway-api
+    name: hooks UI Component
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-react/src/hooks.ts
+      containerId: techdocs-react
+      technology: React Component
+      classification: ui-import
+    x: 1760
+    'y': 370
+  - entityRef: blueprint/plugins/techdocs-react/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-react/src/index.ts
+      containerId: techdocs-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2220
+    'y': 50
+  - entityRef: blueprint/plugins/techdocs-react/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/techdocs-react/src/setupTests.ts
+      containerId: techdocs-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2680
+    'y': 50
+  - entityRef: blueprint/plugins/techdocs-react/types
+    type: gateway-api
+    name: types UI Component
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-react/src/types.ts
+      containerId: techdocs-react
+      technology: React Component
+      classification: ui-import
+    x: 680
+    'y': 1330
+dependencies:
+  - from: blueprint/plugins/techdocs-react/addons
+    to: blueprint/plugins/techdocs-react/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-react/alpha
+    to: blueprint/plugins/techdocs-react/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-react/alpha
+    to: blueprint/plugins/techdocs-react/addons
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-react/api
+    to: blueprint/plugins/techdocs-react/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-react/component-test
+    to: blueprint/plugins/techdocs-react/component
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-react/context-test
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-react/context-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-react/context-test
+    to: blueprint/plugins/techdocs-react/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-react/context-test
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-react/context-test
+    to: blueprint/plugins/techdocs-react/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-react/context-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-react/context
+    to: blueprint/plugins/techdocs-react/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-react/context
+    to: blueprint/plugins/techdocs-react/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-react/context
+    to: blueprint/plugins/techdocs-react/helpers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-react/helpers
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-react/hooks-test
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-react/hooks
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-react/requirepermission-test
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-react/requirepermission
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-react/cookieauthrefreshprovider
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/entitycontextmenu
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-graph/selectedrelationsfilter
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-import/importinfocard
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-import/previewcataloginfocomponent
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-import/steppreparecreatepullrequest
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entityautocompletepicker-test
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entitykindpicker
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entitypeekaheadpopover
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entityprocessingstatuspicker
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entityrelationcard
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/missingannotationemptystate
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/useallentitiescount-test
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/useallentitiescount
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/useownedentitiescount-test
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/useownedentitiescount
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/userlistpicker-test
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/userlistpicker
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/usestarredentitiescount-test
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/usestarredentitiescount
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/cluster
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/configmapsaccordions
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/cronjobsaccordions
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/customresources
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/daemonsetsaccordions
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/deploymentsaccordions
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/ingressesaccordions
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/jobsaccordions
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/kubernetesstructuredmetadatatabledrawer
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/persistentvolumesaccordions
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/persistentvolumeclaimsaccordions
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/podexecterminaldialog
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/secretsaccordions
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/servicesaccordions
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/statefulsetsaccordions
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications/notificationspage
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications/notificationssidebaritem
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications/usernotificationsettingscard
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchautocomplete-stories
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchautocomplete
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchautocompletedefaultoption-stories
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchbar-stories
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchbar-test
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchbar
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/hooks-test
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/hooks
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchfilter-autocomplete-test
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchfilter-autocomplete
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchfilter-stories
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchfilter-test
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchfilter
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchpagination-stories
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchpagination-test
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchpagination
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchresult-stories
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchresult-test
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchresult
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchresultgroup-stories
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchresultgroup-test
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchresultlist-stories
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchresultpager-test
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchresultpager
+    to: blueprint/plugins/techdocs-react/context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/configcontent
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/externaldependenciescontent
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/infocontent
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/scheduledtaskscontent
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/rollout
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/containercard
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/poddrawer
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/templatewizardpage
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/stepper
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/transformer
+    to: blueprint/plugins/techdocs-react/hooks
+    type: direct-call
+    description: Calls module / service
