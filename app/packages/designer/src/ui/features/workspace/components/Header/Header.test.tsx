@@ -1,13 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { Router } from 'wouter';
 import { memoryLocation } from 'wouter/memory-location';
 import { Header } from './Header';
 import { useBlueprintStore } from '../../../../../application/store/store';
-
-vi.mock('../Searchbar/Searchbar', () => ({
-  Searchbar: () => <div data-testid="searchbar-mock">Searchbar Mock</div>,
-}));
 
 function renderHeader() {
   const { hook } = memoryLocation({ path: '/workspace' });

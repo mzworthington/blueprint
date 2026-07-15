@@ -4,6 +4,7 @@ import {
   BrowserFileSystemAdapter,
   BrowserWorkspaceAdapter,
 } from '../../infrastructure/fileSystem/fileSync';
+import { createBrowserLayoutRegistry } from '../../infrastructure/layout/createBrowserLayoutRegistry';
 import { ConsoleLoggerAdapter } from '../../infrastructure/logging/logger';
 import { useBlueprintStore } from '../store/store';
 
@@ -15,6 +16,8 @@ interface AppContextProps {
 
 const AppContext = createContext<AppContextProps | null>(null);
 
+const browserLayoutRegistry = createBrowserLayoutRegistry();
+
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Wire up the infrastructure adapters to the Zustand store at launch
   useEffect(() => {
@@ -22,6 +25,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       fileSystemPort: BrowserFileSystemAdapter,
       workspacePort: BrowserWorkspaceAdapter,
       logger: ConsoleLoggerAdapter,
+      layoutRegistry: browserLayoutRegistry,
     });
   }, []);
 

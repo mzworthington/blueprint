@@ -4,9 +4,11 @@ import {
   type FileSystemPort,
   type WorkspacePort,
   type LoggerPort,
+  type LayoutRegistryPort,
   noopFileSystem,
   noopWorkspace,
   noopLogger,
+  noopLayoutRegistry,
 } from '../../../core';
 import { saveBaselineSchema } from '../../../infrastructure/db/db';
 import { loadWorkspaceFromDirectory } from './ioState/openWorkspace';
@@ -15,11 +17,13 @@ export interface IoState {
   fileSystemPort: FileSystemPort;
   workspacePort: WorkspacePort;
   logger: LoggerPort;
+  layoutRegistry: LayoutRegistryPort;
   setPorts: (
     ports: Partial<{
       fileSystemPort: FileSystemPort;
       workspacePort: WorkspacePort;
       logger: LoggerPort;
+      layoutRegistry: LayoutRegistryPort;
     }>
   ) => void;
 
@@ -35,6 +39,7 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
   fileSystemPort: noopFileSystem,
   workspacePort: noopWorkspace,
   logger: noopLogger,
+  layoutRegistry: noopLayoutRegistry,
   setPorts: ports => set((state: IoStateDeps) => ({ ...state, ...ports })),
 
   saveSchema: async () => {

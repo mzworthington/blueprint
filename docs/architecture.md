@@ -35,11 +35,13 @@ graph TD
     subgraph Ports [Outbound Ports]
         FSPort[FileSystemPort]
         LoggerPort[LoggerPort]
+        LayoutRegistry[LayoutRegistryPort]
     end
 
     subgraph Driven [Driven Infrastructure Adapters]
         FSAdapter[BrowserFileSystemAdapter]
         LogAdapter[ConsoleLoggerAdapter]
+        LayoutAdapters[Dagre / ELK / d3-hierarchy adapters]
     end
 
     Canvas --> Store
@@ -50,8 +52,10 @@ graph TD
     IoState --> DomainPath
     IoState --> FSPort
     IoState --> LoggerPort
+    DiagramState --> LayoutRegistry
     FSPort --> FSAdapter
     LoggerPort --> LogAdapter
+    LayoutRegistry --> LayoutAdapters
 ```
 
 ---
@@ -124,11 +128,14 @@ Shared by designer and CLI. TypeScript + Zod — no Protocol Buffers.
 
 - `FileSystemPort` / `WorkspacePort`: load and save schemas and directories.
 - `LoggerPort`: structured logging.
+- `LayoutRegistryPort` / `LayoutEnginePort`: client-side graph layout engines (dagre, ELK, d3-hierarchy).
 
 ### 3. Designer adapters & store (`app/packages/designer/src/`)
 
 - `infrastructure/fileSystem/` — browser FS Access adapters.
+- `infrastructure/layout/` — graph layout adapters + `createBrowserLayoutRegistry`.
 - `infrastructure/db/` — IndexedDB working copy / baseline diffs.
+- `application/layout/` — pure layout use-case (`computeClientLayout`) and grid policy.
 - `application/store/` — Zustand composition (`uiState`, `diagramState`, `ioState`).
 
 ### 4. TypeScript CLI (`app/packages/cli/src/`)

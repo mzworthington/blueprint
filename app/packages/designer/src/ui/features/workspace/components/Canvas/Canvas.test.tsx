@@ -152,7 +152,7 @@ describe('Canvas Component', () => {
     render(<Canvas />);
 
     expect(screen.getByText('System:')).toBeInTheDocument();
-    expect(screen.getByRole('combobox')).toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: 'Active system' })).toBeInTheDocument();
     expect(screen.getByText('System 1')).toBeInTheDocument();
     expect(screen.getByText('System 2')).toBeInTheDocument();
   });
@@ -176,7 +176,9 @@ describe('Canvas Component', () => {
 
     render(<Canvas />);
 
-    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'sys2.yaml' } });
+    fireEvent.change(screen.getByRole('combobox', { name: 'Active system' }), {
+      target: { value: 'sys2.yaml' },
+    });
 
     expect(mockSetLocation).toHaveBeenCalledWith('/workspace/s2');
   });

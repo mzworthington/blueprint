@@ -3,7 +3,6 @@ import { CheckCircle, AlertTriangle } from 'lucide-react';
 import { AppHeader } from '../../../../components/AppHeader';
 import { useBlueprintStore } from '../../../../../application/store/store';
 import { Breadcrumbs } from '../Breadcrumbs/Breadcrumbs';
-import { Searchbar } from '../Searchbar/Searchbar';
 
 export const Header: React.FC = () => {
   const { schema, validationResult } = useBlueprintStore();
@@ -28,9 +27,6 @@ export const Header: React.FC = () => {
             <span>Cycle Detected</span>
           </span>
         )}
-      </div>
-      <div className="ml-auto shrink-0">
-        <Searchbar />
       </div>
     </AppHeader>
   );

@@ -61,3 +61,42 @@ export const noopWorkspace: WorkspacePort = {
   hasPermission: async () => false,
   readDirectoryFiles: async () => [],
 };
+
+/** Engine ids selectable in the designer layout prototype. */
+export type LayoutEngineId = 'dagre' | 'elk' | 'd3-hierarchy';
+
+export type LayoutPosition = { x: number; y: number };
+
+export type LayoutNodeInput = {
+  id: string;
+  width: number;
+  height: number;
+};
+
+export type LayoutEdgeInput = {
+  id: string;
+  source: string;
+  target: string;
+};
+
+/**
+ * Driven outbound port for a single graph layout algorithm.
+ * Adapters wrap dagre / ELK / d3-hierarchy (or fakes in tests).
+ */
+export interface LayoutEnginePort {
+  computeLayout(
+    nodes: LayoutNodeInput[],
+    edges: LayoutEdgeInput[]
+  ): Promise<Map<string, LayoutPosition>>;
+}
+
+/**
+ * Registry of layout engines available to the application use-case.
+ */
+export interface LayoutRegistryPort {
+  get(engine: LayoutEngineId): LayoutEnginePort | undefined;
+}
+
+export const noopLayoutRegistry: LayoutRegistryPort = {
+  get: () => undefined,
+};

@@ -9,8 +9,6 @@ export interface UseSearchbarReturn {
   setSearchQuery: (q: string) => void;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
-  isExpanded: boolean;
-  setIsExpanded: (expanded: boolean) => void;
   activeIndex: number;
   // Refs
   containerRef: React.RefObject<HTMLDivElement | null>;
@@ -21,7 +19,6 @@ export interface UseSearchbarReturn {
   // Handlers
   handleSelectNode: (nodeId: string) => void;
   handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-  handleContainerClick: () => void;
 }
 
 export function useSearchbar(): UseSearchbarReturn {
@@ -30,7 +27,6 @@ export function useSearchbar(): UseSearchbarReturn {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -41,7 +37,6 @@ export function useSearchbar(): UseSearchbarReturn {
     const handleClickOutside = (e: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
         setIsOpen(false);
-        setIsExpanded(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -50,7 +45,6 @@ export function useSearchbar(): UseSearchbarReturn {
 
   useKeyboardNavigation({
     onSearchOpen: () => {
-      setIsExpanded(true);
       setTimeout(() => inputRef.current?.focus(), 50);
       setIsOpen(true);
     },
@@ -80,7 +74,6 @@ export function useSearchbar(): UseSearchbarReturn {
     selectNode(nodeId);
     setSearchQuery('');
     setIsOpen(false);
-    setIsExpanded(false);
 
     try {
       const rfNode = reactFlowInstance.getNode(nodeId);
@@ -97,7 +90,6 @@ export function useSearchbar(): UseSearchbarReturn {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Escape') {
       setIsOpen(false);
-      setIsExpanded(false);
       inputRef.current?.blur();
     } else if (e.key === 'ArrowDown') {
       e.preventDefault();
@@ -113,13 +105,6 @@ export function useSearchbar(): UseSearchbarReturn {
     }
   };
 
-  const handleContainerClick = () => {
-    if (!isExpanded) {
-      setIsExpanded(true);
-      setTimeout(() => inputRef.current?.focus(), 50);
-    }
-  };
-
   const isMac =
     typeof navigator !== 'undefined' && navigator.platform.toUpperCase().indexOf('MAC') >= 0;
   const kbdText = isMac ? '⌘K' : 'Ctrl+K';
@@ -129,8 +114,6 @@ export function useSearchbar(): UseSearchbarReturn {
     setSearchQuery,
     isOpen,
     setIsOpen,
-    isExpanded,
-    setIsExpanded,
     activeIndex,
     containerRef,
     inputRef,
@@ -138,6 +121,5 @@ export function useSearchbar(): UseSearchbarReturn {
     kbdText,
     handleSelectNode,
     handleKeyDown,
-    handleContainerClick,
   };
 }

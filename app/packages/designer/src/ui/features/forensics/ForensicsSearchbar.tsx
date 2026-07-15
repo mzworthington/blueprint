@@ -7,7 +7,7 @@ type Props = {
 };
 
 /**
- * Same placement/look as the workspace Searchbar; filters the forensics ranking list.
+ * Filters the forensics ranking list alongside scope/signal controls.
  */
 export const ForensicsSearchbar: React.FC<Props> = ({ value, onChange }) => {
   const inputRef = useRef<HTMLInputElement>(null);

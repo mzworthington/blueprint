@@ -1,3 +1,5 @@
+import type { LayoutEngineId } from '../../../core';
+
 export interface ToastNotification {
   message: string;
   type: 'success' | 'info' | 'error';
@@ -8,6 +10,11 @@ export interface UiState {
   showTests: boolean;
   /** When true (and a node is selected), overlay temporal-coupling edges on the canvas. */
   showCoupling: boolean;
+  /**
+   * Selected client layout engine, or `null` until the user picks one.
+   * Applying an engine recomputes positions and writes them into schema / YAML.
+   */
+  layoutEngine: LayoutEngineId | null;
   leftCollapsed: boolean;
   rightCollapsed: boolean;
   showDesignSystem: boolean;
@@ -20,6 +27,7 @@ export interface UiState {
   setShowDesignSystem: (show: boolean) => void;
   setIsDiffOpen: (open: boolean) => void;
   setNotification: (notification: ToastNotification | null) => void;
+  setLayoutEngine: (engine: LayoutEngineId | null) => void;
 }
 
 export const createUiState = (
@@ -27,6 +35,7 @@ export const createUiState = (
 ): UiState => ({
   showTests: false,
   showCoupling: false,
+  layoutEngine: null,
   leftCollapsed: true,
   rightCollapsed: true,
   showDesignSystem: false,
@@ -39,4 +48,5 @@ export const createUiState = (
   setShowDesignSystem: show => set({ showDesignSystem: show }),
   setIsDiffOpen: open => set({ isDiffOpen: open }),
   setNotification: notification => set({ notification }),
+  setLayoutEngine: engine => set({ layoutEngine: engine }),
 });

@@ -65,7 +65,7 @@ describe('ForensicsPage', () => {
     expect(screen.queryByText('OK')).not.toBeInTheDocument();
   });
 
-  it('filters the ranking list from the header search', () => {
+  it('filters the ranking list from the page search', () => {
     const { hook } = memoryLocation({ path: '/forensics' });
     render(
       <Router hook={hook}>

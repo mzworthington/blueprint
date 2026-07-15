@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useCallback } from 'react';
+import React, { useMemo, useEffect, useCallback, useRef } from 'react';
 import {
   ReactFlow,
   Background,
@@ -12,6 +12,9 @@ import { useLocation } from 'wouter';
 import { useBlueprintStore } from '../../../../../application/store/store';
 import { BlueprintNode } from './BlueprintNode';
 import { ActionControls } from '../ActionControls/ActionControls';
+import { LayoutEngineControls } from '../LayoutEngineControls/LayoutEngineControls';
+import { Searchbar } from '../Searchbar/Searchbar';
+import { SystemSelector } from '../SystemSelector/SystemSelector';
 import { AlertTriangle, CheckCircle2, Info, AlertCircle, X, ZoomOut } from 'lucide-react';
 import { getSchemaEntityRef } from '@blueprint/core';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
@@ -41,9 +44,13 @@ export const Canvas: React.FC = () => {
     isWorkspaceOpen,
     notification,
     setNotification,
+    layoutEngine,
+    applyClientLayout,
   } = useBlueprintStore();
 
   const { fitView } = useReactFlow();
+  const fitViewRef = useRef(fitView);
+  fitViewRef.current = fitView;
 
   const nodeTypes = useMemo(
     () => ({
@@ -74,10 +81,21 @@ export const Canvas: React.FC = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      fitView({ duration: 400 });
+      fitViewRef.current({ duration: 400 });
     }, 50);
     return () => clearTimeout(timer);
-  }, [currentFilePath, fitView]);
+  }, [currentFilePath]);
+
+  // Apply layout engine after diagram switches or mode changes (session positions).
+  useEffect(() => {
+    if (!layoutEngine) return;
+    const controller = new AbortController();
+    void applyClientLayout(controller.signal).then(() => {
+      if (controller.signal.aborted) return;
+      fitViewRef.current({ duration: 400 });
+    });
+    return () => controller.abort();
+  }, [currentFilePath, layoutEngine, applyClientLayout]);
 
   useEffect(() => {
     if (notification) {
@@ -159,33 +177,9 @@ export const Canvas: React.FC = () => {
           position="bottom-right"
           className="m-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-slate-950/90 border border-slate-900 px-3.5 py-2 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md"
         >
-          {loadedSystems && loadedSystems.length > 0 && (
-            <div className="flex items-center gap-2 bg-slate-900/40 border border-slate-850 px-2.5 py-1.5 rounded-lg text-xs shrink-0 select-none">
-              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500 hidden sm:inline">
-                System:
-              </span>
-              <select
-                value={currentFilePath}
-                onChange={e => {
-                  const targetSys = loadedSystems.find(s => s.path === e.target.value);
-                  if (targetSys) {
-                    const ref = getSchemaEntityRef(
-                      targetSys.schema,
-                      isWorkspaceOpen ? workspaceName : undefined
-                    );
-                    setLocation(`/workspace/${ref}`);
-                  }
-                }}
-                className="bg-slate-950 border border-slate-850 text-slate-200 hover:text-slate-100 hover:border-slate-700 px-2 py-0.5 rounded-md text-xs font-semibold focus:outline-none focus:border-brand-500 cursor-pointer transition duration-200 max-w-[130px] truncate"
-              >
-                {loadedSystems.map(sys => (
-                  <option key={sys.path} value={sys.path}>
-                    {sys.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
+          <Searchbar />
+          <SystemSelector />
+          <LayoutEngineControls />
           <ActionControls />
         </Panel>
 

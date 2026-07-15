@@ -187,11 +187,7 @@ export const ForensicsPage: React.FC = () => {
             ? `Worst offenders · lookback ${lookback}d`
             : 'Worst offenders across loaded blueprints'
         }
-      >
-        <div className="ml-auto shrink-0">
-          <ForensicsSearchbar value={searchQuery} onChange={setSearchQuery} />
-        </div>
-      </AppHeader>
+      />
 
       <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
         <div className="bg-[#061125]/40 border border-[#00f0ff]/10 rounded-2xl p-6 md:p-8 backdrop-blur-sm">
@@ -229,9 +225,12 @@ export const ForensicsPage: React.FC = () => {
                 { id: 'silos', label: 'Silos' },
               ]}
             />
-            <span className="ml-auto font-mono text-[10px] uppercase tracking-wider text-slate-500">
-              {offenders.length} ranked
-            </span>
+            <div className="w-full sm:w-auto sm:ml-auto flex items-center gap-3">
+              <ForensicsSearchbar value={searchQuery} onChange={setSearchQuery} />
+              <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 whitespace-nowrap">
+                {offenders.length} ranked
+              </span>
+            </div>
           </div>
 
           {offenders.length === 0 ? (

@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useBlueprintStore } from '../store';
 import type { NodeType } from '@blueprint/core';
+import { createBrowserLayoutRegistry } from '../../../infrastructure/layout/createBrowserLayoutRegistry';
 
 describe('diagramState Actions & State Management', () => {
   beforeEach(() => {
@@ -140,6 +141,33 @@ describe('diagramState Actions & State Management', () => {
 
     expect(state.schema.nodes.find(n => n.entityRef === 'test-project/app-test')?.isTest).toBe(
       true
+    );
+  });
+
+  it('should write layout engine positions into schema and YAML', async () => {
+    useBlueprintStore.getState().setPorts({
+      layoutRegistry: createBrowserLayoutRegistry(),
+    });
+
+    const store = useBlueprintStore.getState();
+    store.setLayoutEngine('dagre');
+    await store.applyClientLayout();
+
+    const updated = useBlueprintStore.getState();
+    const nodeA = updated.schema.nodes.find(
+      n => n.entityRef.endsWith('/nodeA') || n.entityRef === 'nodeA'
+    );
+    const nodeB = updated.schema.nodes.find(
+      n => n.entityRef.endsWith('/nodeB') || n.entityRef === 'nodeB'
+    );
+
+    expect(nodeA).toBeDefined();
+    expect(nodeB).toBeDefined();
+    expect(nodeA!.y).toBeLessThan(nodeB!.y!);
+    expect(updated.yamlCode).toMatch(/x:\s*\d+/);
+    expect(updated.yamlCode).toMatch(/['"]?y['"]?:\s*\d+/);
+    expect(updated.nodes.find(n => n.id.includes('nodeA'))?.position.y).toBeLessThan(
+      updated.nodes.find(n => n.id.includes('nodeB'))?.position.y ?? Infinity
     );
   });
 });

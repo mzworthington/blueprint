@@ -28,6 +28,7 @@ import {
   updateDependencyMutation,
   deleteDependencyMutation,
 } from './diagramState/edgeMutations';
+import { computeClientLayout } from '../../layout/computeClientLayout';
 
 export interface DiagramState {
   schema: SystemSchema;
@@ -60,6 +61,11 @@ export interface DiagramState {
   deleteDependency: (from: string, to: string) => void;
   selectSystem: (path: string) => void;
   syncExternalContainers: () => void;
+  /**
+   * Apply the selected layout engine and sync positions into schema / YAML.
+   * No-ops when no engine is selected.
+   */
+  applyClientLayout: (signal?: AbortSignal) => Promise<void>;
 }
 
 const initial = createDiagramInitialState();
@@ -192,5 +198,23 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
 
   syncExternalContainers: () => {
     syncExternalContainersAction(set, get);
+  },
+
+  applyClientLayout: async (signal?: AbortSignal) => {
+    const { layoutEngine, layoutRegistry, nodes, edges, schema } = get();
+    if (!layoutEngine || !schema?.nodes || !nodes) return;
+    if (signal?.aborted) return;
+
+    const positions = await computeClientLayout(layoutEngine, nodes, edges, layoutRegistry);
+    if (signal?.aborted) return;
+    const nextNodes = nodes.map(n => {
+      const pos = positions.get(n.id);
+      return pos ? { ...n, position: pos } : n;
+    });
+    const changed = nextNodes.some(
+      (n, i) => n.position.x !== nodes[i]?.position.x || n.position.y !== nodes[i]?.position.y
+    );
+    if (!changed) return;
+    applyStateUpdates(set, get, nextNodes, edges);
   },
 });
