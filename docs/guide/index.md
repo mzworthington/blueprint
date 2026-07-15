@@ -21,7 +21,7 @@ Use this guide if you want to understand the product, not just the internals.
 
 ## Guide chapters
 
-- [Getting started](./getting-started.md) — install, run designer & CLI
+- [Getting started](./getting-started.md) — install the CLI, scan a repo, open the app
 - [Canvas & workspace](./canvas.md) — panels, selection, zoom, sync
 - [CLI analysis](./cli.md) — scanners, flags, outputs
 - [Git forensics](./forensics.md) — metrics, coupling overlay, lookback

@@ -10,9 +10,10 @@ The TypeScript CLI (`@blueprint/cli`) scans source, discovers systems, extracts 
 2. **Headless** — flags or non-TTY / CI; suitable for automation
 
 ```bash
-cd app
-pnpm dev:cli --headless --parser=ts-morph --glob="**/*.{ts,tsx}" --output="blueprints"
+blueprint --headless --parser=ts-morph --glob="**/*.{ts,tsx}" --output="blueprints"
 ```
+
+Install the release binary first: [Getting started](./getting-started.md).
 
 ## Useful flags
 

@@ -51,12 +51,6 @@ export const DocsHome: React.FC = () => {
                 Open the app
               </Link>
               <Link
-                href="/setup"
-                className="rounded-xl border border-white/10 px-4 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/5 transition-colors"
-              >
-                Setup
-              </Link>
-              <Link
                 href="/design-system"
                 className="rounded-xl border border-white/10 px-4 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/5 transition-colors"
               >
