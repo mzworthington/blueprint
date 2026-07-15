@@ -175,7 +175,7 @@ export const Canvas: React.FC = () => {
 
         <Panel
           position="bottom-right"
-          className="m-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-slate-950/90 border border-slate-900 px-3.5 py-2 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md"
+          className="m-4 mb-[max(1rem,env(safe-area-inset-bottom,0px))] flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-slate-950/90 border border-slate-900 px-3.5 py-2 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md"
         >
           <Searchbar />
           <SystemSelector />

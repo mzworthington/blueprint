@@ -88,7 +88,7 @@ export const DesignSystemShowcase: React.FC = () => {
   const [sandboxStatus, setSandboxStatus] = useState<'healthy' | 'warning' | 'error'>('healthy');
 
   return (
-    <div className="fixed inset-0 z-[100] flex flex-col bg-[#040914]/98 blueprint-grid text-slate-100 overflow-y-auto animate-fade-in">
+    <div className="fixed inset-0 z-[100] flex flex-col h-dvh max-h-dvh bg-[#040914]/98 blueprint-grid text-slate-100 overflow-y-auto animate-fade-in pb-safe">
       <AppHeader
         sticky
         badge="DESIGN SYSTEM"

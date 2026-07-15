@@ -35,9 +35,20 @@ body,
 #root {
   margin: 0;
   padding: 0;
-  width: 100vw;
+  width: 100%;
+  /* 100vh ignores Chrome Android’s bottom URL bar; dvh tracks the visible area. */
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
+}
+
+/* Keep fixed/floating chrome clear of browser UI and home indicators. */
+.pb-safe {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+}
+
+.bottom-safe {
+  bottom: max(1rem, env(safe-area-inset-bottom, 0px));
 }
 
 /* Glassmorphism panel styles */

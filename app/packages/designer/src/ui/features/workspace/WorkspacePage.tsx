@@ -24,7 +24,7 @@ export const WorkspacePage: React.FC = () => {
 
   return (
     <ReactFlowProvider>
-      <div className="flex flex-col h-screen w-screen bg-slate-950 overflow-hidden text-slate-100 selection:bg-brand-600/30">
+      <div className="flex flex-col h-dvh w-full bg-slate-950 overflow-hidden text-slate-100 selection:bg-brand-600/30">
         <Header />
         <div className="flex-1 flex overflow-hidden relative">
           <CodeViewer />

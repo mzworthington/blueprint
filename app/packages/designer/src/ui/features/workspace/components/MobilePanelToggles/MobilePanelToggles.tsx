@@ -17,7 +17,7 @@ export const MobilePanelToggles: React.FC = () => {
 
   return (
     <div
-      className="sm:hidden absolute bottom-4 left-4 z-50 flex items-center gap-2"
+      className="sm:hidden absolute bottom-safe left-4 z-50 flex items-center gap-2"
       role="toolbar"
       aria-label="Open side panels"
     >

@@ -12,7 +12,7 @@ export const DocsShell: React.FC<Props> = ({ children, title }) => {
   const [location] = useLocation();
 
   return (
-    <div className="h-screen w-screen overflow-y-auto blueprint-grid text-slate-100">
+    <div className="h-dvh w-full overflow-y-auto blueprint-grid text-slate-100 pb-safe">
       <AppHeader sticky badge="DOCS" subtitle="Product guide and reference">
         <nav className="hidden lg:flex items-center gap-1 min-w-0 overflow-x-auto border-l border-[#00f0ff]/15 pl-4">
           {DOCS_NAV.map(item => {

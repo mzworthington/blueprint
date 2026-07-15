@@ -178,7 +178,7 @@ export const ForensicsPage: React.FC = () => {
   };
 
   return (
-    <div className="h-screen w-screen overflow-y-auto blueprint-grid text-slate-100">
+    <div className="h-dvh w-full overflow-y-auto blueprint-grid text-slate-100 pb-safe">
       <AppHeader
         sticky
         badge="FORENSICS"
