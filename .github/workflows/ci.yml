@@ -101,11 +101,16 @@ jobs:
         run: pnpm build
         working-directory: app
 
+      - name: Assemble GitHub Pages Site
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: pnpm build:site
+        working-directory: app
+
       - name: Upload Pages Artifact
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: actions/upload-pages-artifact@v5
         with:
-          path: './app/packages/designer/dist'
+          path: './app/site'
 
   deploy:
     needs: build-and-test

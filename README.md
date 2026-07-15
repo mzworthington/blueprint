@@ -72,6 +72,17 @@ pnpm test:cli
 
 ## Deep-dive documentation
 
+Product guide and reference live as Markdown under [`docs/`](./docs/) (same files locally, in git, and on the site):
+
+- **[Product guide](./docs/guide/index.md)** — overview, canvas, CLI, forensics
 - **[E2E Journeys & Interface Tour](./docs/journeys.md)**
 - **[System Architecture & Security](./docs/architecture.md)**
 - **[Setup & Local Development](./docs/setup.md)**
+
+```bash
+cd app
+pnpm dev:docs      # VitePress local preview
+pnpm build:site    # docs + designer → app/site (GitHub Pages layout)
+```
+
+On GitHub Pages: designer at `/`, documentation at `/docs/` (product guide under `/docs/guide/`).

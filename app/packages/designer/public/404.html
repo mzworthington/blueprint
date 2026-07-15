@@ -1,23 +1,139 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Blueprint SPA Fallback</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: #040914;
+        color: #f3f4f6;
+        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      body {
+        background-image:
+          radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 240, 255, 0.08), transparent),
+          url('/assets/grid.svg');
+        background-repeat: no-repeat, repeat;
+        background-size:
+          100% 100%,
+          auto;
+      }
+      .wrap {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+      }
+      .panel {
+        max-width: 28rem;
+        width: 100%;
+        padding: 1.5rem 1.75rem;
+        border-radius: 14px;
+        background: rgba(6, 17, 37, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(0, 240, 255, 0.15);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        margin-bottom: 1rem;
+      }
+      .brand img {
+        width: 1.75rem;
+        height: 1.75rem;
+        border-radius: 0.35rem;
+      }
+      .eyebrow {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #00f0ff;
+        margin: 0;
+      }
+      h1 {
+        margin: 0 0 0.5rem;
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+      p {
+        margin: 0 0 1.25rem;
+        color: #94a3b8;
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+      a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.5rem 0.9rem;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #00f0ff;
+        background: rgba(0, 240, 255, 0.12);
+        border: 1px solid rgba(0, 240, 255, 0.3);
+        box-shadow: 0 0 16px rgba(0, 240, 255, 0.12);
+      }
+      a:hover {
+        background: rgba(0, 240, 255, 0.22);
+        border-color: rgba(0, 240, 255, 0.5);
+        color: #fff;
+      }
+    </style>
     <script type="text/javascript">
       // Single Page Apps for GitHub Pages
       // MIT License
       // https://github.com/rafgraph/spa-github-pages
-      
-      var l = window.location;
-      l.replace(
-        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-        '/?/' +
-        l.pathname.slice(1).replace(/&/g, '~and~') +
-        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-        l.hash
-      );
+      //
+      // Only rewrite missing *app* routes into the SPA.
+      // Docs under /docs/ are static VitePress HTML — leave their 404s alone.
+      (function () {
+        var path = window.location.pathname || '';
+        if (path === '/docs' || path.indexOf('/docs/') === 0) {
+          document.title = 'Not Found · Blueprint';
+          document.addEventListener('DOMContentLoaded', function () {
+            document.body.innerHTML =
+              '<div class="wrap"><div class="panel">' +
+              '<div class="brand"><img src="/favicon.svg" alt="Blueprint" /><p class="eyebrow">Blueprint docs</p></div>' +
+              '<h1>Page not found</h1>' +
+              '<p>That documentation URL is missing. Head back to the guide.</p>' +
+              '<a href="/docs/">Back to docs</a>' +
+              '</div></div>';
+          });
+          return;
+        }
+        var l = window.location;
+        l.replace(
+          l.protocol +
+            '//' +
+            l.hostname +
+            (l.port ? ':' + l.port : '') +
+            '/?/' +
+            l.pathname.slice(1).replace(/&/g, '~and~') +
+            (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+            l.hash
+        );
+      })();
     </script>
   </head>
-  <body>
-  </body>
+  <body></body>
 </html>

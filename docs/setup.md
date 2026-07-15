@@ -2,6 +2,8 @@
 
 This page covers setting up your local development environment, package installation, running the development server, compiling the app, and quality control commands.
 
+For a product-oriented walkthrough, see the [Product guide](./guide/).
+
 ---
 
 ## Environment & Tooling Setup
@@ -40,10 +42,22 @@ pnpm run prepare
 pnpm dev
 ```
 
+Documentation site (VitePress, Markdown under `docs/`):
+
+```bash
+pnpm dev:docs
+```
+
 ### 3. Build Production Artifacts
 
 ```bash
 pnpm build
+```
+
+Combined GitHub Pages artifact (designer at `/` + docs at `/docs/`):
+
+```bash
+pnpm build:site
 ```
 
 ---
