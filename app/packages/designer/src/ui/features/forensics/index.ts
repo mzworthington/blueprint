@@ -1,0 +1,1 @@
+export { ForensicsPage } from './ForensicsPage';

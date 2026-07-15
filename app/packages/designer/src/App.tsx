@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Route, Router, Switch, useLocation } from 'wouter';
 import { WorkspacePage } from './ui/features/workspace';
 import { DesignSystemPage } from './ui/features/designSystem';
+import { ForensicsPage } from './ui/features/forensics';
 import { DocsHome, DocsPage } from './ui/features/docs';
 
 /** Vite BASE_URL always has a trailing slash; wouter wants none. */
@@ -20,6 +21,7 @@ function App() {
     <Router base={routerBase}>
       <Switch>
         <Route path="/design-system" component={DesignSystemPage} />
+        <Route path="/forensics" component={ForensicsPage} />
         <Route path="/workspace" component={WorkspacePage} />
         <Route path="/workspace/*" component={WorkspacePage} />
         {/* Legacy GitHub Pages layout: /app → workspace */}

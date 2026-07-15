@@ -93,22 +93,6 @@ export const DesignSystemShowcase: React.FC = () => {
         sticky
         badge="DESIGN SYSTEM"
         subtitle="System guidelines, vector assets, and glassmorphic user interface tokens."
-        trailing={
-          <>
-            <Link
-              href="/"
-              className="hidden sm:inline text-xs font-mono uppercase tracking-wider text-slate-400 hover:text-[#00f0ff] transition-colors px-2"
-            >
-              Docs
-            </Link>
-            <Link
-              href="/workspace"
-              className="px-4 py-2 border border-[#00f0ff]/40 text-[#00f0ff] hover:text-white hover:bg-[#00f0ff]/10 hover:border-[#00f0ff] rounded-lg text-sm font-semibold transition"
-            >
-              Open app
-            </Link>
-          </>
-        }
       />
 
       <div className="max-w-6xl w-full mx-auto px-4 md:px-8 py-8 flex-1 flex flex-col md:flex-row md:items-start gap-8">

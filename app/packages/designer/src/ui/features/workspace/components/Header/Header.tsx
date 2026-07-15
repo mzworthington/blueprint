@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'wouter';
 import { CheckCircle, AlertTriangle } from 'lucide-react';
 import { AppHeader } from '../../../../components/AppHeader';
 import { useBlueprintStore } from '../../../../../application/store/store';
@@ -10,26 +9,7 @@ export const Header: React.FC = () => {
   const { schema, validationResult } = useBlueprintStore();
 
   return (
-    <AppHeader
-      badge="WORKSPACE"
-      trailing={
-        <>
-          <Link
-            href="/design-system"
-            className="hidden sm:inline text-xs font-mono uppercase tracking-wider text-slate-400 hover:text-[#00f0ff] transition-colors px-2"
-          >
-            Design system
-          </Link>
-          <Link
-            href="/"
-            className="hidden sm:inline text-xs font-mono uppercase tracking-wider text-slate-400 hover:text-[#00f0ff] transition-colors px-2"
-          >
-            Docs
-          </Link>
-          <Searchbar />
-        </>
-      }
-    >
+    <AppHeader badge="WORKSPACE">
       <div className="min-w-0 hidden lg:block border-l border-[#00f0ff]/15 pl-4">
         <Breadcrumbs />
       </div>
@@ -48,6 +28,9 @@ export const Header: React.FC = () => {
             <span>Cycle Detected</span>
           </span>
         )}
+      </div>
+      <div className="ml-auto shrink-0">
+        <Searchbar />
       </div>
     </AppHeader>
   );

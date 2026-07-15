@@ -39,6 +39,8 @@ forensics:
 
 ## In the designer
 
+Open **`/forensics`** (header: Forensics) for a ranked “worst offenders” list across loaded blueprints — components or containers, filterable by hotspots/silos. Click a row to open that node on the canvas.
+
 Select an enriched node → **Git forensics** in the property panel shows metrics with helper text and a **lookback** value (e.g. `90d`).
 
 Concern badges on the canvas:

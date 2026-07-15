@@ -13,27 +13,7 @@ export const DocsShell: React.FC<Props> = ({ children, title }) => {
 
   return (
     <div className="h-screen w-screen overflow-y-auto blueprint-grid text-slate-100">
-      <AppHeader
-        sticky
-        badge="DOCS"
-        subtitle="Product guide and reference"
-        trailing={
-          <>
-            <Link
-              href="/design-system"
-              className="hidden sm:inline text-xs font-mono uppercase tracking-wider text-slate-400 hover:text-[#00f0ff] transition-colors px-2"
-            >
-              Design system
-            </Link>
-            <Link
-              href="/workspace"
-              className="px-4 py-2 border border-[#00f0ff]/40 text-[#00f0ff] hover:text-white hover:bg-[#00f0ff]/10 hover:border-[#00f0ff] rounded-lg text-sm font-semibold transition"
-            >
-              Open app
-            </Link>
-          </>
-        }
-      >
+      <AppHeader sticky badge="DOCS" subtitle="Product guide and reference">
         <nav className="hidden lg:flex items-center gap-1 min-w-0 overflow-x-auto border-l border-[#00f0ff]/15 pl-4">
           {DOCS_NAV.map(item => {
             const active =
