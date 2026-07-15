@@ -89,7 +89,10 @@ Files are included only if they pass **all** of:
 4. Optional config / CLI `--ignore`
 5. Optional config `include` allow-list
 
-Test paths stay in the model and are tagged `isTest` (designer can hide them).
+Test paths stay in the model and are tagged `isTest` (designer can hide them). Detection covers
+JS/TS (`*.test.ts`, `__tests__`), .NET (`*.UnitTests`, `FooTests.cs`), Go, Java, and Python
+conventions. Pure test projects are also tagged at the **container** level so they hide with
+“Show test components” off.
 
 ### Type hydration
 

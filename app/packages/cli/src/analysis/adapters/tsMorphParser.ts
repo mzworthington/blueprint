@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import type { CodebaseParserPort } from '../domain/ports.ts';
 import type { ParsedSourceFile } from '../domain/types.ts';
 import type { AnalysisOptions } from '../domain/analysisOptions.ts';
-import { isTestSourcePath } from './gitignoreFilter.ts';
+import { isTestSourcePath } from '../domain/testPath.ts';
 import { createSourcePathFilter } from './sourcePathFilter.ts';
 import { throwIfAborted } from '../domain/cancellation.ts';
 

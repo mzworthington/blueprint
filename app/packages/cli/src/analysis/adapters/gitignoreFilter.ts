@@ -42,16 +42,3 @@ export function isIgnoredByGitignore(
   if (!normalized || normalized === '.') return false;
   return ig.ignores(normalized);
 }
-
-/**
- * Marks test sources for the designer's "show test components" flag.
- * Test folders stay in the scan; they are tagged, not excluded.
- */
-export function isTestSourcePath(relativePath: string): boolean {
-  const normalized = relativePath.replace(/\\/g, '/');
-  return (
-    /\.(test|spec)\.[^/]+$/i.test(normalized) ||
-    /(^|\/)setupTests\.[^/]+$/i.test(normalized) ||
-    /(^|\/)(__tests__|tests?)(\/|$)/i.test(normalized)
-  );
-}

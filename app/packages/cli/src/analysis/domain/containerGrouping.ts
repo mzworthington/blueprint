@@ -1,5 +1,6 @@
 import { slugify } from '@blueprint/core';
 import { LAYOUT_IDENTITY_DENYLIST } from './analysisOptions.ts';
+import { isTestProjectSegment } from './testPath.ts';
 
 /** Path segments that mark a layout root; the *next* segment may be a container. */
 const LAYOUT_ROOTS = new Set(['src', 'lib', 'source', 'sources']);
@@ -48,9 +49,9 @@ function isDeniedIdentity(name: string): boolean {
  * Resolve a logical container from a file path.
  *
  * Prefer declared workspace packages (`…/packages|plugins/<name>/…` with package.json when
- * `isPackageRoot` is provided), then a non-leftover folder under `src`/`lib`, then
- * the file's parent directory — never promoting layout leftovers (`src`, `types`, …)
- * as the container identity.
+ * `isPackageRoot` is provided), then dedicated test projects (`*.UnitTests`), then a
+ * non-leftover folder under `src`/`lib`, then the file's parent directory — never promoting
+ * layout leftovers (`src`, `types`, …) as the container identity.
  */
 export function resolveContainerFromPath(
   relativePath: string,
@@ -84,6 +85,14 @@ export function resolveContainerFromPath(
       }
       rejectedNames.add(name.toLowerCase());
     }
+  }
+
+  // Prefer Ordering.UnitTests over nested Domain/Application folders inside that project.
+  const testProject = parts.find(
+    (p, i) => i < parts.length - 1 && !rejectedNames.has(p.toLowerCase()) && isTestProjectSegment(p)
+  );
+  if (testProject) {
+    return finalizeName(testProject, rollupModules);
   }
 
   const layoutIdx = parts.findIndex(p => LAYOUT_ROOTS.has(p));

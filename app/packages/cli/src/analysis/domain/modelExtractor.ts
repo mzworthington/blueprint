@@ -53,7 +53,11 @@ export class ModelExtractor {
           entityRef: containerRef,
           type: 'container',
           name: `${displayName.charAt(0).toUpperCase()}${displayName.slice(1)} Service`,
+          isTest: !!file.isTestFile,
         });
+      } else if (!file.isTestFile) {
+        // Mixed packages (prod + colocated tests) stay visible as production containers.
+        containerNodesMap.get(containerId)!.isTest = false;
       }
     }
 

@@ -82,6 +82,19 @@ describe('containerGrouping', () => {
       displayName: 'catalog',
     });
   });
+
+  it('keeps .NET test projects as the container even under nested Domain folders', () => {
+    expect(
+      resolveContainerFromPath('tests/Ordering.UnitTests/Domain/SeedWork/ValueObjectTests.cs')
+    ).toEqual({
+      containerId: 'ordering-unittests',
+      displayName: 'Ordering.UnitTests',
+    });
+    expect(resolveContainerFromPath('tests/Catalog.FunctionalTests/CatalogApiTests.cs')).toEqual({
+      containerId: 'catalog-functionaltests',
+      displayName: 'Catalog.FunctionalTests',
+    });
+  });
 });
 
 describe('ModelExtractor', () => {
@@ -135,6 +148,7 @@ describe('ModelExtractor', () => {
       'background-worker'
     );
     expect(componentNodesMap.get(componentMapKey('cli', 'modelextractor-test'))?.isTest).toBe(true);
+    expect(containerNodesMap.get('cli')?.isTest).toBe(false);
     expect(componentNodesMap.get(componentMapKey('designer', 'app'))?.type).toBe('gateway-api');
     expect(componentNodesMap.get(componentMapKey('designer', 'app'))?.properties?.containerId).toBe(
       'designer'
@@ -145,5 +159,31 @@ describe('ModelExtractor', () => {
         d => d.to.includes('/designer/app') && d.from.includes('/designer/db')
       )
     ).toBe(true);
+  });
+
+  it('marks containers as tests when every source file in them is a test', () => {
+    const extractor = new ModelExtractor('ctx/sys');
+    const { containerNodesMap } = extractor.extractGraph([
+      {
+        filePath: 'tests/Ordering.UnitTests/Domain/ValueObjectTests.cs',
+        relativePath: 'tests/Ordering.UnitTests/Domain/ValueObjectTests.cs',
+        baseName: 'ValueObjectTests',
+        isTestFile: true,
+        imports: [],
+        newExpressions: [],
+        callExpressions: [],
+      },
+      {
+        filePath: 'tests/Ordering.UnitTests/Application/OrderServiceTests.cs',
+        relativePath: 'tests/Ordering.UnitTests/Application/OrderServiceTests.cs',
+        baseName: 'OrderServiceTests',
+        isTestFile: true,
+        imports: [],
+        newExpressions: [],
+        callExpressions: [],
+      },
+    ]);
+
+    expect(containerNodesMap.get('ordering-unittests')?.isTest).toBe(true);
   });
 });

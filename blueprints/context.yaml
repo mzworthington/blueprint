@@ -14,14 +14,14 @@ nodes:
     'y': 50
     forensics:
       complexity: 4
-      churn: 1
-      authorCount: 1
+      churn: 0
       hotspotScore: 0
-      classifications: []
-      sinceDays: 900
+      authorCount: 0
       fileCount: 1
       hotspotCount: 0
       knowledgeSiloCount: 0
+      classifications: []
+      sinceDays: 500
   - entityRef: blueprint/backstage
     type: software-system
     name: Backstage System
@@ -126,21 +126,25 @@ nodes:
       rootPath: app
       productId: testproject
       role: subsystem
+    x: 1980
+    'y': 370
     forensics:
       complexity: 66
-      churn: 497
-      hotspotScore: 0.5276923076923077
+      churn: 501
       authorCount: 1
-      fileCount: 186
-      hotspotCount: 2
-      knowledgeSiloCount: 58
+      hotspotScore: 0.5276923076923077
       classifications:
         - knowledge-silo
         - hotspot
       sinceDays: 90
-    x: 1980
-    'y': 370
+      fileCount: 188
+      hotspotCount: 3
+      knowledgeSiloCount: 57
 dependencies:
+  - from: blueprint/testproject
+    to: blueprint/app
+    type: direct-call
+    description: Part of product system
   - from: blueprint/backstage
     to: blueprint/packages
     type: direct-call
@@ -155,6 +159,10 @@ dependencies:
     description: Part of product system
   - from: blueprint/backstage
     to: blueprint/microsite
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/testproject
+    to: blueprint/app
     type: direct-call
     description: Part of product system
   - from: blueprint/backstage
