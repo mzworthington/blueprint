@@ -168,46 +168,51 @@ async function seedStaleDraft(page: Page) {
 
 test.describe('Hierarchy zoom journeys', () => {
   test('Zoom out button and breadcrumb return to parent', async ({ page }) => {
-    await page.goto('/workspace/test');
-
+    await page.goto('/workspace/blueprint');
     await page.locator('button[aria-label="Toggle Right Panel"]').click();
+    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint');
 
-    const blueprintNode = page
-      .locator('.react-flow__node', { hasText: 'Blueprint System' })
-      .first();
-    await expect(blueprintNode).toBeVisible();
-    await blueprintNode.dblclick();
+    // Match the proven Visual C4 locator style; App System can sit far on the canvas.
+    const appSystem = page.locator('.react-flow__node', { hasText: 'App System' }).first();
+    await expect(appSystem).toBeVisible({ timeout: 15000 });
+    await appSystem.scrollIntoViewIfNeeded();
+    await appSystem.dblclick();
 
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('test/blueprint');
-    expect(page.url()).toContain('/workspace/test/blueprint');
+    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint/app', {
+      timeout: 10000,
+    });
+    await expect(page).toHaveURL(/\/workspace\/blueprint\/app/);
 
     await expect(page.getByTitle('Zoom out to parent diagram (Esc)')).toBeVisible();
     await page.getByTitle('Zoom out to parent diagram (Esc)').click();
 
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('test');
-    expect(page.url()).toContain('/workspace/test');
+    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint');
+    await expect(page).toHaveURL(/\/workspace\/blueprint$/);
 
-    await blueprintNode.dblclick();
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('test/blueprint');
+    await appSystem.scrollIntoViewIfNeeded();
+    await appSystem.dblclick();
+    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint/app');
 
-    const contextCrumb = page.locator('a[href="/workspace/test"]').first();
+    const contextCrumb = page.locator('a[href="/workspace/blueprint"]').first();
     await expect(contextCrumb).toBeVisible();
     await contextCrumb.click();
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('test');
+    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint');
   });
 
   test('Backspace zooms out one level', async ({ page }) => {
-    await page.goto('/workspace/test');
+    await page.goto('/workspace/blueprint');
     await page.locator('button[aria-label="Toggle Right Panel"]').click();
 
-    const blueprintNode = page
-      .locator('.react-flow__node', { hasText: 'Blueprint System' })
-      .first();
-    await blueprintNode.dblclick();
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('test/blueprint');
+    const appSystem = page.locator('.react-flow__node', { hasText: 'App System' }).first();
+    await expect(appSystem).toBeVisible({ timeout: 15000 });
+    await appSystem.scrollIntoViewIfNeeded();
+    await appSystem.dblclick();
+    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint/app', {
+      timeout: 10000,
+    });
 
     await page.keyboard.press('Backspace');
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('test');
+    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint');
   });
 });
 
