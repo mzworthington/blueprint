@@ -314,5 +314,64 @@ nodes: []
       expect(mermaid).toContain('node_billing_web_portal_webapp["Web Portal"]');
       expect(mermaid).toContain('node_billing_web_portal_external_svc["API Service (External)"]');
     });
+
+    it('should parse and round-trip node forensics', () => {
+      const yamlContent = `
+name: Forensic Component Graph
+version: 1.0.0
+level: component
+entityRef: blueprint/cli/forensics
+nodes:
+  - entityRef: blueprint/cli/forensics/analyzer
+    type: component
+    name: Analyzer
+    properties:
+      filepath: src/analyzer.ts
+    forensics:
+      complexity: 20
+      loc: 100
+      sloc: 80
+      churn: 12
+      authorCount: 2
+      topAuthorPercent: 0.75
+      hotspotScore: 0.9
+      classifications:
+        - hotspot
+      coupledFiles:
+        - path: src/other.ts
+          score: 0.8
+          sharedCommits: 6
+      fileCount: 1
+      hotspotCount: 1
+      knowledgeSiloCount: 0
+`;
+      const schema = parseSchemaFromYaml(yamlContent);
+      expect(schema.nodes[0].forensics).toMatchObject({
+        complexity: 20,
+        churn: 12,
+        hotspotScore: 0.9,
+        classifications: ['hotspot'],
+        coupledFiles: [{ path: 'src/other.ts', score: 0.8, sharedCommits: 6 }],
+      });
+
+      const roundTrip = parseSchemaFromYaml(serializeSchemaToYaml(schema));
+      expect(roundTrip.nodes[0].forensics).toEqual(schema.nodes[0].forensics);
+    });
+
+    it('should reject invalid forensics classifications', () => {
+      const invalidYaml = `
+name: Bad Forensics
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: a/b/c
+    type: component
+    name: Bad
+    forensics:
+      classifications:
+        - not-a-class
+`;
+      expect(() => parseSchemaFromYaml(invalidYaml)).toThrow();
+    });
   });
 });

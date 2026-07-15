@@ -1,0 +1,96 @@
+entityRef: blueprint/cli
+name: Cli Containers
+version: 1.0.0
+level: container
+nodes:
+  - entityRef: blueprint/cli/core
+    type: container
+    name: Core Service
+    forensics:
+      complexity: 41
+      churn: 6
+      hotspotScore: 0.2484472049689441
+      authorCount: 1
+      fileCount: 7
+      hotspotCount: 0
+      knowledgeSiloCount: 1
+      classifications:
+        - knowledge-silo
+    x: 350
+    'y': 60
+  - entityRef: blueprint/cli/forensics
+    type: container
+    name: Forensics Service
+    forensics:
+      complexity: 21
+      churn: 0
+      hotspotScore: 0
+      authorCount: 0
+      fileCount: 23
+      hotspotCount: 0
+      knowledgeSiloCount: 0
+      classifications: []
+    x: 465
+    'y': 1170
+  - entityRef: blueprint/cli/writers
+    type: container
+    name: Writers Service
+    forensics:
+      complexity: 35
+      churn: 8
+      hotspotScore: 0.14078674948240166
+      authorCount: 1
+      fileCount: 6
+      hotspotCount: 0
+      knowledgeSiloCount: 1
+      classifications:
+        - knowledge-silo
+    x: 150
+    'y': 800
+  - entityRef: blueprint/cli/analysis
+    type: container
+    name: Analysis Service
+    forensics:
+      complexity: 70
+      churn: 82
+      hotspotScore: 0.5507246376811594
+      authorCount: 1
+      fileCount: 38
+      hotspotCount: 1
+      knowledgeSiloCount: 14
+      classifications:
+        - knowledge-silo
+        - hotspot
+    x: 460
+    'y': 430
+dependencies:
+  - from: blueprint/cli/core
+    to: blueprint/cli/analysis
+    type: inter-container
+  - from: blueprint/cli/core
+    to: blueprint/cli/forensics
+    type: inter-container
+  - from: blueprint/cli/forensics
+    to: blueprint/cli/analysis
+    type: inter-container
+  - from: blueprint/cli/forensics
+    to: blueprint/cli/core
+    type: inter-container
+  - from: blueprint/cli/writers
+    to: blueprint/cli/core
+    type: inter-container
+  - from: blueprint/cli/writers
+    to: blueprint/cli/analysis
+    type: inter-container
+  - from: blueprint/cli/writers
+    to: blueprint/cli/forensics
+    type: inter-container
+  - from: blueprint/cli/analysis
+    to: blueprint/cli/core
+    type: inter-container
+  - from: blueprint/cli/analysis
+    to: blueprint/cli/writers
+    type: inter-container
+  - from: blueprint/cli/analysis
+    to: blueprint/cli/forensics
+    type: inter-container

@@ -8,10 +8,17 @@ import { ModelExtractor } from './modelExtractor.ts';
 import { ContextLevelWriter } from '../../writers/contextLevelWriter.ts';
 import { ContainerLevelWriter } from '../../writers/containerLevelWriter.ts';
 import { ComponentLevelWriter } from '../../writers/componentLevelWriter.ts';
+import type { SystemNode } from '@blueprint/core';
 import { EntityRef } from '@blueprint/core';
 import { DEFAULT_ANALYSIS_OPTIONS, type AnalysisOptions } from './analysisOptions.ts';
 import { discoverSystems, partitionFilesBySystem } from './systemDiscovery.ts';
 import { throwIfAborted } from './cancellation.ts';
+import {
+  attachForensicsToSchema,
+  fileMetricsToNodeForensics,
+  normalizeFilePath,
+} from '../../forensics/domain/attachForensics.ts';
+import type { FileMetrics } from '../../forensics/domain/types.ts';
 
 export interface CodebaseAnalyzerDependencies {
   parser: CodebaseParserPort;
@@ -19,6 +26,11 @@ export interface CodebaseAnalyzerDependencies {
   fileSystem: AnalysisFileSystemPort;
   logger: LoggerPort;
   analysisOptions?: AnalysisOptions;
+}
+
+export interface RunAnalysisOptions {
+  /** When set, component/container/context nodes are enriched before write. */
+  forensicsByPath?: ReadonlyMap<string, FileMetrics>;
 }
 
 export class CodebaseAnalyzer {
@@ -105,11 +117,50 @@ export class CodebaseAnalyzer {
     return parts[parts.length - 1] || 'blueprint';
   }
 
+  private enrichMapsWithForensics(
+    componentNodesMap: Map<string, SystemNode>,
+    containerNodesMap: Map<string, SystemNode>,
+    forensicsByPath: ReadonlyMap<string, FileMetrics>
+  ): SystemNode[] {
+    for (const [key, node] of componentNodesMap) {
+      const filepath = node.properties?.filepath;
+      if (typeof filepath !== 'string') continue;
+      const metrics = forensicsByPath.get(normalizeFilePath(filepath));
+      if (!metrics) continue;
+      componentNodesMap.set(key, {
+        ...node,
+        forensics: fileMetricsToNodeForensics(metrics),
+      });
+    }
+
+    const componentNodes = Array.from(componentNodesMap.values());
+    for (const [key, node] of containerNodesMap) {
+      const rolled = attachForensicsToSchema(
+        {
+          name: 'containers',
+          version: '1.0.0',
+          level: 'container',
+          nodes: [node],
+          dependencies: [],
+        },
+        forensicsByPath,
+        { componentNodes }
+      );
+      const enriched = rolled.nodes[0];
+      if (enriched?.forensics) {
+        containerNodesMap.set(key, { ...node, forensics: enriched.forensics });
+      }
+    }
+
+    return componentNodes;
+  }
+
   async runAnalysis(
     contextName: string,
     outputDir: string,
     globPattern: string = 'src/**/*.{ts,tsx}',
-    signal?: AbortSignal
+    signal?: AbortSignal,
+    options: RunAnalysisOptions = {}
   ): Promise<void> {
     throwIfAborted(signal);
     this.deps.logger.info('🚀 Starting Multi-Level Codebase Analysis...');
@@ -157,18 +208,8 @@ export class CodebaseAnalyzer {
       return files.length > 0 || system.kind === 'fallback' || system.kind === 'product';
     });
 
-    throwIfAborted(signal);
-    await contextWriter.writeSystems(
-      rootDir,
-      contextName,
-      emittedSystems.map(s => ({
-        entityRef: s.id,
-        displayName: s.displayName,
-        rootPath: s.rootPath,
-        productId: s.productId,
-        isProductHub: s.kind === 'product' || s.kind === 'fallback',
-      }))
-    );
+    const allComponentNodes: SystemNode[] = [];
+    const forensicsByPath = options.forensicsByPath;
 
     for (const system of emittedSystems) {
       throwIfAborted(signal);
@@ -196,6 +237,14 @@ export class CodebaseAnalyzer {
       const { componentNodesMap, componentDependencies, containerNodesMap, containerDependencies } =
         extractor.extractGraph(files);
 
+      if (forensicsByPath && forensicsByPath.size > 0) {
+        allComponentNodes.push(
+          ...this.enrichMapsWithForensics(componentNodesMap, containerNodesMap, forensicsByPath)
+        );
+      } else {
+        allComponentNodes.push(...componentNodesMap.values());
+      }
+
       const blueprintsDir = this.deps.fileSystem.getAbsolutePath(rootDir, system.id);
       if (!this.deps.fileSystem.exists(blueprintsDir)) this.deps.fileSystem.mkdir(blueprintsDir);
 
@@ -218,6 +267,22 @@ export class CodebaseAnalyzer {
         containerNodesMap
       );
     }
+
+    throwIfAborted(signal);
+    await contextWriter.writeSystems(
+      rootDir,
+      contextName,
+      emittedSystems.map(s => ({
+        entityRef: s.id,
+        displayName: s.displayName,
+        rootPath: s.rootPath,
+        productId: s.productId,
+        isProductHub: s.kind === 'product' || s.kind === 'fallback',
+      })),
+      forensicsByPath && forensicsByPath.size > 0
+        ? { forensicsComponentNodes: allComponentNodes }
+        : undefined
+    );
 
     throwIfAborted(signal);
     this.deps.logger.info(`✅ Multi-level structural blueprint generation complete.`);

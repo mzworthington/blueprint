@@ -14,6 +14,52 @@ import {
   mergeAnalysisOptions,
 } from './analysis/adapters/loadAnalysisConfig.ts';
 import { createCliCancellation, isCancellationError } from './analysis/domain/cancellation.ts';
+import { parseBlueprintArgv, type BlueprintCliPlan } from './parseBlueprintArgv.ts';
+import { collectFileMetrics } from './forensics/collectFileMetrics.ts';
+import {
+  applyInteractiveGitChoice,
+  shouldPromptForGit,
+  type InteractiveGitChoice,
+} from './interactiveGitChoice.ts';
+import { DEFAULT_FORENSICS_OPTIONS } from './forensics/domain/options.ts';
+import type { FileMetrics } from './forensics/domain/types.ts';
+
+async function promptInteractiveGit(): Promise<InteractiveGitChoice> {
+  const mode = await p.select({
+    message: 'Enrich blueprints with Git forensics (complexity, churn, ownership)?',
+    options: [
+      { value: 'none', label: 'No — architecture only' },
+      { value: 'full', label: 'Yes — attach forensics onto systems and nodes' },
+    ],
+    initialValue: 'none',
+  });
+
+  if (p.isCancel(mode)) {
+    p.cancel('Analysis cancelled.');
+    process.exit(0);
+  }
+
+  if (mode === 'none') {
+    return { mode: 'none' };
+  }
+
+  const sinceInput = await p.text({
+    message: 'Git lookback window (days):',
+    placeholder: String(DEFAULT_FORENSICS_OPTIONS.sinceDays),
+    defaultValue: String(DEFAULT_FORENSICS_OPTIONS.sinceDays),
+  });
+
+  if (p.isCancel(sinceInput)) {
+    p.cancel('Analysis cancelled.');
+    process.exit(0);
+  }
+
+  const parsed = Number(String(sinceInput).replace(/d$/i, '').trim());
+  const sinceDays =
+    Number.isFinite(parsed) && parsed > 0 ? parsed : DEFAULT_FORENSICS_OPTIONS.sinceDays;
+
+  return { mode: 'full', sinceDays };
+}
 
 function askPathWithTabComplete(message: string, defaultValue: string): Promise<string> {
   return new Promise(resolve => {
@@ -68,76 +114,21 @@ function askPathWithTabComplete(message: string, defaultValue: string): Promise<
   });
 }
 
-async function run() {
-  const args = process.argv.slice(2);
-
-  // Detect if run headlessly (e.g. from flags or CI/non-TTY environment)
-  const isHeadless =
-    args.includes('--headless') ||
-    args.some(a => a.startsWith('--parser=')) ||
-    args.some(a => a.startsWith('--glob=')) ||
-    args.some(a => a.startsWith('--output=')) ||
-    args.some(a => a.startsWith('--context=')) ||
-    args.includes('--rollup-modules') ||
-    args.some(a => a.startsWith('--ignore=')) ||
-    args.some(a => a.startsWith('--systems=')) ||
-    !process.stdout.isTTY ||
-    process.env.CI;
-
+async function runArchitecture(plan: BlueprintCliPlan): Promise<{
+  plan: BlueprintCliPlan;
+  forensicsByPath?: Map<string, FileMetrics>;
+}> {
+  const isHeadless = plan.isHeadless;
   const fileConfig = loadAnalysisConfig(process.cwd());
+  let resolvedPlan = plan;
 
-  let parserType = 'ts-morph';
-  let globPattern = fileConfig.glob || '**/*.{ts,tsx,cs,java,go}';
-  let outputDir = process.env.BLUEPRINT_OUTPUT_DIR || 'blueprints';
-  let contextName = fileConfig.context || 'Blueprint';
-  let rollupModules = fileConfig.rollupModules;
-  let cliIgnores: string[] = [];
-  let cliSystems: string[] | undefined;
-
-  // Headless flag overrides
-  const parserArg = args.find(a => a.startsWith('--parser='));
-  if (parserArg) {
-    parserType = parserArg.split('=')[1];
-  } else if (args.includes('--parser=tree-sitter')) {
-    parserType = 'tree-sitter';
-  }
-
-  const globArg = args.find(a => a.startsWith('--glob='));
-  if (globArg) {
-    globPattern = globArg.split('=')[1];
-  }
-
-  const outputArg = args.find(a => a.startsWith('--output='));
-  if (outputArg) {
-    outputDir = outputArg.split('=')[1];
-  }
-
-  const contextArg = args.find(a => a.startsWith('--context='));
-  if (contextArg) {
-    contextName = contextArg.split('=')[1];
-  }
-
-  if (args.includes('--rollup-modules')) {
-    rollupModules = true;
-  }
-
-  const ignoreArg = args.find(a => a.startsWith('--ignore='));
-  if (ignoreArg) {
-    cliIgnores = ignoreArg
-      .slice('--ignore='.length)
-      .split(',')
-      .map(s => s.trim())
-      .filter(Boolean);
-  }
-
-  const systemsArg = args.find(a => a.startsWith('--systems='));
-  if (systemsArg) {
-    cliSystems = systemsArg
-      .slice('--systems='.length)
-      .split(',')
-      .map(s => s.trim())
-      .filter(Boolean);
-  }
+  let parserType = plan.architecture.parserType || 'ts-morph';
+  let globPattern = plan.architecture.glob || fileConfig.glob || '**/*.{ts,tsx,cs,java,go}';
+  let outputDir = plan.architecture.outputDir || process.env.BLUEPRINT_OUTPUT_DIR || 'blueprints';
+  let contextName = plan.architecture.context || fileConfig.context || 'Blueprint';
+  let rollupModules = plan.architecture.rollupModules || fileConfig.rollupModules;
+  const cliIgnores = plan.architecture.ignore;
+  const cliSystems = plan.architecture.systems;
 
   if (!isHeadless) {
     p.intro(`\n🔹 ${pc.bold(pc.cyan('blueprint'))}${pc.gray(' • system architecture generator')}`);
@@ -176,7 +167,25 @@ async function run() {
     globPattern = await askPathWithTabComplete('Glob pattern/directory to scan:', globPattern);
     outputDir = await askPathWithTabComplete('Directory to output schemas:', outputDir);
 
+    if (shouldPromptForGit(resolvedPlan)) {
+      resolvedPlan = applyInteractiveGitChoice(resolvedPlan, await promptInteractiveGit());
+    }
+
     console.log(pc.cyan('│'));
+  }
+
+  let forensicsByPath: Map<string, FileMetrics> | undefined;
+  if (resolvedPlan.runGitForensics) {
+    const logger = new ConsoleLogger();
+    try {
+      if (!isHeadless) {
+        p.log.info('Collecting Git forensics metrics…');
+      }
+      forensicsByPath = await collectFileMetrics(resolvedPlan.git);
+    } catch (error) {
+      logger.error('Failed to collect Git forensics', error);
+      process.exit(1);
+    }
   }
 
   const analysisOptions = mergeAnalysisOptions(fileConfig, {
@@ -208,10 +217,16 @@ async function run() {
 
   try {
     if (spinner) {
-      spinner.start('Analyzing codebase structure… (Ctrl+C to cancel)');
+      spinner.start(
+        forensicsByPath
+          ? 'Analyzing codebase + Git forensics… (Ctrl+C to cancel)'
+          : 'Analyzing codebase structure… (Ctrl+C to cancel)'
+      );
     }
     const absoluteOutputDir = path.resolve(process.cwd(), outputDir);
-    await analyzer.runAnalysis(contextName, outputDir, globPattern, cancellation.signal);
+    await analyzer.runAnalysis(contextName, outputDir, globPattern, cancellation.signal, {
+      forensicsByPath,
+    });
     if (spinner) {
       spinner.stop(
         pc.green(`Successfully generated visual layout levels inside: ${absoluteOutputDir}`)
@@ -238,6 +253,14 @@ async function run() {
   } finally {
     disposeCancellation();
   }
+
+  return { plan: resolvedPlan, forensicsByPath };
+}
+
+async function run() {
+  const args = process.argv.slice(2);
+  const plan = parseBlueprintArgv(args);
+  await runArchitecture(plan);
 }
 
 run();
