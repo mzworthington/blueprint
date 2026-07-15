@@ -21,6 +21,7 @@ export function fileMetricsToNodeForensics(metrics: FileMetrics): NodeForensics 
       score: c.score,
       sharedCommits: c.sharedCommits,
     })),
+    ...(metrics.sinceDays !== undefined ? { sinceDays: metrics.sinceDays } : {}),
   };
 }
 
@@ -34,6 +35,7 @@ export function aggregateNodeForensics(nodes: readonly SystemNode[]): NodeForens
   let authorCount = 0;
   let hotspotCount = 0;
   let knowledgeSiloCount = 0;
+  let sinceDays: number | undefined;
   const classificationSet = new Set<'hotspot' | 'knowledge-silo'>();
 
   for (const node of withForensics) {
@@ -42,6 +44,7 @@ export function aggregateNodeForensics(nodes: readonly SystemNode[]): NodeForens
     churn += f.churn ?? 0;
     if ((f.hotspotScore ?? 0) > hotspotScore) hotspotScore = f.hotspotScore ?? 0;
     if ((f.authorCount ?? 0) > authorCount) authorCount = f.authorCount ?? 0;
+    if (sinceDays === undefined && f.sinceDays !== undefined) sinceDays = f.sinceDays;
     for (const c of f.classifications ?? []) {
       classificationSet.add(c);
       if (c === 'hotspot') hotspotCount++;
@@ -58,6 +61,7 @@ export function aggregateNodeForensics(nodes: readonly SystemNode[]): NodeForens
     hotspotCount,
     knowledgeSiloCount,
     classifications: [...classificationSet],
+    ...(sinceDays !== undefined ? { sinceDays } : {}),
   };
 }
 

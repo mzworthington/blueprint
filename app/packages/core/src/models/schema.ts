@@ -135,6 +135,8 @@ export interface NodeForensics {
   hotspotScore?: number;
   classifications?: ForensicClassification[];
   coupledFiles?: CoupledFileForensics[];
+  /** Git history lookback window (days) used when these metrics were collected. */
+  sinceDays?: number;
   /** Rollups only (containers / systems) */
   fileCount?: number;
   hotspotCount?: number;

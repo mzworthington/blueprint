@@ -43,7 +43,10 @@ export async function collectFileMetrics(
 
   const byPath = new Map<string, FileMetrics>();
   for (const file of report.files) {
-    byPath.set(normalizeFilePath(file.path), file);
+    byPath.set(normalizeFilePath(file.path), {
+      ...file,
+      sinceDays: options.sinceDays,
+    });
   }
   return byPath;
 }

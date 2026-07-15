@@ -335,6 +335,7 @@ nodes:
       authorCount: 2
       topAuthorPercent: 0.75
       hotspotScore: 0.9
+      sinceDays: 90
       classifications:
         - hotspot
       coupledFiles:
@@ -350,6 +351,7 @@ nodes:
         complexity: 20,
         churn: 12,
         hotspotScore: 0.9,
+        sinceDays: 90,
         classifications: ['hotspot'],
         coupledFiles: [{ path: 'src/other.ts', score: 0.8, sharedCommits: 6 }],
       });

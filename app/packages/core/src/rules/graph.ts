@@ -138,6 +138,7 @@ const nodeForensicsSchema = z.object({
   hotspotScore: z.number().optional(),
   classifications: z.array(forensicClassificationSchema).optional(),
   coupledFiles: z.array(coupledFileForensicsSchema).optional(),
+  sinceDays: z.number().positive().optional(),
   fileCount: z.number().optional(),
   hotspotCount: z.number().optional(),
   knowledgeSiloCount: z.number().optional(),

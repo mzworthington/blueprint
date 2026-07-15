@@ -30,6 +30,7 @@ describe('aggregateNodeForensics', () => {
           churn: 3,
           hotspotScore: 0.4,
           authorCount: 2,
+          sinceDays: 90,
           classifications: ['hotspot'],
         },
       },
@@ -42,6 +43,7 @@ describe('aggregateNodeForensics', () => {
           churn: 5,
           hotspotScore: 0.9,
           authorCount: 1,
+          sinceDays: 90,
           classifications: ['knowledge-silo'],
         },
       },
@@ -55,6 +57,7 @@ describe('aggregateNodeForensics', () => {
       fileCount: 2,
       hotspotCount: 1,
       knowledgeSiloCount: 1,
+      sinceDays: 90,
       classifications: ['hotspot', 'knowledge-silo'],
     });
   });
@@ -92,6 +95,7 @@ describe('attachForensicsToSchema', () => {
           complexity: 15,
           churn: 4,
           hotspotScore: 0.7,
+          sinceDays: 60,
           classifications: ['hotspot'],
           coupledFiles: [{ path: 'src/bar.ts', score: 0.8, sharedCommits: 5 }],
         }),
@@ -103,6 +107,7 @@ describe('attachForensicsToSchema', () => {
       complexity: 15,
       churn: 4,
       hotspotScore: 0.7,
+      sinceDays: 60,
       classifications: ['hotspot'],
     });
     expect(next.nodes[1].forensics).toBeUndefined();

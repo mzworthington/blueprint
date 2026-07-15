@@ -1,0 +1,258 @@
+entityRef: blueprint/cli/core
+name: Core Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/cli/core/vitest-config
+    type: background-worker
+    name: vitest.config Service
+    isTest: false
+    properties:
+      filepath: vitest.config.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 10
+      sloc: 8
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 140
+    'y': 50
+  - entityRef: blueprint/cli/core/blueprint
+    type: background-worker
+    name: blueprint Service
+    isTest: false
+    properties:
+      filepath: src/blueprint.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 41
+      loc: 267
+      sloc: 231
+      churn: 7
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.4347826086956522
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 600
+    'y': 50
+  - entityRef: blueprint/cli/core/interactivegitchoice-test
+    type: background-worker
+    name: interactiveGitChoice.test Service
+    isTest: true
+    properties:
+      filepath: src/interactiveGitChoice.test.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 57
+      sloc: 48
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 1235
+    'y': 50
+  - entityRef: blueprint/cli/core/interactivegitchoice
+    type: background-worker
+    name: interactiveGitChoice Service
+    isTest: false
+    properties:
+      filepath: src/interactiveGitChoice.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 4
+      loc: 35
+      sloc: 27
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.005434782608695652
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 1060
+    'y': 370
+  - entityRef: blueprint/cli/core/parseblueprintargv-test
+    type: background-worker
+    name: parseBlueprintArgv.test Service
+    isTest: true
+    properties:
+      filepath: src/parseBlueprintArgv.test.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 83
+      sloc: 68
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 600
+    'y': 370
+  - entityRef: blueprint/cli/core/parseblueprintargv
+    type: background-worker
+    name: parseBlueprintArgv Service
+    isTest: false
+    properties:
+      filepath: src/parseBlueprintArgv.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 29
+      loc: 123
+      sloc: 102
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.050724637681159424
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 830
+    'y': 690
+  - entityRef: blueprint/cli/core/fakes
+    type: background-worker
+    name: fakes Service
+    isTest: true
+    properties:
+      filepath: src/test/fakes.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 9
+      loc: 123
+      sloc: 105
+      churn: 3
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.028985507246376812
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 1695
+    'y': 50
+dependencies:
+  - from: blueprint/cli/core/blueprint
+    to: blueprint/cli/analysis/tsmorphparser
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/core/blueprint
+    to: blueprint/cli/analysis/treesitterparser
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/core/blueprint
+    to: blueprint/cli/analysis/dagrelayout
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/core/blueprint
+    to: blueprint/cli/analysis/nodefilesystem
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/core/blueprint
+    to: blueprint/cli/analysis/consolelogger
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/core/blueprint
+    to: blueprint/cli/analysis/analyzer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/core/blueprint
+    to: blueprint/cli/analysis/loadanalysisconfig
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/core/blueprint
+    to: blueprint/cli/analysis/cancellation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/core/blueprint
+    to: blueprint/cli/core/parseblueprintargv
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/core/blueprint
+    to: blueprint/cli/forensics/collectfilemetrics
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/core/blueprint
+    to: blueprint/cli/core/interactivegitchoice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/core/blueprint
+    to: blueprint/cli/forensics/options
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/core/blueprint
+    to: blueprint/cli/analysis/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/core/interactivegitchoice-test
+    to: blueprint/cli/core/interactivegitchoice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/core/interactivegitchoice-test
+    to: blueprint/cli/core/parseblueprintargv
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/core/interactivegitchoice
+    to: blueprint/cli/core/parseblueprintargv
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/core/parseblueprintargv-test
+    to: blueprint/cli/core/parseblueprintargv
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/forensics/collectfilemetrics
+    to: blueprint/cli/core/parseblueprintargv
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/core/fakes
+    to: blueprint/cli/analysis/ports
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/core/fakes
+    to: blueprint/cli/analysis/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/writers/componentlevelwriter-test
+    to: blueprint/cli/core/fakes
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/writers/containerlevelwriter-test
+    to: blueprint/cli/core/fakes
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/writers/contextlevelwriter-test
+    to: blueprint/cli/core/fakes
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/cli/analysis/analyzer-test
+    to: blueprint/cli/core/fakes
+    type: direct-call
+    description: Calls module / service

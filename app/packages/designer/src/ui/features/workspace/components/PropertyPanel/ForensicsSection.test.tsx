@@ -71,4 +71,33 @@ describe('ForensicsSection', () => {
 
     expect(screen.getByTestId('toggle-show-coupling')).toBeDisabled();
   });
+
+  it('shows helper text for the section and each metric', () => {
+    render(
+      <ForensicsSection
+        forensics={{
+          complexity: 22,
+          churn: 8,
+          authorCount: 2,
+          hotspotScore: 0.9,
+          sinceDays: 90,
+          coupledFiles: [{ path: 'src/other.ts', score: 0.8, sharedCommits: 6 }],
+        }}
+      />
+    );
+
+    expect(screen.getByTestId('forensics-section-help')).toHaveTextContent(
+      /AST complexity and recent git history/i
+    );
+    expect(screen.getByTestId('forensics-help-complexity')).toHaveTextContent(
+      /Cyclomatic complexity/i
+    );
+    expect(screen.getByTestId('forensics-help-churn')).toHaveTextContent(/lookback window/i);
+    expect(screen.getByTestId('forensics-help-hotspotScore')).toHaveTextContent(
+      /complexity × churn/i
+    );
+    expect(screen.getByTestId('forensics-help-lookback')).toHaveTextContent(/Git history window/i);
+    expect(screen.getByText('90d')).toBeInTheDocument();
+    expect(screen.getByTestId('forensics-help-coupled')).toHaveTextContent(/temporal coupling/i);
+  });
 });

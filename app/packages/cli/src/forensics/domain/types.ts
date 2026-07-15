@@ -17,6 +17,8 @@ export interface FileMetrics {
   coupledFiles: CoupledFileRef[];
   hotspotScore: number;
   classifications: ForensicClassification[];
+  /** Git lookback window (days) used for this analysis run. */
+  sinceDays?: number;
 }
 
 export interface CoupledPair {

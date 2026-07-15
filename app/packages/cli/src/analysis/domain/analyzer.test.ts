@@ -211,6 +211,7 @@ describe('CodebaseAnalyzer Domain Service', () => {
           coupledFiles: [],
           hotspotScore: 0.85,
           classifications: ['hotspot' as const, 'knowledge-silo' as const],
+          sinceDays: 45,
         },
       ],
     ]);
@@ -221,18 +222,20 @@ describe('CodebaseAnalyzer Domain Service', () => {
 
     const componentNodesMap = mockComponentWrite.mock.calls[0][3] as Map<
       string,
-      { forensics?: { complexity?: number; hotspotScore?: number } }
+      { forensics?: { complexity?: number; hotspotScore?: number; sinceDays?: number } }
     >;
     const graph = componentNodesMap.get('domain/graph');
     expect(graph?.forensics?.complexity).toBe(22);
     expect(graph?.forensics?.hotspotScore).toBe(0.85);
+    expect(graph?.forensics?.sinceDays).toBe(45);
 
     const containerNodesMap = mockContainerWrite.mock.calls[0][3] as Map<
       string,
-      { forensics?: { hotspotCount?: number; fileCount?: number } }
+      { forensics?: { hotspotCount?: number; fileCount?: number; sinceDays?: number } }
     >;
     expect(containerNodesMap.get('domain')?.forensics?.fileCount).toBe(1);
     expect(containerNodesMap.get('domain')?.forensics?.hotspotCount).toBe(1);
+    expect(containerNodesMap.get('domain')?.forensics?.sinceDays).toBe(45);
 
     expect(mockContextWriteSystems).toHaveBeenCalledWith(
       '/workspace/blueprints',

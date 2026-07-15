@@ -130,33 +130,6 @@ async function runArchitecture(plan: BlueprintCliPlan): Promise<{
   let cliIgnores = plan.architecture.ignore;
   let cliSystems = plan.architecture.systems;
 
-  const contextArg = args.find(a => a.startsWith('--context='));
-  if (contextArg) {
-    contextName = contextArg.split('=')[1];
-  }
-
-  if (args.includes('--rollup-modules')) {
-    rollupModules = true;
-  }
-
-  const ignoreArg = args.find(a => a.startsWith('--ignore='));
-  if (ignoreArg) {
-    cliIgnores = ignoreArg
-      .slice('--ignore='.length)
-      .split(',')
-      .map(s => s.trim())
-      .filter(Boolean);
-  }
-
-  const systemsArg = args.find(a => a.startsWith('--systems='));
-  if (systemsArg) {
-    cliSystems = systemsArg
-      .slice('--systems='.length)
-      .split(',')
-      .map(s => s.trim())
-      .filter(Boolean);
-  }
-
   if (!isHeadless) {
     p.intro(`\n🔹 ${pc.bold(pc.cyan('blueprint'))}${pc.gray(' • system architecture generator')}`);
 
