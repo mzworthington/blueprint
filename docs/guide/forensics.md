@@ -48,12 +48,23 @@ Concern badges on the canvas:
 - **HOT** — hotspot
 - **SILO** — knowledge silo
 
-### Coupling overlay (opt-in)
+### Risk heatmap (opt-in)
 
-Coupling edges are **off by default** (too busy globally). With a node selected that has on-canvas coupled peers:
+Heatmap is **off by default** and is a **workspace display** setting (not per-node):
+
+1. Open the properties panel → **Workspace display** → toggle **Risk Heatmap**
+2. Available with or without a node selected
+3. Nodes tint by `hotspotScore` (red intensity); MiniMap uses the same scale
+4. YAML is unchanged — heat is display-only
+
+### Coupling focus (opt-in)
+
+Coupling focus is **off by default**. With a node selected that has on-canvas coupled peers:
 
 1. Toggle coupling in the forensics section
-2. Amber dashed edges appear to peers; peers get a **COUPLED** highlight
+2. The canvas shows **only** the selected node and its coupled peers
+3. Schema dependency links are hidden; amber dashed coupling edges remain
+4. Peers get a **COUPLED** highlight
 
 Peers resolve via `coupledFiles[].path` ↔ `properties.filepath` on the current diagram.
 

@@ -6,6 +6,7 @@ describe('uiState Actions & State Management', () => {
     const state = useBlueprintStore.getState();
     expect(state.showTests).toBe(false);
     expect(state.showCoupling).toBe(false);
+    expect(state.showHotspotHeatmap).toBe(false);
     expect(state.leftCollapsed).toBe(true);
     expect(state.rightCollapsed).toBe(true);
     expect(state.showDesignSystem).toBe(false);
@@ -43,6 +44,17 @@ describe('uiState Actions & State Management', () => {
 
     store.toggleShowCoupling();
     expect(useBlueprintStore.getState().showCoupling).toBe(false);
+  });
+
+  it('should toggle showHotspotHeatmap via toggleShowHotspotHeatmap action', () => {
+    const store = useBlueprintStore.getState();
+    expect(store.showHotspotHeatmap).toBe(false);
+
+    store.toggleShowHotspotHeatmap();
+    expect(useBlueprintStore.getState().showHotspotHeatmap).toBe(true);
+
+    store.toggleShowHotspotHeatmap();
+    expect(useBlueprintStore.getState().showHotspotHeatmap).toBe(false);
   });
 
   it('should manage leftCollapsed and rightCollapsed panel states', () => {

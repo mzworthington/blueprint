@@ -21,7 +21,12 @@ import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 import {
   applyCouplingHighlights,
   buildCouplingOverlayEdges,
+  filterCouplingFocusNodes,
 } from '../../../../../application/forensics/buildCouplingOverlayEdges';
+import {
+  applyHotspotHeatmap,
+  hotspotHeatmapMinimapColor,
+} from '../../../../../application/forensics/hotspotHeatmap';
 
 export const Canvas: React.FC = () => {
   const [, setLocation] = useLocation();
@@ -38,6 +43,7 @@ export const Canvas: React.FC = () => {
     clearError,
     showTests,
     showCoupling,
+    showHotspotHeatmap,
     loadedSystems,
     currentFilePath,
     workspaceName,
@@ -111,10 +117,11 @@ export const Canvas: React.FC = () => {
     return nodes.filter(n => !n.data.isTest);
   }, [nodes, showTests]);
 
-  const displayNodes = useMemo(
-    () => applyCouplingHighlights(filteredNodes, selectedNodeId, showCoupling),
-    [filteredNodes, selectedNodeId, showCoupling]
-  );
+  const displayNodes = useMemo(() => {
+    const focused = filterCouplingFocusNodes(filteredNodes, selectedNodeId, showCoupling);
+    const withCoupling = applyCouplingHighlights(focused, selectedNodeId, showCoupling);
+    return applyHotspotHeatmap(withCoupling, showHotspotHeatmap);
+  }, [filteredNodes, selectedNodeId, showCoupling, showHotspotHeatmap]);
 
   const filteredEdges = useMemo(() => {
     if (showTests) return edges;
@@ -124,9 +131,12 @@ export const Canvas: React.FC = () => {
 
   const displayEdges = useMemo(() => {
     const couplingEdges = buildCouplingOverlayEdges(selectedNodeId, filteredNodes, showCoupling);
-    if (couplingEdges.length === 0) return filteredEdges;
-    return [...filteredEdges, ...couplingEdges];
-  }, [filteredEdges, filteredNodes, selectedNodeId, showCoupling]);
+    // Coupling focus: hide schema deps; only show temporal-coupling links.
+    if (showCoupling && couplingEdges.length > 0) return couplingEdges;
+
+    const visibleNodeIds = new Set(displayNodes.map(n => n.id));
+    return filteredEdges.filter(e => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target));
+  }, [filteredEdges, filteredNodes, displayNodes, selectedNodeId, showCoupling]);
 
   return (
     <div className="flex-1 h-full relative" onClick={() => selectNode(null)}>
@@ -188,6 +198,12 @@ export const Canvas: React.FC = () => {
             position="bottom-left"
             bgColor="#0f172a"
             nodeColor={n => {
+              if (showHotspotHeatmap && n.type === 'blueprintNode') {
+                const heatColor = hotspotHeatmapMinimapColor(
+                  typeof n.data?.hotspotHeat === 'number' ? n.data.hotspotHeat : 0
+                );
+                if (heatColor) return heatColor;
+              }
               if (n.type === 'blueprintNode') {
                 if (n.data?.type === 'relational-database') return '#06b6d4';
                 if (n.data?.type === 'event-broker') return '#a855f7';

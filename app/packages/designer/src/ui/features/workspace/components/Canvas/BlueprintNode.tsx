@@ -191,6 +191,7 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
   const showSiloBadge =
     classifications.includes('knowledge-silo') ||
     (concern.level === 'warning' && concern.reasons.some(r => /silo/i.test(r)));
+  const heat = typeof data.hotspotHeat === 'number' ? data.hotspotHeat : 0;
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -216,20 +217,27 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
       : data.couplingHighlight
         ? 'border-amber-500/70 shadow-[0_0_14px_rgba(245,158,11,0.25)] bg-slate-900/90'
         : concernBorder
-          ? `${concernBorder} bg-slate-950/80 hover:border-slate-700`
-          : 'border-slate-800 bg-slate-950/80 hover:border-slate-700';
+          ? `${concernBorder} ${heat > 0 ? 'bg-transparent' : 'bg-slate-950/80'} hover:border-slate-700`
+          : `${heat > 0 ? 'bg-transparent' : 'bg-slate-950/80'} border-slate-800 hover:border-slate-700`;
 
   return (
     <div
       onClick={handleClick}
       data-coupling-highlight={data.couplingHighlight ? 'true' : undefined}
-      className={`relative w-64 rounded-xl border p-4 transition-all duration-200 cursor-pointer ${borderClass}`}
+      data-hotspot-heat={heat > 0 ? heat.toFixed(2) : undefined}
+      data-testid={heat > 0 ? 'hotspot-heat' : undefined}
+      className={`relative w-64 rounded-xl border p-4 transition-all duration-200 cursor-pointer overflow-hidden ${borderClass}`}
       style={{
         boxShadow:
           selected || data.external || data.couplingHighlight
             ? undefined
             : '0 4px 12px rgba(0, 0, 0, 0.25)',
         backdropFilter: 'blur(8px)',
+        ...(heat > 0
+          ? {
+              backgroundImage: `linear-gradient(90deg, rgba(239, 68, 68, ${0.12 + heat * 0.45}) 0, rgba(239, 68, 68, ${0.12 + heat * 0.45}) 5px, rgba(239, 68, 68, ${0.04 + heat * 0.18}) 5px, rgba(239, 68, 68, ${0.04 + heat * 0.18}) 100%)`,
+            }
+          : {}),
       }}
     >
       <Handle

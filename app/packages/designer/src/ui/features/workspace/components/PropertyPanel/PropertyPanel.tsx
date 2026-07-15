@@ -9,6 +9,7 @@ import { PropertiesSection } from './PropertiesSection';
 import { ForensicsSection } from './ForensicsSection';
 import { ConnectionsSection } from './ConnectionsSection';
 import { ComponentCatalog } from './ComponentCatalog';
+import { WorkspaceDisplayControls } from './WorkspaceDisplayControls';
 import { ValidationSection } from './ValidationSection';
 import { resolveCouplingEdges } from '../../../../../application/forensics/resolveCouplingEdges';
 
@@ -31,6 +32,8 @@ export const PropertyPanel: React.FC = () => {
     toggleShowTests,
     showCoupling,
     toggleShowCoupling,
+    showHotspotHeatmap,
+    toggleShowHotspotHeatmap,
     rightCollapsed,
     toggleRightCollapsed,
     workspaceName,
@@ -166,6 +169,13 @@ export const PropertyPanel: React.FC = () => {
             }
           />
 
+          <WorkspaceDisplayControls
+            showTests={showTests}
+            onToggleShowTests={toggleShowTests}
+            showHotspotHeatmap={showHotspotHeatmap}
+            onToggleShowHotspotHeatmap={toggleShowHotspotHeatmap}
+          />
+
           {isNode && selectedNode ? (
             <>
               {selectedNode.forensics ? (
@@ -213,11 +223,7 @@ export const PropertyPanel: React.FC = () => {
             </>
           ) : (
             <>
-              <ComponentCatalog
-                showTests={showTests}
-                onToggleShowTests={toggleShowTests}
-                onAddNode={addNode}
-              />
+              <ComponentCatalog onAddNode={addNode} />
               <ValidationSection validationResult={validationResult} />
             </>
           )}

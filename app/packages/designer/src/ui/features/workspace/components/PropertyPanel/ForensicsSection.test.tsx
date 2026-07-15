@@ -54,7 +54,9 @@ describe('ForensicsSection', () => {
 
     fireEvent.click(screen.getByTestId('toggle-show-coupling'));
     expect(onToggle).toHaveBeenCalledTimes(1);
-    expect(screen.getByText(/Show 1 coupling link on canvas/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Focus 1 coupled peer \(hides other nodes and links\)/i)
+    ).toBeInTheDocument();
   });
 
   it('disables coupling toggle when no peers are on the diagram', () => {

@@ -30,7 +30,7 @@ const FORENSICS_METRIC_HELP: Record<string, string> = {
 };
 
 const COUPLED_FILES_HELP =
-  'Files that often change in the same commits (temporal coupling). Score is Jaccard similarity of commit sets.';
+  'Files that often change in the same commits (temporal coupling). Score is Jaccard similarity of commit sets. Enabling focus hides other nodes and schema links.';
 
 const SECTION_HELP =
   'Readonly signals from AST complexity and recent git history. Used to spot hotspots, silos, and change coupling.';
@@ -250,8 +250,8 @@ export const ForensicsSection: React.FC<ForensicsSectionProps> = ({
                   linkedCouplingCount === 0
                     ? 'No coupled peers on this diagram'
                     : showCoupling
-                      ? 'Hide coupling on canvas'
-                      : 'Show coupling on canvas'
+                      ? 'Show full diagram again'
+                      : 'Focus canvas on this node and coupled peers'
                 }
                 className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none disabled:cursor-not-allowed disabled:opacity-40 ${
                   showCoupling ? 'bg-amber-600' : 'bg-slate-800'
@@ -276,8 +276,8 @@ export const ForensicsSection: React.FC<ForensicsSectionProps> = ({
               {linkedCouplingCount === 0
                 ? 'Coupled peers are not on this diagram'
                 : showCoupling
-                  ? `Showing ${linkedCouplingCount} coupling link${linkedCouplingCount === 1 ? '' : 's'} on canvas`
-                  : `Show ${linkedCouplingCount} coupling link${linkedCouplingCount === 1 ? '' : 's'} on canvas`}
+                  ? `Focusing ${linkedCouplingCount} coupled peer${linkedCouplingCount === 1 ? '' : 's'} — other nodes and links are hidden`
+                  : `Focus ${linkedCouplingCount} coupled peer${linkedCouplingCount === 1 ? '' : 's'} (hides other nodes and links)`}
             </p>
           )}
           {coupled.map(c => (

@@ -8,8 +8,10 @@ export interface ToastNotification {
 
 export interface UiState {
   showTests: boolean;
-  /** When true (and a node is selected), overlay temporal-coupling edges on the canvas. */
+  /** When true (and a node is selected), focus the canvas on that node and its coupled peers. */
   showCoupling: boolean;
+  /** When true, tint canvas nodes by forensics.hotspotScore (display-only). */
+  showHotspotHeatmap: boolean;
   /**
    * Selected client layout engine, or `null` until the user picks one.
    * Applying an engine recomputes positions and writes them into schema / YAML.
@@ -22,6 +24,7 @@ export interface UiState {
   notification: ToastNotification | null;
   toggleShowTests: () => void;
   toggleShowCoupling: () => void;
+  toggleShowHotspotHeatmap: () => void;
   toggleLeftCollapsed: () => void;
   toggleRightCollapsed: () => void;
   setShowDesignSystem: (show: boolean) => void;
@@ -35,6 +38,7 @@ export const createUiState = (
 ): UiState => ({
   showTests: false,
   showCoupling: false,
+  showHotspotHeatmap: false,
   layoutEngine: null,
   leftCollapsed: true,
   rightCollapsed: true,
@@ -43,6 +47,7 @@ export const createUiState = (
   notification: null,
   toggleShowTests: () => set(state => ({ showTests: !state.showTests })),
   toggleShowCoupling: () => set(state => ({ showCoupling: !state.showCoupling })),
+  toggleShowHotspotHeatmap: () => set(state => ({ showHotspotHeatmap: !state.showHotspotHeatmap })),
   toggleLeftCollapsed: () => set(state => ({ leftCollapsed: !state.leftCollapsed })),
   toggleRightCollapsed: () => set(state => ({ rightCollapsed: !state.rightCollapsed })),
   setShowDesignSystem: show => set({ showDesignSystem: show }),

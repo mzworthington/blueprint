@@ -4,6 +4,7 @@ import {
   applyCouplingHighlights,
   buildCouplingOverlayEdges,
   COUPLING_EDGE_PREFIX,
+  filterCouplingFocusNodes,
 } from './buildCouplingOverlayEdges';
 
 function node(
@@ -72,5 +73,33 @@ describe('applyCouplingHighlights', () => {
     ];
     const next = applyCouplingHighlights(nodes, 'a', false);
     expect(next[0]!.data.couplingHighlight).toBe(false);
+  });
+});
+
+describe('filterCouplingFocusNodes', () => {
+  it('keeps only the selected node and coupled peers when enabled', () => {
+    const nodes = [
+      node('a', 'src/a.ts', [{ path: 'src/b.ts', score: 0.9, sharedCommits: 5 }]),
+      node('b', 'src/b.ts'),
+      node('c', 'src/c.ts'),
+    ];
+    const next = filterCouplingFocusNodes(nodes, 'a', true);
+    expect(next.map(n => n.id).sort()).toEqual(['a', 'b']);
+  });
+
+  it('returns all nodes when disabled', () => {
+    const nodes = [
+      node('a', 'src/a.ts', [{ path: 'src/b.ts', score: 0.9, sharedCommits: 5 }]),
+      node('b', 'src/b.ts'),
+      node('c', 'src/c.ts'),
+    ];
+    expect(filterCouplingFocusNodes(nodes, 'a', false)).toHaveLength(3);
+  });
+
+  it('returns all nodes when there are no resolvable peers', () => {
+    const nodes = [
+      node('a', 'src/a.ts', [{ path: 'src/missing.ts', score: 0.5, sharedCommits: 2 }]),
+    ];
+    expect(filterCouplingFocusNodes(nodes, 'a', true)).toHaveLength(1);
   });
 });

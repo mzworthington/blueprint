@@ -93,6 +93,33 @@ describe('BlueprintNode Component', () => {
     expect(screen.getByTestId('forensics-badge-coupled')).toHaveTextContent('COUPLED');
   });
 
+  it('exposes hotspot heat intensity for styling when heatmap is active', () => {
+    const props = {
+      ...defaultProps,
+      data: {
+        ...defaultProps.data,
+        hotspotHeat: 0.85,
+        forensics: { hotspotScore: 0.85 },
+      },
+    };
+    render(<BlueprintNode {...props} />);
+    const heat = screen.getByTestId('hotspot-heat');
+    expect(heat).toHaveAttribute('data-hotspot-heat', '0.85');
+  });
+
+  it('does not mark heat when intensity is zero', () => {
+    const props = {
+      ...defaultProps,
+      data: {
+        ...defaultProps.data,
+        hotspotHeat: 0,
+        forensics: { hotspotScore: 0 },
+      },
+    };
+    render(<BlueprintNode {...props} />);
+    expect(screen.queryByTestId('hotspot-heat')).not.toBeInTheDocument();
+  });
+
   it('truncates long entityRefs while exposing the full value in the title tooltip', () => {
     const longRef = 'blueprint/blueprint/designer/importschema';
     const props = {

@@ -16,6 +16,9 @@ vi.mock('@xyflow/react', () => {
       <div data-testid="react-flow">
         <div data-testid="nodes-count">{nodes.length}</div>
         <div data-testid="edges-count">{edges.length}</div>
+        <div data-testid="heated-nodes-count">
+          {nodes.filter((n: any) => (n.data?.hotspotHeat ?? 0) > 0).length}
+        </div>
         <button
           data-testid="double-click-node"
           onClick={() =>
@@ -84,7 +87,7 @@ describe('Canvas Component', () => {
     expect(screen.getByTestId('minimap')).toBeInTheDocument();
   });
 
-  it('overlays coupling edges when showCoupling is on for a selected node', () => {
+  it('focuses coupling neighbors and hides other nodes and schema links', () => {
     const { initSchema } = useBlueprintStore.getState();
     initSchema({
       name: 'Coupling Canvas',
@@ -110,14 +113,58 @@ describe('Canvas Component', () => {
           y: 100,
           properties: { filepath: 'src/b.ts' },
         },
+        {
+          entityRef: 'comp-c',
+          type: 'component',
+          name: 'C',
+          x: 200,
+          y: 200,
+          properties: { filepath: 'src/c.ts' },
+        },
       ],
-      dependencies: [],
+      dependencies: [
+        { from: 'comp-a', to: 'comp-c', type: 'direct-call' },
+        { from: 'comp-b', to: 'comp-c', type: 'direct-call' },
+      ],
     });
     useBlueprintStore.setState({ selectedNodeId: 'comp-a', showCoupling: true, showTests: true });
 
     render(<Canvas />);
 
+    expect(screen.getByTestId('nodes-count')).toHaveTextContent('2');
     expect(screen.getByTestId('edges-count')).toHaveTextContent('1');
+  });
+
+  it('applies hotspot heat to nodes when showHotspotHeatmap is on', () => {
+    const { initSchema } = useBlueprintStore.getState();
+    initSchema({
+      name: 'Heatmap Canvas',
+      version: '1.0.0',
+      level: 'code',
+      nodes: [
+        {
+          entityRef: 'comp-hot',
+          type: 'component',
+          name: 'Hot',
+          x: 0,
+          y: 0,
+          forensics: { hotspotScore: 0.9 },
+        },
+        {
+          entityRef: 'comp-cold',
+          type: 'component',
+          name: 'Cold',
+          x: 100,
+          y: 100,
+        },
+      ],
+      dependencies: [],
+    });
+    useBlueprintStore.setState({ showHotspotHeatmap: true, showTests: true });
+
+    render(<Canvas />);
+
+    expect(screen.getByTestId('heated-nodes-count')).toHaveTextContent('1');
   });
 
   it('displays cycle warning validation status badge when cycle is present', () => {

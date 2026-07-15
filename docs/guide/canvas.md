@@ -36,9 +36,12 @@ When a node carries `forensics` from the CLI, a **Git forensics** section appear
 - Editing YAML/JSON in the code viewer redraws the canvas
 - Workspaces can load multiple systems from a `blueprints/` folder and switch via the canvas system picker
 
-## Tests on the canvas
+## Tests & risk heatmap
 
-Toggle **Show Test Components** in the catalog section if analysis marked nodes as `isTest`. Hidden by default so production structure stays readable.
+Under **Workspace display** in the properties panel (visible with or without a node selected):
+
+- **Show Test Components** — reveal nodes marked `isTest` (hidden by default)
+- **Risk Heatmap** — tint nodes by `hotspotScore` (see [Git forensics](./forensics.md))
 
 ## Next
 

@@ -83,3 +83,21 @@ export function applyCouplingHighlights(
     return { ...n, data: { ...n.data, couplingHighlight: highlight } };
   });
 }
+
+/**
+ * When coupling focus is on, keep only the selected node and its on-canvas coupled peers.
+ * Resolution still uses the full incoming node list so peers are found before filtering.
+ */
+export function filterCouplingFocusNodes(
+  nodes: BlueprintRFNode[],
+  selectedNodeId: string | null | undefined,
+  enabled: boolean
+): BlueprintRFNode[] {
+  if (!enabled || !selectedNodeId) return nodes;
+
+  const peerIds = new Set(resolveCouplingEdges(selectedNodeId, nodes).map(e => e.targetId));
+  if (peerIds.size === 0) return nodes;
+
+  peerIds.add(selectedNodeId);
+  return nodes.filter(n => peerIds.has(n.id));
+}
