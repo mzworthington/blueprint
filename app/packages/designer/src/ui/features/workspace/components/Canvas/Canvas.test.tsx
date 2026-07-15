@@ -84,6 +84,42 @@ describe('Canvas Component', () => {
     expect(screen.getByTestId('minimap')).toBeInTheDocument();
   });
 
+  it('overlays coupling edges when showCoupling is on for a selected node', () => {
+    const { initSchema } = useBlueprintStore.getState();
+    initSchema({
+      name: 'Coupling Canvas',
+      version: '1.0.0',
+      level: 'code',
+      nodes: [
+        {
+          entityRef: 'comp-a',
+          type: 'component',
+          name: 'A',
+          x: 0,
+          y: 0,
+          properties: { filepath: 'src/a.ts' },
+          forensics: {
+            coupledFiles: [{ path: 'src/b.ts', score: 0.9, sharedCommits: 7 }],
+          },
+        },
+        {
+          entityRef: 'comp-b',
+          type: 'component',
+          name: 'B',
+          x: 100,
+          y: 100,
+          properties: { filepath: 'src/b.ts' },
+        },
+      ],
+      dependencies: [],
+    });
+    useBlueprintStore.setState({ selectedNodeId: 'comp-a', showCoupling: true, showTests: true });
+
+    render(<Canvas />);
+
+    expect(screen.getByTestId('edges-count')).toHaveTextContent('1');
+  });
+
   it('displays cycle warning validation status badge when cycle is present', () => {
     useBlueprintStore.setState({
       validationResult: {

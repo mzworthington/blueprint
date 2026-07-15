@@ -7,6 +7,7 @@ import type {
   DependencyType,
   PropertyMap,
   C4Level,
+  NodeForensics,
 } from '@blueprint/core';
 
 export type ComponentNodeData = {
@@ -18,6 +19,9 @@ export type ComponentNodeData = {
   isTest?: boolean;
   properties: PropertyMap;
   entityRef?: string;
+  forensics?: NodeForensics;
+  /** Transient canvas highlight for temporal-coupling peers (not persisted). */
+  couplingHighlight?: boolean;
 };
 
 export type BlueprintRFNode = RFNode<ComponentNodeData, 'blueprintNode'>;
@@ -44,6 +48,7 @@ export const mapDomainNodeToRFNode = (n: any): BlueprintRFNode => {
       isTest: n.isTest,
       properties: n.properties || {},
       entityRef: ref,
+      forensics: n.forensics,
     },
   };
 };
@@ -116,6 +121,7 @@ export const rebuildSchemaFromCanvas = (
     external: rn.data.external,
     isTest: rn.data.isTest,
     properties: rn.data.properties,
+    forensics: rn.data.forensics,
     x: rn.position.x,
     y: rn.position.y,
     entityRef: rn.data.entityRef || rn.id || '',

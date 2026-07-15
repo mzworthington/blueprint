@@ -4,7 +4,7 @@
 
 Scans a local codebase, extracts modules and dependencies via static analysis, lays them out with Dagre, and writes C4-style YAML under `blueprints/`.
 
-Supports **multi-system** / monorepo discovery, **product hubs** on the context diagram, **type hydration**, **gitignore + structural filters**, and **cancelable** runs (Ctrl+C).
+Supports **multi-system** / monorepo discovery, **product hubs** on the context diagram, **type hydration**, **gitignore + structural filters**, **optional Git forensics**, and **cancelable** runs (Ctrl+C).
 
 ---
 
@@ -18,7 +18,7 @@ pnpm dev:cli
 
 ### Modes
 
-1. **Interactive (default):** step-by-step prompts for parser, glob, and output.
+1. **Interactive (default):** step-by-step prompts for parser, glob, output, and whether to enrich with Git forensics.
 2. **Headless / CI:** non-TTY, or when flags are supplied:
 
 ```bash
@@ -37,8 +37,27 @@ pnpm dev:cli --headless --parser=ts-morph --glob="**/*.{ts,tsx}" --output="bluep
 | `--ignore="<a,b>"`                 | Extra ignore globs (comma-separated)                              |
 | `--systems="<a,b>"`                | Restrict discovery to these system roots                          |
 | `--rollup-modules`                 | Collapse `*-module-*` packages into a prefix system               |
+| `--git`                            | Explicitly enable Git forensics (on by default)                   |
+| `--no-git`                         | Skip Git forensics enrichment                                     |
+| `--git-only`                       | Headless architecture + forensics enrich (same deliverable)       |
+| `--git-since=<days>`               | Forensics lookback window (default 90)                            |
 
 Interrupt with **Ctrl+C** (or SIGTERM). First signal aborts cooperatively; a second signal force-exits (`130`).
+
+### Git forensics examples
+
+```bash
+# Architecture + forensics (default) attached onto blueprint nodes
+pnpm dev:cli --headless --output=blueprints
+
+# Architecture without forensics
+pnpm dev:cli --headless --no-git --output=blueprints
+
+# Headless enrich with custom lookback
+pnpm --filter @blueprint/cli exec tsx src/blueprint.ts --git-only --git-since=90
+```
+
+Forensics attach a typed `forensics` object onto component nodes (per-file metrics via `filepath`) and rolled-up summaries onto containers and context system nodes. Optional `forensics` section in `blueprint.config.json` for thresholds (`hotspotThreshold`, `complexityThreshold`, `minSharedCommits`, `couplingThreshold`, `minChurnForComplexity`, `sinceDays`).
 
 ---
 

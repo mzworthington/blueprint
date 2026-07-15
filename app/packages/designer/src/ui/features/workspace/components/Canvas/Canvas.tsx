@@ -15,6 +15,10 @@ import { ActionControls } from '../ActionControls/ActionControls';
 import { AlertTriangle, CheckCircle2, Info, AlertCircle, X, ZoomOut } from 'lucide-react';
 import { getSchemaEntityRef } from '@blueprint/core';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
+import {
+  applyCouplingHighlights,
+  buildCouplingOverlayEdges,
+} from '../../../../../application/forensics/buildCouplingOverlayEdges';
 
 export const Canvas: React.FC = () => {
   const [, setLocation] = useLocation();
@@ -26,9 +30,11 @@ export const Canvas: React.FC = () => {
     onEdgesChange,
     onConnect,
     selectNode,
+    selectedNodeId,
     lastError,
     clearError,
     showTests,
+    showCoupling,
     loadedSystems,
     currentFilePath,
     workspaceName,
@@ -87,17 +93,28 @@ export const Canvas: React.FC = () => {
     return nodes.filter(n => !n.data.isTest);
   }, [nodes, showTests]);
 
+  const displayNodes = useMemo(
+    () => applyCouplingHighlights(filteredNodes, selectedNodeId, showCoupling),
+    [filteredNodes, selectedNodeId, showCoupling]
+  );
+
   const filteredEdges = useMemo(() => {
     if (showTests) return edges;
     const visibleNodeIds = new Set(filteredNodes.map(n => n.id));
     return edges.filter(e => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target));
   }, [edges, filteredNodes, showTests]);
 
+  const displayEdges = useMemo(() => {
+    const couplingEdges = buildCouplingOverlayEdges(selectedNodeId, filteredNodes, showCoupling);
+    if (couplingEdges.length === 0) return filteredEdges;
+    return [...filteredEdges, ...couplingEdges];
+  }, [filteredEdges, filteredNodes, selectedNodeId, showCoupling]);
+
   return (
     <div className="flex-1 h-full relative" onClick={() => selectNode(null)}>
       <ReactFlow
-        nodes={filteredNodes}
-        edges={filteredEdges}
+        nodes={displayNodes}
+        edges={displayEdges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}

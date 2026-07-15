@@ -117,6 +117,30 @@ export interface PropertyMap {
   [key: string]: string | number | boolean;
 }
 
+export type ForensicClassification = 'hotspot' | 'knowledge-silo';
+
+export interface CoupledFileForensics {
+  path: string;
+  score: number;
+  sharedCommits: number;
+}
+
+export interface NodeForensics {
+  complexity?: number;
+  loc?: number;
+  sloc?: number;
+  churn?: number;
+  authorCount?: number;
+  topAuthorPercent?: number;
+  hotspotScore?: number;
+  classifications?: ForensicClassification[];
+  coupledFiles?: CoupledFileForensics[];
+  /** Rollups only (containers / systems) */
+  fileCount?: number;
+  hotspotCount?: number;
+  knowledgeSiloCount?: number;
+}
+
 export interface SystemNode {
   entityRef: EntityRef;
   type: NodeType;
@@ -126,6 +150,7 @@ export interface SystemNode {
   isTest?: boolean;
   x?: number;
   y?: number;
+  forensics?: NodeForensics;
 }
 
 export type DependencyType = 'direct-call' | 'publish-subscribe' | 'read-write' | 'inter-container';

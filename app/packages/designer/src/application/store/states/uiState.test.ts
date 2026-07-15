@@ -5,6 +5,7 @@ describe('uiState Actions & State Management', () => {
   it('should initialize with correct default UI state', () => {
     const state = useBlueprintStore.getState();
     expect(state.showTests).toBe(false);
+    expect(state.showCoupling).toBe(false);
     expect(state.leftCollapsed).toBe(true);
     expect(state.rightCollapsed).toBe(true);
     expect(state.showDesignSystem).toBe(false);
@@ -31,6 +32,17 @@ describe('uiState Actions & State Management', () => {
 
     store.toggleShowTests();
     expect(useBlueprintStore.getState().showTests).toBe(false);
+  });
+
+  it('should toggle showCoupling property via toggleShowCoupling action', () => {
+    const store = useBlueprintStore.getState();
+    expect(store.showCoupling).toBe(false);
+
+    store.toggleShowCoupling();
+    expect(useBlueprintStore.getState().showCoupling).toBe(true);
+
+    store.toggleShowCoupling();
+    expect(useBlueprintStore.getState().showCoupling).toBe(false);
   });
 
   it('should manage leftCollapsed and rightCollapsed panel states', () => {

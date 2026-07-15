@@ -21,6 +21,16 @@ nodes:
       role: subsystem
     x: 140
     'y': 370
+    forensics:
+      complexity: 102
+      churn: 2077
+      hotspotScore: 0
+      authorCount: 1
+      fileCount: 2077
+      hotspotCount: 0
+      knowledgeSiloCount: 321
+      classifications:
+        - knowledge-silo
   - entityRef: blueprint/plugins
     type: software-system
     name: Plugins System
@@ -30,6 +40,16 @@ nodes:
       role: subsystem
     x: 600
     'y': 370
+    forensics:
+      complexity: 96
+      churn: 3231
+      hotspotScore: 0
+      authorCount: 1
+      fileCount: 3231
+      hotspotCount: 0
+      knowledgeSiloCount: 388
+      classifications:
+        - knowledge-silo
   - entityRef: blueprint/docs-ui
     type: software-system
     name: Docs Ui System
@@ -39,6 +59,16 @@ nodes:
       role: subsystem
     x: 1060
     'y': 370
+    forensics:
+      complexity: 23
+      churn: 69
+      hotspotScore: 0
+      authorCount: 1
+      fileCount: 69
+      hotspotCount: 0
+      knowledgeSiloCount: 6
+      classifications:
+        - knowledge-silo
   - entityRef: blueprint/microsite
     type: software-system
     name: Microsite System
@@ -48,6 +78,16 @@ nodes:
       role: subsystem
     x: 1520
     'y': 370
+    forensics:
+      complexity: 27
+      churn: 17
+      hotspotScore: 0
+      authorCount: 1
+      fileCount: 17
+      hotspotCount: 0
+      knowledgeSiloCount: 1
+      classifications:
+        - knowledge-silo
   - entityRef: blueprint/blueprint
     type: software-system
     name: Blueprint System
@@ -66,21 +106,41 @@ nodes:
       role: subsystem
     x: 1980
     'y': 370
+  - entityRef: blueprint/cli
+    type: software-system
+    name: Cli System
+    properties:
+      rootPath: ''
+      productId: cli
+      role: product-hub
+    x: 2440
+    'y': 50
+    forensics:
+      complexity: 70
+      churn: 96
+      authorCount: 1
+      hotspotScore: 0.5507246376811594
+      classifications:
+        - knowledge-silo
+        - hotspot
+      fileCount: 74
+      hotspotCount: 1
+      knowledgeSiloCount: 16
 dependencies:
-  - from: blueprint/backstage
-    to: blueprint/packages
+  - from: blueprint/blueprint
+    to: blueprint/app
     type: direct-call
     description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/plugins
+  - from: blueprint/blueprint
+    to: blueprint/app
     type: direct-call
     description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/docs-ui
+  - from: blueprint/blueprint
+    to: blueprint/app
     type: direct-call
     description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/microsite
+  - from: blueprint/blueprint
+    to: blueprint/app
     type: direct-call
     description: Part of product system
   - from: blueprint/backstage

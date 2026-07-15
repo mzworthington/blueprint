@@ -20,6 +20,7 @@ import {
 import type { NodeType } from '@blueprint/core';
 import { useBlueprintStore } from '../../../../../application/store/store';
 import type { ComponentNodeData } from '../../../../../application/store/store';
+import { evaluateForensicsConcern } from '../../../../../application/forensics/concern';
 
 type CustomNode = Node<ComponentNodeData, 'blueprintNode'>;
 
@@ -184,6 +185,13 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
     return loadedSystems.some(s => s.schema.entityRef === data.entityRef);
   }, [data.entityRef, loadedSystems]);
 
+  const concern = React.useMemo(() => evaluateForensicsConcern(data.forensics), [data.forensics]);
+  const classifications = data.forensics?.classifications ?? [];
+  const showHotBadge = classifications.includes('hotspot') || concern.level === 'danger';
+  const showSiloBadge =
+    classifications.includes('knowledge-silo') ||
+    (concern.level === 'warning' && concern.reasons.some(r => /silo/i.test(r)));
+
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     selectNode(id);
@@ -194,18 +202,33 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
     deleteNode(id);
   };
 
+  const concernBorder =
+    concern.level === 'danger'
+      ? 'border-red-800/80'
+      : concern.level === 'warning'
+        ? 'border-amber-800/80'
+        : null;
+
   const borderClass = data.external
     ? 'border-dashed border-slate-700 bg-slate-950/45 opacity-70 shadow-none hover:border-slate-500'
     : selected
       ? 'border-brand-500 shadow-[0_0_15px_rgba(139,92,246,0.3)] bg-slate-900/90 scale-102'
-      : 'border-slate-800 bg-slate-950/80 hover:border-slate-700';
+      : data.couplingHighlight
+        ? 'border-amber-500/70 shadow-[0_0_14px_rgba(245,158,11,0.25)] bg-slate-900/90'
+        : concernBorder
+          ? `${concernBorder} bg-slate-950/80 hover:border-slate-700`
+          : 'border-slate-800 bg-slate-950/80 hover:border-slate-700';
 
   return (
     <div
       onClick={handleClick}
+      data-coupling-highlight={data.couplingHighlight ? 'true' : undefined}
       className={`relative w-64 rounded-xl border p-4 transition-all duration-200 cursor-pointer ${borderClass}`}
       style={{
-        boxShadow: selected || data.external ? undefined : '0 4px 12px rgba(0, 0, 0, 0.25)',
+        boxShadow:
+          selected || data.external || data.couplingHighlight
+            ? undefined
+            : '0 4px 12px rgba(0, 0, 0, 0.25)',
         backdropFilter: 'blur(8px)',
       }}
     >
@@ -318,13 +341,39 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
         </p>
       </div>
 
-      <div className="mt-4 flex items-center justify-between border-t border-slate-900 pt-2 text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
-        <span>{config.label}</span>
-        {data.isTest && (
-          <span className="bg-red-500/10 text-red-400 px-1.5 py-0.5 rounded text-[9px] font-bold border border-red-500/20 tracking-normal normal-case">
-            TEST
-          </span>
-        )}
+      <div className="mt-4 flex items-center justify-between border-t border-slate-900 pt-2 text-[10px] text-slate-400 uppercase tracking-wider font-semibold gap-2">
+        <span className="truncate">{config.label}</span>
+        <div className="flex items-center gap-1 shrink-0">
+          {showHotBadge && (
+            <span
+              data-testid="forensics-badge-hot"
+              className="bg-red-950/50 text-red-300 px-1.5 py-0.5 rounded text-[9px] font-bold border border-red-900/40 tracking-normal"
+            >
+              HOT
+            </span>
+          )}
+          {showSiloBadge && (
+            <span
+              data-testid="forensics-badge-silo"
+              className="bg-amber-950/50 text-amber-300 px-1.5 py-0.5 rounded text-[9px] font-bold border border-amber-900/40 tracking-normal"
+            >
+              SILO
+            </span>
+          )}
+          {data.couplingHighlight && (
+            <span
+              data-testid="forensics-badge-coupled"
+              className="bg-amber-950/50 text-amber-200 px-1.5 py-0.5 rounded text-[9px] font-bold border border-amber-800/50 tracking-normal"
+            >
+              COUPLED
+            </span>
+          )}
+          {data.isTest && (
+            <span className="bg-red-500/10 text-red-400 px-1.5 py-0.5 rounded text-[9px] font-bold border border-red-500/20 tracking-normal normal-case">
+              TEST
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

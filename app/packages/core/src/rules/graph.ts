@@ -120,6 +120,29 @@ const entityRefStringSchema = z
     'entityRef must be alphanumeric, dashes, or underscores segments separated by slashes'
   );
 
+const forensicClassificationSchema = z.enum(['hotspot', 'knowledge-silo']);
+
+const coupledFileForensicsSchema = z.object({
+  path: z.string().min(1),
+  score: z.number(),
+  sharedCommits: z.number(),
+});
+
+const nodeForensicsSchema = z.object({
+  complexity: z.number().optional(),
+  loc: z.number().optional(),
+  sloc: z.number().optional(),
+  churn: z.number().optional(),
+  authorCount: z.number().optional(),
+  topAuthorPercent: z.number().optional(),
+  hotspotScore: z.number().optional(),
+  classifications: z.array(forensicClassificationSchema).optional(),
+  coupledFiles: z.array(coupledFileForensicsSchema).optional(),
+  fileCount: z.number().optional(),
+  hotspotCount: z.number().optional(),
+  knowledgeSiloCount: z.number().optional(),
+});
+
 const systemNodeSchema = z.object({
   entityRef: entityRefStringSchema,
   type: nodeTypeSchema,
@@ -129,6 +152,7 @@ const systemNodeSchema = z.object({
   isTest: z.boolean().optional(),
   x: z.number().optional(),
   y: z.number().optional(),
+  forensics: nodeForensicsSchema.optional(),
 });
 
 const systemDependencySchema = z.object({
@@ -164,6 +188,7 @@ function mapValidatedSchema(validated: z.infer<typeof systemSchemaValidator>): S
       isTest: n.isTest,
       x: n.x,
       y: n.y,
+      forensics: n.forensics,
     })),
     dependencies: validated.dependencies
       ? validated.dependencies.map(d => ({
@@ -260,6 +285,7 @@ export function serializeSchemaToYaml(schema: SystemSchema): string {
     }
     if (typeof n.x === 'number') cleaned.x = Math.round(n.x);
     if (typeof n.y === 'number') cleaned.y = Math.round(n.y);
+    if (n.forensics) cleaned.forensics = n.forensics;
     return cleaned;
   });
 

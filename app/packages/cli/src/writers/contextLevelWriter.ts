@@ -1,6 +1,7 @@
 import { BaseWriter } from '../analysis/domain/writer.ts';
 import type { SystemDependency, SystemNode, SystemSchema } from '@blueprint/core';
 import { EntityRef, parseSchemaFromYaml } from '@blueprint/core';
+import { attachForensicsToSchema } from '../forensics/domain/attachForensics.ts';
 
 export type ContextSystemInput = {
   entityRef: string;
@@ -86,7 +87,8 @@ export class ContextLevelWriter extends BaseWriter {
   async writeSystems(
     rootDir: string,
     contextName: string,
-    systems: ContextSystemInput[]
+    systems: ContextSystemInput[],
+    options?: { forensicsComponentNodes?: SystemNode[] }
   ): Promise<void> {
     if (systems.length === 0) return;
 
@@ -147,6 +149,12 @@ export class ContextLevelWriter extends BaseWriter {
     });
 
     contextSchema.dependencies = [...preserved, ...hubDeps];
+
+    if (options?.forensicsComponentNodes?.length) {
+      contextSchema = attachForensicsToSchema(contextSchema, new Map(), {
+        componentNodes: options.forensicsComponentNodes,
+      });
+    }
 
     contextSchema.nodes = await this.layout.computeLayout(
       contextSchema.nodes,

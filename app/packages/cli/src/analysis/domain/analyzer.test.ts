@@ -75,15 +75,20 @@ describe('CodebaseAnalyzer Domain Service', () => {
 
     // 1. Verify ContextLevelWriter.writeSystems was called once with the fallback system
     expect(mockContextWriteSystems).toHaveBeenCalledTimes(1);
-    expect(mockContextWriteSystems).toHaveBeenCalledWith('/workspace/blueprints', 'test-pkg', [
-      {
-        entityRef: 'test-pkg',
-        displayName: 'Test Pkg',
-        rootPath: '',
-        productId: 'test-pkg',
-        isProductHub: true,
-      },
-    ]);
+    expect(mockContextWriteSystems).toHaveBeenCalledWith(
+      '/workspace/blueprints',
+      'test-pkg',
+      [
+        {
+          entityRef: 'test-pkg',
+          displayName: 'Test Pkg',
+          rootPath: '',
+          productId: 'test-pkg',
+          isProductHub: true,
+        },
+      ],
+      undefined
+    );
 
     // 2. Verify ContainerLevelWriter was called
     expect(mockContainerWrite).toHaveBeenCalledTimes(1);
@@ -177,6 +182,66 @@ describe('CodebaseAnalyzer Domain Service', () => {
   it('should not throw if analyzing an empty file set', async () => {
     parser.files = [];
     await expect(analyzer.runAnalysis('test-pkg', 'blueprints')).resolves.not.toThrow();
+  });
+
+  it('attaches forensics onto component and container nodes when metrics are provided', async () => {
+    parser.files = [
+      {
+        filePath: '/workspace/src/domain/graph.ts',
+        relativePath: 'src/domain/graph.ts',
+        baseName: 'graph',
+        isTestFile: false,
+        imports: [],
+        newExpressions: [],
+        callExpressions: [],
+      },
+    ];
+
+    const forensicsByPath = new Map([
+      [
+        'src/domain/graph.ts',
+        {
+          path: 'src/domain/graph.ts',
+          complexity: 22,
+          loc: 40,
+          sloc: 30,
+          churn: 7,
+          authorCount: 1,
+          topAuthorPercent: 1,
+          coupledFiles: [],
+          hotspotScore: 0.85,
+          classifications: ['hotspot' as const, 'knowledge-silo' as const],
+        },
+      ],
+    ]);
+
+    await analyzer.runAnalysis('test-pkg', 'blueprints', 'src/**/*.ts', undefined, {
+      forensicsByPath,
+    });
+
+    const componentNodesMap = mockComponentWrite.mock.calls[0][3] as Map<
+      string,
+      { forensics?: { complexity?: number; hotspotScore?: number } }
+    >;
+    const graph = componentNodesMap.get('domain/graph');
+    expect(graph?.forensics?.complexity).toBe(22);
+    expect(graph?.forensics?.hotspotScore).toBe(0.85);
+
+    const containerNodesMap = mockContainerWrite.mock.calls[0][3] as Map<
+      string,
+      { forensics?: { hotspotCount?: number; fileCount?: number } }
+    >;
+    expect(containerNodesMap.get('domain')?.forensics?.fileCount).toBe(1);
+    expect(containerNodesMap.get('domain')?.forensics?.hotspotCount).toBe(1);
+
+    expect(mockContextWriteSystems).toHaveBeenCalledWith(
+      '/workspace/blueprints',
+      'test-pkg',
+      expect.any(Array),
+      expect.objectContaining({
+        forensicsComponentNodes: expect.any(Array),
+      })
+    );
   });
 
   it('stops when the abort signal is already aborted', async () => {
