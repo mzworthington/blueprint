@@ -6,6 +6,7 @@ import { slugify, getSchemaEntityRef } from '@blueprint/core';
 import { NODE_TYPES } from './nodeTypes';
 import { IdentitySection } from './IdentitySection';
 import { PropertiesSection } from './PropertiesSection';
+import { ForensicsSection } from './ForensicsSection';
 import { ConnectionsSection } from './ConnectionsSection';
 import { ComponentCatalog } from './ComponentCatalog';
 import { ValidationSection } from './ValidationSection';
@@ -163,6 +164,10 @@ export const PropertyPanel: React.FC = () => {
 
           {isNode && selectedNode ? (
             <>
+              {selectedNode.forensics ? (
+                <ForensicsSection forensics={selectedNode.forensics} />
+              ) : null}
+
               <PropertiesSection
                 properties={selectedNode.properties}
                 propKey={propKey}

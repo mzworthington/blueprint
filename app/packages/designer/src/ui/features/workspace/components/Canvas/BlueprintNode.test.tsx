@@ -63,6 +63,24 @@ describe('BlueprintNode Component', () => {
     expect(screen.getByTestId('handle-source-right')).toBeInTheDocument();
   });
 
+  it('shows HOT and SILO badges for concerning forensics', () => {
+    const props = {
+      ...defaultProps,
+      data: {
+        ...defaultProps.data,
+        forensics: {
+          complexity: 20,
+          authorCount: 1,
+          hotspotScore: 0.9,
+          classifications: ['hotspot', 'knowledge-silo'],
+        },
+      },
+    };
+    render(<BlueprintNode {...props} />);
+    expect(screen.getByTestId('forensics-badge-hot')).toHaveTextContent('HOT');
+    expect(screen.getByTestId('forensics-badge-silo')).toHaveTextContent('SILO');
+  });
+
   it('truncates long entityRefs while exposing the full value in the title tooltip', () => {
     const longRef = 'blueprint/blueprint/designer/importschema';
     const props = {

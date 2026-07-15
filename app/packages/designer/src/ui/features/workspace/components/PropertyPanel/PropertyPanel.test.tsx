@@ -163,4 +163,38 @@ describe('PropertyPanel UI Component', () => {
     const edge = useBlueprintStore.getState().edges[0];
     expect(edge.data?.description).toBe('JSON over HTTPS');
   });
+
+  it('shows readonly git forensics when the selected node is enriched', () => {
+    const { initSchema } = useBlueprintStore.getState();
+    initSchema({
+      name: 'Cloud Infrastructure Workspace',
+      version: '1.0.0',
+      level: 'container',
+      nodes: [
+        {
+          entityRef: 'gateway-api',
+          type: 'rest-api',
+          name: 'Gateway API',
+          x: 0,
+          y: 0,
+          forensics: {
+            complexity: 18,
+            churn: 4,
+            hotspotScore: 0.8,
+            classifications: ['hotspot'],
+          },
+        },
+      ],
+      dependencies: [],
+    });
+
+    const nodeId = useBlueprintStore.getState().nodes[0]?.id;
+    useBlueprintStore.setState({ selectedNodeId: nodeId });
+
+    render(<PropertyPanel />);
+
+    expect(screen.getByTestId('forensics-section')).toBeInTheDocument();
+    expect(screen.getByTestId('forensics-concern-badge')).toHaveTextContent(/Hotspot/i);
+    expect(screen.getByText('18')).toBeInTheDocument();
+  });
 });
