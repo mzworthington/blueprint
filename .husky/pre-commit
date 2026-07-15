@@ -1,13 +1,29 @@
-if git diff --cached --name-only | grep -qE '^cli/'; then
+STAGED=$(git diff --cached --name-only)
+
+if echo "$STAGED" | grep -qE '^cli/'; then
   echo "Skipping Rust checks — experimental cli/ tree is unmaintained and not part of CI."
 fi
 
-if git diff --cached --name-only | grep -qE '^app/'; then
-  echo "Detected changes under app/. Running PNPM checks..."
+# CI runs format:check on app + repo docs/README. Keep the hook in sync.
+NEEDS_APP_CHECKS=false
+NEEDS_DOCS_FORMAT=false
+
+if echo "$STAGED" | grep -qE '^app/'; then
+  NEEDS_APP_CHECKS=true
+fi
+
+if echo "$STAGED" | grep -qE '^docs/|(^|/)[^/]+\.md$'; then
+  NEEDS_DOCS_FORMAT=true
+fi
+
+if [ "$NEEDS_APP_CHECKS" = true ] || [ "$NEEDS_DOCS_FORMAT" = true ]; then
+  echo "Detected staged app/docs changes. Running PNPM checks..."
   cd app
   pnpm exec lint-staged
-  pnpm run lint
-  pnpm knip
-  pnpm vitest run --changed
+  if [ "$NEEDS_APP_CHECKS" = true ]; then
+    pnpm run lint
+    pnpm knip
+    pnpm vitest run --changed
+  fi
   cd ..
 fi

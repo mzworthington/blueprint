@@ -10,12 +10,12 @@ Grab the latest release from GitHub:
 
 Pick the archive for your platform:
 
-| Platform            | Asset                            |
-| ------------------- | -------------------------------- |
-| macOS Apple Silicon | `blueprint-macos-arm64.tar.gz`   |
-| macOS Intel         | `blueprint-macos-x64.tar.gz`     |
-| Linux x64           | `blueprint-linux-x64.tar.gz`     |
-| Windows x64         | `blueprint-windows-x64.zip`      |
+| Platform            | Asset                          |
+| ------------------- | ------------------------------ |
+| macOS Apple Silicon | `blueprint-macos-arm64.tar.gz` |
+| macOS Intel         | `blueprint-macos-x64.tar.gz`   |
+| Linux x64           | `blueprint-linux-x64.tar.gz`   |
+| Windows x64         | `blueprint-windows-x64.zip`    |
 
 ## 2. Install on your `PATH`
 
