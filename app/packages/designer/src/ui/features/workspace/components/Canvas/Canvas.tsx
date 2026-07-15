@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useCallback } from 'react';
 import {
   ReactFlow,
   Background,
@@ -8,13 +8,17 @@ import {
   Panel,
   useReactFlow,
 } from '@xyflow/react';
+import { useLocation } from 'wouter';
 import { useBlueprintStore } from '../../../../../application/store/store';
 import { BlueprintNode } from './BlueprintNode';
 import { ActionControls } from '../ActionControls/ActionControls';
-import { AlertTriangle, CheckCircle2, Info, AlertCircle, X } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, Info, AlertCircle, X, ZoomOut } from 'lucide-react';
+import { getSchemaEntityRef } from '@blueprint/core';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 
 export const Canvas: React.FC = () => {
+  const [, setLocation] = useLocation();
+
   const {
     nodes,
     edges,
@@ -25,11 +29,10 @@ export const Canvas: React.FC = () => {
     lastError,
     clearError,
     showTests,
-    zoomIntoNode,
-    zoomOut,
     loadedSystems,
     currentFilePath,
-    selectSystem,
+    workspaceName,
+    isWorkspaceOpen,
     notification,
     setNotification,
   } = useBlueprintStore();
@@ -43,15 +46,32 @@ export const Canvas: React.FC = () => {
     []
   );
 
+  const parentSystem = useMemo(() => {
+    const active = loadedSystems.find(s => s.path === currentFilePath);
+    const childRef = active?.schema.entityRef;
+    if (!childRef) return null;
+    return loadedSystems.find(s => s.schema.nodes.some(n => n.entityRef === childRef)) ?? null;
+  }, [loadedSystems, currentFilePath]);
+
+  const zoomOutToParent = useCallback(() => {
+    if (!parentSystem) return;
+    const parentRef = getSchemaEntityRef(
+      parentSystem.schema,
+      isWorkspaceOpen ? workspaceName : undefined
+    );
+    setLocation(`/workspace/${parentRef}`);
+  }, [parentSystem, isWorkspaceOpen, workspaceName, setLocation]);
+
+  useKeyboardNavigation({
+    onZoomOut: parentSystem ? zoomOutToParent : undefined,
+  });
+
   useEffect(() => {
     const timer = setTimeout(() => {
       fitView({ duration: 400 });
     }, 50);
     return () => clearTimeout(timer);
   }, [currentFilePath, fitView]);
-
-  // Centralized keyboard navigation
-  useKeyboardNavigation({ onZoomOut: zoomOut });
 
   useEffect(() => {
     if (notification) {
@@ -84,11 +104,9 @@ export const Canvas: React.FC = () => {
         onNodeDoubleClick={(_, node) => {
           const hasSub =
             node.data?.entityRef &&
-            loadedSystems.some(
-              s => s.schema.level === 'component' && s.schema.parentRef === node.data.entityRef
-            );
-          if (hasSub) {
-            zoomIntoNode(node.id);
+            loadedSystems.some(s => s.schema.entityRef === node.data.entityRef);
+          if (hasSub && node.data?.entityRef) {
+            setLocation(`/workspace/${node.data.entityRef}`);
           }
         }}
         nodeTypes={nodeTypes}
@@ -99,6 +117,26 @@ export const Canvas: React.FC = () => {
       >
         <Background variant={BackgroundVariant.Dots} gap={24} size={1} color="#334155" />
         <Controls position="top-right" />
+
+        {parentSystem && (
+          <Panel position="top-left" className="m-4">
+            <button
+              type="button"
+              onClick={e => {
+                e.stopPropagation();
+                zoomOutToParent();
+              }}
+              className="flex items-center gap-1.5 bg-slate-950/90 border border-slate-800 hover:border-brand-500/40 hover:bg-slate-900 text-slate-200 hover:text-brand-300 px-3 py-1.5 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md text-xs font-semibold transition cursor-pointer"
+              title="Zoom out to parent diagram (Esc)"
+            >
+              <ZoomOut className="w-3.5 h-3.5" />
+              <span>Zoom out</span>
+              <kbd className="hidden sm:inline ml-1 text-[9px] font-mono text-slate-500 bg-slate-900 border border-slate-800 rounded px-1 py-0.5">
+                Esc
+              </kbd>
+            </button>
+          </Panel>
+        )}
 
         <Panel
           position="bottom-right"
@@ -111,7 +149,16 @@ export const Canvas: React.FC = () => {
               </span>
               <select
                 value={currentFilePath}
-                onChange={e => selectSystem(e.target.value)}
+                onChange={e => {
+                  const targetSys = loadedSystems.find(s => s.path === e.target.value);
+                  if (targetSys) {
+                    const ref = getSchemaEntityRef(
+                      targetSys.schema,
+                      isWorkspaceOpen ? workspaceName : undefined
+                    );
+                    setLocation(`/workspace/${ref}`);
+                  }
+                }}
                 className="bg-slate-950 border border-slate-850 text-slate-200 hover:text-slate-100 hover:border-slate-700 px-2 py-0.5 rounded-md text-xs font-semibold focus:outline-none focus:border-brand-500 cursor-pointer transition duration-200 max-w-[130px] truncate"
               >
                 {loadedSystems.map(sys => (

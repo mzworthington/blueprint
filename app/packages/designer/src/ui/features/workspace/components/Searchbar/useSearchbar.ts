@@ -48,7 +48,6 @@ export function useSearchbar(): UseSearchbarReturn {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Centralized keyboard navigation for search shortcuts
   useKeyboardNavigation({
     onSearchOpen: () => {
       setIsExpanded(true);
@@ -63,7 +62,7 @@ export function useSearchbar(): UseSearchbarReturn {
     return schema.nodes.filter(n => {
       if (!showTests && n.isTest) return false;
       const matchName = n.name?.toLowerCase().includes(q);
-      const matchId = n.id?.toLowerCase().includes(q);
+      const matchId = n.entityRef?.toLowerCase().includes(q);
       const matchType = n.type?.toLowerCase().includes(q);
       const matchProps =
         n.properties &&
@@ -109,7 +108,7 @@ export function useSearchbar(): UseSearchbarReturn {
     } else if (e.key === 'Enter') {
       e.preventDefault();
       if (filteredNodes[activeIndex]) {
-        handleSelectNode(filteredNodes[activeIndex].id);
+        handleSelectNode(filteredNodes[activeIndex].entityRef || '');
       }
     }
   };

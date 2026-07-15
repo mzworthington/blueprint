@@ -7,15 +7,9 @@ import {
   noopFileSystem,
   noopWorkspace,
   noopLogger,
-  parseSchemaFromYaml,
-  resolveWorkspaceEntityRefs,
-  getSystemIdFromPath,
 } from '../../../core';
-import {
-  saveBaselineSchema,
-  saveWorkingSchema,
-  loadWorkingSchema,
-} from '../../../infrastructure/db/db';
+import { saveBaselineSchema } from '../../../infrastructure/db/db';
+import { loadWorkspaceFromDirectory } from './ioState/openWorkspace';
 
 export interface IoState {
   fileSystemPort: FileSystemPort;
@@ -116,97 +110,17 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
   },
 
   openWorkspaceDirectory: async () => {
-    const { workspacePort, logger } = get();
-    logger.info('Opening workspace folder picker');
+    const { workspacePort, logger, setNotification, initSchema } = get();
     try {
-      const ok = await workspacePort.selectDirectory();
-      if (!ok) return false;
-
-      const files = await workspacePort.readDirectoryFiles();
-      if (files.length === 0) {
-        throw new Error('No blueprint .yaml or .yml files found in selected directory');
-      }
-
-      const schemaFiles = files.filter(
-        f =>
-          (f.name.endsWith('.yaml') || f.name.endsWith('.yml')) &&
-          !f.name.endsWith('workspace.yaml') &&
-          !f.name.endsWith('blueprint-workspace.yaml')
-      );
-
-      const nextLoadedSystems = schemaFiles
-        .map(file => {
-          try {
-            const schema = parseSchemaFromYaml(file.content);
-            return {
-              path: file.name,
-              name:
-                schema.name ||
-                file.name
-                  .split('/')
-                  .pop()!
-                  .replace(/\.ya?ml$/, ''),
-              schema,
-            };
-          } catch (err) {
-            logger.warn(`Skipping file ${file.name} as it is not a valid blueprint schema: ${err}`);
-            return null;
-          }
-        })
-        .filter((s): s is NonNullable<typeof s> => s !== null);
-
-      if (nextLoadedSystems.length === 0) {
-        throw new Error('No valid blueprint schemas found in selected directory');
-      }
-
-      const resolved = resolveWorkspaceEntityRefs(nextLoadedSystems);
-      const resolvedSystems = nextLoadedSystems.map(sys => ({
-        ...sys,
-        schema: resolved.schemas[sys.path] || sys.schema,
-      }));
-
-      const resolvedSystemsWithDrafts = await Promise.all(
-        resolvedSystems.map(async sys => {
-          const sysId = getSystemIdFromPath(sys.path);
-          const fileRefMap = resolved.nodeRefMap[sys.path] || {};
-
-          await saveBaselineSchema(sys.path, sys.schema, sysId, fileRefMap).catch(() => {});
-
-          const workingSchema = await loadWorkingSchema(
-            sys.path,
-            sys.schema.name,
-            sys.schema.version,
-            sys.schema.level,
-            sys.schema.parentRef
-          ).catch(() => null);
-
-          if (workingSchema) {
-            return {
-              ...sys,
-              schema: workingSchema,
-            };
-          } else {
-            await saveWorkingSchema(sys.path, sys.schema, sysId, fileRefMap).catch(() => {});
-            return sys;
-          }
-        })
-      );
-
-      const firstSystem =
-        resolvedSystemsWithDrafts.find(s => s.schema.level === 'context') ||
-        resolvedSystemsWithDrafts.find(s => s.schema.level === 'container') ||
-        resolvedSystemsWithDrafts[0];
-
-      set({
-        isWorkspaceOpen: true,
-        workspaceName: workspacePort.getDirectoryName(),
-        loadedSystems: resolvedSystemsWithDrafts,
-        nodeRefMap: resolved.nodeRefMap,
-        currentFilePath: firstSystem.path,
-        navigationStack: [],
+      return await loadWorkspaceFromDirectory({
+        selectDirectory: () => workspacePort.selectDirectory(),
+        readDirectoryFiles: () => workspacePort.readDirectoryFiles(),
+        getDirectoryName: () => workspacePort.getDirectoryName(),
+        logger,
+        setNotification,
+        initSchema,
+        set,
       });
-      get().initSchema(firstSystem.schema);
-      return true;
     } catch (err) {
       logger.error('Failed to open workspace directory', err);
       set({ lastError: (err as Error).message || 'Failed to open workspace directory' });
@@ -234,8 +148,7 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
       const success = await workspacePort.writeFile(currentFilePath, yamlCode);
       if (success) {
         logger.info('Diagram saved successfully');
-        // Update database baseline table to match the persistent file
-        const sysId = getSystemIdFromPath(currentFilePath);
+        const sysId = schema.entityRef || 'default';
         const fileRefMap = nodeRefMap[currentFilePath] || {};
         await saveBaselineSchema(currentFilePath, schema, sysId, fileRefMap);
         setNotification?.({
@@ -262,6 +175,4 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
       return false;
     }
   },
-
-  // Manifest saving functionality removed.
 });

@@ -1,0 +1,111 @@
+entityRef: blueprint/plugins/search-backend-module-explore
+name: Search-backend-module-explore Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/search-backend-module-explore/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-explore/config.d.ts
+      containerId: search-backend-module-explore
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend-module-explore/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-explore/src/alpha.ts
+      containerId: search-backend-module-explore
+      technology: TypeScript Domain Service
+      classification: default
+    x: 830
+    'y': 370
+  - entityRef: blueprint/plugins/search-backend-module-explore/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-explore/src/collators/index.ts
+      containerId: search-backend-module-explore
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend-module-explore/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-explore/src/module.test.ts
+      containerId: search-backend-module-explore
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend-module-explore/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-explore/src/module.ts
+      containerId: search-backend-module-explore
+      technology: TypeScript Domain Service
+      classification: default
+    x: 830
+    'y': 690
+  - entityRef: blueprint/plugins/search-backend-module-explore/tooldocumentcollatorfactory-test
+    type: background-worker
+    name: ToolDocumentCollatorFactory.test Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-explore/src/collators/ToolDocumentCollatorFactory.test.ts
+      containerId: search-backend-module-explore
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1290
+    'y': 690
+  - entityRef: blueprint/plugins/search-backend-module-explore/tooldocumentcollatorfactory
+    type: background-worker
+    name: ToolDocumentCollatorFactory Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-explore/src/collators/ToolDocumentCollatorFactory.ts
+      containerId: search-backend-module-explore
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 1010
+dependencies:
+  - from: blueprint/plugins/search-backend-module-explore/alpha
+    to: blueprint/plugins/search-backend-module-explore/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-explore/module-test
+    to: blueprint/plugins/search-backend-module-explore/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-explore/module-test
+    to: blueprint/plugins/search-backend-module-explore/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-explore/module
+    to: blueprint/plugins/search-backend-module-explore/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-explore/module
+    to: blueprint/plugins/search-backend-module-explore/tooldocumentcollatorfactory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-explore/tooldocumentcollatorfactory-test
+    to: blueprint/plugins/search-backend-module-explore/tooldocumentcollatorfactory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-explore/tooldocumentcollatorfactory
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service

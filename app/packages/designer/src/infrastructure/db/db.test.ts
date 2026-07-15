@@ -6,7 +6,7 @@ import {
   computeSchemaDiff,
   revertWorkingSchema,
 } from './db';
-import type { SystemSchema } from '../../core';
+import type { SystemSchema } from '@blueprint/core';
 
 describe('db.ts - IndexedDB Client Operations', () => {
   beforeEach(async () => {
@@ -23,12 +23,12 @@ describe('db.ts - IndexedDB Client Operations', () => {
     level: 'component',
     nodes: [
       {
-        id: 'service-a',
+        entityRef: 'service-a',
         type: 'microservice',
         name: 'Service A',
         properties: { technology: 'Go' },
       },
-      { id: 'db-a', type: 'relational-database', name: 'Database A' },
+      { entityRef: 'db-a', type: 'relational-database', name: 'Database A' },
     ],
     dependencies: [{ from: 'service-a', to: 'db-a', type: 'read-write' }],
   };
@@ -78,7 +78,10 @@ describe('db.ts - IndexedDB Client Operations', () => {
   it('should detect added components and connections in working schema', async () => {
     const updatedSchema: SystemSchema = {
       ...sampleSchema,
-      nodes: [...sampleSchema.nodes, { id: 'cache-a', type: 'cache-store', name: 'Cache Store A' }],
+      nodes: [
+        ...sampleSchema.nodes,
+        { entityRef: 'cache-a', type: 'cache-store', name: 'Cache Store A' },
+      ],
       dependencies: [
         ...sampleSchema.dependencies,
         { from: 'service-a', to: 'cache-a', type: 'read-write' },
@@ -107,7 +110,7 @@ describe('db.ts - IndexedDB Client Operations', () => {
       ...sampleSchema,
       nodes: [
         {
-          id: 'service-a',
+          entityRef: 'service-a',
           type: 'microservice',
           name: 'Service A',
           properties: { technology: 'Go' },
@@ -133,12 +136,12 @@ describe('db.ts - IndexedDB Client Operations', () => {
       ...sampleSchema,
       nodes: [
         {
-          id: 'service-a',
+          entityRef: 'service-a',
           type: 'microservice',
           name: 'Service A Updated Name',
           properties: { technology: 'Go', version: '2.0' },
         },
-        { id: 'db-a', type: 'relational-database', name: 'Database A' },
+        { entityRef: 'db-a', type: 'relational-database', name: 'Database A' },
       ],
     };
 
@@ -155,8 +158,8 @@ describe('db.ts - IndexedDB Client Operations', () => {
     const positionSchema: SystemSchema = {
       ...sampleSchema,
       nodes: [
-        { id: 'service-a', type: 'microservice', name: 'Service A', x: 150, y: 250 },
-        { id: 'db-a', type: 'relational-database', name: 'Database A' },
+        { entityRef: 'service-a', type: 'microservice', name: 'Service A', x: 150, y: 250 },
+        { entityRef: 'db-a', type: 'relational-database', name: 'Database A' },
       ],
     };
 
@@ -176,7 +179,7 @@ describe('db.ts - IndexedDB Client Operations', () => {
       ...sampleSchema,
       nodes: [
         {
-          id: 'service-a',
+          entityRef: 'service-a',
           type: 'microservice',
           name: 'Service A Modified',
           properties: { technology: 'TS' },
@@ -201,7 +204,7 @@ describe('db.ts - IndexedDB Client Operations', () => {
     // Verify returned schema matches original
     expect(restored.name).toBe('Sample System');
     expect(restored.nodes).toHaveLength(2);
-    const restoredService = restored.nodes.find(n => n.id === 'service-a');
+    const restoredService = restored.nodes.find(n => n.entityRef === 'backstage/catalog/service-a');
     expect(restoredService?.name).toBe('Service A');
     expect(restored.dependencies).toHaveLength(1);
 

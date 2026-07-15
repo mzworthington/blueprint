@@ -1,0 +1,179 @@
+entityRef: blueprint/packages/dev-utils
+name: Dev-utils Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/dev-utils/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/dev-utils/src/components/SidebarSignOutButton/index.ts
+      containerId: dev-utils
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/dev-utils/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: packages/dev-utils/src/setupTests.ts
+      containerId: dev-utils
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/dev-utils/buicss
+    type: background-worker
+    name: BuiCss Service
+    isTest: false
+    properties:
+      filepath: packages/dev-utils/src/devApp/BuiCss.tsx
+      containerId: dev-utils
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/packages/dev-utils/render-test
+    type: gateway-api
+    name: render.test UI Component
+    isTest: true
+    properties:
+      filepath: packages/dev-utils/src/devApp/render.test.tsx
+      containerId: dev-utils
+      technology: React Component
+      classification: ui-import
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/packages/dev-utils/render
+    type: gateway-api
+    name: render UI Component
+    isTest: false
+    properties:
+      filepath: packages/dev-utils/src/devApp/render.tsx
+      containerId: dev-utils
+      technology: React Component
+      classification: ui-import
+    x: 1520
+    'y': 370
+  - entityRef: blueprint/packages/dev-utils/sidebarthemeswitcher-test
+    type: background-worker
+    name: SidebarThemeSwitcher.test Service
+    isTest: true
+    properties:
+      filepath: packages/dev-utils/src/devApp/SidebarThemeSwitcher.test.tsx
+      containerId: dev-utils
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 370
+  - entityRef: blueprint/packages/dev-utils/sidebarthemeswitcher
+    type: gateway-api
+    name: SidebarThemeSwitcher UI Component
+    isTest: false
+    properties:
+      filepath: packages/dev-utils/src/devApp/SidebarThemeSwitcher.tsx
+      containerId: dev-utils
+      technology: React Component
+      classification: ui-import
+    x: 1750
+    'y': 690
+  - entityRef: blueprint/packages/dev-utils/entitygriditem
+    type: gateway-api
+    name: EntityGridItem UI Component
+    isTest: false
+    properties:
+      filepath: packages/dev-utils/src/components/EntityGridItem/EntityGridItem.tsx
+      containerId: dev-utils
+      technology: React Component
+      classification: ui-import
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/packages/dev-utils/sidebarlanguageswitcher-test
+    type: background-worker
+    name: SidebarLanguageSwitcher.test Service
+    isTest: true
+    properties:
+      filepath: packages/dev-utils/src/components/SidebarLanguageSwitcher/SidebarLanguageSwitcher.test.tsx
+      containerId: dev-utils
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/packages/dev-utils/sidebarlanguageswitcher
+    type: gateway-api
+    name: SidebarLanguageSwitcher UI Component
+    isTest: false
+    properties:
+      filepath: packages/dev-utils/src/components/SidebarLanguageSwitcher/SidebarLanguageSwitcher.tsx
+      containerId: dev-utils
+      technology: React Component
+      classification: ui-import
+    x: 2440
+    'y': 370
+  - entityRef: blueprint/packages/dev-utils/sidebarsignoutbutton
+    type: background-worker
+    name: SidebarSignOutButton Service
+    isTest: false
+    properties:
+      filepath: packages/dev-utils/src/components/SidebarSignOutButton/SidebarSignOutButton.tsx
+      containerId: dev-utils
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2900
+    'y': 50
+dependencies:
+  - from: blueprint/packages/dev-utils/render-test
+    to: blueprint/packages/dev-utils/render
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/dev-utils/render
+    to: blueprint/packages/catalog-model/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/dev-utils/render
+    to: blueprint/packages/ui/box
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/dev-utils/render
+    to: blueprint/packages/dev-utils/sidebarthemeswitcher
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/dev-utils/render
+    to: blueprint/packages/app-defaults/components
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/dev-utils/sidebarthemeswitcher-test
+    to: blueprint/packages/dev-utils/sidebarthemeswitcher
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/dev-utils/sidebarthemeswitcher
+    to: blueprint/packages/ui/menu
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/dev-utils/entitygriditem
+    to: blueprint/packages/ui/grid
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/dev-utils/entitygriditem
+    to: blueprint/packages/core-components/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/dev-utils/sidebarlanguageswitcher-test
+    to: blueprint/packages/catalog-model/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/dev-utils/sidebarlanguageswitcher-test
+    to: blueprint/packages/dev-utils/sidebarlanguageswitcher
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/dev-utils/sidebarlanguageswitcher
+    to: blueprint/packages/catalog-model/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/dev-utils/sidebarlanguageswitcher
+    to: blueprint/packages/ui/menu
+    type: direct-call
+    description: Calls module / service

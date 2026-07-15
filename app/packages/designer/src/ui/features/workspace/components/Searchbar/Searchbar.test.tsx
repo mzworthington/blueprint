@@ -27,10 +27,11 @@ describe('Searchbar Component', () => {
       name: 'Search Test App',
       version: '1.0.0',
       level: 'container',
+      entityRef: 'cli',
       nodes: [
-        { id: 'node-1', name: 'Auth Controller', type: 'microservice' },
-        { id: 'node-2', name: 'Database Instance', type: 'database' },
-        { id: 'node-3', name: 'Test Gateway', type: 'gateway-api', isTest: true },
+        { entityRef: 'node-1', name: 'Auth Controller', type: 'microservice' },
+        { entityRef: 'node-2', name: 'Database Instance', type: 'database' },
+        { entityRef: 'node-3', name: 'Test Gateway', type: 'gateway-api', isTest: true },
       ],
       dependencies: [],
     });
@@ -95,8 +96,8 @@ describe('Searchbar Component', () => {
     const dropdownItem = screen.getByText('Auth Controller');
     fireEvent.click(dropdownItem);
 
-    expect(selectNodeSpy).toHaveBeenCalledWith('node-1');
-    expect(mockGetNode).toHaveBeenCalledWith('node-1');
+    expect(selectNodeSpy).toHaveBeenCalledWith('cli/node-1');
+    expect(mockGetNode).toHaveBeenCalledWith('cli/node-1');
     expect(mockSetCenter).toHaveBeenCalledWith(150, 225, { zoom: 1.15, duration: 800 });
     expect(screen.queryByText('Auth Controller')).not.toBeInTheDocument();
   });
@@ -112,8 +113,8 @@ describe('Searchbar Component', () => {
     fireEvent.keyDown(input, { key: 'ArrowDown' });
     fireEvent.keyDown(input, { key: 'Enter' });
 
-    expect(selectNodeSpy).toHaveBeenCalledWith('node-2');
-    expect(mockGetNode).toHaveBeenCalledWith('node-2');
+    expect(selectNodeSpy).toHaveBeenCalledWith('cli/node-2');
+    expect(mockGetNode).toHaveBeenCalledWith('cli/node-2');
   });
 
   it('closes dropdown when Escape key is pressed', () => {

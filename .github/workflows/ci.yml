@@ -42,23 +42,8 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
 
-      - name: Setup Buf
-        uses: bufbuild/buf-setup-action@v1
-
-      - name: Setup Rust Toolchain
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-
-      - name: Setup Protobuf Compiler
-        uses: arduino/setup-protoc@v3
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
-        working-directory: app
-
-      - name: Generate TypeScript protobufs
-        run: pnpm --filter @blueprint/cli generate:proto
         working-directory: app
 
       - name: Check Code Formatting
@@ -72,9 +57,6 @@ jobs:
       - name: Check Unused Code & Dependencies (Knip)
         run: pnpm knip --reporter github-actions
         working-directory: app
-
-      - name: Run Rust CLI Tests
-        run: cargo test --manifest-path cli/Cargo.toml
 
       - name: Run Test Suite with Coverage
         run: pnpm test:coverage
@@ -137,143 +119,6 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v5
 
-  check-rust-cli-release:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    outputs:
-      should_release: ${{ steps.check_changes.outputs.should_release }}
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 2
-
-      - name: Check if CLI or Proto files changed
-        id: check_changes
-        run: |
-          git diff --name-only HEAD~1 HEAD > changed_files.txt || git show --name-only --pretty="" HEAD > changed_files.txt
-          cat changed_files.txt
-          
-          if grep -qE '^(cli/|core/proto/)' changed_files.txt; then
-            echo "should_release=true" >> $GITHUB_OUTPUT
-          else
-            echo "should_release=false" >> $GITHUB_OUTPUT
-          fi
-
-  build-rust-cli-binaries:
-    needs: check-rust-cli-release
-    if: needs.check-rust-cli-release.outputs.should_release == 'true'
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
-            artifact_name: blueprint-rust-linux-x64.tar.gz
-            archive_cmd: tar -czf dist/blueprint-rust-linux-x64.tar.gz -C cli/target/release blueprint-rust
-          - os: macos-latest
-            target: x86_64-apple-darwin
-            artifact_name: blueprint-rust-macos-x64.tar.gz
-            archive_cmd: rustup target add x86_64-apple-darwin && cargo build --release --target x86_64-apple-darwin --manifest-path cli/Cargo.toml && tar -czf dist/blueprint-rust-macos-x64.tar.gz -C cli/target/x86_64-apple-darwin/release blueprint-rust
-          - os: macos-latest
-            target: aarch64-apple-darwin
-            artifact_name: blueprint-rust-macos-arm64.tar.gz
-            archive_cmd: rustup target add aarch64-apple-darwin && cargo build --release --target aarch64-apple-darwin --manifest-path cli/Cargo.toml && tar -czf dist/blueprint-rust-macos-arm64.tar.gz -C cli/target/aarch64-apple-darwin/release blueprint-rust
-          - os: windows-latest
-            target: x86_64-pc-windows-msvc
-            artifact_name: blueprint-rust-windows-x64.zip
-            archive_cmd: powershell -Command "Compress-Archive -Path cli\target\release\blueprint-rust.exe -DestinationPath dist\blueprint-rust-windows-x64.zip"
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v7
-
-      - name: Setup Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-
-      - name: Setup Protobuf Compiler
-        uses: arduino/setup-protoc@v3
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Compile CLI Binary
-        if: matrix.target == 'x86_64-unknown-linux-gnu' || matrix.target == 'x86_64-pc-windows-msvc'
-        run: cargo build --release --manifest-path cli/Cargo.toml
-
-      - name: Prepare Package
-        run: mkdir dist
-
-      - name: Archive Binary
-        run: ${{ matrix.archive_cmd }}
-
-      - name: Upload Binary Artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: ${{ matrix.artifact_name }}
-          path: dist/${{ matrix.artifact_name }}
-
-  publish-rust-release:
-    needs: [check-rust-cli-release, build-rust-cli-binaries]
-    if: needs.check-rust-cli-release.outputs.should_release == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-
-      - name: Download Linux Artifact
-        uses: actions/download-artifact@v7
-        with:
-          name: blueprint-rust-linux-x64.tar.gz
-          path: dist
-
-      - name: Download macOS x64 Artifact
-        uses: actions/download-artifact@v7
-        with:
-          name: blueprint-rust-macos-x64.tar.gz
-          path: dist
-
-      - name: Download macOS arm64 Artifact
-        uses: actions/download-artifact@v7
-        with:
-          name: blueprint-rust-macos-arm64.tar.gz
-          path: dist
-
-      - name: Download Windows Artifact
-        uses: actions/download-artifact@v7
-        with:
-          name: blueprint-rust-windows-x64.zip
-          path: dist
-
-      - name: Determine Next Version
-        id: versioning
-        run: |
-          git fetch --tags
-          LATEST_TAG=$(git describe --tags --match "rust-v*" --abbrev=0 2>/dev/null || echo "rust-v0.1.0")
-          echo "Latest tag found: $LATEST_TAG"
-          VERSION=${LATEST_TAG#rust-v}
-          IFS='.' read -r major minor patch <<< "$VERSION"
-          NEW_PATCH=$((patch + 1))
-          NEW_TAG="rust-v$major.$minor.$NEW_PATCH"
-          echo "Next release version: $NEW_TAG"
-          echo "new_tag=$NEW_TAG" >> $GITHUB_OUTPUT
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v3
-        with:
-          tag_name: ${{ steps.versioning.outputs.new_tag }}
-          name: Release ${{ steps.versioning.outputs.new_tag }}
-          draft: false
-          prerelease: false
-          generate_release_notes: true
-          files: |
-            dist/blueprint-rust-linux-x64.tar.gz
-            dist/blueprint-rust-macos-x64.tar.gz
-            dist/blueprint-rust-macos-arm64.tar.gz
-            dist/blueprint-rust-windows-x64.zip
-
   check-ts-cli-release:
     needs: build-and-test
     runs-on: ubuntu-latest
@@ -286,13 +131,13 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Check if TypeScript CLI or Proto files changed
+      - name: Check if TypeScript CLI files changed
         id: check_changes
         run: |
           git diff --name-only HEAD~1 HEAD > changed_files.txt || git show --name-only --pretty="" HEAD > changed_files.txt
           cat changed_files.txt
-          
-          if grep -qE '^(app/packages/cli/|core/proto/)' changed_files.txt; then
+
+          if grep -qE '^app/packages/cli/' changed_files.txt; then
             echo "should_release=true" >> $GITHUB_OUTPUT
           else
             echo "should_release=false" >> $GITHUB_OUTPUT
@@ -309,9 +154,6 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
 
-      - name: Setup Buf
-        uses: bufbuild/buf-setup-action@v1
-
       - name: Install pnpm
         uses: pnpm/action-setup@v6
         with:
@@ -327,10 +169,6 @@ jobs:
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
-        working-directory: app
-
-      - name: Generate TypeScript protobufs
-        run: pnpm --filter @blueprint/cli generate:proto
         working-directory: app
 
       - name: Compile TS CLI Binaries

@@ -88,14 +88,14 @@ fn topological_sort(
         return nodes.to_vec();
     }
 
-    let node_ids: HashSet<&str> = nodes.iter().map(|n| n.id.as_str()).collect();
+    let node_ids: HashSet<&str> = nodes.iter().map(|n| n.entity_ref.as_str()).collect();
 
     let mut in_degree: HashMap<String, usize> = HashMap::new();
     let mut adj: HashMap<String, Vec<String>> = HashMap::new();
 
     for node in nodes {
-        in_degree.entry(node.id.clone()).or_insert(0);
-        adj.entry(node.id.clone()).or_default();
+        in_degree.entry(node.entity_ref.clone()).or_insert(0);
+        adj.entry(node.entity_ref.clone()).or_default();
     }
 
     // Only keep edges within this group
@@ -142,14 +142,14 @@ fn topological_sort(
         let sorted_set: HashSet<&str> = sorted_ids.iter().map(|s| s.as_str()).collect();
         let mut remaining: Vec<String> = nodes
             .iter()
-            .map(|n| n.id.clone())
+            .map(|n| n.entity_ref.clone())
             .filter(|id| !sorted_set.contains(id.as_str()))
             .collect();
         remaining.sort();
         sorted_ids.extend(remaining);
     }
 
-    let node_map: HashMap<&str, &SystemNode> = nodes.iter().map(|n| (n.id.as_str(), n)).collect();
+    let node_map: HashMap<&str, &SystemNode> = nodes.iter().map(|n| (n.entity_ref.as_str(), n)).collect();
     sorted_ids
         .iter()
         .filter_map(|id| node_map.get(id.as_str()).map(|n| (*n).clone()))

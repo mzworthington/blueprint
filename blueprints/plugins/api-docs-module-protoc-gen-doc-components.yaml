@@ -1,0 +1,43 @@
+entityRef: blueprint/plugins/api-docs-module-protoc-gen-doc
+name: Api-docs-module-protoc-gen-doc Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/api-docs-module-protoc-gen-doc/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/api-docs-module-protoc-gen-doc/src/index.ts
+      containerId: api-docs-module-protoc-gen-doc
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/api-docs-module-protoc-gen-doc/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/api-docs-module-protoc-gen-doc/src/setupTests.ts
+      containerId: api-docs-module-protoc-gen-doc
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/api-docs-module-protoc-gen-doc/widgets
+    type: background-worker
+    name: widgets Service
+    isTest: false
+    properties:
+      filepath: plugins/api-docs-module-protoc-gen-doc/src/widgets.tsx
+      containerId: api-docs-module-protoc-gen-doc
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+dependencies:
+  - from: blueprint/plugins/scaffolder-react/index
+    to: blueprint/plugins/api-docs-module-protoc-gen-doc/widgets
+    type: direct-call
+    description: Calls module / service

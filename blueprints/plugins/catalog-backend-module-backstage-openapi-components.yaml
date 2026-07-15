@@ -1,0 +1,62 @@
+entityRef: blueprint/plugins/catalog-backend-module-backstage-openapi
+name: Catalog-backend-module-backstage-openapi Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/catalog-backend-module-backstage-openapi/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-backstage-openapi/config.d.ts
+      containerId: catalog-backend-module-backstage-openapi
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-backstage-openapi/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-backstage-openapi/src/index.ts
+      containerId: catalog-backend-module-backstage-openapi
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-backstage-openapi/internalopenapidocumentationprovider
+    type: background-worker
+    name: InternalOpenApiDocumentationProvider Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-backstage-openapi/src/InternalOpenApiDocumentationProvider.ts
+      containerId: catalog-backend-module-backstage-openapi
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 370
+  - entityRef: blueprint/plugins/catalog-backend-module-backstage-openapi/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-backstage-openapi/src/setupTests.ts
+      containerId: catalog-backend-module-backstage-openapi
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+dependencies:
+  - from: blueprint/plugins/catalog-backend-module-backstage-openapi/index
+    to: blueprint/plugins/catalog-backend-module-backstage-openapi/internalopenapidocumentationprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-backstage-openapi/internalopenapidocumentationprovider
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-backstage-openapi/internalopenapidocumentationprovider
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service

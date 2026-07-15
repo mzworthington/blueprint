@@ -1,8 +1,8 @@
 import type { ParsedSourceFile } from './types.ts';
-import type { SystemNode } from '../../core/generated/blueprint/v1/schema.ts';
+import type { SystemNode } from '@blueprint/core';
 
 export interface ContainerInfo {
-  id: string;
+  entityRef: string;
   name: string;
   type:
     | 'gateway-api'

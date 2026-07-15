@@ -1,0 +1,195 @@
+entityRef: blueprint/packages/filter-predicates
+name: Filter-predicates Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/filter-predicates/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/filter-predicates/src/predicates/index.ts
+      containerId: filter-predicates
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/filter-predicates/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: packages/filter-predicates/src/setupTests.ts
+      containerId: filter-predicates
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/filter-predicates/config-test
+    type: background-worker
+    name: config.test Service
+    isTest: true
+    properties:
+      filepath: packages/filter-predicates/src/predicates/config.test.ts
+      containerId: filter-predicates
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2520
+    'y': 50
+  - entityRef: blueprint/packages/filter-predicates/config
+    type: background-worker
+    name: config Service
+    isTest: false
+    properties:
+      filepath: packages/filter-predicates/src/predicates/config.ts
+      containerId: filter-predicates
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2520
+    'y': 370
+  - entityRef: blueprint/packages/filter-predicates/evaluate-test
+    type: background-worker
+    name: evaluate.test Service
+    isTest: true
+    properties:
+      filepath: packages/filter-predicates/src/predicates/evaluate.test.ts
+      containerId: filter-predicates
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/packages/filter-predicates/evaluate
+    type: background-worker
+    name: evaluate Service
+    isTest: false
+    properties:
+      filepath: packages/filter-predicates/src/predicates/evaluate.ts
+      containerId: filter-predicates
+      technology: TypeScript Domain Service
+      classification: default
+    x: 925
+    'y': 370
+  - entityRef: blueprint/packages/filter-predicates/getjsonvalueatpath-test
+    type: background-worker
+    name: getJsonValueAtPath.test Service
+    isTest: true
+    properties:
+      filepath: packages/filter-predicates/src/predicates/getJsonValueAtPath.test.ts
+      containerId: filter-predicates
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1600
+    'y': 370
+  - entityRef: blueprint/packages/filter-predicates/getjsonvalueatpath
+    type: background-worker
+    name: getJsonValueAtPath Service
+    isTest: false
+    properties:
+      filepath: packages/filter-predicates/src/predicates/getJsonValueAtPath.ts
+      containerId: filter-predicates
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 690
+  - entityRef: blueprint/packages/filter-predicates/schema-test
+    type: background-worker
+    name: schema.test Service
+    isTest: true
+    properties:
+      filepath: packages/filter-predicates/src/predicates/schema.test.ts
+      containerId: filter-predicates
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2060
+    'y': 370
+  - entityRef: blueprint/packages/filter-predicates/schema
+    type: background-worker
+    name: schema Service
+    isTest: false
+    properties:
+      filepath: packages/filter-predicates/src/predicates/schema.ts
+      containerId: filter-predicates
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1870
+    'y': 690
+  - entityRef: blueprint/packages/filter-predicates/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: packages/filter-predicates/src/predicates/types.ts
+      containerId: filter-predicates
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1505
+    'y': 1010
+dependencies:
+  - from: blueprint/packages/filter-predicates/config-test
+    to: blueprint/packages/filter-predicates/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/filter-predicates/config-test
+    to: blueprint/packages/filter-predicates/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/filter-predicates/config
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/filter-predicates/config
+    to: blueprint/packages/filter-predicates/schema
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/filter-predicates/config
+    to: blueprint/packages/filter-predicates/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/filter-predicates/evaluate-test
+    to: blueprint/packages/filter-predicates/evaluate
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/filter-predicates/evaluate-test
+    to: blueprint/packages/filter-predicates/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/filter-predicates/evaluate
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/filter-predicates/evaluate
+    to: blueprint/packages/filter-predicates/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/filter-predicates/evaluate
+    to: blueprint/packages/filter-predicates/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/filter-predicates/evaluate
+    to: blueprint/packages/filter-predicates/getjsonvalueatpath
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/filter-predicates/getjsonvalueatpath-test
+    to: blueprint/packages/filter-predicates/getjsonvalueatpath
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/filter-predicates/getjsonvalueatpath
+    to: blueprint/packages/filter-predicates/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/filter-predicates/schema-test
+    to: blueprint/packages/filter-predicates/schema
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/filter-predicates/schema-test
+    to: blueprint/packages/filter-predicates/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/filter-predicates/schema
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/filter-predicates/schema
+    to: blueprint/packages/filter-predicates/types
+    type: direct-call
+    description: Calls module / service

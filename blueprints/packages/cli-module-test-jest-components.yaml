@@ -1,0 +1,87 @@
+entityRef: blueprint/packages/cli-module-test-jest
+name: Cli-module-test-jest Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/cli-module-test-jest/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-test-jest/src/index.ts
+      containerId: cli-module-test-jest
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-test-jest/test
+    type: background-worker
+    name: test Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-test-jest/src/commands/repo/test.ts
+      containerId: cli-module-test-jest
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 370
+  - entityRef: blueprint/packages/cli-module-test-jest/test-test
+    type: background-worker
+    name: test.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-test-jest/src/commands/repo/test.test.ts
+      containerId: cli-module-test-jest
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+dependencies:
+  - from: blueprint/packages/app/app-test
+    to: blueprint/packages/cli-module-test-jest/test
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/homepage-test
+    to: blueprint/packages/cli-module-test-jest/test
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app/searchpage-test
+    to: blueprint/packages/cli-module-test-jest/test
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/create-app/playwright-config
+    to: blueprint/packages/cli-module-test-jest/test
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/create-app/playwright-config
+    to: blueprint/packages/cli-module-test-jest/test
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/e2e-test-utils/failonbrowsererrors
+    to: blueprint/packages/cli-module-test-jest/test
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/e2e-test-utils/generateprojects
+    to: blueprint/packages/cli-module-test-jest/test
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-test-jest/test-test
+    to: blueprint/packages/cli-module-test-jest/test
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/ui/combobox-stories
+    to: blueprint/packages/cli-module-test-jest/test
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/ui/select-stories
+    to: blueprint/packages/cli-module-test-jest/test
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/create-app/app-test
+    to: blueprint/packages/cli-module-test-jest/test
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/create-app/app-test
+    to: blueprint/packages/cli-module-test-jest/test
+    type: direct-call
+    description: Calls module / service

@@ -1,0 +1,88 @@
+entityRef: blueprint/plugins/catalog-backend-module-unprocessed
+name: Catalog-backend-module-unprocessed Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/catalog-backend-module-unprocessed/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-unprocessed/src/index.ts
+      containerId: catalog-backend-module-unprocessed
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-unprocessed/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-unprocessed/src/module.ts
+      containerId: catalog-backend-module-unprocessed
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-unprocessed/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-unprocessed/src/setupTests.ts
+      containerId: catalog-backend-module-unprocessed
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-unprocessed/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-unprocessed/src/types.ts
+      containerId: catalog-backend-module-unprocessed
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 690
+  - entityRef: blueprint/plugins/catalog-backend-module-unprocessed/unprocessedentitiesmodule-test
+    type: relational-database
+    name: UnprocessedEntitiesModule.test Database
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-unprocessed/src/UnprocessedEntitiesModule.test.ts
+      containerId: catalog-backend-module-unprocessed
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-unprocessed/unprocessedentitiesmodule
+    type: relational-database
+    name: UnprocessedEntitiesModule Database
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-unprocessed/src/UnprocessedEntitiesModule.ts
+      containerId: catalog-backend-module-unprocessed
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 1060
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/catalog-backend-module-unprocessed/module
+    to: blueprint/plugins/catalog-backend-module-unprocessed/unprocessedentitiesmodule
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/catalog-backend-module-unprocessed/unprocessedentitiesmodule-test
+    to: blueprint/plugins/catalog-backend-module-unprocessed/unprocessedentitiesmodule
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/catalog-backend-module-unprocessed/unprocessedentitiesmodule
+    to: blueprint/plugins/catalog-backend-module-unprocessed/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-unprocessed/unprocessedentitiesmodule
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service

@@ -1,0 +1,111 @@
+entityRef: blueprint/plugins/auth-backend-module-azure-easyauth-provider
+name: Auth-backend-module-azure-easyauth-provider Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/auth-backend-module-azure-easyauth-provider/authenticator-test
+    type: rest-api
+    name: authenticator.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-azure-easyauth-provider/src/authenticator.test.ts
+      containerId: auth-backend-module-azure-easyauth-provider
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 140
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-azure-easyauth-provider/authenticator
+    type: rest-api
+    name: authenticator REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-azure-easyauth-provider/src/authenticator.ts
+      containerId: auth-backend-module-azure-easyauth-provider
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 180
+    'y': 690
+  - entityRef: blueprint/plugins/auth-backend-module-azure-easyauth-provider/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-azure-easyauth-provider/src/index.ts
+      containerId: auth-backend-module-azure-easyauth-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 180
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-azure-easyauth-provider/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-azure-easyauth-provider/src/module.test.ts
+      containerId: auth-backend-module-azure-easyauth-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 640
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-azure-easyauth-provider/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-azure-easyauth-provider/src/module.ts
+      containerId: auth-backend-module-azure-easyauth-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 640
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-azure-easyauth-provider/resolvers
+    type: background-worker
+    name: resolvers Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-azure-easyauth-provider/src/resolvers.ts
+      containerId: auth-backend-module-azure-easyauth-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 680
+    'y': 690
+  - entityRef: blueprint/plugins/auth-backend-module-azure-easyauth-provider/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-azure-easyauth-provider/src/types.ts
+      containerId: auth-backend-module-azure-easyauth-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 410
+    'y': 1010
+dependencies:
+  - from: blueprint/plugins/auth-backend-module-azure-easyauth-provider/authenticator-test
+    to: blueprint/plugins/auth-backend-module-azure-easyauth-provider/authenticator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-azure-easyauth-provider/authenticator
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-azure-easyauth-provider/authenticator
+    to: blueprint/plugins/auth-backend-module-azure-easyauth-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-azure-easyauth-provider/module-test
+    to: blueprint/plugins/auth-backend-module-azure-easyauth-provider/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-azure-easyauth-provider/module
+    to: blueprint/plugins/auth-backend-module-azure-easyauth-provider/authenticator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-azure-easyauth-provider/module
+    to: blueprint/plugins/auth-backend-module-azure-easyauth-provider/resolvers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-azure-easyauth-provider/resolvers
+    to: blueprint/plugins/auth-backend-module-azure-easyauth-provider/types
+    type: direct-call
+    description: Calls module / service

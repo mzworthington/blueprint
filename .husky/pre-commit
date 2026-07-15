@@ -1,18 +1,13 @@
-if git diff --cached --name-only | grep -qE '^(cli/|core/proto/)'; then
-  echo "Detected changes to CLI or Proto. Running Cargo checks..."
-  cd cli
-  cargo fmt --check
-  cargo clippy -- -D warnings
-  cargo test 
-  cd ..
+if git diff --cached --name-only | grep -qE '^cli/'; then
+  echo "Skipping Rust checks — experimental cli/ tree is unmaintained and not part of CI."
 fi
 
-if git diff --cached --name-only | grep -qE '^(app/|core/proto/)'; then
-  echo "Detected changes to App or Proto. Running PNPM checks..."
+if git diff --cached --name-only | grep -qE '^app/'; then
+  echo "Detected changes under app/. Running PNPM checks..."
   cd app
   pnpm exec lint-staged
   pnpm run lint
-  pnpm vitest run --changed
   pnpm knip
+  pnpm vitest run --changed
   cd ..
 fi

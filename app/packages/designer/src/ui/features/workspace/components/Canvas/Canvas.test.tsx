@@ -4,6 +4,12 @@ import { Canvas } from './Canvas';
 import { Header } from '../Header/Header';
 import { useBlueprintStore } from '../../../../../application/store/store';
 
+const mockSetLocation = vi.fn();
+vi.mock('wouter', () => ({
+  useLocation: () => ['/workspace/blueprint', mockSetLocation],
+  Link: ({ children, to }: any) => <a href={to}>{children}</a>,
+}));
+
 vi.mock('@xyflow/react', () => {
   return {
     ReactFlow: ({ children, nodes, edges, onNodeDoubleClick }: any) => (
@@ -54,8 +60,8 @@ describe('Canvas Component', () => {
       version: '1.0.0',
       level: 'container',
       nodes: [
-        { id: 'node1', type: 'rest-api', name: 'Node 1', x: 10, y: 10 },
-        { id: 'node2', type: 'relational-database', name: 'Node 2', x: 100, y: 100 },
+        { entityRef: 'node1', type: 'rest-api', name: 'Node 1', x: 10, y: 10 },
+        { entityRef: 'node2', type: 'relational-database', name: 'Node 2', x: 100, y: 100 },
       ],
       dependencies: [{ from: 'node1', to: 'node2', type: 'direct-call' }],
     });
@@ -136,33 +142,19 @@ describe('Canvas Component', () => {
 
     fireEvent.change(screen.getByRole('combobox'), { target: { value: 'sys2.yaml' } });
 
-    expect(useBlueprintStore.getState().currentFilePath).toBe('sys2.yaml');
+    expect(mockSetLocation).toHaveBeenCalledWith('/workspace/s2');
   });
 
   it('triggers openWorkspaceDirectory store action when Open Folder is clicked', async () => {
-    const selectDirectoryMock = vi.fn().mockResolvedValue(true);
-    const readDirectoryFilesMock = vi.fn().mockResolvedValue([
-      {
-        name: 'sys.yaml',
-        content:
-          'name: Loaded System\nversion: "1.0.0"\nlevel: container\nnodes: []\ndependencies: []',
-      },
-    ]);
-    useBlueprintStore.setState({
-      workspacePort: {
-        selectDirectory: selectDirectoryMock,
-        readDirectoryFiles: readDirectoryFilesMock,
-        getDirectoryName: () => 'MockedDir',
-      } as any,
-    });
+    const openWorkspaceDirectory = vi.fn().mockResolvedValue(true);
+    useBlueprintStore.setState({ openWorkspaceDirectory });
 
     render(<Canvas />);
 
     fireEvent.click(screen.getByTitle('Open a local directory workspace'));
 
-    expect(selectDirectoryMock).toHaveBeenCalled();
     await waitFor(() => {
-      expect(useBlueprintStore.getState().isWorkspaceOpen).toBe(true);
+      expect(openWorkspaceDirectory).toHaveBeenCalled();
     });
   });
 
@@ -198,7 +190,7 @@ describe('Canvas Component', () => {
       name: 'Child Level',
       version: '1.0.0',
       level: 'component' as const,
-      parentRef: 'default/test-node-1',
+      entityRef: 'default/test-node-1',
       nodes: [],
       dependencies: [],
     };
@@ -220,25 +212,81 @@ describe('Canvas Component', () => {
     fireEvent.click(screen.getByTestId('double-click-node'));
 
     await waitFor(() => {
-      expect(useBlueprintStore.getState().currentFilePath).toBe('child.yaml');
+      expect(mockSetLocation).toHaveBeenCalledWith('/workspace/default/test-node-1');
     });
   });
 
-  it('triggers zoomOut store action on zoomOut Escape/Backspace keyboard events', () => {
-    useBlueprintStore.setState({
-      navigationStack: [
+  const drillInFixtures = () => {
+    const parentSchema = {
+      name: 'Root Context',
+      version: '1.0.0',
+      level: 'context' as const,
+      entityRef: 'root',
+      nodes: [
         {
-          path: 'parent.yaml',
-          schema: { name: 'Parent', version: '1', level: 'container', nodes: [], dependencies: [] },
+          entityRef: 'root/web-app',
+          type: 'web-app' as const,
+          name: 'Web App',
         },
       ],
-      currentFilePath: 'child.yaml',
+      dependencies: [],
+    };
+
+    const childSchema = {
+      name: 'Web Containers',
+      version: '1.0.0',
+      level: 'container' as const,
+      entityRef: 'root/web-app',
+      nodes: [],
+      dependencies: [],
+    };
+
+    useBlueprintStore.setState({
+      workspaceName: 'default',
+      loadedSystems: [
+        { path: 'context.yaml', name: 'Root Context', schema: parentSchema },
+        { path: 'containers.yaml', name: 'Web Containers', schema: childSchema },
+      ],
+      currentFilePath: 'containers.yaml',
     });
 
+    const { initSchema } = useBlueprintStore.getState();
+    initSchema(childSchema);
+  };
+
+  it('navigates to parent system when Escape is pressed', async () => {
+    mockSetLocation.mockClear();
+    drillInFixtures();
     render(<Canvas />);
 
     fireEvent.keyDown(window, { key: 'Escape' });
 
-    expect(useBlueprintStore.getState().currentFilePath).toBe('parent.yaml');
+    await waitFor(() => {
+      expect(mockSetLocation).toHaveBeenCalledWith('/workspace/root');
+    });
+  });
+
+  it('navigates to parent system when Backspace is pressed', async () => {
+    mockSetLocation.mockClear();
+    drillInFixtures();
+    render(<Canvas />);
+
+    fireEvent.keyDown(window, { key: 'Backspace' });
+
+    await waitFor(() => {
+      expect(mockSetLocation).toHaveBeenCalledWith('/workspace/root');
+    });
+  });
+
+  it('shows a Zoom out button that navigates to the parent system', async () => {
+    mockSetLocation.mockClear();
+    drillInFixtures();
+    render(<Canvas />);
+
+    fireEvent.click(screen.getByRole('button', { name: /zoom out/i }));
+
+    await waitFor(() => {
+      expect(mockSetLocation).toHaveBeenCalledWith('/workspace/root');
+    });
   });
 });

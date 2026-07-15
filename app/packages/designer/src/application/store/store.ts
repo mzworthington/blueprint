@@ -10,7 +10,7 @@ export type {
   ComponentEdgeData,
 } from './layoutUtils';
 
-export { resolveRelativePath, getFileName } from '../../core';
+export { resolveRelativePath, getFileName } from '@blueprint/core';
 
 export { defaultLoadedSystems, defaultInitialSchema } from './defaultData';
 

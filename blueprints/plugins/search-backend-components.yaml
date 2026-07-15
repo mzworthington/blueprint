@@ -1,0 +1,257 @@
+entityRef: blueprint/plugins/search-backend
+name: Search-backend Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/search-backend/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend/config.d.ts
+      containerId: search-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend/src/schema/openapi/index.ts
+      containerId: search-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend/src/alpha.ts
+      containerId: search-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 790
+    'y': 690
+  - entityRef: blueprint/plugins/search-backend/plugin-test
+    type: background-worker
+    name: plugin.test Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend/src/plugin.test.ts
+      containerId: search-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1370
+    'y': 690
+  - entityRef: blueprint/plugins/search-backend/plugin
+    type: background-worker
+    name: plugin Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend/src/plugin.ts
+      containerId: search-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1020
+    'y': 1010
+  - entityRef: blueprint/plugins/search-backend/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend/src/setupTests.ts
+      containerId: search-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend/createqueryaction-test
+    type: background-worker
+    name: createQueryAction.test Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend/src/actions/createQueryAction.test.ts
+      containerId: search-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend/createqueryaction
+    type: background-worker
+    name: createQueryAction Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend/src/actions/createQueryAction.ts
+      containerId: search-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 910
+    'y': 370
+  - entityRef: blueprint/plugins/search-backend/authorizedsearchengine-test
+    type: background-worker
+    name: AuthorizedSearchEngine.test Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend/src/service/AuthorizedSearchEngine.test.ts
+      containerId: search-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 560
+    'y': 1010
+  - entityRef: blueprint/plugins/search-backend/authorizedsearchengine
+    type: background-worker
+    name: AuthorizedSearchEngine Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend/src/service/AuthorizedSearchEngine.ts
+      containerId: search-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 830
+    'y': 1330
+  - entityRef: blueprint/plugins/search-backend/router-test
+    type: rest-api
+    name: router.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/search-backend/src/service/router.test.ts
+      containerId: search-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1950
+    'y': 1010
+  - entityRef: blueprint/plugins/search-backend/router
+    type: rest-api
+    name: router REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/search-backend/src/service/router.ts
+      containerId: search-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1910
+    'y': 1330
+  - entityRef: blueprint/plugins/search-backend/search_result_utils
+    type: background-worker
+    name: search_result_utils Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend/src/utils/search_result_utils.ts
+      containerId: search-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1815
+    'y': 1650
+dependencies:
+  - from: blueprint/plugins/search-backend/alpha
+    to: blueprint/plugins/search-backend/plugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/plugin-test
+    to: blueprint/plugins/search-backend/plugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/plugin
+    to: blueprint/plugins/search-backend/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/plugin
+    to: blueprint/plugins/search-backend/router
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/plugin
+    to: blueprint/plugins/search-backend/authorizedsearchengine
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/plugin
+    to: blueprint/plugins/home/actions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/plugin
+    to: blueprint/plugins/search-backend/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/createqueryaction-test
+    to: blueprint/plugins/search-backend/createqueryaction
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/createqueryaction-test
+    to: blueprint/plugins/search-backend/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/createqueryaction
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/createqueryaction
+    to: blueprint/plugins/search-backend/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/createqueryaction
+    to: blueprint/plugins/search-backend/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/createqueryaction
+    to: blueprint/plugins/search-backend/search_result_utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/index
+    to: blueprint/plugins/search-backend/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/index
+    to: blueprint/plugins/search-backend/createqueryaction
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/index
+    to: blueprint/plugins/search-backend/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/authorizedsearchengine-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/authorizedsearchengine-test
+    to: blueprint/plugins/search-backend/authorizedsearchengine
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/authorizedsearchengine
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/authorizedsearchengine
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/router-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/router-test
+    to: blueprint/plugins/search-backend/router
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/router-test
+    to: blueprint/plugins/catalog-node/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/router
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/router
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/router
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/router
+    to: blueprint/plugins/search-backend/search_result_utils
+    type: direct-call
+    description: Calls module / service

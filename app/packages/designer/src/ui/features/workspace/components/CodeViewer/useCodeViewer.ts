@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'wouter';
 import { useBlueprintStore } from '../../../../../application/store/store';
-import { serializeSchemaToMermaid, serializeSchemaToYaml } from '../../../../../core';
+import { serializeSchemaToMermaid, serializeSchemaToYaml } from '@blueprint/core';
 
 type Tab = 'yaml' | 'json' | 'mermaid';
 type MermaidMode = 'preview' | 'code';
@@ -42,7 +42,7 @@ function buildFilteredSchema(
   if (showTests) return schema;
 
   const nodes = schema.nodes.filter(n => !n.isTest);
-  const visibleNodeIds = new Set(nodes.map(n => n.id));
+  const visibleNodeIds = new Set(nodes.map(n => n.entityRef));
   const dependencies = schema.dependencies.filter(
     d => visibleNodeIds.has(d.from) && visibleNodeIds.has(d.to)
   );

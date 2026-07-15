@@ -12,12 +12,19 @@ vi.mock('mermaid', () => ({
 
 describe('CodeViewer UI Component', () => {
   beforeEach(() => {
+    useBlueprintStore.setState({
+      selectedNodeId: null,
+      currentFilePath: 'blueprint.yaml',
+      workspaceName: undefined,
+      loadedSystems: [],
+    });
+
     const { initSchema } = useBlueprintStore.getState();
     initSchema({
       name: 'Test Project',
       version: '1.0.0',
       level: 'container',
-      nodes: [{ id: 'web-api', type: 'rest-api', name: 'Web API' }],
+      nodes: [{ entityRef: 'web-api', type: 'rest-api', name: 'Web API' }],
       dependencies: [],
     });
   });
@@ -38,7 +45,7 @@ describe('CodeViewer UI Component', () => {
     const textarea = screen.getByRole('textbox') as HTMLTextAreaElement;
     expect(textarea).toBeInTheDocument();
     expect(textarea.value).toContain('name: Test Project');
-    expect(textarea.value).toContain('id: web-api');
+    expect(textarea.value).toContain('entityRef: test-project/web-api');
     expect(textarea.value).toContain('type: rest-api');
   });
 
@@ -63,7 +70,7 @@ name: Edited YAML System
 version: 2.1.0
 level: container
 nodes:
-  - id: custom-service
+  - entityRef: custom-service
     type: grpc-service
     name: Custom Service
 `;
@@ -72,7 +79,9 @@ nodes:
     fireEvent.click(screen.getByRole('button', { name: /Apply YAML Changes/i }));
 
     expect(useBlueprintStore.getState().schema.name).toBe('Edited YAML System');
-    expect(useBlueprintStore.getState().schema.nodes[0].id).toBe('custom-service');
+    expect(useBlueprintStore.getState().schema.nodes[0].entityRef).toBe(
+      'edited-yaml-system/custom-service'
+    );
   });
 
   it('should support JSON direct edit and apply workflow', () => {
@@ -89,7 +98,7 @@ nodes:
   "level": "container",
   "nodes": [
     {
-      "id": "new-node",
+      "entityRef": "new-node",
       "type": "serverless-function",
       "name": "New Function"
     }
@@ -101,7 +110,9 @@ nodes:
     fireEvent.click(screen.getByRole('button', { name: /Apply JSON Changes/i }));
 
     expect(useBlueprintStore.getState().schema.name).toBe('Edited JSON System');
-    expect(useBlueprintStore.getState().schema.nodes[0].id).toBe('new-node');
+    expect(useBlueprintStore.getState().schema.nodes[0].entityRef).toBe(
+      'edited-json-system/new-node'
+    );
   });
 
   it('should show error when applying invalid YAML configuration', () => {
@@ -149,8 +160,8 @@ nodes:
       version: '1.0.0',
       level: 'container',
       nodes: [
-        { id: 'app', type: 'rest-api', name: 'App Node', isTest: false },
-        { id: 'app-test', type: 'rest-api', name: 'App Test Node', isTest: true },
+        { entityRef: 'app', type: 'rest-api', name: 'App Node', isTest: false },
+        { entityRef: 'app-test', type: 'rest-api', name: 'App Test Node', isTest: true },
       ],
       dependencies: [{ from: 'app-test', to: 'app', type: 'direct-call', description: 'Test app' }],
     });
@@ -160,20 +171,20 @@ nodes:
     const { rerender } = render(<CodeViewer />);
 
     let textarea = screen.getByRole('textbox') as HTMLTextAreaElement;
-    expect(textarea.value).toContain('id: app');
-    expect(textarea.value).not.toContain('id: app-test');
+    expect(textarea.value).toContain('entityRef: filtered-project/app');
+    expect(textarea.value).not.toContain('entityRef: filtered-project/app-test');
 
     fireEvent.click(screen.getByRole('button', { name: /^json$/i }));
     textarea = screen.getByRole('textbox') as HTMLTextAreaElement;
-    expect(textarea.value).toContain('"id": "app"');
-    expect(textarea.value).not.toContain('"id": "app-test"');
+    expect(textarea.value).toContain('"entityRef": "filtered-project/app"');
+    expect(textarea.value).not.toContain('"entityRef": "filtered-project/app-test"');
 
     useBlueprintStore.setState({ showTests: true });
     rerender(<CodeViewer />);
 
     fireEvent.click(screen.getByRole('button', { name: /^json$/i }));
     textarea = screen.getByRole('textbox') as HTMLTextAreaElement;
-    expect(textarea.value).toContain('"id": "app"');
-    expect(textarea.value).toContain('"id": "app-test"');
+    expect(textarea.value).toContain('"entityRef": "filtered-project/app"');
+    expect(textarea.value).toContain('"entityRef": "filtered-project/app-test"');
   });
 });

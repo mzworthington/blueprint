@@ -1,0 +1,229 @@
+entityRef: blueprint/plugins/catalog-backend-module-bitbucket-cloud
+name: Catalog-backend-module-bitbucket-cloud Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/catalog-backend-module-bitbucket-cloud/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-bitbucket-cloud/config.d.ts
+      containerId: catalog-backend-module-bitbucket-cloud
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-bitbucket-cloud/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-bitbucket-cloud/src/alpha.ts
+      containerId: catalog-backend-module-bitbucket-cloud
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1735
+    'y': 1330
+  - entityRef: blueprint/plugins/catalog-backend-module-bitbucket-cloud/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-bitbucket-cloud/src/module/index.ts
+      containerId: catalog-backend-module-bitbucket-cloud
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-bitbucket-cloud/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-bitbucket-cloud/src/setupTests.ts
+      containerId: catalog-backend-module-bitbucket-cloud
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-bitbucket-cloud/analyzebitbucketcloudwebhookevent-test
+    type: background-worker
+    name: analyzeBitbucketCloudWebhookEvent.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-bitbucket-cloud/src/events/analyzeBitbucketCloudWebhookEvent.test.ts
+      containerId: catalog-backend-module-bitbucket-cloud
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2195
+    'y': 690
+  - entityRef: blueprint/plugins/catalog-backend-module-bitbucket-cloud/analyzebitbucketcloudwebhookevent
+    type: background-worker
+    name: analyzeBitbucketCloudWebhookEvent Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-bitbucket-cloud/src/events/analyzeBitbucketCloudWebhookEvent.ts
+      containerId: catalog-backend-module-bitbucket-cloud
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2155
+    'y': 1010
+  - entityRef: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudscmeventsbridge
+    type: background-worker
+    name: BitbucketCloudScmEventsBridge Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-bitbucket-cloud/src/events/BitbucketCloudScmEventsBridge.ts
+      containerId: catalog-backend-module-bitbucket-cloud
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1735
+    'y': 690
+  - entityRef: blueprint/plugins/catalog-backend-module-bitbucket-cloud/catalogmodulebitbucketcloudentityprovider-test
+    type: background-worker
+    name: catalogModuleBitbucketCloudEntityProvider.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-bitbucket-cloud/src/module/catalogModuleBitbucketCloudEntityProvider.test.ts
+      containerId: catalog-backend-module-bitbucket-cloud
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-bitbucket-cloud/catalogmodulebitbucketcloudentityprovider
+    type: background-worker
+    name: catalogModuleBitbucketCloudEntityProvider Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-bitbucket-cloud/src/module/catalogModuleBitbucketCloudEntityProvider.ts
+      containerId: catalog-backend-module-bitbucket-cloud
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1330
+    'y': 370
+  - entityRef: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudentityprovider-test
+    type: background-worker
+    name: BitbucketCloudEntityProvider.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-bitbucket-cloud/src/providers/BitbucketCloudEntityProvider.test.ts
+      containerId: catalog-backend-module-bitbucket-cloud
+      technology: TypeScript Domain Service
+      classification: default
+    x: 775
+    'y': 370
+  - entityRef: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudentityprovider
+    type: background-worker
+    name: BitbucketCloudEntityProvider Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-bitbucket-cloud/src/providers/BitbucketCloudEntityProvider.ts
+      containerId: catalog-backend-module-bitbucket-cloud
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1140
+    'y': 690
+  - entityRef: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudentityproviderconfig-test
+    type: background-worker
+    name: BitbucketCloudEntityProviderConfig.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-bitbucket-cloud/src/providers/BitbucketCloudEntityProviderConfig.test.ts
+      containerId: catalog-backend-module-bitbucket-cloud
+      technology: TypeScript Domain Service
+      classification: default
+    x: 640
+    'y': 690
+  - entityRef: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudentityproviderconfig
+    type: background-worker
+    name: BitbucketCloudEntityProviderConfig Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-bitbucket-cloud/src/providers/BitbucketCloudEntityProviderConfig.ts
+      containerId: catalog-backend-module-bitbucket-cloud
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1140
+    'y': 1010
+dependencies:
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/alpha
+    to: blueprint/plugins/app-module-user-settings/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/analyzebitbucketcloudwebhookevent-test
+    to: blueprint/plugins/catalog-backend-module-bitbucket-cloud/analyzebitbucketcloudwebhookevent
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/analyzebitbucketcloudwebhookevent
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/analyzebitbucketcloudwebhookevent
+    to: blueprint/plugins/catalog-backend-module-bitbucket-cloud/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudscmeventsbridge
+    to: blueprint/plugins/catalog-backend-module-bitbucket-cloud/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudscmeventsbridge
+    to: blueprint/plugins/catalog-backend-module-bitbucket-cloud/analyzebitbucketcloudwebhookevent
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/catalogmodulebitbucketcloudentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-bitbucket-cloud/catalogmodulebitbucketcloudentityprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/catalogmodulebitbucketcloudentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudentityprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/catalogmodulebitbucketcloudentityprovider
+    to: blueprint/plugins/catalog-backend-module-bitbucket-cloud/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/catalogmodulebitbucketcloudentityprovider
+    to: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudentityprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/catalogmodulebitbucketcloudentityprovider
+    to: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudscmeventsbridge
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudentityprovider-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudentityprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudentityprovider-test
+    to: blueprint/plugins/catalog-node/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudentityprovider
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudentityprovider
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudentityprovider
+    to: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudentityproviderconfig
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudentityproviderconfig-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudentityproviderconfig-test
+    to: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudentityproviderconfig
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/bitbucketcloudentityproviderconfig
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service

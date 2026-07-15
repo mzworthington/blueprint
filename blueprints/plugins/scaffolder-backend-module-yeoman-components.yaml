@@ -1,0 +1,142 @@
+entityRef: blueprint/plugins/scaffolder-backend-module-yeoman
+name: Scaffolder-backend-module-yeoman Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/scaffolder-backend-module-yeoman/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-yeoman/src/actions/run/index.ts
+      containerId: scaffolder-backend-module-yeoman
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-yeoman/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-yeoman/src/module.ts
+      containerId: scaffolder-backend-module-yeoman
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-yeoman/yeoman-examples-test
+    type: background-worker
+    name: yeoman.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-yeoman/src/actions/run/yeoman.examples.test.ts
+      containerId: scaffolder-backend-module-yeoman
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1545
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-yeoman/yeoman-examples
+    type: background-worker
+    name: yeoman.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-yeoman/src/actions/run/yeoman.examples.ts
+      containerId: scaffolder-backend-module-yeoman
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1625
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-yeoman/yeoman-test
+    type: background-worker
+    name: yeoman.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-yeoman/src/actions/run/yeoman.test.ts
+      containerId: scaffolder-backend-module-yeoman
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-yeoman/yeoman
+    type: background-worker
+    name: yeoman Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-yeoman/src/actions/run/yeoman.ts
+      containerId: scaffolder-backend-module-yeoman
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1235
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-yeoman/yeomanrun-test
+    type: background-worker
+    name: yeomanRun.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-yeoman/src/actions/run/yeomanRun.test.ts
+      containerId: scaffolder-backend-module-yeoman
+      technology: TypeScript Domain Service
+      classification: default
+    x: 695
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-yeoman/yeomanrun
+    type: background-worker
+    name: yeomanRun Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-yeoman/src/actions/run/yeomanRun.ts
+      containerId: scaffolder-backend-module-yeoman
+      technology: TypeScript Domain Service
+      classification: default
+    x: 925
+    'y': 690
+dependencies:
+  - from: blueprint/plugins/scaffolder-backend-module-yeoman/module
+    to: blueprint/plugins/home/actions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-yeoman/yeoman-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-yeoman/yeomanrun
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-yeoman/yeoman-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-yeoman/yeoman
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-yeoman/yeoman-examples-test
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-yeoman/yeoman-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-yeoman/yeoman-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-yeoman/yeoman-test
+    to: blueprint/plugins/scaffolder-backend-module-yeoman/yeomanrun
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-yeoman/yeoman-test
+    to: blueprint/plugins/scaffolder-backend-module-yeoman/yeoman
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-yeoman/yeoman-test
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-yeoman/yeoman
+    to: blueprint/plugins/scaffolder-backend-module-yeoman/yeomanrun
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-yeoman/yeoman
+    to: blueprint/plugins/scaffolder-backend-module-yeoman/yeoman-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-yeoman/yeomanrun-test
+    to: blueprint/plugins/scaffolder-backend-module-yeoman/yeomanrun
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-yeoman/yeomanrun
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service

@@ -1,14 +1,16 @@
 import dagre from 'dagre';
 import type { LayoutPort } from '../domain/ports.ts';
-import type { SystemNode, SystemDependency } from '../../core/generated/blueprint/v1/schema.ts';
+import type { SystemNode, SystemDependency } from '@blueprint/core';
 
 export class DagreLayoutAdapter implements LayoutPort {
   async computeLayout(
     nodes: SystemNode[],
     dependencies: SystemDependency[]
   ): Promise<SystemNode[]> {
-    const isContainerLevel = nodes.some(n =>
-      ['domain-logic', 'state-sync', 'frontend-ui', 'app-host'].includes(n.id)
+    const isContainerLevel = nodes.some(
+      n =>
+        n.type === 'container' ||
+        ['domain-logic', 'state-sync', 'frontend-ui', 'app-host'].includes(n.entityRef)
     );
 
     const g = new dagre.graphlib.Graph();
@@ -25,9 +27,8 @@ export class DagreLayoutAdapter implements LayoutPort {
     const height = isContainerLevel ? 120 : 100;
 
     nodes.forEach(node => {
-      g.setNode(node.id, { width, height });
+      g.setNode(node.entityRef, { width, height });
     });
-
     dependencies.forEach(edge => {
       if (g.hasNode(edge.from) && g.hasNode(edge.to)) {
         g.setEdge(edge.from, edge.to);
@@ -37,7 +38,7 @@ export class DagreLayoutAdapter implements LayoutPort {
     dagre.layout(g);
 
     return nodes.map(node => {
-      const coords = g.node(node.id);
+      const coords = g.node(node.entityRef);
       return {
         ...node,
         x: coords ? Math.round(coords.x) : 100,

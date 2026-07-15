@@ -1,3 +1,8 @@
-# Cleanup tasks
+# Hierarchy model (completed)
 
-Both the manifest file and the c4Ref are no longer valuable. Our approach is to continue to allow the parentRef on a node. Once these have been persisted in the database we are able to transverse the graph, therefore we understand the entire graph without the need for the manifest and c4ref. Plan this out. We should remove these from test data too
+Architecture diagrams are linked by **entityRef FQNs**, not manifests or `c4Ref`.
+
+- A child diagram's `schema.entityRef` equals a node `entityRef` on its parent diagram.
+- Nodes and schema identity must match `ENTITY_REF_PATTERN` (no `../file.yaml` paths).
+- Legacy YAML `id` is still accepted as an alias for `entityRef` when it is already a valid FQN.
+- Navigate down by double-click / zoom; navigate up with breadcrumbs or `Escape`.

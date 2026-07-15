@@ -3,6 +3,11 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { BlueprintNode } from './BlueprintNode';
 import { useBlueprintStore } from '../../../../../application/store/store';
 
+const mockSetLocation = vi.fn();
+vi.mock('wouter', () => ({
+  useLocation: () => ['/workspace/blueprint', mockSetLocation],
+}));
+
 vi.mock('@xyflow/react', () => {
   return {
     Handle: ({ type, position, id }: any) => (
@@ -22,7 +27,7 @@ describe('BlueprintNode Component', () => {
       name: 'Test Schema',
       version: '1.0.0',
       level: 'container',
-      nodes: [{ id: 'test-node-1', type: 'microservice', name: 'My Service', x: 0, y: 0 }],
+      nodes: [{ entityRef: 'test-node-1', type: 'microservice', name: 'My Service', x: 0, y: 0 }],
       dependencies: [],
     });
     useBlueprintStore.setState({ selectedNodeId: null });
@@ -56,6 +61,21 @@ describe('BlueprintNode Component', () => {
     expect(screen.getByText('Microservice')).toBeInTheDocument();
     expect(screen.getByTestId('handle-target-left')).toBeInTheDocument();
     expect(screen.getByTestId('handle-source-right')).toBeInTheDocument();
+  });
+
+  it('truncates long entityRefs while exposing the full value in the title tooltip', () => {
+    const longRef = 'blueprint/blueprint/designer/importschema';
+    const props = {
+      ...defaultProps,
+      id: longRef,
+      data: { ...defaultProps.data, id: longRef, entityRef: longRef },
+    };
+    render(<BlueprintNode {...props} />);
+
+    const refEl = screen.getByTitle(longRef);
+    expect(refEl).toBeInTheDocument();
+    expect(refEl).toHaveTextContent(longRef);
+    expect(refEl.className).toMatch(/truncate/);
   });
 
   it('triggers store selectNode when clicked', () => {
@@ -113,7 +133,7 @@ describe('BlueprintNode Component', () => {
             name: 'Child Level',
             version: '1.0.0',
             level: 'component',
-            parentRef: 'default/test-node-1',
+            entityRef: 'default/test-node-1',
             nodes: [],
             dependencies: [],
           },
@@ -130,7 +150,7 @@ describe('BlueprintNode Component', () => {
     expect(screen.getByText('Zoom')).toBeInTheDocument();
   });
 
-  it('triggers store zoomIntoNode when Zoom button is clicked', () => {
+  it('triggers navigation to node entityRef when Zoom button is clicked', () => {
     useBlueprintStore.setState({
       loadedSystems: [
         {
@@ -140,7 +160,7 @@ describe('BlueprintNode Component', () => {
             name: 'Child Level',
             version: '1.0.0',
             level: 'component',
-            parentRef: 'default/test-node-1',
+            entityRef: 'default/test-node-1',
             nodes: [],
             dependencies: [],
           },
@@ -152,15 +172,11 @@ describe('BlueprintNode Component', () => {
       ...defaultProps,
       data: { ...defaultProps.data, entityRef: 'default/test-node-1' },
     };
-    const zoomSpy = vi
-      .spyOn(useBlueprintStore.getState(), 'zoomIntoNode')
-      .mockImplementation(async () => true);
 
     render(<BlueprintNode {...props} />);
 
     fireEvent.click(screen.getByRole('button', { name: /zoom/i }));
 
-    expect(zoomSpy).toHaveBeenCalledWith('test-node-1');
-    zoomSpy.mockRestore();
+    expect(mockSetLocation).toHaveBeenCalledWith('/workspace/default/test-node-1');
   });
 });

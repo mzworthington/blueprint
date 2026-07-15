@@ -1,0 +1,84 @@
+entityRef: blueprint/plugins/events-backend-module-bitbucket-server
+name: Events-backend-module-bitbucket-server Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/events-backend-module-bitbucket-server/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-server/src/index.ts
+      containerId: events-backend-module-bitbucket-server
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-bitbucket-server/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-server/src/setupTests.ts
+      containerId: events-backend-module-bitbucket-server
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-bitbucket-server/bitbucketservereventrouter-test
+    type: rest-api
+    name: BitbucketServerEventRouter.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-server/src/router/BitbucketServerEventRouter.test.ts
+      containerId: events-backend-module-bitbucket-server
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 600
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-bitbucket-server/bitbucketservereventrouter
+    type: rest-api
+    name: BitbucketServerEventRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-server/src/router/BitbucketServerEventRouter.ts
+      containerId: events-backend-module-bitbucket-server
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 830
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend-module-bitbucket-server/eventsmodulebitbucketservereventrouter
+    type: rest-api
+    name: eventsModuleBitbucketServerEventRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-server/src/service/eventsModuleBitbucketServerEventRouter.ts
+      containerId: events-backend-module-bitbucket-server
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1060
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-bitbucket-server/eventsmodulebitbucketserverrouter-test
+    type: rest-api
+    name: eventsModuleBitbucketServerRouter.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-server/src/service/eventsModuleBitbucketServerRouter.test.ts
+      containerId: events-backend-module-bitbucket-server
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1060
+    'y': 50
+dependencies:
+  - from: blueprint/plugins/events-backend-module-bitbucket-server/bitbucketservereventrouter-test
+    to: blueprint/plugins/events-backend-module-bitbucket-server/bitbucketservereventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-bitbucket-server/eventsmodulebitbucketservereventrouter
+    to: blueprint/plugins/events-backend-module-bitbucket-server/bitbucketservereventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-bitbucket-server/eventsmodulebitbucketserverrouter-test
+    to: blueprint/plugins/events-backend-module-bitbucket-server/eventsmodulebitbucketservereventrouter
+    type: direct-call
+    description: Calls module / service

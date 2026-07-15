@@ -1,17 +1,24 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useBlueprintStore } from '../store';
-import type { NodeType } from '../../../core';
+import type { NodeType } from '@blueprint/core';
 
 describe('diagramState Actions & State Management', () => {
   beforeEach(() => {
+    useBlueprintStore.setState({
+      selectedNodeId: null,
+      currentFilePath: 'blueprint.yaml',
+      workspaceName: undefined,
+      loadedSystems: [],
+    });
+
     const { initSchema } = useBlueprintStore.getState();
     initSchema({
       name: 'Test Workspace',
       version: '1.0.0',
       level: 'container',
       nodes: [
-        { id: 'nodeA', type: 'rest-api', name: 'Node A', x: 0, y: 0 },
-        { id: 'nodeB', type: 'grpc-service', name: 'Node B', x: 100, y: 100 },
+        { entityRef: 'nodeA', type: 'rest-api', name: 'Node A', x: 0, y: 0 },
+        { entityRef: 'nodeB', type: 'grpc-service', name: 'Node B', x: 100, y: 100 },
       ],
       dependencies: [{ from: 'nodeA', to: 'nodeB', type: 'direct-call', description: 'Request' }],
     });
@@ -59,7 +66,7 @@ describe('diagramState Actions & State Management', () => {
     });
 
     const updatedState = useBlueprintStore.getState();
-    const nodeA = updatedState.schema.nodes.find(n => n.id === 'nodeA');
+    const nodeA = updatedState.schema.nodes.find(n => n.entityRef === 'test-workspace/nodeA');
     expect(nodeA?.name).toBe('Updated Node A');
     expect(nodeA?.properties?.port).toBe(8080);
     expect(nodeA?.external).toBe(true);
@@ -69,11 +76,11 @@ describe('diagramState Actions & State Management', () => {
 
   it('should rename a node ID and update referencing edges', () => {
     const store = useBlueprintStore.getState();
-    store.updateNode('nodeA', { id: 'nodeNewA' });
+    store.updateNode('nodeA', { entityRef: 'nodeNewA' });
 
     const updatedState = useBlueprintStore.getState();
-    const oldNode = updatedState.schema.nodes.find(n => n.id === 'nodeA');
-    const newNode = updatedState.schema.nodes.find(n => n.id === 'nodeNewA');
+    const oldNode = updatedState.schema.nodes.find(n => n.entityRef === 'test-workspace/nodeA');
+    const newNode = updatedState.schema.nodes.find(n => n.entityRef === 'test-workspace/nodeNewA');
     expect(oldNode).toBeUndefined();
     expect(newNode).toBeDefined();
     expect(newNode?.name).toBe('Node A');
@@ -97,8 +104,8 @@ describe('diagramState Actions & State Management', () => {
     expect(updatedState.edges).toHaveLength(2);
     expect(updatedState.validationResult.isValid).toBe(false);
     expect(updatedState.validationResult.issues[0].type).toBe('cycle');
-    expect(updatedState.validationResult.issues[0].path).toContain('nodeA');
-    expect(updatedState.validationResult.issues[0].path).toContain('nodeB');
+    expect(updatedState.validationResult.issues[0].path).toContain('test-workspace/nodeA');
+    expect(updatedState.validationResult.issues[0].path).toContain('test-workspace/nodeB');
   });
 
   it('should allow updating schema name and level', () => {
@@ -118,8 +125,8 @@ describe('diagramState Actions & State Management', () => {
       version: '1.0.0',
       level: 'container',
       nodes: [
-        { id: 'app', type: 'rest-api', name: 'App Node', isTest: false },
-        { id: 'app-test', type: 'rest-api', name: 'App Test Node', isTest: true },
+        { entityRef: 'app', type: 'rest-api', name: 'App Node', isTest: false },
+        { entityRef: 'app-test', type: 'rest-api', name: 'App Test Node', isTest: true },
       ],
       dependencies: [],
     });
@@ -131,26 +138,8 @@ describe('diagramState Actions & State Management', () => {
     expect(rfNodeApp?.data.isTest).toBe(false);
     expect(rfNodeAppTest?.data.isTest).toBe(true);
 
-    expect(state.schema.nodes.find(n => n.id === 'app-test')?.isTest).toBe(true);
-  });
-
-  describe('Zoom error handling', () => {
-    it('should return false if zooming out from root diagram', async () => {
-      const store = useBlueprintStore.getState();
-      useBlueprintStore.setState({
-        currentFilePath: 'root.yaml',
-        navigationStack: [],
-        schema: {
-          name: 'Root Context',
-          version: '1.0.0',
-          level: 'context',
-          nodes: [],
-          dependencies: [],
-        },
-      });
-
-      const success = await store.zoomOut();
-      expect(success).toBe(false);
-    });
+    expect(state.schema.nodes.find(n => n.entityRef === 'test-project/app-test')?.isTest).toBe(
+      true
+    );
   });
 });

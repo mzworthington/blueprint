@@ -1,0 +1,167 @@
+entityRef: blueprint/plugins/auth-backend-module-microsoft-provider
+name: Auth-backend-module-microsoft-provider Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/auth-backend-module-microsoft-provider/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-microsoft-provider/config.d.ts
+      containerId: auth-backend-module-microsoft-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-microsoft-provider/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-microsoft-provider/src/index.ts
+      containerId: auth-backend-module-microsoft-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-microsoft-provider/authenticator-test
+    type: rest-api
+    name: authenticator.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-microsoft-provider/src/authenticator.test.ts
+      containerId: auth-backend-module-microsoft-provider
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 790
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-microsoft-provider/authenticator
+    type: background-worker
+    name: authenticator Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-microsoft-provider/src/authenticator.ts
+      containerId: auth-backend-module-microsoft-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 750
+    'y': 690
+  - entityRef: blueprint/plugins/auth-backend-module-microsoft-provider/deprecated
+    type: background-worker
+    name: deprecated Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-microsoft-provider/src/deprecated.ts
+      containerId: auth-backend-module-microsoft-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-microsoft-provider/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-microsoft-provider/src/module.test.ts
+      containerId: auth-backend-module-microsoft-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-microsoft-provider/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-microsoft-provider/src/module.ts
+      containerId: auth-backend-module-microsoft-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1290
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-microsoft-provider/resolvers
+    type: background-worker
+    name: resolvers Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-microsoft-provider/src/resolvers.ts
+      containerId: auth-backend-module-microsoft-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1290
+    'y': 690
+  - entityRef: blueprint/plugins/auth-backend-module-microsoft-provider/strategy
+    type: background-worker
+    name: strategy Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-microsoft-provider/src/strategy.ts
+      containerId: auth-backend-module-microsoft-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 750
+    'y': 1010
+  - entityRef: blueprint/plugins/auth-backend-module-microsoft-provider/fake-test
+    type: background-worker
+    name: fake.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-microsoft-provider/src/__testUtils__/fake.test.ts
+      containerId: auth-backend-module-microsoft-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1830
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-microsoft-provider/fake
+    type: background-worker
+    name: fake Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-microsoft-provider/src/__testUtils__/fake.ts
+      containerId: auth-backend-module-microsoft-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1790
+    'y': 690
+dependencies:
+  - from: blueprint/plugins/auth-backend-module-microsoft-provider/config-d
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-microsoft-provider/authenticator-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-microsoft-provider/authenticator-test
+    to: blueprint/plugins/auth-backend-module-microsoft-provider/fake
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-microsoft-provider/authenticator-test
+    to: blueprint/plugins/auth-backend-module-microsoft-provider/authenticator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-microsoft-provider/authenticator
+    to: blueprint/plugins/auth-backend-module-microsoft-provider/strategy
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-microsoft-provider/deprecated
+    to: blueprint/plugins/auth-backend-module-microsoft-provider/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-microsoft-provider/module-test
+    to: blueprint/plugins/auth-backend-module-microsoft-provider/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-microsoft-provider/module
+    to: blueprint/plugins/auth-backend-module-microsoft-provider/authenticator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-microsoft-provider/module
+    to: blueprint/plugins/auth-backend-module-microsoft-provider/resolvers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-microsoft-provider/fake-test
+    to: blueprint/plugins/auth-backend-module-microsoft-provider/fake
+    type: direct-call
+    description: Calls module / service

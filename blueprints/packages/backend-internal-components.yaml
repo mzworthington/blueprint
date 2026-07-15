@@ -1,0 +1,39 @@
+entityRef: blueprint/packages/backend-internal
+name: Backend-internal Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/backend-internal/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/backend-internal/src/wiring/index.ts
+      containerId: backend-internal
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/backend-internal/helpers
+    type: background-worker
+    name: helpers Service
+    isTest: false
+    properties:
+      filepath: packages/backend-internal/src/wiring/helpers.ts
+      containerId: backend-internal
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/backend-internal/opaqueextensionpointfactorymiddleware
+    type: background-worker
+    name: OpaqueExtensionPointFactoryMiddleware Service
+    isTest: false
+    properties:
+      filepath: packages/backend-internal/src/wiring/OpaqueExtensionPointFactoryMiddleware.ts
+      containerId: backend-internal
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+dependencies: []

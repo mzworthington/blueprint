@@ -1,0 +1,232 @@
+entityRef: blueprint/packages/cli-module-migrate
+name: Cli-module-migrate Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/cli-module-migrate/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/index.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-migrate/packageexports
+    type: background-worker
+    name: packageExports Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/commands/packageExports.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-migrate/packagelintconfigs
+    type: background-worker
+    name: packageLintConfigs Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/commands/packageLintConfigs.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-migrate/packagerole
+    type: background-worker
+    name: packageRole Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/commands/packageRole.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-migrate/packagescripts
+    type: background-worker
+    name: packageScripts Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/commands/packageScripts.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-migrate/reactrouterdeps
+    type: rest-api
+    name: reactRouterDeps REST Endpoint
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/commands/reactRouterDeps.ts
+      containerId: cli-module-migrate
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-migrate/utils
+    type: background-worker
+    name: utils Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/lib/utils.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3495
+    'y': 1010
+  - entityRef: blueprint/packages/cli-module-migrate/bump-test
+    type: background-worker
+    name: bump.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-migrate/src/commands/versions/bump.test.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2900
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-migrate/bump
+    type: background-worker
+    name: bump Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/commands/versions/bump.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3265
+    'y': 370
+  - entityRef: blueprint/packages/cli-module-migrate/migrate-test
+    type: background-worker
+    name: migrate.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-migrate/src/commands/versions/migrate.test.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3725
+    'y': 370
+  - entityRef: blueprint/packages/cli-module-migrate/migrate
+    type: background-worker
+    name: migrate Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/commands/versions/migrate.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3685
+    'y': 690
+  - entityRef: blueprint/packages/cli-module-migrate/packages-test
+    type: background-worker
+    name: packages.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-migrate/src/lib/versioning/packages.test.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2805
+    'y': 370
+  - entityRef: blueprint/packages/cli-module-migrate/packages
+    type: background-worker
+    name: packages Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/lib/versioning/packages.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2670
+    'y': 690
+  - entityRef: blueprint/packages/cli-module-migrate/yarn
+    type: background-worker
+    name: yarn Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/lib/versioning/yarn.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2535
+    'y': 1010
+dependencies:
+  - from: blueprint/packages/cli-module-migrate/bump-test
+    to: blueprint/packages/backend-openapi-utils/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/bump-test
+    to: blueprint/packages/cli-module-migrate/bump
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/bump-test
+    to: blueprint/packages/cli-module-migrate/packages
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/bump-test
+    to: blueprint/packages/core-components/node
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/bump-test
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/bump
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/bump
+    to: blueprint/packages/cli-module-migrate/packages
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/bump
+    to: blueprint/packages/cli-module-migrate/migrate
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/bump
+    to: blueprint/packages/cli-module-migrate/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/migrate-test
+    to: blueprint/packages/backend-openapi-utils/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/migrate-test
+    to: blueprint/packages/cli-module-migrate/migrate
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/migrate
+    to: blueprint/packages/cli-module-migrate/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/packages-test
+    to: blueprint/packages/cli-module-migrate/yarn
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/packages-test
+    to: blueprint/packages/cli-module-migrate/packages
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/packages-test
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/packages
+    to: blueprint/packages/cli-module-migrate/yarn
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/packages
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/yarn
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service

@@ -1,0 +1,81 @@
+entityRef: blueprint/plugins/auth-backend-module-oauth2-proxy-provider
+name: Auth-backend-module-oauth2-proxy-provider Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/auth-backend-module-oauth2-proxy-provider/authenticator
+    type: background-worker
+    name: authenticator Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-oauth2-proxy-provider/src/authenticator.ts
+      containerId: auth-backend-module-oauth2-proxy-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 370
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-oauth2-proxy-provider/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-oauth2-proxy-provider/src/index.ts
+      containerId: auth-backend-module-oauth2-proxy-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-oauth2-proxy-provider/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-oauth2-proxy-provider/src/module.ts
+      containerId: auth-backend-module-oauth2-proxy-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-oauth2-proxy-provider/resolvers
+    type: background-worker
+    name: resolvers Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-oauth2-proxy-provider/src/resolvers.ts
+      containerId: auth-backend-module-oauth2-proxy-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 830
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-oauth2-proxy-provider/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-oauth2-proxy-provider/src/types.ts
+      containerId: auth-backend-module-oauth2-proxy-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 690
+dependencies:
+  - from: blueprint/plugins/auth-backend-module-oauth2-proxy-provider/authenticator
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-oauth2-proxy-provider/authenticator
+    to: blueprint/plugins/auth-backend-module-oauth2-proxy-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-oauth2-proxy-provider/module
+    to: blueprint/plugins/auth-backend-module-oauth2-proxy-provider/authenticator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-oauth2-proxy-provider/module
+    to: blueprint/plugins/auth-backend-module-oauth2-proxy-provider/resolvers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-oauth2-proxy-provider/resolvers
+    to: blueprint/plugins/auth-backend-module-oauth2-proxy-provider/types
+    type: direct-call
+    description: Calls module / service

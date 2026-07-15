@@ -92,8 +92,8 @@ export const Searchbar: React.FC = () => {
                 const isActive = index === activeIndex;
                 return (
                   <button
-                    key={node.id}
-                    onClick={() => handleSelectNode(node.id)}
+                    key={node.entityRef}
+                    onClick={() => handleSelectNode(node.entityRef || '')}
                     className={`w-full text-left px-3 py-2 rounded-lg flex items-center justify-between gap-3 font-mono text-xs transition-colors cursor-pointer focus:outline-none ${
                       isActive
                         ? 'bg-brand-950/40 text-[#00f0ff] border border-brand-500/20'
@@ -102,7 +102,7 @@ export const Searchbar: React.FC = () => {
                   >
                     <div className="min-w-0">
                       <div className="font-semibold truncate">{node.name}</div>
-                      <div className="text-[10px] text-slate-500 truncate">{node.id}</div>
+                      <div className="text-[10px] text-slate-500 truncate">{node.entityRef}</div>
                     </div>
                     <span className="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-[9px] text-slate-400 capitalize shrink-0">
                       {node.type.replace('-', ' ')}

@@ -1,0 +1,233 @@
+entityRef: blueprint/plugins/config-schema
+name: Config-schema Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/config-schema/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/config-schema/src/components/ScrollTargetsContext/index.ts
+      containerId: config-schema
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 690
+  - entityRef: blueprint/plugins/config-schema/plugin-test
+    type: background-worker
+    name: plugin.test Service
+    isTest: true
+    properties:
+      filepath: plugins/config-schema/src/plugin.test.ts
+      containerId: config-schema
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 690
+  - entityRef: blueprint/plugins/config-schema/plugin
+    type: background-worker
+    name: plugin Service
+    isTest: false
+    properties:
+      filepath: plugins/config-schema/src/plugin.ts
+      containerId: config-schema
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 1010
+  - entityRef: blueprint/plugins/config-schema/routes
+    type: background-worker
+    name: routes Service
+    isTest: false
+    properties:
+      filepath: plugins/config-schema/src/routes.ts
+      containerId: config-schema
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 1330
+  - entityRef: blueprint/plugins/config-schema/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/config-schema/src/setupTests.ts
+      containerId: config-schema
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1195
+    'y': 50
+  - entityRef: blueprint/plugins/config-schema/staticschemaloader
+    type: rest-api
+    name: StaticSchemaLoader REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/config-schema/src/api/StaticSchemaLoader.ts
+      containerId: config-schema
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1060
+    'y': 690
+  - entityRef: blueprint/plugins/config-schema/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/config-schema/src/components/SchemaView/types.ts
+      containerId: config-schema
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 1010
+  - entityRef: blueprint/plugins/config-schema/configschemapage
+    type: gateway-api
+    name: ConfigSchemaPage UI Component
+    isTest: false
+    properties:
+      filepath: plugins/config-schema/src/components/ConfigSchemaPage/ConfigSchemaPage.tsx
+      containerId: config-schema
+      technology: React Component
+      classification: ui-import
+    x: 1655
+    'y': 50
+  - entityRef: blueprint/plugins/config-schema/schemabrowser
+    type: gateway-api
+    name: SchemaBrowser UI Component
+    isTest: false
+    properties:
+      filepath: plugins/config-schema/src/components/SchemaBrowser/SchemaBrowser.tsx
+      containerId: config-schema
+      technology: React Component
+      classification: ui-import
+    x: 1520
+    'y': 690
+  - entityRef: blueprint/plugins/config-schema/schemaview
+    type: gateway-api
+    name: SchemaView UI Component
+    isTest: false
+    properties:
+      filepath: plugins/config-schema/src/components/SchemaView/SchemaView.tsx
+      containerId: config-schema
+      technology: React Component
+      classification: ui-import
+    x: 1980
+    'y': 690
+  - entityRef: blueprint/plugins/config-schema/schemaviewer-test
+    type: gateway-api
+    name: SchemaViewer.test UI Component
+    isTest: true
+    properties:
+      filepath: plugins/config-schema/src/components/SchemaViewer/SchemaViewer.test.tsx
+      containerId: config-schema
+      technology: React Component
+      classification: ui-import
+    x: 2115
+    'y': 50
+  - entityRef: blueprint/plugins/config-schema/schemaviewer
+    type: background-worker
+    name: SchemaViewer Service
+    isTest: false
+    properties:
+      filepath: plugins/config-schema/src/components/SchemaViewer/SchemaViewer.tsx
+      containerId: config-schema
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 370
+  - entityRef: blueprint/plugins/config-schema/scrolltargetscontext
+    type: gateway-api
+    name: ScrollTargetsContext UI Component
+    isTest: false
+    properties:
+      filepath: plugins/config-schema/src/components/ScrollTargetsContext/ScrollTargetsContext.tsx
+      containerId: config-schema
+      technology: React Component
+      classification: ui-import
+    x: 2075
+    'y': 1010
+dependencies:
+  - from: blueprint/plugins/config-schema/index
+    to: blueprint/plugins/catalog-react/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/index
+    to: blueprint/plugins/config-schema/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/index
+    to: blueprint/plugins/config-schema/plugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/plugin-test
+    to: blueprint/plugins/config-schema/plugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/plugin
+    to: blueprint/plugins/config-schema/routes
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/staticschemaloader
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/staticschemaloader
+    to: blueprint/plugins/config-schema/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/staticschemaloader
+    to: blueprint/plugins/config-schema/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/configschemapage
+    to: blueprint/plugins/catalog-react/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/configschemapage
+    to: blueprint/plugins/config-schema/schemaviewer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/schemabrowser
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/schemabrowser
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/schemabrowser
+    to: blueprint/plugins/config-schema/scrolltargetscontext
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/schemaview
+    to: blueprint/plugins/config-schema/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/schemaview
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/schemaview
+    to: blueprint/plugins/config-schema/scrolltargetscontext
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/schemaview
+    to: blueprint/plugins/config-schema/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/schemaviewer-test
+    to: blueprint/plugins/config-schema/schemaviewer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/schemaviewer
+    to: blueprint/plugins/config-schema/schemaview
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/schemaviewer
+    to: blueprint/plugins/config-schema/schemabrowser
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/schemaviewer
+    to: blueprint/plugins/config-schema/scrolltargetscontext
+    type: direct-call
+    description: Calls module / service

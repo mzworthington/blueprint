@@ -2,7 +2,7 @@ use crate::domain::analyzer::naming::sanitize_id;
 use crate::domain::model::{NodeType, SystemNode};
 
 pub struct ContainerInfo {
-    pub id: String,
+    pub entity_ref: String,
     pub name: String,
     pub r#type: NodeType,
     pub description: String,
@@ -16,18 +16,18 @@ pub fn get_container_info(node: &SystemNode, filepath: Option<&str>) -> Containe
         .unwrap_or("")
         .to_lowercase();
 
-    if node.id == "external-api-target" {
+    if node.entity_ref == "external-api-target" {
         return ContainerInfo {
-            id: "external-services".to_string(),
+            entity_ref: "external-services".to_string(),
             name: "External HTTP Services".to_string(),
             r#type: NodeType::SoftwareSystem,
             description: "Outbound HTTP integration endpoints.".to_string(),
             technology: "Web APIs".to_string(),
         };
     }
-    if node.id == "frontend-client" {
+    if node.entity_ref == "frontend-client" {
         return ContainerInfo {
-            id: "frontend-client".to_string(),
+            entity_ref: "frontend-client".to_string(),
             name: "Frontend Client Host".to_string(),
             r#type: NodeType::GatewayApi,
             description: "Vite app hosting server.".to_string(),
@@ -38,7 +38,7 @@ pub fn get_container_info(node: &SystemNode, filepath: Option<&str>) -> Containe
     let filepath = match filepath {
         None => {
             return ContainerInfo {
-                id: "app-host".to_string(),
+                entity_ref: "app-host".to_string(),
                 name: "Application Shell".to_string(),
                 r#type: NodeType::GatewayApi,
                 description: "Entrypoint and root shell layout.".to_string(),
@@ -58,7 +58,7 @@ pub fn get_container_info(node: &SystemNode, filepath: Option<&str>) -> Containe
 
     if normalized.starts_with("packages/core/") || normalized.starts_with("src/domain/") {
         return ContainerInfo {
-            id: "domain-logic".to_string(),
+            entity_ref: "domain-logic".to_string(),
             name: "Domain Logic Layer".to_string(),
             r#type: NodeType::BackgroundWorker,
             description: "Core domain logic, schema validation rules, and graph parsing."
@@ -83,7 +83,7 @@ pub fn get_container_info(node: &SystemNode, filepath: Option<&str>) -> Containe
             || normalized.contains("logging");
         if is_state_or_sync {
             return ContainerInfo {
-                id: "state-sync".to_string(),
+                entity_ref: "state-sync".to_string(),
                 name: "State & Sync Manager".to_string(),
                 r#type: NodeType::CacheStore,
                 description: "Zustand global store and local directory synchronization."
@@ -92,7 +92,7 @@ pub fn get_container_info(node: &SystemNode, filepath: Option<&str>) -> Containe
             };
         } else {
             return ContainerInfo {
-                id: "frontend-ui".to_string(),
+                entity_ref: "frontend-ui".to_string(),
                 name: "Frontend React UI".to_string(),
                 r#type: NodeType::GatewayApi,
                 description: "React Flow canvas, sidebar configuration panel, and navigation UI."
@@ -110,7 +110,7 @@ pub fn get_container_info(node: &SystemNode, filepath: Option<&str>) -> Containe
         || normalized.starts_with("src/pages/")
     {
         return ContainerInfo {
-            id: "frontend-ui".to_string(),
+            entity_ref: "frontend-ui".to_string(),
             name: "Frontend React UI".to_string(),
             r#type: NodeType::GatewayApi,
             description: "React Flow canvas, sidebar configuration panel, and navigation UI."
@@ -179,7 +179,7 @@ pub fn get_container_info(node: &SystemNode, filepath: Option<&str>) -> Containe
         };
 
         return ContainerInfo {
-            id: container_id,
+            entity_ref: container_id,
             name: container_name,
             r#type: container_type,
             description: desc,
@@ -195,7 +195,7 @@ pub fn get_container_info(node: &SystemNode, filepath: Option<&str>) -> Containe
 
     // Universal fallback container
     ContainerInfo {
-        id: "app-host".to_string(),
+        entity_ref: "app-host".to_string(),
         name: "Application Shell".to_string(),
         r#type: NodeType::GatewayApi,
         description: "Entrypoint and root shell layout.".to_string(),
@@ -216,7 +216,7 @@ mod tests {
     #[test]
     fn test_get_container_info_special_ids() {
         let ext_node = SystemNode {
-            id: "external-api-target".to_string(),
+            entity_ref: "external-api-target".to_string(),
             r#type: NodeType::RestApi as i32,
             name: "External API".to_string(),
             external: Some(true),
@@ -224,14 +224,13 @@ mod tests {
             is_test: Some(false),
             x: None,
             y: None,
-            entity_ref: None,
         };
         let info = get_container_info(&ext_node, None);
-        assert_eq!(info.id, "external-services");
+        assert_eq!(info.entity_ref, "external-services");
         assert_eq!(info.r#type, NodeType::SoftwareSystem);
 
         let client_node = SystemNode {
-            id: "frontend-client".to_string(),
+            entity_ref: "frontend-client".to_string(),
             r#type: NodeType::GatewayApi as i32,
             name: "React".to_string(),
             external: Some(false),
@@ -239,17 +238,16 @@ mod tests {
             is_test: Some(false),
             x: None,
             y: None,
-            entity_ref: None,
         };
         let info2 = get_container_info(&client_node, None);
-        assert_eq!(info2.id, "frontend-client");
+        assert_eq!(info2.entity_ref, "frontend-client");
         assert_eq!(info2.r#type, NodeType::GatewayApi);
     }
 
     #[test]
     fn test_get_container_info_filepath_heuristics() {
         let node = SystemNode {
-            id: "my-node".to_string(),
+            entity_ref: "my-node".to_string(),
             r#type: NodeType::BackgroundWorker as i32,
             name: "My Node".to_string(),
             external: Some(false),
@@ -257,23 +255,22 @@ mod tests {
             is_test: Some(false),
             x: None,
             y: None,
-            entity_ref: None,
         };
 
         // Core path
         let info = get_container_info(&node, Some("packages/core/src/rules/graph.ts"));
-        assert_eq!(info.id, "domain-logic");
+        assert_eq!(info.entity_ref, "domain-logic");
         assert_eq!(info.name, "Domain Logic Layer");
 
         // App store/sync path
         let info2 = get_container_info(&node, Some("packages/app/src/store/states/ioState.ts"));
-        assert_eq!(info2.id, "state-sync");
+        assert_eq!(info2.entity_ref, "state-sync");
 
         // App frontend UI path
         let info3 = get_container_info(
             &node,
             Some("packages/app/src/ui/components/MermaidPreview.tsx"),
         );
-        assert_eq!(info3.id, "frontend-ui");
+        assert_eq!(info3.entity_ref, "frontend-ui");
     }
 }

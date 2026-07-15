@@ -1,0 +1,119 @@
+entityRef: blueprint/plugins/signals-node
+name: Signals-node Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/signals-node/defaultsignalsservice-test
+    type: background-worker
+    name: DefaultSignalsService.test Service
+    isTest: true
+    properties:
+      filepath: plugins/signals-node/src/DefaultSignalsService.test.ts
+      containerId: signals-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/signals-node/defaultsignalsservice
+    type: background-worker
+    name: DefaultSignalsService Service
+    isTest: false
+    properties:
+      filepath: plugins/signals-node/src/DefaultSignalsService.ts
+      containerId: signals-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 560
+    'y': 370
+  - entityRef: blueprint/plugins/signals-node/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/signals-node/src/index.ts
+      containerId: signals-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/signals-node/lib
+    type: background-worker
+    name: lib Service
+    isTest: false
+    properties:
+      filepath: plugins/signals-node/src/lib.ts
+      containerId: signals-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/signals-node/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/signals-node/src/setupTests.ts
+      containerId: signals-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/signals-node/signalsservice
+    type: background-worker
+    name: SignalsService Service
+    isTest: false
+    properties:
+      filepath: plugins/signals-node/src/SignalsService.ts
+      containerId: signals-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 690
+  - entityRef: blueprint/plugins/signals-node/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/signals-node/src/types.ts
+      containerId: signals-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 465
+    'y': 1010
+dependencies:
+  - from: blueprint/plugins/signals-node/defaultsignalsservice-test
+    to: blueprint/plugins/signals-node/defaultsignalsservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals-node/defaultsignalsservice-test
+    to: blueprint/plugins/signals-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals-node/defaultsignalsservice
+    to: blueprint/plugins/signals-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals-node/defaultsignalsservice
+    to: blueprint/plugins/signals-node/signalsservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals-node/defaultsignalsservice
+    to: blueprint/plugins/signals-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals-node/lib
+    to: blueprint/plugins/signals-node/defaultsignalsservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals-node/lib
+    to: blueprint/plugins/signals-node/signalsservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals-node/signalsservice
+    to: blueprint/plugins/signals-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals-node/signalsservice
+    to: blueprint/plugins/signals-node/types
+    type: direct-call
+    description: Calls module / service

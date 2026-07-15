@@ -1,0 +1,33 @@
+entityRef: blueprint/microsite
+name: Microsite Containers
+version: 1.0.0
+level: container
+nodes:
+  - entityRef: blueprint/microsite/microsite
+    type: container
+    name: Microsite Service
+    x: 305
+    'y': 800
+  - entityRef: blueprint/microsite/pages
+    type: container
+    name: Pages Service
+    x: 255
+    'y': 60
+  - entityRef: blueprint/microsite/components
+    type: container
+    name: Components Service
+    x: 150
+    'y': 430
+dependencies:
+  - from: blueprint/microsite/components
+    to: blueprint/microsite/pages
+    type: inter-container
+  - from: blueprint/microsite/components
+    to: blueprint/microsite/microsite
+    type: inter-container
+  - from: blueprint/microsite/pages
+    to: blueprint/microsite/components
+    type: inter-container
+  - from: blueprint/microsite/pages
+    to: blueprint/microsite/microsite
+    type: inter-container

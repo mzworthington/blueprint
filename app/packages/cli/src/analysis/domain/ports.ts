@@ -1,8 +1,8 @@
 import type { ParsedSourceFile } from './types.ts';
-import type { SystemNode, SystemDependency } from '../../core/generated/blueprint/v1/schema.ts';
+import type { SystemNode, SystemDependency } from '@blueprint/core';
 
 export interface CodebaseParserPort {
-  parseSourceFiles(globPattern: string): Promise<ParsedSourceFile[]>;
+  parseSourceFiles(globPattern: string, signal?: AbortSignal): Promise<ParsedSourceFile[]>;
 }
 
 export interface LayoutPort {
@@ -16,6 +16,10 @@ export interface AnalysisFileSystemPort {
   mkdir(dirPath: string): void;
   unlink(filePath: string): void;
   readPackageJsonName(packageJsonPath: string): string | null;
+  /** Raw text read; returns null when missing or unreadable. */
+  readText(filePath: string): string | null;
+  /** Immediate child names of a directory (files and folders). */
+  listDirectoryNames(dirPath: string): string[];
   getRelativePath(from: string, to: string): string;
   getAbsolutePath(...parts: string[]): string;
   getCurrentWorkingDirectory(): string;

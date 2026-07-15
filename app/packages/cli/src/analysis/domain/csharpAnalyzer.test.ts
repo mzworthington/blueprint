@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import { CSharpAnalyzer } from './csharpAnalyzer.ts';
-import { NodeType } from '../../core/generated/blueprint/v1/schema.ts';
 
 describe('CSharpAnalyzer Strategy', () => {
   const analyzer = new CSharpAnalyzer();
@@ -24,15 +23,15 @@ describe('CSharpAnalyzer Strategy', () => {
       'data',
       false
     );
-    expect(node.type).toBe(NodeType.NODE_TYPE_BACKGROUND_WORKER);
+    expect(node.type).toBe('background-worker');
     expect(node.properties?.technology).toBe('C# Domain Service');
   });
 
   it('computes container info from C# namespaces', () => {
     const info = analyzer.getContainerInfo(
       {
-        id: 'usercontroller',
-        type: NodeType.NODE_TYPE_BACKGROUND_WORKER,
+        entityRef: 'usercontroller',
+        type: 'background-worker',
         name: 'UserController',
         properties: {
           namespaces: 'TestProject.Controllers,TestProject.Services',
@@ -42,7 +41,7 @@ describe('CSharpAnalyzer Strategy', () => {
       'cs',
       'src/UserController.cs'
     );
-    expect(info?.id).toBe('testproject_controllers');
+    expect(info?.entityRef).toBe('testproject-controllers');
     expect(info?.name).toBe('TestProject.Controllers');
   });
 });

@@ -1,0 +1,355 @@
+entityRef: blueprint/packages/integration-aws-node
+name: Integration-aws-node Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/integration-aws-node/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: packages/integration-aws-node/config.d.ts
+      containerId: integration-aws-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 180
+    'y': 50
+  - entityRef: blueprint/packages/integration-aws-node/config-test
+    type: background-worker
+    name: config.test Service
+    isTest: true
+    properties:
+      filepath: packages/integration-aws-node/src/config.test.ts
+      containerId: integration-aws-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 370
+  - entityRef: blueprint/packages/integration-aws-node/config
+    type: background-worker
+    name: config Service
+    isTest: false
+    properties:
+      filepath: packages/integration-aws-node/src/config.ts
+      containerId: integration-aws-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 275
+    'y': 690
+  - entityRef: blueprint/packages/integration-aws-node/defaultawscredentialsmanager-test
+    type: background-worker
+    name: DefaultAwsCredentialsManager.test Service
+    isTest: true
+    properties:
+      filepath: packages/integration-aws-node/src/DefaultAwsCredentialsManager.test.ts
+      containerId: integration-aws-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 640
+    'y': 50
+  - entityRef: blueprint/packages/integration-aws-node/defaultawscredentialsmanager
+    type: background-worker
+    name: DefaultAwsCredentialsManager Service
+    isTest: false
+    properties:
+      filepath: packages/integration-aws-node/src/DefaultAwsCredentialsManager.ts
+      containerId: integration-aws-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 775
+    'y': 370
+  - entityRef: blueprint/packages/integration-aws-node/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/integration-aws-node/src/index.ts
+      containerId: integration-aws-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1100
+    'y': 50
+  - entityRef: blueprint/packages/integration-aws-node/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: packages/integration-aws-node/src/types.ts
+      containerId: integration-aws-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 815
+    'y': 690
+dependencies:
+  - from: blueprint/packages/app-legacy/authproxydiscoveryapi
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/loader-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/loader
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/createapp
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/discovery-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/discovery
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/resolution
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration-aws-node/config-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration-aws-node/config-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration-aws-node/defaultawscredentialsmanager-test
+    to: blueprint/packages/integration-aws-node/defaultawscredentialsmanager
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration-aws-node/defaultawscredentialsmanager-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration-aws-node/defaultawscredentialsmanager
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration-aws-node/defaultawscredentialsmanager
+    to: blueprint/packages/integration-aws-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration-aws-node/defaultawscredentialsmanager
+    to: blueprint/packages/integration-aws-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration-aws-node/defaultawscredentialsmanager
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-app-api/createallowbootfailurepredicate
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-dynamic-feature-service/features
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-dynamic-feature-service/plugin-manager
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-dynamic-feature-service/plugin-scanner-watcher-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-dynamic-feature-service/plugin-scanner-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-dynamic-feature-service/plugin-scanner
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-test-utils/mockservices
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-test-utils/testbackend
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/compile
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/load
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/types
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/configsources
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/envconfigsource
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/observableconfigproxy-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/observableconfigproxy
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/types
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/getlegacyintegrations
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/appmanager
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/approuter-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/defaultconfigloader-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/defaultconfigloader
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/overridebaseurlconfigs
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/resolveroutebindings
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/types
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-app-api/resolveroutebindings-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-app-api/resolveroutebindings
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-app-api/readappextensionsconfig-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-app-api/readappextensionsconfig
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-app-api/preparespecializedapp
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/createextensiontester
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/renderintestapp
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/rendertestapp
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration-react/scmintegrationsapi-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration-react/scmintegrationsapi
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/publisherconfig
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-plugin-api/rootconfigservice
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-plugin-api/schedulerservice-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-plugin-api/schedulerservice
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/defaultauthconnector-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/configapi
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/mockconfigapi
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/generate
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/test-utils/mockapis
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/customizabletemplate-stories
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/defaulttemplate-stories
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/frontendhostdiscovery-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/frontendhostdiscovery
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/fetchmiddlewares
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/identityauthinjectorfetchmiddleware-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/identityauthinjectorfetchmiddleware
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/test-utils/mockconfigapi
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/microsoftauth-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service

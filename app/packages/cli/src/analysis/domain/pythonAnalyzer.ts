@@ -1,5 +1,5 @@
 import type { ParsedSourceFile } from './types.ts';
-import { NodeType, type SystemNode } from '../../core/generated/blueprint/v1/schema.ts';
+import { type SystemNode, slugify } from '@blueprint/core';
 import type { LanguageAnalyzer, ContainerInfo } from './languageAnalyzer.ts';
 
 export class PythonAnalyzer implements LanguageAnalyzer {
@@ -9,8 +9,8 @@ export class PythonAnalyzer implements LanguageAnalyzer {
 
   createNode(sourceFile: ParsedSourceFile, cleanFileId: string, isTestFile: boolean): SystemNode {
     return {
-      id: cleanFileId,
-      type: NodeType.NODE_TYPE_BACKGROUND_WORKER,
+      entityRef: cleanFileId,
+      type: 'background-worker',
       name: `${sourceFile.baseName} Service`,
       isTest: isTestFile,
       properties: {
@@ -23,28 +23,25 @@ export class PythonAnalyzer implements LanguageAnalyzer {
 
   getContainerInfo(
     node: SystemNode,
-    systemName: string,
-    fileExt: string,
+    _systemName: string,
+    _fileExt: string,
     normalizedPath: string
   ): ContainerInfo | null {
-    // Resolve container from namespaces or folder structures
     const namespacesStr = node.properties?.namespaces as string | undefined;
     const namespaces = namespacesStr ? namespacesStr.split(',').filter(Boolean) : [];
     let containerName = '';
     let containerId = '';
 
-    // A. Use namespace if present
     if (namespaces.length > 0) {
       const primaryNamespace = namespaces[0];
       const parts = primaryNamespace.split('.');
       const segment = parts.slice(0, Math.min(parts.length, 2)).join('.');
       if (segment && segment !== 'System' && segment !== 'Microsoft') {
         containerName = segment;
-        containerId = this.sanitizeId(segment);
+        containerId = slugify(segment);
       }
     }
 
-    // B. Fallback to folder structure
     if (!containerId) {
       const parts = normalizedPath.split('/');
       const srcIndex = parts.indexOf('src');
@@ -57,7 +54,7 @@ export class PythonAnalyzer implements LanguageAnalyzer {
 
       if (folderName && folderName !== 'src') {
         containerName = folderName;
-        containerId = this.sanitizeId(folderName);
+        containerId = slugify(folderName);
       }
     }
 
@@ -72,7 +69,7 @@ export class PythonAnalyzer implements LanguageAnalyzer {
         : `Core domain services for ${containerName}`;
 
       return {
-        id: containerId,
+        entityRef: containerId,
         name: containerName,
         type: containerType,
         description: desc,
@@ -81,9 +78,5 @@ export class PythonAnalyzer implements LanguageAnalyzer {
     }
 
     return null;
-  }
-
-  private sanitizeId(raw: string): string {
-    return raw.toLowerCase().replace(/[^a-z0-9_-]/g, '_');
   }
 }

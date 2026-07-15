@@ -1,0 +1,111 @@
+entityRef: blueprint/plugins/signals-backend
+name: Signals-backend Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/signals-backend/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/signals-backend/src/index.ts
+      containerId: signals-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/signals-backend/plugin
+    type: background-worker
+    name: plugin Service
+    isTest: false
+    properties:
+      filepath: plugins/signals-backend/src/plugin.ts
+      containerId: signals-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/signals-backend/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/signals-backend/src/setupTests.ts
+      containerId: signals-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/signals-backend/router-test
+    type: rest-api
+    name: router.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/signals-backend/src/service/router.test.ts
+      containerId: signals-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/signals-backend/router
+    type: rest-api
+    name: router REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/signals-backend/src/service/router.ts
+      containerId: signals-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1060
+    'y': 370
+  - entityRef: blueprint/plugins/signals-backend/signalmanager-test
+    type: background-worker
+    name: SignalManager.test Service
+    isTest: true
+    properties:
+      filepath: plugins/signals-backend/src/service/SignalManager.test.ts
+      containerId: signals-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 370
+  - entityRef: blueprint/plugins/signals-backend/signalmanager
+    type: background-worker
+    name: SignalManager Service
+    isTest: false
+    properties:
+      filepath: plugins/signals-backend/src/service/SignalManager.ts
+      containerId: signals-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1290
+    'y': 690
+dependencies:
+  - from: blueprint/plugins/signals-backend/plugin
+    to: blueprint/plugins/signals-backend/router
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals-backend/router-test
+    to: blueprint/plugins/signals-backend/router
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals-backend/router
+    to: blueprint/plugins/signals-backend/signalmanager
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals-backend/router
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals-backend/signalmanager-test
+    to: blueprint/plugins/signals-backend/signalmanager
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals-backend/signalmanager
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals-backend/signalmanager
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service

@@ -1,0 +1,173 @@
+entityRef: blueprint/plugins/notifications-backend-module-slack
+name: Notifications-backend-module-slack Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/notifications-backend-module-slack/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-slack/config.d.ts
+      containerId: notifications-backend-module-slack
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1450
+    'y': 370
+  - entityRef: blueprint/plugins/notifications-backend-module-slack/extensions
+    type: background-worker
+    name: extensions Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-slack/src/extensions.ts
+      containerId: notifications-backend-module-slack
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1410
+    'y': 1010
+  - entityRef: blueprint/plugins/notifications-backend-module-slack/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-slack/src/lib/index.ts
+      containerId: notifications-backend-module-slack
+      technology: TypeScript Domain Service
+      classification: default
+    x: 275
+    'y': 50
+  - entityRef: blueprint/plugins/notifications-backend-module-slack/module
+    type: relational-database
+    name: module Database
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-slack/src/module.ts
+      containerId: notifications-backend-module-slack
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 1775
+    'y': 50
+  - entityRef: blueprint/plugins/notifications-backend-module-slack/constants
+    type: background-worker
+    name: constants Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-slack/src/lib/constants.ts
+      containerId: notifications-backend-module-slack
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 690
+  - entityRef: blueprint/plugins/notifications-backend-module-slack/slacknotificationprocessor-test
+    type: relational-database
+    name: SlackNotificationProcessor.test Database
+    isTest: true
+    properties:
+      filepath: plugins/notifications-backend-module-slack/src/lib/SlackNotificationProcessor.test.ts
+      containerId: notifications-backend-module-slack
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 735
+    'y': 50
+  - entityRef: blueprint/plugins/notifications-backend-module-slack/slacknotificationprocessor
+    type: relational-database
+    name: SlackNotificationProcessor Database
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-slack/src/lib/SlackNotificationProcessor.ts
+      containerId: notifications-backend-module-slack
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 990
+    'y': 370
+  - entityRef: blueprint/plugins/notifications-backend-module-slack/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-slack/src/lib/types.ts
+      containerId: notifications-backend-module-slack
+      technology: TypeScript Domain Service
+      classification: default
+    x: 640
+    'y': 690
+  - entityRef: blueprint/plugins/notifications-backend-module-slack/util
+    type: background-worker
+    name: util Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-slack/src/lib/util.ts
+      containerId: notifications-backend-module-slack
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1275
+    'y': 690
+dependencies:
+  - from: blueprint/plugins/notifications-backend-module-slack/config-d
+    to: blueprint/plugins/notifications-backend-module-slack/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend-module-slack/module
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend-module-slack/module
+    to: blueprint/plugins/notifications-backend-module-slack/slacknotificationprocessor
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/notifications-backend-module-slack/module
+    to: blueprint/plugins/notifications-backend-module-slack/extensions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend-module-slack/slacknotificationprocessor-test
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend-module-slack/slacknotificationprocessor-test
+    to: blueprint/plugins/notifications-backend-module-slack/slacknotificationprocessor
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/notifications-backend-module-slack/slacknotificationprocessor-test
+    to: blueprint/plugins/catalog-node/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend-module-slack/slacknotificationprocessor-test
+    to: blueprint/plugins/notifications-backend-module-slack/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend-module-slack/slacknotificationprocessor
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend-module-slack/slacknotificationprocessor
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend-module-slack/slacknotificationprocessor
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend-module-slack/slacknotificationprocessor
+    to: blueprint/plugins/notifications-backend-module-slack/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend-module-slack/slacknotificationprocessor
+    to: blueprint/plugins/notifications-backend-module-slack/constants
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend-module-slack/slacknotificationprocessor
+    to: blueprint/plugins/notifications-backend-module-slack/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend-module-slack/slacknotificationprocessor
+    to: blueprint/plugins/notifications-backend-module-slack/util
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend-module-slack/slacknotificationprocessor
+    to: blueprint/plugins/notifications-backend-module-slack/extensions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend-module-slack/util
+    to: blueprint/plugins/notifications-backend-module-slack/extensions
+    type: direct-call
+    description: Calls module / service

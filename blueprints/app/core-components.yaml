@@ -1,0 +1,238 @@
+entityRef: blueprint/app/core
+name: Core Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/app/core/vite-config
+    type: background-worker
+    name: vite.config Service
+    isTest: false
+    properties:
+      filepath: app/packages/core/vite.config.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/app/core/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: app/packages/core/src/index.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/app/core/entityref-test
+    type: background-worker
+    name: entityRef.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/core/src/lib/entityRef.test.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2115
+    'y': 370
+  - entityRef: blueprint/app/core/entityref
+    type: background-worker
+    name: entityRef Service
+    isTest: false
+    properties:
+      filepath: app/packages/core/src/lib/entityRef.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 690
+  - entityRef: blueprint/app/core/slug-test
+    type: background-worker
+    name: slug.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/core/src/lib/slug.test.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 1010
+  - entityRef: blueprint/app/core/slug
+    type: background-worker
+    name: slug Service
+    isTest: false
+    properties:
+      filepath: app/packages/core/src/lib/slug.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1575
+    'y': 1330
+  - entityRef: blueprint/app/core/schema-test
+    type: background-worker
+    name: schema.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/core/src/models/schema.test.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1020
+    'y': 690
+  - entityRef: blueprint/app/core/schema
+    type: background-worker
+    name: schema Service
+    isTest: false
+    properties:
+      filepath: app/packages/core/src/models/schema.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 980
+    'y': 1010
+  - entityRef: blueprint/app/core/graph-test
+    type: background-worker
+    name: graph.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/core/src/rules/graph.test.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/app/core/graph
+    type: background-worker
+    name: graph Service
+    isTest: false
+    properties:
+      filepath: app/packages/core/src/rules/graph.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1195
+    'y': 370
+  - entityRef: blueprint/app/core/path-test
+    type: background-worker
+    name: path.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/core/src/rules/path.test.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1655
+    'y': 50
+  - entityRef: blueprint/app/core/path
+    type: background-worker
+    name: path Service
+    isTest: false
+    properties:
+      filepath: app/packages/core/src/rules/path.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1655
+    'y': 370
+dependencies:
+  - from: blueprint/app/cli/blueprint
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/e2e-spec
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/core/entityref-test
+    to: blueprint/app/core/entityref
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/core/entityref-test
+    to: blueprint/app/core/schema
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/core/entityref
+    to: blueprint/app/core/schema
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/core/entityref
+    to: blueprint/app/core/slug
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/core/slug-test
+    to: blueprint/app/core/slug
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/core/schema-test
+    to: blueprint/app/core/schema
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/core/schema
+    to: blueprint/app/core/slug
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/core/graph-test
+    to: blueprint/app/core/graph
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/core/graph-test
+    to: blueprint/app/core/schema
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/core/graph
+    to: blueprint/app/core/schema
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/core/graph
+    to: blueprint/app/core/entityref
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/core/path-test
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/gitignorefilter-test
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/gitignorefilter
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/loadanalysisconfig-test
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/loadanalysisconfig
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/nodefilesystem-test
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/nodefilesystem
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/sourcepathfilter-test
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/treesitterparser-test
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/treesitterparser
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphparser-test
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphparser
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service

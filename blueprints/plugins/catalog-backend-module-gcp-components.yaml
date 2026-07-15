@@ -1,0 +1,99 @@
+entityRef: blueprint/plugins/catalog-backend-module-gcp
+name: Catalog-backend-module-gcp Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/catalog-backend-module-gcp/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gcp/config.d.ts
+      containerId: catalog-backend-module-gcp
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-gcp/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gcp/src/alpha.ts
+      containerId: catalog-backend-module-gcp
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-gcp/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gcp/src/providers/index.ts
+      containerId: catalog-backend-module-gcp
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-gcp/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-gcp/src/setupTests.ts
+      containerId: catalog-backend-module-gcp
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-gcp/catalogmodulegcpgkeentityprovider
+    type: background-worker
+    name: catalogModuleGcpGkeEntityProvider Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gcp/src/module/catalogModuleGcpGkeEntityProvider.ts
+      containerId: catalog-backend-module-gcp
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-gcp/gkeentityprovider-test
+    type: background-worker
+    name: GkeEntityProvider.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-gcp/src/providers/GkeEntityProvider.test.ts
+      containerId: catalog-backend-module-gcp
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-gcp/gkeentityprovider
+    type: background-worker
+    name: GkeEntityProvider Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gcp/src/providers/GkeEntityProvider.ts
+      containerId: catalog-backend-module-gcp
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2210
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/catalog-backend-module-gcp/catalogmodulegcpgkeentityprovider
+    to: blueprint/plugins/catalog-backend-module-gcp/gkeentityprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gcp/gkeentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-gcp/gkeentityprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gcp/gkeentityprovider-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gcp/gkeentityprovider
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service

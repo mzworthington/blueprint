@@ -1,0 +1,256 @@
+entityRef: blueprint/packages/catalog-client
+name: Catalog-client Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/catalog-client/catalogclient-test
+    type: background-worker
+    name: CatalogClient.test Service
+    isTest: true
+    properties:
+      filepath: packages/catalog-client/src/CatalogClient.test.ts
+      containerId: catalog-client
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2020
+    'y': 50
+  - entityRef: blueprint/packages/catalog-client/catalogclient
+    type: background-worker
+    name: CatalogClient Service
+    isTest: false
+    properties:
+      filepath: packages/catalog-client/src/CatalogClient.ts
+      containerId: catalog-client
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2020
+    'y': 370
+  - entityRef: blueprint/packages/catalog-client/constants
+    type: background-worker
+    name: constants Service
+    isTest: false
+    properties:
+      filepath: packages/catalog-client/src/constants.ts
+      containerId: catalog-client
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 690
+  - entityRef: blueprint/packages/catalog-client/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/catalog-client/src/schema/openapi/index.ts
+      containerId: catalog-client
+      technology: TypeScript Domain Service
+      classification: default
+    x: 640
+    'y': 50
+  - entityRef: blueprint/packages/catalog-client/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: packages/catalog-client/src/setupTests.ts
+      containerId: catalog-client
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1100
+    'y': 50
+  - entityRef: blueprint/packages/catalog-client/testutils
+    type: background-worker
+    name: testUtils Service
+    isTest: false
+    properties:
+      filepath: packages/catalog-client/src/testUtils.ts
+      containerId: catalog-client
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1560
+    'y': 50
+  - entityRef: blueprint/packages/catalog-client/utils-test
+    type: background-worker
+    name: utils.test Service
+    isTest: true
+    properties:
+      filepath: packages/catalog-client/src/utils.test.ts
+      containerId: catalog-client
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2940
+    'y': 370
+  - entityRef: blueprint/packages/catalog-client/utils
+    type: background-worker
+    name: utils Service
+    isTest: false
+    properties:
+      filepath: packages/catalog-client/src/utils.ts
+      containerId: catalog-client
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3075
+    'y': 690
+  - entityRef: blueprint/packages/catalog-client/inmemorycatalogclient-test
+    type: background-worker
+    name: InMemoryCatalogClient.test Service
+    isTest: true
+    properties:
+      filepath: packages/catalog-client/src/testUtils/InMemoryCatalogClient.test.ts
+      containerId: catalog-client
+      technology: TypeScript Domain Service
+      classification: default
+    x: 180
+    'y': 50
+  - entityRef: blueprint/packages/catalog-client/inmemorycatalogclient
+    type: background-worker
+    name: InMemoryCatalogClient Service
+    isTest: false
+    properties:
+      filepath: packages/catalog-client/src/testUtils/InMemoryCatalogClient.ts
+      containerId: catalog-client
+      technology: TypeScript Domain Service
+      classification: default
+    x: 180
+    'y': 370
+  - entityRef: blueprint/packages/catalog-client/api
+    type: background-worker
+    name: api Service
+    isTest: false
+    properties:
+      filepath: packages/catalog-client/src/types/api.ts
+      containerId: catalog-client
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2020
+    'y': 1010
+  - entityRef: blueprint/packages/catalog-client/discovery
+    type: background-worker
+    name: discovery Service
+    isTest: false
+    properties:
+      filepath: packages/catalog-client/src/types/discovery.ts
+      containerId: catalog-client
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2480
+    'y': 370
+  - entityRef: blueprint/packages/catalog-client/fetch
+    type: background-worker
+    name: fetch Service
+    isTest: false
+    properties:
+      filepath: packages/catalog-client/src/types/fetch.ts
+      containerId: catalog-client
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2480
+    'y': 50
+  - entityRef: blueprint/packages/catalog-client/status
+    type: background-worker
+    name: status Service
+    isTest: false
+    properties:
+      filepath: packages/catalog-client/src/types/status.ts
+      containerId: catalog-client
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2940
+    'y': 50
+dependencies:
+  - from: blueprint/packages/catalog-client/catalogclient-test
+    to: blueprint/packages/core-components/node
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/catalog-client/catalogclient-test
+    to: blueprint/packages/catalog-client/catalogclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/catalog-client/catalogclient-test
+    to: blueprint/packages/catalog-client/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/catalog-client/catalogclient-test
+    to: blueprint/packages/catalog-client/discovery
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/catalog-client/catalogclient
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/catalog-client/catalogclient
+    to: blueprint/packages/catalog-client/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/catalog-client/catalogclient
+    to: blueprint/packages/catalog-client/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/catalog-client/catalogclient
+    to: blueprint/packages/catalog-client/constants
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/catalog-client/utils-test
+    to: blueprint/packages/catalog-client/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/catalog-client/utils-test
+    to: blueprint/packages/catalog-client/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/catalog-client/utils
+    to: blueprint/packages/catalog-client/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/service
+    to: blueprint/packages/catalog-client/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/catalog-client/inmemorycatalogclient-test
+    to: blueprint/packages/backend-plugin-api/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/catalog-client/inmemorycatalogclient-test
+    to: blueprint/packages/catalog-client/inmemorycatalogclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/catalog-client/inmemorycatalogclient
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/catalog-client/inmemorycatalogclient
+    to: blueprint/packages/catalog-client/constants
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/catalog-client/api
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/github-test
+    to: blueprint/packages/catalog-client/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/customscaffolderextensions
+    to: blueprint/packages/catalog-client/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-defaults/defaultmetricsservice-test
+    to: blueprint/packages/catalog-client/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-defaults/defaultmetricsservice
+    to: blueprint/packages/catalog-client/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-defaults/defaulttracingservice-test
+    to: blueprint/packages/catalog-client/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-defaults/defaulttracingservice
+    to: blueprint/packages/catalog-client/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-defaults/plugintaskschedulerimpl
+    to: blueprint/packages/catalog-client/api
+    type: direct-call
+    description: Calls module / service

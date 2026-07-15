@@ -1,0 +1,55 @@
+entityRef: blueprint/plugins/catalog-backend-module-ai-model
+name: Catalog-backend-module-ai-model Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/catalog-backend-module-ai-model/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-ai-model/src/index.ts
+      containerId: catalog-backend-module-ai-model
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-ai-model/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-ai-model/src/module.test.ts
+      containerId: catalog-backend-module-ai-model
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-ai-model/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-ai-model/src/module.ts
+      containerId: catalog-backend-module-ai-model
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/catalog-backend-module-ai-model/module-test
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-ai-model/module-test
+    to: blueprint/plugins/catalog-backend-module-ai-model/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-ai-model/module
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-ai-model/module
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service

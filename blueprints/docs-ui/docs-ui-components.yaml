@@ -1,0 +1,577 @@
+entityRef: blueprint/docs-ui/docs-ui
+name: Docs-ui Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/docs-ui/docs-ui/mdx-components
+    type: gateway-api
+    name: mdx-components UI Component
+    isTest: false
+    properties:
+      filepath: docs-ui/src/mdx-components.tsx
+      containerId: docs-ui
+      technology: React Component
+      classification: ui-import
+    x: 140
+    'y': 50
+  - entityRef: blueprint/docs-ui/docs-ui/changelog
+    type: background-worker
+    name: changelog Service
+    isTest: false
+    properties:
+      filepath: docs-ui/src/utils/changelog.ts
+      containerId: docs-ui
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/docs-ui/docs-ui/data
+    type: background-worker
+    name: data Service
+    isTest: false
+    properties:
+      filepath: docs-ui/src/utils/data.ts
+      containerId: docs-ui
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2210
+    'y': 370
+  - entityRef: blueprint/docs-ui/docs-ui/definitions
+    type: background-worker
+    name: definitions Service
+    isTest: false
+    properties:
+      filepath: docs-ui/src/utils/definitions.ts
+      containerId: docs-ui
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/docs-ui/docs-ui/getpagename
+    type: background-worker
+    name: getPageName Service
+    isTest: false
+    properties:
+      filepath: docs-ui/src/utils/getPageName.ts
+      containerId: docs-ui
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/docs-ui/docs-ui/playground-context
+    type: gateway-api
+    name: playground-context UI Component
+    isTest: false
+    properties:
+      filepath: docs-ui/src/utils/playground-context.tsx
+      containerId: docs-ui
+      technology: React Component
+      classification: ui-import
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/docs-ui/docs-ui/propdefs
+    type: gateway-api
+    name: propDefs UI Component
+    isTest: false
+    properties:
+      filepath: docs-ui/src/utils/propDefs.ts
+      containerId: docs-ui
+      technology: React Component
+      classification: ui-import
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/docs-ui/docs-ui/theme-switcher
+    type: background-worker
+    name: theme-switcher Service
+    isTest: false
+    properties:
+      filepath: docs-ui/src/utils/theme-switcher.ts
+      containerId: docs-ui
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2900
+    'y': 50
+  - entityRef: blueprint/docs-ui/docs-ui/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: docs-ui/src/utils/types.ts
+      containerId: docs-ui
+      technology: TypeScript Domain Service
+      classification: default
+    x: 830
+    'y': 370
+dependencies:
+  - from: blueprint/docs-ui/docs-ui/mdx-components
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/providers
+    to: blueprint/docs-ui/docs-ui/playground-context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/hooks/usecurrentpage
+    to: blueprint/docs-ui/docs-ui/getpagename
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-16-0
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-15-0
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-14-0
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-13-0
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-12-0
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-11-0
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-10-0
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-9-1
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-9-0
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-8-2
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-8-0
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-7-2
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-7-1
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-7-0
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-6-0
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-5-0
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-4-0
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-3-2
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-3-0
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-2-1
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-2-0
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/changelog
+    to: blueprint/docs-ui/changelogs/v0-1-0
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/getpagename
+    to: blueprint/docs-ui/docs-ui/data
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/playground-context
+    to: blueprint/docs-ui/docs-ui/data
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/docs-ui/propdefs
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/docs-ui/changelog
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/docs-ui/mdx-components
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/utils
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/docs-ui/changelog
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/docs-ui/mdx-components
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/docs-ui/changelog
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/commandpalette
+    to: blueprint/docs-ui/docs-ui/data
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/componentgrid
+    to: blueprint/docs-ui/docs-ui/data
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/customtheme
+    to: blueprint/docs-ui/docs-ui/playground-context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/hookgrid
+    to: blueprint/docs-ui/docs-ui/data
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/mobilebottomnav
+    to: blueprint/docs-ui/docs-ui/playground-context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/navigation
+    to: blueprint/docs-ui/docs-ui/data
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/docs-ui/mdx-components
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/propstable
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/spacinggrouprow
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/typepopup
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/docs-ui/mdx-components
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/toolbar
+    to: blueprint/docs-ui/docs-ui/playground-context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-1-0
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-10-0
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-11-0
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-12-0
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-13-0
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-14-0
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-15-0
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-16-0
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-2-0
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-2-1
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-3-0
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-3-2
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-4-0
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-5-0
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-6-0
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-7-0
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-7-1
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-7-2
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-8-0
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-8-2
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-9-0
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/changelogs/v0-9-1
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service

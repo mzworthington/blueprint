@@ -1,0 +1,158 @@
+entityRef: blueprint/packages/core
+name: Core Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/core/deferred-test
+    type: background-worker
+    name: deferred.test Service
+    isTest: true
+    properties:
+      filepath: packages/types/src/deferred.test.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/core/deferred
+    type: background-worker
+    name: deferred Service
+    isTest: false
+    properties:
+      filepath: packages/types/src/deferred.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 370
+  - entityRef: blueprint/packages/core/expand-test
+    type: background-worker
+    name: expand.test Service
+    isTest: true
+    properties:
+      filepath: packages/types/src/expand.test.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/core/expand
+    type: background-worker
+    name: expand Service
+    isTest: false
+    properties:
+      filepath: packages/types/src/expand.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 370
+  - entityRef: blueprint/packages/core/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/types/src/index.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/packages/core/json-test
+    type: background-worker
+    name: json.test Service
+    isTest: true
+    properties:
+      filepath: packages/types/src/json.test.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/packages/core/json
+    type: background-worker
+    name: json Service
+    isTest: false
+    properties:
+      filepath: packages/types/src/json.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 370
+  - entityRef: blueprint/packages/core/observable-test
+    type: background-worker
+    name: observable.test Service
+    isTest: true
+    properties:
+      filepath: packages/types/src/observable.test.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/packages/core/observable
+    type: background-worker
+    name: observable Service
+    isTest: false
+    properties:
+      filepath: packages/types/src/observable.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 370
+  - entityRef: blueprint/packages/core/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: packages/types/src/setupTests.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/packages/core/time-test
+    type: background-worker
+    name: time.test Service
+    isTest: true
+    properties:
+      filepath: packages/types/src/time.test.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2900
+    'y': 50
+  - entityRef: blueprint/packages/core/time
+    type: background-worker
+    name: time Service
+    isTest: false
+    properties:
+      filepath: packages/types/src/time.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2900
+    'y': 370
+dependencies:
+  - from: blueprint/packages/core/deferred-test
+    to: blueprint/packages/core/deferred
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core/expand-test
+    to: blueprint/packages/core/expand
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core/json-test
+    to: blueprint/packages/core/json
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core/observable-test
+    to: blueprint/packages/core/observable
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core/time-test
+    to: blueprint/packages/core/time
+    type: direct-call
+    description: Calls module / service

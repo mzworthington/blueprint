@@ -1,0 +1,195 @@
+entityRef: blueprint/plugins/search-backend-module-catalog
+name: Search-backend-module-catalog Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/search-backend-module-catalog/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-catalog/config.d.ts
+      containerId: search-backend-module-catalog
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend-module-catalog/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-catalog/src/collators/index.ts
+      containerId: search-backend-module-catalog
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend-module-catalog/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-catalog/src/module.test.ts
+      containerId: search-backend-module-catalog
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend-module-catalog/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-catalog/src/module.ts
+      containerId: search-backend-module-catalog
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 370
+  - entityRef: blueprint/plugins/search-backend-module-catalog/catalogcollatorentitytransformer
+    type: background-worker
+    name: CatalogCollatorEntityTransformer Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-catalog/src/collators/CatalogCollatorEntityTransformer.ts
+      containerId: search-backend-module-catalog
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1655
+    'y': 1330
+  - entityRef: blueprint/plugins/search-backend-module-catalog/config-test
+    type: background-worker
+    name: config.test Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-catalog/src/collators/config.test.ts
+      containerId: search-backend-module-catalog
+      technology: TypeScript Domain Service
+      classification: default
+    x: 965
+    'y': 690
+  - entityRef: blueprint/plugins/search-backend-module-catalog/config
+    type: background-worker
+    name: config Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-catalog/src/collators/config.ts
+      containerId: search-backend-module-catalog
+      technology: TypeScript Domain Service
+      classification: default
+    x: 830
+    'y': 1010
+  - entityRef: blueprint/plugins/search-backend-module-catalog/defaultcatalogcollatorentitytransformer-test
+    type: background-worker
+    name: defaultCatalogCollatorEntityTransformer.test Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-catalog/src/collators/defaultCatalogCollatorEntityTransformer.test.ts
+      containerId: search-backend-module-catalog
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1425
+    'y': 690
+  - entityRef: blueprint/plugins/search-backend-module-catalog/defaultcatalogcollatorentitytransformer
+    type: background-worker
+    name: defaultCatalogCollatorEntityTransformer Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-catalog/src/collators/defaultCatalogCollatorEntityTransformer.ts
+      containerId: search-backend-module-catalog
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 1010
+  - entityRef: blueprint/plugins/search-backend-module-catalog/defaultcatalogcollatorfactory-test
+    type: background-worker
+    name: DefaultCatalogCollatorFactory.test Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-catalog/src/collators/DefaultCatalogCollatorFactory.test.ts
+      containerId: search-backend-module-catalog
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1925
+    'y': 370
+  - entityRef: blueprint/plugins/search-backend-module-catalog/defaultcatalogcollatorfactory
+    type: background-worker
+    name: DefaultCatalogCollatorFactory Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-catalog/src/collators/DefaultCatalogCollatorFactory.ts
+      containerId: search-backend-module-catalog
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1885
+    'y': 690
+dependencies:
+  - from: blueprint/plugins/search-backend-module-catalog/module-test
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-catalog/module-test
+    to: blueprint/plugins/search-backend-module-catalog/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-catalog/module
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-catalog/module
+    to: blueprint/plugins/search-backend-module-catalog/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-catalog/module
+    to: blueprint/plugins/search-backend-module-catalog/defaultcatalogcollatorfactory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-catalog/config-test
+    to: blueprint/plugins/search-backend-module-catalog/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-catalog/config-test
+    to: blueprint/plugins/search-backend-module-catalog/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-catalog/config
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-catalog/defaultcatalogcollatorentitytransformer-test
+    to: blueprint/plugins/search-backend-module-catalog/defaultcatalogcollatorentitytransformer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-catalog/defaultcatalogcollatorentitytransformer
+    to: blueprint/plugins/search-backend-module-catalog/catalogcollatorentitytransformer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-catalog/defaultcatalogcollatorfactory-test
+    to: blueprint/plugins/catalog-node/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-catalog/defaultcatalogcollatorfactory-test
+    to: blueprint/plugins/search-backend-module-catalog/defaultcatalogcollatorfactory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-catalog/defaultcatalogcollatorfactory
+    to: blueprint/plugins/search-backend-module-catalog/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-catalog/defaultcatalogcollatorfactory
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-catalog/defaultcatalogcollatorfactory
+    to: blueprint/plugins/search-backend-module-catalog/catalogcollatorentitytransformer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-catalog/defaultcatalogcollatorfactory
+    to: blueprint/plugins/search-backend-module-catalog/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-catalog/defaultcatalogcollatorfactory
+    to: blueprint/plugins/search-backend-module-catalog/defaultcatalogcollatorentitytransformer
+    type: direct-call
+    description: Calls module / service

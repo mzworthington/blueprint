@@ -1,0 +1,1335 @@
+entityRef: blueprint/plugins/techdocs-addons-test-utils
+name: Techdocs-addons-test-utils Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/techdocs-addons-test-utils/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-addons-test-utils/src/index.ts
+      containerId: techdocs-addons-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/techdocs-addons-test-utils/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/techdocs-addons-test-utils/src/setupTests.ts
+      containerId: techdocs-addons-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: gateway-api
+    name: test-utils UI Component
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-addons-test-utils/src/test-utils.tsx
+      containerId: techdocs-addons-test-utils
+      technology: React Component
+      classification: ui-import
+    x: 1060
+    'y': 50
+dependencies:
+  - from: blueprint/plugins/home/alpha-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes/index
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes/kubernetescontent-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-common/scaffolderclient-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search/apis-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/extensions-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/client-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    to: blueprint/plugins/catalog-node/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-react/context-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app/appmodulepublicsignin-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app/useinvertedthememode-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-import/azurerepoapiclient-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-import/catalogimportclient-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/useentity-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/useentitylistprovider-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/useentityownership-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/userelatedentities-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/usestarredentities-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/usestarredentity-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/config-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/visitsstorageapi-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/visitswebstorageapi-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/visitlistener-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications/notificationsclient-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-node/defaultnotificationservice-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-react/identitypermissionapi-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-react/requirepermission-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-react/usepermission-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/usecustomfieldextensions-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search/util-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-node/newlinedelimitedjsoncollatorfactory-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-node/lunrsearchengine-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-node/lunrsearchengineindexer-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-node/batchsearchengineindexer-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-node/decoratorbase-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchcontext-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals/signalsclient-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/usetechdocsreadercontentdata-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/usetechdocsreaderheaderdata-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/usetechdocssearch-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-module-addons-contrib/issuelink-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/api-docs/apidefinitioncard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/api-docs/apitypetitle-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/api-docs/apiexplorerpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/api-docs/defaultapiexplorerpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/api-docs/consumedapiscard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/api-docs/hasapiscard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/api-docs/providedapiscard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/api-docs/asyncapidefinition-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/api-docs/consumingcomponentscard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/api-docs/providingcomponentscard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/api-docs/graphqldefinition-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/api-docs/grpcapidefinitionwidget-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/api-docs/openapidefinition-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/api-docs/plainapidefinitionwidget-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/api-docs/trpcapidefinitionwidget-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app/toastdisplay-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth/consentpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-react/cookieauthredirect-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-react/cookieauthrefreshprovider-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-react/usecookieauthrefresh-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/defaultstarredentitiesapi-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/migration-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/aboutcard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/aboutcontent-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/catalogexportbutton-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/catalogkindheader-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/catalogpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/defaultcatalogpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/nfsdefaultcatalogpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/catalogtable-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/cursorpaginatedcatalogtable-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/offsetpaginatedcatalogtable-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/dependencyofcomponentscard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/dependsoncomponentscard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/dependsonresourcescard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/entitycontextmenu-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/unregisterentity-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/entitylayout-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/entitylinkscard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/iconlink-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/entitynotfound-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/deleteentitydialog-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/entityorphanwarning-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/entityprocessingerrorspanel-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/entityrelationwarning-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/hascomponentscard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/hasresourcescard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/hassubcomponentscard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/hassubdomainscard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/hassystemscard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/systemdiagramcard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-graph/cataloggraphcard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-graph/cataloggraphpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-graph/curvefilter-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-graph/directionfilter-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-graph/maxdepthfilter-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-graph/selectedkindsfilter-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-graph/selectedrelationsfilter-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-graph/defaultrendernode-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-graph/entityicon-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-graph/entityrelationsgraph-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-graph/useentityrelationgraph-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-graph/useentityrelationnodesandedges-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-import/defaultimportpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-import/importinfocard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-import/importpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-import/stepinitanalyzeurl-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-import/previewcataloginfocomponent-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-import/previewpullrequestcomponent-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-import/steppreparecreatepullrequest-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-import/stepprepareselectlocations-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/catalogautocomplete-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entityautocompletepicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entitydatatable-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entitydisplayname-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entitydisplayname-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entityinfocard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entitykindpicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entitylifecyclepicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entitynamespacepicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entityownerpicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entitypeekaheadpopover-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entitypeekaheadpopover-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entityprocessingstatuspicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entityreflink-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entityreflink-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entityreflinks-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entityreflinks-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entityrelationcard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entitysearchbar-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/columns-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entitytable-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/presets-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/titlecolumn-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entitytagpicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/entitytypepicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/favoriteentity-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/unregisterentitydialog-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/useunregisterentitydialogstate-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/useownedentitiescount-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/userlistpicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/customhomepagegrid-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/visitlist-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/companylogo-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/companylogo-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/content-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/featureddocscard-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/headerworldclock-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/headerworldclock-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/content-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/quickstart-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/content-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/starredentities-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/content-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/toolkit-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/content-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/homepagevisitedbytype-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/visitedbytype-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/welcometitle-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/welcometitle-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/apiresources-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/clusteroverview-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-cluster/nodes-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/buithemepreview-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/buithemerpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/themecontent-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications/usernotificationsettingspanel-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/org/mygroupssidebaritem-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/org-react/grouplistpicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/useformdecorators-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/actionspage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/virtualizedlistbox-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/listtaskpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/ownerlistpicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/ongoingtask-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/renderschema-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/router-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/scaffolderusageexamplestable-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/templatetypepicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/templatingextensionspage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/usefilteredschemaproperties-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/usetemplatetimesaved-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/usetransformschematoprops-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search/homepagesearchbar-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search/homepagesearchbar-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search/searchmodal-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search/searchmodal-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search/searchpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search/searchtype-accordion-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search/searchtype-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search/searchtype-tabs-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search/searchtype-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/defaultresultlistitem-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/highlightedsearchresulttext-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchautocomplete-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchautocomplete-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchautocompletedefaultoption-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchbar-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchbar-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/hooks-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchfilter-autocomplete-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchfilter-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchfilter-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchpagination-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchpagination-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchresult-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchresult-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchresultgroup-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchresultgroup-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchresultlist-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchresultlist-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-react/searchresultpager-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/techdocsindexpagecontent-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/techdocsreadercontent-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/techdocsreaderentitycard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/techdocsreaderheader-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/techdocsreadersearch-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/defaulttechdocshome-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/techdocscustomhome-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/techdocsindexpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/techdocsbuildlogs-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/techdocsnotfound-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/usereaderstate-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/addbaseurl-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/addgitfeedbacklink-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/addlinkclicklistener-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/addnavlinkkeyboardtoggle-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/copytoclipboard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/handlemetaredirects-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/oncssready-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/removemkdocsheader-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/rewritedoclinks-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/scrollintonavigation-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/simplifymkdocsfooter-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/techdocssearch-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/techdocssearchresultlistitem-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/user-settings/usersettingsstorage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/user-settings/usersettingsauthproviders-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/user-settings/defaultsettingspage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/user-settings/usersettingsidentitycard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/user-settings/usersettingslanguagetoggle-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/user-settings/usersettingsmenu-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/user-settings/usersettingspintoggle-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/user-settings/usersettingsprofilecard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/user-settings/usersettingsthemetoggle-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/user-settings/settingspage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/usestreamingexport-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/jsonpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/overviewpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/yamlpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/org/ownershipcard-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/org/ownershipcard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/customfieldspage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/dryruncontext-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/templateeditorbrowser-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/templateeditorpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/templateeditortoolbar-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/templateeditortoolbarfilemenu-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/templateeditortoolbartemplatesmenu-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/templateformpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/templateintropage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/registerexistingbutton-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/templatelistpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/templatewizardpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/entitypicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/entitytagspicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/multientitypicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/mygroupspicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/ownerpicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/bitbucketrepobranchpicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/githubrepobranchpicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/repobranchpicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/defaultrepoownerpicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/githubrepoownerpicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/gitlabrepoownerpicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/repoownerpicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/azurerepopicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/bitbucketrepopicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/bitbucketrepopicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/gerritrepopicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/gitearepopicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/githubrepopicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/gitlabrepopicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/repourlpicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/repourlpickerhost-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/repourlpickerreponame-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/repourlpickerreponame-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/secretinput-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/createdatcolumn-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/ownerentitycolumn-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/taskstatuscolumn-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/templatetitlecolumn-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/stepper-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/tasklogstream-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/tasksteps-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/cardheader-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/templatecard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/templatecategorypicker-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/templategroups-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/defaulttemplateoutputs-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/defaulttemplateoutputs-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/workflow-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/docscardgrid-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/entitylistdocsgrid-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/infocardgrid-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/cursorpaginateddocstable-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/docstable-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/offsetpaginateddocstable-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/context-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/techdocsreaderpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/useexternalredirect-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/techdocsreaderpagecontent-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/usenavigateurl-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/techdocsreaderpageheader-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/transformer-sanitizer-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/transformer-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/org/memberslistcard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/org/userprofilecard-stories
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/org/userprofilecard-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/dryrunresults-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/dryrunresultslist-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/dryrunresultsview-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/errorlisttemplate-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service

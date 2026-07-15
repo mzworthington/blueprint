@@ -1,0 +1,140 @@
+entityRef: blueprint/packages/cli
+name: Cli Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/cli/asset-types-d
+    type: background-worker
+    name: asset-types.d Service
+    isTest: false
+    properties:
+      filepath: packages/cli/asset-types/asset-types.d.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/cli/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/cli/src/index.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/cli/types-d
+    type: background-worker
+    name: types.d Service
+    isTest: false
+    properties:
+      filepath: packages/cli/src/types.d.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/packages/cli/yaml-test
+    type: background-worker
+    name: yaml.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli/src/tests/yaml.test.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/packages/cli/cliinitializer-test
+    type: background-worker
+    name: CliInitializer.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli/src/wiring/CliInitializer.test.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/packages/cli/cliinitializer
+    type: background-worker
+    name: CliInitializer Service
+    isTest: false
+    properties:
+      filepath: packages/cli/src/wiring/CliInitializer.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 370
+    'y': 370
+  - entityRef: blueprint/packages/cli/discoverclimodules
+    type: background-worker
+    name: discoverCliModules Service
+    isTest: false
+    properties:
+      filepath: packages/cli/src/wiring/discoverCliModules.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1330
+    'y': 370
+  - entityRef: blueprint/packages/cli/factory
+    type: background-worker
+    name: factory Service
+    isTest: false
+    properties:
+      filepath: packages/cli/src/wiring/factory.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2250
+    'y': 370
+  - entityRef: blueprint/packages/cli/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: packages/cli/src/wiring/types.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 690
+  - entityRef: blueprint/packages/cli/version
+    type: background-worker
+    name: version Service
+    isTest: false
+    properties:
+      filepath: packages/cli/src/wiring/version.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 690
+dependencies:
+  - from: blueprint/packages/cli/index
+    to: blueprint/packages/cli/cliinitializer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli/index
+    to: blueprint/packages/cli/discoverclimodules
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli/cliinitializer-test
+    to: blueprint/packages/cli/cliinitializer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli/cliinitializer-test
+    to: blueprint/packages/cli/factory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli/cliinitializer
+    to: blueprint/packages/cli/version
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli/cliinitializer
+    to: blueprint/packages/cli/types
+    type: direct-call
+    description: Calls module / service

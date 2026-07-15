@@ -1,0 +1,220 @@
+entityRef: blueprint/plugins/search-backend-module-pg
+name: Search-backend-module-pg Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/search-backend-module-pg/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-pg/config.d.ts
+      containerId: search-backend-module-pg
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend-module-pg/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-pg/src/alpha.ts
+      containerId: search-backend-module-pg
+      technology: TypeScript Domain Service
+      classification: default
+    x: 480
+    'y': 370
+  - entityRef: blueprint/plugins/search-backend-module-pg/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-pg/src/PgSearchEngine/index.ts
+      containerId: search-backend-module-pg
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend-module-pg/module
+    type: relational-database
+    name: module Database
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-pg/src/module.ts
+      containerId: search-backend-module-pg
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 480
+    'y': 690
+  - entityRef: blueprint/plugins/search-backend-module-pg/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-pg/src/setupTests.ts
+      containerId: search-backend-module-pg
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend-module-pg/databasedocumentstore-test
+    type: relational-database
+    name: DatabaseDocumentStore.test Database
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-pg/src/database/DatabaseDocumentStore.test.ts
+      containerId: search-backend-module-pg
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend-module-pg/databasedocumentstore
+    type: relational-database
+    name: DatabaseDocumentStore Database
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-pg/src/database/DatabaseDocumentStore.ts
+      containerId: search-backend-module-pg
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 1885
+    'y': 370
+  - entityRef: blueprint/plugins/search-backend-module-pg/types
+    type: relational-database
+    name: types Database
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-pg/src/database/types.ts
+      containerId: search-backend-module-pg
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 1060
+    'y': 690
+  - entityRef: blueprint/plugins/search-backend-module-pg/util-test
+    type: relational-database
+    name: util.test Database
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-pg/src/database/util.test.ts
+      containerId: search-backend-module-pg
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 1020
+    'y': 370
+  - entityRef: blueprint/plugins/search-backend-module-pg/util
+    type: relational-database
+    name: util Database
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-pg/src/database/util.ts
+      containerId: search-backend-module-pg
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 2115
+    'y': 690
+  - entityRef: blueprint/plugins/search-backend-module-pg/pgsearchengine-test
+    type: relational-database
+    name: PgSearchEngine.test Database
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.test.ts
+      containerId: search-backend-module-pg
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 1655
+    'y': 690
+  - entityRef: blueprint/plugins/search-backend-module-pg/pgsearchengine
+    type: relational-database
+    name: PgSearchEngine Database
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.ts
+      containerId: search-backend-module-pg
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 790
+    'y': 1010
+  - entityRef: blueprint/plugins/search-backend-module-pg/pgsearchengineindexer-test
+    type: relational-database
+    name: PgSearchEngineIndexer.test Database
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngineIndexer.test.ts
+      containerId: search-backend-module-pg
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 1425
+    'y': 1010
+  - entityRef: blueprint/plugins/search-backend-module-pg/pgsearchengineindexer
+    type: relational-database
+    name: PgSearchEngineIndexer Database
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngineIndexer.ts
+      containerId: search-backend-module-pg
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 1180
+    'y': 1330
+dependencies:
+  - from: blueprint/plugins/search-backend-module-pg/alpha
+    to: blueprint/plugins/search-backend-module-pg/module
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/search-backend-module-pg/module
+    to: blueprint/plugins/search-backend-module-pg/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-pg/module
+    to: blueprint/plugins/search-backend-module-pg/pgsearchengine
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/search-backend-module-pg/databasedocumentstore-test
+    to: blueprint/plugins/search-backend-module-pg/pgsearchengine
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/search-backend-module-pg/databasedocumentstore-test
+    to: blueprint/plugins/search-backend-module-pg/databasedocumentstore
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/search-backend-module-pg/databasedocumentstore
+    to: blueprint/plugins/search-backend-module-pg/types
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/search-backend-module-pg/databasedocumentstore
+    to: blueprint/plugins/search-backend-module-pg/util
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/search-backend-module-pg/types
+    to: blueprint/plugins/search-backend-module-pg/pgsearchengine
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/search-backend-module-pg/util-test
+    to: blueprint/plugins/search-backend-module-pg/util
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/search-backend-module-pg/pgsearchengine-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-pg/pgsearchengine-test
+    to: blueprint/plugins/search-backend-module-pg/pgsearchengine
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/search-backend-module-pg/pgsearchengine-test
+    to: blueprint/plugins/search-backend-module-pg/pgsearchengineindexer
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/search-backend-module-pg/pgsearchengine
+    to: blueprint/plugins/search-backend-module-pg/pgsearchengineindexer
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/search-backend-module-pg/pgsearchengine
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-pg/pgsearchengineindexer-test
+    to: blueprint/plugins/search-backend-module-pg/pgsearchengineindexer
+    type: read-write
+    description: Queries datastore records

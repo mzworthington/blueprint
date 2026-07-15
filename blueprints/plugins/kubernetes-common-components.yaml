@@ -1,0 +1,234 @@
+entityRef: blueprint/plugins/kubernetes-common
+name: Kubernetes-common Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/kubernetes-common/catalog-entity-constants
+    type: background-worker
+    name: catalog-entity-constants Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-common/src/catalog-entity-constants.ts
+      containerId: kubernetes-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/kubernetes-common/certificate-authority-constants
+    type: background-worker
+    name: certificate-authority-constants Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-common/src/certificate-authority-constants.ts
+      containerId: kubernetes-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/kubernetes-common/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-common/src/util/index.ts
+      containerId: kubernetes-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/kubernetes-common/permissions
+    type: background-worker
+    name: permissions Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-common/src/permissions.ts
+      containerId: kubernetes-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/kubernetes-common/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-common/src/error-detection/types.ts
+      containerId: kubernetes-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1615
+    'y': 1330
+  - entityRef: blueprint/plugins/kubernetes-common/common
+    type: background-worker
+    name: common Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-common/src/error-detection/common.ts
+      containerId: kubernetes-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2115
+    'y': 1010
+  - entityRef: blueprint/plugins/kubernetes-common/deployments
+    type: background-worker
+    name: deployments Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-common/src/error-detection/deployments.ts
+      containerId: kubernetes-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 690
+  - entityRef: blueprint/plugins/kubernetes-common/error-detection-test
+    type: background-worker
+    name: error-detection.test Service
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-common/src/error-detection/error-detection.test.ts
+      containerId: kubernetes-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/kubernetes-common/error-detection
+    type: background-worker
+    name: error-detection Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-common/src/error-detection/error-detection.ts
+      containerId: kubernetes-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 370
+  - entityRef: blueprint/plugins/kubernetes-common/hpas
+    type: background-worker
+    name: hpas Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-common/src/error-detection/hpas.ts
+      containerId: kubernetes-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2480
+    'y': 690
+  - entityRef: blueprint/plugins/kubernetes-common/pods
+    type: background-worker
+    name: pods Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-common/src/error-detection/pods.ts
+      containerId: kubernetes-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 690
+  - entityRef: blueprint/plugins/kubernetes-common/response
+    type: background-worker
+    name: response Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-common/src/util/response.ts
+      containerId: kubernetes-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1210
+    'y': 1010
+dependencies:
+  - from: blueprint/plugins/catalog-backend/catalogbuilder
+    to: blueprint/plugins/kubernetes-common/response
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/createrouter
+    to: blueprint/plugins/kubernetes-common/response
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/defaultentitiescatalog-test
+    to: blueprint/plugins/kubernetes-common/response
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/defaultentitiescatalog
+    to: blueprint/plugins/kubernetes-common/response
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/integration-test
+    to: blueprint/plugins/kubernetes-common/response
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-common/common
+    to: blueprint/plugins/kubernetes-common/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-common/deployments
+    to: blueprint/plugins/kubernetes-common/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-common/deployments
+    to: blueprint/plugins/kubernetes-common/common
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-common/error-detection-test
+    to: blueprint/plugins/kubernetes-common/error-detection
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-common/error-detection
+    to: blueprint/plugins/kubernetes-common/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-common/error-detection
+    to: blueprint/plugins/scaffolder-backend-module-github/util
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-common/error-detection
+    to: blueprint/plugins/kubernetes-common/pods
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-common/error-detection
+    to: blueprint/plugins/kubernetes-common/deployments
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-common/error-detection
+    to: blueprint/plugins/kubernetes-common/hpas
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-common/hpas
+    to: blueprint/plugins/kubernetes-common/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-common/hpas
+    to: blueprint/plugins/kubernetes-common/common
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-common/pods
+    to: blueprint/plugins/kubernetes-common/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-common/pods
+    to: blueprint/plugins/kubernetes-common/common
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-common/response
+    to: blueprint/plugins/kubernetes-common/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/daemonsetsaccordions
+    to: blueprint/plugins/kubernetes-common/pods
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/deploymentsaccordions
+    to: blueprint/plugins/kubernetes-common/pods
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/jobsaccordions
+    to: blueprint/plugins/kubernetes-common/pods
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/statefulsetsaccordions
+    to: blueprint/plugins/kubernetes-common/pods
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/rollout
+    to: blueprint/plugins/kubernetes-common/pods
+    type: direct-call
+    description: Calls module / service

@@ -1,5 +1,5 @@
 import Dexie, { type Table } from 'dexie';
-import type { SystemSchema } from '../../core';
+import type { SystemSchema } from '@blueprint/core';
 
 export interface DbNode {
   entityRef: string;
@@ -70,13 +70,18 @@ export async function saveBaselineSchema(
     await db.originalDependencies.where('filePath').equals(filePath).delete();
 
     const dbNodes: DbNode[] = schema.nodes.map(node => {
-      const entityRef = node.entityRef || nodeRefMap[node.id] || `${systemId}/${node.id}`;
+      const key = node.entityRef || '';
+      const entityRef =
+        node.entityRef && node.entityRef.includes('/')
+          ? node.entityRef
+          : nodeRefMap[key] || `${systemId}/${key}`;
       const refParts = entityRef.split('/');
       const containerId = refParts.length > 2 ? refParts[1] : undefined;
+      const localId = refParts[refParts.length - 1];
 
       return {
         entityRef,
-        id: node.id,
+        id: localId,
         systemId,
         containerId,
         type: node.type,
@@ -95,8 +100,9 @@ export async function saveBaselineSchema(
     }
 
     const dbDeps: DbDependency[] = (schema.dependencies || []).map(dep => {
-      const fromRef = nodeRefMap[dep.from] || `${systemId}/${dep.from}`;
-      const toRef = nodeRefMap[dep.to] || `${systemId}/${dep.to}`;
+      const fromRef =
+        nodeRefMap[dep.from] || (dep.from.includes('/') ? dep.from : `${systemId}/${dep.from}`);
+      const toRef = nodeRefMap[dep.to] || (dep.to.includes('/') ? dep.to : `${systemId}/${dep.to}`);
       return {
         id: `${fromRef}->${toRef}`,
         fromRef,
@@ -127,13 +133,18 @@ export async function saveWorkingSchema(
     await db.workingDependencies.where('filePath').equals(filePath).delete();
 
     const dbNodes: DbNode[] = schema.nodes.map(node => {
-      const entityRef = node.entityRef || nodeRefMap[node.id] || `${systemId}/${node.id}`;
+      const key = node.entityRef || '';
+      const entityRef =
+        node.entityRef && node.entityRef.includes('/')
+          ? node.entityRef
+          : nodeRefMap[key] || `${systemId}/${key}`;
       const refParts = entityRef.split('/');
       const containerId = refParts.length > 2 ? refParts[1] : undefined;
+      const localId = refParts[refParts.length - 1];
 
       return {
         entityRef,
-        id: node.id,
+        id: localId,
         systemId,
         containerId,
         type: node.type,
@@ -152,8 +163,9 @@ export async function saveWorkingSchema(
     }
 
     const dbDeps: DbDependency[] = (schema.dependencies || []).map(dep => {
-      const fromRef = nodeRefMap[dep.from] || `${systemId}/${dep.from}`;
-      const toRef = nodeRefMap[dep.to] || `${systemId}/${dep.to}`;
+      const fromRef =
+        nodeRefMap[dep.from] || (dep.from.includes('/') ? dep.from : `${systemId}/${dep.from}`);
+      const toRef = nodeRefMap[dep.to] || (dep.to.includes('/') ? dep.to : `${systemId}/${dep.to}`);
       return {
         id: `${fromRef}->${toRef}`,
         fromRef,
@@ -236,7 +248,7 @@ export async function revertWorkingSchema(
   systemName?: string,
   systemVersion?: string,
   systemLevel?: string,
-  parentRef?: string
+  systemEntityRef?: string
 ): Promise<SystemSchema> {
   const originalNodes = await db.originalNodes.where('filePath').equals(filePath).toArray();
   const originalDeps = await db.originalDependencies.where('filePath').equals(filePath).toArray();
@@ -245,21 +257,20 @@ export async function revertWorkingSchema(
     name: systemName || 'Restored Schema',
     version: systemVersion || '1.0.0',
     level: (systemLevel as any) || 'container',
-    parentRef,
+    entityRef: systemEntityRef,
     nodes: originalNodes.map(n => ({
-      id: n.id,
+      entityRef: n.entityRef,
       type: n.type as any,
       name: n.name,
       properties: n.properties,
       x: n.x,
       y: n.y,
-      entityRef: n.entityRef,
       external: n.external,
       isTest: n.isTest,
     })),
     dependencies: originalDeps.map(d => ({
-      from: d.fromRef.split('/').pop()!,
-      to: d.toRef.split('/').pop()!,
+      from: d.fromRef,
+      to: d.toRef,
       type: d.type as any,
       description: d.description,
     })),
@@ -280,15 +291,22 @@ export async function revertWorkingSchema(
 }
 
 /**
- * Loads the active working schema from working tables if it exists.
- * Returns the SystemSchema or null if not found.
+ * True if either working or baseline tables already have rows for this path.
  */
+export async function pathHasStoredData(filePath: string): Promise<boolean> {
+  const [workingCount, originalCount] = await Promise.all([
+    db.workingNodes.where('filePath').equals(filePath).count(),
+    db.originalNodes.where('filePath').equals(filePath).count(),
+  ]);
+  return workingCount > 0 || originalCount > 0;
+}
+
 export async function loadWorkingSchema(
   filePath: string,
   systemName?: string,
   systemVersion?: string,
   systemLevel?: string,
-  parentRef?: string
+  systemEntityRef?: string
 ): Promise<SystemSchema | null> {
   const workingNodes = await db.workingNodes.where('filePath').equals(filePath).toArray();
   if (workingNodes.length === 0) {
@@ -300,21 +318,20 @@ export async function loadWorkingSchema(
     name: systemName || 'Working Schema',
     version: systemVersion || '1.0.0',
     level: (systemLevel as any) || 'container',
-    parentRef,
+    entityRef: systemEntityRef,
     nodes: workingNodes.map(n => ({
-      id: n.id,
+      entityRef: n.entityRef,
       type: n.type as any,
       name: n.name,
       properties: n.properties,
       x: n.x,
       y: n.y,
-      entityRef: n.entityRef,
       external: n.external,
       isTest: n.isTest,
     })),
     dependencies: workingDeps.map(d => ({
-      from: d.fromRef.split('/').pop()!,
-      to: d.toRef.split('/').pop()!,
+      from: d.fromRef,
+      to: d.toRef,
       type: d.type as any,
       description: d.description,
     })),

@@ -1,0 +1,36 @@
+entityRef: blueprint/packages/cli-module-info
+name: Cli-module-info Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/cli-module-info/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-info/src/index.ts
+      containerId: cli-module-info
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-info/info
+    type: background-worker
+    name: info Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-info/src/commands/info.ts
+      containerId: cli-module-info
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+dependencies:
+  - from: blueprint/packages/app/app
+    to: blueprint/packages/cli-module-info/info
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-components/gaugecard-stories
+    to: blueprint/packages/cli-module-info/info
+    type: direct-call
+    description: Calls module / service

@@ -1,0 +1,152 @@
+entityRef: blueprint/packages/integration-react
+name: Integration-react Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/integration-react/devpage
+    type: background-worker
+    name: DevPage Service
+    isTest: false
+    properties:
+      filepath: packages/integration-react/dev/DevPage.tsx
+      containerId: integration-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 370
+  - entityRef: blueprint/packages/integration-react/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/integration-react/src/components/ScmIntegrationIcon/index.ts
+      containerId: integration-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 275
+    'y': 50
+  - entityRef: blueprint/packages/integration-react/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: packages/integration-react/src/setupTests.ts
+      containerId: integration-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 775
+    'y': 50
+  - entityRef: blueprint/packages/integration-react/scmauth-test
+    type: rest-api
+    name: ScmAuth.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: packages/integration-react/src/api/ScmAuth.test.ts
+      containerId: integration-react
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1695
+    'y': 50
+  - entityRef: blueprint/packages/integration-react/scmauth
+    type: rest-api
+    name: ScmAuth REST Endpoint
+    isTest: false
+    properties:
+      filepath: packages/integration-react/src/api/ScmAuth.ts
+      containerId: integration-react
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1695
+    'y': 370
+  - entityRef: blueprint/packages/integration-react/scmauthapi
+    type: rest-api
+    name: ScmAuthApi REST Endpoint
+    isTest: false
+    properties:
+      filepath: packages/integration-react/src/api/ScmAuthApi.ts
+      containerId: integration-react
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1695
+    'y': 690
+  - entityRef: blueprint/packages/integration-react/scmintegrationsapi-test
+    type: rest-api
+    name: ScmIntegrationsApi.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: packages/integration-react/src/api/ScmIntegrationsApi.test.ts
+      containerId: integration-react
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 680
+    'y': 370
+  - entityRef: blueprint/packages/integration-react/scmintegrationsapi
+    type: rest-api
+    name: ScmIntegrationsApi REST Endpoint
+    isTest: false
+    properties:
+      filepath: packages/integration-react/src/api/ScmIntegrationsApi.ts
+      containerId: integration-react
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 410
+    'y': 690
+  - entityRef: blueprint/packages/integration-react/scmintegrationicon-test
+    type: background-worker
+    name: ScmIntegrationIcon.test Service
+    isTest: true
+    properties:
+      filepath: packages/integration-react/src/components/ScmIntegrationIcon/ScmIntegrationIcon.test.tsx
+      containerId: integration-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1235
+    'y': 50
+  - entityRef: blueprint/packages/integration-react/scmintegrationicon
+    type: background-worker
+    name: ScmIntegrationIcon Service
+    isTest: false
+    properties:
+      filepath: packages/integration-react/src/components/ScmIntegrationIcon/ScmIntegrationIcon.tsx
+      containerId: integration-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1235
+    'y': 370
+dependencies:
+  - from: blueprint/packages/integration-react/devpage
+    to: blueprint/packages/integration-react/scmintegrationsapi
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration-react/index
+    to: blueprint/packages/integration-react/scmintegrationsapi
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration-react/index
+    to: blueprint/packages/integration-react/devpage
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration-react/scmauth-test
+    to: blueprint/packages/integration-react/scmauth
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration-react/scmauth
+    to: blueprint/packages/integration-react/scmauthapi
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration-react/scmintegrationsapi-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration-react/scmintegrationsapi-test
+    to: blueprint/packages/integration-react/scmintegrationsapi
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration-react/scmintegrationsapi
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration-react/scmintegrationicon-test
+    to: blueprint/packages/integration-react/scmintegrationicon
+    type: direct-call
+    description: Calls module / service

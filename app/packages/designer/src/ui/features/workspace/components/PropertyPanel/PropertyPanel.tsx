@@ -1,71 +1,14 @@
 import React, { useState } from 'react';
-import {
-  Database,
-  Globe,
-  Zap,
-  Cpu,
-  Layers,
-  Share2,
-  AlertTriangle,
-  Plus,
-  Trash2,
-  CheckCircle,
-  User,
-  Network,
-  Monitor,
-  Smartphone,
-  Code,
-} from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import { useBlueprintStore } from '../../../../../application/store/store';
-import type { NodeType, PropertyMap } from '../../../../../core';
-import { slugify, getSchemaEntityRef } from '../../../../../core';
-
-const NODE_TYPES: { type: NodeType; label: string; icon: any }[] = [
-  { type: 'person', label: 'Person (Actor)', icon: User },
-  { type: 'software-system', label: 'Software System', icon: Network },
-  { type: 'web-app', label: 'Web App', icon: Monitor },
-  { type: 'mobile-app', label: 'Mobile App', icon: Smartphone },
-  { type: 'single-page-app', label: 'Single Page App', icon: Monitor },
-  { type: 'microservice', label: 'Microservice', icon: Cpu },
-  { type: 'database', label: 'Database', icon: Database },
-  { type: 'cache-store', label: 'Cache Store', icon: Layers },
-  { type: 'event-broker', label: 'Event Broker', icon: Share2 },
-  { type: 'serverless-app', label: 'Serverless App', icon: Zap },
-  { type: 'component', label: 'Component', icon: Layers },
-  { type: 'code-module', label: 'Code Module', icon: Code },
-  { type: 'rest-api', label: 'REST API', icon: Globe },
-  { type: 'grpc-service', label: 'gRPC Service', icon: Cpu },
-  { type: 'relational-database', label: 'Relational DB', icon: Database },
-  { type: 'serverless-function', label: 'Serverless Fn', icon: Zap },
-  { type: 'gateway-api', label: 'Gateway API', icon: Globe },
-  { type: 'background-worker', label: 'Background Worker', icon: Cpu },
-];
-
-const CopyableField: React.FC<{ label: string; value: string; id: string }> = ({
-  label,
-  value,
-  id,
-}) => {
-  return (
-    <div>
-      <label
-        htmlFor={id}
-        className="block text-[10px] font-bold font-mono text-slate-400 uppercase tracking-wider mb-1.5"
-      >
-        {label}
-      </label>
-      <input
-        id={id}
-        type="text"
-        readOnly
-        value={value}
-        onClick={e => (e.target as HTMLInputElement).select()}
-        className="w-full bg-[#040914]/40 border border-slate-800/80 focus:border-brand-500/50 focus:shadow-[0_0_8px_rgba(139,92,246,0.05)] rounded-lg px-3 py-2 text-xs font-mono text-brand-400 cursor-text transition duration-200 select-all focus:outline-none"
-        title="Click to select all and copy"
-      />
-    </div>
-  );
-};
+import type { NodeType, PropertyMap, C4Level } from '@blueprint/core';
+import { slugify, getSchemaEntityRef } from '@blueprint/core';
+import { NODE_TYPES } from './nodeTypes';
+import { IdentitySection } from './IdentitySection';
+import { PropertiesSection } from './PropertiesSection';
+import { ConnectionsSection } from './ConnectionsSection';
+import { ComponentCatalog } from './ComponentCatalog';
+import { ValidationSection } from './ValidationSection';
 
 export const PropertyPanel: React.FC = () => {
   const {
@@ -87,11 +30,12 @@ export const PropertyPanel: React.FC = () => {
     rightCollapsed,
     toggleRightCollapsed,
     workspaceName,
-    currentFilePath,
   } = useBlueprintStore();
 
   const selectedRFNode = nodes.find(n => n.id === selectedNodeId);
-  const selectedNode = selectedRFNode ? schema.nodes.find(sn => sn.id === selectedNodeId) : null;
+  const selectedNode = selectedRFNode
+    ? schema.nodes.find(sn => sn.entityRef === selectedRFNode.data.entityRef)
+    : null;
 
   const [propKey, setPropKey] = useState('');
   const [propVal, setPropVal] = useState('');
@@ -108,7 +52,7 @@ export const PropertyPanel: React.FC = () => {
   const nameInputId = isNode ? 'component-name-input' : 'workspace-name-input';
   const entityRefValue = isNode
     ? selectedNode.entityRef || 'Not resolved'
-    : getSchemaEntityRef(schema, currentFilePath, workspaceName) || '';
+    : getSchemaEntityRef(schema, workspaceName) || '';
   const entityRefInputId = isNode ? 'component-entityref-input' : 'workspace-slug-input';
   const selectId = isNode ? 'component-type-select' : 'workspace-level-select';
 
@@ -119,9 +63,11 @@ export const PropertyPanel: React.FC = () => {
       const newId = slugify(newName).replace(/_/g, '-');
 
       if (newId && newId !== selectedNodeId) {
-        const idExists = schema.nodes.some(n => n.id === newId);
+        const idExists = schema.nodes.some(
+          n => n.entityRef === newId || (n.entityRef && n.entityRef.endsWith('/' + newId))
+        );
         if (!idExists) {
-          updateNode(selectedNodeId, { name: newName, id: newId });
+          updateNode(selectedNodeId, { name: newName, entityRef: newId });
           return;
         }
       }
@@ -136,7 +82,7 @@ export const PropertyPanel: React.FC = () => {
       if (!selectedNodeId) return;
       updateNode(selectedNodeId, { type: e.target.value as NodeType });
     } else {
-      updateSchemaLevel(e.target.value as any);
+      updateSchemaLevel(e.target.value as C4Level);
     }
   };
 
@@ -199,201 +145,41 @@ export const PropertyPanel: React.FC = () => {
 
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
         <div className="space-y-6">
-          <div className="space-y-4">
-            <div>
-              <label
-                htmlFor={nameInputId}
-                className="block text-[10px] font-bold font-mono text-slate-400 uppercase tracking-wider mb-1.5"
-              >
-                Name
-              </label>
-              <input
-                id={nameInputId}
-                type="text"
-                value={nameValue}
-                onChange={handleNameChangeLocal}
-                className="w-full bg-slate-950/60 border border-slate-800 focus:border-brand-500 focus:shadow-[0_0_10px_rgba(139,92,246,0.15)] rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none transition duration-200"
-              />
-            </div>
+          <IdentitySection
+            isNode={isNode}
+            schema={schema}
+            selectedNode={selectedNode ?? null}
+            nameValue={nameValue}
+            nameInputId={nameInputId}
+            entityRefValue={entityRefValue}
+            entityRefInputId={entityRefInputId}
+            selectId={selectId}
+            onNameChange={handleNameChangeLocal}
+            onTypeOrLevelChange={handleTypeOrLevelChange}
+            onExternalChange={checked =>
+              updateNode(selectedNode?.entityRef || '', { external: checked })
+            }
+          />
 
-            <div>
-              <label
-                htmlFor={selectId}
-                className="block text-[10px] font-bold font-mono text-slate-400 uppercase tracking-wider mb-1.5"
-              >
-                {isNode ? 'Type' : 'C4 Level'}
-              </label>
-              <select
-                id={selectId}
-                value={isNode ? selectedNode.type : schema.level}
-                onChange={handleTypeOrLevelChange}
-                className="w-full bg-slate-950/60 border border-slate-800 focus:border-brand-500 focus:shadow-[0_0_10px_rgba(139,92,246,0.15)] rounded-lg px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none transition duration-200 cursor-pointer"
-              >
-                {isNode
-                  ? NODE_TYPES.map(nt => (
-                      <option key={nt.type} value={nt.type}>
-                        {nt.label}
-                      </option>
-                    ))
-                  : [
-                      { type: 'context', label: 'System Context' },
-                      { type: 'container', label: 'Container Level' },
-                      { type: 'component', label: 'Component Level' },
-                      { type: 'code', label: 'Code Level' },
-                    ].map(opt => (
-                      <option key={opt.type} value={opt.type}>
-                        {opt.label}
-                      </option>
-                    ))}
-              </select>
-            </div>
-
-            <CopyableField id={entityRefInputId} label="Entity Reference" value={entityRefValue} />
-
-            {isNode && (
-              <div className="flex items-center justify-between border-t border-slate-900/60 pt-3">
-                <label
-                  htmlFor="component-external-checkbox"
-                  className="text-[10px] font-bold font-mono text-slate-400 uppercase tracking-wider"
-                >
-                  External System / Actor
-                </label>
-                <input
-                  id="component-external-checkbox"
-                  type="checkbox"
-                  checked={!!selectedNode.external}
-                  onChange={e => updateNode(selectedNode.id, { external: e.target.checked })}
-                  className="w-4 h-4 rounded border-slate-800 text-brand-500 focus:ring-brand-500 bg-slate-950/60 cursor-pointer focus:ring-offset-0 focus:outline-none"
-                />
-              </div>
-            )}
-          </div>
-
-          {isNode ? (
+          {isNode && selectedNode ? (
             <>
-              <div className="border-t border-slate-900 pt-4">
-                <h4 className="text-[10px] font-bold font-mono text-[#00f0ff] uppercase tracking-wider mb-3">
-                  Metadata Attributes
-                </h4>
+              <PropertiesSection
+                properties={selectedNode.properties}
+                propKey={propKey}
+                propVal={propVal}
+                onPropKeyChange={setPropKey}
+                onPropValChange={setPropVal}
+                onAddProperty={handleAddProperty}
+                onDeleteProperty={handleDeleteProperty}
+              />
 
-                {selectedNode.properties && Object.keys(selectedNode.properties).length > 0 ? (
-                  <div className="space-y-2 mb-3">
-                    {Object.entries(selectedNode.properties).map(([key, val]) => (
-                      <div
-                        key={key}
-                        className="flex items-center justify-between bg-slate-950/40 rounded-xl px-3 py-1.5 border border-slate-900"
-                      >
-                        <div className="text-xs break-words mr-2">
-                          <span className="font-mono text-brand-400/80">{key}:</span>{' '}
-                          <span className="text-slate-300 font-semibold">{val}</span>
-                        </div>
-                        <button
-                          onClick={() => handleDeleteProperty(key)}
-                          className="text-slate-500 hover:text-red-400 transition cursor-pointer"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-xs text-slate-500 italic mb-3">
-                    No metadata attributes added.
-                  </p>
-                )}
-
-                <form onSubmit={handleAddProperty} className="flex gap-2">
-                  <input
-                    type="text"
-                    placeholder="Key (e.g. port)"
-                    value={propKey}
-                    onChange={e => setPropKey(e.target.value)}
-                    className="w-1/2 bg-slate-950/60 border border-slate-800 focus:border-brand-500 focus:shadow-[0_0_10px_rgba(139,92,246,0.15)] rounded-lg px-2.5 py-1.5 text-xs font-mono text-white focus:outline-none transition duration-200"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Value"
-                    value={propVal}
-                    onChange={e => setPropVal(e.target.value)}
-                    className="w-1/2 bg-slate-950/60 border border-slate-800 focus:border-brand-500 focus:shadow-[0_0_10px_rgba(139,92,246,0.15)] rounded-lg px-2.5 py-1.5 text-xs font-mono text-white focus:outline-none transition duration-200"
-                  />
-                  <button
-                    type="submit"
-                    aria-label="Add attribute"
-                    className="bg-brand-600/15 hover:bg-brand-600/30 text-brand-400 hover:text-white border border-brand-500/30 hover:border-brand-500 rounded-lg p-1.5 flex items-center justify-center transition cursor-pointer shadow-[0_0_8px_rgba(139,92,246,0.15)]"
-                  >
-                    <Plus className="w-4 h-4" />
-                  </button>
-                </form>
-              </div>
-
-              <div className="border-t border-slate-900 pt-4">
-                <h4 className="text-[10px] font-bold font-mono text-brand-400 uppercase tracking-wider mb-3">
-                  Active Connections
-                </h4>
-                {nodeConnections.length > 0 ? (
-                  <div className="space-y-3">
-                    {nodeConnections.map(edge => {
-                      const isSource = edge.source === selectedNodeId;
-                      const partnerId = isSource ? edge.target : edge.source;
-                      const partnerNode = schema.nodes.find(n => n.id === partnerId);
-
-                      return (
-                        <div
-                          key={edge.id}
-                          className="bg-slate-950/40 rounded-xl p-2.5 border border-slate-900 space-y-2"
-                        >
-                          <div className="flex items-center justify-between text-xs">
-                            <span className="font-semibold text-slate-300 font-sans">
-                              {isSource ? '➔ Output to' : '📥 Input from'}{' '}
-                              <span className="text-brand-400">
-                                {partnerNode?.name || partnerId}
-                              </span>
-                            </span>
-                            <button
-                              onClick={() => deleteDependency(edge.source, edge.target)}
-                              className="text-slate-500 hover:text-red-400 transition cursor-pointer"
-                            >
-                              <Trash2 className="w-3.5 h-3.5" />
-                            </button>
-                          </div>
-
-                          <div className="flex flex-col gap-2">
-                            <div className="flex gap-2">
-                              <select
-                                value={(edge.data as any)?.type || 'direct-call'}
-                                onChange={e =>
-                                  updateDependency(edge.source, edge.target, {
-                                    type: e.target.value as any,
-                                  })
-                                }
-                                className="flex-1 bg-slate-950/60 border border-slate-800 focus:border-brand-500 rounded px-1.5 py-1 text-[10px] font-mono text-slate-200 focus:outline-none transition duration-200"
-                              >
-                                <option value="direct-call">Direct Call</option>
-                                <option value="publish-subscribe">Pub/Sub (Async)</option>
-                                <option value="read-write">Read/Write</option>
-                              </select>
-                            </div>
-                            <input
-                              type="text"
-                              placeholder="Add description (e.g. JSON/HTTPS)"
-                              value={(edge.data as any)?.description || ''}
-                              onChange={e =>
-                                updateDependency(edge.source, edge.target, {
-                                  description: e.target.value,
-                                })
-                              }
-                              className="w-full bg-slate-950/60 border border-slate-800 focus:border-brand-500 rounded px-2 py-1 text-[10px] font-mono text-slate-200 focus:outline-none transition duration-200 focus:shadow-[0_0_8px_rgba(139,92,246,0.15)]"
-                            />
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <p className="text-xs text-slate-500 italic">No connections established.</p>
-                )}
-              </div>
+              <ConnectionsSection
+                selectedNodeId={selectedNodeId!}
+                schemaNodes={schema.nodes}
+                connections={nodeConnections}
+                onUpdateDependency={updateDependency}
+                onDeleteDependency={deleteDependency}
+              />
 
               <div className="border-t border-slate-900 pt-4">
                 <button
@@ -401,7 +187,7 @@ export const PropertyPanel: React.FC = () => {
                     if (
                       confirm(`Are you sure you want to delete this ${titleType.toLowerCase()}?`)
                     ) {
-                      deleteNode(selectedNode.id);
+                      deleteNode(selectedNode.entityRef || '');
                     }
                   }}
                   className="w-full flex items-center justify-center gap-2 bg-red-950/15 border border-red-900/30 hover:border-red-900/60 hover:bg-red-950/30 text-red-400 rounded-lg py-2 text-xs font-semibold transition cursor-pointer"
@@ -413,88 +199,12 @@ export const PropertyPanel: React.FC = () => {
             </>
           ) : (
             <>
-              <div className="flex items-center justify-between border-t border-slate-900 pt-4">
-                <span className="text-[10px] font-bold font-mono text-slate-400 uppercase tracking-wider">
-                  Show Test Components
-                </span>
-                <button
-                  onClick={toggleShowTests}
-                  className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                    showTests ? 'bg-brand-600' : 'bg-slate-800'
-                  }`}
-                >
-                  <span
-                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
-                      showTests ? 'translate-x-5' : 'translate-x-0'
-                    }`}
-                  />
-                </button>
-              </div>
-
-              <div className="border-t border-slate-900 pt-4">
-                <h4 className="text-[10px] font-bold font-mono text-brand-400 uppercase tracking-wider mb-3">
-                  Component Catalog
-                </h4>
-                <p className="text-xs text-slate-400 mb-3">
-                  Click any component below to instantiate it on the canvas:
-                </p>
-                <div className="grid grid-cols-2 gap-2">
-                  {NODE_TYPES.map(nt => {
-                    const Icon = nt.icon;
-                    return (
-                      <button
-                        key={nt.type}
-                        onClick={() => addNode(nt.type)}
-                        className="flex flex-col items-center gap-2 bg-slate-950/40 hover:bg-slate-900/50 border border-slate-900 hover:border-brand-500/40 rounded-xl p-3 transition text-center hover:shadow-[0_0_10px_rgba(139,92,246,0.15)] cursor-pointer group"
-                      >
-                        <Icon className="w-5 h-5 text-brand-400 filter drop-shadow-[0_0_4px_rgba(139,92,246,0.4)] group-hover:scale-105 transition" />
-                        <span className="text-xs font-semibold text-slate-200">{nt.label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="border-t border-slate-900 pt-4">
-                <h4 className="text-[10px] font-bold font-mono text-brand-400 uppercase tracking-wider mb-3">
-                  Graph Validation
-                </h4>
-                {validationResult.isValid ? (
-                  <div className="flex items-start gap-2.5 bg-emerald-950/20 border border-emerald-900/30 rounded-xl p-3.5 text-emerald-400 text-xs">
-                    <CheckCircle className="w-5 h-5 shrink-0" />
-                    <div>
-                      <h5 className="font-semibold leading-none mb-1">Architecture Valid</h5>
-                      <p className="text-[11px] text-emerald-500/80 leading-normal">
-                        No cyclic loops or invalid boundaries detected.
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="space-y-2">
-                    {validationResult.issues.map(issue => (
-                      <div
-                        key={`${issue.type}-${issue.message}`}
-                        className="flex items-start gap-2.5 bg-red-950/20 border border-red-900/30 rounded-xl p-3.5 text-red-400 text-xs"
-                      >
-                        <AlertTriangle className="w-5 h-5 shrink-0" />
-                        <div>
-                          <h5 className="font-semibold leading-none mb-1">
-                            {issue.type === 'cycle' ? 'Circular Dependency' : 'Validation Alert'}
-                          </h5>
-                          <p className="text-[11px] text-red-400/80 leading-normal">
-                            {issue.message}
-                          </p>
-                          {issue.path && (
-                            <div className="mt-2 font-mono text-[10px] bg-red-950/40 px-2 py-1 rounded border border-red-900/40 text-red-300">
-                              {issue.path.join(' ➔ ')}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <ComponentCatalog
+                showTests={showTests}
+                onToggleShowTests={toggleShowTests}
+                onAddNode={addNode}
+              />
+              <ValidationSection validationResult={validationResult} />
             </>
           )}
         </div>

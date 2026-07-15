@@ -1,0 +1,77 @@
+entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model
+name: Catalog-backend-module-scaffolder-entity-model Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-scaffolder-entity-model/src/processor/index.ts
+      containerId: catalog-backend-module-scaffolder-entity-model
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-scaffolder-entity-model/src/module.test.ts
+      containerId: catalog-backend-module-scaffolder-entity-model
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-scaffolder-entity-model/src/module.ts
+      containerId: catalog-backend-module-scaffolder-entity-model
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 370
+  - entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/scaffolderentitiesprocessor-test
+    type: background-worker
+    name: ScaffolderEntitiesProcessor.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-scaffolder-entity-model/src/processor/ScaffolderEntitiesProcessor.test.ts
+      containerId: catalog-backend-module-scaffolder-entity-model
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/scaffolderentitiesprocessor
+    type: background-worker
+    name: ScaffolderEntitiesProcessor Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-scaffolder-entity-model/src/processor/ScaffolderEntitiesProcessor.ts
+      containerId: catalog-backend-module-scaffolder-entity-model
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module-test
+    to: blueprint/plugins/catalog-node/processor
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module-test
+    to: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module
+    to: blueprint/plugins/catalog-node/processor
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/scaffolderentitiesprocessor-test
+    to: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/scaffolderentitiesprocessor
+    type: direct-call
+    description: Calls module / service

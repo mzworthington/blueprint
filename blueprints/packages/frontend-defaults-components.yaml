@@ -1,0 +1,189 @@
+entityRef: blueprint/packages/frontend-defaults
+name: Frontend-defaults Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/frontend-defaults/createapp-test
+    type: gateway-api
+    name: createApp.test UI Component
+    isTest: true
+    properties:
+      filepath: packages/frontend-defaults/src/createApp.test.tsx
+      containerId: frontend-defaults
+      technology: React Component
+      classification: ui-import
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/frontend-defaults/createapp
+    type: gateway-api
+    name: createApp UI Component
+    isTest: false
+    properties:
+      filepath: packages/frontend-defaults/src/createApp.tsx
+      containerId: frontend-defaults
+      technology: React Component
+      classification: ui-import
+    x: 140
+    'y': 370
+  - entityRef: blueprint/packages/frontend-defaults/discovery-test
+    type: background-worker
+    name: discovery.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-defaults/src/discovery.test.ts
+      containerId: frontend-defaults
+      technology: TypeScript Domain Service
+      classification: default
+    x: 640
+    'y': 370
+  - entityRef: blueprint/packages/frontend-defaults/discovery
+    type: background-worker
+    name: discovery Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-defaults/src/discovery.ts
+      containerId: frontend-defaults
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 690
+  - entityRef: blueprint/packages/frontend-defaults/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-defaults/src/index.ts
+      containerId: frontend-defaults
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/frontend-defaults/maybecreateerrorpage
+    type: gateway-api
+    name: maybeCreateErrorPage UI Component
+    isTest: false
+    properties:
+      filepath: packages/frontend-defaults/src/maybeCreateErrorPage.tsx
+      containerId: frontend-defaults
+      technology: React Component
+      classification: ui-import
+    x: 140
+    'y': 690
+  - entityRef: blueprint/packages/frontend-defaults/resolution-test
+    type: background-worker
+    name: resolution.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-defaults/src/resolution.test.ts
+      containerId: frontend-defaults
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 690
+  - entityRef: blueprint/packages/frontend-defaults/resolution
+    type: background-worker
+    name: resolution Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-defaults/src/resolution.ts
+      containerId: frontend-defaults
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 1010
+  - entityRef: blueprint/packages/frontend-defaults/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-defaults/src/setupTests.ts
+      containerId: frontend-defaults
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+dependencies:
+  - from: blueprint/packages/backend-defaults/createbackend
+    to: blueprint/packages/frontend-defaults/discovery
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/createapp-test
+    to: blueprint/packages/frontend-defaults/createapp
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/createapp
+    to: blueprint/packages/core-app-api/defaultconfigloader
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/createapp
+    to: blueprint/packages/core-app-api/overridebaseurlconfigs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/createapp
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/createapp
+    to: blueprint/packages/frontend-defaults/discovery
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/createapp
+    to: blueprint/packages/frontend-defaults/resolution
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/createapp
+    to: blueprint/packages/frontend-defaults/maybecreateerrorpage
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/discovery-test
+    to: blueprint/packages/frontend-defaults/discovery
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/discovery-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/discovery
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/discovery
+    to: blueprint/packages/frontend-defaults/resolution
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/resolution-test
+    to: blueprint/packages/frontend-defaults/resolution
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/resolution
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/resolution
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-defaults/resolution
+    to: blueprint/packages/frontend-plugin-api/createfrontendfeatureloader
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-test-utils/mockservices
+    to: blueprint/packages/frontend-defaults/discovery
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-test-utils/testbackend
+    to: blueprint/packages/frontend-defaults/discovery
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-defaults/authservicefactory-test
+    to: blueprint/packages/frontend-defaults/discovery
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/migrate
+    to: blueprint/packages/frontend-defaults/discovery
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/publish
+    to: blueprint/packages/frontend-defaults/discovery
+    type: direct-call
+    description: Calls module / service

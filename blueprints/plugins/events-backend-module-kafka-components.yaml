@@ -1,0 +1,265 @@
+entityRef: blueprint/plugins/events-backend-module-kafka
+name: Events-backend-module-kafka Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/events-backend-module-kafka/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-kafka/config.d.ts
+      containerId: events-backend-module-kafka
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1505
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-kafka/index
+    type: event-broker
+    name: index Message Broker
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-kafka/src/KafkaPublishingEventConsumer/index.ts
+      containerId: events-backend-module-kafka
+      technology: TypeScript Event Client
+      classification: event-marker
+    x: 965
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-kafka/config-test
+    type: background-worker
+    name: config.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-kafka/src/utils/config.test.ts
+      containerId: events-backend-module-kafka
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend-module-kafka/config
+    type: event-broker
+    name: config Message Broker
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-kafka/src/utils/config.ts
+      containerId: events-backend-module-kafka
+      technology: TypeScript Event Client
+      classification: event-marker
+    x: 775
+    'y': 1010
+  - entityRef: blueprint/plugins/events-backend-module-kafka/kafkaconsumingeventpublisher-test
+    type: event-broker
+    name: KafkaConsumingEventPublisher.test Message Broker
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-kafka/src/KafkaConsumingEventPublisher/KafkaConsumingEventPublisher.test.ts
+      containerId: events-backend-module-kafka
+      technology: TypeScript Event Client
+      classification: event-marker
+    x: 505
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-kafka/kafkaconsumingeventpublisher
+    type: event-broker
+    name: KafkaConsumingEventPublisher Message Broker
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-kafka/src/KafkaConsumingEventPublisher/KafkaConsumingEventPublisher.ts
+      containerId: events-backend-module-kafka
+      technology: TypeScript Event Client
+      classification: event-marker
+    x: 1640
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend-module-kafka/module-test
+    type: event-broker
+    name: module.test Message Broker
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-kafka/src/KafkaPublishingEventConsumer/module.test.ts
+      containerId: events-backend-module-kafka
+      technology: TypeScript Event Client
+      classification: event-marker
+    x: 1965
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-kafka/module
+    type: event-broker
+    name: module Message Broker
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-kafka/src/KafkaPublishingEventConsumer/module.ts
+      containerId: events-backend-module-kafka
+      technology: TypeScript Event Client
+      classification: event-marker
+    x: 1965
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-kafka/kafkapublishingeventconsumer-test
+    type: event-broker
+    name: KafkaPublishingEventConsumer.test Message Broker
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-kafka/src/KafkaPublishingEventConsumer/KafkaPublishingEventConsumer.test.ts
+      containerId: events-backend-module-kafka
+      technology: TypeScript Event Client
+      classification: event-marker
+    x: 1425
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-kafka/kafkapublishingeventconsumer
+    type: event-broker
+    name: KafkaPublishingEventConsumer Message Broker
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-kafka/src/KafkaPublishingEventConsumer/KafkaPublishingEventConsumer.ts
+      containerId: events-backend-module-kafka
+      technology: TypeScript Event Client
+      classification: event-marker
+    x: 2140
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend-module-kafka/kafkatransformers-test
+    type: background-worker
+    name: kafkaTransformers.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-kafka/src/utils/kafkaTransformers.test.ts
+      containerId: events-backend-module-kafka
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2600
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend-module-kafka/kafkatransformers
+    type: event-broker
+    name: kafkaTransformers Message Broker
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-kafka/src/utils/kafkaTransformers.ts
+      containerId: events-backend-module-kafka
+      technology: TypeScript Event Client
+      classification: event-marker
+    x: 2520
+    'y': 1010
+  - entityRef: blueprint/plugins/events-backend-module-kafka/loggerserviceadapter
+    type: event-broker
+    name: LoggerServiceAdapter Message Broker
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-kafka/src/utils/LoggerServiceAdapter.ts
+      containerId: events-backend-module-kafka
+      technology: TypeScript Event Client
+      classification: event-marker
+    x: 1600
+    'y': 1010
+dependencies:
+  - from: blueprint/plugins/events-backend-module-kafka/config-d
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-kafka/index
+    to: blueprint/plugins/events-backend-module-kafka/kafkaconsumingeventpublisher
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/index
+    to: blueprint/plugins/events-backend-module-kafka/kafkapublishingeventconsumer
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/config-test
+    to: blueprint/plugins/events-backend-module-kafka/config
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/config-test
+    to: blueprint/plugins/events-backend-module-kafka/config
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/kafkaconsumingeventpublisher-test
+    to: blueprint/plugins/events-backend-module-kafka/kafkaconsumingeventpublisher
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/kafkaconsumingeventpublisher-test
+    to: blueprint/plugins/events-backend-module-kafka/config
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/kafkaconsumingeventpublisher
+    to: blueprint/plugins/events-backend-module-kafka/config
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/kafkaconsumingeventpublisher
+    to: blueprint/plugins/events-backend-module-kafka/config
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/kafkaconsumingeventpublisher
+    to: blueprint/plugins/events-backend-module-kafka/loggerserviceadapter
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/kafkaconsumingeventpublisher
+    to: blueprint/plugins/events-backend-module-kafka/kafkatransformers
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/module-test
+    to: blueprint/plugins/events-backend-module-kafka/module
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/module-test
+    to: blueprint/plugins/events-backend-module-kafka/kafkaconsumingeventpublisher
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/module
+    to: blueprint/plugins/events-backend-module-kafka/kafkaconsumingeventpublisher
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/config-test
+    to: blueprint/plugins/events-backend-module-kafka/config
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/config-test
+    to: blueprint/plugins/events-backend-module-kafka/config
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/kafkapublishingeventconsumer-test
+    to: blueprint/plugins/events-backend-module-kafka/kafkapublishingeventconsumer
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/kafkapublishingeventconsumer-test
+    to: blueprint/plugins/events-backend-module-kafka/config
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/kafkapublishingeventconsumer
+    to: blueprint/plugins/events-backend-module-kafka/config
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/kafkapublishingeventconsumer
+    to: blueprint/plugins/events-backend-module-kafka/config
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/kafkapublishingeventconsumer
+    to: blueprint/plugins/events-backend-module-kafka/loggerserviceadapter
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/kafkapublishingeventconsumer
+    to: blueprint/plugins/events-backend-module-kafka/kafkatransformers
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/module-test
+    to: blueprint/plugins/events-backend-module-kafka/module
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/module-test
+    to: blueprint/plugins/events-backend-module-kafka/kafkapublishingeventconsumer
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/module
+    to: blueprint/plugins/events-backend-module-kafka/kafkapublishingeventconsumer
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/config-test
+    to: blueprint/plugins/events-backend-module-kafka/config
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/config-test
+    to: blueprint/plugins/events-backend-module-kafka/config
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/plugins/events-backend-module-kafka/config
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-kafka/kafkatransformers-test
+    to: blueprint/plugins/events-backend-module-kafka/kafkatransformers
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics

@@ -1,0 +1,99 @@
+entityRef: blueprint/plugins/events-backend-module-bitbucket-cloud
+name: Events-backend-module-bitbucket-cloud Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/events-backend-module-bitbucket-cloud/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-cloud/src/alpha.ts
+      containerId: events-backend-module-bitbucket-cloud
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-bitbucket-cloud/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-cloud/src/index.ts
+      containerId: events-backend-module-bitbucket-cloud
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-bitbucket-cloud/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-cloud/src/setupTests.ts
+      containerId: events-backend-module-bitbucket-cloud
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-bitbucket-cloud/bitbucketcloudeventrouter-test
+    type: rest-api
+    name: BitbucketCloudEventRouter.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-cloud/src/router/BitbucketCloudEventRouter.test.ts
+      containerId: events-backend-module-bitbucket-cloud
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 370
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-bitbucket-cloud/bitbucketcloudeventrouter
+    type: rest-api
+    name: BitbucketCloudEventRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-cloud/src/router/BitbucketCloudEventRouter.ts
+      containerId: events-backend-module-bitbucket-cloud
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 600
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend-module-bitbucket-cloud/eventsmodulebitbucketcloudeventrouter-test
+    type: rest-api
+    name: eventsModuleBitbucketCloudEventRouter.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-cloud/src/service/eventsModuleBitbucketCloudEventRouter.test.ts
+      containerId: events-backend-module-bitbucket-cloud
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-bitbucket-cloud/eventsmodulebitbucketcloudeventrouter
+    type: rest-api
+    name: eventsModuleBitbucketCloudEventRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-cloud/src/service/eventsModuleBitbucketCloudEventRouter.ts
+      containerId: events-backend-module-bitbucket-cloud
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 830
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/events-backend-module-bitbucket-cloud/alpha
+    to: blueprint/plugins/events-backend-module-bitbucket-cloud/eventsmodulebitbucketcloudeventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-bitbucket-cloud/bitbucketcloudeventrouter-test
+    to: blueprint/plugins/events-backend-module-bitbucket-cloud/bitbucketcloudeventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-bitbucket-cloud/eventsmodulebitbucketcloudeventrouter-test
+    to: blueprint/plugins/events-backend-module-bitbucket-cloud/eventsmodulebitbucketcloudeventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-bitbucket-cloud/eventsmodulebitbucketcloudeventrouter
+    to: blueprint/plugins/events-backend-module-bitbucket-cloud/bitbucketcloudeventrouter
+    type: direct-call
+    description: Calls module / service

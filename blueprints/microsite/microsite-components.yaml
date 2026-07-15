@@ -1,0 +1,92 @@
+entityRef: blueprint/microsite/microsite
+name: Microsite Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/microsite/microsite/docusaurus-config
+    type: gateway-api
+    name: docusaurus.config UI Component
+    isTest: false
+    properties:
+      filepath: microsite/docusaurus.config.ts
+      containerId: microsite
+      technology: React Component
+      classification: ui-import
+    x: 140
+    'y': 50
+  - entityRef: blueprint/microsite/microsite/sidebars
+    type: background-worker
+    name: sidebars Service
+    isTest: false
+    properties:
+      filepath: microsite/sidebars.ts
+      containerId: microsite
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/microsite/microsite/typings-d
+    type: background-worker
+    name: typings.d Service
+    isTest: false
+    properties:
+      filepath: microsite/typings.d.ts
+      containerId: microsite
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/microsite/microsite/calcisnewplugin
+    type: background-worker
+    name: calcIsNewPlugin Service
+    isTest: false
+    properties:
+      filepath: microsite/src/util/calcIsNewPlugin.tsx
+      containerId: microsite
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/microsite/microsite/truncatedescription
+    type: background-worker
+    name: truncateDescription Service
+    isTest: false
+    properties:
+      filepath: microsite/src/util/truncateDescription.tsx
+      containerId: microsite
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/microsite/microsite/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: microsite/src/util/types.ts
+      containerId: microsite
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 370
+dependencies:
+  - from: blueprint/microsite/microsite/docusaurus-config
+    to: blueprint/microsite/microsite/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/components/pluginsfilter
+    to: blueprint/microsite/microsite/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/microsite/calcisnewplugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/microsite/truncatedescription
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/microsite/types
+    type: direct-call
+    description: Calls module / service

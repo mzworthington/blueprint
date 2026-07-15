@@ -1,0 +1,139 @@
+entityRef: blueprint/plugins/catalog-backend-module-msgraph-incremental
+name: Catalog-backend-module-msgraph-incremental Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/catalog-backend-module-msgraph-incremental/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-msgraph-incremental/src/alpha.ts
+      containerId: catalog-backend-module-msgraph-incremental
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-msgraph-incremental/clienthelpers-test
+    type: background-worker
+    name: clientHelpers.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-msgraph-incremental/src/clientHelpers.test.ts
+      containerId: catalog-backend-module-msgraph-incremental
+      technology: TypeScript Domain Service
+      classification: default
+    x: 305
+    'y': 690
+  - entityRef: blueprint/plugins/catalog-backend-module-msgraph-incremental/clienthelpers
+    type: background-worker
+    name: clientHelpers Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-msgraph-incremental/src/clientHelpers.ts
+      containerId: catalog-backend-module-msgraph-incremental
+      technology: TypeScript Domain Service
+      classification: default
+    x: 615
+    'y': 1010
+  - entityRef: blueprint/plugins/catalog-backend-module-msgraph-incremental/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-msgraph-incremental/src/module/index.ts
+      containerId: catalog-backend-module-msgraph-incremental
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-msgraph-incremental/microsoftgraphincrementalentityprovider-test
+    type: background-worker
+    name: MicrosoftGraphIncrementalEntityProvider.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-msgraph-incremental/src/MicrosoftGraphIncrementalEntityProvider.test.ts
+      containerId: catalog-backend-module-msgraph-incremental
+      technology: TypeScript Domain Service
+      classification: default
+    x: 615
+    'y': 370
+  - entityRef: blueprint/plugins/catalog-backend-module-msgraph-incremental/microsoftgraphincrementalentityprovider
+    type: background-worker
+    name: MicrosoftGraphIncrementalEntityProvider Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-msgraph-incremental/src/MicrosoftGraphIncrementalEntityProvider.ts
+      containerId: catalog-backend-module-msgraph-incremental
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1020
+    'y': 690
+  - entityRef: >-
+      blueprint/plugins/catalog-backend-module-msgraph-incremental/catalogmodulemicrosoftgraphincrementalentityprovider-test
+    type: background-worker
+    name: catalogModuleMicrosoftGraphIncrementalEntityProvider.test Service
+    isTest: true
+    properties:
+      filepath: >-
+        plugins/catalog-backend-module-msgraph-incremental/src/module/catalogModuleMicrosoftGraphIncrementalEntityProvider.test.ts
+      containerId: catalog-backend-module-msgraph-incremental
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-msgraph-incremental/catalogmodulemicrosoftgraphincrementalentityprovider
+    type: background-worker
+    name: catalogModuleMicrosoftGraphIncrementalEntityProvider Service
+    isTest: false
+    properties:
+      filepath: >-
+        plugins/catalog-backend-module-msgraph-incremental/src/module/catalogModuleMicrosoftGraphIncrementalEntityProvider.ts
+      containerId: catalog-backend-module-msgraph-incremental
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1195
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/catalog-backend-module-msgraph-incremental/clienthelpers-test
+    to: blueprint/plugins/catalog-backend-module-msgraph-incremental/clienthelpers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-msgraph-incremental/microsoftgraphincrementalentityprovider-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-msgraph-incremental/microsoftgraphincrementalentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-msgraph-incremental/microsoftgraphincrementalentityprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-msgraph-incremental/microsoftgraphincrementalentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-msgraph-incremental/clienthelpers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-msgraph-incremental/microsoftgraphincrementalentityprovider
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-msgraph-incremental/microsoftgraphincrementalentityprovider
+    to: blueprint/plugins/catalog-backend-module-msgraph-incremental/clienthelpers
+    type: direct-call
+    description: Calls module / service
+  - from: >-
+      blueprint/plugins/catalog-backend-module-msgraph-incremental/catalogmodulemicrosoftgraphincrementalentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-msgraph-incremental/catalogmodulemicrosoftgraphincrementalentityprovider
+    type: direct-call
+    description: Calls module / service
+  - from: >-
+      blueprint/plugins/catalog-backend-module-msgraph-incremental/catalogmodulemicrosoftgraphincrementalentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-msgraph-incremental/microsoftgraphincrementalentityprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-msgraph-incremental/catalogmodulemicrosoftgraphincrementalentityprovider
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-msgraph-incremental/catalogmodulemicrosoftgraphincrementalentityprovider
+    to: blueprint/plugins/catalog-backend-module-msgraph-incremental/microsoftgraphincrementalentityprovider
+    type: direct-call
+    description: Calls module / service

@@ -1,0 +1,47 @@
+entityRef: blueprint/packages/release-manifests
+name: Release-manifests Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/release-manifests/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/release-manifests/src/index.ts
+      containerId: release-manifests
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/release-manifests/manifest-test
+    type: background-worker
+    name: manifest.test Service
+    isTest: true
+    properties:
+      filepath: packages/release-manifests/src/manifest.test.ts
+      containerId: release-manifests
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/release-manifests/manifest
+    type: background-worker
+    name: manifest Service
+    isTest: false
+    properties:
+      filepath: packages/release-manifests/src/manifest.ts
+      containerId: release-manifests
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 370
+dependencies:
+  - from: blueprint/packages/release-manifests/manifest-test
+    to: blueprint/packages/core-components/node
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/release-manifests/manifest-test
+    to: blueprint/packages/release-manifests/manifest
+    type: direct-call
+    description: Calls module / service

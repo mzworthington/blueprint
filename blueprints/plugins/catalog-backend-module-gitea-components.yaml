@@ -1,0 +1,279 @@
+entityRef: blueprint/plugins/catalog-backend-module-gitea
+name: Catalog-backend-module-gitea Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/catalog-backend-module-gitea/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitea/config.d.ts
+      containerId: catalog-backend-module-gitea
+      technology: TypeScript Domain Service
+      classification: default
+    x: 300
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-gitea/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitea/src/providers/index.ts
+      containerId: catalog-backend-module-gitea
+      technology: TypeScript Domain Service
+      classification: default
+    x: 760
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-gitea/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-gitea/src/module.test.ts
+      containerId: catalog-backend-module-gitea
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1220
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-gitea/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitea/src/module.ts
+      containerId: catalog-backend-module-gitea
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1410
+    'y': 370
+  - entityRef: blueprint/plugins/catalog-backend-module-gitea/config-test
+    type: background-worker
+    name: config.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-gitea/src/providers/config.test.ts
+      containerId: catalog-backend-module-gitea
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 690
+  - entityRef: blueprint/plugins/catalog-backend-module-gitea/config
+    type: background-worker
+    name: config Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitea/src/providers/config.ts
+      containerId: catalog-backend-module-gitea
+      technology: TypeScript Domain Service
+      classification: default
+    x: 275
+    'y': 1010
+  - entityRef: blueprint/plugins/catalog-backend-module-gitea/core-test
+    type: background-worker
+    name: core.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-gitea/src/providers/core.test.ts
+      containerId: catalog-backend-module-gitea
+      technology: TypeScript Domain Service
+      classification: default
+    x: 680
+    'y': 690
+  - entityRef: blueprint/plugins/catalog-backend-module-gitea/core
+    type: background-worker
+    name: core Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitea/src/providers/core.ts
+      containerId: catalog-backend-module-gitea
+      technology: TypeScript Domain Service
+      classification: default
+    x: 965
+    'y': 1010
+  - entityRef: blueprint/plugins/catalog-backend-module-gitea/giteaentityprovider-test
+    type: background-worker
+    name: GiteaEntityProvider.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-gitea/src/providers/GiteaEntityProvider.test.ts
+      containerId: catalog-backend-module-gitea
+      technology: TypeScript Domain Service
+      classification: default
+    x: 735
+    'y': 370
+  - entityRef: blueprint/plugins/catalog-backend-module-gitea/giteaentityprovider
+    type: background-worker
+    name: GiteaEntityProvider Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitea/src/providers/GiteaEntityProvider.ts
+      containerId: catalog-backend-module-gitea
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1355
+    'y': 690
+  - entityRef: blueprint/plugins/catalog-backend-module-gitea/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitea/src/providers/types.ts
+      containerId: catalog-backend-module-gitea
+      technology: TypeScript Domain Service
+      classification: default
+    x: 965
+    'y': 1330
+dependencies:
+  - from: blueprint/plugins/catalog-backend-module-gitea/module-test
+    to: blueprint/plugins/catalog-backend-module-gitea/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/module-test
+    to: blueprint/plugins/catalog-backend-module-gitea/giteaentityprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/module
+    to: blueprint/plugins/catalog-backend-module-gitea/giteaentityprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/gateway-backend/router
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/config-test
+    to: blueprint/plugins/catalog-backend-module-gitea/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/config-test
+    to: blueprint/plugins/catalog-backend-module-gitea/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/config
+    to: blueprint/plugins/catalog-backend-module-gitea/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/core-test
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/core-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/core
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/giteaentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-gitea/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/giteaentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-gitea/giteaentityprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/giteaentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-gitea/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/giteaentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/giteaentityprovider-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/giteaentityprovider
+    to: blueprint/plugins/catalog-backend-module-gitea/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/giteaentityprovider
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/giteaentityprovider
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/giteaentityprovider
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/giteaentityprovider
+    to: blueprint/plugins/catalog-backend-module-gitea/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/giteaentityprovider
+    to: blueprint/plugins/catalog-backend-module-gitea/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-github/github-test
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-github/github
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-github/githubmultiorgentityprovider
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-github/githuborgentityprovider
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabgroupaccessaction
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/types
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/rjsf
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/createscaffolderlayout
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-module-addons-contrib/expandablenavigation
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-module-addons-contrib/issuelink
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-module-addons-contrib/reportissuecontent
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-module-addons-contrib/textsize
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home/widgetsettingsoverlay
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/types
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/form
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/stepper
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-react/index
+    to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service

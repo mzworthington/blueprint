@@ -1,0 +1,274 @@
+entityRef: blueprint/plugins/events-backend-module-google-pubsub
+name: Events-backend-module-google-pubsub Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/events-backend-module-google-pubsub/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-google-pubsub/config.d.ts
+      containerId: events-backend-module-google-pubsub
+      technology: TypeScript Domain Service
+      classification: default
+    x: 165
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-google-pubsub/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-google-pubsub/src/GooglePubSubConsumingEventPublisher/index.ts
+      containerId: events-backend-module-google-pubsub
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1085
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-google-pubsub/config-test
+    type: background-worker
+    name: config.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-google-pubsub/src/GooglePubSubConsumingEventPublisher/config.test.ts
+      containerId: events-backend-module-google-pubsub
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-google-pubsub/config
+    type: background-worker
+    name: config Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-google-pubsub/src/GooglePubSubConsumingEventPublisher/config.ts
+      containerId: events-backend-module-google-pubsub
+      technology: TypeScript Domain Service
+      classification: default
+    x: 950
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend-module-google-pubsub/eventconsuminggooglepubsubpublisher-test
+    type: background-worker
+    name: EventConsumingGooglePubSubPublisher.test Service
+    isTest: true
+    properties:
+      filepath: >-
+        plugins/events-backend-module-google-pubsub/src/EventConsumingGooglePubSubPublisher/EventConsumingGooglePubSubPublisher.test.ts
+      containerId: events-backend-module-google-pubsub
+      technology: TypeScript Domain Service
+      classification: default
+    x: 625
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-google-pubsub/eventconsuminggooglepubsubpublisher
+    type: background-worker
+    name: EventConsumingGooglePubSubPublisher Service
+    isTest: false
+    properties:
+      filepath: >-
+        plugins/events-backend-module-google-pubsub/src/EventConsumingGooglePubSubPublisher/EventConsumingGooglePubSubPublisher.ts
+      containerId: events-backend-module-google-pubsub
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1005
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-google-pubsub/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-google-pubsub/src/GooglePubSubConsumingEventPublisher/module.ts
+      containerId: events-backend-module-google-pubsub
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1545
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-google-pubsub/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-google-pubsub/src/GooglePubSubConsumingEventPublisher/types.ts
+      containerId: events-backend-module-google-pubsub
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1290
+    'y': 1330
+  - entityRef: blueprint/plugins/events-backend-module-google-pubsub/googlepubsubconsumingeventpublisher-test
+    type: background-worker
+    name: GooglePubSubConsumingEventPublisher.test Service
+    isTest: true
+    properties:
+      filepath: >-
+        plugins/events-backend-module-google-pubsub/src/GooglePubSubConsumingEventPublisher/GooglePubSubConsumingEventPublisher.test.ts
+      containerId: events-backend-module-google-pubsub
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2005
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-google-pubsub/googlepubsubconsumingeventpublisher
+    type: background-worker
+    name: GooglePubSubConsumingEventPublisher Service
+    isTest: false
+    properties:
+      filepath: >-
+        plugins/events-backend-module-google-pubsub/src/GooglePubSubConsumingEventPublisher/GooglePubSubConsumingEventPublisher.ts
+      containerId: events-backend-module-google-pubsub
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1735
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-google-pubsub/createpatternresolver-test
+    type: background-worker
+    name: createPatternResolver.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-google-pubsub/src/util/createPatternResolver.test.ts
+      containerId: events-backend-module-google-pubsub
+      technology: TypeScript Domain Service
+      classification: default
+    x: 490
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend-module-google-pubsub/createpatternresolver
+    type: background-worker
+    name: createPatternResolver Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-google-pubsub/src/util/createPatternResolver.ts
+      containerId: events-backend-module-google-pubsub
+      technology: TypeScript Domain Service
+      classification: default
+    x: 490
+    'y': 1010
+dependencies:
+  - from: blueprint/plugins/events-backend-module-google-pubsub/index
+    to: blueprint/plugins/events-backend-module-google-pubsub/eventconsuminggooglepubsubpublisher
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/index
+    to: blueprint/plugins/events-backend-module-google-pubsub/googlepubsubconsumingeventpublisher
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/config-test
+    to: blueprint/plugins/events-backend-module-google-pubsub/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/config
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/config
+    to: blueprint/plugins/events-backend-module-google-pubsub/createpatternresolver
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/config
+    to: blueprint/plugins/events-backend-module-google-pubsub/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/eventconsuminggooglepubsubpublisher-test
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/eventconsuminggooglepubsubpublisher-test
+    to: blueprint/plugins/events-backend-module-google-pubsub/eventconsuminggooglepubsubpublisher
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/eventconsuminggooglepubsubpublisher
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/eventconsuminggooglepubsubpublisher
+    to: blueprint/plugins/events-backend-module-google-pubsub/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/eventconsuminggooglepubsubpublisher
+    to: blueprint/plugins/events-backend-module-google-pubsub/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/eventconsuminggooglepubsubpublisher
+    to: blueprint/plugins/events-backend-module-google-pubsub/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/module
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/module
+    to: blueprint/plugins/events-backend-module-google-pubsub/eventconsuminggooglepubsubpublisher
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/config-test
+    to: blueprint/plugins/events-backend-module-google-pubsub/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/config-test
+    to: blueprint/plugins/events-backend-module-google-pubsub/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/config-test
+    to: blueprint/plugins/events-backend-module-google-pubsub/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/config
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/config
+    to: blueprint/plugins/events-backend-module-google-pubsub/createpatternresolver
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/config
+    to: blueprint/plugins/events-backend-module-google-pubsub/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/googlepubsubconsumingeventpublisher-test
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/googlepubsubconsumingeventpublisher-test
+    to: blueprint/plugins/events-backend-module-google-pubsub/googlepubsubconsumingeventpublisher
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/googlepubsubconsumingeventpublisher-test
+    to: blueprint/plugins/events-backend-module-google-pubsub/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/googlepubsubconsumingeventpublisher
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/googlepubsubconsumingeventpublisher
+    to: blueprint/plugins/events-backend-module-google-pubsub/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/googlepubsubconsumingeventpublisher
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/googlepubsubconsumingeventpublisher
+    to: blueprint/plugins/events-backend-module-google-pubsub/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/googlepubsubconsumingeventpublisher
+    to: blueprint/plugins/events-backend-module-google-pubsub/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/module
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/module
+    to: blueprint/plugins/events-backend-module-google-pubsub/googlepubsubconsumingeventpublisher
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/createpatternresolver-test
+    to: blueprint/plugins/events-backend-module-google-pubsub/createpatternresolver
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/createpatternresolver
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/createpatternresolver
+    to: blueprint/plugins/events-backend-module-google-pubsub/types
+    type: direct-call
+    description: Calls module / service

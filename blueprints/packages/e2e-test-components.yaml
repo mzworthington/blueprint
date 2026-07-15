@@ -1,0 +1,77 @@
+entityRef: blueprint/packages/e2e-test
+name: E2e-test Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/e2e-test/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/e2e-test/src/commands/index.ts
+      containerId: e2e-test
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/e2e-test/types-d
+    type: background-worker
+    name: types.d Service
+    isTest: false
+    properties:
+      filepath: packages/e2e-test/src/types.d.ts
+      containerId: e2e-test
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/e2e-test/runcommand
+    type: relational-database
+    name: runCommand Database
+    isTest: false
+    properties:
+      filepath: packages/e2e-test/src/commands/runCommand.ts
+      containerId: e2e-test
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 140
+    'y': 370
+  - entityRef: blueprint/packages/e2e-test/helpers-test
+    type: background-worker
+    name: helpers.test Service
+    isTest: true
+    properties:
+      filepath: packages/e2e-test/src/lib/helpers.test.ts
+      containerId: e2e-test
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 370
+  - entityRef: blueprint/packages/e2e-test/helpers
+    type: background-worker
+    name: helpers Service
+    isTest: false
+    properties:
+      filepath: packages/e2e-test/src/lib/helpers.ts
+      containerId: e2e-test
+      technology: TypeScript Domain Service
+      classification: default
+    x: 370
+    'y': 690
+dependencies:
+  - from: blueprint/packages/e2e-test/index
+    to: blueprint/packages/e2e-test/runcommand
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/packages/e2e-test/runcommand
+    to: blueprint/packages/e2e-test/helpers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/e2e-test/runcommand
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/e2e-test/helpers-test
+    to: blueprint/packages/e2e-test/helpers
+    type: direct-call
+    description: Calls module / service

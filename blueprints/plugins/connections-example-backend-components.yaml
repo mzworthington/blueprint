@@ -1,0 +1,62 @@
+entityRef: blueprint/plugins/connections-example-backend
+name: Connections-example-backend Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/connections-example-backend/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/connections-example-backend/src/index.ts
+      containerId: connections-example-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/connections-example-backend/plugin
+    type: background-worker
+    name: plugin Service
+    isTest: false
+    properties:
+      filepath: plugins/connections-example-backend/src/plugin.ts
+      containerId: connections-example-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/connections-example-backend/router
+    type: rest-api
+    name: router REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/connections-example-backend/src/router.ts
+      containerId: connections-example-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 600
+    'y': 370
+  - entityRef: blueprint/plugins/connections-example-backend/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/connections-example-backend/src/setupTests.ts
+      containerId: connections-example-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+dependencies:
+  - from: blueprint/plugins/connections-example-backend/index
+    to: blueprint/plugins/catalog-node/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/connections-example-backend/plugin
+    to: blueprint/plugins/connections-example-backend/router
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/connections-example-backend/router
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service

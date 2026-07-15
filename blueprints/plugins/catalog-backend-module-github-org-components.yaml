@@ -1,0 +1,62 @@
+entityRef: blueprint/plugins/catalog-backend-module-github-org
+name: Catalog-backend-module-github-org Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/catalog-backend-module-github-org/githuborgentitycleanerprovider
+    type: background-worker
+    name: GithubOrgEntityCleanerProvider Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-github-org/src/GithubOrgEntityCleanerProvider.ts
+      containerId: catalog-backend-module-github-org
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 690
+  - entityRef: blueprint/plugins/catalog-backend-module-github-org/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-github-org/src/index.ts
+      containerId: catalog-backend-module-github-org
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-github-org/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-github-org/src/module.test.ts
+      containerId: catalog-backend-module-github-org
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-github-org/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-github-org/src/module.ts
+      containerId: catalog-backend-module-github-org
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 370
+dependencies:
+  - from: blueprint/plugins/catalog-backend-module-github-org/module-test
+    to: blueprint/plugins/catalog-backend-module-github-org/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-github-org/module
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-github-org/module
+    to: blueprint/plugins/catalog-backend-module-github-org/githuborgentitycleanerprovider
+    type: direct-call
+    description: Calls module / service

@@ -1,0 +1,266 @@
+entityRef: blueprint/packages/techdocs-cli
+name: Techdocs-cli Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/techdocs-cli/techdocs-cli-test
+    type: background-worker
+    name: techdocs-cli.test Service
+    isTest: true
+    properties:
+      filepath: packages/techdocs-cli/cli-e2e-tests/techdocs-cli.test.ts
+      containerId: techdocs-cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/techdocs-cli/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli/src/commands/index.ts
+      containerId: techdocs-cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/techdocs-cli/httpserver
+    type: background-worker
+    name: httpServer Service
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli/src/lib/httpServer.ts
+      containerId: techdocs-cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1100
+    'y': 370
+  - entityRef: blueprint/packages/techdocs-cli/livereload-test
+    type: background-worker
+    name: livereload.test Service
+    isTest: true
+    properties:
+      filepath: packages/techdocs-cli/src/lib/livereload.test.ts
+      containerId: techdocs-cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1560
+    'y': 370
+  - entityRef: blueprint/packages/techdocs-cli/livereload
+    type: background-worker
+    name: livereload Service
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli/src/lib/livereload.ts
+      containerId: techdocs-cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1465
+    'y': 690
+  - entityRef: blueprint/packages/techdocs-cli/mkdocsserver-test
+    type: background-worker
+    name: mkdocsServer.test Service
+    isTest: true
+    properties:
+      filepath: packages/techdocs-cli/src/lib/mkdocsServer.test.ts
+      containerId: techdocs-cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/packages/techdocs-cli/mkdocsserver
+    type: background-worker
+    name: mkdocsServer Service
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli/src/lib/mkdocsServer.ts
+      containerId: techdocs-cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2020
+    'y': 370
+  - entityRef: blueprint/packages/techdocs-cli/publisherconfig-test
+    type: background-worker
+    name: PublisherConfig.test Service
+    isTest: true
+    properties:
+      filepath: packages/techdocs-cli/src/lib/PublisherConfig.test.ts
+      containerId: techdocs-cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2480
+    'y': 370
+  - entityRef: blueprint/packages/techdocs-cli/publisherconfig
+    type: background-worker
+    name: PublisherConfig Service
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli/src/lib/PublisherConfig.ts
+      containerId: techdocs-cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3535
+    'y': 690
+  - entityRef: blueprint/packages/techdocs-cli/utility
+    type: background-worker
+    name: utility Service
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli/src/lib/utility.ts
+      containerId: techdocs-cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3995
+    'y': 690
+  - entityRef: blueprint/packages/techdocs-cli/generate
+    type: background-worker
+    name: generate Service
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli/src/commands/generate/generate.ts
+      containerId: techdocs-cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2940
+    'y': 370
+  - entityRef: blueprint/packages/techdocs-cli/migrate
+    type: background-worker
+    name: migrate Service
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli/src/commands/migrate/migrate.ts
+      containerId: techdocs-cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3400
+    'y': 370
+  - entityRef: blueprint/packages/techdocs-cli/publish
+    type: background-worker
+    name: publish Service
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli/src/commands/publish/publish.ts
+      containerId: techdocs-cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3860
+    'y': 370
+  - entityRef: blueprint/packages/techdocs-cli/mkdocs
+    type: gateway-api
+    name: mkdocs UI Component
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli/src/commands/serve/mkdocs.ts
+      containerId: techdocs-cli
+      technology: React Component
+      classification: ui-import
+    x: 4575
+    'y': 50
+  - entityRef: blueprint/packages/techdocs-cli/serve
+    type: gateway-api
+    name: serve UI Component
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli/src/commands/serve/serve.ts
+      containerId: techdocs-cli
+      technology: React Component
+      classification: ui-import
+    x: 4075
+    'y': 50
+  - entityRef: blueprint/packages/techdocs-cli/utils
+    type: background-worker
+    name: utils Service
+    isTest: false
+    properties:
+      filepath: packages/techdocs-cli/src/commands/serve/utils.ts
+      containerId: techdocs-cli
+      technology: TypeScript Domain Service
+      classification: default
+    x: 4615
+    'y': 370
+dependencies:
+  - from: blueprint/packages/techdocs-cli/httpserver
+    to: blueprint/packages/techdocs-cli/utility
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/httpserver
+    to: blueprint/packages/techdocs-cli/livereload
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/livereload-test
+    to: blueprint/packages/techdocs-cli/livereload
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/mkdocsserver-test
+    to: blueprint/packages/techdocs-cli/mkdocsserver
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/publisherconfig-test
+    to: blueprint/packages/techdocs-cli/publisherconfig
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/publisherconfig
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/generate
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/generate
+    to: blueprint/packages/techdocs-cli/utility
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/migrate
+    to: blueprint/packages/frontend-defaults/discovery
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/migrate
+    to: blueprint/packages/techdocs-cli/utility
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/migrate
+    to: blueprint/packages/techdocs-cli/publisherconfig
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/publish
+    to: blueprint/packages/techdocs-cli/utility
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/publish
+    to: blueprint/packages/frontend-defaults/discovery
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/publish
+    to: blueprint/packages/techdocs-cli/publisherconfig
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/mkdocs
+    to: blueprint/packages/techdocs-cli/utility
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/mkdocs
+    to: blueprint/packages/techdocs-cli/mkdocsserver
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/mkdocs
+    to: blueprint/packages/techdocs-cli/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/serve
+    to: blueprint/packages/techdocs-cli/httpserver
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/serve
+    to: blueprint/packages/techdocs-cli/mkdocsserver
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/serve
+    to: blueprint/packages/techdocs-cli/utility
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli/serve
+    to: blueprint/packages/techdocs-cli/utils
+    type: direct-call
+    description: Calls module / service

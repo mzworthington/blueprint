@@ -1,0 +1,383 @@
+entityRef: blueprint/plugins/app-backend
+name: App-backend Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/app-backend/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/app-backend/config.d.ts
+      containerId: app-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/app-backend/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/app-backend/src/lib/config/index.ts
+      containerId: app-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/app-backend/migrations-test
+    type: relational-database
+    name: migrations.test Database
+    isTest: true
+    properties:
+      filepath: plugins/app-backend/src/migrations.test.ts
+      containerId: app-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/app-backend/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/app-backend/src/setupTests.ts
+      containerId: app-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/app-backend/headers
+    type: background-worker
+    name: headers Service
+    isTest: false
+    properties:
+      filepath: plugins/app-backend/src/lib/headers.ts
+      containerId: app-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 1010
+  - entityRef: blueprint/plugins/app-backend/appplugin-test
+    type: background-worker
+    name: appPlugin.test Service
+    isTest: true
+    properties:
+      filepath: plugins/app-backend/src/service/appPlugin.test.ts
+      containerId: app-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/app-backend/appplugin
+    type: rest-api
+    name: appPlugin REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/app-backend/src/service/appPlugin.ts
+      containerId: app-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1980
+    'y': 370
+  - entityRef: blueprint/plugins/app-backend/router-test
+    type: rest-api
+    name: router.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/app-backend/src/service/router.test.ts
+      containerId: app-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 2440
+    'y': 370
+  - entityRef: blueprint/plugins/app-backend/router
+    type: rest-api
+    name: router REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/app-backend/src/service/router.ts
+      containerId: app-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1980
+    'y': 690
+  - entityRef: blueprint/plugins/app-backend/createstaticassetmiddleware-test
+    type: rest-api
+    name: createStaticAssetMiddleware.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/app-backend/src/lib/assets/createStaticAssetMiddleware.test.ts
+      containerId: app-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 2900
+    'y': 370
+  - entityRef: blueprint/plugins/app-backend/createstaticassetmiddleware
+    type: rest-api
+    name: createStaticAssetMiddleware REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/app-backend/src/lib/assets/createStaticAssetMiddleware.ts
+      containerId: app-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 2900
+    'y': 690
+  - entityRef: blueprint/plugins/app-backend/findstaticassets-test
+    type: background-worker
+    name: findStaticAssets.test Service
+    isTest: true
+    properties:
+      filepath: plugins/app-backend/src/lib/assets/findStaticAssets.test.ts
+      containerId: app-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3360
+    'y': 370
+  - entityRef: blueprint/plugins/app-backend/findstaticassets
+    type: background-worker
+    name: findStaticAssets Service
+    isTest: false
+    properties:
+      filepath: plugins/app-backend/src/lib/assets/findStaticAssets.ts
+      containerId: app-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3360
+    'y': 690
+  - entityRef: blueprint/plugins/app-backend/staticassetsstore-test
+    type: background-worker
+    name: StaticAssetsStore.test Service
+    isTest: true
+    properties:
+      filepath: plugins/app-backend/src/lib/assets/StaticAssetsStore.test.ts
+      containerId: app-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 3860
+    'y': 370
+  - entityRef: blueprint/plugins/app-backend/staticassetsstore
+    type: relational-database
+    name: StaticAssetsStore Database
+    isTest: false
+    properties:
+      filepath: plugins/app-backend/src/lib/assets/StaticAssetsStore.ts
+      containerId: app-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    x: 3820
+    'y': 690
+  - entityRef: blueprint/plugins/app-backend/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/app-backend/src/lib/config/types.ts
+      containerId: app-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 4145
+    'y': 1010
+  - entityRef: blueprint/plugins/app-backend/injectconfig
+    type: background-worker
+    name: injectConfig Service
+    isTest: false
+    properties:
+      filepath: plugins/app-backend/src/lib/config/injectConfig.ts
+      containerId: app-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 4320
+    'y': 370
+  - entityRef: blueprint/plugins/app-backend/injectconfigintohtml-test
+    type: background-worker
+    name: injectConfigIntoHtml.test Service
+    isTest: true
+    properties:
+      filepath: plugins/app-backend/src/lib/config/injectConfigIntoHtml.test.ts
+      containerId: app-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 4780
+    'y': 370
+  - entityRef: blueprint/plugins/app-backend/injectconfigintohtml
+    type: background-worker
+    name: injectConfigIntoHtml Service
+    isTest: false
+    properties:
+      filepath: plugins/app-backend/src/lib/config/injectConfigIntoHtml.ts
+      containerId: app-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 4550
+    'y': 690
+  - entityRef: blueprint/plugins/app-backend/injectconfigintostatic-test
+    type: background-worker
+    name: injectConfigIntoStatic.test Service
+    isTest: true
+    properties:
+      filepath: plugins/app-backend/src/lib/config/injectConfigIntoStatic.test.ts
+      containerId: app-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 5240
+    'y': 370
+  - entityRef: blueprint/plugins/app-backend/injectconfigintostatic
+    type: background-worker
+    name: injectConfigIntoStatic Service
+    isTest: false
+    properties:
+      filepath: plugins/app-backend/src/lib/config/injectConfigIntoStatic.ts
+      containerId: app-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 5200
+    'y': 690
+  - entityRef: blueprint/plugins/app-backend/readfrontendconfig-test
+    type: background-worker
+    name: readFrontendConfig.test Service
+    isTest: true
+    properties:
+      filepath: plugins/app-backend/src/lib/config/readFrontendConfig.test.ts
+      containerId: app-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 5700
+    'y': 370
+  - entityRef: blueprint/plugins/app-backend/readfrontendconfig
+    type: background-worker
+    name: readFrontendConfig Service
+    isTest: false
+    properties:
+      filepath: plugins/app-backend/src/lib/config/readFrontendConfig.ts
+      containerId: app-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 5700
+    'y': 690
+dependencies:
+  - from: blueprint/plugins/app-backend/appplugin-test
+    to: blueprint/plugins/app-backend/appplugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/appplugin-test
+    to: blueprint/plugins/catalog-node/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/appplugin
+    to: blueprint/plugins/app-backend/router
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/router-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/router-test
+    to: blueprint/plugins/app-backend/router
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/router
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/router
+    to: blueprint/plugins/app-backend/headers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/router
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/router
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/createstaticassetmiddleware-test
+    to: blueprint/plugins/app-backend/createstaticassetmiddleware
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/createstaticassetmiddleware-test
+    to: blueprint/plugins/app-backend/staticassetsstore
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/app-backend/createstaticassetmiddleware
+    to: blueprint/plugins/app-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/createstaticassetmiddleware
+    to: blueprint/plugins/app-backend/headers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/findstaticassets-test
+    to: blueprint/plugins/app-backend/findstaticassets
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/findstaticassets
+    to: blueprint/plugins/app-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/staticassetsstore-test
+    to: blueprint/plugins/app-backend/staticassetsstore
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/app-backend/staticassetsstore
+    to: blueprint/plugins/app-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/injectconfig
+    to: blueprint/plugins/app-backend/injectconfigintohtml
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/injectconfig
+    to: blueprint/plugins/app-backend/injectconfigintostatic
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/injectconfig
+    to: blueprint/plugins/app-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/injectconfigintohtml-test
+    to: blueprint/plugins/app-backend/injectconfigintohtml
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/injectconfigintohtml
+    to: blueprint/plugins/app-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/injectconfigintohtml
+    to: blueprint/plugins/scaffolder-backend/template
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/injectconfigintohtml
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/injectconfigintostatic-test
+    to: blueprint/plugins/app-backend/injectconfigintostatic
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/injectconfigintostatic
+    to: blueprint/plugins/app-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/readfrontendconfig-test
+    to: blueprint/plugins/app-backend/readfrontendconfig
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/readfrontendconfig-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/readfrontendconfig
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/readfrontendconfig
+    to: blueprint/plugins/app-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/types
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service

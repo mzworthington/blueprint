@@ -1,0 +1,221 @@
+entityRef: blueprint/plugins/events-backend-module-github
+name: Events-backend-module-github Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/events-backend-module-github/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-github/config.d.ts
+      containerId: events-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-github/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-github/src/index.ts
+      containerId: events-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-github/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-github/src/setupTests.ts
+      containerId: events-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-github/creategithubsignaturevalidator-test
+    type: background-worker
+    name: createGithubSignatureValidator.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-github/src/http/createGithubSignatureValidator.test.ts
+      containerId: events-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-github/creategithubsignaturevalidator
+    type: background-worker
+    name: createGithubSignatureValidator Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-github/src/http/createGithubSignatureValidator.ts
+      containerId: events-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1480
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend-module-github/githubeventrouter-test
+    type: rest-api
+    name: GithubEventRouter.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-github/src/router/GithubEventRouter.test.ts
+      containerId: events-backend-module-github
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 600
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-github/githubeventrouter
+    type: rest-api
+    name: GithubEventRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-github/src/router/GithubEventRouter.ts
+      containerId: events-backend-module-github
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1020
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend-module-github/eventsmodulegithubeventrouter-test
+    type: rest-api
+    name: eventsModuleGithubEventRouter.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-github/src/service/eventsModuleGithubEventRouter.test.ts
+      containerId: events-backend-module-github
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-github/eventsmodulegithubeventrouter
+    type: rest-api
+    name: eventsModuleGithubEventRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-github/src/service/eventsModuleGithubEventRouter.ts
+      containerId: events-backend-module-github
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 1520
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-github/eventsmodulegithubwebhook-test
+    type: background-worker
+    name: eventsModuleGithubWebhook.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-github/src/service/eventsModuleGithubWebhook.test.ts
+      containerId: events-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-github/eventsmodulegithubwebhook
+    type: background-worker
+    name: eventsModuleGithubWebhook Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-github/src/service/eventsModuleGithubWebhook.ts
+      containerId: events-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-github/createappidresolver
+    type: background-worker
+    name: createAppIdResolver Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-github/src/util/createAppIdResolver.ts
+      containerId: events-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2290
+    'y': 1010
+  - entityRef: blueprint/plugins/events-backend-module-github/octokitproviderservice
+    type: background-worker
+    name: octokitProviderService Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-github/src/util/octokitProviderService.ts
+      containerId: events-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1885
+    'y': 1330
+dependencies:
+  - from: blueprint/plugins/events-backend-module-github/creategithubsignaturevalidator-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-github/creategithubsignaturevalidator-test
+    to: blueprint/plugins/events-backend-module-github/creategithubsignaturevalidator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-github/creategithubsignaturevalidator-test
+    to: blueprint/plugins/events-backend-module-github/octokitproviderservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-github/creategithubsignaturevalidator
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-github/creategithubsignaturevalidator
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-github/creategithubsignaturevalidator
+    to: blueprint/plugins/events-backend-module-github/createappidresolver
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-github/creategithubsignaturevalidator
+    to: blueprint/plugins/events-backend-module-github/octokitproviderservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-github/githubeventrouter-test
+    to: blueprint/plugins/events-backend-module-github/githubeventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-github/eventsmodulegithubeventrouter-test
+    to: blueprint/plugins/events-backend-module-github/eventsmodulegithubeventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-github/eventsmodulegithubeventrouter
+    to: blueprint/plugins/events-backend-module-github/githubeventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-github/eventsmodulegithubwebhook-test
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-github/eventsmodulegithubwebhook-test
+    to: blueprint/plugins/events-backend-module-github/eventsmodulegithubwebhook
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-github/eventsmodulegithubwebhook
+    to: blueprint/plugins/api-docs/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-github/eventsmodulegithubwebhook
+    to: blueprint/plugins/events-backend-module-github/creategithubsignaturevalidator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-github/eventsmodulegithubwebhook
+    to: blueprint/plugins/events-backend-module-github/octokitproviderservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-github/createappidresolver
+    to: blueprint/plugins/events-backend-module-github/octokitproviderservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-github/octokitproviderservice
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-github/octokitproviderservice
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service

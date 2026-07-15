@@ -16,8 +16,3 @@ export interface ParsedSourceFile {
   callExpressions: string[];
   namespaces?: string[];
 }
-
-export interface CodebaseAnalysisConfig {
-  sourcePathsGlob: string;
-  tsConfigPath: string;
-}

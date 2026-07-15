@@ -1,0 +1,118 @@
+entityRef: blueprint/packages/version-bridge
+name: Version-bridge Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/version-bridge/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/version-bridge/src/lib/index.ts
+      containerId: version-bridge
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/version-bridge/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: packages/version-bridge/src/setupTests.ts
+      containerId: version-bridge
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/version-bridge/globalobject-test
+    type: background-worker
+    name: globalObject.test Service
+    isTest: true
+    properties:
+      filepath: packages/version-bridge/src/lib/globalObject.test.ts
+      containerId: version-bridge
+      technology: TypeScript Domain Service
+      classification: default
+    x: 235
+    'y': 370
+  - entityRef: blueprint/packages/version-bridge/globalobject
+    type: background-worker
+    name: globalObject Service
+    isTest: false
+    properties:
+      filepath: packages/version-bridge/src/lib/globalObject.ts
+      containerId: version-bridge
+      technology: TypeScript Domain Service
+      classification: default
+    x: 275
+    'y': 690
+  - entityRef: blueprint/packages/version-bridge/versionedcontext-test
+    type: gateway-api
+    name: VersionedContext.test UI Component
+    isTest: true
+    properties:
+      filepath: packages/version-bridge/src/lib/VersionedContext.test.tsx
+      containerId: version-bridge
+      technology: React Component
+      classification: ui-import
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/packages/version-bridge/versionedcontext
+    type: gateway-api
+    name: VersionedContext UI Component
+    isTest: false
+    properties:
+      filepath: packages/version-bridge/src/lib/VersionedContext.ts
+      containerId: version-bridge
+      technology: React Component
+      classification: ui-import
+    x: 695
+    'y': 370
+  - entityRef: blueprint/packages/version-bridge/versionedvalue-test
+    type: background-worker
+    name: VersionedValue.test Service
+    isTest: true
+    properties:
+      filepath: packages/version-bridge/src/lib/VersionedValue.test.ts
+      containerId: version-bridge
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1155
+    'y': 370
+  - entityRef: blueprint/packages/version-bridge/versionedvalue
+    type: background-worker
+    name: VersionedValue Service
+    isTest: false
+    properties:
+      filepath: packages/version-bridge/src/lib/VersionedValue.ts
+      containerId: version-bridge
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1250
+    'y': 690
+dependencies:
+  - from: blueprint/packages/version-bridge/globalobject-test
+    to: blueprint/packages/version-bridge/globalobject
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/version-bridge/versionedcontext-test
+    to: blueprint/packages/version-bridge/versionedcontext
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/version-bridge/versionedcontext-test
+    to: blueprint/packages/version-bridge/versionedvalue
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/version-bridge/versionedcontext
+    to: blueprint/packages/version-bridge/globalobject
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/version-bridge/versionedcontext
+    to: blueprint/packages/version-bridge/versionedvalue
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/version-bridge/versionedvalue-test
+    to: blueprint/packages/version-bridge/versionedvalue
+    type: direct-call
+    description: Calls module / service

@@ -1,0 +1,164 @@
+entityRef: blueprint/plugins/home-react
+name: Home-react Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/home-react/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/home-react/src/alpha.ts
+      containerId: home-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 640
+    'y': 690
+  - entityRef: blueprint/plugins/home-react/extensions
+    type: gateway-api
+    name: extensions UI Component
+    isTest: false
+    properties:
+      filepath: plugins/home-react/src/extensions.tsx
+      containerId: home-react
+      technology: React Component
+      classification: ui-import
+    x: 1100
+    'y': 690
+  - entityRef: blueprint/plugins/home-react/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/home-react/src/components/index.ts
+      containerId: home-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/home-react/overridablecomponents
+    type: background-worker
+    name: overridableComponents Service
+    isTest: false
+    properties:
+      filepath: plugins/home-react/src/overridableComponents.ts
+      containerId: home-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1100
+    'y': 50
+  - entityRef: blueprint/plugins/home-react/translation
+    type: background-worker
+    name: translation Service
+    isTest: false
+    properties:
+      filepath: plugins/home-react/src/translation.ts
+      containerId: home-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1100
+    'y': 1010
+  - entityRef: blueprint/plugins/home-react/datarefs
+    type: gateway-api
+    name: dataRefs UI Component
+    isTest: false
+    properties:
+      filepath: plugins/home-react/src/alpha/dataRefs.ts
+      containerId: home-react
+      technology: React Component
+      classification: ui-import
+    x: 640
+    'y': 370
+  - entityRef: blueprint/plugins/home-react/contentmodal
+    type: gateway-api
+    name: ContentModal UI Component
+    isTest: false
+    properties:
+      filepath: plugins/home-react/src/components/ContentModal.tsx
+      containerId: home-react
+      technology: React Component
+      classification: ui-import
+    x: 1100
+    'y': 370
+  - entityRef: blueprint/plugins/home-react/settingsmodal
+    type: background-worker
+    name: SettingsModal Service
+    isTest: false
+    properties:
+      filepath: plugins/home-react/src/components/SettingsModal.tsx
+      containerId: home-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1560
+    'y': 690
+  - entityRef: blueprint/plugins/home-react/homepagelayoutblueprint
+    type: gateway-api
+    name: HomePageLayoutBlueprint UI Component
+    isTest: false
+    properties:
+      filepath: plugins/home-react/src/alpha/blueprints/HomePageLayoutBlueprint.tsx
+      containerId: home-react
+      technology: React Component
+      classification: ui-import
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/home-react/homepagewidgetblueprint
+    type: gateway-api
+    name: HomePageWidgetBlueprint UI Component
+    isTest: false
+    properties:
+      filepath: plugins/home-react/src/alpha/blueprints/HomePageWidgetBlueprint.tsx
+      containerId: home-react
+      technology: React Component
+      classification: ui-import
+    x: 1560
+    'y': 50
+dependencies:
+  - from: blueprint/plugins/home-react/alpha
+    to: blueprint/plugins/home-react/translation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home-react/extensions
+    to: blueprint/plugins/user-settings/settings
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home-react/extensions
+    to: blueprint/plugins/app/components
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home-react/extensions
+    to: blueprint/plugins/notifications-common/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home-react/extensions
+    to: blueprint/plugins/home-react/translation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home-react/overridablecomponents
+    to: blueprint/plugins/home-react/contentmodal
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home-react/datarefs
+    to: blueprint/plugins/home-react/extensions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home-react/contentmodal
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home-react/settingsmodal
+    to: blueprint/plugins/home-react/translation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home-react/homepagelayoutblueprint
+    to: blueprint/plugins/home-react/datarefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home-react/homepagewidgetblueprint
+    to: blueprint/plugins/home-react/extensions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home-react/homepagewidgetblueprint
+    to: blueprint/plugins/home-react/datarefs
+    type: direct-call
+    description: Calls module / service

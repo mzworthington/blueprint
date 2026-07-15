@@ -1,0 +1,93 @@
+entityRef: blueprint/packages/frontend-dynamic-feature-loader
+name: Frontend-dynamic-feature-loader Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/packages/frontend-dynamic-feature-loader/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-dynamic-feature-loader/config.d.ts
+      containerId: frontend-dynamic-feature-loader
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/frontend-dynamic-feature-loader/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-dynamic-feature-loader/src/schema/openapi/index.ts
+      containerId: frontend-dynamic-feature-loader
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/frontend-dynamic-feature-loader/loader-test
+    type: background-worker
+    name: loader.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-dynamic-feature-loader/src/loader.test.tsx
+      containerId: frontend-dynamic-feature-loader
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/packages/frontend-dynamic-feature-loader/loader
+    type: background-worker
+    name: loader Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-dynamic-feature-loader/src/loader.ts
+      containerId: frontend-dynamic-feature-loader
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 370
+  - entityRef: blueprint/packages/frontend-dynamic-feature-loader/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-dynamic-feature-loader/src/setupTests.ts
+      containerId: frontend-dynamic-feature-loader
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+dependencies:
+  - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
+    to: blueprint/packages/frontend-dynamic-feature-loader/loader
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
+    to: blueprint/packages/core-components/node
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
+    to: blueprint/packages/backend-plugin-api/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
+    to: blueprint/packages/frontend-plugin-api/createfrontendfeatureloader
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
+    to: blueprint/packages/integration/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
+    to: blueprint/packages/backend-plugin-api/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-dynamic-feature-loader/loader
+    to: blueprint/packages/backend-plugin-api/types
+    type: direct-call
+    description: Calls module / service

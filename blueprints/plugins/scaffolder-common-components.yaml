@@ -1,0 +1,180 @@
+entityRef: blueprint/plugins/scaffolder-common
+name: Scaffolder-common Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/scaffolder-common/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-common/src/alpha.ts
+      containerId: scaffolder-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-common/api
+    type: background-worker
+    name: api Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-common/src/api.ts
+      containerId: scaffolder-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1655
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-common/catalogmodel
+    type: background-worker
+    name: catalogModel Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-common/src/catalogModel.ts
+      containerId: scaffolder-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-common/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-common/src/schema/openapi/index.ts
+      containerId: scaffolder-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-common/permissions
+    type: background-worker
+    name: permissions Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-common/src/permissions.ts
+      containerId: scaffolder-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-common/scaffolderclient-test
+    type: background-worker
+    name: ScaffolderClient.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-common/src/ScaffolderClient.test.ts
+      containerId: scaffolder-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-common/scaffolderclient
+    type: background-worker
+    name: ScaffolderClient Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-common/src/ScaffolderClient.ts
+      containerId: scaffolder-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-common/taskspec
+    type: background-worker
+    name: TaskSpec Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-common/src/TaskSpec.ts
+      containerId: scaffolder-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1695
+    'y': 1010
+  - entityRef: blueprint/plugins/scaffolder-common/templateentityv1beta3-test
+    type: background-worker
+    name: TemplateEntityV1beta3.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-common/src/TemplateEntityV1beta3.test.ts
+      containerId: scaffolder-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1020
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-common/templateentityv1beta3
+    type: background-worker
+    name: TemplateEntityV1beta3 Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-common/src/TemplateEntityV1beta3.ts
+      containerId: scaffolder-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1155
+    'y': 1010
+dependencies:
+  - from: blueprint/plugins/scaffolder-common/api
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-common/api
+    to: blueprint/plugins/scaffolder-common/taskspec
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-common/api
+    to: blueprint/plugins/scaffolder-common/templateentityv1beta3
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-common/catalogmodel
+    to: blueprint/plugins/scaffolder-common/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-common/catalogmodel
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-common/scaffolderclient-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-common/scaffolderclient-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-common/scaffolderclient-test
+    to: blueprint/plugins/scaffolder-common/scaffolderclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-common/scaffolderclient
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-common/scaffolderclient
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-common/scaffolderclient
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-common/scaffolderclient
+    to: blueprint/plugins/scaffolder-common/templateentityv1beta3
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-common/scaffolderclient
+    to: blueprint/plugins/scaffolder-common/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-common/taskspec
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-common/templateentityv1beta3-test
+    to: blueprint/plugins/scaffolder-common/templateentityv1beta3
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-common/templateentityv1beta3
+    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    type: direct-call
+    description: Calls module / service

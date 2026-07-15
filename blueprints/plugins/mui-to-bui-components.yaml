@@ -1,0 +1,248 @@
+entityRef: blueprint/plugins/mui-to-bui
+name: Mui-to-bui Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/mui-to-bui/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/mui-to-bui/src/components/BuiThemerPage/index.ts
+      containerId: mui-to-bui
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/mui-to-bui/plugin-test
+    type: background-worker
+    name: plugin.test Service
+    isTest: true
+    properties:
+      filepath: plugins/mui-to-bui/src/plugin.test.ts
+      containerId: mui-to-bui
+      technology: TypeScript Domain Service
+      classification: default
+    x: 830
+    'y': 50
+  - entityRef: blueprint/plugins/mui-to-bui/plugin
+    type: background-worker
+    name: plugin Service
+    isTest: false
+    properties:
+      filepath: plugins/mui-to-bui/src/plugin.tsx
+      containerId: mui-to-bui
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 370
+  - entityRef: blueprint/plugins/mui-to-bui/routes
+    type: background-worker
+    name: routes Service
+    isTest: false
+    properties:
+      filepath: plugins/mui-to-bui/src/routes.ts
+      containerId: mui-to-bui
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 690
+  - entityRef: blueprint/plugins/mui-to-bui/buithemepreview-test
+    type: gateway-api
+    name: BuiThemePreview.test UI Component
+    isTest: true
+    properties:
+      filepath: plugins/mui-to-bui/src/components/BuiThemerPage/BuiThemePreview.test.tsx
+      containerId: mui-to-bui
+      technology: React Component
+      classification: ui-import
+    x: 1060
+    'y': 690
+  - entityRef: blueprint/plugins/mui-to-bui/buithemepreview
+    type: background-worker
+    name: BuiThemePreview Service
+    isTest: false
+    properties:
+      filepath: plugins/mui-to-bui/src/components/BuiThemerPage/BuiThemePreview.tsx
+      containerId: mui-to-bui
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2290
+    'y': 1010
+  - entityRef: blueprint/plugins/mui-to-bui/buithemerpage-test
+    type: gateway-api
+    name: BuiThemerPage.test UI Component
+    isTest: true
+    properties:
+      filepath: plugins/mui-to-bui/src/components/BuiThemerPage/BuiThemerPage.test.tsx
+      containerId: mui-to-bui
+      technology: React Component
+      classification: ui-import
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/mui-to-bui/buithemerpage
+    type: background-worker
+    name: BuiThemerPage Service
+    isTest: false
+    properties:
+      filepath: plugins/mui-to-bui/src/components/BuiThemerPage/BuiThemerPage.tsx
+      containerId: mui-to-bui
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 370
+  - entityRef: blueprint/plugins/mui-to-bui/convertmuitobuitheme-test
+    type: background-worker
+    name: convertMuiToBuiTheme.test Service
+    isTest: true
+    properties:
+      filepath: plugins/mui-to-bui/src/components/BuiThemerPage/convertMuiToBuiTheme.test.ts
+      containerId: mui-to-bui
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 690
+  - entityRef: blueprint/plugins/mui-to-bui/convertmuitobuitheme
+    type: background-worker
+    name: convertMuiToBuiTheme Service
+    isTest: false
+    properties:
+      filepath: plugins/mui-to-bui/src/components/BuiThemerPage/convertMuiToBuiTheme.ts
+      containerId: mui-to-bui
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 1010
+  - entityRef: blueprint/plugins/mui-to-bui/muithemeextractor-test
+    type: gateway-api
+    name: MuiThemeExtractor.test UI Component
+    isTest: true
+    properties:
+      filepath: plugins/mui-to-bui/src/components/BuiThemerPage/MuiThemeExtractor.test.tsx
+      containerId: mui-to-bui
+      technology: React Component
+      classification: ui-import
+    x: 1980
+    'y': 370
+  - entityRef: blueprint/plugins/mui-to-bui/muithemeextractor
+    type: gateway-api
+    name: MuiThemeExtractor UI Component
+    isTest: false
+    properties:
+      filepath: plugins/mui-to-bui/src/components/BuiThemerPage/MuiThemeExtractor.tsx
+      containerId: mui-to-bui
+      technology: React Component
+      classification: ui-import
+    x: 1520
+    'y': 690
+  - entityRef: blueprint/plugins/mui-to-bui/themecontent-test
+    type: gateway-api
+    name: ThemeContent.test UI Component
+    isTest: true
+    properties:
+      filepath: plugins/mui-to-bui/src/components/BuiThemerPage/ThemeContent.test.tsx
+      containerId: mui-to-bui
+      technology: React Component
+      classification: ui-import
+    x: 2440
+    'y': 370
+  - entityRef: blueprint/plugins/mui-to-bui/themecontent
+    type: gateway-api
+    name: ThemeContent UI Component
+    isTest: false
+    properties:
+      filepath: plugins/mui-to-bui/src/components/BuiThemerPage/ThemeContent.tsx
+      containerId: mui-to-bui
+      technology: React Component
+      classification: ui-import
+    x: 2400
+    'y': 690
+dependencies:
+  - from: blueprint/plugins/mui-to-bui/index
+    to: blueprint/plugins/mui-to-bui/plugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/plugin-test
+    to: blueprint/plugins/mui-to-bui/plugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/plugin
+    to: blueprint/plugins/mui-to-bui/routes
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/buithemepreview-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/buithemepreview-test
+    to: blueprint/plugins/mui-to-bui/buithemepreview
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/buithemerpage-test
+    to: blueprint/plugins/mui-to-bui/buithemerpage
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/buithemerpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/buithemerpage-test
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/buithemerpage
+    to: blueprint/plugins/mui-to-bui/themecontent
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/buithemerpage
+    to: blueprint/plugins/mui-to-bui/muithemeextractor
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/convertmuitobuitheme-test
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/convertmuitobuitheme-test
+    to: blueprint/plugins/mui-to-bui/convertmuitobuitheme
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/convertmuitobuitheme
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/muithemeextractor-test
+    to: blueprint/plugins/mui-to-bui/muithemeextractor
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/muithemeextractor-test
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/muithemeextractor
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/themecontent-test
+    to: blueprint/plugins/mui-to-bui/themecontent
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/themecontent-test
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/themecontent-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/themecontent
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/themecontent
+    to: blueprint/plugins/mui-to-bui/convertmuitobuitheme
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mui-to-bui/themecontent
+    to: blueprint/plugins/mui-to-bui/buithemepreview
+    type: direct-call
+    description: Calls module / service

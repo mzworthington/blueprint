@@ -1,0 +1,141 @@
+entityRef: blueprint/plugins/auth
+name: Auth Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/auth/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/auth/src/components/ConsentPage/index.ts
+      containerId: auth
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/auth/plugin-test
+    type: background-worker
+    name: plugin.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth/src/plugin.test.ts
+      containerId: auth
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/auth/plugin
+    type: background-worker
+    name: plugin Service
+    isTest: false
+    properties:
+      filepath: plugins/auth/src/plugin.tsx
+      containerId: auth
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 370
+  - entityRef: blueprint/plugins/auth/routes
+    type: background-worker
+    name: routes Service
+    isTest: false
+    properties:
+      filepath: plugins/auth/src/routes.ts
+      containerId: auth
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 690
+  - entityRef: blueprint/plugins/auth/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/auth/src/setupTests.ts
+      containerId: auth
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/auth/router
+    type: gateway-api
+    name: Router UI Component
+    isTest: false
+    properties:
+      filepath: plugins/auth/src/components/Router.tsx
+      containerId: auth
+      technology: React Component
+      classification: ui-import
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/auth/consentpage-test
+    type: gateway-api
+    name: ConsentPage.test UI Component
+    isTest: true
+    properties:
+      filepath: plugins/auth/src/components/ConsentPage/ConsentPage.test.tsx
+      containerId: auth
+      technology: React Component
+      classification: ui-import
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/auth/consentpage
+    type: gateway-api
+    name: ConsentPage UI Component
+    isTest: false
+    properties:
+      filepath: plugins/auth/src/components/ConsentPage/ConsentPage.tsx
+      containerId: auth
+      technology: React Component
+      classification: ui-import
+    x: 1560
+    'y': 370
+  - entityRef: blueprint/plugins/auth/useconsentsession
+    type: gateway-api
+    name: useConsentSession UI Component
+    isTest: false
+    properties:
+      filepath: plugins/auth/src/components/ConsentPage/useConsentSession.ts
+      containerId: auth
+      technology: React Component
+      classification: ui-import
+    x: 1750
+    'y': 690
+dependencies:
+  - from: blueprint/plugins/auth/index
+    to: blueprint/plugins/techdocs/client
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth/plugin-test
+    to: blueprint/plugins/auth/plugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth/plugin
+    to: blueprint/plugins/auth/routes
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth/router
+    to: blueprint/plugins/auth/consentpage
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth/consentpage-test
+    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth/consentpage-test
+    to: blueprint/plugins/auth/consentpage
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth/consentpage-test
+    to: blueprint/plugins/auth/useconsentsession
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth/consentpage
+    to: blueprint/plugins/auth/useconsentsession
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth/useconsentsession
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service

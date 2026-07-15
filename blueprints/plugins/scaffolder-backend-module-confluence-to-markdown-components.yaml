@@ -1,0 +1,178 @@
+entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown
+name: Scaffolder-backend-module-confluence-to-markdown Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-confluence-to-markdown/config.d.ts
+      containerId: scaffolder-backend-module-confluence-to-markdown
+      technology: TypeScript Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-confluence-to-markdown/src/actions/confluence/index.ts
+      containerId: scaffolder-backend-module-confluence-to-markdown
+      technology: TypeScript Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-confluence-to-markdown/src/module.ts
+      containerId: scaffolder-backend-module-confluence-to-markdown
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples-test
+    type: background-worker
+    name: confluenceToMarkdown.examples.test Service
+    isTest: true
+    properties:
+      filepath: >-
+        plugins/scaffolder-backend-module-confluence-to-markdown/src/actions/confluence/confluenceToMarkdown.examples.test.ts
+      containerId: scaffolder-backend-module-confluence-to-markdown
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples
+    type: background-worker
+    name: confluenceToMarkdown.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-confluence-to-markdown/src/actions/confluence/confluenceToMarkdown.examples.ts
+      containerId: scaffolder-backend-module-confluence-to-markdown
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1980
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-test
+    type: background-worker
+    name: confluenceToMarkdown.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-confluence-to-markdown/src/actions/confluence/confluenceToMarkdown.test.ts
+      containerId: scaffolder-backend-module-confluence-to-markdown
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown
+    type: background-worker
+    name: confluenceToMarkdown Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-confluence-to-markdown/src/actions/confluence/confluenceToMarkdown.ts
+      containerId: scaffolder-backend-module-confluence-to-markdown
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1615
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers-test
+    type: background-worker
+    name: helpers.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-confluence-to-markdown/src/actions/confluence/helpers.test.ts
+      containerId: scaffolder-backend-module-confluence-to-markdown
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1155
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers
+    type: background-worker
+    name: helpers Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-confluence-to-markdown/src/actions/confluence/helpers.ts
+      containerId: scaffolder-backend-module-confluence-to-markdown
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1195
+    'y': 690
+dependencies:
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/module
+    to: blueprint/plugins/home/actions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/module
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-test
+    to: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown
+    to: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown
+    to: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers-test
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers-test
+    to: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers
+    to: blueprint/plugins/api-docs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers
+    to: blueprint/plugins/search-backend-node/errors
+    type: direct-call
+    description: Calls module / service
