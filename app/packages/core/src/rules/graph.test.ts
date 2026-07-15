@@ -5,7 +5,7 @@ import {
   serializeSchemaToYaml,
   serializeSchemaToMermaid,
 } from './graph';
-import type { SystemSchema } from '@blueprint/core';
+import type { SystemSchema } from '../models/schema';
 
 describe('Graph Validation & Cycle Detection', () => {
   it('should validate a clean, acyclic graph', () => {
@@ -208,35 +208,72 @@ nodes:
     expect(mermaidContent).toContain('node_Gateway --> |"Query"| node_DB');
   });
 
+  it('should accept container node type from CLI-generated schemas', () => {
+    const yamlContent = `
+name: Generated System
+version: 1.0.0
+level: container
+nodes:
+  - entityRef: core
+    type: container
+    name: Core Service
+`;
+    const schema = parseSchemaFromYaml(yamlContent);
+    expect(schema.nodes[0].type).toBe('container');
+  });
+
   describe('C4 Model Validation & Serialization Extensions', () => {
     it('should parse C4 properties from valid YAML schema', () => {
       const yamlContent = `
 name: High-Level System Context
 version: 1.0.0
 level: context
-id: ../root-workspace.yaml
+entityRef: billing
 nodes:
-  - entityRef: billing-service
+  - entityRef: billing/billing-service
     type: microservice
     name: Billing Service
-  - entityRef: payment-gateway
+  - entityRef: billing/payment-gateway
     type: software-system
     name: External Payment Processor
     external: true
 dependencies:
-  - from: billing-service
-    to: payment-gateway
+  - from: billing/billing-service
+    to: billing/payment-gateway
     type: direct-call
     description: Authorize Credit Card
 `;
       const schema = parseSchemaFromYaml(yamlContent);
       expect(schema.level).toBe('context');
-      expect(schema.id).toBe('../root-workspace.yaml');
+      expect(schema.entityRef).toBe('billing');
       expect(schema.nodes).toHaveLength(2);
-      expect(schema.nodes[0].entityRef).toBe('billing-service');
+      expect(schema.nodes[0].entityRef).toBe('billing/billing-service');
       expect(schema.nodes[0].type).toBe('microservice');
       expect(schema.nodes[1].external).toBe(true);
       expect(schema.dependencies[0].description).toBe('Authorize Credit Card');
+    });
+
+    it('should accept legacy schema id alias when it is a valid entityRef', () => {
+      const yamlContent = `
+name: Legacy Alias
+version: 1.0.0
+level: container
+id: billing/web-app
+nodes: []
+`;
+      const schema = parseSchemaFromYaml(yamlContent);
+      expect(schema.entityRef).toBe('billing/web-app');
+    });
+
+    it('should reject path-style schema identity', () => {
+      const invalidYaml = `
+name: Bad Path Id
+version: 1.0.0
+level: context
+entityRef: ../root-workspace.yaml
+nodes: []
+`;
+      expect(() => parseSchemaFromYaml(invalidYaml)).toThrow(/entityRef/);
     });
 
     it('should serialize C4 properties to valid YAML and Mermaid', () => {
@@ -244,15 +281,15 @@ dependencies:
         name: 'Workspace Level',
         version: '1.2.0',
         level: 'container',
-        id: '../workspace.yaml',
+        entityRef: 'billing/web-portal',
         nodes: [
           {
-            entityRef: 'webapp',
+            entityRef: 'billing/web-portal/webapp',
             type: 'web-app',
             name: 'Web Portal',
           },
           {
-            entityRef: 'external_svc',
+            entityRef: 'billing/web-portal/external_svc',
             type: 'software-system',
             name: 'API Service',
             external: true,
@@ -260,8 +297,8 @@ dependencies:
         ],
         dependencies: [
           {
-            from: 'webapp',
-            to: 'external_svc',
+            from: 'billing/web-portal/webapp',
+            to: 'billing/web-portal/external_svc',
             type: 'direct-call',
             description: 'Hits Endpoint',
           },
@@ -270,12 +307,12 @@ dependencies:
 
       const yamlContent = serializeSchemaToYaml(schema);
       expect(yamlContent).toContain('level: container');
-      expect(yamlContent).toContain('id: ../workspace.yaml');
+      expect(yamlContent).toContain('entityRef: billing/web-portal');
       expect(yamlContent).toContain('external: true');
 
       const mermaid = serializeSchemaToMermaid(schema);
-      expect(mermaid).toContain('node_webapp["Web Portal"]');
-      expect(mermaid).toContain('node_external_svc["API Service (External)"]');
+      expect(mermaid).toContain('node_billing_web_portal_webapp["Web Portal"]');
+      expect(mermaid).toContain('node_billing_web_portal_external_svc["API Service (External)"]');
     });
   });
 });

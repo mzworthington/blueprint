@@ -1,15 +1,11 @@
 import type { SystemNode, SystemDependency } from '@blueprint/core';
-import { EntityRef } from '@blueprint/core';
+import { EntityRef, slugify } from '@blueprint/core';
 
 export class ModelExtractor {
   public parentRef: string;
 
   constructor(parentRef: string) {
     this.parentRef = parentRef;
-  }
-
-  public sanitizeId(raw: string): string {
-    return raw.toLowerCase().replace(/[^a-z0-9_-]/g, '_');
   }
 
   public extractGraph(sourceFiles: any[]) {
@@ -20,11 +16,11 @@ export class ModelExtractor {
 
     // Grouping Components into Containers based on path depth
     for (const file of sourceFiles) {
-      const componentId = this.sanitizeId(file.baseName);
+      const componentId = slugify(file.baseName);
       const pathParts = file.relativePath.replace(/\\/g, '/').split('/');
       const rawContainer =
         pathParts.length > 1 && pathParts[0] !== 'src' ? pathParts[0] : pathParts[1] || 'core';
-      const containerId = this.sanitizeId(rawContainer);
+      const containerId = slugify(rawContainer);
 
       const containerRef = EntityRef.child(this.parentRef, containerId);
       const componentRef = EntityRef.child(containerRef, componentId);
@@ -47,18 +43,18 @@ export class ModelExtractor {
 
     // Process edge arrays
     for (const file of sourceFiles) {
-      const fromComponentId = this.sanitizeId(file.baseName);
+      const fromComponentId = slugify(file.baseName);
       const fromComponent = componentNodesMap.get(fromComponentId);
       if (!fromComponent) continue;
       const fromContainerId = fromComponent.properties?.containerId;
 
       file.imports.forEach((imp: any) => {
-        const toComponentId =
+        const toComponentId = slugify(
           imp.moduleSpecifier
             .split(/[\\/]/)
             .pop()
-            ?.replace(/\.(ts|tsx|js|jsx)$/, '')
-            .toLowerCase() || '';
+            ?.replace(/\.(ts|tsx|js|jsx)$/, '') || ''
+        );
         const toComponent = componentNodesMap.get(toComponentId);
         if (!toComponent) return;
         const toContainerId = toComponent.properties?.containerId;

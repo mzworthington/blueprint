@@ -53,6 +53,34 @@ export const Canvas: React.FC = () => {
   }, [currentFilePath, fitView]);
 
   useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+
+      const isTyping =
+        document.activeElement?.tagName === 'INPUT' ||
+        document.activeElement?.tagName === 'TEXTAREA' ||
+        document.activeElement?.hasAttribute('contenteditable');
+      if (isTyping) return;
+
+      const active = loadedSystems.find(s => s.path === currentFilePath);
+      const childRef = active?.schema.entityRef;
+      if (!childRef) return;
+
+      const parent = loadedSystems.find(s => s.schema.nodes.some(n => n.entityRef === childRef));
+      if (!parent) return;
+
+      const parentRef = getSchemaEntityRef(
+        parent.schema,
+        isWorkspaceOpen ? workspaceName : undefined
+      );
+      setLocation(`/workspace/${parentRef}`);
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [loadedSystems, currentFilePath, isWorkspaceOpen, workspaceName, setLocation]);
+
+  useEffect(() => {
     if (notification) {
       const timer = setTimeout(() => {
         setNotification(null);
@@ -82,7 +110,8 @@ export const Canvas: React.FC = () => {
         onConnect={onConnect}
         onNodeDoubleClick={(_, node) => {
           const hasSub =
-            node.data?.entityRef && loadedSystems.some(s => s.schema.id === node.data.entityRef);
+            node.data?.entityRef &&
+            loadedSystems.some(s => s.schema.entityRef === node.data.entityRef);
           if (hasSub && node.data?.entityRef) {
             setLocation(`/workspace/${node.data.entityRef}`);
           }

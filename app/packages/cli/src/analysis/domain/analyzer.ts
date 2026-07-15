@@ -8,7 +8,7 @@ import { ModelExtractor } from './modelExtractor.ts';
 import { ContextLevelWriter } from '../../writers/contextLevelWriter.ts';
 import { ContainerLevelWriter } from '../../writers/containerLevelWriter.ts';
 import { ComponentLevelWriter } from '../../writers/componentLevelWriter.ts';
-import { EntityRef } from '@blueprint/core';
+import { EntityRef, slugify } from '@blueprint/core';
 
 export interface CodebaseAnalyzerDependencies {
   parser: CodebaseParserPort;
@@ -19,10 +19,6 @@ export interface CodebaseAnalyzerDependencies {
 
 export class CodebaseAnalyzer {
   constructor(private deps: CodebaseAnalyzerDependencies) {}
-
-  private sanitizeId(raw: string): string {
-    return raw.toLowerCase().replace(/[^a-z0-9_-]/g, '_');
-  }
 
   private getMeaningfulName(sourceFiles: any[], globPattern: string): string {
     // 1. Resolve from C# namespaces
@@ -112,7 +108,7 @@ export class CodebaseAnalyzer {
     // 1. Parse files and isolate graph extraction logic
     const sourceFiles = await this.deps.parser.parseSourceFiles(globPattern);
     const systemName = this.getMeaningfulName(sourceFiles, globPattern);
-    const systemId = this.sanitizeId(systemName);
+    const systemId = slugify(systemName);
 
     const parentRef = EntityRef.parse(systemId, EntityRef.parse(contextName));
     const extractor = new ModelExtractor(parentRef);

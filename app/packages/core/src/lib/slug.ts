@@ -3,7 +3,8 @@ export function slugify(text: string): string {
     .toString()
     .toLowerCase()
     .trim()
-    .replace(/\s+/g, '-')
+    .replace(/[\s.]+/g, '-')
     .replace(/[^\w-]+/g, '')
-    .replace(/--+/g, '-');
+    .replace(/--+/g, '-')
+    .replace(/^-+|-+$/g, '');
 }

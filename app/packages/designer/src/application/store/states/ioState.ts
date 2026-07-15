@@ -7,9 +7,8 @@ import {
   noopFileSystem,
   noopWorkspace,
   noopLogger,
-  parseSchemaFromYaml,
 } from '../../../core';
-import { resolveWorkspaceEntityRefs } from '@blueprint/core';
+import { parseSchemaFromYaml, resolveWorkspaceEntityRefs } from '@blueprint/core';
 import {
   saveBaselineSchema,
   saveWorkingSchema,
@@ -126,12 +125,7 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
         throw new Error('No blueprint .yaml or .yml files found in selected directory');
       }
 
-      const schemaFiles = files.filter(
-        f =>
-          (f.name.endsWith('.yaml') || f.name.endsWith('.yml')) &&
-          !f.name.endsWith('workspace.yaml') &&
-          !f.name.endsWith('blueprint-workspace.yaml')
-      );
+      const schemaFiles = files.filter(f => f.name.endsWith('.yaml') || f.name.endsWith('.yml'));
 
       const nextLoadedSystems = schemaFiles
         .map(file => {
@@ -176,7 +170,7 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
             sys.schema.name,
             sys.schema.version,
             sys.schema.level,
-            sys.schema.id
+            sys.schema.entityRef
           ).catch(() => null);
 
           if (workingSchema) {
@@ -260,6 +254,4 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
       return false;
     }
   },
-
-  // Manifest saving functionality removed.
 });

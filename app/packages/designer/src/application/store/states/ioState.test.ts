@@ -7,8 +7,9 @@ describe('ioState Actions & State Management', () => {
 name: Root Context
 version: 1.0.0
 level: context
+entityRef: root
 nodes:
-  - entityRef: web-app
+  - entityRef: root/web-app
     type: web-app
     name: Web App
 dependencies: []
@@ -17,9 +18,9 @@ dependencies: []
 name: Web Containers
 version: 1.0.0
 level: container
-id: web-app
+entityRef: root/web-app
 nodes:
-  - entityRef: controller
+  - entityRef: root/web-app/controller
     type: component
     name: API Controller
 dependencies: []
@@ -94,7 +95,7 @@ dependencies: []
     expect(state2.schema.name).toBe('Another System');
   });
 
-  // Save workspace manifest tests removed.
+  // Workspace directory selection tests cover multi-file loading.
 
   describe('saveSchema error handling', () => {
     it('should return false if saveSchema port operation fails', async () => {
@@ -204,15 +205,16 @@ dependencies: []
       spyRead.mockRestore();
     });
 
-    it('should log/skip invalid manifests and schemas and continue if at least one schema is valid', async () => {
+    it('should log/skip invalid schemas and continue if at least one schema is valid', async () => {
       const store = useBlueprintStore.getState();
       const spyRead = vi.spyOn(store.workspacePort, 'readDirectoryFiles');
       spyRead.mockResolvedValue([
-        { name: 'workspace.yaml', content: 'invalid: :yaml' },
+        { name: 'notes.yaml', content: 'invalid: :yaml' },
         { name: 'broken-schema.yaml', content: 'name: Broken\nlevel: invalid' },
         {
           name: 'valid.yaml',
-          content: 'name: Valid Schema\nversion: 1.0.0\nlevel: context\nnodes: []',
+          content:
+            'name: Valid Schema\nversion: 1.0.0\nlevel: context\nentityRef: valid\nnodes: []',
         },
       ]);
 

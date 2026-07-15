@@ -1,27 +1,24 @@
 import type { SystemSchema } from '../models/schema';
 import { slugify } from './slug';
 
+/** Shared FQN shape for schema identity and node refs (no file paths). */
+export const ENTITY_REF_PATTERN = /^[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*$/;
+
+/**
+ * True when `ref` is a hierarchical entity FQN (not a file path).
+ * Hierarchy links child diagrams via schema.entityRef === parent node.entityRef.
+ */
 export function isEntityRef(ref: string | undefined): boolean {
   if (!ref) return false;
-  const clean = ref.trim();
-  if (clean.startsWith('.') || clean.startsWith('/') || clean.startsWith('\\')) {
-    return false;
-  }
-  if (clean.endsWith('.yaml') || clean.endsWith('.yml')) {
-    return false;
-  }
-  return true;
+  return ENTITY_REF_PATTERN.test(ref.trim());
 }
 
 export function getSchemaEntityRef(schema: SystemSchema, workspaceName?: string | null): string {
-  if (schema.entityRef) {
+  if (schema.entityRef && isEntityRef(schema.entityRef)) {
     return schema.entityRef;
   }
   if (schema.level === 'context') {
     return 'context';
-  }
-  if (schema.id && isEntityRef(schema.id)) {
-    return schema.id;
   }
   const name = workspaceName || schema.name;
   if (name) {
@@ -38,6 +35,9 @@ export interface ResolvedWorkspaceState {
 /**
  * Processes all schemas in the workspace, calculates their C4 hierarchical FQNs,
  * and sets the resolved `entityRef` on every node. It also updates dependency targets.
+ *
+ * Parent linkage: a child diagram's `schema.entityRef` matches a node `entityRef`
+ * on the parent diagram (no separate parentRef / c4Ref / workspace manifest).
  */
 export function resolveWorkspaceEntityRefs(
   files: Array<{ path: string; schema: SystemSchema }>,
@@ -48,13 +48,11 @@ export function resolveWorkspaceEntityRefs(
   const contextFile = files.find(f => f.schema.level === 'context');
   let contextSlug: string | undefined;
   if (contextFile) {
-    contextSlug = contextFile.schema.entityRef || contextFile.schema.id;
+    contextSlug = contextFile.schema.entityRef;
   }
 
   const getSystemId = (schema: SystemSchema) => {
-    return (
-      schema.entityRef || schema.id || slugify(workspaceName || schema.name).replace(/_/g, '-')
-    );
+    return schema.entityRef || slugify(workspaceName || schema.name).replace(/_/g, '-');
   };
 
   // First pass: populate nodeRefMapByPath for all files
@@ -78,11 +76,9 @@ export function resolveWorkspaceEntityRefs(
       }
     } else if (file.schema.level === 'component') {
       const parentContainerFQN =
-        file.schema.id && isEntityRef(file.schema.id)
-          ? file.schema.id
-          : file.schema.entityRef && isEntityRef(file.schema.entityRef)
-            ? file.schema.entityRef
-            : undefined;
+        file.schema.entityRef && isEntityRef(file.schema.entityRef)
+          ? file.schema.entityRef
+          : undefined;
 
       for (const node of file.schema.nodes) {
         const ref = node.entityRef || '';

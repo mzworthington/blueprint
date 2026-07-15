@@ -8,4 +8,9 @@ describe('Slug utility tests', () => {
     expect(slugify('Special@Chars!Workspace')).toBe('specialcharsworkspace');
     expect(slugify('Multiple---Hyphens')).toBe('multiple-hyphens');
   });
+
+  it('should treat dots as separators for namespaces and package-like ids', () => {
+    expect(slugify('TestProject.Controllers')).toBe('testproject-controllers');
+    expect(slugify('order.service')).toBe('order-service');
+  });
 });

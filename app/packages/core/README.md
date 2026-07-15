@@ -1,29 +1,28 @@
-# `@blueprint/core` — Business Domain & Ports Layer
+# `@blueprint/core` — Business Domain Layer
 
-The core package defines the pure, zero-I/O system domain models, verification rules, and interface ports for the Blueprint application suite.
-
-It is completely decoupled from any runtime execution layer (Node, Bun, or Browser) and contains no side effects.
+Shared, pure domain models and rules for Blueprint. No I/O adapters — browser and CLI depend on this package for one contract.
 
 ---
 
-## 📂 Key Submodules
+## Key Submodules
 
 ### `src/models/`
 
-- **[schema.ts](./src/models/schema.ts):** Zod declarative validation schemas and TypeScript types defining the Blueprint system structure.
-- **[ports.ts](./src/models/ports.ts):** Context and storage ports (interfaces) defining how components communicate across boundaries.
+- **[schema.ts](./src/models/schema.ts):** TypeScript types for diagrams (`SystemSchema`, nodes, dependencies) and the `EntityRef` helpers.
+
+### `src/lib/`
+
+- **[slug.ts](./src/lib/slug.ts):** Canonical `slugify` used by designer and CLI.
+- **[entityRef.ts](./src/lib/entityRef.ts):** Workspace entity-ref resolution helpers.
 
 ### `src/rules/`
 
-- **[graph.ts](./src/rules/graph.ts):** Graph traversal logic, parent-child component rendering support, and circular dependency validation rules.
-- **[path.ts](./src/rules/path.ts):** Normalized path utilities and relative boundary validations.
-- **[slug.ts](./src/rules/slug.ts):** Pure functions to slugify and validate system workspace names.
+- **[graph.ts](./src/rules/graph.ts):** Zod schema contracts, cycle validation, YAML/JSON parse & serialize, Mermaid export.
+- **[path.ts](./src/rules/path.ts):** Relative path utilities for multi-file blueprints.
 
 ---
 
-## 🧪 Testing
-
-To run the core package unit tests:
+## Testing
 
 ```bash
 pnpm --filter @blueprint/core test

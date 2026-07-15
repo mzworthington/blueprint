@@ -106,7 +106,6 @@ export const rebuildSchemaFromCanvas = (
   name: string,
   version: string,
   level: C4Level,
-  id: string | undefined,
   rfNodes: BlueprintRFNode[],
   rfEdges: BlueprintRFEdge[],
   entityRef?: string
@@ -129,5 +128,5 @@ export const rebuildSchemaFromCanvas = (
     description: re.data?.description || '',
   }));
 
-  return { name, version, level, id, nodes, dependencies, entityRef };
+  return { name, version, level, nodes, dependencies, entityRef };
 };

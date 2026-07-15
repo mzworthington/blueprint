@@ -181,7 +181,7 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
 
   const hasSubDiagram = React.useMemo(() => {
     if (!data.entityRef) return false;
-    return loadedSystems.some(s => s.schema.id === data.entityRef);
+    return loadedSystems.some(s => s.schema.entityRef === data.entityRef);
   }, [data.entityRef, loadedSystems]);
 
   const handleClick = (e: React.MouseEvent) => {

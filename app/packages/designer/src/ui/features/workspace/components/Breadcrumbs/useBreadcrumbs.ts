@@ -65,7 +65,7 @@ export function useBreadcrumbs(): UseeBreadcrumbsReturn {
       );
 
       const childSystems = loadedSystems.filter(s => {
-        const ref = s.schema.entityRef || s.schema.id;
+        const ref = s.schema.entityRef;
         return ref && nodeEntityRefs.has(ref);
       });
 
@@ -88,12 +88,9 @@ export function useBreadcrumbs(): UseeBreadcrumbsReturn {
     let currentSystem = activeSystem;
     const visited = new Set<string>();
 
-    while (
-      (currentSystem.schema.entityRef || currentSystem.schema.id) &&
-      !visited.has(currentSystem.path)
-    ) {
+    while (currentSystem.schema.entityRef && !visited.has(currentSystem.path)) {
       visited.add(currentSystem.path);
-      const parentRef = currentSystem.schema.entityRef || currentSystem.schema.id;
+      const parentRef = currentSystem.schema.entityRef;
       const parentSystem = loadedSystems.find(s =>
         s.schema.nodes.some(n => n.entityRef === parentRef)
       );
@@ -120,11 +117,7 @@ export function useBreadcrumbs(): UseeBreadcrumbsReturn {
     if (!selectedNode) return false;
     const entityRef = selectedNode.entityRef;
     if (!entityRef) return false;
-    return loadedSystems.some(
-      s =>
-        (s.schema.entityRef === entityRef || s.schema.id === entityRef) &&
-        s.schema.level === 'component'
-    );
+    return loadedSystems.some(s => s.schema.entityRef === entityRef);
   }, [selectedNode, loadedSystems]);
 
   const getNextLevel = (current: C4Level): C4Level => {
@@ -160,18 +153,14 @@ export function useBreadcrumbs(): UseeBreadcrumbsReturn {
   if (hasNextHierarchy && selectedNode) {
     const entityRef = selectedNode.entityRef;
     const childSystem = entityRef
-      ? loadedSystems.find(
-          s =>
-            (s.schema.entityRef === entityRef || s.schema.id === entityRef) &&
-            s.schema.level === 'component'
-        )
+      ? loadedSystems.find(s => s.schema.entityRef === entityRef)
       : undefined;
     const targetPath = childSystem?.path || '';
 
     segments.push({
       name: selectedNode.name || selectedNode.entityRef || '',
       path: targetPath,
-      level: getNextLevel(activeLevel),
+      level: childSystem?.schema.level || getNextLevel(activeLevel),
       entityRef: selectedNode.entityRef || '',
       isZoomPreview: true,
     });

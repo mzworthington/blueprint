@@ -204,7 +204,7 @@ describe('Canvas Component', () => {
       name: 'Child Level',
       version: '1.0.0',
       level: 'component' as const,
-      id: 'default/test-node-1',
+      entityRef: 'default/test-node-1',
       nodes: [],
       dependencies: [],
     };
@@ -227,6 +227,54 @@ describe('Canvas Component', () => {
 
     await waitFor(() => {
       expect(mockSetLocation).toHaveBeenCalledWith('/workspace/default/test-node-1');
+    });
+  });
+
+  it('navigates to parent system when Escape is pressed', async () => {
+    mockSetLocation.mockClear();
+
+    const parentSchema = {
+      name: 'Root Context',
+      version: '1.0.0',
+      level: 'context' as const,
+      entityRef: 'root',
+      nodes: [
+        {
+          entityRef: 'root/web-app',
+          type: 'web-app' as const,
+          name: 'Web App',
+        },
+      ],
+      dependencies: [],
+    };
+
+    const childSchema = {
+      name: 'Web Containers',
+      version: '1.0.0',
+      level: 'container' as const,
+      entityRef: 'root/web-app',
+      nodes: [],
+      dependencies: [],
+    };
+
+    useBlueprintStore.setState({
+      workspaceName: 'default',
+      loadedSystems: [
+        { path: 'context.yaml', name: 'Root Context', schema: parentSchema },
+        { path: 'containers.yaml', name: 'Web Containers', schema: childSchema },
+      ],
+      currentFilePath: 'containers.yaml',
+    });
+
+    const { initSchema } = useBlueprintStore.getState();
+    initSchema(childSchema);
+
+    render(<Canvas />);
+
+    fireEvent.keyDown(window, { key: 'Escape' });
+
+    await waitFor(() => {
+      expect(mockSetLocation).toHaveBeenCalledWith('/workspace/root');
     });
   });
 });

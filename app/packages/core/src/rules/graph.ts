@@ -1,6 +1,7 @@
 import * as yaml from 'js-yaml';
 import { z } from 'zod';
-import type { SystemSchema, ValidationResult, ValidationIssue } from '@blueprint/core';
+import type { SystemSchema, ValidationResult, ValidationIssue } from '../models/schema';
+import { ENTITY_REF_PATTERN } from '../lib/entityRef';
 
 /**
  * Validates the node dependency graph for cycles and other logic constraints.
@@ -92,6 +93,7 @@ const nodeTypeSchema = z.enum([
   'serverless-app',
 
   'component',
+  'container',
   'code-module',
 
   'relational-database',
@@ -109,14 +111,17 @@ const dependencyTypeSchema = z.enum([
   'inter-container',
 ]);
 
+/** Shared FQN shape for schema identity and node refs (no file paths). */
+const entityRefStringSchema = z
+  .string()
+  .min(1)
+  .regex(
+    ENTITY_REF_PATTERN,
+    'entityRef must be alphanumeric, dashes, or underscores segments separated by slashes'
+  );
+
 const systemNodeSchema = z.object({
-  entityRef: z
-    .string()
-    .min(1)
-    .regex(
-      /^[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*$/,
-      'Node entityRef must be alphanumeric, dashes, or underscores segments separated by slashes'
-    ),
+  entityRef: entityRefStringSchema,
   type: nodeTypeSchema,
   name: z.string().min(1),
   external: z.boolean().optional(),
@@ -134,21 +139,61 @@ const systemDependencySchema = z.object({
 });
 
 const systemSchemaValidator = z.object({
-  entityRef: z.string().min(1).optional(),
+  entityRef: entityRefStringSchema.optional(),
   name: z.string().min(1),
   version: z.string().min(1),
   level: z.enum(['context', 'container', 'component', 'code']),
-  id: z.string().optional(),
+  /** @deprecated Prefer `entityRef`. Kept for legacy YAML/CLI output. */
+  id: entityRefStringSchema.optional(),
   nodes: z.array(systemNodeSchema),
   dependencies: z.array(systemDependencySchema).optional(),
 });
 
+function mapValidatedSchema(validated: z.infer<typeof systemSchemaValidator>): SystemSchema {
+  return {
+    entityRef: validated.entityRef || validated.id || '',
+    name: validated.name,
+    version: validated.version,
+    level: validated.level,
+    nodes: validated.nodes.map(n => ({
+      entityRef: n.entityRef,
+      type: n.type,
+      name: n.name,
+      external: n.external,
+      properties: n.properties || {},
+      isTest: n.isTest,
+      x: n.x,
+      y: n.y,
+    })),
+    dependencies: validated.dependencies
+      ? validated.dependencies.map(d => ({
+          from: d.from,
+          to: d.to,
+          type: d.type,
+          description: d.description || '',
+        }))
+      : [],
+  };
+}
+
+function formatZodError(zodErr: z.ZodError): string {
+  return zodErr.issues
+    .map(issue => {
+      const path = issue.path
+        .map((p, idx) => (typeof p === 'number' ? `[${p}]` : (idx > 0 ? '.' : '') + String(p)))
+        .join('');
+      return `${path || 'root'}: ${issue.message}`;
+    })
+    .join('; ');
+}
+
 export function parseSchemaFromYaml(yamlContent: string): SystemSchema {
-  let parsed: any;
+  let parsed: unknown;
   try {
     parsed = yaml.load(yamlContent);
-  } catch (yamlErr: any) {
-    throw new Error(`Invalid schema YAML. YAML Parsing Error: ${yamlErr.message || yamlErr}`);
+  } catch (yamlErr: unknown) {
+    const message = yamlErr instanceof Error ? yamlErr.message : String(yamlErr);
+    throw new Error(`Invalid schema YAML. YAML Parsing Error: ${message}`);
   }
 
   if (!parsed || typeof parsed !== 'object') {
@@ -156,55 +201,22 @@ export function parseSchemaFromYaml(yamlContent: string): SystemSchema {
   }
 
   try {
-    const validated = systemSchemaValidator.parse(parsed);
-
-    return {
-      entityRef: validated.entityRef || (parsed as any).entityRef || '',
-      name: validated.name,
-      version: validated.version,
-      level: validated.level,
-      id: validated.id,
-      nodes: validated.nodes.map(n => ({
-        entityRef: n.entityRef,
-        type: n.type,
-        name: n.name,
-        external: n.external,
-        properties: n.properties || {},
-        isTest: n.isTest,
-        x: n.x,
-        y: n.y,
-      })),
-      dependencies: validated.dependencies
-        ? validated.dependencies.map(d => ({
-            from: d.from,
-            to: d.to,
-            type: d.type,
-            description: d.description || '',
-          }))
-        : [],
-    };
+    return mapValidatedSchema(systemSchemaValidator.parse(parsed));
   } catch (zodErr) {
     if (zodErr instanceof z.ZodError) {
-      const details = zodErr.issues
-        .map(issue => {
-          const path = issue.path
-            .map((p, idx) => (typeof p === 'number' ? `[${p}]` : (idx > 0 ? '.' : '') + String(p)))
-            .join('');
-          return `${path || 'root'}: ${issue.message}`;
-        })
-        .join('; ');
-      throw new Error(`Invalid schema YAML. Schema Validation Error: ${details}`);
+      throw new Error(`Invalid schema YAML. Schema Validation Error: ${formatZodError(zodErr)}`);
     }
     throw zodErr;
   }
 }
 
 export function parseSchemaFromJson(jsonContent: string): SystemSchema {
-  let parsed: any;
+  let parsed: unknown;
   try {
     parsed = JSON.parse(jsonContent);
-  } catch (jsonErr: any) {
-    throw new Error(`Invalid schema JSON. JSON Parsing Error: ${jsonErr.message || jsonErr}`);
+  } catch (jsonErr: unknown) {
+    const message = jsonErr instanceof Error ? jsonErr.message : String(jsonErr);
+    throw new Error(`Invalid schema JSON. JSON Parsing Error: ${message}`);
   }
 
   if (!parsed || typeof parsed !== 'object') {
@@ -212,43 +224,10 @@ export function parseSchemaFromJson(jsonContent: string): SystemSchema {
   }
 
   try {
-    const validated = systemSchemaValidator.parse(parsed);
-
-    return {
-      name: validated.name,
-      version: validated.version,
-      level: validated.level,
-      id: validated.id,
-      nodes: validated.nodes.map(n => ({
-        entityRef: n.entityRef,
-        type: n.type,
-        name: n.name,
-        external: n.external,
-        properties: n.properties || {},
-        isTest: n.isTest,
-        x: n.x,
-        y: n.y,
-      })),
-      dependencies: validated.dependencies
-        ? validated.dependencies.map(d => ({
-            from: d.from,
-            to: d.to,
-            type: d.type,
-            description: d.description || '',
-          }))
-        : [],
-    };
+    return mapValidatedSchema(systemSchemaValidator.parse(parsed));
   } catch (zodErr) {
     if (zodErr instanceof z.ZodError) {
-      const details = zodErr.issues
-        .map(issue => {
-          const path = issue.path
-            .map((p, idx) => (typeof p === 'number' ? `[${p}]` : (idx > 0 ? '.' : '') + String(p)))
-            .join('');
-          return `${path || 'root'}: ${issue.message}`;
-        })
-        .join('; ');
-      throw new Error(`Invalid schema JSON. Schema Validation Error: ${details}`);
+      throw new Error(`Invalid schema JSON. Schema Validation Error: ${formatZodError(zodErr)}`);
     }
     throw zodErr;
   }
@@ -258,18 +237,22 @@ export function parseSchemaFromJson(jsonContent: string): SystemSchema {
  * Serializes a SystemSchema model to a YAML string.
  */
 export function serializeSchemaToYaml(schema: SystemSchema): string {
-  const cleanSchema: any = {
+  const cleanSchema: Record<string, unknown> = {
     name: schema.name,
     version: schema.version,
     level: schema.level,
   };
 
-  if (schema.id) {
-    cleanSchema.id = schema.id;
+  if (schema.entityRef) {
+    cleanSchema.entityRef = schema.entityRef;
   }
 
   cleanSchema.nodes = schema.nodes.map(n => {
-    const cleaned: any = { entityRef: n.entityRef, type: n.type, name: n.name };
+    const cleaned: Record<string, unknown> = {
+      entityRef: n.entityRef,
+      type: n.type,
+      name: n.name,
+    };
     if (n.external !== undefined) cleaned.external = n.external;
     if (n.isTest !== undefined) cleaned.isTest = n.isTest;
     if (n.properties && Object.keys(n.properties).length > 0) {
@@ -281,7 +264,7 @@ export function serializeSchemaToYaml(schema: SystemSchema): string {
   });
 
   cleanSchema.dependencies = schema.dependencies.map(d => {
-    const cleaned: any = {
+    const cleaned: Record<string, unknown> = {
       from: d.from,
       to: d.to,
       type: d.type,

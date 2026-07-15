@@ -248,7 +248,7 @@ export async function revertWorkingSchema(
   systemName?: string,
   systemVersion?: string,
   systemLevel?: string,
-  id?: string
+  systemEntityRef?: string
 ): Promise<SystemSchema> {
   const originalNodes = await db.originalNodes.where('filePath').equals(filePath).toArray();
   const originalDeps = await db.originalDependencies.where('filePath').equals(filePath).toArray();
@@ -257,7 +257,7 @@ export async function revertWorkingSchema(
     name: systemName || 'Restored Schema',
     version: systemVersion || '1.0.0',
     level: (systemLevel as any) || 'container',
-    id,
+    entityRef: systemEntityRef,
     nodes: originalNodes.map(n => ({
       entityRef: n.entityRef,
       type: n.type as any,
@@ -299,7 +299,7 @@ export async function loadWorkingSchema(
   systemName?: string,
   systemVersion?: string,
   systemLevel?: string,
-  id?: string
+  systemEntityRef?: string
 ): Promise<SystemSchema | null> {
   const workingNodes = await db.workingNodes.where('filePath').equals(filePath).toArray();
   if (workingNodes.length === 0) {
@@ -311,7 +311,7 @@ export async function loadWorkingSchema(
     name: systemName || 'Working Schema',
     version: systemVersion || '1.0.0',
     level: (systemLevel as any) || 'container',
-    id,
+    entityRef: systemEntityRef,
     nodes: workingNodes.map(n => ({
       entityRef: n.entityRef,
       type: n.type as any,

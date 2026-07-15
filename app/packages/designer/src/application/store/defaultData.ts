@@ -1,5 +1,4 @@
-import type { SystemSchema } from '@blueprint/core';
-import { parseSchemaFromYaml, getFileName } from '../../core';
+import { type SystemSchema, parseSchemaFromYaml, getFileName } from '@blueprint/core';
 
 export const defaultBlueprintModules = import.meta.glob<{ default: string }>(
   '../../../../../../blueprints/**/*.{yaml,yml}',
@@ -23,10 +22,6 @@ Object.entries(defaultBlueprintModules).forEach(([filePath, module]) => {
   const fileName = getFileName(filePath);
   const cleanPath = filePath.replace('../../../../../blueprints/', '');
 
-  if (fileName === 'workspace.yaml' || fileName.endsWith('-workspace.yaml')) {
-    // Skip workspace manifest files
-    return;
-  }
   try {
     const yamlContent = module.default;
     const parsed = parseSchemaFromYaml(yamlContent);

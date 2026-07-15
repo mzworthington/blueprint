@@ -45,39 +45,48 @@ test.describe('Blueprint E2E Journeys', () => {
   });
 
   test('Visual C4 Navigation (Zoom In / Zoom Out / URL Routing)', async ({ page }) => {
-    await page.goto('/workspace/testproject');
+    await page.goto('/workspace/test');
 
     await page.locator('button[aria-label="Toggle Right Panel"]').click();
 
-    await expect(page.locator('#workspace-name-input')).toHaveValue('Workspace Context');
-    //TODO 20260713- e2e tests need updating after workspace decom
-    // await expect(page.locator('#workspace-slug-input')).toHaveValue('testproject');
+    await expect(page.locator('#workspace-name-input')).toHaveValue('test Context');
+    await expect(page.locator('#workspace-slug-input')).toHaveValue('test');
+    expect(page.url()).toContain('/workspace/test');
 
-    // await page.screenshot({ path: '../../docs/screenshots/3-container-level.png' });
+    await page.screenshot({ path: '../../docs/screenshots/3-container-level.png' });
 
-    // const appShellNode = page
-    //   .locator('.react-flow__node', { hasText: 'Application Shell' })
-    //   .first();
-    // await expect(appShellNode).toBeVisible();
+    const blueprintNode = page
+      .locator('.react-flow__node', { hasText: 'Blueprint System' })
+      .first();
+    await expect(blueprintNode).toBeVisible();
+    await blueprintNode.dblclick();
 
-    // await appShellNode.dblclick();
+    await expect(page.locator('#workspace-name-input')).toHaveValue('Blueprint Containers');
+    await expect(page.locator('#workspace-slug-input')).toHaveValue('test/blueprint');
+    expect(page.url()).toContain('/workspace/test/blueprint');
 
-    // await expect(page.locator('#workspace-name-input')).toHaveValue(
-    //   'TestProject - Application Shell Components'
-    // );
-    // await expect(page.locator('#workspace-slug-input')).toHaveValue('testproject/app-host');
-    // expect(page.url()).toContain('/workspace/testproject/app-host');
+    await page.screenshot({ path: '../../docs/screenshots/4-zoomed-in-components.png' });
 
-    // await page.screenshot({ path: '../../docs/screenshots/4-zoomed-in-components.png' });
+    const appNode = page.locator('.react-flow__node', { hasText: 'App Service' }).first();
+    await expect(appNode).toBeVisible();
+    await appNode.dblclick();
 
-    // await page.keyboard.press('Escape');
+    await expect(page.locator('#workspace-name-input')).toHaveValue('App Service Components');
+    await expect(page.locator('#workspace-slug-input')).toHaveValue('test/blueprint/app');
+    expect(page.url()).toContain('/workspace/test/blueprint/app');
 
-    // await expect(page.locator('#workspace-name-input')).toHaveValue(
-    //   'TestProject - Container Level'
-    // );
-    // await expect(page.locator('#workspace-slug-input')).toHaveValue('testproject');
-    // expect(page.url()).toContain('/workspace/testproject');
+    await page.keyboard.press('Escape');
 
-    // await page.screenshot({ path: '../../docs/screenshots/5-zoomed-back-out.png' });
+    await expect(page.locator('#workspace-name-input')).toHaveValue('Blueprint Containers');
+    await expect(page.locator('#workspace-slug-input')).toHaveValue('test/blueprint');
+    expect(page.url()).toContain('/workspace/test/blueprint');
+
+    await page.keyboard.press('Escape');
+
+    await expect(page.locator('#workspace-name-input')).toHaveValue('test Context');
+    await expect(page.locator('#workspace-slug-input')).toHaveValue('test');
+    expect(page.url()).toContain('/workspace/test');
+
+    await page.screenshot({ path: '../../docs/screenshots/5-zoomed-back-out.png' });
   });
 });

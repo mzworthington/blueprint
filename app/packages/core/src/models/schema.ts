@@ -1,16 +1,10 @@
+import { slugify } from '../lib/slug';
+
 export type C4Level = 'context' | 'container' | 'component' | 'code';
 
 export type EntityRef = string;
 
-export function slugify(text: string): string {
-  return text
-    .toString()
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w-]+/g, '')
-    .replace(/--+/g, '-');
-}
+export { slugify };
 
 export const EntityRef = {
   /**
@@ -144,8 +138,11 @@ export interface SystemDependency {
 }
 
 export interface SystemSchema {
+  /**
+   * Identity of this diagram in the hierarchy.
+   * Child diagrams link to parents by setting this equal to a parent node's entityRef.
+   */
   entityRef?: EntityRef;
-  id?: string;
   name: string;
   version: string;
   level: C4Level;

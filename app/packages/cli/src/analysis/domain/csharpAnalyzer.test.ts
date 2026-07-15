@@ -41,7 +41,7 @@ describe('CSharpAnalyzer Strategy', () => {
       'cs',
       'src/UserController.cs'
     );
-    expect(info?.entityRef).toBe('testproject_controllers');
+    expect(info?.entityRef).toBe('testproject-controllers');
     expect(info?.name).toBe('TestProject.Controllers');
   });
 });

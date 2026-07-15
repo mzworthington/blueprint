@@ -1,0 +1,36 @@
+import {
+  Database,
+  Globe,
+  Zap,
+  Cpu,
+  Layers,
+  Share2,
+  User,
+  Network,
+  Monitor,
+  Smartphone,
+  Code,
+  type LucideIcon,
+} from 'lucide-react';
+import type { NodeType } from '@blueprint/core';
+
+export const NODE_TYPES: { type: NodeType; label: string; icon: LucideIcon }[] = [
+  { type: 'person', label: 'Person (Actor)', icon: User },
+  { type: 'software-system', label: 'Software System', icon: Network },
+  { type: 'web-app', label: 'Web App', icon: Monitor },
+  { type: 'mobile-app', label: 'Mobile App', icon: Smartphone },
+  { type: 'single-page-app', label: 'Single Page App', icon: Monitor },
+  { type: 'microservice', label: 'Microservice', icon: Cpu },
+  { type: 'database', label: 'Database', icon: Database },
+  { type: 'cache-store', label: 'Cache Store', icon: Layers },
+  { type: 'event-broker', label: 'Event Broker', icon: Share2 },
+  { type: 'serverless-app', label: 'Serverless App', icon: Zap },
+  { type: 'component', label: 'Component', icon: Layers },
+  { type: 'code-module', label: 'Code Module', icon: Code },
+  { type: 'rest-api', label: 'REST API', icon: Globe },
+  { type: 'grpc-service', label: 'gRPC Service', icon: Cpu },
+  { type: 'relational-database', label: 'Relational DB', icon: Database },
+  { type: 'serverless-function', label: 'Serverless Fn', icon: Zap },
+  { type: 'gateway-api', label: 'Gateway API', icon: Globe },
+  { type: 'background-worker', label: 'Background Worker', icon: Cpu },
+];

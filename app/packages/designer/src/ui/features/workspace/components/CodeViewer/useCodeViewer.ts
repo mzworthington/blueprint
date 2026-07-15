@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'wouter';
 import { useBlueprintStore } from '../../../../../application/store/store';
-import { serializeSchemaToMermaid, serializeSchemaToYaml } from '../../../../../core';
+import { serializeSchemaToMermaid, serializeSchemaToYaml } from '@blueprint/core';
 
 type Tab = 'yaml' | 'json' | 'mermaid';
 type MermaidMode = 'preview' | 'code';

@@ -123,7 +123,7 @@ describe('entityRef Rules', () => {
       );
     });
 
-    it('should correctly resolve FQN references using parentRef entityRef linkage', () => {
+    it('should correctly resolve FQN references using schema entityRef parent linkage', () => {
       // 1. Container-level schema
       const containerSchema: SystemSchema = {
         name: 'Backstage - Container Level',
