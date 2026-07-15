@@ -54,7 +54,7 @@ export const Searchbar: React.FC = () => {
             <X className="w-3.5 h-3.5" />
           </button>
         ) : (
-          <kbd className="hidden md:inline-block px-1.5 py-0.5 rounded bg-slate-950/80 border border-slate-800 text-[9px] text-slate-500 font-mono shrink-0">
+          <kbd className="hidden md:inline-block px-1.5 py-0.5 rounded bg-slate-950/80 border border-slate-700 text-[9px] text-slate-300 font-mono shrink-0">
             {kbdText}
           </kbd>
         )}

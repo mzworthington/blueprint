@@ -14,7 +14,7 @@ export const SystemSelector: React.FC = () => {
 
   return (
     <div className="flex items-center gap-2 bg-slate-900/40 border border-slate-850 px-2.5 py-1.5 rounded-lg text-xs shrink-0 select-none">
-      <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500 hidden sm:inline">
+      <span className="text-[10px] uppercase font-bold tracking-wider text-slate-300 hidden sm:inline">
         System:
       </span>
       <select

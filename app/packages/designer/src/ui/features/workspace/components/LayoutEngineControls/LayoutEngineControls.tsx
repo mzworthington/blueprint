@@ -22,8 +22,8 @@ export const LayoutEngineControls: React.FC = () => {
       className="flex items-center gap-2 bg-slate-900/40 border border-slate-850 px-2.5 py-1.5 rounded-lg text-xs shrink-0 select-none"
       title="Client layout prototype — pick an engine to recompute positions and update YAML"
     >
-      <LayoutTemplate className="w-3.5 h-3.5 text-slate-500 shrink-0" aria-hidden />
-      <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500 hidden sm:inline">
+      <LayoutTemplate className="w-3.5 h-3.5 text-slate-400 shrink-0" aria-hidden />
+      <span className="text-[10px] uppercase font-bold tracking-wider text-slate-300 hidden sm:inline">
         Layout:
       </span>
       <select

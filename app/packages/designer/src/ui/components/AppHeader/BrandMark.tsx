@@ -22,7 +22,7 @@ type BrandMarkProps = {
  * Links home (`/`).
  */
 export const BrandMark: React.FC<BrandMarkProps> = ({ badge, subtitle }) => (
-  <Link href="/" className="flex items-center gap-3 min-w-0 group" aria-label="Blueprint home">
+  <Link href="/" className="flex items-center gap-3 min-w-0 group">
     <div className="p-1 border border-[#00f0ff]/40 rounded bg-cyan-950/20 shadow-[0_0_8px_rgba(0,240,255,0.2)] shrink-0 group-hover:border-[#00f0ff]/70 transition-colors">
       <BrandIcon />
     </div>
@@ -39,8 +39,7 @@ export const BrandMark: React.FC<BrandMarkProps> = ({ badge, subtitle }) => (
         <p className="text-xs text-slate-400 font-medium font-sans mt-1 truncate">{subtitle}</p>
       ) : null}
     </div>
-    {/* sr / mobile: keep a text label for tests & a11y when title is hidden */}
-    <span className="sr-only">blueprint</span>
-    <img src="/favicon.svg" alt="Blueprint Logo" className="sr-only" />
+    {/* Mobile: title is visually hidden; keep an accessible name. */}
+    <span className="sr-only sm:hidden">BLUEPRINT{badge ? ` ${badge}` : ''}</span>
   </Link>
 );

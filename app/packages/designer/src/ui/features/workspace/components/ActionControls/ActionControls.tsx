@@ -72,7 +72,7 @@ export const ActionControls: React.FC = () => {
 
       <button
         onClick={handleSave}
-        className="flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-lg shadow-brand-600/20 transition cursor-pointer"
+        className="flex items-center gap-1.5 bg-brand-700 hover:bg-brand-800 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-lg shadow-brand-600/20 transition cursor-pointer"
         title={isWorkspaceOpen ? 'Save diagram directly in folder' : 'Save YAML to disk'}
       >
         <Download className="w-3.5 h-3.5" />

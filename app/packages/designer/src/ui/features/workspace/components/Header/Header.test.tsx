@@ -31,10 +31,9 @@ describe('Header Component', () => {
     });
   });
 
-  it('renders branding logo and breadcrumbs', () => {
+  it('renders branding and breadcrumbs', () => {
     renderHeader();
-    expect(screen.getByAltText('Blueprint Logo')).toBeInTheDocument();
-    expect(screen.getByText('blueprint')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /BLUEPRINT/i })).toBeInTheDocument();
   });
 
   it('displays the C4 level badge', () => {

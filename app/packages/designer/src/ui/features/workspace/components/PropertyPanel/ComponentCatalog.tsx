@@ -19,8 +19,12 @@ export const ComponentCatalog: React.FC<ComponentCatalogProps> = ({
         Show Test Components
       </span>
       <button
+        type="button"
+        role="switch"
+        aria-checked={showTests}
+        aria-label="Show test components"
         onClick={onToggleShowTests}
-        className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+        className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
           showTests ? 'bg-brand-600' : 'bg-slate-800'
         }`}
       >

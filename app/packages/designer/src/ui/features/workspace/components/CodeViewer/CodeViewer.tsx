@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Copy, Check, AlertCircle, CheckCircle2 } from 'lucide-react';
-import { MermaidPreview } from '../../../../components/MermaidPreview';
 import { useCodeViewer } from './useCodeViewer';
+
+const MermaidPreview = lazy(() =>
+  import('../../../../components/MermaidPreview').then(m => ({ default: m.MermaidPreview }))
+);
 
 export const CodeViewer: React.FC = () => {
   const {
@@ -183,7 +186,15 @@ export const CodeViewer: React.FC = () => {
             </div>
 
             {activeTab === 'mermaid' && mermaidMode === 'preview' ? (
-              <MermaidPreview code={getCodeContent()} />
+              <Suspense
+                fallback={
+                  <div className="flex-1 flex items-center justify-center text-xs font-mono text-slate-500">
+                    Loading preview…
+                  </div>
+                }
+              >
+                <MermaidPreview code={getCodeContent()} />
+              </Suspense>
             ) : (
               <pre className="flex-1 bg-[#040914]/60 border border-[#00f0ff]/10 rounded-xl p-4 overflow-auto text-xs font-mono text-slate-300 leading-relaxed select-all">
                 <code>{getCodeContent()}</code>

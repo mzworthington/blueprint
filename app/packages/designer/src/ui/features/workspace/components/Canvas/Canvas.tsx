@@ -166,7 +166,7 @@ export const Canvas: React.FC = () => {
             >
               <ZoomOut className="w-3.5 h-3.5" />
               <span>Zoom out</span>
-              <kbd className="hidden sm:inline ml-1 text-[9px] font-mono text-slate-500 bg-slate-900 border border-slate-800 rounded px-1 py-0.5">
+              <kbd className="hidden sm:inline ml-1 text-[9px] font-mono text-slate-300 bg-slate-900 border border-slate-700 rounded px-1 py-0.5">
                 Esc
               </kbd>
             </button>

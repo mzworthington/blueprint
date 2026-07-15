@@ -1,17 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import mermaid from 'mermaid';
 import { AlertCircle, Loader, X, Maximize2, Plus, Minus, RefreshCw } from 'lucide-react';
 
-mermaid.initialize({
-  startOnLoad: false,
-  theme: 'dark',
-  securityLevel: 'loose',
-  flowchart: {
-    useMaxWidth: true,
-    htmlLabels: true,
-  },
-});
+type MermaidApi = {
+  initialize: (config: Record<string, unknown>) => void;
+  render: (id: string, code: string) => Promise<{ svg: string }>;
+};
+
+let mermaidReady: Promise<MermaidApi> | undefined;
+
+async function getMermaid(): Promise<MermaidApi> {
+  mermaidReady ??= (async () => {
+    const { default: mermaid } = await import('mermaid');
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'dark',
+      securityLevel: 'loose',
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true,
+      },
+    });
+    return mermaid;
+  })();
+  return mermaidReady;
+}
 
 interface MermaidPreviewProps {
   code: string;
@@ -63,8 +76,10 @@ export const MermaidPreview: React.FC<MermaidPreviewProps> = ({ code }) => {
       setError('');
 
       try {
-        const id = `mermaid-render-${Math.random().toString(36).substring(2, 11)}`;
+        const mermaid = await getMermaid();
+        if (!active) return;
 
+        const id = `mermaid-render-${Math.random().toString(36).substring(2, 11)}`;
         const { svg: renderedSvg } = await mermaid.render(id, code);
 
         if (active) {

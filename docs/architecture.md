@@ -133,7 +133,7 @@ Shared by designer and CLI. TypeScript + Zod — no Protocol Buffers.
 ### 3. Designer adapters & store (`app/packages/designer/src/`)
 
 - `infrastructure/fileSystem/` — browser FS Access adapters.
-- `infrastructure/layout/` — graph layout adapters + `createBrowserLayoutRegistry`.
+- `infrastructure/layout/` — graph layout adapters + `createBrowserLayoutRegistry` (engines lazy-loaded on first use).
 - `infrastructure/db/` — IndexedDB working copy / baseline diffs.
 - `application/layout/` — pure layout use-case (`computeClientLayout`) and grid policy.
 - `application/store/` — Zustand composition (`uiState`, `diagramState`, `ioState`).
