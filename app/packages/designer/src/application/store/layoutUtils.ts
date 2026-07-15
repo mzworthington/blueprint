@@ -7,7 +7,7 @@ import type {
   DependencyType,
   PropertyMap,
   C4Level,
-} from '../../core';
+} from '@blueprint/core';
 
 export type ComponentNodeData = {
   [key: string]: unknown;
@@ -30,20 +30,23 @@ export type ComponentEdgeData = {
 
 export type BlueprintRFEdge = RFEdge<ComponentEdgeData>;
 
-export const mapDomainNodeToRFNode = (n: SystemNode): BlueprintRFNode => ({
-  id: n.id,
-  type: 'blueprintNode',
-  position: { x: n.x ?? 150 + Math.random() * 200, y: n.y ?? 150 + Math.random() * 200 },
-  data: {
-    id: n.id,
-    type: n.type,
-    name: n.name,
-    external: n.external,
-    isTest: n.isTest,
-    properties: n.properties || {},
-    entityRef: n.entityRef,
-  },
-});
+export const mapDomainNodeToRFNode = (n: any): BlueprintRFNode => {
+  const ref = n.entityRef || n.id || `node-${Math.random().toString(36).substring(2, 9)}`;
+  return {
+    id: ref,
+    type: 'blueprintNode',
+    position: { x: n.x ?? 150 + Math.random() * 200, y: n.y ?? 150 + Math.random() * 200 },
+    data: {
+      id: ref,
+      type: n.type,
+      name: n.name,
+      external: n.external,
+      isTest: n.isTest,
+      properties: n.properties || {},
+      entityRef: ref,
+    },
+  };
+};
 
 export const mapDomainDepToRFEdge = (d: SystemDependency): BlueprintRFEdge => ({
   id: `edge-${d.from}-${d.to}`,
@@ -103,12 +106,12 @@ export const rebuildSchemaFromCanvas = (
   name: string,
   version: string,
   level: C4Level,
-  parentRef: string | undefined,
+  id: string | undefined,
   rfNodes: BlueprintRFNode[],
-  rfEdges: BlueprintRFEdge[]
+  rfEdges: BlueprintRFEdge[],
+  entityRef?: string
 ): SystemSchema => {
   const nodes: SystemNode[] = rfNodes.map(rn => ({
-    id: rn.id,
     type: rn.data.type,
     name: rn.data.name,
     external: rn.data.external,
@@ -116,7 +119,7 @@ export const rebuildSchemaFromCanvas = (
     properties: rn.data.properties,
     x: rn.position.x,
     y: rn.position.y,
-    entityRef: rn.data.entityRef,
+    entityRef: rn.data.entityRef || rn.id || '',
   }));
 
   const dependencies: SystemDependency[] = rfEdges.map(re => ({
@@ -126,5 +129,5 @@ export const rebuildSchemaFromCanvas = (
     description: re.data?.description || '',
   }));
 
-  return { name, version, level, parentRef, nodes, dependencies };
+  return { name, version, level, id, nodes, dependencies, entityRef };
 };

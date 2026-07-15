@@ -66,7 +66,7 @@ fn build_node(file: &ParsedSourceFile, node_type: NodeType, tech: &str) -> Syste
     };
 
     let mut node = SystemNode {
-        id: sanitize_id(&file.base_name),
+        entity_ref: sanitize_id(&file.base_name),
         r#type: node_type as i32,
         name: format!("{} {}", file.base_name, type_label),
         external: Some(false),
@@ -74,7 +74,6 @@ fn build_node(file: &ParsedSourceFile, node_type: NodeType, tech: &str) -> Syste
         is_test: Some(file.is_test_file),
         x: None,
         y: None,
-        entity_ref: None,
     };
     node.set_property_string("technology", tech);
     node.set_property_string("filepath", &file.relative_path);
@@ -90,7 +89,7 @@ pub fn extract_nodes(source_files: &[ParsedSourceFile]) -> HashMap<String, Syste
     nodes.insert(
         CLIENT_ID.to_string(),
         SystemNode {
-            id: CLIENT_ID.to_string(),
+            entity_ref: CLIENT_ID.to_string(),
             r#type: NodeType::GatewayApi as i32,
             name: "React Web Application".to_string(),
             ..Default::default()
@@ -100,7 +99,7 @@ pub fn extract_nodes(source_files: &[ParsedSourceFile]) -> HashMap<String, Syste
     for file in source_files {
         let (node_type, tech) = classify(file);
         let node = build_node(file, node_type, tech);
-        nodes.insert(node.id.clone(), node);
+        nodes.insert(node.entity_ref.clone(), node);
     }
 
     nodes
@@ -228,7 +227,7 @@ pub fn extract_dependencies(
                     .entry("external-api-target".to_string())
                     .or_insert_with(|| {
                         let mut n = SystemNode {
-                            id: "external-api-target".to_string(),
+                            entity_ref: "external-api-target".to_string(),
                             r#type: NodeType::RestApi as i32,
                             name: "External HTTP API Endpoint".to_string(),
                             external: Some(true),

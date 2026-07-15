@@ -1,6 +1,6 @@
 import * as yaml from 'js-yaml';
 import { z } from 'zod';
-import type { SystemSchema, ValidationResult, ValidationIssue } from '../models/schema';
+import type { SystemSchema, ValidationResult, ValidationIssue } from '@blueprint/core';
 
 /**
  * Validates the node dependency graph for cycles and other logic constraints.
@@ -10,7 +10,7 @@ export function validateGraph(schema: SystemSchema): ValidationResult {
   const adj = new Map<string, string[]>();
 
   for (const node of schema.nodes) {
-    adj.set(node.id, []);
+    adj.set(node.entityRef || '', []);
   }
 
   for (const dep of schema.dependencies) {
@@ -57,8 +57,9 @@ export function validateGraph(schema: SystemSchema): ValidationResult {
   }
 
   for (const node of schema.nodes) {
-    if (!visited.has(node.id)) {
-      const cyclePath = dfs(node.id);
+    const ref = node.entityRef || '';
+    if (!visited.has(ref)) {
+      const cyclePath = dfs(ref);
       if (cyclePath) {
         issues.push({
           type: 'cycle',
@@ -101,13 +102,21 @@ const nodeTypeSchema = z.enum([
   'background-worker',
 ]);
 
-const dependencyTypeSchema = z.enum(['direct-call', 'publish-subscribe', 'read-write']);
+const dependencyTypeSchema = z.enum([
+  'direct-call',
+  'publish-subscribe',
+  'read-write',
+  'inter-container',
+]);
 
 const systemNodeSchema = z.object({
-  id: z
+  entityRef: z
     .string()
     .min(1)
-    .regex(/^[a-zA-Z0-9_-]+$/, 'Node ID must be alphanumeric, dashes, or underscores'),
+    .regex(
+      /^[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*$/,
+      'Node entityRef must be alphanumeric, dashes, or underscores segments separated by slashes'
+    ),
   type: nodeTypeSchema,
   name: z.string().min(1),
   external: z.boolean().optional(),
@@ -125,10 +134,11 @@ const systemDependencySchema = z.object({
 });
 
 const systemSchemaValidator = z.object({
+  entityRef: z.string().min(1).optional(),
   name: z.string().min(1),
   version: z.string().min(1),
   level: z.enum(['context', 'container', 'component', 'code']),
-  parentRef: z.string().optional(),
+  id: z.string().optional(),
   nodes: z.array(systemNodeSchema),
   dependencies: z.array(systemDependencySchema).optional(),
 });
@@ -149,12 +159,13 @@ export function parseSchemaFromYaml(yamlContent: string): SystemSchema {
     const validated = systemSchemaValidator.parse(parsed);
 
     return {
+      entityRef: validated.entityRef || (parsed as any).entityRef || '',
       name: validated.name,
       version: validated.version,
       level: validated.level,
-      parentRef: validated.parentRef,
+      id: validated.id,
       nodes: validated.nodes.map(n => ({
-        id: n.id,
+        entityRef: n.entityRef,
         type: n.type,
         name: n.name,
         external: n.external,
@@ -207,9 +218,9 @@ export function parseSchemaFromJson(jsonContent: string): SystemSchema {
       name: validated.name,
       version: validated.version,
       level: validated.level,
-      parentRef: validated.parentRef,
+      id: validated.id,
       nodes: validated.nodes.map(n => ({
-        id: n.id,
+        entityRef: n.entityRef,
         type: n.type,
         name: n.name,
         external: n.external,
@@ -253,12 +264,12 @@ export function serializeSchemaToYaml(schema: SystemSchema): string {
     level: schema.level,
   };
 
-  if (schema.parentRef) {
-    cleanSchema.parentRef = schema.parentRef;
+  if (schema.id) {
+    cleanSchema.id = schema.id;
   }
 
   cleanSchema.nodes = schema.nodes.map(n => {
-    const cleaned: any = { id: n.id, type: n.type, name: n.name };
+    const cleaned: any = { entityRef: n.entityRef, type: n.type, name: n.name };
     if (n.external !== undefined) cleaned.external = n.external;
     if (n.isTest !== undefined) cleaned.isTest = n.isTest;
     if (n.properties && Object.keys(n.properties).length > 0) {
@@ -308,7 +319,7 @@ export function serializeSchemaToMermaid(schema: SystemSchema): string {
     } else if (node.external) {
       label = `["${node.name} (External)"]`;
     }
-    lines.push(`    ${mId(node.id)}${label}`);
+    lines.push(`    ${mId(node.entityRef || '')}${label}`);
   }
 
   for (const dep of schema.dependencies) {

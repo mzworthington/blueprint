@@ -1,5 +1,5 @@
 import type { ParsedSourceFile } from './types.ts';
-import type { SystemNode } from '../../core/generated/blueprint/v1/schema.ts';
+import type { SystemNode } from '@blueprint/core';
 import type { LanguageAnalyzer, ContainerInfo } from './languageAnalyzer.ts';
 
 export class TypeScriptAnalyzer implements LanguageAnalyzer {
@@ -12,7 +12,7 @@ export class TypeScriptAnalyzer implements LanguageAnalyzer {
     const langPrefix = ['js', 'jsx'].includes(fileExt || '') ? 'JavaScript' : 'TypeScript';
 
     return {
-      id: cleanFileId,
+      entityRef: cleanFileId,
       type: 'background-worker',
       name: `${sourceFile.baseName} Service`,
       isTest: isTestFile,
@@ -35,7 +35,7 @@ export class TypeScriptAnalyzer implements LanguageAnalyzer {
     // Core layer
     if (normalizedPath.startsWith('packages/core/') || normalizedPath.startsWith('src/domain/')) {
       return {
-        id: 'domain-logic',
+        entityRef: 'domain-logic',
         name: 'Domain Logic Layer',
         type: 'background-worker',
         description: 'Core domain logic, schema validation rules, and graph parsing.',
@@ -62,7 +62,7 @@ export class TypeScriptAnalyzer implements LanguageAnalyzer {
         normalizedPath.includes('logging');
       if (isStateOrSync) {
         return {
-          id: 'state-sync',
+          entityRef: 'state-sync',
           name: 'State & Sync Manager',
           type: 'cache-store',
           description: 'Zustand global store and local directory synchronization.',
@@ -70,7 +70,7 @@ export class TypeScriptAnalyzer implements LanguageAnalyzer {
         };
       } else {
         return {
-          id: 'frontend-ui',
+          entityRef: 'frontend-ui',
           name: 'Frontend React UI',
           type: 'gateway-api',
           description: 'React Flow canvas, sidebar configuration panel, and navigation UI.',
@@ -89,7 +89,7 @@ export class TypeScriptAnalyzer implements LanguageAnalyzer {
       normalizedPath.startsWith('src/pages/')
     ) {
       return {
-        id: 'frontend-ui',
+        entityRef: 'frontend-ui',
         name: 'Frontend React UI',
         type: 'gateway-api',
         description: 'React Flow canvas, sidebar configuration panel, and navigation UI.',

@@ -8,19 +8,18 @@ name: Root Context
 version: 1.0.0
 level: context
 nodes:
-  - id: web-app
+  - entityRef: web-app
     type: web-app
     name: Web App
-    entityRef: web-app
 dependencies: []
 `,
     'web/container.yaml': `
 name: Web Containers
 version: 1.0.0
 level: container
-parentRef: web-app
+id: web-app
 nodes:
-  - id: controller
+  - entityRef: controller
     type: component
     name: API Controller
 dependencies: []
@@ -51,7 +50,6 @@ dependencies: []
     useBlueprintStore.setState({
       workspacePort: mockWorkspacePort,
       currentFilePath: 'blueprint.yaml',
-      navigationStack: [],
       isWorkspaceOpen: false,
       workspaceName: '',
     });
@@ -69,221 +67,6 @@ dependencies: []
     expect(updatedState.schema.name).toBe('Root Context');
     expect(updatedState.schema.level).toBe('context');
     expect(updatedState.nodes).toHaveLength(1);
-  });
-
-  it('should zoom into a node, push history to navigationStack, and read target file', async () => {
-    const store = useBlueprintStore.getState();
-
-    await store.openWorkspaceDirectory();
-
-    const success = await store.zoomIntoNode('web-app');
-    expect(success).toBe(true);
-
-    const updatedState = useBlueprintStore.getState();
-    expect(updatedState.currentFilePath).toBe('web/container.yaml');
-    expect(updatedState.navigationStack).toHaveLength(1);
-    expect(updatedState.navigationStack[0].path).toBe('blueprint.yaml');
-    expect(updatedState.navigationStack[0].schema.name).toBe('Root Context');
-    expect(updatedState.schema.name).toBe('Web Containers');
-    expect(updatedState.schema.level).toBe('container');
-    expect(updatedState.nodes).toHaveLength(1);
-    expect(updatedState.nodes[0].data.name).toBe('API Controller');
-  });
-
-  it('should zoom out to restore parent schema state', async () => {
-    const store = useBlueprintStore.getState();
-    await store.openWorkspaceDirectory();
-    await store.zoomIntoNode('web-app');
-
-    const zoomOutSuccess = await store.zoomOut();
-    expect(zoomOutSuccess).toBe(true);
-
-    const updatedState = useBlueprintStore.getState();
-    expect(updatedState.currentFilePath).toBe('blueprint.yaml');
-    expect(updatedState.navigationStack).toHaveLength(0);
-    expect(updatedState.schema.name).toBe('Root Context');
-    expect(updatedState.nodes).toHaveLength(1);
-  });
-  it('should zoom out to parent schema via parentRef entityRef matching when navigation stack is empty', async () => {
-    const store = useBlueprintStore.getState();
-
-    useBlueprintStore.setState({
-      loadedSystems: [
-        {
-          path: 'blueprint.yaml',
-          name: 'Root Context',
-          schema: {
-            name: 'Root Context',
-            version: '1.0.0',
-            level: 'context',
-            nodes: [{ id: 'web-app', type: 'web-app', name: 'Web App', entityRef: 'web-app' }],
-            dependencies: [],
-          },
-        },
-      ],
-    });
-
-    useBlueprintStore.setState({
-      currentFilePath: 'web/container.yaml',
-      navigationStack: [],
-    });
-
-    store.initSchema({
-      name: 'Child Level',
-      version: '1.0.0',
-      level: 'container',
-      parentRef: 'web-app',
-      nodes: [],
-      dependencies: [],
-    });
-
-    const success = await store.zoomOut();
-    expect(success).toBe(true);
-    expect(useBlueprintStore.getState().currentFilePath).toBe('blueprint.yaml');
-    expect(useBlueprintStore.getState().schema.name).toBe('Root Context');
-  });
-
-  it('should zoom into a node using entityRef matching from loadedSystems', async () => {
-    useBlueprintStore.setState({
-      loadedSystems: [
-        {
-          path: 'internet-banking-container.yaml',
-          name: 'Internet Banking - Containers',
-          schema: {
-            name: 'Internet Banking - Containers',
-            version: '1.0.0',
-            level: 'container',
-            parentRef: 'default/banking-system',
-            nodes: [],
-            dependencies: [],
-          },
-        },
-      ],
-    });
-
-    const store = useBlueprintStore.getState();
-    store.initSchema({
-      name: 'Internet Banking - System Context',
-      version: '1.0.0',
-      level: 'context',
-      nodes: [
-        {
-          id: 'banking-system',
-          type: 'software-system',
-          name: 'Internet Banking System',
-          entityRef: 'default/banking-system',
-        },
-      ],
-      dependencies: [],
-    });
-    useBlueprintStore.setState({
-      currentFilePath: 'system-context.yaml',
-    });
-
-    const success = await store.zoomIntoNode('banking-system');
-    expect(success).toBe(true);
-
-    const updatedState = useBlueprintStore.getState();
-    expect(updatedState.currentFilePath).toBe('internet-banking-container.yaml');
-    expect(updatedState.navigationStack).toHaveLength(1);
-    expect(updatedState.navigationStack[0].path).toBe('system-context.yaml');
-    expect(updatedState.schema.name).toBe('Internet Banking - Containers');
-  });
-
-  it('should zoom into a node using entityRef linkage', async () => {
-    useBlueprintStore.setState({
-      loadedSystems: [
-        {
-          path: 'internet-banking-container.yaml',
-          name: 'Internet Banking - Containers',
-          schema: {
-            name: 'Internet Banking - Containers',
-            version: '1.0.0',
-            level: 'component',
-            parentRef: 'default/banking-system',
-            nodes: [{ id: 'web-app', type: 'web-app', name: 'Web App' }],
-            dependencies: [],
-          },
-        },
-      ],
-    });
-
-    const store = useBlueprintStore.getState();
-    store.initSchema({
-      name: 'Internet Banking - System Context',
-      version: '1.0.0',
-      level: 'container',
-      nodes: [
-        {
-          id: 'banking-system',
-          type: 'software-system',
-          name: 'Internet Banking System',
-          entityRef: 'default/banking-system',
-        },
-      ],
-      dependencies: [],
-    });
-    useBlueprintStore.setState({
-      currentFilePath: 'system-context.yaml',
-    });
-
-    const success = await store.zoomIntoNode('banking-system');
-    expect(success).toBe(true);
-
-    const updatedState = useBlueprintStore.getState();
-    expect(updatedState.currentFilePath).toBe('internet-banking-container.yaml');
-    expect(updatedState.navigationStack).toHaveLength(1);
-    expect(updatedState.navigationStack[0].path).toBe('system-context.yaml');
-    expect(updatedState.schema.name).toBe('Internet Banking - Containers');
-  });
-
-  it('should zoom out to parent schema via parentRef entityRef', async () => {
-    const parentSchema = {
-      name: 'Internet Banking - System Context',
-      version: '1.0.0',
-      level: 'container' as const,
-      nodes: [
-        {
-          id: 'banking-system',
-          type: 'software-system' as const,
-          name: 'Internet Banking System',
-          entityRef: 'default/banking-system',
-        },
-      ],
-      dependencies: [],
-    };
-
-    useBlueprintStore.setState({
-      workspaceName: 'default',
-      loadedSystems: [
-        {
-          path: 'system-context.yaml',
-          name: 'Internet Banking - System Context',
-          schema: parentSchema,
-        },
-      ],
-      navigationStack: [],
-    });
-
-    const store = useBlueprintStore.getState();
-    store.initSchema({
-      name: 'Internet Banking - Containers',
-      version: '1.0.0',
-      level: 'component',
-      parentRef: 'default/banking-system',
-      nodes: [{ id: 'web-app', type: 'web-app', name: 'Web App' }],
-      dependencies: [],
-    });
-    useBlueprintStore.setState({
-      currentFilePath: 'internet-banking-container.yaml',
-    });
-
-    const success = await store.zoomOut();
-    expect(success).toBe(true);
-
-    const updatedState = useBlueprintStore.getState();
-    expect(updatedState.currentFilePath).toBe('system-context.yaml');
-    expect(updatedState.schema.name).toBe('Internet Banking - System Context');
   });
 
   it('should load multiple top-level systems and support selecting between them', async () => {

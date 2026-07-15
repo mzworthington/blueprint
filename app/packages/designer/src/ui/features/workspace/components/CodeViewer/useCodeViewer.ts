@@ -42,7 +42,7 @@ function buildFilteredSchema(
   if (showTests) return schema;
 
   const nodes = schema.nodes.filter(n => !n.isTest);
-  const visibleNodeIds = new Set(nodes.map(n => n.id));
+  const visibleNodeIds = new Set(nodes.map(n => n.entityRef));
   const dependencies = schema.dependencies.filter(
     d => visibleNodeIds.has(d.from) && visibleNodeIds.has(d.to)
   );

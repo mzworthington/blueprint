@@ -4,6 +4,12 @@ import { Canvas } from './Canvas';
 import { Header } from '../Header/Header';
 import { useBlueprintStore } from '../../../../../application/store/store';
 
+const mockSetLocation = vi.fn();
+vi.mock('wouter', () => ({
+  useLocation: () => ['/workspace/blueprint', mockSetLocation],
+  Link: ({ children, to }: any) => <a href={to}>{children}</a>,
+}));
+
 vi.mock('@xyflow/react', () => {
   return {
     ReactFlow: ({ children, nodes, edges, onNodeDoubleClick }: any) => (
@@ -54,8 +60,8 @@ describe('Canvas Component', () => {
       version: '1.0.0',
       level: 'container',
       nodes: [
-        { id: 'node1', type: 'rest-api', name: 'Node 1', x: 10, y: 10 },
-        { id: 'node2', type: 'relational-database', name: 'Node 2', x: 100, y: 100 },
+        { entityRef: 'node1', type: 'rest-api', name: 'Node 1', x: 10, y: 10 },
+        { entityRef: 'node2', type: 'relational-database', name: 'Node 2', x: 100, y: 100 },
       ],
       dependencies: [{ from: 'node1', to: 'node2', type: 'direct-call' }],
     });
@@ -136,7 +142,7 @@ describe('Canvas Component', () => {
 
     fireEvent.change(screen.getByRole('combobox'), { target: { value: 'sys2.yaml' } });
 
-    expect(useBlueprintStore.getState().currentFilePath).toBe('sys2.yaml');
+    expect(mockSetLocation).toHaveBeenCalledWith('/workspace/s2');
   });
 
   it('triggers openWorkspaceDirectory store action when Open Folder is clicked', async () => {
@@ -198,7 +204,7 @@ describe('Canvas Component', () => {
       name: 'Child Level',
       version: '1.0.0',
       level: 'component' as const,
-      parentRef: 'default/test-node-1',
+      id: 'default/test-node-1',
       nodes: [],
       dependencies: [],
     };
@@ -220,25 +226,7 @@ describe('Canvas Component', () => {
     fireEvent.click(screen.getByTestId('double-click-node'));
 
     await waitFor(() => {
-      expect(useBlueprintStore.getState().currentFilePath).toBe('child.yaml');
+      expect(mockSetLocation).toHaveBeenCalledWith('/workspace/default/test-node-1');
     });
-  });
-
-  it('triggers zoomOut store action on zoomOut Escape/Backspace keyboard events', () => {
-    useBlueprintStore.setState({
-      navigationStack: [
-        {
-          path: 'parent.yaml',
-          schema: { name: 'Parent', version: '1', level: 'container', nodes: [], dependencies: [] },
-        },
-      ],
-      currentFilePath: 'child.yaml',
-    });
-
-    render(<Canvas />);
-
-    fireEvent.keyDown(window, { key: 'Escape' });
-
-    expect(useBlueprintStore.getState().currentFilePath).toBe('parent.yaml');
   });
 });

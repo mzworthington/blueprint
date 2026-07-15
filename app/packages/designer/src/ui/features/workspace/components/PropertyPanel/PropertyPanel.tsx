@@ -17,8 +17,8 @@ import {
   Code,
 } from 'lucide-react';
 import { useBlueprintStore } from '../../../../../application/store/store';
-import type { NodeType, PropertyMap } from '../../../../../core';
-import { slugify, getSchemaEntityRef } from '../../../../../core';
+import type { NodeType, PropertyMap } from '@blueprint/core';
+import { slugify, getSchemaEntityRef } from '@blueprint/core';
 
 const NODE_TYPES: { type: NodeType; label: string; icon: any }[] = [
   { type: 'person', label: 'Person (Actor)', icon: User },
@@ -87,11 +87,12 @@ export const PropertyPanel: React.FC = () => {
     rightCollapsed,
     toggleRightCollapsed,
     workspaceName,
-    currentFilePath,
   } = useBlueprintStore();
 
   const selectedRFNode = nodes.find(n => n.id === selectedNodeId);
-  const selectedNode = selectedRFNode ? schema.nodes.find(sn => sn.id === selectedNodeId) : null;
+  const selectedNode = selectedRFNode
+    ? schema.nodes.find(sn => sn.entityRef === selectedRFNode.data.entityRef)
+    : null;
 
   const [propKey, setPropKey] = useState('');
   const [propVal, setPropVal] = useState('');
@@ -108,7 +109,7 @@ export const PropertyPanel: React.FC = () => {
   const nameInputId = isNode ? 'component-name-input' : 'workspace-name-input';
   const entityRefValue = isNode
     ? selectedNode.entityRef || 'Not resolved'
-    : getSchemaEntityRef(schema, currentFilePath, workspaceName) || '';
+    : getSchemaEntityRef(schema, workspaceName) || '';
   const entityRefInputId = isNode ? 'component-entityref-input' : 'workspace-slug-input';
   const selectId = isNode ? 'component-type-select' : 'workspace-level-select';
 
@@ -119,9 +120,11 @@ export const PropertyPanel: React.FC = () => {
       const newId = slugify(newName).replace(/_/g, '-');
 
       if (newId && newId !== selectedNodeId) {
-        const idExists = schema.nodes.some(n => n.id === newId);
+        const idExists = schema.nodes.some(
+          n => n.entityRef === newId || (n.entityRef && n.entityRef.endsWith('/' + newId))
+        );
         if (!idExists) {
-          updateNode(selectedNodeId, { name: newName, id: newId });
+          updateNode(selectedNodeId, { name: newName, entityRef: newId });
           return;
         }
       }
@@ -262,7 +265,9 @@ export const PropertyPanel: React.FC = () => {
                   id="component-external-checkbox"
                   type="checkbox"
                   checked={!!selectedNode.external}
-                  onChange={e => updateNode(selectedNode.id, { external: e.target.checked })}
+                  onChange={e =>
+                    updateNode(selectedNode.entityRef || '', { external: e.target.checked })
+                  }
                   className="w-4 h-4 rounded border-slate-800 text-brand-500 focus:ring-brand-500 bg-slate-950/60 cursor-pointer focus:ring-offset-0 focus:outline-none"
                 />
               </div>
@@ -336,7 +341,7 @@ export const PropertyPanel: React.FC = () => {
                     {nodeConnections.map(edge => {
                       const isSource = edge.source === selectedNodeId;
                       const partnerId = isSource ? edge.target : edge.source;
-                      const partnerNode = schema.nodes.find(n => n.id === partnerId);
+                      const partnerNode = schema.nodes.find(n => n.entityRef === partnerId);
 
                       return (
                         <div
@@ -401,7 +406,7 @@ export const PropertyPanel: React.FC = () => {
                     if (
                       confirm(`Are you sure you want to delete this ${titleType.toLowerCase()}?`)
                     ) {
-                      deleteNode(selectedNode.id);
+                      deleteNode(selectedNode.entityRef || '');
                     }
                   }}
                   className="w-full flex items-center justify-center gap-2 bg-red-950/15 border border-red-900/30 hover:border-red-900/60 hover:bg-red-950/30 text-red-400 rounded-lg py-2 text-xs font-semibold transition cursor-pointer"

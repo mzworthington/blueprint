@@ -5,7 +5,7 @@ import {
   serializeSchemaToYaml,
   serializeSchemaToMermaid,
 } from './graph';
-import type { SystemSchema } from '../models/schema';
+import type { SystemSchema } from '@blueprint/core';
 
 describe('Graph Validation & Cycle Detection', () => {
   it('should validate a clean, acyclic graph', () => {
@@ -14,9 +14,9 @@ describe('Graph Validation & Cycle Detection', () => {
       version: '1.0.0',
       level: 'container',
       nodes: [
-        { id: 'Gateway', type: 'rest-api', name: 'Gateway' },
-        { id: 'AuthService', type: 'grpc-service', name: 'AuthService' },
-        { id: 'SessionDB', type: 'relational-database', name: 'SessionDB' },
+        { entityRef: 'Gateway', type: 'rest-api', name: 'Gateway' },
+        { entityRef: 'AuthService', type: 'grpc-service', name: 'AuthService' },
+        { entityRef: 'SessionDB', type: 'relational-database', name: 'SessionDB' },
       ],
       dependencies: [
         { from: 'Gateway', to: 'AuthService', type: 'direct-call' },
@@ -34,7 +34,7 @@ describe('Graph Validation & Cycle Detection', () => {
       name: 'Self Loop',
       version: '1.0.0',
       level: 'container',
-      nodes: [{ id: 'Worker', type: 'serverless-function', name: 'Worker' }],
+      nodes: [{ entityRef: 'Worker', type: 'serverless-function', name: 'Worker' }],
       dependencies: [{ from: 'Worker', to: 'Worker', type: 'direct-call' }],
     };
 
@@ -51,9 +51,9 @@ describe('Graph Validation & Cycle Detection', () => {
       version: '1.0.0',
       level: 'container',
       nodes: [
-        { id: 'ServiceA', type: 'grpc-service', name: 'Service A' },
-        { id: 'ServiceB', type: 'grpc-service', name: 'Service B' },
-        { id: 'ServiceC', type: 'grpc-service', name: 'Service C' },
+        { entityRef: 'ServiceA', type: 'grpc-service', name: 'Service A' },
+        { entityRef: 'ServiceB', type: 'grpc-service', name: 'Service B' },
+        { entityRef: 'ServiceC', type: 'grpc-service', name: 'Service C' },
       ],
       dependencies: [
         { from: 'ServiceA', to: 'ServiceB', type: 'direct-call' },
@@ -80,10 +80,10 @@ describe('Graph Validation & Cycle Detection', () => {
       version: '1.0.0',
       level: 'container',
       nodes: [
-        { id: 'A', type: 'rest-api', name: 'A' },
-        { id: 'B', type: 'grpc-service', name: 'B' },
-        { id: 'C', type: 'event-broker', name: 'C' },
-        { id: 'D', type: 'event-broker', name: 'D' },
+        { entityRef: 'A', type: 'rest-api', name: 'A' },
+        { entityRef: 'B', type: 'grpc-service', name: 'B' },
+        { entityRef: 'C', type: 'event-broker', name: 'C' },
+        { entityRef: 'D', type: 'event-broker', name: 'D' },
       ],
       dependencies: [
         { from: 'A', to: 'B', type: 'direct-call' },
@@ -108,10 +108,10 @@ name: Demo System
 version: 1.0.0
 level: container
 nodes:
-  - id: UserApi
+  - entityRef: UserApi
     type: grpc-service
     name: User API
-  - id: UserCache
+  - entityRef: UserCache
     type: cache-store
     name: Redis Cache
 dependencies:
@@ -122,7 +122,7 @@ dependencies:
     const schema = parseSchemaFromYaml(yamlContent);
     expect(schema.name).toBe('Demo System');
     expect(schema.nodes).toHaveLength(2);
-    expect(schema.nodes[0].id).toBe('UserApi');
+    expect(schema.nodes[0].entityRef).toBe('UserApi');
     expect(schema.nodes[1].type).toBe('cache-store');
     expect(schema.dependencies).toHaveLength(1);
     expect(schema.dependencies[0].from).toBe('UserApi');
@@ -134,7 +134,7 @@ name: Malicious System
 version: 1.0.0
 level: container
 nodes:
-  - id: HackNode
+  - entityRef: HackNode
     type: invalid-type-hacker
     name: Hacker
 `;
@@ -147,7 +147,7 @@ name: Malicious System
 version: 1.0.0
 level: container
 nodes:
-  - id: "invalid id with spaces"
+  - entityRef: "invalid id with spaces"
     type: rest-api
     name: Rest API
 `;
@@ -159,13 +159,13 @@ nodes:
       name: 'Demo System',
       version: '1.0.0',
       level: 'container',
-      nodes: [{ id: 'UserApi', type: 'grpc-service', name: 'User API' }],
+      nodes: [{ entityRef: 'UserApi', type: 'grpc-service', name: 'User API' }],
       dependencies: [],
     };
 
     const yamlContent = serializeSchemaToYaml(schema);
     expect(yamlContent).toContain('name: Demo System');
-    expect(yamlContent).toContain('id: UserApi');
+    expect(yamlContent).toContain('entityRef: UserApi');
     expect(yamlContent).toContain('type: grpc-service');
   });
 
@@ -175,7 +175,7 @@ name: Test System
 version: 1.0.0
 level: container
 nodes:
-  - id: ServiceTest
+  - entityRef: ServiceTest
     type: grpc-service
     name: Service Test Component
     isTest: true
@@ -193,9 +193,9 @@ nodes:
       version: '1.0.0',
       level: 'container',
       nodes: [
-        { id: 'Gateway', type: 'rest-api', name: 'Gateway Node' },
-        { id: 'DB', type: 'relational-database', name: 'DB Node' },
-        { id: 'graph', type: 'background-worker', name: 'graph Service' },
+        { entityRef: 'Gateway', type: 'rest-api', name: 'Gateway Node' },
+        { entityRef: 'DB', type: 'relational-database', name: 'DB Node' },
+        { entityRef: 'graph', type: 'background-worker', name: 'graph Service' },
       ],
       dependencies: [{ from: 'Gateway', to: 'DB', type: 'direct-call', description: 'Query' }],
     };
@@ -214,12 +214,12 @@ nodes:
 name: High-Level System Context
 version: 1.0.0
 level: context
-parentRef: ../root-workspace.yaml
+id: ../root-workspace.yaml
 nodes:
-  - id: billing-service
+  - entityRef: billing-service
     type: microservice
     name: Billing Service
-  - id: payment-gateway
+  - entityRef: payment-gateway
     type: software-system
     name: External Payment Processor
     external: true
@@ -231,9 +231,9 @@ dependencies:
 `;
       const schema = parseSchemaFromYaml(yamlContent);
       expect(schema.level).toBe('context');
-      expect(schema.parentRef).toBe('../root-workspace.yaml');
+      expect(schema.id).toBe('../root-workspace.yaml');
       expect(schema.nodes).toHaveLength(2);
-      expect(schema.nodes[0].id).toBe('billing-service');
+      expect(schema.nodes[0].entityRef).toBe('billing-service');
       expect(schema.nodes[0].type).toBe('microservice');
       expect(schema.nodes[1].external).toBe(true);
       expect(schema.dependencies[0].description).toBe('Authorize Credit Card');
@@ -244,15 +244,15 @@ dependencies:
         name: 'Workspace Level',
         version: '1.2.0',
         level: 'container',
-        parentRef: '../workspace.yaml',
+        id: '../workspace.yaml',
         nodes: [
           {
-            id: 'webapp',
+            entityRef: 'webapp',
             type: 'web-app',
             name: 'Web Portal',
           },
           {
-            id: 'external_svc',
+            entityRef: 'external_svc',
             type: 'software-system',
             name: 'API Service',
             external: true,
@@ -270,7 +270,7 @@ dependencies:
 
       const yamlContent = serializeSchemaToYaml(schema);
       expect(yamlContent).toContain('level: container');
-      expect(yamlContent).toContain('parentRef: ../workspace.yaml');
+      expect(yamlContent).toContain('id: ../workspace.yaml');
       expect(yamlContent).toContain('external: true');
 
       const mermaid = serializeSchemaToMermaid(schema);

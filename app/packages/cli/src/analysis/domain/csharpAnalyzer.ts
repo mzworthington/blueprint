@@ -1,5 +1,5 @@
 import type { ParsedSourceFile } from './types.ts';
-import { NodeType, type SystemNode } from '../../core/generated/blueprint/v1/schema.ts';
+import { type SystemNode } from '@blueprint/core';
 import type { LanguageAnalyzer, ContainerInfo } from './languageAnalyzer.ts';
 
 export class CSharpAnalyzer implements LanguageAnalyzer {
@@ -9,8 +9,8 @@ export class CSharpAnalyzer implements LanguageAnalyzer {
 
   createNode(sourceFile: ParsedSourceFile, cleanFileId: string, isTestFile: boolean): SystemNode {
     return {
-      id: cleanFileId,
-      type: NodeType.NODE_TYPE_BACKGROUND_WORKER,
+      entityRef: cleanFileId,
+      type: 'background-worker',
       name: `${sourceFile.baseName} Service`,
       isTest: isTestFile,
       properties: {
@@ -72,7 +72,7 @@ export class CSharpAnalyzer implements LanguageAnalyzer {
         : `Core domain services for ${containerName}`;
 
       return {
-        id: containerId,
+        entityRef: containerId,
         name: containerName,
         type: containerType,
         description: desc,

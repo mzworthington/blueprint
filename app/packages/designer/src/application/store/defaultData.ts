@@ -1,4 +1,4 @@
-import type { SystemSchema } from '../../core';
+import type { SystemSchema } from '@blueprint/core';
 import { parseSchemaFromYaml, getFileName } from '../../core';
 
 export const defaultBlueprintModules = import.meta.glob<{ default: string }>(

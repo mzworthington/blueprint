@@ -26,6 +26,26 @@ describe('App Layout and Collapsible Panels', () => {
       workspaceName: undefined,
       leftCollapsed: true,
       rightCollapsed: true,
+      schema: {
+        name: 'Empty Workspace',
+        version: '1.0.0',
+        level: 'container',
+        nodes: [],
+        dependencies: [],
+      },
+      loadedSystems: [
+        {
+          path: 'blueprint.yaml',
+          name: 'Empty Workspace',
+          schema: {
+            name: 'Empty Workspace',
+            version: '1.0.0',
+            level: 'container',
+            nodes: [],
+            dependencies: [],
+          },
+        },
+      ],
     });
   });
 
@@ -65,7 +85,7 @@ describe('App Layout and Collapsible Panels', () => {
 
     const spyReplaceState = vi.spyOn(window.history, 'replaceState');
 
-    useBlueprintStore.setState({ workspaceName: 'My Super Cool Workspace' });
+    useBlueprintStore.setState({ workspaceName: 'My Super Cool Workspace', isWorkspaceOpen: true });
 
     render(<App />);
 
@@ -91,7 +111,7 @@ describe('App Layout and Collapsible Panels', () => {
       schema: {
         name: 'Initial System',
         version: '1.0.0',
-        level: 'context',
+        level: 'container',
         nodes: [],
         dependencies: [],
       },
@@ -102,7 +122,7 @@ describe('App Layout and Collapsible Panels', () => {
           schema: {
             name: 'Initial System',
             version: '1.0.0',
-            level: 'context',
+            level: 'container',
             nodes: [],
             dependencies: [],
           },
@@ -113,7 +133,7 @@ describe('App Layout and Collapsible Panels', () => {
           schema: {
             name: 'Target System',
             version: '1.0.0',
-            level: 'context',
+            level: 'container',
             nodes: [],
             dependencies: [],
           },

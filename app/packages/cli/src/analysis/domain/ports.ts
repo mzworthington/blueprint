@@ -1,5 +1,5 @@
 import type { ParsedSourceFile } from './types.ts';
-import type { SystemNode, SystemDependency } from '../../core/generated/blueprint/v1/schema.ts';
+import type { SystemNode, SystemDependency } from '@blueprint/core';
 
 export interface CodebaseParserPort {
   parseSourceFiles(globPattern: string): Promise<ParsedSourceFile[]>;

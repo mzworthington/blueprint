@@ -32,11 +32,11 @@ describe('TypeScriptAnalyzer Strategy', () => {
 
   it('computes container info correctly', () => {
     const info = analyzer.getContainerInfo(
-      { id: 'test', type: 'background-worker', name: 'test' },
+      { entityRef: 'test', type: 'background-worker', name: 'test' },
       'system',
       'ts',
       'src/domain/test.ts'
     );
-    expect(info?.id).toBe('domain-logic');
+    expect(info?.entityRef).toBe('domain-logic');
   });
 });

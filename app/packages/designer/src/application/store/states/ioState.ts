@@ -8,9 +8,8 @@ import {
   noopWorkspace,
   noopLogger,
   parseSchemaFromYaml,
-  resolveWorkspaceEntityRefs,
-  getSystemIdFromPath,
 } from '../../../core';
+import { resolveWorkspaceEntityRefs } from '@blueprint/core';
 import {
   saveBaselineSchema,
   saveWorkingSchema,
@@ -167,7 +166,7 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
 
       const resolvedSystemsWithDrafts = await Promise.all(
         resolvedSystems.map(async sys => {
-          const sysId = getSystemIdFromPath(sys.path);
+          const sysId = sys.schema.entityRef || 'default';
           const fileRefMap = resolved.nodeRefMap[sys.path] || {};
 
           await saveBaselineSchema(sys.path, sys.schema, sysId, fileRefMap).catch(() => {});
@@ -177,7 +176,7 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
             sys.schema.name,
             sys.schema.version,
             sys.schema.level,
-            sys.schema.parentRef
+            sys.schema.id
           ).catch(() => null);
 
           if (workingSchema) {
@@ -203,7 +202,6 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
         loadedSystems: resolvedSystemsWithDrafts,
         nodeRefMap: resolved.nodeRefMap,
         currentFilePath: firstSystem.path,
-        navigationStack: [],
       });
       get().initSchema(firstSystem.schema);
       return true;
@@ -235,7 +233,7 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
       if (success) {
         logger.info('Diagram saved successfully');
         // Update database baseline table to match the persistent file
-        const sysId = getSystemIdFromPath(currentFilePath);
+        const sysId = schema.entityRef || 'default';
         const fileRefMap = nodeRefMap[currentFilePath] || {};
         await saveBaselineSchema(currentFilePath, schema, sysId, fileRefMap);
         setNotification?.({

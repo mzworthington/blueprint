@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import { Handle, Position } from '@xyflow/react';
+import { useLocation } from 'wouter';
 import type { NodeProps, Node } from '@xyflow/react';
 import {
   Database,
@@ -16,7 +17,7 @@ import {
   Code,
   ZoomIn,
 } from 'lucide-react';
-import type { NodeType } from '../../../../../core';
+import type { NodeType } from '@blueprint/core';
 import { useBlueprintStore } from '../../../../../application/store/store';
 import type { ComponentNodeData } from '../../../../../application/store/store';
 
@@ -159,6 +160,13 @@ const nodeTypeConfigs: Record<
     bg: 'rgba(99, 102, 241, 0.08)',
     border: 'rgba(99, 102, 241, 0.3)',
   },
+  container: {
+    label: 'Container',
+    icon: Layers,
+    color: '#8b5cf6',
+    bg: 'rgba(139, 92, 246, 0.08)',
+    border: 'rgba(139, 92, 246, 0.3)',
+  },
 };
 
 export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) => {
@@ -166,14 +174,14 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
   const config = nodeTypeConfigs[type as NodeType] || nodeTypeConfigs['rest-api'];
   const Icon = config.icon;
 
+  const [, setLocation] = useLocation();
   const selectNode = useBlueprintStore(state => state.selectNode);
   const deleteNode = useBlueprintStore(state => state.deleteNode);
-  const zoomIntoNode = useBlueprintStore(state => state.zoomIntoNode);
   const loadedSystems = useBlueprintStore(state => state.loadedSystems);
 
   const hasSubDiagram = React.useMemo(() => {
     if (!data.entityRef) return false;
-    return loadedSystems.some(s => s.schema.parentRef === data.entityRef);
+    return loadedSystems.some(s => s.schema.id === data.entityRef);
   }, [data.entityRef, loadedSystems]);
 
   const handleClick = (e: React.MouseEvent) => {
@@ -269,7 +277,9 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
           <button
             onClick={e => {
               e.stopPropagation();
-              zoomIntoNode(id);
+              if (data.entityRef) {
+                setLocation(`/workspace/${data.entityRef}`);
+              }
             }}
             className="flex items-center gap-1 bg-brand-500/10 border border-brand-500/30 hover:bg-brand-500/20 active:bg-brand-500/30 text-brand-400 px-1.5 py-0.5 rounded text-[8px] font-bold tracking-wider uppercase transition cursor-pointer z-10"
             title="Click to zoom inside"

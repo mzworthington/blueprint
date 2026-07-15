@@ -3,20 +3,21 @@ import type { NodeChange, EdgeChange, Connection } from '@xyflow/react';
 import type { UiState } from './uiState';
 import type { IoState } from './ioState';
 import {
+  validateGraph,
+  parseSchemaFromYaml,
+  parseSchemaFromJson,
+  serializeSchemaToYaml,
+} from '../../../core';
+import {
   type SystemSchema,
   type SystemNode,
   type SystemDependency,
   type NodeType,
   type C4Level,
   type ValidationResult,
-  validateGraph,
-  parseSchemaFromYaml,
-  parseSchemaFromJson,
-  serializeSchemaToYaml,
   resolveWorkspaceEntityRefs,
-  getSystemIdFromPath,
-  isEntityRef,
-} from '../../../core';
+  slugify,
+} from '@blueprint/core';
 import {
   mapDomainNodeToRFNode,
   mapDomainDepToRFEdge,
@@ -36,7 +37,6 @@ export interface DiagramState {
   yamlCode: string;
   lastError: string | null;
   currentFilePath: string;
-  navigationStack: Array<{ path: string; schema: SystemSchema }>;
   isWorkspaceOpen: boolean;
   workspaceName: string;
   loadedSystems: Array<{ path: string; name: string; schema: SystemSchema }>;
@@ -57,8 +57,6 @@ export interface DiagramState {
   selectNode: (id: string | null) => void;
   updateDependency: (from: string, to: string, updates: Partial<SystemDependency>) => void;
   deleteDependency: (from: string, to: string) => void;
-  zoomIntoNode: (nodeId: string) => Promise<boolean>;
-  zoomOut: () => Promise<boolean>;
   selectSystem: (path: string) => void;
   syncExternalContainers: () => void;
 }
@@ -70,13 +68,20 @@ const applyStateUpdates = (
   nextEdges: BlueprintRFEdge[],
   customSchemaName?: string,
   customSchemaLevel?: C4Level,
-  customParentRef?: string
+  customId?: string | null,
+  customEntityRef?: string | null
 ) => {
   const currentSchema = get().schema;
   const name = customSchemaName ?? currentSchema.name;
   const version = currentSchema.version;
   const level = customSchemaLevel ?? currentSchema.level;
-  const parentRef = customParentRef !== undefined ? customParentRef : currentSchema.parentRef;
+  const id = customId !== undefined ? (customId === null ? undefined : customId) : currentSchema.id;
+  const entityRef =
+    customEntityRef !== undefined
+      ? customEntityRef === null
+        ? undefined
+        : customEntityRef
+      : currentSchema.entityRef;
 
   const edgesWithHandles = nextEdges.map(edge => {
     const sourceNode = nextNodes.find(n => n.id === edge.source);
@@ -94,13 +99,60 @@ const applyStateUpdates = (
     name,
     version,
     level,
-    parentRef,
+    id,
     nextNodes,
-    edgesWithHandles
+    edgesWithHandles,
+    entityRef
   );
 
-  const validationResult = validateGraph(nextSchema);
-  const yamlCode = serializeSchemaToYaml(nextSchema);
+  const nextLoadedSystems =
+    get().loadedSystems?.map((sys: any) => {
+      if (sys.path === get().currentFilePath) {
+        return { ...sys, name: nextSchema.name, schema: nextSchema };
+      }
+      return sys;
+    }) || [];
+
+  let workspaceName = get().workspaceName;
+  const nameChanged = name !== get().schema.name;
+  if (!get().isWorkspaceOpen && nameChanged && (level === 'container' || level === 'context')) {
+    workspaceName = name;
+  } else if (!workspaceName && (level === 'container' || level === 'context')) {
+    workspaceName = name;
+  }
+
+  const resolved = resolveWorkspaceEntityRefs(nextLoadedSystems, workspaceName);
+  const currentFilePath = get().currentFilePath;
+  const fileRefMap = resolved.nodeRefMap[currentFilePath] || {};
+  const activeResolvedSchema = resolved.schemas[currentFilePath];
+  const systemId =
+    activeResolvedSchema?.entityRef || slugify(workspaceName || '').replace(/_/g, '-') || 'default';
+
+  // Map nextSchema nodes and dependencies to fully resolved FQNs
+  const nextSchemaMapped = {
+    ...nextSchema,
+    nodes: nextSchema.nodes.map((node: SystemNode) => ({
+      ...node,
+      entityRef:
+        node.entityRef && node.entityRef.includes('/')
+          ? node.entityRef
+          : fileRefMap[node.entityRef || ''] || `${systemId}/${node.entityRef || ''}`,
+    })),
+    dependencies: nextSchema.dependencies.map((dep: SystemDependency) => {
+      const fromFQN = dep.from.includes('/')
+        ? dep.from
+        : fileRefMap[dep.from] || `${systemId}/${dep.from}`;
+      const toFQN = dep.to.includes('/') ? dep.to : fileRefMap[dep.to] || `${systemId}/${dep.to}`;
+      return {
+        ...dep,
+        from: fromFQN,
+        to: toFQN,
+      };
+    }),
+  };
+
+  const validationResult = validateGraph(nextSchemaMapped);
+  const yamlCode = serializeSchemaToYaml(nextSchemaMapped);
 
   if (!validationResult.isValid && get().logger) {
     get().logger.warn('Schema validation warnings triggered', {
@@ -119,7 +171,13 @@ const applyStateUpdates = (
   );
 
   const highlightedEdges = edgesWithHandles.map(edge => {
-    const isCycleEdge = cycleNodes.has(edge.source) && cycleNodes.has(edge.target);
+    const sourceRef =
+      fileRefMap[edge.source] ||
+      (edge.source.includes('/') ? edge.source : `${systemId}/${edge.source}`);
+    const targetRef =
+      fileRefMap[edge.target] ||
+      (edge.target.includes('/') ? edge.target : `${systemId}/${edge.target}`);
+    const isCycleEdge = cycleNodes.has(sourceRef) && cycleNodes.has(targetRef);
     return {
       ...edge,
       animated: edge.animated || isCycleEdge,
@@ -140,21 +198,11 @@ const applyStateUpdates = (
     };
   });
 
-  const nextLoadedSystems =
-    get().loadedSystems?.map((sys: any) => {
-      if (sys.path === get().currentFilePath) {
-        return { ...sys, name: nextSchema.name, schema: nextSchema };
-      }
-      return sys;
-    }) || [];
-
-  const resolved = resolveWorkspaceEntityRefs(nextLoadedSystems, get().workspaceName);
-  const currentFilePath = get().currentFilePath;
-  const fileRefMap = resolved.nodeRefMap[currentFilePath] || {};
-  const systemId = getSystemIdFromPath(currentFilePath);
-
   const resolvedNextNodes = nextNodes.map(node => {
-    const entityRef = fileRefMap[node.id] || `${systemId}/${node.id}`;
+    const entityRef =
+      node.data.entityRef && node.data.entityRef.includes('/')
+        ? node.data.entityRef
+        : fileRefMap[node.id] || fileRefMap[node.data.entityRef || ''] || `${systemId}/${node.id}`;
     return {
       ...node,
       data: {
@@ -166,15 +214,10 @@ const applyStateUpdates = (
 
   const resolvedSchema = resolved.schemas[currentFilePath]
     ? resolved.schemas[currentFilePath]
-    : {
-        ...nextSchema,
-        nodes: nextSchema.nodes.map(node => ({
-          ...node,
-          entityRef: fileRefMap[node.id] || `${systemId}/${node.id}`,
-        })),
-      };
+    : nextSchemaMapped;
 
   set({
+    workspaceName,
     nodes: resolvedNextNodes,
     edges: highlightedEdges,
     schema: resolvedSchema,
@@ -209,39 +252,42 @@ const initialSchemaResolved =
     ? initialLoadedSystemsResolved[0].schema
     : defaultInitialSchema;
 
-const initialNodes = initialSchemaResolved.nodes.map(mapDomainNodeToRFNode).map(node => {
-  const defaultPath = defaultLoadedSystems[0]?.path || 'blueprint.yaml';
-  const fileRefMap = resolvedInitial.nodeRefMap[defaultPath] || {};
-  const sysId = defaultLoadedSystems[0]
-    ? getSystemIdFromPath(defaultLoadedSystems[0].path)
-    : 'default';
-  const entityRef = fileRefMap[node.id] || `${sysId}/${node.id}`;
-  return {
-    ...node,
-    data: {
-      ...node.data,
-      entityRef,
-    },
-  };
-});
-const initialEdges = initialSchemaResolved.dependencies.map(mapDomainDepToRFEdge).map(edge => {
-  const sourceNode = initialNodes.find(n => n.id === edge.source);
-  const targetNode = initialNodes.find(n => n.id === edge.target);
-  if (!sourceNode || !targetNode) return edge;
-  const { sourceHandle, targetHandle } = getClosestHandles(sourceNode, targetNode);
-  return {
-    ...edge,
-    sourceHandle,
-    targetHandle,
-  };
-});
+const initialNodes = initialSchemaResolved.nodes
+  .map(mapDomainNodeToRFNode)
+  .map((node: BlueprintRFNode) => {
+    const defaultPath = defaultLoadedSystems[0]?.path || 'blueprint.yaml';
+    const fileRefMap = resolvedInitial.nodeRefMap[defaultPath] || {};
+    const sysId = resolvedInitial.schemas[defaultPath]?.entityRef || 'default';
+    const entityRef = fileRefMap[node.id] || `${sysId}/${node.id}`;
+    return {
+      ...node,
+      data: {
+        ...node.data,
+        entityRef,
+      },
+    };
+  });
+const initialEdges = initialSchemaResolved.dependencies
+  .map(mapDomainDepToRFEdge)
+  .map((edge: BlueprintRFEdge) => {
+    const sourceNode = initialNodes.find((n: BlueprintRFNode) => n.id === edge.source);
+    const targetNode = initialNodes.find((n: BlueprintRFNode) => n.id === edge.target);
+    if (!sourceNode || !targetNode) return edge;
+    const { sourceHandle, targetHandle } = getClosestHandles(sourceNode, targetNode);
+    return {
+      ...edge,
+      sourceHandle,
+      targetHandle,
+    };
+  });
 const initialValidation = validateGraph(initialSchemaResolved);
 const initialYaml = serializeSchemaToYaml(initialSchemaResolved);
 
 // Seed database with default systems asynchronously on startup
 setTimeout(() => {
   initialLoadedSystemsResolved.forEach(sys => {
-    const sysId = getSystemIdFromPath(sys.path);
+    const resolvedSysSchema = resolvedInitial.schemas[sys.path] || sys.schema;
+    const sysId = resolvedSysSchema.entityRef || 'default';
     const fileRefMap = resolvedInitial.nodeRefMap[sys.path] || {};
     saveBaselineSchema(sys.path, sys.schema, sysId, fileRefMap).catch(() => {});
     saveWorkingSchema(sys.path, sys.schema, sysId, fileRefMap).catch(() => {});
@@ -260,7 +306,6 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   lastError: null,
   currentFilePath:
     defaultLoadedSystems.length > 0 ? defaultLoadedSystems[0].path : 'blueprint.yaml',
-  navigationStack: [],
   isWorkspaceOpen: false,
   workspaceName: '',
   loadedSystems: initialLoadedSystemsResolved,
@@ -284,7 +329,16 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   initSchema: schema => {
     const rfNodes = schema.nodes.map(mapDomainNodeToRFNode);
     const rfEdges = schema.dependencies.map(mapDomainDepToRFEdge);
-    applyStateUpdates(set, get, rfNodes, rfEdges, schema.name, schema.level, schema.parentRef);
+    applyStateUpdates(
+      set,
+      get,
+      rfNodes,
+      rfEdges,
+      schema.name,
+      schema.level,
+      schema.id ?? null,
+      schema.entityRef ?? null
+    );
   },
 
   updateSchemaName: name => {
@@ -397,13 +451,13 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   },
 
   addNode: type => {
-    const id = `${type}-${Date.now().toString().slice(-4)}`;
+    const entityRef = `${type}-${Date.now().toString().slice(-4)}`;
     const name = `New ${type
       .split('-')
       .map(w => w.charAt(0).toUpperCase() + w.slice(1))
       .join(' ')}`;
     const newDomainNode: SystemNode = {
-      id,
+      entityRef,
       type,
       name,
       properties: {},
@@ -411,7 +465,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
       y: 100 + Math.random() * 200,
     };
 
-    get().logger.info('Instantiating new visual node component', { id, type, name });
+    get().logger.info('Instantiating new visual node component', { entityRef, type, name });
 
     const newRFNode = mapDomainNodeToRFNode(newDomainNode);
     applyStateUpdates(set, get, [...get().nodes, newRFNode], get().edges);
@@ -437,28 +491,29 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
     });
 
     let nextEdges = get().edges;
-    if (updates.id && updates.id !== id) {
+    if (updates.entityRef && updates.entityRef !== id) {
       nextNodes.forEach(n => {
         if (n.id === id) {
-          n.id = updates.id!;
-          n.data.id = updates.id!;
+          n.id = updates.entityRef!;
+          n.data.id = updates.entityRef!;
+          n.data.entityRef = updates.entityRef!;
         }
       });
       nextEdges = get().edges.map(re => {
         const updated = { ...re };
         if (re.source === id) {
-          updated.source = updates.id!;
-          updated.id = `edge-${updates.id}-${re.target}`;
+          updated.source = updates.entityRef!;
+          updated.id = `edge-${updates.entityRef}-${re.target}`;
         }
         if (re.target === id) {
-          updated.target = updates.id!;
-          updated.id = `edge-${re.source}-${updates.id}`;
+          updated.target = updates.entityRef!;
+          updated.id = `edge-${re.source}-${updates.entityRef}`;
         }
         return updated;
       });
 
       if (get().selectedNodeId === id) {
-        set({ selectedNodeId: updates.id });
+        set({ selectedNodeId: updates.entityRef });
       }
     }
 
@@ -509,69 +564,6 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
     applyStateUpdates(set, get, get().nodes, nextEdges);
   },
 
-  zoomIntoNode: async (nodeId: string) => {
-    const { schema, currentFilePath, navigationStack, loadedSystems, logger } = get();
-    const node = schema.nodes.find(n => n.id === nodeId);
-    if (!node) return false;
-
-    const entityRef = node.entityRef || `${getSystemIdFromPath(currentFilePath)}/${node.id}`;
-    const targetSystem = loadedSystems.find(s => s.schema.parentRef === entityRef);
-
-    if (targetSystem) {
-      logger.info('Zooming into sub-diagram via entityRef', { node: node.name, entityRef });
-      const newStack = [...navigationStack, { path: currentFilePath, schema }];
-      set({
-        currentFilePath: targetSystem.path,
-        navigationStack: newStack,
-        selectedNodeId: null,
-      });
-      get().initSchema(targetSystem.schema);
-      return true;
-    }
-
-    return false;
-  },
-
-  zoomOut: async () => {
-    const { navigationStack, schema, loadedSystems, logger } = get();
-    if (navigationStack.length > 0) {
-      logger.info('Zooming out to parent diagram');
-      const newStack = [...navigationStack];
-      const parentState = newStack.pop();
-
-      if (parentState) {
-        set({
-          currentFilePath: parentState.path,
-          navigationStack: newStack,
-          selectedNodeId: null,
-        });
-        get().initSchema(parentState.schema);
-        return true;
-      }
-      return false;
-    }
-
-    if (schema.parentRef && isEntityRef(schema.parentRef)) {
-      const parentSystem = loadedSystems.find(s =>
-        s.schema.nodes.some(n => n.entityRef === schema.parentRef)
-      );
-      if (parentSystem) {
-        logger.info('Zooming out to parent diagram via entityRef lookup', {
-          parentRef: schema.parentRef,
-        });
-        set({
-          currentFilePath: parentSystem.path,
-          selectedNodeId: null,
-        });
-        get().initSchema(parentSystem.schema);
-        return true;
-      }
-    }
-
-    logger.info('Already at root of diagram, cannot zoom out');
-    return false;
-  },
-
   syncExternalContainers: () => {
     const { schema, loadedSystems, logger } = get();
     if (schema.level !== 'component') {
@@ -585,22 +577,20 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
       return;
     }
 
-    const activeContainerNode = parentSystem.schema.nodes.find(
-      n => n.entityRef === schema.parentRef
-    );
+    const activeContainerNode = parentSystem.schema.nodes.find(n => n.entityRef === schema.id);
 
     if (!activeContainerNode) {
       logger.warn(
-        `Could not map the current component diagram to any container node in parent schema. Make sure the schema has a valid parentRef.`
+        `Could not map the current component diagram to any container node in parent schema. Make sure the schema has a valid id.`
       );
       return;
     }
 
     const relatedContainerIds = new Set<string>();
     parentSystem.schema.dependencies.forEach(dep => {
-      if (dep.from === activeContainerNode.id) {
+      if (dep.from === activeContainerNode.entityRef) {
         relatedContainerIds.add(dep.to);
-      } else if (dep.to === activeContainerNode.id) {
+      } else if (dep.to === activeContainerNode.entityRef) {
         relatedContainerIds.add(dep.from);
       }
     });
@@ -635,7 +625,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
           addedCount++;
         }
       } else {
-        const extNode = parentSystem.schema.nodes.find(n => n.id === extId);
+        const extNode = parentSystem.schema.nodes.find(n => n.entityRef === extId);
         if (extNode) {
           maxX += 180;
           if (maxX > 600) {
@@ -644,7 +634,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
           }
 
           const newRFNode = mapDomainNodeToRFNode({
-            id: extNode.id,
+            entityRef: extNode.entityRef,
             type: extNode.type,
             name: `${extNode.name} (External)`,
             external: true,

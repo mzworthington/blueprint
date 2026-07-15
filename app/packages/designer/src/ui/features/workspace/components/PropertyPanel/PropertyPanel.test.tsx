@@ -5,22 +5,23 @@ import { useBlueprintStore } from '../../../../../application/store/store';
 
 describe('PropertyPanel UI Component', () => {
   beforeEach(() => {
+    useBlueprintStore.setState({
+      selectedNodeId: null,
+      currentFilePath: 'blueprint.yaml',
+      workspaceName: undefined,
+      loadedSystems: [],
+    });
+
     const { initSchema } = useBlueprintStore.getState();
     initSchema({
       name: 'Cloud Infrastructure Workspace',
       version: '1.0.0',
       level: 'container',
       nodes: [
-        { id: 'gateway-api', type: 'rest-api', name: 'Gateway API', x: 0, y: 0 },
-        { id: 'session-store', type: 'cache-store', name: 'Session Cache', x: 10, y: 10 },
+        { entityRef: 'gateway-api', type: 'rest-api', name: 'Gateway API', x: 0, y: 0 },
+        { entityRef: 'session-store', type: 'cache-store', name: 'Session Cache', x: 10, y: 10 },
       ],
       dependencies: [],
-    });
-
-    useBlueprintStore.setState({
-      selectedNodeId: null,
-      currentFilePath: 'blueprint.yaml',
-      workspaceName: undefined,
     });
   });
 
@@ -76,14 +77,14 @@ describe('PropertyPanel UI Component', () => {
   it('should show cycle warning alert when circular dependency is triggered', () => {
     const { onConnect } = useBlueprintStore.getState();
     onConnect({
-      source: 'gateway-api',
-      target: 'session-store',
+      source: 'cloud-infrastructure-workspace/gateway-api',
+      target: 'cloud-infrastructure-workspace/session-store',
       sourceHandle: null,
       targetHandle: null,
     });
     onConnect({
-      source: 'session-store',
-      target: 'gateway-api',
+      source: 'cloud-infrastructure-workspace/session-store',
+      target: 'cloud-infrastructure-workspace/gateway-api',
       sourceHandle: null,
       targetHandle: null,
     });
@@ -113,12 +114,12 @@ describe('PropertyPanel UI Component', () => {
 
     const updatedNode = useBlueprintStore
       .getState()
-      .schema.nodes.find(n => n.id === 'api-gateway-proxy');
+      .schema.nodes.find(n => n.entityRef === 'cloud-infrastructure-workspace/api-gateway-proxy');
     expect(updatedNode?.name).toBe('API Gateway Proxy');
-    expect(updatedNode?.entityRef).toBe('default/api-gateway-proxy');
+    expect(updatedNode?.entityRef).toBe('cloud-infrastructure-workspace/api-gateway-proxy');
 
     const entityRefInput = screen.getByLabelText(/Entity Reference/i);
-    expect(entityRefInput).toHaveValue('default/api-gateway-proxy');
+    expect(entityRefInput).toHaveValue('cloud-infrastructure-workspace/api-gateway-proxy');
   });
 
   it('should allow adding custom metadata attributes to the component', () => {
@@ -134,9 +135,12 @@ describe('PropertyPanel UI Component', () => {
     fireEvent.change(valueInput, { target: { value: '443' } });
     fireEvent.click(addButton);
 
-    const updatedNode = useBlueprintStore.getState().schema.nodes.find(n => n.id === 'gateway-api');
+    const updatedNode = useBlueprintStore
+      .getState()
+      .schema.nodes.find(n => n.entityRef === 'cloud-infrastructure-workspace/gateway-api');
     expect(updatedNode?.properties?.port).toBe('443');
   });
+
   it('should allow editing active connection descriptions', () => {
     const { onConnect } = useBlueprintStore.getState();
     onConnect({

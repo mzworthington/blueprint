@@ -25,15 +25,11 @@ fn main() {
         "#[serde(skip_serializing_if = \"Option::is_none\", default)]",
     );
     config.field_attribute(
-        "blueprint.v1.SystemNode.entity_ref",
-        "#[serde(skip_serializing_if = \"Option::is_none\", default)]",
-    );
-    config.field_attribute(
         "blueprint.v1.SystemDependency.description",
         "#[serde(skip_serializing_if = \"Option::is_none\", default)]",
     );
     config.field_attribute(
-        "blueprint.v1.SystemSchema.parent_ref",
+        "blueprint.v1.SystemSchema.id",
         "#[serde(skip_serializing_if = \"Option::is_none\", default)]",
     );
 

@@ -54,7 +54,7 @@ describe('WorkspacePage Component', () => {
       schema: {
         name: 'Initial Name',
         version: '1.0.0',
-        level: 'context',
+        level: 'container',
         nodes: [],
         dependencies: [],
       },
@@ -65,7 +65,7 @@ describe('WorkspacePage Component', () => {
           schema: {
             name: 'Initial Name',
             version: '1.0.0',
-            level: 'context',
+            level: 'container',
             nodes: [],
             dependencies: [],
           },
@@ -76,7 +76,7 @@ describe('WorkspacePage Component', () => {
           schema: {
             name: 'My System',
             version: '1.0.0',
-            level: 'context',
+            level: 'container',
             nodes: [],
             dependencies: [],
           },
@@ -116,8 +116,13 @@ describe('WorkspacePage Component', () => {
   });
 
   it('should synchronize workspace system selection from URL params', () => {
+    mockLocation = '/workspace/my-system';
     mockMatch = true;
     mockParams = { '*': 'my-system' };
+
+    useBlueprintStore.setState({
+      workspaceName: '', // clear workspaceName so getSchemaEntityRef matches my-system!
+    });
 
     const spySelectSystem = vi.spyOn(useBlueprintStore.getState(), 'selectSystem');
 
@@ -129,106 +134,14 @@ describe('WorkspacePage Component', () => {
 
   it('should redirect route to slugified workspace name if on a workspace route and path mismatches', () => {
     mockLocation = '/';
-    useBlueprintStore.setState({ workspaceName: 'Awesome Redirect System' });
+    mockMatch = false;
+    mockParams = { '*': '' };
+    useBlueprintStore.setState({ workspaceName: 'Awesome Redirect System', isWorkspaceOpen: true });
 
     render(<WorkspacePage />);
 
     expect(mockSetLocation).toHaveBeenCalledWith('/workspace/awesome-redirect-system', {
       replace: true,
     });
-  });
-
-  it('should append node entityRef to URL path when a node is selected', () => {
-    mockLocation = '/workspace/initial-name';
-    mockParams = { '*': 'initial-name' };
-
-    useBlueprintStore.setState({
-      workspaceName: 'Initial Name',
-      selectedNodeId: 'gateway-api',
-      schema: {
-        name: 'Initial Name',
-        version: '1.0.0',
-        level: 'context',
-        nodes: [
-          {
-            id: 'gateway-api',
-            type: 'rest-api',
-            name: 'Gateway API',
-            entityRef: 'initial-name/gateway-api',
-          },
-        ],
-        dependencies: [],
-      },
-    });
-
-    render(<WorkspacePage />);
-
-    expect(mockSetLocation).toHaveBeenCalledWith('/workspace/initial-name/gateway-api', {
-      replace: false,
-    });
-  });
-
-  it('should select node when entityRef path is present in URL', async () => {
-    mockLocation = '/workspace/initial-name/session-store';
-    mockParams = { '*': 'initial-name/session-store' };
-
-    const spySelectNode = vi.spyOn(useBlueprintStore.getState(), 'selectNode');
-
-    useBlueprintStore.setState({
-      workspaceName: 'Initial Name',
-      selectedNodeId: null,
-      schema: {
-        name: 'Initial Name',
-        version: '1.0.0',
-        level: 'context',
-        nodes: [
-          {
-            id: 'gateway-api',
-            type: 'rest-api',
-            name: 'Gateway API',
-            entityRef: 'initial-name/gateway-api',
-          },
-          {
-            id: 'session-store',
-            type: 'cache-store',
-            name: 'Session Cache',
-            entityRef: 'initial-name/session-store',
-          },
-        ],
-        dependencies: [],
-      },
-      loadedSystems: [
-        {
-          path: 'initial.yaml',
-          name: 'Initial Name',
-          schema: {
-            name: 'Initial Name',
-            version: '1.0.0',
-            level: 'context',
-            nodes: [
-              {
-                id: 'gateway-api',
-                type: 'rest-api',
-                name: 'Gateway API',
-                entityRef: 'initial-name/gateway-api',
-              },
-              {
-                id: 'session-store',
-                type: 'cache-store',
-                name: 'Session Cache',
-                entityRef: 'initial-name/session-store',
-              },
-            ],
-            dependencies: [],
-          },
-        },
-      ],
-    });
-
-    render(<WorkspacePage />);
-
-    expect(spySelectNode).toHaveBeenCalledWith('session-store');
-
-    spySelectNode.mockRestore();
   });
 });

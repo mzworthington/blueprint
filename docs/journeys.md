@@ -42,7 +42,7 @@ Allows designers to inspect internal details of components by double-clicking no
 ### 2. Recursive Level Navigation
 
 - Double-click on components configured with a sub-diagram reference (`c4Ref`) to zoom down into container/component levels.
-- Navigate back up using the interactive Breadcrumbs bar at the top, or press `Escape` / `Backspace`.
+- Navigate back up using the interactive Breadcrumbs bar at the top.
 
 ### 3. Multi-File Workspace Swaps
 

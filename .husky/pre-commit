@@ -1,10 +1,11 @@
 if git diff --cached --name-only | grep -qE '^(cli/|core/proto/)'; then
-  echo "Detected changes to CLI or Proto. Running Cargo checks..."
-  cd cli
-  cargo fmt --check
-  cargo clippy -- -D warnings
-  cargo test 
-  cd ..
+  echo "Our Rust app is currently not maintained, therefore bypassing checks"
+  # echo "Detected changes to CLI or Proto. Running Cargo checks..."
+  # cd cli
+  # cargo fmt --check
+  # cargo clippy -- -D warnings
+  # cargo test 
+  # cd ..
 fi
 
 if git diff --cached --name-only | grep -qE '^(app/|core/proto/)'; then

@@ -72,12 +72,14 @@ async function run() {
     args.some(a => a.startsWith('--parser=')) ||
     args.some(a => a.startsWith('--glob=')) ||
     args.some(a => a.startsWith('--output=')) ||
+    args.some(a => a.startsWith('--context=')) ||
     !process.stdout.isTTY ||
     process.env.CI;
 
   let parserType = 'ts-morph';
   let globPattern = '**/*.{ts,tsx,cs,java,go}';
   let outputDir = process.env.BLUEPRINT_OUTPUT_DIR || 'blueprints';
+  let contextName = 'Blueprint';
 
   // Headless flag overrides
   const parserArg = args.find(a => a.startsWith('--parser='));
@@ -97,6 +99,11 @@ async function run() {
     outputDir = outputArg.split('=')[1];
   }
 
+  const contextArg = args.find(a => a.startsWith('--context='));
+  if (contextArg) {
+    contextName = contextArg.split('=')[1];
+  }
+
   if (!isHeadless) {
     p.intro(`\n🔹 ${pc.bold(pc.cyan('blueprint'))}${pc.gray(' • system architecture generator')}`);
 
@@ -114,6 +121,18 @@ async function run() {
       process.exit(0);
     }
     parserType = selectedParser as string;
+
+    const contextNameInput = await p.text({
+      message: 'Enter context name:',
+      placeholder: 'Blueprint',
+      defaultValue: 'Blueprint',
+    });
+
+    if (p.isCancel(contextNameInput)) {
+      p.cancel('Analysis cancelled.');
+      process.exit(0);
+    }
+    contextName = (contextNameInput as string) || 'Blueprint';
 
     globPattern = await askPathWithTabComplete('Glob pattern/directory to scan:', globPattern);
     outputDir = await askPathWithTabComplete('Directory to output schemas:', outputDir);
@@ -141,7 +160,7 @@ async function run() {
       spinner.start('Analyzing codebase structure...');
     }
     const absoluteOutputDir = path.resolve(process.cwd(), outputDir);
-    await analyzer.runAnalysis(globPattern, outputDir);
+    await analyzer.runAnalysis(contextName, outputDir, globPattern);
     if (spinner) {
       spinner.stop(
         pc.green(`Successfully generated visual layout levels inside: ${absoluteOutputDir}`)

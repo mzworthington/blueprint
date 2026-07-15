@@ -50,7 +50,7 @@ export const DiffMenu: React.FC<DiffMenuProps> = ({ isOpen, onClose }) => {
         system?.schema.name,
         system?.schema.version,
         system?.schema.level,
-        system?.schema.parentRef
+        system?.schema.id
       );
 
       initSchema(originalSchema);

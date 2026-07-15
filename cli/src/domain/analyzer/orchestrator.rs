@@ -56,10 +56,10 @@ impl CodebaseAnalyzer {
             let info = get_container_info(node, node.get_property_string("filepath"));
 
             container_nodes_map
-                .entry(info.id.clone())
+                .entry(info.entity_ref.clone())
                 .or_insert_with(|| {
                     let mut c_node = SystemNode {
-                        id: info.id,
+                        entity_ref: info.entity_ref,
                         r#type: info.r#type as i32,
                         name: info.name,
                         external: Some(false),
@@ -67,7 +67,6 @@ impl CodebaseAnalyzer {
                         is_test: Some(false),
                         x: None,
                         y: None,
-                        entity_ref: None,
                     };
                     c_node.set_property_string("description", &info.description);
                     c_node.set_property_string("technology", &info.technology);
@@ -82,14 +81,14 @@ impl CodebaseAnalyzer {
                 let from_info = get_container_info(f_node, f_node.get_property_string("filepath"));
                 let to_info = get_container_info(t_node, t_node.get_property_string("filepath"));
 
-                if from_info.id != to_info.id {
+                if from_info.entity_ref != to_info.entity_ref {
                     let already_exists = container_dependencies_list
                         .iter()
-                        .any(|d| d.from == from_info.id && d.to == to_info.id);
+                        .any(|d| d.from == from_info.entity_ref && d.to == to_info.entity_ref);
                     if !already_exists {
                         container_dependencies_list.push(SystemDependency {
-                            from: from_info.id,
-                            to: to_info.id,
+                            from: from_info.entity_ref,
+                            to: to_info.entity_ref,
                             r#type: edge.r#type,
                             description: Some("Inter-container request / connection".to_string()),
                         });
@@ -142,7 +141,7 @@ impl CodebaseAnalyzer {
                 name: "Workspace Context".to_string(),
                 version: "1.0.0".to_string(),
                 level: C4Level::Context as i32,
-                parent_ref: None,
+                id: None,
                 nodes: Vec::new(),
                 dependencies: Vec::new(),
             }
@@ -152,7 +151,7 @@ impl CodebaseAnalyzer {
             name: format!("{} - Container Level", display_name),
             version: "1.0.0".to_string(),
             level: C4Level::Container as i32,
-            parent_ref: Some(system_name.clone()),
+            id: Some(system_name.clone()),
             nodes: layout_containers,
             dependencies: container_dependencies_list,
         };
@@ -174,7 +173,7 @@ impl CodebaseAnalyzer {
         let display_name_clone = display_name.clone();
         let mut found = false;
         for node in &mut context_schema.nodes {
-            if node.id == node_id {
+            if node.entity_ref == node_id {
                 node.name = display_name_clone.clone();
                 found = true;
                 break;
@@ -182,7 +181,7 @@ impl CodebaseAnalyzer {
         }
         if !found {
             let system_node = SystemNode {
-                id: node_id,
+                entity_ref: node_id,
                 r#type: NodeType::SoftwareSystem as i32,
                 name: display_name_clone,
                 external: Some(false),
@@ -190,7 +189,6 @@ impl CodebaseAnalyzer {
                 is_test: Some(false),
                 x: None,
                 y: None,
-                entity_ref: None,
             };
             context_schema.nodes.push(system_node);
         }
@@ -221,7 +219,7 @@ impl CodebaseAnalyzer {
                 .iter()
                 .filter(|n| {
                     let info = get_container_info(n, n.get_property_string("filepath"));
-                    info.id == *cont_id
+                    info.entity_ref == *cont_id
                 })
                 .collect();
 
@@ -231,8 +229,8 @@ impl CodebaseAnalyzer {
                     let from_node = nodes_map.get(&edge.from);
                     let to_node = nodes_map.get(&edge.to);
                     if let (Some(f), Some(t)) = (from_node, to_node) {
-                        let from_cont = get_container_info(f, f.get_property_string("filepath")).id;
-                        let to_cont = get_container_info(t, t.get_property_string("filepath")).id;
+                        let from_cont = get_container_info(f, f.get_property_string("filepath")).entity_ref;
+                        let to_cont = get_container_info(t, t.get_property_string("filepath")).entity_ref;
                         from_cont == *cont_id || to_cont == *cont_id
                     } else {
                         false
@@ -243,7 +241,7 @@ impl CodebaseAnalyzer {
 
             let mut node_ids = HashSet::new();
             for n in &internal_nodes {
-                node_ids.insert(n.id.clone());
+                node_ids.insert(n.entity_ref.clone());
             }
             for e in &relevant_edges {
                 node_ids.insert(e.from.clone());
@@ -255,10 +253,10 @@ impl CodebaseAnalyzer {
                 .map(|id| {
                     let node = nodes_map.get(&id).unwrap().clone();
                     let info = get_container_info(&node, node.get_property_string("filepath"));
-                    let is_external = info.id != *cont_id;
+                    let is_external = info.entity_ref != *cont_id;
 
                     SystemNode {
-                        id: node.id,
+                        entity_ref: node.entity_ref,
                         r#type: node.r#type,
                         name: if is_external {
                             format!("{} ({})", node.name, info.name)
@@ -270,7 +268,6 @@ impl CodebaseAnalyzer {
                         is_test: node.is_test,
                         x: node.x,
                         y: node.y,
-                        entity_ref: node.entity_ref,
                     }
                 })
                 .collect();
@@ -283,7 +280,7 @@ impl CodebaseAnalyzer {
                 name: format!("{} - {} Components", display_name, container_node.name),
                 version: "1.0.0".to_string(),
                 level: C4Level::Component as i32,
-                parent_ref: Some(format!("{}/{}", system_name, cont_id)),
+                id: Some(format!("{}/{}", system_name, cont_id)),
                 nodes: layout_sub_nodes,
                 dependencies: relevant_edges,
             };
