@@ -197,4 +197,41 @@ describe('PropertyPanel UI Component', () => {
     expect(screen.getByTestId('forensics-concern-badge')).toHaveTextContent(/Hotspot/i);
     expect(screen.getByText('18')).toBeInTheDocument();
   });
+
+  it('wires coupling toggle for a selected node with on-canvas peers', () => {
+    const { initSchema } = useBlueprintStore.getState();
+    initSchema({
+      name: 'Code',
+      version: '1.0.0',
+      level: 'code',
+      nodes: [
+        {
+          entityRef: 'comp-a',
+          type: 'component',
+          name: 'A',
+          x: 0,
+          y: 0,
+          properties: { filepath: 'src/a.ts' },
+          forensics: {
+            coupledFiles: [{ path: 'src/b.ts', score: 0.85, sharedCommits: 5 }],
+          },
+        },
+        {
+          entityRef: 'comp-b',
+          type: 'component',
+          name: 'B',
+          x: 40,
+          y: 40,
+          properties: { filepath: 'src/b.ts' },
+        },
+      ],
+      dependencies: [],
+    });
+
+    useBlueprintStore.setState({ selectedNodeId: 'comp-a', showCoupling: false });
+    render(<PropertyPanel />);
+
+    fireEvent.click(screen.getByTestId('toggle-show-coupling'));
+    expect(useBlueprintStore.getState().showCoupling).toBe(true);
+  });
 });

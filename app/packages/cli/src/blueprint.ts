@@ -31,7 +31,7 @@ async function promptInteractiveGit(): Promise<InteractiveGitChoice> {
       { value: 'none', label: 'No — architecture only' },
       { value: 'full', label: 'Yes — attach forensics onto systems and nodes' },
     ],
-    initialValue: 'none',
+    initialValue: 'full',
   });
 
   if (p.isCancel(mode)) {

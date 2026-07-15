@@ -28,7 +28,7 @@ export function applyInteractiveGitChoice(
   };
 }
 
-/** True when interactive flow should ask about git (CLI did not already enable via flags). */
+/** True when interactive flow should ask about git (CLI did not already decide via flags). */
 export function shouldPromptForGit(plan: BlueprintCliPlan): boolean {
-  return !plan.isHeadless && !plan.runGitForensics;
+  return !plan.isHeadless && !plan.gitDecisionExplicit;
 }

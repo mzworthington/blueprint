@@ -13,7 +13,7 @@ describe('applyInteractiveGitChoice', () => {
     expect(next.runGitForensics).toBe(false);
   });
 
-  it('enables forensics enrich when user selects full', () => {
+  it('keeps forensics enrich when user selects full', () => {
     const plan = parseBlueprintArgv([]);
     const next = applyInteractiveGitChoice(plan, { mode: 'full', sinceDays: 60 });
     expect(next.runGitForensics).toBe(true);
@@ -34,8 +34,8 @@ describe('applyInteractiveGitChoice', () => {
 });
 
 describe('shouldPromptForGit', () => {
-  it('prompts in interactive mode when git was not requested via flags', () => {
-    const plan = { ...parseBlueprintArgv([]), isHeadless: false, runGitForensics: false };
+  it('prompts in interactive mode when git was not decided via flags', () => {
+    const plan = { ...parseBlueprintArgv([]), isHeadless: false };
     expect(shouldPromptForGit(plan)).toBe(true);
   });
 
@@ -46,5 +46,11 @@ describe('shouldPromptForGit', () => {
   it('does not prompt when --git already set', () => {
     const plan = { ...parseBlueprintArgv(['--git']), isHeadless: false };
     expect(shouldPromptForGit(plan)).toBe(false);
+  });
+
+  it('does not prompt when --no-git already set', () => {
+    const plan = { ...parseBlueprintArgv(['--no-git']), isHeadless: false };
+    expect(shouldPromptForGit(plan)).toBe(false);
+    expect(plan.runGitForensics).toBe(false);
   });
 });

@@ -159,7 +159,15 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   },
 
   onEdgesChange: changes => {
-    const nextEdges = applyEdgeChanges(changes, get().edges) as unknown as BlueprintRFEdge[];
+    // Coupling overlays are display-only (id prefix `coupling-`) and must not mutate schema edges.
+    const persistedChanges = changes.filter(
+      change => !('id' in change) || !String(change.id).startsWith('coupling-')
+    );
+    if (persistedChanges.length === 0) return;
+    const nextEdges = applyEdgeChanges(
+      persistedChanges,
+      get().edges
+    ) as unknown as BlueprintRFEdge[];
     applyStateUpdates(set, get, get().nodes, nextEdges);
   },
 

@@ -37,7 +37,8 @@ pnpm dev:cli --headless --parser=ts-morph --glob="**/*.{ts,tsx}" --output="bluep
 | `--ignore="<a,b>"`                 | Extra ignore globs (comma-separated)                              |
 | `--systems="<a,b>"`                | Restrict discovery to these system roots                          |
 | `--rollup-modules`                 | Collapse `*-module-*` packages into a prefix system               |
-| `--git`                            | Enrich written blueprints with Git forensics on systems/nodes     |
+| `--git`                            | Explicitly enable Git forensics (on by default)                   |
+| `--no-git`                         | Skip Git forensics enrichment                                     |
 | `--git-only`                       | Headless architecture + forensics enrich (same deliverable)       |
 | `--git-since=<days>`               | Forensics lookback window (default 90)                            |
 
@@ -46,10 +47,13 @@ Interrupt with **Ctrl+C** (or SIGTERM). First signal aborts cooperatively; a sec
 ### Git forensics examples
 
 ```bash
-# Architecture + forensics attached onto blueprint nodes
-pnpm dev:cli --headless --git --output=blueprints
+# Architecture + forensics (default) attached onto blueprint nodes
+pnpm dev:cli --headless --output=blueprints
 
-# Headless enrich (writes blueprints with node.forensics)
+# Architecture without forensics
+pnpm dev:cli --headless --no-git --output=blueprints
+
+# Headless enrich with custom lookback
 pnpm --filter @blueprint/cli exec tsx src/blueprint.ts --git-only --git-since=90
 ```
 

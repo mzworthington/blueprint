@@ -19,6 +19,8 @@ export interface BlueprintCliPlan {
   isHeadless: boolean;
   runArchitecture: boolean;
   runGitForensics: boolean;
+  /** True when CLI flags already decided git on/off (skip interactive git prompt). */
+  gitDecisionExplicit: boolean;
   architecture: ArchitectureCliFlags;
   git: GitForensicsCliFlags;
 }
@@ -47,9 +49,10 @@ function parseSinceDays(raw: string | undefined): number | undefined {
   return Number.isFinite(days) && days > 0 ? days : undefined;
 }
 
-function hasGitIntent(argv: string[]): boolean {
+function hasExplicitGitDecision(argv: string[]): boolean {
   return (
     argv.includes('--git') ||
+    argv.includes('--no-git') ||
     argv.includes('--git-only') ||
     argv.some(a => a.startsWith('--git-since')) ||
     argv[0] === 'forensics'
@@ -57,15 +60,17 @@ function hasGitIntent(argv: string[]): boolean {
 }
 
 /**
- * Parse unified blueprint CLI argv (architecture + optional git forensics enrich).
+ * Parse unified blueprint CLI argv (architecture + git forensics enrich by default).
  * Legacy `forensics …` maps to headless architecture + forensics attach.
+ * Pass `--no-git` to skip forensics enrichment.
  */
 export function parseBlueprintArgv(argv: string[]): BlueprintCliPlan {
   const legacy = argv[0] === 'forensics';
   const legacyRest = legacy ? argv.slice(1) : argv;
 
-  const gitIntent = hasGitIntent(argv);
+  const noGit = argv.includes('--no-git');
   const gitOnly = argv.includes('--git-only') || legacy;
+  const gitDecisionExplicit = hasExplicitGitDecision(argv);
 
   const sinceFromGit =
     flagValue(argv, '--git-since') ?? (legacy ? flagValue(legacyRest, '--since') : undefined);
@@ -109,7 +114,8 @@ export function parseBlueprintArgv(argv: string[]): BlueprintCliPlan {
     isHeadless,
     /** Always generate blueprints; git-only still enriches them. */
     runArchitecture: true,
-    runGitForensics: gitIntent,
+    runGitForensics: !noGit,
+    gitDecisionExplicit,
     architecture,
     git,
   };

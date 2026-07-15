@@ -213,16 +213,22 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
     ? 'border-dashed border-slate-700 bg-slate-950/45 opacity-70 shadow-none hover:border-slate-500'
     : selected
       ? 'border-brand-500 shadow-[0_0_15px_rgba(139,92,246,0.3)] bg-slate-900/90 scale-102'
-      : concernBorder
-        ? `${concernBorder} bg-slate-950/80 hover:border-slate-700`
-        : 'border-slate-800 bg-slate-950/80 hover:border-slate-700';
+      : data.couplingHighlight
+        ? 'border-amber-500/70 shadow-[0_0_14px_rgba(245,158,11,0.25)] bg-slate-900/90'
+        : concernBorder
+          ? `${concernBorder} bg-slate-950/80 hover:border-slate-700`
+          : 'border-slate-800 bg-slate-950/80 hover:border-slate-700';
 
   return (
     <div
       onClick={handleClick}
+      data-coupling-highlight={data.couplingHighlight ? 'true' : undefined}
       className={`relative w-64 rounded-xl border p-4 transition-all duration-200 cursor-pointer ${borderClass}`}
       style={{
-        boxShadow: selected || data.external ? undefined : '0 4px 12px rgba(0, 0, 0, 0.25)',
+        boxShadow:
+          selected || data.external || data.couplingHighlight
+            ? undefined
+            : '0 4px 12px rgba(0, 0, 0, 0.25)',
         backdropFilter: 'blur(8px)',
       }}
     >
@@ -352,6 +358,14 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
               className="bg-amber-950/50 text-amber-300 px-1.5 py-0.5 rounded text-[9px] font-bold border border-amber-900/40 tracking-normal"
             >
               SILO
+            </span>
+          )}
+          {data.couplingHighlight && (
+            <span
+              data-testid="forensics-badge-coupled"
+              className="bg-amber-950/50 text-amber-200 px-1.5 py-0.5 rounded text-[9px] font-bold border border-amber-800/50 tracking-normal"
+            >
+              COUPLED
             </span>
           )}
           {data.isTest && (

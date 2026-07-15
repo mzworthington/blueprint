@@ -7,6 +7,10 @@ import {
 
 interface ForensicsSectionProps {
   forensics: NodeForensics;
+  showCoupling?: boolean;
+  onToggleShowCoupling?: () => void;
+  /** How many coupled files resolve to nodes on the current canvas. */
+  linkedCouplingCount?: number;
 }
 
 function concernBadgeClasses(level: ConcernLevel): string {
@@ -46,7 +50,12 @@ function MetricRow({
   );
 }
 
-export const ForensicsSection: React.FC<ForensicsSectionProps> = ({ forensics }) => {
+export const ForensicsSection: React.FC<ForensicsSectionProps> = ({
+  forensics,
+  showCoupling = false,
+  onToggleShowCoupling,
+  linkedCouplingCount = 0,
+}) => {
   const concern = evaluateForensicsConcern(forensics);
   const badgeLabel =
     concern.reasons[0] ??
@@ -138,9 +147,45 @@ export const ForensicsSection: React.FC<ForensicsSectionProps> = ({ forensics })
 
       {coupled.length > 0 && (
         <div className="space-y-1.5">
-          <p className="text-[10px] font-mono text-slate-500 uppercase tracking-wider">
-            Coupled files
-          </p>
+          <div className="flex items-center justify-between gap-2">
+            <p className="text-[10px] font-mono text-slate-500 uppercase tracking-wider">
+              Coupled files
+            </p>
+            {onToggleShowCoupling && (
+              <button
+                type="button"
+                data-testid="toggle-show-coupling"
+                aria-pressed={showCoupling}
+                onClick={onToggleShowCoupling}
+                disabled={linkedCouplingCount === 0}
+                title={
+                  linkedCouplingCount === 0
+                    ? 'No coupled peers on this diagram'
+                    : showCoupling
+                      ? 'Hide coupling on canvas'
+                      : 'Show coupling on canvas'
+                }
+                className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none disabled:cursor-not-allowed disabled:opacity-40 ${
+                  showCoupling ? 'bg-amber-600' : 'bg-slate-800'
+                }`}
+              >
+                <span
+                  className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                    showCoupling ? 'translate-x-4' : 'translate-x-0'
+                  }`}
+                />
+              </button>
+            )}
+          </div>
+          {onToggleShowCoupling && (
+            <p className="text-[10px] text-slate-500">
+              {linkedCouplingCount === 0
+                ? 'Coupled peers are not on this diagram'
+                : showCoupling
+                  ? `Showing ${linkedCouplingCount} coupling link${linkedCouplingCount === 1 ? '' : 's'} on canvas`
+                  : `Show ${linkedCouplingCount} coupling link${linkedCouplingCount === 1 ? '' : 's'} on canvas`}
+            </p>
+          )}
           {coupled.map(c => (
             <div
               key={c.path}

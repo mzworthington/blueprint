@@ -10,6 +10,7 @@ import { ForensicsSection } from './ForensicsSection';
 import { ConnectionsSection } from './ConnectionsSection';
 import { ComponentCatalog } from './ComponentCatalog';
 import { ValidationSection } from './ValidationSection';
+import { resolveCouplingEdges } from '../../../../../application/forensics/resolveCouplingEdges';
 
 export const PropertyPanel: React.FC = () => {
   const {
@@ -28,6 +29,8 @@ export const PropertyPanel: React.FC = () => {
     deleteDependency,
     showTests,
     toggleShowTests,
+    showCoupling,
+    toggleShowCoupling,
     rightCollapsed,
     toggleRightCollapsed,
     workspaceName,
@@ -165,7 +168,12 @@ export const PropertyPanel: React.FC = () => {
           {isNode && selectedNode ? (
             <>
               {selectedNode.forensics ? (
-                <ForensicsSection forensics={selectedNode.forensics} />
+                <ForensicsSection
+                  forensics={selectedNode.forensics}
+                  showCoupling={showCoupling}
+                  onToggleShowCoupling={toggleShowCoupling}
+                  linkedCouplingCount={resolveCouplingEdges(selectedNodeId, nodes).length}
+                />
               ) : null}
 
               <PropertiesSection

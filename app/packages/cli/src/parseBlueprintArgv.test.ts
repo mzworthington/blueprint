@@ -2,16 +2,26 @@ import { describe, expect, it } from 'vitest';
 import { parseBlueprintArgv, type BlueprintCliPlan } from './parseBlueprintArgv.ts';
 
 describe('parseBlueprintArgv (git options)', () => {
-  it('defaults to architecture-only with git disabled', () => {
+  it('defaults to architecture with git forensics enabled', () => {
     const plan = parseBlueprintArgv([]);
     expect(plan.runArchitecture).toBe(true);
-    expect(plan.runGitForensics).toBe(false);
+    expect(plan.runGitForensics).toBe(true);
+    expect(plan.gitDecisionExplicit).toBe(false);
   });
 
-  it('enables git forensics with --git and keeps architecture on', () => {
+  it('disables git forensics with --no-git', () => {
+    const plan = parseBlueprintArgv(['--headless', '--no-git', '--output=blueprints']);
+    expect(plan.runArchitecture).toBe(true);
+    expect(plan.runGitForensics).toBe(false);
+    expect(plan.gitDecisionExplicit).toBe(true);
+    expect(plan.isHeadless).toBe(true);
+  });
+
+  it('keeps git forensics enabled with --git', () => {
     const plan = parseBlueprintArgv(['--headless', '--git', '--output=blueprints']);
     expect(plan.runArchitecture).toBe(true);
     expect(plan.runGitForensics).toBe(true);
+    expect(plan.gitDecisionExplicit).toBe(true);
     expect(plan.isHeadless).toBe(true);
   });
 
@@ -27,6 +37,7 @@ describe('parseBlueprintArgv (git options)', () => {
     const plan = parseBlueprintArgv(['--git', '--git-since=30']);
     expect(plan.runGitForensics).toBe(true);
     expect(plan.git.sinceDays).toBe(30);
+    expect(plan.gitDecisionExplicit).toBe(true);
   });
 
   it('maps legacy forensics subcommand to arch + git enrich', () => {
@@ -45,13 +56,14 @@ describe('parseBlueprintArgv (git options)', () => {
     expect(parseBlueprintArgv(['--git-only']).isHeadless).toBe(true);
   });
 
-  it('exposes architecture flag overrides without enabling git', () => {
+  it('exposes architecture flag overrides and keeps git on by default', () => {
     const plan = parseBlueprintArgv([
       '--parser=tree-sitter',
       '--glob=**/*.ts',
       '--ignore=dist,build',
     ]);
-    expect(plan.runGitForensics).toBe(false);
+    expect(plan.runGitForensics).toBe(true);
+    expect(plan.gitDecisionExplicit).toBe(false);
     expect(plan.architecture.parserType).toBe('tree-sitter');
     expect(plan.architecture.glob).toBe('**/*.ts');
     expect(plan.architecture.ignore).toEqual(['dist', 'build']);
@@ -64,6 +76,7 @@ describe('parseBlueprintArgv plan shape', () => {
     expect(plan).toMatchObject({
       runArchitecture: true,
       runGitForensics: true,
+      gitDecisionExplicit: true,
     });
   });
 });

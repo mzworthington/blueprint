@@ -81,6 +81,18 @@ describe('BlueprintNode Component', () => {
     expect(screen.getByTestId('forensics-badge-silo')).toHaveTextContent('SILO');
   });
 
+  it('shows COUPLED badge when couplingHighlight is set', () => {
+    const props = {
+      ...defaultProps,
+      data: {
+        ...defaultProps.data,
+        couplingHighlight: true,
+      },
+    };
+    render(<BlueprintNode {...props} />);
+    expect(screen.getByTestId('forensics-badge-coupled')).toHaveTextContent('COUPLED');
+  });
+
   it('truncates long entityRefs while exposing the full value in the title tooltip', () => {
     const longRef = 'blueprint/blueprint/designer/importschema';
     const props = {
