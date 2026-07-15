@@ -31,9 +31,9 @@ export const PropertiesSection: React.FC<PropertiesSectionProps> = ({
         {Object.entries(properties).map(([key, val]) => (
           <div
             key={key}
-            className="flex items-center justify-between bg-slate-950/40 rounded-xl px-3 py-1.5 border border-slate-900"
+            className="flex items-center justify-between bg-slate-950/40 rounded-xl px-3 py-1.5 border border-slate-900 min-w-0"
           >
-            <div className="text-xs break-words mr-2">
+            <div className="text-xs break-all min-w-0 flex-1 mr-2">
               <span className="font-mono text-brand-400/80">{key}:</span>{' '}
               <span className="text-slate-300 font-semibold">{val}</span>
             </div>
