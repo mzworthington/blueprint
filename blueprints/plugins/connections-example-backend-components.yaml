@@ -25,6 +25,28 @@ nodes:
       sinceDays: 500
     x: 40
     'y': 40
+  - entityRef: blueprint/plugins/connections-example-backend/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/connections-example-backend-module-gitlab/src/module.ts
+      containerId: connections-example-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 66
+      sloc: 43
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 400
+    'y': 40
   - entityRef: blueprint/plugins/connections-example-backend/plugin
     type: background-worker
     name: plugin Service
@@ -45,7 +67,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 400
+    x: 760
     'y': 40
   - entityRef: blueprint/plugins/connections-example-backend/router
     type: rest-api
@@ -70,6 +92,28 @@ nodes:
       sinceDays: 500
     x: 40
     'y': 300
+  - entityRef: blueprint/plugins/connections-example-backend/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/connections-example-backend-module-gitlab/src/module.test.ts
+      containerId: connections-example-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 188
+      sloc: 159
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 400
+    'y': 300
   - entityRef: blueprint/plugins/connections-example-backend/setuptests
     type: background-worker
     name: setupTests Service
@@ -90,9 +134,13 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 400
+    x: 760
     'y': 300
 dependencies:
+  - from: blueprint/plugins/connections-example-backend/module
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/plugins/connections-example-backend/index
     to: blueprint/plugins/catalog-react/testutils
     type: direct-call

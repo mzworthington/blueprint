@@ -8,14 +8,14 @@ nodes:
     name: index Service
     isTest: false
     properties:
-      filepath: plugins/api-docs/src/index.ts
+      filepath: plugins/api-docs-module-protoc-gen-doc/src/index.ts
       containerId: api-docs
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 38
-      sloc: 15
+      loc: 24
+      sloc: 1
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -140,14 +140,14 @@ nodes:
     name: setupTests Service
     isTest: true
     properties:
-      filepath: plugins/api-docs/src/setupTests.ts
+      filepath: plugins/api-docs-module-protoc-gen-doc/src/setupTests.ts
       containerId: api-docs
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 29
-      sloc: 8
+      loc: 18
+      sloc: 1
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -1015,7 +1015,33 @@ nodes:
       sinceDays: 500
     x: 208
     'y': 704
+  - entityRef: blueprint/plugins/api-docs/widgets
+    type: background-worker
+    name: widgets Service
+    isTest: false
+    properties:
+      filepath: plugins/api-docs-module-protoc-gen-doc/src/widgets.tsx
+      containerId: api-docs
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 29
+      sloc: 8
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 7388
+    'y': 64
 dependencies:
+  - from: blueprint/plugins/scaffolder-react/index
+    to: blueprint/plugins/api-docs/widgets
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/plugins/api-docs/plugin
     to: blueprint/plugins/api-docs/apidefinitioncard
     type: direct-call

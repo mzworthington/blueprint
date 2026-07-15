@@ -8,36 +8,14 @@ nodes:
     name: config.d Service
     isTest: false
     properties:
-      filepath: plugins/notifications-backend/config.d.ts
+      filepath: plugins/notifications-backend-module-email/config.d.ts
       containerId: notifications-backend
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 76
-      sloc: 22
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 48
-    'y': 64
-  - entityRef: blueprint/plugins/notifications-backend/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/notifications-backend/src/index.ts
-      containerId: notifications-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 17
-      sloc: 1
+      loc: 185
+      sloc: 63
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -46,6 +24,183 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 808
+    'y': 704
+  - entityRef: blueprint/plugins/notifications-backend/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-email/src/module.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 70
+      sloc: 48
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3868
+    'y': 64
+  - entityRef: blueprint/plugins/notifications-backend/extensions
+    type: background-worker
+    name: extensions Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-email/src/extensions.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 42
+      sloc: 14
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3868
+    'y': 1024
+  - entityRef: blueprint/plugins/notifications-backend/slacknotificationprocessor
+    type: relational-database
+    name: SlackNotificationProcessor Database
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-slack/src/lib/SlackNotificationProcessor.ts
+      containerId: notifications-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    forensics:
+      complexity: 52
+      loc: 647
+      sloc: 530
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 4728
+    'y': 384
+  - entityRef: blueprint/plugins/notifications-backend/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-slack/src/lib/types.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 34
+      sloc: 9
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2608
+    'y': 1024
+  - entityRef: blueprint/plugins/notifications-backend/constants
+    type: background-worker
+    name: constants Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-slack/src/lib/constants.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 30
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4728
+    'y': 704
+  - entityRef: blueprint/plugins/notifications-backend/util
+    type: background-worker
+    name: util Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-slack/src/lib/util.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 8
+      loc: 137
+      sloc: 108
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5228
+    'y': 704
+  - entityRef: blueprint/plugins/notifications-backend/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-email/src/index.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 25
+      sloc: 2
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 808
+    'y': 64
+  - entityRef: blueprint/plugins/notifications-backend/slacknotificationprocessor-test
+    type: relational-database
+    name: SlackNotificationProcessor.test Database
+    isTest: true
+    properties:
+      filepath: plugins/notifications-backend-module-slack/src/lib/SlackNotificationProcessor.test.ts
+      containerId: notifications-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    forensics:
+      complexity: 4
+      loc: 2003
+      sloc: 1818
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5388
     'y': 64
   - entityRef: blueprint/plugins/notifications-backend/databasenotificationsstore-test
     type: relational-database
@@ -134,8 +289,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2388
-    'y': 64
+    x: 3268
+    'y': 384
   - entityRef: blueprint/plugins/notifications-backend/migrations-test
     type: relational-database
     name: migrations.test Database
@@ -156,7 +311,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1568
+    x: 3488
     'y': 64
   - entityRef: blueprint/plugins/notifications-backend/setuptests
     type: background-worker
@@ -178,7 +333,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3148
+    x: 5008
     'y': 64
   - entityRef: blueprint/plugins/notifications-backend/creategetnotificationsaction
     type: background-worker
@@ -245,7 +400,7 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 1568
-    'y': 384
+    'y': 704
   - entityRef: blueprint/plugins/notifications-backend/router
     type: rest-api
     name: router REST Endpoint
@@ -267,8 +422,8 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 2708
-    'y': 384
+    x: 3588
+    'y': 704
   - entityRef: blueprint/plugins/notifications-backend/router-test
     type: rest-api
     name: router.test REST Endpoint
@@ -289,8 +444,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2768
-    'y': 64
+    x: 3648
+    'y': 384
   - entityRef: blueprint/plugins/notifications-backend/notificationcleaner
     type: background-worker
     name: NotificationCleaner Service
@@ -311,8 +466,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1948
-    'y': 384
+    x: 2608
+    'y': 704
   - entityRef: blueprint/plugins/notifications-backend/defaultnotificationrecipientresolver
     type: background-worker
     name: DefaultNotificationRecipientResolver Service
@@ -335,7 +490,7 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 1568
-    'y': 704
+    'y': 1024
   - entityRef: blueprint/plugins/notifications-backend/parseentityorderfieldparams-test
     type: background-worker
     name: parseEntityOrderFieldParams.test Service
@@ -356,8 +511,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2328
-    'y': 384
+    x: 2988
+    'y': 704
   - entityRef: blueprint/plugins/notifications-backend/parseentityorderfieldparams
     type: background-worker
     name: parseEntityOrderFieldParams Service
@@ -378,8 +533,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2768
-    'y': 704
+    x: 2988
+    'y': 1024
   - entityRef: blueprint/plugins/notifications-backend/notificationcleaner-test
     type: background-worker
     name: NotificationCleaner.test Service
@@ -400,11 +555,234 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1948
+    x: 1848
+    'y': 384
+  - entityRef: blueprint/plugins/notifications-backend/smtp
+    type: background-worker
+    name: smtp Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-email/src/processor/transports/smtp.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 31
+      sloc: 13
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5768
     'y': 64
+  - entityRef: blueprint/plugins/notifications-backend/sendmail
+    type: background-worker
+    name: sendmail Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-email/src/processor/transports/sendmail.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 26
+      sloc: 9
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4248
+    'y': 64
+  - entityRef: blueprint/plugins/notifications-backend/stream
+    type: background-worker
+    name: stream Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-email/src/processor/transports/stream.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 21
+      sloc: 4
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 6148
+    'y': 64
+  - entityRef: blueprint/plugins/notifications-backend/azure
+    type: background-worker
+    name: azure Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-email/src/processor/transports/azure.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 8
+      loc: 81
+      sloc: 61
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 48
+    'y': 64
+  - entityRef: blueprint/plugins/notifications-backend/ses
+    type: background-worker
+    name: ses Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-email/src/processor/transports/ses.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 43
+      sloc: 23
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4628
+    'y': 64
+  - entityRef: blueprint/plugins/notifications-backend/notificationsemailprocessor
+    type: background-worker
+    name: NotificationsEmailProcessor Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-email/src/processor/NotificationsEmailProcessor.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 35
+      loc: 400
+      sloc: 342
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 2228
+    'y': 704
+  - entityRef: blueprint/plugins/notifications-backend/notificationsemailprocessor-test
+    type: background-worker
+    name: NotificationsEmailProcessor.test Service
+    isTest: true
+    properties:
+      filepath: plugins/notifications-backend-module-email/src/processor/NotificationsEmailProcessor.test.ts
+      containerId: notifications-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 510
+      sloc: 458
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2228
+    'y': 384
 dependencies:
   - from: blueprint/plugins/notifications-backend/config-d
-    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    to: blueprint/plugins/notifications-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/module
+    to: blueprint/plugins/permission-node/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/module
+    to: blueprint/plugins/notifications-backend/slacknotificationprocessor
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/notifications-backend/module
+    to: blueprint/plugins/notifications-backend/extensions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/slacknotificationprocessor
+    to: blueprint/plugins/permission-node/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/slacknotificationprocessor
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/slacknotificationprocessor
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/slacknotificationprocessor
+    to: blueprint/plugins/notifications-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/slacknotificationprocessor
+    to: blueprint/plugins/notifications-backend/constants
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/slacknotificationprocessor
+    to: blueprint/plugins/notifications-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/slacknotificationprocessor
+    to: blueprint/plugins/notifications-backend/util
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/slacknotificationprocessor
+    to: blueprint/plugins/notifications-backend/extensions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/util
+    to: blueprint/plugins/notifications-backend/extensions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/slacknotificationprocessor-test
+    to: blueprint/plugins/permission-node/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/slacknotificationprocessor-test
+    to: blueprint/plugins/notifications-backend/slacknotificationprocessor
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/notifications-backend/slacknotificationprocessor-test
+    to: blueprint/plugins/catalog-react/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/slacknotificationprocessor-test
+    to: blueprint/plugins/notifications-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/config-d
+    to: blueprint/plugins/notifications-backend/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/notifications-backend/databasenotificationsstore-test
@@ -412,7 +790,7 @@ dependencies:
     type: read-write
     description: Queries datastore records
   - from: blueprint/plugins/notifications-backend/notificationsstore
-    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    to: blueprint/plugins/notifications-backend/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/notifications-backend/databasenotificationsstore
@@ -420,7 +798,7 @@ dependencies:
     type: read-write
     description: Queries datastore records
   - from: blueprint/plugins/notifications-backend/databasenotificationsstore
-    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    to: blueprint/plugins/notifications-backend/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/notifications-backend/plugin
@@ -484,7 +862,7 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/notifications-backend/router
-    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    to: blueprint/plugins/notifications-backend/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/notifications-backend/router
@@ -504,7 +882,7 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/notifications-backend/notificationcleaner
-    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    to: blueprint/plugins/notifications-backend/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/notifications-backend/notificationcleaner
@@ -525,5 +903,61 @@ dependencies:
     description: Calls module / service
   - from: blueprint/plugins/notifications-backend/notificationcleaner-test
     to: blueprint/plugins/notifications-backend/notificationcleaner
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/config-d
+    to: blueprint/plugins/notifications-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/module
+    to: blueprint/plugins/catalog-node/processor
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/module
+    to: blueprint/plugins/notifications-backend/extensions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/smtp
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/sendmail
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/azure
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/ses
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/notificationsemailprocessor
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/notificationsemailprocessor
+    to: blueprint/plugins/notifications-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/notificationsemailprocessor
+    to: blueprint/plugins/notifications-backend/extensions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/notificationsemailprocessor-test
+    to: blueprint/plugins/notifications-backend/notificationsemailprocessor
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/notificationsemailprocessor-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/notificationsemailprocessor-test
+    to: blueprint/plugins/notifications-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/notificationsemailprocessor-test
+    to: blueprint/plugins/catalog-react/testutils
     type: direct-call
     description: Calls module / service

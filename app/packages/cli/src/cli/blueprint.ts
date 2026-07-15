@@ -164,6 +164,17 @@ async function runArchitecture(plan: BlueprintCliPlan): Promise<{
     }
     contextName = (contextNameInput as string) || contextName;
 
+    const confirmRollup = await p.confirm({
+      message: 'Collapse/rollup *-module-* packages into their parent systems?',
+      initialValue: rollupModules,
+    });
+
+    if (p.isCancel(confirmRollup)) {
+      p.cancel('Analysis cancelled.');
+      process.exit(0);
+    }
+    rollupModules = confirmRollup;
+
     globPattern = await askPathWithTabComplete('Glob pattern/directory to scan:', globPattern);
     outputDir = await askPathWithTabComplete('Directory to output schemas:', outputDir);
 

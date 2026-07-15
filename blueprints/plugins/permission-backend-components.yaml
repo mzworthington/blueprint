@@ -3,6 +3,72 @@ name: Permission-backend Service Components
 version: 1.0.0
 level: component
 nodes:
+  - entityRef: blueprint/plugins/permission-backend/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/permission-backend-module-policy-allow-all/src/module.ts
+      containerId: permission-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 37
+      sloc: 15
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 428
+    'y': 64
+  - entityRef: blueprint/plugins/permission-backend/policy
+    type: background-worker
+    name: policy Service
+    isTest: false
+    properties:
+      filepath: plugins/permission-backend-module-policy-allow-all/src/policy.ts
+      containerId: permission-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 37
+      sloc: 19
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1188
+    'y': 384
+  - entityRef: blueprint/plugins/permission-backend/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/permission-backend/src/service/index.ts
+      containerId: permission-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 19
+      sloc: 2
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 48
+    'y': 64
   - entityRef: blueprint/plugins/permission-backend/plugin
     type: background-worker
     name: plugin Service
@@ -24,7 +90,7 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 428
-    'y': 384
+    'y': 704
   - entityRef: blueprint/plugins/permission-backend/alpha
     type: background-worker
     name: alpha Service
@@ -46,7 +112,7 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 428
-    'y': 64
+    'y': 384
   - entityRef: blueprint/plugins/permission-backend/setuptests
     type: background-worker
     name: setupTests Service
@@ -67,29 +133,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1568
-    'y': 64
-  - entityRef: blueprint/plugins/permission-backend/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/permission-backend/src/service/index.ts
-      containerId: permission-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 19
-      sloc: 2
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 808
+    x: 1948
     'y': 64
   - entityRef: blueprint/plugins/permission-backend/permissionintegrationclient
     type: background-worker
@@ -111,7 +155,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1188
+    x: 1568
     'y': 704
   - entityRef: blueprint/plugins/permission-backend/router
     type: rest-api
@@ -134,7 +178,7 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1188
+    x: 1568
     'y': 384
   - entityRef: blueprint/plugins/permission-backend/router-test
     type: rest-api
@@ -156,7 +200,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1188
+    x: 1568
     'y': 64
   - entityRef: blueprint/plugins/permission-backend/permissionintegrationclient-test
     type: rest-api
@@ -178,9 +222,17 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 48
+    x: 808
     'y': 384
 dependencies:
+  - from: blueprint/plugins/permission-backend/module
+    to: blueprint/plugins/permission-backend/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-backend/module
+    to: blueprint/plugins/permission-backend/policy
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/plugins/permission-backend/plugin
     to: blueprint/plugins/permission-backend/alpha
     type: direct-call
