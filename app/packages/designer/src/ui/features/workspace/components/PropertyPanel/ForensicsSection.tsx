@@ -14,7 +14,7 @@ interface ForensicsSectionProps {
 }
 
 /** User-facing explanations for each forensics metric key. */
-export const FORENSICS_METRIC_HELP: Record<string, string> = {
+const FORENSICS_METRIC_HELP: Record<string, string> = {
   complexity: 'Cyclomatic complexity from the AST — higher means more branching and harder review.',
   loc: 'Total lines of code in the file, including blanks and comments.',
   sloc: 'Source lines of code — non-blank, non-comment lines.',
