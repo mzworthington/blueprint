@@ -77,7 +77,7 @@ describe('CodebaseAnalyzer Domain Service', () => {
     expect(mockContextWriteSystems).toHaveBeenCalledTimes(1);
     expect(mockContextWriteSystems).toHaveBeenCalledWith('/workspace/blueprints', 'test-pkg', [
       {
-        id: 'test-pkg',
+        entityRef: 'test-pkg',
         displayName: 'Test Pkg',
         rootPath: '',
         productId: 'test-pkg',
@@ -155,17 +155,17 @@ describe('CodebaseAnalyzer Domain Service', () => {
 
     expect(mockContextWriteSystems).toHaveBeenCalledTimes(1);
     const systemsArg = mockContextWriteSystems.mock.calls[0][2] as Array<{
-      id: string;
+      entityRef: string;
       productId: string;
       isProductHub?: boolean;
     }>;
-    expect(systemsArg.map(s => s.id).sort()).toEqual([
+    expect(systemsArg.map(s => s.entityRef).sort()).toEqual([
       'backstage',
       'microsite',
       'packages',
       'plugins',
     ]);
-    expect(systemsArg.find(s => s.id === 'backstage')?.isProductHub).toBe(true);
+    expect(systemsArg.find(s => s.entityRef === 'backstage')?.isProductHub).toBe(true);
     expect(systemsArg.every(s => s.productId === 'backstage')).toBe(true);
     expect(mockContainerWrite.mock.calls.map(c => c[0]).sort()).toEqual([
       '/workspace/blueprints/microsite',
