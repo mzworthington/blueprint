@@ -54,7 +54,7 @@ pnpm dev:cli --headless --output=blueprints
 pnpm dev:cli --headless --no-git --output=blueprints
 
 # Headless enrich with custom lookback
-pnpm --filter @blueprint/cli exec tsx src/blueprint.ts --git-only --git-since=90
+pnpm --filter @blueprint/cli exec tsx src/cli/blueprint.ts --git-only --git-since=90
 ```
 
 Forensics attach a typed `forensics` object onto component nodes (per-file metrics via `filepath`) and rolled-up summaries onto containers and context system nodes. Optional `forensics` section in `blueprint.config.json` for thresholds (`hotspotThreshold`, `complexityThreshold`, `minSharedCommits`, `couplingThreshold`, `minChurnForComplexity`, `sinceDays`).
@@ -113,6 +113,24 @@ Optional `blueprint.config.json` (or `.yml` / `.yaml`) beside the scan root:
   "glob": "**/*.{ts,tsx}",
   "context": "my-product"
 }
+```
+
+---
+
+## Source layout
+
+```
+src/
+  cli/                 # entry, argv, interactive prompts
+  analysis/
+    domain/            # analyzer, extraction, discovery, testPath
+      languages/       # csharp | python | typescript strategies
+    adapters/
+      parsing/         # ts-morph, tree-sitter, wasm paths
+      pathFilter/      # gitignore + structural ignores
+  forensics/           # git metrics (domain + adapters)
+  writers/             # C4 YAML writers (+ baseWriter)
+  test/                # shared fakes
 ```
 
 ---

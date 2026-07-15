@@ -63,13 +63,14 @@ The production CLI is `@blueprint/cli` under `app/packages/cli/` (TypeScript / B
 ```mermaid
 graph TD
     subgraph CLI_Drivers [Driving Adapters]
-        CliEntry[blueprint.ts - Clack prompts / flags]
+        CliEntry["cli/blueprint.ts - Clack prompts / flags"]
         BunBinary[dist/blueprint - Bun compile]
     end
 
     subgraph CLI_Core [Analysis Core]
         Analyzer[CodebaseAnalyzer]
         Extractor[ModelExtractor]
+        Languages[domain/languages]
     end
 
     subgraph CLI_Ports [Outbound Ports]
@@ -80,8 +81,8 @@ graph TD
     end
 
     subgraph CLI_Adapters [Driven Adapters]
-        TsMorph[tsMorphParser]
-        TreeSitter[treeSitterParser]
+        TsMorph[adapters/parsing/tsMorph]
+        TreeSitter[adapters/parsing/treeSitter]
         Dagre[dagreLayout]
         Fs[node FS adapter]
     end
@@ -89,12 +90,15 @@ graph TD
     CliEntry --> Analyzer
     BunBinary --> Analyzer
     Analyzer --> Extractor
+    Analyzer --> Languages
     Analyzer --> CLI_Ports
     ParserPort --> TsMorph
     ParserPort --> TreeSitter
     LayoutPort --> Dagre
     CliFsPort --> Fs
 ```
+
+Folder map: `src/cli/` (entry), `src/analysis/{domain,adapters}` (with `languages/` and `parsing/` / `pathFilter/` subgroups), `src/forensics/`, `src/writers/`. See `@blueprint/cli` README “Source layout”.
 
 ### Web-to-CLI filesystem bridge
 

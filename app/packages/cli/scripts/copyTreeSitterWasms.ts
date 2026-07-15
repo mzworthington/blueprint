@@ -12,7 +12,7 @@ import * as path from 'path';
 import {
   TREE_SITTER_WASM_LANGUAGES,
   wasmFileName,
-} from '../src/analysis/adapters/treeSitterWasmPaths.ts';
+} from '../src/analysis/adapters/parsing/treeSitterWasmPaths.ts';
 
 const require = createRequire(import.meta.url);
 const pkgJson = require.resolve('tree-sitter-wasms/package.json');

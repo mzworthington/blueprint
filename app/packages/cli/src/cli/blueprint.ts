@@ -3,26 +3,26 @@ import pc from 'picocolors';
 import readline from 'readline';
 import fs from 'fs';
 import path from 'path';
-import { TsMorphParserAdapter } from './analysis/adapters/tsMorphParser.ts';
-import { TreeSitterParserAdapter } from './analysis/adapters/treeSitterParser.ts';
-import { DagreLayoutAdapter } from './analysis/adapters/dagreLayout.ts';
-import { NodeFileSystemAdapter } from './analysis/adapters/nodeFileSystem.ts';
-import { ConsoleLogger } from './analysis/adapters/consoleLogger.ts';
-import { CodebaseAnalyzer } from './analysis/domain/analyzer.ts';
+import { TsMorphParserAdapter } from '../analysis/adapters/parsing/tsMorphParser.ts';
+import { TreeSitterParserAdapter } from '../analysis/adapters/parsing/treeSitterParser.ts';
+import { DagreLayoutAdapter } from '../analysis/adapters/dagreLayout.ts';
+import { NodeFileSystemAdapter } from '../analysis/adapters/nodeFileSystem.ts';
+import { ConsoleLogger } from '../analysis/adapters/consoleLogger.ts';
+import { CodebaseAnalyzer } from '../analysis/domain/analyzer.ts';
 import {
   loadAnalysisConfig,
   mergeAnalysisOptions,
-} from './analysis/adapters/loadAnalysisConfig.ts';
-import { createCliCancellation, isCancellationError } from './analysis/domain/cancellation.ts';
+} from '../analysis/adapters/loadAnalysisConfig.ts';
+import { createCliCancellation, isCancellationError } from '../analysis/domain/cancellation.ts';
 import { parseBlueprintArgv, type BlueprintCliPlan } from './parseBlueprintArgv.ts';
-import { collectFileMetrics } from './forensics/collectFileMetrics.ts';
+import { collectFileMetrics } from '../forensics/collectFileMetrics.ts';
 import {
   applyInteractiveGitChoice,
   shouldPromptForGit,
   type InteractiveGitChoice,
 } from './interactiveGitChoice.ts';
-import { DEFAULT_FORENSICS_OPTIONS } from './forensics/domain/options.ts';
-import type { FileMetrics } from './forensics/domain/types.ts';
+import { DEFAULT_FORENSICS_OPTIONS } from '../forensics/domain/options.ts';
+import type { FileMetrics } from '../forensics/domain/types.ts';
 
 async function promptInteractiveGit(): Promise<InteractiveGitChoice> {
   const mode = await p.select({

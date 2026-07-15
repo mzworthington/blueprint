@@ -3,19 +3,19 @@ name: Cli-module-test-jest Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/cli-module-test-jest/test-test
+  - entityRef: blueprint/packages/cli-module-test-jest/index
     type: background-worker
-    name: test.test Service
-    isTest: true
+    name: index Service
+    isTest: false
     properties:
-      filepath: packages/cli-module-test-jest/src/commands/repo/test.test.ts
+      filepath: packages/cli-module-test-jest/src/index.ts
       containerId: cli-module-test-jest
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 2
-      loc: 104
-      sloc: 74
+      complexity: 1
+      loc: 37
+      sloc: 19
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -23,8 +23,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 140
-    'y': 50
+    x: 40
+    'y': 40
   - entityRef: blueprint/packages/cli-module-test-jest/test
     type: background-worker
     name: test Service
@@ -46,21 +46,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 140
-    'y': 370
-  - entityRef: blueprint/packages/cli-module-test-jest/index
+    x: 400
+    'y': 40
+  - entityRef: blueprint/packages/cli-module-test-jest/test-test
     type: background-worker
-    name: index Service
-    isTest: false
+    name: test.test Service
+    isTest: true
     properties:
-      filepath: packages/cli-module-test-jest/src/index.ts
+      filepath: packages/cli-module-test-jest/src/commands/repo/test.test.ts
       containerId: cli-module-test-jest
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 37
-      sloc: 19
+      complexity: 2
+      loc: 104
+      sloc: 74
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -68,8 +68,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
-    'y': 50
+    x: 40
+    'y': 300
 dependencies:
   - from: blueprint/packages/ui/combobox-stories
     to: blueprint/packages/cli-module-test-jest/test

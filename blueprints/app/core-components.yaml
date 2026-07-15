@@ -22,9 +22,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 90
-    x: 140
-    'y': 50
+      sinceDays: 500
+    x: 1320
+    'y': 40
   - entityRef: blueprint/app/core/schema
     type: background-worker
     name: schema Service
@@ -45,9 +45,9 @@ nodes:
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 90
-    x: 1140
-    'y': 1010
+      sinceDays: 500
+    x: 600
+    'y': 700
   - entityRef: blueprint/app/core/schema-test
     type: background-worker
     name: schema.test Service
@@ -67,9 +67,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 90
-    x: 695
-    'y': 690
+      sinceDays: 500
+    x: 40
+    'y': 480
   - entityRef: blueprint/app/core/path
     type: background-worker
     name: path Service
@@ -89,9 +89,9 @@ nodes:
       hotspotScore: 0.015384615384615385
       classifications: []
       coupledFiles: []
-      sinceDays: 90
-    x: 600
-    'y': 370
+      sinceDays: 500
+    x: 960
+    'y': 260
   - entityRef: blueprint/app/core/path-test
     type: background-worker
     name: path.test Service
@@ -111,9 +111,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 90
-    x: 600
-    'y': 50
+      sinceDays: 500
+    x: 960
+    'y': 40
   - entityRef: blueprint/app/core/graph-test
     type: background-worker
     name: graph.test Service
@@ -133,9 +133,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 90
-    x: 1060
-    'y': 50
+      sinceDays: 500
+    x: 240
+    'y': 40
   - entityRef: blueprint/app/core/graph
     type: background-worker
     name: graph Service
@@ -156,9 +156,9 @@ nodes:
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 90
-    x: 1235
-    'y': 370
+      sinceDays: 500
+    x: 600
+    'y': 260
   - entityRef: blueprint/app/core/entityref
     type: background-worker
     name: entityRef Service
@@ -179,9 +179,9 @@ nodes:
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 90
-    x: 1410
-    'y': 690
+      sinceDays: 500
+    x: 1520
+    'y': 480
   - entityRef: blueprint/app/core/slug
     type: background-worker
     name: slug Service
@@ -201,9 +201,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 90
-    x: 1815
-    'y': 1330
+      sinceDays: 500
+    x: 600
+    'y': 920
   - entityRef: blueprint/app/core/entityref-test
     type: background-worker
     name: entityRef.test Service
@@ -223,9 +223,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 90
-    x: 1695
-    'y': 370
+      sinceDays: 500
+    x: 1320
+    'y': 260
   - entityRef: blueprint/app/core/slug-test
     type: background-worker
     name: slug.test Service
@@ -245,9 +245,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 90
-    x: 2085
-    'y': 1010
+      sinceDays: 500
+    x: 240
+    'y': 700
   - entityRef: blueprint/app/core/index
     type: background-worker
     name: index Service
@@ -267,9 +267,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 90
-    x: 1520
-    'y': 50
+      sinceDays: 500
+    x: 600
+    'y': 40
 dependencies:
   - from: blueprint/app/core/schema
     to: blueprint/app/core/slug
@@ -327,14 +327,6 @@ dependencies:
     to: blueprint/app/core/path
     type: direct-call
     description: Calls module / service
-  - from: blueprint/app/cli/nodefilesystem
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/treesitterparser-test
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/app/cli/gitignorefilter-test
     to: blueprint/app/core/path
     type: direct-call
@@ -343,7 +335,11 @@ dependencies:
     to: blueprint/app/core/path
     type: direct-call
     description: Calls module / service
-  - from: blueprint/app/cli/tsmorphparser
+  - from: blueprint/app/cli/gitignorefilter
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/nodefilesystem
     to: blueprint/app/core/path
     type: direct-call
     description: Calls module / service
@@ -351,15 +347,19 @@ dependencies:
     to: blueprint/app/core/path
     type: direct-call
     description: Calls module / service
-  - from: blueprint/app/cli/treesitterwasmpaths
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/app/cli/nodefilesystem-test
     to: blueprint/app/core/path
     type: direct-call
     description: Calls module / service
-  - from: blueprint/app/cli/gitignorefilter
+  - from: blueprint/app/cli/treesitterparser-test
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphparser
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/treesitterwasmpaths
     to: blueprint/app/core/path
     type: direct-call
     description: Calls module / service
@@ -368,6 +368,10 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/cli/treesitterparser
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/blueprint
     to: blueprint/app/core/path
     type: direct-call
     description: Calls module / service
@@ -388,10 +392,6 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/cli/collectfilemetrics
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/blueprint
     to: blueprint/app/core/path
     type: direct-call
     description: Calls module / service

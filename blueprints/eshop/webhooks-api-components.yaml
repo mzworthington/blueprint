@@ -3,28 +3,6 @@ name: Webhooks.API Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/eshop/webhooks-api/webhookscontextmodelsnapshot
-    type: relational-database
-    name: WebhooksContextModelSnapshot Database
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/Migrations/WebhooksContextModelSnapshot.cs
-      containerId: webhooks-api
-      technology: Entity Framework / DB Context
-      classification: database-marker
-    x: 140
-    'y': 50
-  - entityRef: blueprint/eshop/webhooks-api/20230925222606_initial-designer
-    type: relational-database
-    name: 20230925222606_Initial.Designer Database
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/Migrations/20230925222606_Initial.Designer.cs
-      containerId: webhooks-api
-      technology: Entity Framework / DB Context
-      classification: database-marker
-    x: 600
-    'y': 50
   - entityRef: blueprint/eshop/webhooks-api/20230925222606_initial
     type: relational-database
     name: 20230925222606_Initial Database
@@ -34,41 +12,19 @@ nodes:
       containerId: webhooks-api
       technology: Entity Framework / DB Context
       classification: database-marker
-    x: 1060
-    'y': 50
-  - entityRef: blueprint/eshop/webhooks-api/webhooksapi
-    type: rest-api
-    name: WebHooksApi REST Endpoint
+    x: 40
+    'y': 40
+  - entityRef: blueprint/eshop/webhooks-api/20230925222606_initial-designer
+    type: relational-database
+    name: 20230925222606_Initial.Designer Database
     isTest: false
     properties:
-      filepath: src/Webhooks.API/Apis/WebHooksApi.cs
+      filepath: src/Webhooks.API/Migrations/20230925222606_Initial.Designer.cs
       containerId: webhooks-api
-      technology: ASP.NET Core Controller / Minimal API
-      classification: api-marker
-    x: 1520
-    'y': 50
-  - entityRef: blueprint/eshop/webhooks-api/webhooksdomainexception
-    type: background-worker
-    name: WebhooksDomainException Service
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/Exceptions/WebhooksDomainException.cs
-      containerId: webhooks-api
-      technology: C# Domain Service
-      classification: default
-    x: 1980
-    'y': 50
-  - entityRef: blueprint/eshop/webhooks-api/routehandlerbuilderextensions
-    type: background-worker
-    name: RouteHandlerBuilderExtensions Service
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/Extensions/RouteHandlerBuilderExtensions.cs
-      containerId: webhooks-api
-      technology: C# Domain Service
-      classification: default
-    x: 2440
-    'y': 50
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 380
+    'y': 40
   - entityRef: blueprint/eshop/webhooks-api/extensions
     type: background-worker
     name: Extensions Service
@@ -78,129 +34,8 @@ nodes:
       containerId: webhooks-api
       technology: C# Domain Service
       classification: default
-    x: 2900
-    'y': 50
-  - entityRef: blueprint/eshop/webhooks-api/webhookdata
-    type: background-worker
-    name: WebhookData Service
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/Model/WebhookData.cs
-      containerId: webhooks-api
-      technology: C# Domain Service
-      classification: default
-    x: 3360
-    'y': 50
-  - entityRef: blueprint/eshop/webhooks-api/webhooksubscriptionrequest
-    type: background-worker
-    name: WebhookSubscriptionRequest Service
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/Model/WebhookSubscriptionRequest.cs
-      containerId: webhooks-api
-      technology: C# Domain Service
-      classification: default
-    x: 3820
-    'y': 50
-  - entityRef: blueprint/eshop/webhooks-api/webhooktype
-    type: background-worker
-    name: WebhookType Service
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/Model/WebhookType.cs
-      containerId: webhooks-api
-      technology: C# Domain Service
-      classification: default
-    x: 4280
-    'y': 50
-  - entityRef: blueprint/eshop/webhooks-api/webhooksubscription
-    type: background-worker
-    name: WebhookSubscription Service
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/Model/WebhookSubscription.cs
-      containerId: webhooks-api
-      technology: C# Domain Service
-      classification: default
-    x: 4740
-    'y': 50
-  - entityRef: blueprint/eshop/webhooks-api/orderstatuschangedtopaidintegrationeventhandler
-    type: background-worker
-    name: OrderStatusChangedToPaidIntegrationEventHandler Service
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/IntegrationEvents/OrderStatusChangedToPaidIntegrationEventHandler.cs
-      containerId: webhooks-api
-      technology: C# Domain Service
-      classification: default
-    x: 5200
-    'y': 50
-  - entityRef: blueprint/eshop/webhooks-api/productpricechangedintegrationeventhandler
-    type: background-worker
-    name: ProductPriceChangedIntegrationEventHandler Service
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/IntegrationEvents/ProductPriceChangedIntegrationEventHandler.cs
-      containerId: webhooks-api
-      technology: C# Domain Service
-      classification: default
-    x: 5660
-    'y': 50
-  - entityRef: blueprint/eshop/webhooks-api/orderstatuschangedtoshippedintegrationeventhandler
-    type: background-worker
-    name: OrderStatusChangedToShippedIntegrationEventHandler Service
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/IntegrationEvents/OrderStatusChangedToShippedIntegrationEventHandler.cs
-      containerId: webhooks-api
-      technology: C# Domain Service
-      classification: default
-    x: 6120
-    'y': 50
-  - entityRef: blueprint/eshop/webhooks-api/orderstatuschangedtopaidintegrationevent
-    type: background-worker
-    name: OrderStatusChangedToPaidIntegrationEvent Service
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/IntegrationEvents/OrderStatusChangedToPaidIntegrationEvent.cs
-      containerId: webhooks-api
-      technology: C# Domain Service
-      classification: default
-    x: 6580
-    'y': 50
-  - entityRef: blueprint/eshop/webhooks-api/orderstatuschangedtoshippedintegrationevent
-    type: background-worker
-    name: OrderStatusChangedToShippedIntegrationEvent Service
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/IntegrationEvents/OrderStatusChangedToShippedIntegrationEvent.cs
-      containerId: webhooks-api
-      technology: C# Domain Service
-      classification: default
-    x: 7040
-    'y': 50
-  - entityRef: blueprint/eshop/webhooks-api/productpricechangedintegrationevent
-    type: background-worker
-    name: ProductPriceChangedIntegrationEvent Service
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/IntegrationEvents/ProductPriceChangedIntegrationEvent.cs
-      containerId: webhooks-api
-      technology: C# Domain Service
-      classification: default
-    x: 7500
-    'y': 50
-  - entityRef: blueprint/eshop/webhooks-api/orderstockitem
-    type: background-worker
-    name: OrderStockItem Service
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/IntegrationEvents/OrderStockItem.cs
-      containerId: webhooks-api
-      technology: C# Domain Service
-      classification: default
-    x: 7960
-    'y': 50
+    x: 720
+    'y': 40
   - entityRef: blueprint/eshop/webhooks-api/globalusings
     type: relational-database
     name: GlobalUsings Database
@@ -210,30 +45,8 @@ nodes:
       containerId: webhooks-api
       technology: Entity Framework / DB Context
       classification: database-marker
-    x: 8420
-    'y': 50
-  - entityRef: blueprint/eshop/webhooks-api/webhookscontext
-    type: background-worker
-    name: WebhooksContext Service
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/Infrastructure/WebhooksContext.cs
-      containerId: webhooks-api
-      technology: C# Domain Service
-      classification: default
-    x: 8880
-    'y': 50
-  - entityRef: blueprint/eshop/webhooks-api/webhooksretriever
-    type: background-worker
-    name: WebhooksRetriever Service
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/Services/WebhooksRetriever.cs
-      containerId: webhooks-api
-      technology: C# Domain Service
-      classification: default
-    x: 9340
-    'y': 50
+    x: 1060
+    'y': 40
   - entityRef: blueprint/eshop/webhooks-api/granturltesterservice
     type: background-worker
     name: GrantUrlTesterService Service
@@ -243,8 +56,8 @@ nodes:
       containerId: webhooks-api
       technology: C# Domain Service
       classification: default
-    x: 9800
-    'y': 50
+    x: 1400
+    'y': 40
   - entityRef: blueprint/eshop/webhooks-api/igranturltesterservice
     type: background-worker
     name: IGrantUrlTesterService Service
@@ -254,19 +67,8 @@ nodes:
       containerId: webhooks-api
       technology: C# Domain Service
       classification: default
-    x: 10260
-    'y': 50
-  - entityRef: blueprint/eshop/webhooks-api/webhookssender
-    type: background-worker
-    name: WebhooksSender Service
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/Services/WebhooksSender.cs
-      containerId: webhooks-api
-      technology: C# Domain Service
-      classification: default
-    x: 10720
-    'y': 50
+    x: 1740
+    'y': 40
   - entityRef: blueprint/eshop/webhooks-api/iwebhooksretriever
     type: background-worker
     name: IWebhooksRetriever Service
@@ -276,8 +78,8 @@ nodes:
       containerId: webhooks-api
       technology: C# Domain Service
       classification: default
-    x: 11180
-    'y': 50
+    x: 40
+    'y': 220
   - entityRef: blueprint/eshop/webhooks-api/iwebhookssender
     type: background-worker
     name: IWebhooksSender Service
@@ -287,8 +89,85 @@ nodes:
       containerId: webhooks-api
       technology: C# Domain Service
       classification: default
-    x: 11640
-    'y': 50
+    x: 380
+    'y': 220
+  - entityRef: blueprint/eshop/webhooks-api/orderstatuschangedtopaidintegrationevent
+    type: background-worker
+    name: OrderStatusChangedToPaidIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/IntegrationEvents/OrderStatusChangedToPaidIntegrationEvent.cs
+      containerId: webhooks-api
+      technology: C# Domain Service
+      classification: default
+    x: 720
+    'y': 220
+  - entityRef: blueprint/eshop/webhooks-api/orderstatuschangedtopaidintegrationeventhandler
+    type: background-worker
+    name: OrderStatusChangedToPaidIntegrationEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/IntegrationEvents/OrderStatusChangedToPaidIntegrationEventHandler.cs
+      containerId: webhooks-api
+      technology: C# Domain Service
+      classification: default
+    x: 1060
+    'y': 220
+  - entityRef: blueprint/eshop/webhooks-api/orderstatuschangedtoshippedintegrationevent
+    type: background-worker
+    name: OrderStatusChangedToShippedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/IntegrationEvents/OrderStatusChangedToShippedIntegrationEvent.cs
+      containerId: webhooks-api
+      technology: C# Domain Service
+      classification: default
+    x: 1400
+    'y': 220
+  - entityRef: blueprint/eshop/webhooks-api/orderstatuschangedtoshippedintegrationeventhandler
+    type: background-worker
+    name: OrderStatusChangedToShippedIntegrationEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/IntegrationEvents/OrderStatusChangedToShippedIntegrationEventHandler.cs
+      containerId: webhooks-api
+      technology: C# Domain Service
+      classification: default
+    x: 1740
+    'y': 220
+  - entityRef: blueprint/eshop/webhooks-api/orderstockitem
+    type: background-worker
+    name: OrderStockItem Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/IntegrationEvents/OrderStockItem.cs
+      containerId: webhooks-api
+      technology: C# Domain Service
+      classification: default
+    x: 40
+    'y': 400
+  - entityRef: blueprint/eshop/webhooks-api/productpricechangedintegrationevent
+    type: background-worker
+    name: ProductPriceChangedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/IntegrationEvents/ProductPriceChangedIntegrationEvent.cs
+      containerId: webhooks-api
+      technology: C# Domain Service
+      classification: default
+    x: 380
+    'y': 400
+  - entityRef: blueprint/eshop/webhooks-api/productpricechangedintegrationeventhandler
+    type: background-worker
+    name: ProductPriceChangedIntegrationEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/IntegrationEvents/ProductPriceChangedIntegrationEventHandler.cs
+      containerId: webhooks-api
+      technology: C# Domain Service
+      classification: default
+    x: 720
+    'y': 400
   - entityRef: blueprint/eshop/webhooks-api/program
     type: background-worker
     name: Program Service
@@ -298,6 +177,127 @@ nodes:
       containerId: webhooks-api
       technology: C# Domain Service
       classification: default
-    x: 12100
-    'y': 50
+    x: 1060
+    'y': 400
+  - entityRef: blueprint/eshop/webhooks-api/routehandlerbuilderextensions
+    type: background-worker
+    name: RouteHandlerBuilderExtensions Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Extensions/RouteHandlerBuilderExtensions.cs
+      containerId: webhooks-api
+      technology: C# Domain Service
+      classification: default
+    x: 1400
+    'y': 400
+  - entityRef: blueprint/eshop/webhooks-api/webhookdata
+    type: background-worker
+    name: WebhookData Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Model/WebhookData.cs
+      containerId: webhooks-api
+      technology: C# Domain Service
+      classification: default
+    x: 1740
+    'y': 400
+  - entityRef: blueprint/eshop/webhooks-api/webhooksapi
+    type: rest-api
+    name: WebHooksApi REST Endpoint
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Apis/WebHooksApi.cs
+      containerId: webhooks-api
+      technology: ASP.NET Core Controller / Minimal API
+      classification: api-marker
+    x: 40
+    'y': 580
+  - entityRef: blueprint/eshop/webhooks-api/webhookscontext
+    type: background-worker
+    name: WebhooksContext Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Infrastructure/WebhooksContext.cs
+      containerId: webhooks-api
+      technology: C# Domain Service
+      classification: default
+    x: 380
+    'y': 580
+  - entityRef: blueprint/eshop/webhooks-api/webhookscontextmodelsnapshot
+    type: relational-database
+    name: WebhooksContextModelSnapshot Database
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Migrations/WebhooksContextModelSnapshot.cs
+      containerId: webhooks-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 720
+    'y': 580
+  - entityRef: blueprint/eshop/webhooks-api/webhooksdomainexception
+    type: background-worker
+    name: WebhooksDomainException Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Exceptions/WebhooksDomainException.cs
+      containerId: webhooks-api
+      technology: C# Domain Service
+      classification: default
+    x: 1060
+    'y': 580
+  - entityRef: blueprint/eshop/webhooks-api/webhooksretriever
+    type: background-worker
+    name: WebhooksRetriever Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Services/WebhooksRetriever.cs
+      containerId: webhooks-api
+      technology: C# Domain Service
+      classification: default
+    x: 1400
+    'y': 580
+  - entityRef: blueprint/eshop/webhooks-api/webhookssender
+    type: background-worker
+    name: WebhooksSender Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Services/WebhooksSender.cs
+      containerId: webhooks-api
+      technology: C# Domain Service
+      classification: default
+    x: 1740
+    'y': 580
+  - entityRef: blueprint/eshop/webhooks-api/webhooksubscription
+    type: background-worker
+    name: WebhookSubscription Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Model/WebhookSubscription.cs
+      containerId: webhooks-api
+      technology: C# Domain Service
+      classification: default
+    x: 40
+    'y': 760
+  - entityRef: blueprint/eshop/webhooks-api/webhooksubscriptionrequest
+    type: background-worker
+    name: WebhookSubscriptionRequest Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Model/WebhookSubscriptionRequest.cs
+      containerId: webhooks-api
+      technology: C# Domain Service
+      classification: default
+    x: 380
+    'y': 760
+  - entityRef: blueprint/eshop/webhooks-api/webhooktype
+    type: background-worker
+    name: WebhookType Service
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Model/WebhookType.cs
+      containerId: webhooks-api
+      technology: C# Domain Service
+      classification: default
+    x: 720
+    'y': 760
 dependencies: []

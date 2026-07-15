@@ -10,18 +10,18 @@ nodes:
       rootPath: ''
       productId: eshop
       role: product-hub
-    x: 370
-    'y': 50
+    x: 1188
+    'y': 64
     forensics:
       complexity: 4
       churn: 0
-      hotspotScore: 0
       authorCount: 0
+      hotspotScore: 0
+      classifications: []
+      sinceDays: 500
       fileCount: 1
       hotspotCount: 0
       knowledgeSiloCount: 0
-      classifications: []
-      sinceDays: 500
   - entityRef: blueprint/backstage
     type: software-system
     name: Backstage System
@@ -29,8 +29,8 @@ nodes:
       rootPath: ''
       productId: backstage
       role: product-hub
-    x: 830
-    'y': 50
+    x: 48
+    'y': 64
   - entityRef: blueprint/packages
     type: software-system
     name: Packages System
@@ -38,19 +38,19 @@ nodes:
       rootPath: packages
       productId: backstage
       role: subsystem
-    x: 140
-    'y': 370
+    x: 808
+    'y': 384
     forensics:
       complexity: 102
       churn: 2077
-      authorCount: 1
       hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      sinceDays: 500
+      authorCount: 1
       fileCount: 2077
       hotspotCount: 0
       knowledgeSiloCount: 324
+      classifications:
+        - knowledge-silo
+      sinceDays: 500
   - entityRef: blueprint/plugins
     type: software-system
     name: Plugins System
@@ -58,19 +58,19 @@ nodes:
       rootPath: plugins
       productId: backstage
       role: subsystem
-    x: 600
-    'y': 370
+    x: 1188
+    'y': 384
     forensics:
       complexity: 96
       churn: 3231
-      authorCount: 1
       hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      sinceDays: 500
+      authorCount: 1
       fileCount: 3231
       hotspotCount: 0
       knowledgeSiloCount: 381
+      classifications:
+        - knowledge-silo
+      sinceDays: 500
   - entityRef: blueprint/docs-ui
     type: software-system
     name: Docs Ui System
@@ -78,19 +78,19 @@ nodes:
       rootPath: docs-ui
       productId: backstage
       role: subsystem
-    x: 1060
-    'y': 370
+    x: 48
+    'y': 384
     forensics:
       complexity: 23
       churn: 69
-      authorCount: 1
       hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      sinceDays: 500
+      authorCount: 1
       fileCount: 69
       hotspotCount: 0
       knowledgeSiloCount: 6
+      classifications:
+        - knowledge-silo
+      sinceDays: 500
   - entityRef: blueprint/microsite
     type: software-system
     name: Microsite System
@@ -98,18 +98,18 @@ nodes:
       rootPath: microsite
       productId: backstage
       role: subsystem
-    x: 1520
-    'y': 370
+    x: 428
+    'y': 384
     forensics:
       complexity: 8
       churn: 17
-      authorCount: 1
       hotspotScore: 0
-      classifications: []
-      sinceDays: 500
+      authorCount: 1
       fileCount: 17
       hotspotCount: 0
       knowledgeSiloCount: 0
+      classifications: []
+      sinceDays: 500
   - entityRef: blueprint/testproject
     type: software-system
     name: TestProject System
@@ -117,8 +117,8 @@ nodes:
       rootPath: ''
       productId: testproject
       role: product-hub
-    x: 1980
-    'y': 50
+    x: 1568
+    'y': 64
   - entityRef: blueprint/app
     type: software-system
     name: App System
@@ -126,41 +126,21 @@ nodes:
       rootPath: app
       productId: testproject
       role: subsystem
-    x: 1980
-    'y': 370
+    x: 1568
+    'y': 384
     forensics:
       complexity: 66
-      churn: 501
+      churn: 437
       authorCount: 1
       hotspotScore: 0.5276923076923077
       classifications:
         - knowledge-silo
         - hotspot
-      sinceDays: 90
+      sinceDays: 500
       fileCount: 188
-      hotspotCount: 3
-      knowledgeSiloCount: 57
+      hotspotCount: 2
+      knowledgeSiloCount: 52
 dependencies:
-  - from: blueprint/testproject
-    to: blueprint/app
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/packages
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/plugins
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/docs-ui
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/microsite
-    type: direct-call
-    description: Part of product system
   - from: blueprint/testproject
     to: blueprint/app
     type: direct-call

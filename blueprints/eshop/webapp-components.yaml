@@ -3,61 +3,39 @@ name: WebApp Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/eshop/webapp/extensions
-    type: rest-api
-    name: Extensions REST Endpoint
-    isTest: false
-    properties:
-      filepath: src/WebApp/Extensions/Extensions.cs
-      containerId: webapp
-      technology: ASP.NET Core Controller / Minimal API
-      classification: api-marker
-    x: 140
-    'y': 50
-  - entityRef: blueprint/eshop/webapp/messageprocessor
-    type: rest-api
-    name: MessageProcessor REST Endpoint
-    isTest: false
-    properties:
-      filepath: src/WebApp/Components/Chatbot/MessageProcessor.cs
-      containerId: webapp
-      technology: ASP.NET Core Controller / Minimal API
-      classification: api-marker
-    x: 600
-    'y': 50
-  - entityRef: blueprint/eshop/webapp/chatstate
+  - entityRef: blueprint/eshop/webapp/basketcheckoutinfo
     type: background-worker
-    name: ChatState Service
+    name: BasketCheckoutInfo Service
     isTest: false
     properties:
-      filepath: src/WebApp/Components/Chatbot/ChatState.cs
+      filepath: src/WebApp/Services/BasketCheckoutInfo.cs
       containerId: webapp
       technology: C# Domain Service
       classification: default
-    x: 1060
-    'y': 50
-  - entityRef: blueprint/eshop/webapp/globalusings
+    x: 40
+    'y': 40
+  - entityRef: blueprint/eshop/webapp/basketitem
     type: background-worker
-    name: GlobalUsings Service
+    name: BasketItem Service
     isTest: false
     properties:
-      filepath: src/WebApp/GlobalUsings.cs
+      filepath: src/WebApp/Services/BasketItem.cs
       containerId: webapp
       technology: C# Domain Service
       classification: default
-    x: 1520
-    'y': 50
-  - entityRef: blueprint/eshop/webapp/orderingservice
+    x: 380
+    'y': 40
+  - entityRef: blueprint/eshop/webapp/basketservice
     type: background-worker
-    name: OrderingService Service
+    name: BasketService Service
     isTest: false
     properties:
-      filepath: src/WebApp/Services/OrderingService.cs
+      filepath: src/WebApp/Services/BasketService.cs
       containerId: webapp
       technology: C# Domain Service
       classification: default
-    x: 1980
-    'y': 50
+    x: 720
+    'y': 40
   - entityRef: blueprint/eshop/webapp/basketstate
     type: rest-api
     name: BasketState REST Endpoint
@@ -67,19 +45,85 @@ nodes:
       containerId: webapp
       technology: ASP.NET Core Controller / Minimal API
       classification: api-marker
-    x: 2440
-    'y': 50
-  - entityRef: blueprint/eshop/webapp/orderstatusnotificationservice
+    x: 1060
+    'y': 40
+  - entityRef: blueprint/eshop/webapp/chatstate
     type: background-worker
-    name: OrderStatusNotificationService Service
+    name: ChatState Service
     isTest: false
     properties:
-      filepath: src/WebApp/Services/OrderStatus/OrderStatusNotificationService.cs
+      filepath: src/WebApp/Components/Chatbot/ChatState.cs
       containerId: webapp
       technology: C# Domain Service
       classification: default
-    x: 2900
-    'y': 50
+    x: 1400
+    'y': 40
+  - entityRef: blueprint/eshop/webapp/extensions
+    type: rest-api
+    name: Extensions REST Endpoint
+    isTest: false
+    properties:
+      filepath: src/WebApp/Extensions/Extensions.cs
+      containerId: webapp
+      technology: ASP.NET Core Controller / Minimal API
+      classification: api-marker
+    x: 1740
+    'y': 40
+  - entityRef: blueprint/eshop/webapp/globalusings
+    type: background-worker
+    name: GlobalUsings Service
+    isTest: false
+    properties:
+      filepath: src/WebApp/GlobalUsings.cs
+      containerId: webapp
+      technology: C# Domain Service
+      classification: default
+    x: 40
+    'y': 220
+  - entityRef: blueprint/eshop/webapp/ibasketstate
+    type: background-worker
+    name: IBasketState Service
+    isTest: false
+    properties:
+      filepath: src/WebApp/Services/IBasketState.cs
+      containerId: webapp
+      technology: C# Domain Service
+      classification: default
+    x: 380
+    'y': 220
+  - entityRef: blueprint/eshop/webapp/logoutservice
+    type: rest-api
+    name: LogOutService REST Endpoint
+    isTest: false
+    properties:
+      filepath: src/WebApp/Services/LogOutService.cs
+      containerId: webapp
+      technology: ASP.NET Core Controller / Minimal API
+      classification: api-marker
+    x: 720
+    'y': 220
+  - entityRef: blueprint/eshop/webapp/messageprocessor
+    type: rest-api
+    name: MessageProcessor REST Endpoint
+    isTest: false
+    properties:
+      filepath: src/WebApp/Components/Chatbot/MessageProcessor.cs
+      containerId: webapp
+      technology: ASP.NET Core Controller / Minimal API
+      classification: api-marker
+    x: 1060
+    'y': 220
+  - entityRef: blueprint/eshop/webapp/orderingservice
+    type: background-worker
+    name: OrderingService Service
+    isTest: false
+    properties:
+      filepath: src/WebApp/Services/OrderingService.cs
+      containerId: webapp
+      technology: C# Domain Service
+      classification: default
+    x: 1400
+    'y': 220
   - entityRef: blueprint/eshop/webapp/orderstatuschangedtoawaitingvalidationintegrationevent
     type: background-worker
     name: OrderStatusChangedToAwaitingValidationIntegrationEvent Service
@@ -90,87 +134,8 @@ nodes:
       containerId: webapp
       technology: C# Domain Service
       classification: default
-    x: 3360
-    'y': 50
-  - entityRef: blueprint/eshop/webapp/orderstatuschangedtocancelledintegrationevent
-    type: background-worker
-    name: OrderStatusChangedToCancelledIntegrationEvent Service
-    isTest: false
-    properties:
-      filepath: src/WebApp/Services/OrderStatus/IntegrationEvents/Events/OrderStatusChangedToCancelledIntegrationEvent.cs
-      containerId: webapp
-      technology: C# Domain Service
-      classification: default
-    x: 3820
-    'y': 50
-  - entityRef: blueprint/eshop/webapp/orderstatuschangedtopaidintegrationevent
-    type: background-worker
-    name: OrderStatusChangedToPaidIntegrationEvent Service
-    isTest: false
-    properties:
-      filepath: src/WebApp/Services/OrderStatus/IntegrationEvents/Events/OrderStatusChangedToPaidIntegrationEvent.cs
-      containerId: webapp
-      technology: C# Domain Service
-      classification: default
-    x: 4280
-    'y': 50
-  - entityRef: blueprint/eshop/webapp/orderstatuschangedtostockconfirmedintegrationevent
-    type: background-worker
-    name: OrderStatusChangedToStockConfirmedIntegrationEvent Service
-    isTest: false
-    properties:
-      filepath: src/WebApp/Services/OrderStatus/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs
-      containerId: webapp
-      technology: C# Domain Service
-      classification: default
-    x: 4740
-    'y': 50
-  - entityRef: blueprint/eshop/webapp/orderstatuschangedtoshippedintegrationevent
-    type: background-worker
-    name: OrderStatusChangedToShippedIntegrationEvent Service
-    isTest: false
-    properties:
-      filepath: src/WebApp/Services/OrderStatus/IntegrationEvents/Events/OrderStatusChangedToShippedIntegrationEvent.cs
-      containerId: webapp
-      technology: C# Domain Service
-      classification: default
-    x: 5200
-    'y': 50
-  - entityRef: blueprint/eshop/webapp/orderstatuschangedtosubmittedintegrationevent
-    type: background-worker
-    name: OrderStatusChangedToSubmittedIntegrationEvent Service
-    isTest: false
-    properties:
-      filepath: src/WebApp/Services/OrderStatus/IntegrationEvents/Events/OrderStatusChangedToSubmittedIntegrationEvent.cs
-      containerId: webapp
-      technology: C# Domain Service
-      classification: default
-    x: 5660
-    'y': 50
-  - entityRef: blueprint/eshop/webapp/orderstatuschangedtopaidintegrationeventhandler
-    type: background-worker
-    name: OrderStatusChangedToPaidIntegrationEventHandler Service
-    isTest: false
-    properties:
-      filepath: >-
-        src/WebApp/Services/OrderStatus/IntegrationEvents/EventHandling/OrderStatusChangedToPaidIntegrationEventHandler.cs
-      containerId: webapp
-      technology: C# Domain Service
-      classification: default
-    x: 6120
-    'y': 50
-  - entityRef: blueprint/eshop/webapp/orderstatuschangedtocancelledintegrationeventhandler
-    type: background-worker
-    name: OrderStatusChangedToCancelledIntegrationEventHandler Service
-    isTest: false
-    properties:
-      filepath: >-
-        src/WebApp/Services/OrderStatus/IntegrationEvents/EventHandling/OrderStatusChangedToCancelledIntegrationEventHandler.cs
-      containerId: webapp
-      technology: C# Domain Service
-      classification: default
-    x: 6580
-    'y': 50
+    x: 1740
+    'y': 220
   - entityRef: blueprint/eshop/webapp/orderstatuschangedtoawaitingvalidationintegrationeventhandler
     type: background-worker
     name: OrderStatusChangedToAwaitingValidationIntegrationEventHandler Service
@@ -181,20 +146,65 @@ nodes:
       containerId: webapp
       technology: C# Domain Service
       classification: default
-    x: 7040
-    'y': 50
-  - entityRef: blueprint/eshop/webapp/orderstatuschangedtostockconfirmedintegrationeventhandler
+    x: 40
+    'y': 400
+  - entityRef: blueprint/eshop/webapp/orderstatuschangedtocancelledintegrationevent
     type: background-worker
-    name: OrderStatusChangedToStockConfirmedIntegrationEventHandler Service
+    name: OrderStatusChangedToCancelledIntegrationEvent Service
     isTest: false
     properties:
-      filepath: >-
-        src/WebApp/Services/OrderStatus/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs
+      filepath: src/WebApp/Services/OrderStatus/IntegrationEvents/Events/OrderStatusChangedToCancelledIntegrationEvent.cs
       containerId: webapp
       technology: C# Domain Service
       classification: default
-    x: 7500
-    'y': 50
+    x: 380
+    'y': 400
+  - entityRef: blueprint/eshop/webapp/orderstatuschangedtocancelledintegrationeventhandler
+    type: background-worker
+    name: OrderStatusChangedToCancelledIntegrationEventHandler Service
+    isTest: false
+    properties:
+      filepath: >-
+        src/WebApp/Services/OrderStatus/IntegrationEvents/EventHandling/OrderStatusChangedToCancelledIntegrationEventHandler.cs
+      containerId: webapp
+      technology: C# Domain Service
+      classification: default
+    x: 720
+    'y': 400
+  - entityRef: blueprint/eshop/webapp/orderstatuschangedtopaidintegrationevent
+    type: background-worker
+    name: OrderStatusChangedToPaidIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/WebApp/Services/OrderStatus/IntegrationEvents/Events/OrderStatusChangedToPaidIntegrationEvent.cs
+      containerId: webapp
+      technology: C# Domain Service
+      classification: default
+    x: 1060
+    'y': 400
+  - entityRef: blueprint/eshop/webapp/orderstatuschangedtopaidintegrationeventhandler
+    type: background-worker
+    name: OrderStatusChangedToPaidIntegrationEventHandler Service
+    isTest: false
+    properties:
+      filepath: >-
+        src/WebApp/Services/OrderStatus/IntegrationEvents/EventHandling/OrderStatusChangedToPaidIntegrationEventHandler.cs
+      containerId: webapp
+      technology: C# Domain Service
+      classification: default
+    x: 1400
+    'y': 400
+  - entityRef: blueprint/eshop/webapp/orderstatuschangedtoshippedintegrationevent
+    type: background-worker
+    name: OrderStatusChangedToShippedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/WebApp/Services/OrderStatus/IntegrationEvents/Events/OrderStatusChangedToShippedIntegrationEvent.cs
+      containerId: webapp
+      technology: C# Domain Service
+      classification: default
+    x: 1740
+    'y': 400
   - entityRef: blueprint/eshop/webapp/orderstatuschangedtoshippedintegrationeventhandler
     type: background-worker
     name: OrderStatusChangedToShippedIntegrationEventHandler Service
@@ -205,8 +215,42 @@ nodes:
       containerId: webapp
       technology: C# Domain Service
       classification: default
-    x: 7960
-    'y': 50
+    x: 40
+    'y': 580
+  - entityRef: blueprint/eshop/webapp/orderstatuschangedtostockconfirmedintegrationevent
+    type: background-worker
+    name: OrderStatusChangedToStockConfirmedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/WebApp/Services/OrderStatus/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs
+      containerId: webapp
+      technology: C# Domain Service
+      classification: default
+    x: 380
+    'y': 580
+  - entityRef: blueprint/eshop/webapp/orderstatuschangedtostockconfirmedintegrationeventhandler
+    type: background-worker
+    name: OrderStatusChangedToStockConfirmedIntegrationEventHandler Service
+    isTest: false
+    properties:
+      filepath: >-
+        src/WebApp/Services/OrderStatus/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs
+      containerId: webapp
+      technology: C# Domain Service
+      classification: default
+    x: 720
+    'y': 580
+  - entityRef: blueprint/eshop/webapp/orderstatuschangedtosubmittedintegrationevent
+    type: background-worker
+    name: OrderStatusChangedToSubmittedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/WebApp/Services/OrderStatus/IntegrationEvents/Events/OrderStatusChangedToSubmittedIntegrationEvent.cs
+      containerId: webapp
+      technology: C# Domain Service
+      classification: default
+    x: 1060
+    'y': 580
   - entityRef: blueprint/eshop/webapp/orderstatuschangedtosubmittedintegrationeventhandler
     type: background-worker
     name: OrderStatusChangedToSubmittedIntegrationEventHandler Service
@@ -217,8 +261,19 @@ nodes:
       containerId: webapp
       technology: C# Domain Service
       classification: default
-    x: 8420
-    'y': 50
+    x: 1400
+    'y': 580
+  - entityRef: blueprint/eshop/webapp/orderstatusnotificationservice
+    type: background-worker
+    name: OrderStatusNotificationService Service
+    isTest: false
+    properties:
+      filepath: src/WebApp/Services/OrderStatus/OrderStatusNotificationService.cs
+      containerId: webapp
+      technology: C# Domain Service
+      classification: default
+    x: 1740
+    'y': 580
   - entityRef: blueprint/eshop/webapp/productimageurlprovider
     type: background-worker
     name: ProductImageUrlProvider Service
@@ -228,63 +283,8 @@ nodes:
       containerId: webapp
       technology: C# Domain Service
       classification: default
-    x: 8880
-    'y': 50
-  - entityRef: blueprint/eshop/webapp/basketcheckoutinfo
-    type: background-worker
-    name: BasketCheckoutInfo Service
-    isTest: false
-    properties:
-      filepath: src/WebApp/Services/BasketCheckoutInfo.cs
-      containerId: webapp
-      technology: C# Domain Service
-      classification: default
-    x: 9340
-    'y': 50
-  - entityRef: blueprint/eshop/webapp/basketitem
-    type: background-worker
-    name: BasketItem Service
-    isTest: false
-    properties:
-      filepath: src/WebApp/Services/BasketItem.cs
-      containerId: webapp
-      technology: C# Domain Service
-      classification: default
-    x: 9800
-    'y': 50
-  - entityRef: blueprint/eshop/webapp/basketservice
-    type: background-worker
-    name: BasketService Service
-    isTest: false
-    properties:
-      filepath: src/WebApp/Services/BasketService.cs
-      containerId: webapp
-      technology: C# Domain Service
-      classification: default
-    x: 10260
-    'y': 50
-  - entityRef: blueprint/eshop/webapp/logoutservice
-    type: rest-api
-    name: LogOutService REST Endpoint
-    isTest: false
-    properties:
-      filepath: src/WebApp/Services/LogOutService.cs
-      containerId: webapp
-      technology: ASP.NET Core Controller / Minimal API
-      classification: api-marker
-    x: 10720
-    'y': 50
-  - entityRef: blueprint/eshop/webapp/ibasketstate
-    type: background-worker
-    name: IBasketState Service
-    isTest: false
-    properties:
-      filepath: src/WebApp/Services/IBasketState.cs
-      containerId: webapp
-      technology: C# Domain Service
-      classification: default
-    x: 11180
-    'y': 50
+    x: 40
+    'y': 760
   - entityRef: blueprint/eshop/webapp/program
     type: background-worker
     name: Program Service
@@ -294,6 +294,6 @@ nodes:
       containerId: webapp
       technology: C# Domain Service
       classification: default
-    x: 11640
-    'y': 50
+    x: 380
+    'y': 760
 dependencies: []

@@ -3,17 +3,6 @@ name: OrderProcessor Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/eshop/orderprocessor/extensions
-    type: background-worker
-    name: Extensions Service
-    isTest: false
-    properties:
-      filepath: src/OrderProcessor/Extensions/Extensions.cs
-      containerId: orderprocessor
-      technology: C# Domain Service
-      classification: default
-    x: 140
-    'y': 50
   - entityRef: blueprint/eshop/orderprocessor/backgroundtaskoptions
     type: background-worker
     name: BackgroundTaskOptions Service
@@ -23,8 +12,19 @@ nodes:
       containerId: orderprocessor
       technology: C# Domain Service
       classification: default
-    x: 600
-    'y': 50
+    x: 40
+    'y': 40
+  - entityRef: blueprint/eshop/orderprocessor/extensions
+    type: background-worker
+    name: Extensions Service
+    isTest: false
+    properties:
+      filepath: src/OrderProcessor/Extensions/Extensions.cs
+      containerId: orderprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 380
+    'y': 40
   - entityRef: blueprint/eshop/orderprocessor/globalusings
     type: rest-api
     name: GlobalUsings REST Endpoint
@@ -34,8 +34,8 @@ nodes:
       containerId: orderprocessor
       technology: ASP.NET Core Controller / Minimal API
       classification: api-marker
-    x: 1060
-    'y': 50
+    x: 720
+    'y': 40
   - entityRef: blueprint/eshop/orderprocessor/graceperiodconfirmedintegrationevent
     type: background-worker
     name: GracePeriodConfirmedIntegrationEvent Service
@@ -45,8 +45,8 @@ nodes:
       containerId: orderprocessor
       technology: C# Domain Service
       classification: default
-    x: 1520
-    'y': 50
+    x: 40
+    'y': 220
   - entityRef: blueprint/eshop/orderprocessor/graceperiodmanagerservice
     type: relational-database
     name: GracePeriodManagerService Database
@@ -56,8 +56,8 @@ nodes:
       containerId: orderprocessor
       technology: Entity Framework / DB Context
       classification: database-marker
-    x: 1980
-    'y': 50
+    x: 380
+    'y': 220
   - entityRef: blueprint/eshop/orderprocessor/program
     type: background-worker
     name: Program Service
@@ -67,6 +67,6 @@ nodes:
       containerId: orderprocessor
       technology: C# Domain Service
       classification: default
-    x: 2440
-    'y': 50
+    x: 720
+    'y': 220
 dependencies: []

@@ -1,4 +1,4 @@
-import type { ParsedSourceFile } from './types.ts';
+import type { ParsedSourceFile } from '../types.ts';
 import { type SystemNode, slugify } from '@blueprint/core';
 import type { LanguageAnalyzer, ContainerInfo } from './languageAnalyzer.ts';
 

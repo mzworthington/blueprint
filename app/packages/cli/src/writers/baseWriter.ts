@@ -1,4 +1,4 @@
-import type { LayoutPort, AnalysisFileSystemPort, LoggerPort } from './ports.ts';
+import type { LayoutPort, AnalysisFileSystemPort, LoggerPort } from '../analysis/domain/ports.ts';
 import type { SystemSchema } from '@blueprint/core';
 import * as yaml from 'js-yaml';
 

@@ -57,10 +57,10 @@ export function treeSitterWasmSearchDirs(opts: {
 
   dirs.push(path.join(cwd, 'node_modules', 'tree-sitter-wasms', 'out'));
 
-  // Source / monorepo layouts (adapters → … → app or packages/cli)
-  dirs.push(path.resolve(moduleDir, '../../../node_modules/tree-sitter-wasms/out'));
-  dirs.push(path.resolve(moduleDir, '../../../../../node_modules/tree-sitter-wasms/out'));
+  // Source / monorepo layouts (parsing → … → packages/cli or app)
   dirs.push(path.resolve(moduleDir, '../../../../node_modules/tree-sitter-wasms/out'));
+  dirs.push(path.resolve(moduleDir, '../../../../../node_modules/tree-sitter-wasms/out'));
+  dirs.push(path.resolve(moduleDir, '../../../../../../node_modules/tree-sitter-wasms/out'));
 
   return [...new Set(dirs.map(d => path.normalize(d)))];
 }

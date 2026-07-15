@@ -23,8 +23,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 140
-    'y': 50
+    x: 40
+    'y': 40
   - entityRef: blueprint/plugins/proxy-backend/index
     type: background-worker
     name: index Service
@@ -45,8 +45,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
-    'y': 50
+    x: 400
+    'y': 40
   - entityRef: blueprint/plugins/proxy-backend/plugin
     type: background-worker
     name: plugin Service
@@ -67,30 +67,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
-    'y': 50
-  - entityRef: blueprint/plugins/proxy-backend/setuptests
-    type: background-worker
-    name: setupTests Service
-    isTest: true
-    properties:
-      filepath: plugins/proxy-backend/src/setupTests.ts
-      containerId: proxy-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 18
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1520
-    'y': 50
+    x: 760
+    'y': 40
   - entityRef: blueprint/plugins/proxy-backend/router
     type: rest-api
     name: router REST Endpoint
@@ -112,8 +90,8 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1750
-    'y': 370
+    x: 40
+    'y': 300
   - entityRef: blueprint/plugins/proxy-backend/router-config-test
     type: rest-api
     name: router.config.test REST Endpoint
@@ -134,30 +112,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1980
-    'y': 50
-  - entityRef: blueprint/plugins/proxy-backend/router-test
-    type: rest-api
-    name: router.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/proxy-backend/src/service/router.test.ts
-      containerId: proxy-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 2
-      loc: 654
-      sloc: 550
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2440
-    'y': 50
+    x: 400
+    'y': 300
   - entityRef: blueprint/plugins/proxy-backend/router-credentials-test
     type: rest-api
     name: router.credentials.test REST Endpoint
@@ -178,8 +134,52 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2900
-    'y': 50
+    x: 760
+    'y': 300
+  - entityRef: blueprint/plugins/proxy-backend/router-test
+    type: rest-api
+    name: router.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/proxy-backend/src/service/router.test.ts
+      containerId: proxy-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 2
+      loc: 654
+      sloc: 550
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 40
+    'y': 560
+  - entityRef: blueprint/plugins/proxy-backend/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/proxy-backend/src/setupTests.ts
+      containerId: proxy-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 18
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 400
+    'y': 560
 dependencies:
   - from: blueprint/plugins/proxy-backend/index
     to: blueprint/plugins/permission-node/alpha

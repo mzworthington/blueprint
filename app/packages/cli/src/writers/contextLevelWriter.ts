@@ -1,4 +1,4 @@
-import { BaseWriter } from '../analysis/domain/writer.ts';
+import { BaseWriter } from './baseWriter.ts';
 import type { SystemDependency, SystemNode, SystemSchema } from '@blueprint/core';
 import { EntityRef, parseSchemaFromYaml } from '@blueprint/core';
 import { attachForensicsToSchema } from '../forensics/domain/attachForensics.ts';

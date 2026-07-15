@@ -1,4 +1,4 @@
-import { BaseWriter } from '../analysis/domain/writer.ts';
+import { BaseWriter } from './baseWriter.ts';
 import type { SystemNode, SystemDependency, SystemSchema } from '@blueprint/core';
 import { EntityRef } from '@blueprint/core';
 

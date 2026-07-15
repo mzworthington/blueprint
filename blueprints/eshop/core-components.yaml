@@ -3,6 +3,28 @@ name: Core Service Components
 version: 1.0.0
 level: component
 nodes:
+  - entityRef: blueprint/eshop/core/activityextensions
+    type: background-worker
+    name: ActivityExtensions Service
+    isTest: false
+    properties:
+      filepath: src/Shared/ActivityExtensions.cs
+      containerId: core
+      technology: C# Domain Service
+      classification: default
+    x: 40
+    'y': 40
+  - entityRef: blueprint/eshop/core/migratedbcontextextensions
+    type: relational-database
+    name: MigrateDbContextExtensions Database
+    isTest: false
+    properties:
+      filepath: src/Shared/MigrateDbContextExtensions.cs
+      containerId: core
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 380
+    'y': 40
   - entityRef: blueprint/eshop/core/playwright-config
     type: background-worker
     name: playwright.config Service
@@ -23,28 +45,6 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 140
-    'y': 50
-  - entityRef: blueprint/eshop/core/migratedbcontextextensions
-    type: relational-database
-    name: MigrateDbContextExtensions Database
-    isTest: false
-    properties:
-      filepath: src/Shared/MigrateDbContextExtensions.cs
-      containerId: core
-      technology: Entity Framework / DB Context
-      classification: database-marker
-    x: 600
-    'y': 50
-  - entityRef: blueprint/eshop/core/activityextensions
-    type: background-worker
-    name: ActivityExtensions Service
-    isTest: false
-    properties:
-      filepath: src/Shared/ActivityExtensions.cs
-      containerId: core
-      technology: C# Domain Service
-      classification: default
-    x: 1060
-    'y': 50
+    x: 40
+    'y': 220
 dependencies: []

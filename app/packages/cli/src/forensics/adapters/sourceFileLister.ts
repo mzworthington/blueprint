@@ -1,7 +1,7 @@
 import { Project } from 'ts-morph';
 import * as path from 'path';
 import * as fs from 'fs';
-import { createSourcePathFilter } from '../../analysis/adapters/sourcePathFilter.ts';
+import { createSourcePathFilter } from '../../analysis/adapters/pathFilter/sourcePathFilter.ts';
 import { throwIfAborted } from '../../analysis/domain/cancellation.ts';
 import type { ForensicsOptions } from '../domain/options.ts';
 import type { SourceFileListerPort } from '../domain/ports.ts';

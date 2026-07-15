@@ -3,19 +3,19 @@ name: Cli-module-lint Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/cli-module-lint/optionsparser
+  - entityRef: blueprint/packages/cli-module-lint/index
     type: background-worker
-    name: optionsParser Service
+    name: index Service
     isTest: false
     properties:
-      filepath: packages/cli-module-lint/src/lib/optionsParser.ts
+      filepath: packages/cli-module-lint/src/index.ts
       containerId: cli-module-lint
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 4
-      loc: 41
-      sloc: 21
+      complexity: 1
+      loc: 35
+      sloc: 17
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -23,8 +23,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 140
-    'y': 370
+    x: 40
+    'y': 40
   - entityRef: blueprint/packages/cli-module-lint/lint
     type: background-worker
     name: lint Service
@@ -46,21 +46,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 140
-    'y': 50
-  - entityRef: blueprint/packages/cli-module-lint/index
+    x: 400
+    'y': 40
+  - entityRef: blueprint/packages/cli-module-lint/optionsparser
     type: background-worker
-    name: index Service
+    name: optionsParser Service
     isTest: false
     properties:
-      filepath: packages/cli-module-lint/src/index.ts
+      filepath: packages/cli-module-lint/src/lib/optionsParser.ts
       containerId: cli-module-lint
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 35
-      sloc: 17
+      complexity: 4
+      loc: 41
+      sloc: 21
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -68,8 +68,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
-    'y': 50
+    x: 40
+    'y': 300
 dependencies:
   - from: blueprint/packages/cli-module-lint/lint
     to: blueprint/packages/cli-module-lint/optionsparser

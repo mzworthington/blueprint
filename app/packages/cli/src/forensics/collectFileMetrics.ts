@@ -8,7 +8,7 @@ import { GitLogHistoryAdapter } from './adapters/gitLogHistory.ts';
 import { loadForensicsConfig, resolveForensicsOptions } from './adapters/loadForensicsConfig.ts';
 import { SourceFileListerAdapter } from './adapters/sourceFileLister.ts';
 import { TsMorphComplexityAdapter } from './adapters/tsMorphComplexity.ts';
-import type { GitForensicsCliFlags } from '../parseBlueprintArgv.ts';
+import type { GitForensicsCliFlags } from '../cli/parseBlueprintArgv.ts';
 
 /**
  * Collect per-file forensics metrics for attaching onto architecture nodes.

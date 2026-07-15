@@ -8,7 +8,7 @@ import { ModelExtractor } from './modelExtractor.ts';
 
 describe('containerGrouping', () => {
   it('groups by packages/<name> instead of the first path segment', () => {
-    expect(resolveContainerFromPath('app/packages/cli/src/blueprint.ts')).toEqual({
+    expect(resolveContainerFromPath('app/packages/cli/src/cli/blueprint.ts')).toEqual({
       containerId: 'cli',
       displayName: 'cli',
     });
@@ -102,8 +102,8 @@ describe('ModelExtractor', () => {
     const extractor = new ModelExtractor('ctx/sys');
     const { componentNodesMap, containerNodesMap, componentDependencies } = extractor.extractGraph([
       {
-        filePath: 'app/packages/cli/src/blueprint.ts',
-        relativePath: 'app/packages/cli/src/blueprint.ts',
+        filePath: 'app/packages/cli/src/cli/blueprint.ts',
+        relativePath: 'app/packages/cli/src/cli/blueprint.ts',
         baseName: 'blueprint',
         isTestFile: false,
         imports: [],

@@ -1,4 +1,4 @@
-import type { ParsedSourceFile } from './types.ts';
+import type { ParsedSourceFile } from '../types.ts';
 import type { SystemNode } from '@blueprint/core';
 
 export interface ContainerInfo {

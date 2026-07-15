@@ -2,7 +2,7 @@ import ignore, { type Ignore } from 'ignore';
 import {
   DEFAULT_STRUCTURAL_IGNORE_GLOBS,
   type AnalysisOptions,
-} from '../domain/analysisOptions.ts';
+} from '../../domain/analysisOptions.ts';
 import { createGitignoreFilter, isIgnoredByGitignore } from './gitignoreFilter.ts';
 
 export type SourcePathFilter = {

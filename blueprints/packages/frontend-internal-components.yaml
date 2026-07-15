@@ -3,50 +3,6 @@ name: Frontend-internal Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/frontend-internal/opaqueapiref
-    type: background-worker
-    name: OpaqueApiRef Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-internal/src/apis/OpaqueApiRef.ts
-      containerId: frontend-internal
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 32
-      sloc: 14
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
-  - entityRef: blueprint/packages/frontend-internal/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-internal/src/routing/index.ts
-      containerId: frontend-internal
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 20
-      sloc: 3
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
   - entityRef: blueprint/packages/frontend-internal/createextensiondatacontainer
     type: background-worker
     name: createExtensionDataContainer Service
@@ -68,21 +24,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1060
-    'y': 50
-  - entityRef: blueprint/packages/frontend-internal/internalextensioninput
+    x: 40
+    'y': 40
+  - entityRef: blueprint/packages/frontend-internal/index
     type: background-worker
-    name: InternalExtensionInput Service
+    name: index Service
     isTest: false
     properties:
-      filepath: packages/frontend-internal/src/wiring/InternalExtensionInput.ts
+      filepath: packages/frontend-internal/src/routing/index.ts
       containerId: frontend-internal
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 37
-      sloc: 18
+      loc: 20
+      sloc: 3
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -90,52 +46,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1520
-    'y': 50
-  - entityRef: blueprint/packages/frontend-internal/internalswappablecomponentref
-    type: background-worker
-    name: InternalSwappableComponentRef Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-internal/src/wiring/InternalSwappableComponentRef.ts
-      containerId: frontend-internal
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 31
-      sloc: 13
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1980
-    'y': 50
-  - entityRef: blueprint/packages/frontend-internal/internalfrontendplugin
-    type: background-worker
-    name: InternalFrontendPlugin Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-internal/src/wiring/InternalFrontendPlugin.ts
-      containerId: frontend-internal
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 45
-      sloc: 27
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2440
-    'y': 50
+    x: 400
+    'y': 40
   - entityRef: blueprint/packages/frontend-internal/internalextensiondefinition
     type: background-worker
     name: InternalExtensionDefinition Service
@@ -156,21 +68,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2900
-    'y': 50
-  - entityRef: blueprint/packages/frontend-internal/opaquerouteref
-    type: rest-api
-    name: OpaqueRouteRef REST Endpoint
+    x: 760
+    'y': 40
+  - entityRef: blueprint/packages/frontend-internal/internalextensioninput
+    type: background-worker
+    name: InternalExtensionInput Service
     isTest: false
     properties:
-      filepath: packages/frontend-internal/src/routing/OpaqueRouteRef.ts
+      filepath: packages/frontend-internal/src/wiring/InternalExtensionInput.ts
       containerId: frontend-internal
-      technology: REST Controller / Router
-      classification: api-marker
+      technology: TypeScript Domain Service
+      classification: default
     forensics:
       complexity: 1
-      loc: 36
-      sloc: 15
+      loc: 37
+      sloc: 18
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -178,8 +90,74 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3360
-    'y': 50
+    x: 1120
+    'y': 40
+  - entityRef: blueprint/packages/frontend-internal/internalfrontendplugin
+    type: background-worker
+    name: InternalFrontendPlugin Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-internal/src/wiring/InternalFrontendPlugin.ts
+      containerId: frontend-internal
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 45
+      sloc: 27
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 40
+    'y': 300
+  - entityRef: blueprint/packages/frontend-internal/internalswappablecomponentref
+    type: background-worker
+    name: InternalSwappableComponentRef Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-internal/src/wiring/InternalSwappableComponentRef.ts
+      containerId: frontend-internal
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 31
+      sloc: 13
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 400
+    'y': 300
+  - entityRef: blueprint/packages/frontend-internal/opaqueapiref
+    type: background-worker
+    name: OpaqueApiRef Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-internal/src/apis/OpaqueApiRef.ts
+      containerId: frontend-internal
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 32
+      sloc: 14
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 760
+    'y': 300
   - entityRef: blueprint/packages/frontend-internal/opaqueexternalrouteref
     type: rest-api
     name: OpaqueExternalRouteRef REST Endpoint
@@ -200,8 +178,30 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3820
-    'y': 50
+    x: 1120
+    'y': 300
+  - entityRef: blueprint/packages/frontend-internal/opaquerouteref
+    type: rest-api
+    name: OpaqueRouteRef REST Endpoint
+    isTest: false
+    properties:
+      filepath: packages/frontend-internal/src/routing/OpaqueRouteRef.ts
+      containerId: frontend-internal
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 36
+      sloc: 15
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 40
+    'y': 560
   - entityRef: blueprint/packages/frontend-internal/opaquesubrouteref
     type: rest-api
     name: OpaqueSubRouteRef REST Endpoint
@@ -222,8 +222,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4280
-    'y': 50
+    x: 400
+    'y': 560
 dependencies:
   - from: blueprint/packages/frontend-internal/internalfrontendplugin
     to: blueprint/packages/ui/types

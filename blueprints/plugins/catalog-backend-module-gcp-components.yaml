@@ -3,28 +3,6 @@ name: Catalog-backend-module-gcp Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/plugins/catalog-backend-module-gcp/config-d
-    type: background-worker
-    name: config.d Service
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-gcp/config.d.ts
-      containerId: catalog-backend-module-gcp
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 62
-      sloc: 16
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
   - entityRef: blueprint/plugins/catalog-backend-module-gcp/alpha
     type: background-worker
     name: alpha Service
@@ -45,8 +23,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
-    'y': 50
+    x: 40
+    'y': 40
   - entityRef: blueprint/plugins/catalog-backend-module-gcp/catalogmodulegcpgkeentityprovider
     type: background-worker
     name: catalogModuleGcpGkeEntityProvider Service
@@ -67,21 +45,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
-    'y': 50
-  - entityRef: blueprint/plugins/catalog-backend-module-gcp/index
+    x: 400
+    'y': 40
+  - entityRef: blueprint/plugins/catalog-backend-module-gcp/config-d
     type: background-worker
-    name: index Service
+    name: config.d Service
     isTest: false
     properties:
-      filepath: plugins/catalog-backend-module-gcp/src/index.ts
+      filepath: plugins/catalog-backend-module-gcp/config.d.ts
       containerId: catalog-backend-module-gcp
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 26
-      sloc: 3
+      loc: 62
+      sloc: 16
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -89,8 +67,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1520
-    'y': 50
+    x: 760
+    'y': 40
   - entityRef: blueprint/plugins/catalog-backend-module-gcp/gkeentityprovider
     type: background-worker
     name: GkeEntityProvider Service
@@ -112,8 +90,30 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1520
-    'y': 370
+    x: 40
+    'y': 300
+  - entityRef: blueprint/plugins/catalog-backend-module-gcp/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gcp/src/index.ts
+      containerId: catalog-backend-module-gcp
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 26
+      sloc: 3
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 400
+    'y': 300
   - entityRef: blueprint/plugins/catalog-backend-module-gcp/gkeentityprovider-test
     type: background-worker
     name: GkeEntityProvider.test Service
@@ -134,8 +134,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1980
-    'y': 50
+    x: 760
+    'y': 300
   - entityRef: blueprint/plugins/catalog-backend-module-gcp/setuptests
     type: background-worker
     name: setupTests Service
@@ -156,8 +156,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2440
-    'y': 50
+    x: 40
+    'y': 560
 dependencies:
   - from: blueprint/plugins/catalog-backend-module-gcp/catalogmodulegcpgkeentityprovider
     to: blueprint/plugins/catalog-backend-module-gcp/gkeentityprovider

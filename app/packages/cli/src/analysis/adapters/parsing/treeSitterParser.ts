@@ -2,12 +2,12 @@ import Parser from 'web-tree-sitter';
 import * as path from 'path';
 import * as fs from 'fs';
 import pc from 'picocolors';
-import type { CodebaseParserPort } from '../domain/ports.ts';
-import type { ParsedSourceFile } from '../domain/types.ts';
-import type { AnalysisOptions } from '../domain/analysisOptions.ts';
-import { isTestSourcePath } from '../domain/testPath.ts';
-import { createSourcePathFilter, type SourcePathFilter } from './sourcePathFilter.ts';
-import { throwIfAborted } from '../domain/cancellation.ts';
+import type { CodebaseParserPort } from '../../domain/ports.ts';
+import type { ParsedSourceFile } from '../../domain/types.ts';
+import type { AnalysisOptions } from '../../domain/analysisOptions.ts';
+import { isTestSourcePath } from '../../domain/testPath.ts';
+import { createSourcePathFilter, type SourcePathFilter } from '../pathFilter/sourcePathFilter.ts';
+import { throwIfAborted } from '../../domain/cancellation.ts';
 import {
   resolveTreeSitterWasmPath,
   treeSitterWasmSearchDirs,

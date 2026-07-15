@@ -3,50 +3,6 @@ name: Release-manifests Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/release-manifests/manifest-test
-    type: background-worker
-    name: manifest.test Service
-    isTest: true
-    properties:
-      filepath: packages/release-manifests/src/manifest.test.ts
-      containerId: release-manifests
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 4
-      loc: 351
-      sloc: 292
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
-  - entityRef: blueprint/packages/release-manifests/manifest
-    type: background-worker
-    name: manifest Service
-    isTest: false
-    properties:
-      filepath: packages/release-manifests/src/manifest.ts
-      containerId: release-manifests
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 7
-      loc: 174
-      sloc: 120
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 370
   - entityRef: blueprint/packages/release-manifests/index
     type: background-worker
     name: index Service
@@ -67,8 +23,52 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
-    'y': 50
+    x: 40
+    'y': 40
+  - entityRef: blueprint/packages/release-manifests/manifest
+    type: background-worker
+    name: manifest Service
+    isTest: false
+    properties:
+      filepath: packages/release-manifests/src/manifest.ts
+      containerId: release-manifests
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 7
+      loc: 174
+      sloc: 120
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 400
+    'y': 40
+  - entityRef: blueprint/packages/release-manifests/manifest-test
+    type: background-worker
+    name: manifest.test Service
+    isTest: true
+    properties:
+      filepath: packages/release-manifests/src/manifest.test.ts
+      containerId: release-manifests
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 4
+      loc: 351
+      sloc: 292
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 40
+    'y': 300
 dependencies:
   - from: blueprint/packages/release-manifests/manifest-test
     to: blueprint/packages/core-components/node

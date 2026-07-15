@@ -3,36 +3,24 @@ name: Eshop Containers
 version: 1.0.0
 level: container
 nodes:
-  - entityRef: blueprint/eshop/ordering-unittests
+  - entityRef: blueprint/eshop/basket-api
     type: container
-    name: Ordering.UnitTests Service
-    isTest: true
-    x: 150
-    'y': 60
-  - entityRef: blueprint/eshop/catalog-functionaltests
+    name: Basket.API Service
+    isTest: false
+    x: 40
+    'y': 40
+  - entityRef: blueprint/eshop/catalog-api
     type: container
-    name: Catalog.FunctionalTests Service
-    isTest: true
-    x: 670
-    'y': 60
-  - entityRef: blueprint/eshop/ordering-functionaltests
+    name: Catalog.API Service
+    isTest: false
+    x: 380
+    'y': 40
+  - entityRef: blueprint/eshop/clientapp
     type: container
-    name: Ordering.FunctionalTests Service
-    isTest: true
-    x: 1190
-    'y': 60
-  - entityRef: blueprint/eshop/clientapp-unittests
-    type: container
-    name: ClientApp.UnitTests Service
-    isTest: true
-    x: 1710
-    'y': 60
-  - entityRef: blueprint/eshop/basket-unittests
-    type: container
-    name: Basket.UnitTests Service
-    isTest: true
-    x: 2230
-    'y': 60
+    name: ClientApp Service
+    isTest: false
+    x: 720
+    'y': 40
   - entityRef: blueprint/eshop/core
     type: container
     name: Core Service
@@ -47,122 +35,134 @@ nodes:
       knowledgeSiloCount: 0
       classifications: []
       sinceDays: 500
-    x: 2750
-    'y': 60
-  - entityRef: blueprint/eshop/integrationeventlogef
-    type: container
-    name: IntegrationEventLogEF Service
-    isTest: false
-    x: 3270
-    'y': 60
-  - entityRef: blueprint/eshop/hybridapp
-    type: container
-    name: HybridApp Service
-    isTest: false
-    x: 3790
-    'y': 60
-  - entityRef: blueprint/eshop/clientapp
-    type: container
-    name: ClientApp Service
-    isTest: false
-    x: 2230
-    'y': 430
-  - entityRef: blueprint/eshop/webappcomponents
-    type: container
-    name: WebAppComponents Service
-    isTest: false
-    x: 4310
-    'y': 60
-  - entityRef: blueprint/eshop/eventbus
-    type: container
-    name: EventBus Service
-    isTest: false
-    x: 4830
-    'y': 60
-  - entityRef: blueprint/eshop/basket-api
-    type: container
-    name: Basket.API Service
-    isTest: false
-    x: 5350
-    'y': 60
+    x: 1060
+    'y': 40
   - entityRef: blueprint/eshop/eshop-apphost
     type: container
     name: EShop.AppHost Service
     isTest: false
-    x: 5870
-    'y': 60
-  - entityRef: blueprint/eshop/webapp
-    type: container
-    name: WebApp Service
-    isTest: false
-    x: 6390
-    'y': 60
-  - entityRef: blueprint/eshop/ordering-api
-    type: container
-    name: Ordering.API Service
-    isTest: false
-    x: 6910
-    'y': 60
-  - entityRef: blueprint/eshop/ordering-infrastructure
-    type: container
-    name: Ordering.Infrastructure Service
-    isTest: false
-    x: 7430
-    'y': 60
-  - entityRef: blueprint/eshop/paymentprocessor
-    type: container
-    name: PaymentProcessor Service
-    isTest: false
-    x: 7950
-    'y': 60
-  - entityRef: blueprint/eshop/identity-api
-    type: container
-    name: Identity.API Service
-    isTest: false
-    x: 8470
-    'y': 60
-  - entityRef: blueprint/eshop/eventbusrabbitmq
-    type: container
-    name: EventBusRabbitMQ Service
-    isTest: false
-    x: 8990
-    'y': 60
-  - entityRef: blueprint/eshop/webhookclient
-    type: container
-    name: WebhookClient Service
-    isTest: false
-    x: 9510
-    'y': 60
+    x: 1400
+    'y': 40
   - entityRef: blueprint/eshop/eshop-servicedefaults
     type: container
     name: EShop.ServiceDefaults Service
     isTest: false
-    x: 10030
-    'y': 60
-  - entityRef: blueprint/eshop/orderprocessor
+    x: 40
+    'y': 220
+  - entityRef: blueprint/eshop/eventbus
     type: container
-    name: OrderProcessor Service
+    name: EventBus Service
     isTest: false
-    x: 10550
-    'y': 60
+    x: 380
+    'y': 220
+  - entityRef: blueprint/eshop/eventbusrabbitmq
+    type: container
+    name: EventBusRabbitMQ Service
+    isTest: false
+    x: 720
+    'y': 220
+  - entityRef: blueprint/eshop/hybridapp
+    type: container
+    name: HybridApp Service
+    isTest: false
+    x: 1060
+    'y': 220
+  - entityRef: blueprint/eshop/identity-api
+    type: container
+    name: Identity.API Service
+    isTest: false
+    x: 1400
+    'y': 220
+  - entityRef: blueprint/eshop/integrationeventlogef
+    type: container
+    name: IntegrationEventLogEF Service
+    isTest: false
+    x: 40
+    'y': 400
+  - entityRef: blueprint/eshop/ordering-api
+    type: container
+    name: Ordering.API Service
+    isTest: false
+    x: 380
+    'y': 400
   - entityRef: blueprint/eshop/ordering-domain
     type: container
     name: Ordering.Domain Service
     isTest: false
-    x: 11070
-    'y': 60
-  - entityRef: blueprint/eshop/catalog-api
+    x: 720
+    'y': 400
+  - entityRef: blueprint/eshop/ordering-infrastructure
     type: container
-    name: Catalog.API Service
+    name: Ordering.Infrastructure Service
     isTest: false
-    x: 11590
-    'y': 60
+    x: 1060
+    'y': 400
+  - entityRef: blueprint/eshop/orderprocessor
+    type: container
+    name: OrderProcessor Service
+    isTest: false
+    x: 1400
+    'y': 400
+  - entityRef: blueprint/eshop/paymentprocessor
+    type: container
+    name: PaymentProcessor Service
+    isTest: false
+    x: 40
+    'y': 580
+  - entityRef: blueprint/eshop/webapp
+    type: container
+    name: WebApp Service
+    isTest: false
+    x: 380
+    'y': 580
+  - entityRef: blueprint/eshop/webappcomponents
+    type: container
+    name: WebAppComponents Service
+    isTest: false
+    x: 720
+    'y': 580
+  - entityRef: blueprint/eshop/webhookclient
+    type: container
+    name: WebhookClient Service
+    isTest: false
+    x: 1060
+    'y': 580
   - entityRef: blueprint/eshop/webhooks-api
     type: container
     name: Webhooks.API Service
     isTest: false
-    x: 12110
-    'y': 60
+    x: 1400
+    'y': 580
+  - entityRef: blueprint/eshop/basket-unittests
+    type: container
+    name: Basket.UnitTests Service
+    isTest: true
+    x: 40
+    'y': 760
+  - entityRef: blueprint/eshop/catalog-functionaltests
+    type: container
+    name: Catalog.FunctionalTests Service
+    isTest: true
+    x: 380
+    'y': 760
+  - entityRef: blueprint/eshop/clientapp-unittests
+    type: container
+    name: ClientApp.UnitTests Service
+    isTest: true
+    x: 720
+    'y': 760
+  - entityRef: blueprint/eshop/ordering-functionaltests
+    type: container
+    name: Ordering.FunctionalTests Service
+    isTest: true
+    x: 1060
+    'y': 760
+  - entityRef: blueprint/eshop/ordering-unittests
+    type: container
+    name: Ordering.UnitTests Service
+    isTest: true
+    x: 1400
+    'y': 760
 dependencies:
   - from: blueprint/eshop/ordering-unittests
     to: blueprint/eshop/clientapp

@@ -3,6 +3,28 @@ name: Cli-module-info Service Components
 version: 1.0.0
 level: component
 nodes:
+  - entityRef: blueprint/packages/cli-module-info/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-info/src/index.ts
+      containerId: cli-module-info
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 29
+      sloc: 12
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 40
+    'y': 40
   - entityRef: blueprint/packages/cli-module-info/info
     type: background-worker
     name: info Service
@@ -24,30 +46,8 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 140
-    'y': 50
-  - entityRef: blueprint/packages/cli-module-info/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-info/src/index.ts
-      containerId: cli-module-info
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 29
-      sloc: 12
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
+    x: 400
+    'y': 40
 dependencies:
   - from: blueprint/packages/app/app
     to: blueprint/packages/cli-module-info/info
