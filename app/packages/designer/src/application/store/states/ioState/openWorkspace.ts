@@ -8,6 +8,8 @@ import {
 import { resolveSchemaOnWorkspaceOpen } from '../../../../infrastructure/db/schemaCompare';
 import { cancelDefaultIdbSeed } from '../diagramState/defaultIdbSeed';
 
+import type { ToastNotification } from '../uiState';
+
 type LoadedSystem = { path: string; name: string; schema: SystemSchema };
 
 type OpenWorkspaceDeps = {
@@ -19,7 +21,7 @@ type OpenWorkspaceDeps = {
     warn: (m: string, meta?: Record<string, unknown>) => void;
     error: (m: string, err?: unknown) => void;
   };
-  setNotification?: (n: { type: string; title: string; message: string }) => void;
+  setNotification?: (n: ToastNotification | null) => void;
   initSchema: (schema: SystemSchema) => void;
   set: (partial: Record<string, unknown>) => void;
 };
