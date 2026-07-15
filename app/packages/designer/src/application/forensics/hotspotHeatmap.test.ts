@@ -35,6 +35,7 @@ describe('applyHotspotHeatmap', () => {
         id: 'hot',
         type: 'component',
         name: 'Hot',
+        properties: {},
         forensics: { hotspotScore: 0.9 },
       },
     },
@@ -46,6 +47,7 @@ describe('applyHotspotHeatmap', () => {
         id: 'cold',
         type: 'component',
         name: 'Cold',
+        properties: {},
       },
     },
   ];
