@@ -7,18 +7,32 @@ import {
   Palette,
   FileCode,
   Layers,
-  Sparkles,
-  ChevronRight,
   Database,
   Globe,
   Zap,
   Cpu,
   Monitor,
   Smartphone,
-  Info,
   Sliders,
 } from 'lucide-react';
 import { AppHeader } from './AppHeader';
+
+const IDENTITY_GUIDELINES = [
+  {
+    title: 'Drafting grid',
+    details:
+      'Heavy structural blueprints need a base grid. Major guidelines at 100px; micro subdivisions at 20px.',
+  },
+  {
+    title: 'Electric cyan glow',
+    details:
+      'Active links, endpoints, and databases emit neon cyan glow (filter blur) to show operational flow.',
+  },
+  {
+    title: 'Monochrome contrast',
+    details: 'Layouts rest on deep navy (#040914) with typography in stark white or soft gray.',
+  },
+];
 
 export const DesignSystemShowcase: React.FC = () => {
   const [activeTab, setActiveTab] = useState<
@@ -97,140 +111,107 @@ export const DesignSystemShowcase: React.FC = () => {
         }
       />
 
-      <div className="max-w-7xl w-full mx-auto px-4 md:px-8 py-6 flex-1 flex flex-col md:flex-row gap-8">
-        <aside className="w-full md:w-64 shrink-0 flex flex-col space-y-1.5">
-          <button
-            onClick={() => setActiveTab('identity')}
-            className={`w-full text-left px-4 py-3 rounded-xl flex items-center justify-between text-sm font-bold border transition ${
-              activeTab === 'identity'
-                ? 'bg-brand-600/15 border-brand-500 text-brand-500 shadow-[0_0_12px_rgba(0,240,255,0.15)]'
-                : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 hover:border-slate-800'
-            }`}
-          >
-            <div className="flex items-center gap-2.5">
-              <Sparkles className="w-4 h-4" />
-              <span>Identity & Grid</span>
+      <div className="max-w-6xl w-full mx-auto px-4 md:px-8 py-8 flex-1 flex flex-col md:flex-row md:items-start gap-8">
+        <aside className="w-full md:w-56 shrink-0">
+          <div className="sticky top-28 space-y-6 text-sm">
+            <div>
+              <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.14em] text-[#00f0ff]">
+                Design system
+              </p>
+              <ul className="space-y-1">
+                {(
+                  [
+                    { id: 'identity' as const, label: 'Identity & Grid' },
+                    { id: 'tokens' as const, label: 'Design Tokens' },
+                    { id: 'assets' as const, label: 'Vector Asset Pack' },
+                    { id: 'components' as const, label: 'UI Components' },
+                    { id: 'sandbox' as const, label: 'Interactive Sandbox' },
+                  ] as const
+                ).map(item => {
+                  const active = activeTab === item.id;
+                  return (
+                    <li key={item.id}>
+                      <button
+                        type="button"
+                        onClick={() => setActiveTab(item.id)}
+                        className={`w-full text-left block rounded-md px-2 py-1.5 transition-colors ${
+                          active
+                            ? 'bg-[#00f0ff]/10 text-[#00f0ff]'
+                            : 'text-slate-400 hover:text-slate-100 hover:bg-white/5'
+                        }`}
+                      >
+                        {item.label}
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
-            <ChevronRight className="w-4 h-4 opacity-55" />
-          </button>
-
-          <button
-            onClick={() => setActiveTab('tokens')}
-            className={`w-full text-left px-4 py-3 rounded-xl flex items-center justify-between text-sm font-bold border transition ${
-              activeTab === 'tokens'
-                ? 'bg-brand-600/15 border-brand-500 text-brand-500 shadow-[0_0_12px_rgba(0,240,255,0.15)]'
-                : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 hover:border-slate-800'
-            }`}
-          >
-            <div className="flex items-center gap-2.5">
-              <Palette className="w-4 h-4" />
-              <span>Design Tokens</span>
-            </div>
-            <ChevronRight className="w-4 h-4 opacity-55" />
-          </button>
-
-          <button
-            onClick={() => setActiveTab('assets')}
-            className={`w-full text-left px-4 py-3 rounded-xl flex items-center justify-between text-sm font-bold border transition ${
-              activeTab === 'assets'
-                ? 'bg-brand-600/15 border-brand-500 text-brand-500 shadow-[0_0_12px_rgba(0,240,255,0.15)]'
-                : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 hover:border-slate-800'
-            }`}
-          >
-            <div className="flex items-center gap-2.5">
-              <FileCode className="w-4 h-4" />
-              <span>Vector Asset Pack</span>
-            </div>
-            <ChevronRight className="w-4 h-4 opacity-55" />
-          </button>
-
-          <button
-            onClick={() => setActiveTab('components')}
-            className={`w-full text-left px-4 py-3 rounded-xl flex items-center justify-between text-sm font-bold border transition ${
-              activeTab === 'components'
-                ? 'bg-brand-600/15 border-brand-500 text-brand-500 shadow-[0_0_12px_rgba(0,240,255,0.15)]'
-                : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 hover:border-slate-800'
-            }`}
-          >
-            <div className="flex items-center gap-2.5">
-              <Layers className="w-4 h-4" />
-              <span>UI Components</span>
-            </div>
-            <ChevronRight className="w-4 h-4 opacity-55" />
-          </button>
-
-          <button
-            onClick={() => setActiveTab('sandbox')}
-            className={`w-full text-left px-4 py-3 rounded-xl flex items-center justify-between text-sm font-bold border transition ${
-              activeTab === 'sandbox'
-                ? 'bg-brand-600/15 border-brand-500 text-brand-500 shadow-[0_0_12px_rgba(0,240,255,0.15)]'
-                : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 hover:border-slate-800'
-            }`}
-          >
-            <div className="flex items-center gap-2.5">
-              <Sliders className="w-4 h-4" />
-              <span>Interactive Sandbox</span>
-            </div>
-            <ChevronRight className="w-4 h-4 opacity-55" />
-          </button>
+          </div>
         </aside>
 
-        <main className="flex-1 bg-[#061125]/40 border border-[#00f0ff]/10 rounded-2xl p-6 md:p-8 backdrop-blur-sm min-h-[500px]">
+        <main className="min-w-0 w-full bg-[#061125]/40 border border-[#00f0ff]/10 rounded-2xl p-6 md:p-8 backdrop-blur-sm">
           {activeTab === 'identity' && (
-            <div className="space-y-6 animate-fade-in">
-              <div className="border-b border-[#00f0ff]/10 pb-4">
-                <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-[#00f0ff]" /> Brand Logo & Identity
-                </h2>
-                <p className="text-xs text-slate-400 mt-1">
-                  The primary identity draws direct inspiration from technical drafts, CAD systems,
-                  and electronic schematics.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                <div className="lg:col-span-5 flex justify-center p-6 border border-[#00f0ff]/15 bg-[#040914] rounded-2xl shadow-inner relative group overflow-hidden">
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,240,255,0.06),transparent_65%)]" />
-                  <img
-                    src="/assets/logo.svg"
-                    className="w-64 h-64 object-contain relative z-10 transition duration-500 group-hover:scale-105"
-                    alt="Blueprint Logo"
-                  />
-                </div>
-                <div className="lg:col-span-7 space-y-4">
-                  <h3 className="text-base font-bold text-white font-mono uppercase tracking-wider text-[#00f0ff]">
-                    The Schematic Philosophy
-                  </h3>
-                  <p className="text-sm text-slate-300 leading-relaxed font-sans">
-                    Rather than a passive visual logotype, the logo is composed of active nodes,
-                    cylinders, and logical structures representing software architecture.
-                  </p>
-                  <div className="bg-[#040914]/80 border border-[#00f0ff]/10 rounded-xl p-4 space-y-3 font-sans">
-                    <h4 className="text-xs font-bold text-slate-200 flex items-center gap-1.5">
-                      <Info className="w-4 h-4 text-[#00f0ff]" /> Key Visual Guidelines:
-                    </h4>
-                    <ul className="text-xs text-slate-400 space-y-2 list-disc list-inside">
-                      <li>
-                        <strong className="text-slate-300">Drafting Grid Lines:</strong> Heavy
-                        structural blueprints require a base grid layer. Major guidelines appear at{' '}
-                        <code className="text-[#00f0ff] font-mono">100px</code> increments; micro
-                        subdivisions occur at <code className="text-[#00f0ff] font-mono">20px</code>
-                        .
-                      </li>
-                      <li>
-                        <strong className="text-slate-300">Electric Cyan Glow:</strong> Elements
-                        representing active network links, endpoints, or databases emit a bright
-                        neon cyan glow (filter blur) to signify operational flow.
-                      </li>
-                      <li>
-                        <strong className="text-slate-300">Monochrome Contrast:</strong> Main
-                        layouts rest on deep navy backdrops (
-                        <code className="text-[#00f0ff] font-mono">#040914</code>) with typography
-                        rendered in stark white or soft gray values.
-                      </li>
-                    </ul>
+            <div className="animate-fade-in">
+              <section className="relative overflow-hidden">
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(0,240,255,0.10),transparent)]" />
+                <div className="relative grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#00f0ff] mb-3">
+                      Brand identity
+                    </p>
+                    <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.1]">
+                      Schematic by design
+                    </h2>
+                    <p className="mt-4 max-w-xl text-slate-400 text-base sm:text-lg leading-relaxed">
+                      Inspired by technical drafts, CAD, and electronic schematics — active nodes,
+                      cylinders, and logical structures, not a passive logotype.
+                    </p>
+                    <div className="mt-8 flex flex-wrap gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setActiveTab('tokens')}
+                        className="rounded-xl bg-[#00f0ff]/90 px-4 py-2.5 text-sm font-semibold text-slate-950 hover:bg-[#00f0ff] transition-colors"
+                      >
+                        Design tokens
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setActiveTab('components')}
+                        className="rounded-xl border border-[#00f0ff]/40 text-[#00f0ff] hover:text-white hover:bg-[#00f0ff]/10 hover:border-[#00f0ff] px-4 py-2.5 text-sm font-semibold transition-colors"
+                      >
+                        UI components
+                      </button>
+                      <Link
+                        href="/"
+                        className="rounded-xl border border-white/10 px-4 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/5 transition-colors"
+                      >
+                        Docs
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="flex justify-center lg:justify-end">
+                    <img
+                      src="/assets/logo.svg"
+                      alt="Blueprint logo"
+                      className="w-48 sm:w-56 drop-shadow-[0_0_40px_rgba(0,240,255,0.25)]"
+                    />
                   </div>
                 </div>
+              </section>
+
+              <div className="mt-10 grid gap-4 sm:grid-cols-3">
+                {IDENTITY_GUIDELINES.map(guideline => (
+                  <article
+                    key={guideline.title}
+                    className="rounded-xl border border-[#00f0ff]/10 bg-[#040914]/80 p-5"
+                  >
+                    <h3 className="text-base font-semibold text-white">{guideline.title}</h3>
+                    <p className="mt-2 text-sm text-slate-400 leading-relaxed">
+                      {guideline.details}
+                    </p>
+                  </article>
+                ))}
               </div>
             </div>
           )}
@@ -839,11 +820,6 @@ export const DesignSystemShowcase: React.FC = () => {
           )}
         </main>
       </div>
-
-      {/* FOOTER SECTION */}
-      <footer className="border-t border-[#00f0ff]/10 bg-[#061125]/90 backdrop-blur-md p-4 text-center text-[10px] text-slate-500 font-mono sticky bottom-0">
-        <div>Made with love.</div>
-      </footer>
     </div>
   );
 };

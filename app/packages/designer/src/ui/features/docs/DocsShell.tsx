@@ -89,19 +89,16 @@ export const DocsShell: React.FC<Props> = ({ children, title }) => {
         </aside>
 
         <main className="min-w-0 pb-16">
-          {title ? (
-            <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.14em] text-[#00f0ff]">
-              Docs
-            </p>
-          ) : null}
-          {children}
+          <div className="bg-[#061125]/40 border border-[#00f0ff]/10 rounded-2xl p-6 md:p-8 backdrop-blur-sm">
+            {title ? (
+              <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.14em] text-[#00f0ff]">
+                Docs
+              </p>
+            ) : null}
+            {children}
+          </div>
         </main>
       </div>
-
-      <footer className="border-t border-[#00f0ff]/10 py-8 text-center text-xs text-slate-500">
-        Markdown source in <code className="font-mono text-slate-400">/docs</code> — same files
-        locally, in git, and on this site.
-      </footer>
     </div>
   );
 };

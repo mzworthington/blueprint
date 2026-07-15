@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, within } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { Router } from 'wouter';
 import { memoryLocation } from 'wouter/memory-location';
@@ -25,8 +25,8 @@ describe('DesignSystemShowcase Component', () => {
   it('supports switching tabs', () => {
     renderShowcase();
 
-    const tokensTab = screen.getByRole('button', { name: /Design Tokens/i });
-    fireEvent.click(tokensTab);
+    const sidebar = screen.getByRole('complementary');
+    fireEvent.click(within(sidebar).getByRole('button', { name: /Design Tokens/i }));
 
     expect(screen.getByText(/Design Tokens \(Theme Variables\)/i)).toBeInTheDocument();
     expect(screen.getByText('Cyan Primary')).toBeInTheDocument();
