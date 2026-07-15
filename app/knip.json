@@ -2,10 +2,12 @@
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "exclude": ["exports", "types"],
   "ignoreDependencies": ["lint-staged", "tree-sitter-wasms", "@types/*"],
-  "ignoreWorkspaces": ["packages/docs"],
   "workspaces": {
     "packages/designer": {
-      "project": ["src/**/*.{ts,tsx}", "tests/**/*.ts"]
+      "project": ["src/**/*.{ts,tsx}", "tests/**/*.ts"],
+      "paths": {
+        "@docs/*": ["../../../docs/*"]
+      }
     }
   }
 }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'wouter';
 import {
   Copy,
   Check,
@@ -17,12 +18,9 @@ import {
   Info,
   Sliders,
 } from 'lucide-react';
+import { AppHeader } from './AppHeader';
 
-interface DesignSystemShowcaseProps {
-  onClose: () => void;
-}
-
-export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onClose }) => {
+export const DesignSystemShowcase: React.FC = () => {
   const [activeTab, setActiveTab] = useState<
     'identity' | 'tokens' | 'assets' | 'components' | 'sandbox'
   >('identity');
@@ -77,43 +75,27 @@ export const DesignSystemShowcase: React.FC<DesignSystemShowcaseProps> = ({ onCl
 
   return (
     <div className="fixed inset-0 z-[100] flex flex-col bg-[#040914]/98 blueprint-grid text-slate-100 overflow-y-auto animate-fade-in">
-      <header className="border-b border-[#00f0ff]/20 bg-[#061125]/90 backdrop-blur-md sticky top-0 z-50 p-4 md:px-8 flex items-center justify-between shadow-lg shadow-black/30">
-        <div className="flex items-center gap-3">
-          <div className="p-1 border border-[#00f0ff]/40 rounded bg-cyan-950/20 shadow-[0_0_8px_rgba(0,240,255,0.2)]">
-            <svg viewBox="0 0 32 32" className="w-8 h-8">
-              <path d="M 16 4 V 28 M 4 16 H 28" stroke="#00f0ff" stroke-width="1.5" />
-              <rect
-                x="10"
-                y="10"
-                width="12"
-                height="12"
-                fill="#061125"
-                stroke="#00f0ff"
-                stroke-width="2"
-              />
-              <circle cx="16" cy="16" r="3" fill="#00f0ff" />
-            </svg>
-          </div>
-          <div>
-            <h1 className="text-xl md:text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
-              BLUEPRINT{' '}
-              <span className="text-[#00f0ff] font-mono text-sm border border-[#00f0ff]/30 px-2 py-0.5 rounded bg-cyan-950/30">
-                DESIGN SYSTEM
-              </span>
-            </h1>
-            <p className="text-xs text-slate-400 font-medium font-sans">
-              System guidelines, vector assets, and glassmorphic user interface tokens.
-            </p>
-          </div>
-        </div>
-
-        <button
-          onClick={onClose}
-          className="px-4 py-2 border border-red-500/40 text-red-400 hover:text-white hover:bg-red-500/10 hover:border-red-500 rounded-lg text-sm font-semibold transition cursor-pointer flex items-center gap-1.5 focus:outline-none"
-        >
-          <span>✕</span> Close System View
-        </button>
-      </header>
+      <AppHeader
+        sticky
+        badge="DESIGN SYSTEM"
+        subtitle="System guidelines, vector assets, and glassmorphic user interface tokens."
+        trailing={
+          <>
+            <Link
+              href="/"
+              className="hidden sm:inline text-xs font-mono uppercase tracking-wider text-slate-400 hover:text-[#00f0ff] transition-colors px-2"
+            >
+              Docs
+            </Link>
+            <Link
+              href="/workspace"
+              className="px-4 py-2 border border-[#00f0ff]/40 text-[#00f0ff] hover:text-white hover:bg-[#00f0ff]/10 hover:border-[#00f0ff] rounded-lg text-sm font-semibold transition"
+            >
+              Open app
+            </Link>
+          </>
+        }
+      />
 
       <div className="max-w-7xl w-full mx-auto px-4 md:px-8 py-6 flex-1 flex flex-col md:flex-row gap-8">
         <aside className="w-full md:w-64 shrink-0 flex flex-col space-y-1.5">

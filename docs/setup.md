@@ -36,17 +36,15 @@ If Git hooks are not configured automatically:
 pnpm run prepare
 ```
 
-### 2. Run Local Development Server
+### 2. Run locally
+
+One command serves docs (`/`) and the canvas (`/workspace`):
 
 ```bash
 pnpm dev
 ```
 
-Documentation site (VitePress, Markdown under `docs/`):
-
-```bash
-pnpm dev:docs
-```
+Opens the Vite designer. Docs and workspace share the same React app.
 
 ### 3. Build Production Artifacts
 
@@ -54,11 +52,7 @@ pnpm dev:docs
 pnpm build
 ```
 
-Combined GitHub Pages artifact (designer at `/` + docs at `/docs/`):
-
-```bash
-pnpm build:site
-```
+GitHub Pages deploys the designer `dist/` (docs + app in one SPA).
 
 ---
 
@@ -79,6 +73,5 @@ pnpm knip
 
 Husky + lint-staged validate commits for changes under `app/`:
 
-- Staged files: Prettier + Oxlint
-- Full package lint, changed Vitest tests, and Knip
-- Changes only under experimental `cli/` skip cargo checks (Rust is unmaintained)
+- Prettier formatting
+- Oxlint on TypeScript

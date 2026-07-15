@@ -47,7 +47,7 @@ Schema source of truth is TypeScript + Zod in `@blueprint/core` (no Protocol Buf
 cd app
 
 pnpm install
-pnpm dev                 # Vite designer
+pnpm dev                 # docs at / + canvas at /workspace
 pnpm build
 pnpm lint
 pnpm format:check
@@ -81,8 +81,7 @@ Product guide and reference live as Markdown under [`docs/`](./docs/) (same file
 
 ```bash
 cd app
-pnpm dev:docs      # VitePress local preview
-pnpm build:site    # docs + designer → app/site (GitHub Pages layout)
+pnpm dev   # docs (/) + workspace (/workspace) in one Vite app
 ```
 
-On GitHub Pages: designer at `/`, documentation at `/docs/` (product guide under `/docs/guide/`).
+On GitHub Pages: documentation at `/`, canvas at `/workspace`.

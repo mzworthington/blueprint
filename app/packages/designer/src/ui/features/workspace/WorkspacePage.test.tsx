@@ -13,6 +13,12 @@ let mockParams: any = { '*': 'my-system' };
 vi.mock('wouter', () => ({
   useLocation: () => [mockLocation, mockSetLocation],
   useRoute: () => [mockMatch, mockParams],
+  Link: ({ href, children, ...props }: any) => (
+    <a href={href} {...props}>
+      {children}
+    </a>
+  ),
+  Router: ({ children }: any) => <>{children}</>,
 }));
 
 vi.mock('./components/CodeViewer/CodeViewer', () => ({

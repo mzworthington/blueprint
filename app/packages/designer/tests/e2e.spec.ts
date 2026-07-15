@@ -4,14 +4,14 @@ import * as path from 'path';
 
 test.describe('Blueprint E2E Journeys', () => {
   test.beforeAll(async () => {
-    const screenshotDir = path.join(process.cwd(), '../../docs/screenshots');
+    const screenshotDir = path.join(process.cwd(), '../../../docs/screenshots');
     if (!fs.existsSync(screenshotDir)) {
       fs.mkdirSync(screenshotDir, { recursive: true });
     }
   });
 
   test('Workspace Selection & Visual Panel Collapse', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/workspace');
 
     const leftPanelButton = page.locator('button[aria-label="Toggle Left Panel"]');
     const rightPanelButton = page.locator('button[aria-label="Toggle Right Panel"]');
@@ -28,7 +28,7 @@ test.describe('Blueprint E2E Journeys', () => {
     await rightPanelButton.click();
     await expect(rightPanel).not.toHaveClass(/w-0/);
 
-    await page.screenshot({ path: '../../docs/screenshots/1-panels-expanded.png' });
+    await page.screenshot({ path: '../../../docs/screenshots/1-panels-expanded.png' });
 
     await leftPanelButton.click();
     await expect(leftPanel).toHaveClass(/w-0/);
@@ -36,7 +36,7 @@ test.describe('Blueprint E2E Journeys', () => {
     await rightPanelButton.click();
     await expect(rightPanel).toHaveClass(/w-0/);
 
-    await page.screenshot({ path: '../../docs/screenshots/2-panels-collapsed.png' });
+    await page.screenshot({ path: '../../../docs/screenshots/2-panels-collapsed.png' });
   });
 
   test('Visual C4 Navigation (Zoom In / Zoom Out / URL Routing)', async ({ page }) => {
@@ -48,7 +48,7 @@ test.describe('Blueprint E2E Journeys', () => {
     await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint');
     expect(page.url()).toContain('/workspace/blueprint');
 
-    await page.screenshot({ path: '../../docs/screenshots/3-container-level.png' });
+    await page.screenshot({ path: '../../../docs/screenshots/3-container-level.png' });
 
     const appSystem = page.locator('.react-flow__node', { hasText: 'App System' }).first();
     await expect(appSystem).toBeVisible();
@@ -58,7 +58,7 @@ test.describe('Blueprint E2E Journeys', () => {
     await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint/app');
     expect(page.url()).toContain('/workspace/blueprint/app');
 
-    await page.screenshot({ path: '../../docs/screenshots/4-zoomed-in-components.png' });
+    await page.screenshot({ path: '../../../docs/screenshots/4-zoomed-in-components.png' });
 
     const appService = page.locator('.react-flow__node', { hasText: 'App Service' }).first();
     await expect(appService).toBeVisible();
@@ -80,6 +80,6 @@ test.describe('Blueprint E2E Journeys', () => {
     await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint');
     expect(page.url()).toContain('/workspace/blueprint');
 
-    await page.screenshot({ path: '../../docs/screenshots/5-zoomed-back-out.png' });
+    await page.screenshot({ path: '../../../docs/screenshots/5-zoomed-back-out.png' });
   });
 });

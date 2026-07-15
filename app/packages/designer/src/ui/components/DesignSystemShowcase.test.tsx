@@ -1,22 +1,29 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
+import { Router } from 'wouter';
+import { memoryLocation } from 'wouter/memory-location';
 import { DesignSystemShowcase } from './DesignSystemShowcase';
 
+function renderShowcase() {
+  const { hook } = memoryLocation({ path: '/design-system' });
+  return render(
+    <Router hook={hook}>
+      <DesignSystemShowcase />
+    </Router>
+  );
+}
+
 describe('DesignSystemShowcase Component', () => {
-  it('renders title and close button', () => {
-    const handleClose = vi.fn();
-    render(<DesignSystemShowcase onClose={handleClose} />);
+  it('renders title and navigation', () => {
+    renderShowcase();
 
     expect(screen.getByText('BLUEPRINT')).toBeInTheDocument();
     expect(screen.getByText('DESIGN SYSTEM')).toBeInTheDocument();
-
-    const closeBtn = screen.getByRole('button', { name: /✕ Close System View/i });
-    fireEvent.click(closeBtn);
-    expect(handleClose).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole('link', { name: /Open app/i })).toBeInTheDocument();
   });
 
   it('supports switching tabs', () => {
-    render(<DesignSystemShowcase onClose={() => {}} />);
+    renderShowcase();
 
     const tokensTab = screen.getByRole('button', { name: /Design Tokens/i });
     fireEvent.click(tokensTab);

@@ -219,7 +219,7 @@ test.describe('Hierarchy zoom journeys', () => {
 test.describe('Disk-first workspace open', () => {
   test('discards stale IndexedDB draft when opening folder', async ({ page }) => {
     await installFakeWorkspacePicker(page);
-    await page.goto('/');
+    await page.goto('/workspace');
 
     // Wait for app + Dexie to initialize, then plant a polluted draft.
     await expect(page.getByTitle('Open a local directory workspace')).toBeVisible();

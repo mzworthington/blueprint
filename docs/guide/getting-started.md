@@ -47,7 +47,7 @@ The CLI writes YAML under `blueprints/` (or your `--output` path): context, cont
 
 ## Open generated blueprints
 
-In the designer, open a workspace pointing at that output folder (or use your usual flow to load systems). Use the system switcher on the canvas to jump between diagrams.
+In the designer, open [the app](/workspace) and load a workspace pointing at that output folder. Use the system switcher on the canvas to jump between diagrams.
 
 ## Next
 

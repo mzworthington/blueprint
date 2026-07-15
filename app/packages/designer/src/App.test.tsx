@@ -20,7 +20,17 @@ vi.mock('@xyflow/react', () => ({
 }));
 
 describe('App Layout and Collapsible Panels', () => {
+  const originalLocation = window.location;
+
   beforeEach(() => {
+    delete (window as any).location;
+    window.location = {
+      ...originalLocation,
+      pathname: '/workspace',
+      search: '',
+      href: 'http://localhost/workspace',
+    } as any;
+
     useBlueprintStore.setState({
       currentFilePath: 'blueprint.yaml',
       workspaceName: undefined,
@@ -78,9 +88,9 @@ describe('App Layout and Collapsible Panels', () => {
     delete (window as any).location;
     window.location = {
       ...originalLocation,
-      pathname: '/',
+      pathname: '/workspace',
       search: '',
-      href: 'http://localhost/',
+      href: 'http://localhost/workspace',
     } as any;
 
     const spyReplaceState = vi.spyOn(window.history, 'replaceState');
