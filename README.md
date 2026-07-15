@@ -6,7 +6,7 @@ Blueprint is a local-first, bi-directionally synchronized visual diagramming can
 
 ---
 
-## 📸 The Blueprint App
+## The Blueprint App
 
 ![Blueprint Interface Tour & Catalog](./docs/screenshots/1-panels-expanded.png)
 
@@ -16,106 +16,62 @@ A front-end visual canvas web application client. Double-click boundary nodes to
 
 ---
 
-## 💻 The Blueprint CLI Tool
+## The Blueprint CLI Tool
 
 ![Blueprint CLI Interactive Prompts](./docs/screenshots/cli.png)
 
-A powerful command-line static analysis (AST) codebase scanner. It parses source files, extracts modules, identifies components and dependency references, computes an optimal layout using Dagre, and outputs a valid system schema YAML configuration file inside the `blueprints/` directory.
+A command-line static analysis (AST) codebase scanner. It parses source files, extracts modules, identifies components and dependency references, computes an optimal layout using Dagre, and outputs a valid system schema YAML configuration file inside the `blueprints/` directory.
 
 👉 **Learn more:** [app/packages/cli/README.md](./app/packages/cli/README.md)
 
 ---
 
-## 📦 Workspace Component Catalog
+## Workspace Component Catalog
 
-This repository is organized into distinct subdirectories:
+| Component | Path | Language/Framework | Description |
+| :-------- | :--- | :----------------- | :---------- |
+| **`@blueprint/designer`** | [app/packages/designer/](./app/packages/designer/) | TypeScript / React / Vite / React Flow | Front-end visual diagramming client |
+| **`@blueprint/cli`** | [app/packages/cli/](./app/packages/cli/) | TS / Node / Bun / Ts-Morph / Tree-Sitter | Production codebase scanner & Bun binary |
+| **`@blueprint/core`** | [app/packages/core/](./app/packages/core/) | TypeScript / Zod | Shared domain types, validation, entityRef rules |
+| **`blueprint-rust` (experimental)** | [cli/](./cli/) | Rust | Unmaintained WIP scanner — not part of CI; prefer `@blueprint/cli` |
 
-| Component                  | Path                                               | Language/Framework                       | Description                                                  |
-| :------------------------- | :------------------------------------------------- | :--------------------------------------- | :----------------------------------------------------------- |
-| **`@blueprint/designer`**  | [app/packages/designer/](./app/packages/designer/) | TypeScript / React / Vite / React Flow   | Front-end visual diagramming client (Playwright E2E, Vitest) |
-| **`@blueprint/cli`**       | [app/packages/cli/](./app/packages/cli/)           | TS / Node / Bun / Ts-Morph / Tree-Sitter | TS codebase static analysis scanner & binary compiler        |
-| **`blueprint-rust` (WIP)** | [cli/](./cli/)                                     | Rust / Clap / Tree-Sitter / Prost        | Rust static analysis AST scanner (Work in Progress)          |
-| **`core-proto`**           | [core/proto/](./core/proto/)                       | Protocol Buffers (v3)                    | Shared declarative schemas defining system diagrams          |
+Schema source of truth is TypeScript + Zod in `@blueprint/core` (no Protocol Buffers).
 
 ---
 
-## 🛠️ Development & Build Commands
+## Development & Build Commands
 
-Since this is a multi-language codebase, commands are run in their respective component directories:
-
-### 🎨 Visual Frontend Web Application (`/app`)
-
-Navigate to the `/app` directory to manage Node dependencies and development:
+### Visual frontend & packages (`/app`)
 
 ```bash
 cd app
 
-# Install dependencies
 pnpm install
-
-# Start the Vite React development server
-pnpm dev
-
-# Build the production assets
+pnpm dev                 # Vite designer
 pnpm build
-
-# Run linters (Oxlint) & code formatting checks (Prettier)
 pnpm lint
 pnpm format:check
-
-# Execute front-end unit tests (Vitest + JSDOM)
-pnpm test
-
-# Run Playwright E2E tests
+pnpm test                # all workspace packages
+pnpm test:designer
+pnpm test:cli
 pnpm test:e2e
 ```
 
-### 💻 TypeScript Static Analyzer CLI (`/app/packages/cli`)
-
-Run and build the TypeScript CLI from the `/app` directory:
+### TypeScript CLI (`/app/packages/cli`)
 
 ```bash
 cd app
 
-# Run the analyzer CLI interactively
 pnpm dev:cli
-
-# Run with headless configuration arguments
 pnpm dev:cli --headless --glob="packages/**/*.ts" --output="blueprints"
-
-# Compile the standalone platform-native binary (generates dist/blueprint)
 pnpm --filter @blueprint/cli build
-
-# Run unit tests for the CLI
 pnpm test:cli
-```
-
-### 🦀 Rust Static Analyzer CLI (`/cli`) [Work in Progress]
-
-Navigate to the `/cli` directory if you want to experiment with the experimental Rust-based CLI scanner:
-
-```bash
-cd cli
-
-# Run the analyzer CLI interactively during development
-cargo run
-
-# Run with headless configuration arguments
-cargo run -- --headless --glob="src/**/*.ts" --output="blueprints"
-
-# Compile the release binary (generated at target/release/blueprint-rust)
-cargo build --release
-
-# Run Rust unit/integration tests
-cargo test
 ```
 
 ---
 
-## 📖 Deep-Dive Documentation
+## Deep-dive documentation
 
-Explore these files under the `docs/` directory to learn more:
-
-- **[E2E Journeys & Interface Tour](./docs/journeys.md):** Detailed step-by-step guides, screenshots, and C4 visualization tours.
-- **[System Architecture & Security](./docs/architecture.md):** Hexagonal structure layers, Zustand state store slices, schema validation rules, and cyclic dependency checkers.
-- **[Setup & Local Development](./docs/setup.md):** Complete guide to tools installation (Mise), compiling standalone executables, and pre-commit Git validation hooks.
+- **[E2E Journeys & Interface Tour](./docs/journeys.md)**
+- **[System Architecture & Security](./docs/architecture.md)**
+- **[Setup & Local Development](./docs/setup.md)**

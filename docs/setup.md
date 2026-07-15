@@ -4,39 +4,31 @@ This page covers setting up your local development environment, package installa
 
 ---
 
-## ⚙️ Environment & Tooling Setup
+## Environment & Tooling Setup
 
-We use **[Mise](https://mise.jdx.dev/)** to automatically manage and activate project tool versions (Node.js, pnpm, and `buf` CLI) defined in `mise.toml`.
+We use **[Mise](https://mise.jdx.dev/)** to manage Node.js, pnpm, and Bun versions defined in `mise.toml`.
 
 1. **Install Mise:** Refer to the [Mise Installation Guide](https://mise.jdx.dev/getting-started.html) (e.g., `brew install mise`).
-2. **Activate Mise:** Make sure Mise is activated in your shell (e.g., add `eval "$(mise activate zsh)"` to your `~/.zshrc`).
-3. **Install Tools:** Run the following in the repository root to automatically download and configure Node, pnpm, and `buf`:
+2. **Activate Mise:** e.g. add `eval "$(mise activate zsh)"` to your `~/.zshrc`.
+3. **Install Tools:** from the repository root:
    ```bash
    mise install
    ```
 
-### 🦀 Rust CLI & Protobuf Compilation Prerequisites
-Because the CLI is written in Rust, compiling it requires:
-1. **Rust Toolchain:** Install Rustc/Cargo (e.g. `brew install rust` or via [rustup.rs](https://rustup.rs/)).
-2. **Protobuf compiler (`protoc`):** Used during code compilation to translate Protobuf schemas. Install it on macOS using:
-   ```bash
-   brew install protobuf
-   ```
-   *(Or make sure `protoc` is available in your PATH)*
+The production toolchain is TypeScript-only under `app/`. An experimental Rust tree lives in `cli/` but is unmaintained and not required for local development.
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Install Dependencies & Setup Husky Hooks
 
-Install project packages. This command automatically executes Husky setup:
-
 ```bash
+cd app
 pnpm install
 ```
 
-If Git hooks are not configured automatically, you can initialize Husky manually:
+If Git hooks are not configured automatically:
 
 ```bash
 pnpm run prepare
@@ -44,15 +36,11 @@ pnpm run prepare
 
 ### 2. Run Local Development Server
 
-Launches the Vite server with Hot Module Replacement (HMR):
-
 ```bash
 pnpm dev
 ```
 
 ### 3. Build Production Artifacts
-
-Compiles type definitions and generates the minified production bundle in the `dist` directory:
 
 ```bash
 pnpm build
@@ -60,43 +48,23 @@ pnpm build
 
 ---
 
-## 🧪 Testing, Formatting & Quality Control
-
-### Running Tests
-
-Run the Vitest suite (unit and store validation tests):
+## Testing, Formatting & Quality Control
 
 ```bash
 pnpm test
-```
-
-Run the Playwright suite (end-to-end user journey tests):
-
-```bash
 pnpm test:e2e
-```
-
-### Formatting
-
-Run Prettier validation:
-
-```bash
 pnpm format:check
-```
-
-Apply automatic formatting to all source files:
-
-```bash
 pnpm format:write
+pnpm lint
+pnpm knip
 ```
 
 ---
 
-## ⚓ Git Commit Hooks
+## Git Commit Hooks
 
-We use **Husky** and **lint-staged** to validate commits before they are finalized:
+Husky + lint-staged validate commits for changes under `app/`:
 
-- Staged files undergo Prettier formatting check (`prettier --check`) and lint verification (`oxlint -c .oxlintrc.json`).
-- The entire codebase is checked for lint errors (`pnpm run lint`).
-- The full Vitest test suite (`pnpm test`) is run.
-- If formatting check fails, lint errors are found, or unit tests fail, the commit is blocked.
+- Staged files: Prettier + Oxlint
+- Full package lint, changed Vitest tests, and Knip
+- Changes only under experimental `cli/` skip cargo checks (Rust is unmaintained)

@@ -1,66 +1,22 @@
-# `@blueprint/cli` — Command Line AST Analyzer (Rust)
+# Experimental Rust CLI (`/cli`)
 
-A powerful systems architecture static analysis (AST) code scanner rewritten in **Rust**. It parses source files, identifies components and dependency references, formats an optimal coordinate layout using a deterministic grid layout, and outputs a valid system schema YAML file inside the `blueprints/` directory.
-
----
-
-## 🚀 Running the Analyzer
-
-You can execute the analyzer during development using Cargo:
-
-```bash
-# Run interactively (will walk you through a prompt menu powered by `dialoguer`)
-cargo run
-
-# Run in headless mode with parameters
-cargo run -- --headless --glob="src/**/*.ts" --output="blueprints"
-```
-
-### CLI Execution Modes
-
-1. **Interactive Mode (Default):**
-   When run inside an interactive terminal, the CLI will walk you through a step-by-step prompt menu powered by `dialoguer`:
-   - Glob pattern to scan (defaults to `app/packages/designer/src/**/*.{ts,tsx}`).
-   - Output directory path (defaults to `blueprints`).
-
-2. **Headless / CI Mode:**
-   The CLI automatically switches to headless mode when executed in a non-TTY terminal, standard CI environments, or when arguments are supplied directly:
-   ```bash
-   cargo run -- --headless --glob="src/**/*.ts" --output="blueprints"
-   ```
-
-### Command Options & Flags
-
-- `--headless`: Explicitly disables interactive console prompts.
-- `--glob="<pattern>"`: The directory or glob matching query to scan (e.g., `**/*.{ts,tsx,py,js,jsx}`).
-- `--output="<path>"`: The folder to store generated YAML blueprint files.
+> **Status: unmaintained.** Prefer the production TypeScript CLI at [`app/packages/cli`](../app/packages/cli/README.md).
+>
+> This tree is kept for historical / experimental work. It is **not** run in CI, requires restored Protocol Buffer schemas that are no longer in the repo, and may not build.
 
 ---
 
-## 🛠️ Building & Compiling Standalone Binaries
+## Why it exists
 
-You can compile the analyzer CLI tool into a standalone platform-native executable binary using Cargo:
+An earlier rewrite of the AST scanner in Rust (Clap, Tree-Sitter, Prost). Schema codegen previously depended on `core/proto/`, which has been removed in favor of TypeScript + Zod in `@blueprint/core`.
 
-```bash
-cargo build --release
-```
+## If you still want to experiment
 
-This compiles a standalone binary to `target/release/blueprint` (or `blueprint.exe` on Windows):
+You will need to restore protobuf definitions and Prost generation before `cargo build` / `cargo test` can succeed. Those steps are intentionally undocumented until someone owns them again.
 
-```bash
-./target/release/blueprint --headless
-```
-
-### Prerequisites
-*   **Rust Toolchain:** Requires `rustc` / `cargo` (edition 2021).
-*   **Protobuf compiler:** Requires the `protoc` binary installed on your PATH (e.g., via `brew install protobuf`, `mise install`, or `choco install protoc`) to compile the Protocol Buffer definitions during build.
-
----
-
-## 🧪 Testing
-
-To run the CLI Rust tests:
+For day-to-day scanning and CI:
 
 ```bash
-cargo test
+cd app
+pnpm dev:cli
 ```

@@ -26,7 +26,7 @@ Visualizes container relationships and boundaries at the C4 Container level of a
 
 ### 4. Recursive Zoom-In Components
 
-Allows designers to inspect internal details of components by double-clicking nodes that reference a sub-diagram (`c4Ref`).
+Allows designers to inspect internal details by double-clicking nodes whose `entityRef` matches a child diagram's schema identity.
 
 ![Recursive Zoom-In Components](./screenshots/4-zoomed-in-components.png)
 
@@ -41,8 +41,8 @@ Allows designers to inspect internal details of components by double-clicking no
 
 ### 2. Recursive Level Navigation
 
-- Double-click on components configured with a sub-diagram reference (`c4Ref`) to zoom down into container/component levels.
-- Navigate back up using the interactive Breadcrumbs bar at the top.
+- Double-click a node that has a nested diagram (child schema `entityRef` equals the node `entityRef`) to zoom into container/component levels.
+- Press `Escape` or use the breadcrumbs bar to navigate back up.
 
 ### 3. Multi-File Workspace Swaps
 
