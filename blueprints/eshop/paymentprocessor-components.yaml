@@ -1,0 +1,84 @@
+entityRef: blueprint/eshop/paymentprocessor
+name: PaymentProcessor Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/eshop/paymentprocessor/paymentoptions
+    type: background-worker
+    name: PaymentOptions Service
+    isTest: false
+    properties:
+      filepath: src/PaymentProcessor/PaymentOptions.cs
+      containerId: paymentprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/eshop/paymentprocessor/orderpaymentfailedintegrationevent
+    type: background-worker
+    name: OrderPaymentFailedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/PaymentProcessor/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs
+      containerId: paymentprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/eshop/paymentprocessor/orderstatuschangedtostockconfirmedintegrationevent
+    type: background-worker
+    name: OrderStatusChangedToStockConfirmedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/PaymentProcessor/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs
+      containerId: paymentprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/eshop/paymentprocessor/orderpaymentsucceededintegrationevent
+    type: background-worker
+    name: OrderPaymentSucceededIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/PaymentProcessor/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs
+      containerId: paymentprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/eshop/paymentprocessor/orderstatuschangedtostockconfirmedintegrationeventhandler
+    type: background-worker
+    name: OrderStatusChangedToStockConfirmedIntegrationEventHandler Service
+    isTest: false
+    properties:
+      filepath: >-
+        src/PaymentProcessor/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs
+      containerId: paymentprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/eshop/paymentprocessor/globalusings
+    type: background-worker
+    name: GlobalUsings Service
+    isTest: false
+    properties:
+      filepath: src/PaymentProcessor/GlobalUsings.cs
+      containerId: paymentprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/eshop/paymentprocessor/program
+    type: background-worker
+    name: Program Service
+    isTest: false
+    properties:
+      filepath: src/PaymentProcessor/Program.cs
+      containerId: paymentprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 2900
+    'y': 50
+dependencies: []

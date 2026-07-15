@@ -3,6 +3,25 @@ name: Blueprint Context
 version: 1.0.0
 level: context
 nodes:
+  - entityRef: blueprint/eshop
+    type: software-system
+    name: EShop System
+    properties:
+      rootPath: ''
+      productId: eshop
+      role: product-hub
+    x: 370
+    'y': 50
+    forensics:
+      complexity: 4
+      churn: 1
+      authorCount: 1
+      hotspotScore: 0
+      classifications: []
+      sinceDays: 900
+      fileCount: 1
+      hotspotCount: 0
+      knowledgeSiloCount: 0
   - entityRef: blueprint/backstage
     type: software-system
     name: Backstage System
@@ -31,7 +50,7 @@ nodes:
       sinceDays: 500
       fileCount: 2077
       hotspotCount: 0
-      knowledgeSiloCount: 321
+      knowledgeSiloCount: 324
   - entityRef: blueprint/plugins
     type: software-system
     name: Plugins System
@@ -51,7 +70,7 @@ nodes:
       sinceDays: 500
       fileCount: 3231
       hotspotCount: 0
-      knowledgeSiloCount: 388
+      knowledgeSiloCount: 381
   - entityRef: blueprint/docs-ui
     type: software-system
     name: Docs Ui System
@@ -82,22 +101,21 @@ nodes:
     x: 1520
     'y': 370
     forensics:
-      complexity: 27
+      complexity: 8
       churn: 17
       authorCount: 1
       hotspotScore: 0
-      classifications:
-        - knowledge-silo
+      classifications: []
       sinceDays: 500
       fileCount: 17
       hotspotCount: 0
-      knowledgeSiloCount: 1
-  - entityRef: blueprint/blueprint
+      knowledgeSiloCount: 0
+  - entityRef: blueprint/testproject
     type: software-system
-    name: Blueprint System
+    name: TestProject System
     properties:
       rootPath: ''
-      productId: blueprint
+      productId: testproject
       role: product-hub
     x: 1980
     'y': 50
@@ -106,41 +124,22 @@ nodes:
     name: App System
     properties:
       rootPath: app
-      productId: blueprint
+      productId: testproject
       role: subsystem
-    x: 1980
-    'y': 370
     forensics:
-      complexity: 70
-      churn: 468
-      hotspotScore: 0.48953301127214166
+      complexity: 66
+      churn: 497
+      hotspotScore: 0.5276923076923077
       authorCount: 1
-      fileCount: 174
-      hotspotCount: 0
-      knowledgeSiloCount: 56
-      classifications:
-        - knowledge-silo
-      sinceDays: 90
-  - entityRef: blueprint/cli
-    type: software-system
-    name: Cli System
-    properties:
-      rootPath: ''
-      productId: cli
-      role: product-hub
-    x: 2440
-    'y': 50
-    forensics:
-      complexity: 70
-      churn: 96
-      authorCount: 1
-      hotspotScore: 0.5507246376811594
+      fileCount: 186
+      hotspotCount: 2
+      knowledgeSiloCount: 58
       classifications:
         - knowledge-silo
         - hotspot
-      fileCount: 74
-      hotspotCount: 1
-      knowledgeSiloCount: 16
+      sinceDays: 90
+    x: 1980
+    'y': 370
 dependencies:
   - from: blueprint/backstage
     to: blueprint/packages
@@ -174,7 +173,7 @@ dependencies:
     to: blueprint/microsite
     type: direct-call
     description: Part of product system
-  - from: blueprint/blueprint
+  - from: blueprint/testproject
     to: blueprint/app
     type: direct-call
     description: Part of product system

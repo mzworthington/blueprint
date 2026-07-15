@@ -120,7 +120,7 @@ Optional `blueprint.config.json` (or `.yml` / `.yaml`) beside the scan root:
 pnpm --filter @blueprint/cli build
 ```
 
-Produces `dist/blueprint` (or `dist/blueprint.exe`). Tree-sitter `.wasm` queries must sit next to the binary or in the project's `node_modules`.
+Produces `dist/blueprint` (or `dist/blueprint.exe`) and copies supported tree-sitter language `.wasm` files next to the binary. Releases ship those parsers in the same archive.
 
 ```bash
 ./dist/blueprint --headless --parser=ts-morph

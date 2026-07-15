@@ -23,21 +23,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 180
+    x: 680
     'y': 50
   - entityRef: blueprint/plugins/devtools/index
     type: background-worker
     name: index Service
     isTest: false
     properties:
-      filepath: plugins/devtools/src/components/Content/ScheduledTasksContent/index.ts
+      filepath: plugins/devtools/src/alpha/index.ts
       containerId: devtools
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
       loc: 18
-      sloc: 2
+      sloc: 1
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -47,6 +47,50 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 370
+  - entityRef: blueprint/plugins/devtools/routes
+    type: background-worker
+    name: routes Service
+    isTest: false
+    properties:
+      filepath: plugins/devtools/src/routes.ts
+      containerId: devtools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 22
+      sloc: 4
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 235
+    'y': 1010
+  - entityRef: blueprint/plugins/devtools/plugin
+    type: gateway-api
+    name: plugin UI Component
+    isTest: false
+    properties:
+      filepath: plugins/devtools/src/alpha/plugin.tsx
+      containerId: devtools
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 5
+      loc: 153
+      sloc: 120
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 235
+    'y': 690
   - entityRef: blueprint/plugins/devtools/alpha
     type: background-worker
     name: alpha Service
@@ -67,8 +111,30 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2480
+    x: 1465
     'y': 1010
+  - entityRef: blueprint/plugins/devtools/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/devtools/src/setupTests.ts
+      containerId: devtools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 18
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1140
+    'y': 50
   - entityRef: blueprint/plugins/devtools/plugin-test
     type: background-worker
     name: plugin.test Service
@@ -91,248 +157,6 @@ nodes:
       sinceDays: 500
     x: 600
     'y': 370
-  - entityRef: blueprint/plugins/devtools/plugin
-    type: gateway-api
-    name: plugin UI Component
-    isTest: false
-    properties:
-      filepath: plugins/devtools/src/alpha/plugin.tsx
-      containerId: devtools
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 5
-      loc: 153
-      sloc: 120
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 370
-    'y': 690
-  - entityRef: blueprint/plugins/devtools/routes
-    type: background-worker
-    name: routes Service
-    isTest: false
-    properties:
-      filepath: plugins/devtools/src/routes.ts
-      containerId: devtools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 22
-      sloc: 4
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 330
-    'y': 1010
-  - entityRef: blueprint/plugins/devtools/setuptests
-    type: background-worker
-    name: setupTests Service
-    isTest: true
-    properties:
-      filepath: plugins/devtools/src/setupTests.ts
-      containerId: devtools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 18
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 640
-    'y': 50
-  - entityRef: blueprint/plugins/devtools/devtoolsapi
-    type: rest-api
-    name: DevToolsApi REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/devtools/src/api/DevToolsApi.ts
-      containerId: devtools
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 43
-      sloc: 24
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1980
-    'y': 690
-  - entityRef: blueprint/plugins/devtools/devtoolsclient-test
-    type: rest-api
-    name: DevToolsClient.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/devtools/src/api/DevToolsClient.test.ts
-      containerId: devtools
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 50
-      sloc: 28
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1100
-    'y': 50
-  - entityRef: blueprint/plugins/devtools/devtoolsclient
-    type: rest-api
-    name: DevToolsClient REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/devtools/src/api/DevToolsClient.ts
-      containerId: devtools
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 7
-      loc: 143
-      sloc: 103
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1100
-    'y': 370
-  - entityRef: blueprint/plugins/devtools/useconfig
-    type: gateway-api
-    name: useConfig UI Component
-    isTest: false
-    properties:
-      filepath: plugins/devtools/src/hooks/useConfig.ts
-      containerId: devtools
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 38
-      sloc: 19
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1560
-    'y': 50
-  - entityRef: blueprint/plugins/devtools/useexternaldependencies
-    type: gateway-api
-    name: useExternalDependencies UI Component
-    isTest: false
-    properties:
-      filepath: plugins/devtools/src/hooks/useExternalDependencies.ts
-      containerId: devtools
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 38
-      sloc: 19
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2020
-    'y': 50
-  - entityRef: blueprint/plugins/devtools/useinfo
-    type: gateway-api
-    name: useInfo UI Component
-    isTest: false
-    properties:
-      filepath: plugins/devtools/src/hooks/useInfo.ts
-      containerId: devtools
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 38
-      sloc: 19
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2480
-    'y': 50
-  - entityRef: blueprint/plugins/devtools/usescheduledtasks
-    type: gateway-api
-    name: useScheduledTasks UI Component
-    isTest: false
-    properties:
-      filepath: plugins/devtools/src/hooks/useScheduledTasks.ts
-      containerId: devtools
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 2
-      loc: 48
-      sloc: 28
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2940
-    'y': 50
-  - entityRef: blueprint/plugins/devtools/usescheduledtasksoperations
-    type: gateway-api
-    name: useScheduledTasksOperations UI Component
-    isTest: false
-    properties:
-      filepath: plugins/devtools/src/hooks/useScheduledTasksOperations.ts
-      containerId: devtools
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 3
-      loc: 66
-      sloc: 44
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3400
-    'y': 50
   - entityRef: blueprint/plugins/devtools/defaultdevtoolspage
     type: gateway-api
     name: DefaultDevToolsPage UI Component
@@ -353,30 +177,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3860
+    x: 1600
     'y': 50
-  - entityRef: blueprint/plugins/devtools/devtoolslayout
-    type: gateway-api
-    name: DevToolsLayout UI Component
-    isTest: false
-    properties:
-      filepath: plugins/devtools/src/components/DevToolsLayout/DevToolsLayout.tsx
-      containerId: devtools
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 86
-      sloc: 45
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2520
-    'y': 370
   - entityRef: blueprint/plugins/devtools/devtoolspage
     type: gateway-api
     name: DevToolsPage UI Component
@@ -397,141 +199,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4550
+    x: 2060
     'y': 370
-  - entityRef: blueprint/plugins/devtools/configcontent
-    type: gateway-api
-    name: ConfigContent UI Component
-    isTest: false
-    properties:
-      filepath: plugins/devtools/src/components/Content/ConfigContent/ConfigContent.tsx
-      containerId: devtools
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 8
-      loc: 86
-      sloc: 61
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4360
-    'y': 50
-  - entityRef: blueprint/plugins/devtools/externaldependenciescontent
-    type: background-worker
-    name: ExternalDependenciesContent Service
-    isTest: false
-    properties:
-      filepath: plugins/devtools/src/components/Content/ExternalDependenciesContent/ExternalDependenciesContent.tsx
-      containerId: devtools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 10
-      loc: 136
-      sloc: 111
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 4820
-    'y': 50
-  - entityRef: blueprint/plugins/devtools/backstagelogoicon
-    type: background-worker
-    name: BackstageLogoIcon Service
-    isTest: false
-    properties:
-      filepath: plugins/devtools/src/components/Content/InfoContent/BackstageLogoIcon.tsx
-      containerId: devtools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 24
-      sloc: 6
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5470
-    'y': 370
-  - entityRef: blueprint/plugins/devtools/infocontent
-    type: background-worker
-    name: InfoContent Service
-    isTest: false
-    properties:
-      filepath: plugins/devtools/src/components/Content/InfoContent/InfoContent.tsx
-      containerId: devtools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 6
-      loc: 143
-      sloc: 121
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5280
-    'y': 50
-  - entityRef: blueprint/plugins/devtools/infodependenciestable
-    type: background-worker
-    name: InfoDependenciesTable Service
-    isTest: false
-    properties:
-      filepath: plugins/devtools/src/components/Content/InfoContent/InfoDependenciesTable.tsx
-      containerId: devtools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 54
-      sloc: 35
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5010
-    'y': 370
-  - entityRef: blueprint/plugins/devtools/scheduledtaskdetailedpanel
-    type: background-worker
-    name: ScheduledTaskDetailedPanel Service
-    isTest: false
-    properties:
-      filepath: plugins/devtools/src/components/Content/ScheduledTasksContent/ScheduledTaskDetailedPanel.tsx
-      containerId: devtools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 7
-      loc: 105
-      sloc: 83
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3995
-    'y': 690
   - entityRef: blueprint/plugins/devtools/scheduledtaskscontent
     type: gateway-api
     name: ScheduledTasksContent UI Component
@@ -553,75 +222,354 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 3860
+    x: 1600
     'y': 370
+  - entityRef: blueprint/plugins/devtools/scheduledtaskdetailedpanel
+    type: background-worker
+    name: ScheduledTaskDetailedPanel Service
+    isTest: false
+    properties:
+      filepath: plugins/devtools/src/components/Content/ScheduledTasksContent/ScheduledTaskDetailedPanel.tsx
+      containerId: devtools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 7
+      loc: 105
+      sloc: 83
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1925
+    'y': 690
+  - entityRef: blueprint/plugins/devtools/configcontent
+    type: gateway-api
+    name: ConfigContent UI Component
+    isTest: false
+    properties:
+      filepath: plugins/devtools/src/components/Content/ConfigContent/ConfigContent.tsx
+      containerId: devtools
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 8
+      loc: 86
+      sloc: 61
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2060
+    'y': 50
+  - entityRef: blueprint/plugins/devtools/infodependenciestable
+    type: background-worker
+    name: InfoDependenciesTable Service
+    isTest: false
+    properties:
+      filepath: plugins/devtools/src/components/Content/InfoContent/InfoDependenciesTable.tsx
+      containerId: devtools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 54
+      sloc: 35
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4360
+    'y': 370
+  - entityRef: blueprint/plugins/devtools/infocontent
+    type: background-worker
+    name: InfoContent Service
+    isTest: false
+    properties:
+      filepath: plugins/devtools/src/components/Content/InfoContent/InfoContent.tsx
+      containerId: devtools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 6
+      loc: 143
+      sloc: 121
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5740
+    'y': 50
+  - entityRef: blueprint/plugins/devtools/backstagelogoicon
+    type: background-worker
+    name: BackstageLogoIcon Service
+    isTest: false
+    properties:
+      filepath: plugins/devtools/src/components/Content/InfoContent/BackstageLogoIcon.tsx
+      containerId: devtools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 24
+      sloc: 6
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5970
+    'y': 370
+  - entityRef: blueprint/plugins/devtools/externaldependenciescontent
+    type: background-worker
+    name: ExternalDependenciesContent Service
+    isTest: false
+    properties:
+      filepath: plugins/devtools/src/components/Content/ExternalDependenciesContent/ExternalDependenciesContent.tsx
+      containerId: devtools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 10
+      loc: 136
+      sloc: 111
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 2980
+    'y': 50
+  - entityRef: blueprint/plugins/devtools/devtoolslayout
+    type: gateway-api
+    name: DevToolsLayout UI Component
+    isTest: false
+    properties:
+      filepath: plugins/devtools/src/components/DevToolsLayout/DevToolsLayout.tsx
+      containerId: devtools
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 86
+      sloc: 45
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1140
+    'y': 370
+  - entityRef: blueprint/plugins/devtools/useconfig
+    type: gateway-api
+    name: useConfig UI Component
+    isTest: false
+    properties:
+      filepath: plugins/devtools/src/hooks/useConfig.ts
+      containerId: devtools
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 38
+      sloc: 19
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3440
+    'y': 50
+  - entityRef: blueprint/plugins/devtools/useinfo
+    type: gateway-api
+    name: useInfo UI Component
+    isTest: false
+    properties:
+      filepath: plugins/devtools/src/hooks/useInfo.ts
+      containerId: devtools
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 38
+      sloc: 19
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3900
+    'y': 50
+  - entityRef: blueprint/plugins/devtools/usescheduledtasksoperations
+    type: gateway-api
+    name: useScheduledTasksOperations UI Component
+    isTest: false
+    properties:
+      filepath: plugins/devtools/src/hooks/useScheduledTasksOperations.ts
+      containerId: devtools
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 3
+      loc: 66
+      sloc: 44
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4360
+    'y': 50
+  - entityRef: blueprint/plugins/devtools/useexternaldependencies
+    type: gateway-api
+    name: useExternalDependencies UI Component
+    isTest: false
+    properties:
+      filepath: plugins/devtools/src/hooks/useExternalDependencies.ts
+      containerId: devtools
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 38
+      sloc: 19
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4820
+    'y': 50
+  - entityRef: blueprint/plugins/devtools/usescheduledtasks
+    type: gateway-api
+    name: useScheduledTasks UI Component
+    isTest: false
+    properties:
+      filepath: plugins/devtools/src/hooks/useScheduledTasks.ts
+      containerId: devtools
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 2
+      loc: 48
+      sloc: 28
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5280
+    'y': 50
+  - entityRef: blueprint/plugins/devtools/devtoolsclient
+    type: rest-api
+    name: DevToolsClient REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/devtools/src/api/DevToolsClient.ts
+      containerId: devtools
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 7
+      loc: 143
+      sloc: 103
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2520
+    'y': 370
+  - entityRef: blueprint/plugins/devtools/devtoolsapi
+    type: rest-api
+    name: DevToolsApi REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/devtools/src/api/DevToolsApi.ts
+      containerId: devtools
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 43
+      sloc: 24
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2655
+    'y': 690
+  - entityRef: blueprint/plugins/devtools/devtoolsclient-test
+    type: rest-api
+    name: DevToolsClient.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/devtools/src/api/DevToolsClient.test.ts
+      containerId: devtools
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 50
+      sloc: 28
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2520
+    'y': 50
 dependencies:
   - from: blueprint/plugins/devtools/index
     to: blueprint/plugins/devtools/plugin
     type: direct-call
     description: Calls module / service
+  - from: blueprint/plugins/devtools/plugin
+    to: blueprint/plugins/techdocs-react/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/plugin
+    to: blueprint/plugins/devtools/routes
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/plugins/devtools/plugin-test
     to: blueprint/plugins/devtools/plugin
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/plugin
-    to: blueprint/plugins/catalog-react/api
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/plugin
-    to: blueprint/plugins/devtools/routes
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/plugin
-    to: blueprint/plugins/catalog-react/api
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/plugin
-    to: blueprint/plugins/devtools/routes
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/plugin
-    to: blueprint/plugins/devtools/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/devtoolsapi
-    to: blueprint/plugins/devtools/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/devtoolsclient-test
-    to: blueprint/plugins/devtools/devtoolsclient
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/devtoolsclient
-    to: blueprint/plugins/devtools/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/devtoolsclient
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/devtoolsclient
-    to: blueprint/plugins/devtools/devtoolsapi
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/useconfig
-    to: blueprint/plugins/catalog-react/api
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/useexternaldependencies
-    to: blueprint/plugins/catalog-react/api
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/useinfo
-    to: blueprint/plugins/catalog-react/api
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/usescheduledtasks
-    to: blueprint/plugins/catalog-react/api
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/usescheduledtasksoperations
-    to: blueprint/plugins/catalog-react/api
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/devtools/defaultdevtoolspage
@@ -652,44 +600,8 @@ dependencies:
     to: blueprint/plugins/devtools/defaultdevtoolspage
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/devtools/configcontent
-    to: blueprint/plugins/techdocs-react/hooks
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/externaldependenciescontent
-    to: blueprint/plugins/home/styles
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/externaldependenciescontent
-    to: blueprint/plugins/techdocs-react/hooks
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/infocontent
-    to: blueprint/plugins/home/styles
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/infocontent
-    to: blueprint/plugins/techdocs-react/hooks
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/infocontent
-    to: blueprint/plugins/devtools/infodependenciestable
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/infocontent
-    to: blueprint/plugins/devtools/backstagelogoicon
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/scheduledtaskdetailedpanel
-    to: blueprint/plugins/devtools/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/scheduledtaskdetailedpanel
-    to: blueprint/plugins/home/styles
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/devtools/scheduledtaskscontent
-    to: blueprint/plugins/scaffolder-backend-module-bitbucket-cloud/autocomplete
+    to: blueprint/plugins/scaffolder/autocomplete
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/devtools/scheduledtaskscontent
@@ -697,7 +609,7 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/devtools/scheduledtaskscontent
-    to: blueprint/plugins/techdocs-react/hooks
+    to: blueprint/plugins/techdocs-module-addons-contrib/hooks
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/devtools/scheduledtaskscontent
@@ -713,6 +625,94 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/devtools/scheduledtaskscontent
+    to: blueprint/plugins/devtools/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/scheduledtaskdetailedpanel
+    to: blueprint/plugins/devtools/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/scheduledtaskdetailedpanel
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/configcontent
+    to: blueprint/plugins/techdocs-module-addons-contrib/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/infocontent
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/infocontent
+    to: blueprint/plugins/techdocs-module-addons-contrib/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/infocontent
+    to: blueprint/plugins/devtools/infodependenciestable
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/infocontent
+    to: blueprint/plugins/devtools/backstagelogoicon
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/externaldependenciescontent
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/externaldependenciescontent
+    to: blueprint/plugins/techdocs-module-addons-contrib/hooks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/useconfig
+    to: blueprint/plugins/techdocs-react/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/useinfo
+    to: blueprint/plugins/techdocs-react/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/usescheduledtasksoperations
+    to: blueprint/plugins/techdocs-react/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/useexternaldependencies
+    to: blueprint/plugins/techdocs-react/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/usescheduledtasks
+    to: blueprint/plugins/techdocs-react/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/devtoolsclient
+    to: blueprint/plugins/devtools/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/devtoolsclient
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/devtoolsclient
+    to: blueprint/plugins/devtools/devtoolsapi
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/devtoolsapi
+    to: blueprint/plugins/devtools/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/devtoolsclient-test
+    to: blueprint/plugins/devtools/devtoolsclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/plugin
+    to: blueprint/plugins/techdocs-react/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/plugin
+    to: blueprint/plugins/devtools/routes
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/plugin
     to: blueprint/plugins/devtools/alpha
     type: direct-call
     description: Calls module / service

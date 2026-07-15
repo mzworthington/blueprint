@@ -25,72 +25,6 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 50
-  - entityRef: blueprint/plugins/events-backend-module-aws-sqs/alpha
-    type: background-worker
-    name: alpha Service
-    isTest: false
-    properties:
-      filepath: plugins/events-backend-module-aws-sqs/src/alpha.ts
-      containerId: events-backend-module-aws-sqs
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 22
-      sloc: 3
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
-  - entityRef: blueprint/plugins/events-backend-module-aws-sqs/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/events-backend-module-aws-sqs/src/index.ts
-      containerId: events-backend-module-aws-sqs
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 28
-      sloc: 2
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
-    'y': 50
-  - entityRef: blueprint/plugins/events-backend-module-aws-sqs/setuptests
-    type: background-worker
-    name: setupTests Service
-    isTest: true
-    properties:
-      filepath: plugins/events-backend-module-aws-sqs/src/setupTests.ts
-      containerId: events-backend-module-aws-sqs
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 18
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1520
-    'y': 50
   - entityRef: blueprint/plugins/events-backend-module-aws-sqs/awssqsconsumingeventpublisher-test
     type: background-worker
     name: AwsSqsConsumingEventPublisher.test Service
@@ -113,6 +47,28 @@ nodes:
       sinceDays: 500
     x: 830
     'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-aws-sqs/config
+    type: background-worker
+    name: config Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-aws-sqs/src/publisher/config.ts
+      containerId: events-backend-module-aws-sqs
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 7
+      loc: 121
+      sloc: 92
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1195
+    'y': 1010
   - entityRef: blueprint/plugins/events-backend-module-aws-sqs/awssqsconsumingeventpublisher
     type: background-worker
     name: AwsSqsConsumingEventPublisher Service
@@ -158,19 +114,19 @@ nodes:
       sinceDays: 500
     x: 1655
     'y': 690
-  - entityRef: blueprint/plugins/events-backend-module-aws-sqs/config
+  - entityRef: blueprint/plugins/events-backend-module-aws-sqs/alpha
     type: background-worker
-    name: config Service
+    name: alpha Service
     isTest: false
     properties:
-      filepath: plugins/events-backend-module-aws-sqs/src/publisher/config.ts
+      filepath: plugins/events-backend-module-aws-sqs/src/alpha.ts
       containerId: events-backend-module-aws-sqs
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 7
-      loc: 121
-      sloc: 92
+      complexity: 1
+      loc: 22
+      sloc: 3
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -178,8 +134,52 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1195
-    'y': 1010
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-aws-sqs/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-aws-sqs/src/setupTests.ts
+      containerId: events-backend-module-aws-sqs
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 18
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-aws-sqs/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-aws-sqs/src/index.ts
+      containerId: events-backend-module-aws-sqs
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 28
+      sloc: 2
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
+    'y': 50
   - entityRef: blueprint/plugins/events-backend-module-aws-sqs/eventsmoduleawssqsconsumingeventpublisher-test
     type: background-worker
     name: eventsModuleAwsSqsConsumingEventPublisher.test Service
@@ -226,11 +226,7 @@ nodes:
     'y': 370
 dependencies:
   - from: blueprint/plugins/events-backend-module-aws-sqs/config-d
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend-module-aws-sqs/alpha
-    to: blueprint/plugins/events-backend-module-aws-sqs/eventsmoduleawssqsconsumingeventpublisher
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/events-backend-module-aws-sqs/awssqsconsumingeventpublisher-test
@@ -241,24 +237,28 @@ dependencies:
     to: blueprint/plugins/events-backend-module-aws-sqs/awssqsconsumingeventpublisher
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/events-backend-module-aws-sqs/awssqsconsumingeventpublisher
-    to: blueprint/plugins/events-backend-module-aws-sqs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend-module-aws-sqs/awssqsconsumingeventpublisher
-    to: blueprint/plugins/events-backend-module-aws-sqs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend-module-aws-sqs/config-test
-    to: blueprint/plugins/events-backend-module-aws-sqs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend-module-aws-sqs/config-test
-    to: blueprint/plugins/events-backend-module-aws-sqs/config
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/events-backend-module-aws-sqs/config
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-aws-sqs/awssqsconsumingeventpublisher
+    to: blueprint/plugins/events-backend-module-aws-sqs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-aws-sqs/awssqsconsumingeventpublisher
+    to: blueprint/plugins/events-backend-module-aws-sqs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-aws-sqs/config-test
+    to: blueprint/plugins/events-backend-module-aws-sqs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-aws-sqs/config-test
+    to: blueprint/plugins/events-backend-module-aws-sqs/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-aws-sqs/alpha
+    to: blueprint/plugins/events-backend-module-aws-sqs/eventsmoduleawssqsconsumingeventpublisher
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/events-backend-module-aws-sqs/eventsmoduleawssqsconsumingeventpublisher-test

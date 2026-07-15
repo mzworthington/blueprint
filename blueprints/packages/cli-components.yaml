@@ -25,28 +25,6 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 50
-  - entityRef: blueprint/packages/cli/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/cli/src/index.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 49
-      sloc: 25
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
   - entityRef: blueprint/packages/cli/types-d
     type: background-worker
     name: types.d Service
@@ -67,7 +45,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 600
     'y': 50
   - entityRef: blueprint/packages/cli/yaml-test
     type: background-worker
@@ -89,7 +67,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1520
+    x: 1060
     'y': 50
   - entityRef: blueprint/packages/cli/cliinitializer-test
     type: background-worker
@@ -111,7 +89,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1980
+    x: 1520
     'y': 50
   - entityRef: blueprint/packages/cli/cliinitializer
     type: background-worker
@@ -134,7 +112,7 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 370
+    x: 1290
     'y': 370
   - entityRef: blueprint/packages/cli/discoverclimodules
     type: background-worker
@@ -156,7 +134,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1330
+    x: 2210
     'y': 370
   - entityRef: blueprint/packages/cli/factory
     type: background-worker
@@ -178,7 +156,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2250
+    x: 1750
     'y': 370
   - entityRef: blueprint/packages/cli/types
     type: background-worker
@@ -200,7 +178,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
+    x: 1520
     'y': 690
   - entityRef: blueprint/packages/cli/version
     type: background-worker
@@ -222,17 +200,31 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 140
+    x: 1060
     'y': 690
+  - entityRef: blueprint/packages/cli/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/cli/src/index.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 49
+      sloc: 25
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2170
+    'y': 50
 dependencies:
-  - from: blueprint/packages/cli/index
-    to: blueprint/packages/cli/cliinitializer
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli/index
-    to: blueprint/packages/cli/discoverclimodules
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/packages/cli/cliinitializer-test
     to: blueprint/packages/cli/cliinitializer
     type: direct-call
@@ -247,5 +239,13 @@ dependencies:
     description: Calls module / service
   - from: blueprint/packages/cli/cliinitializer
     to: blueprint/packages/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli/index
+    to: blueprint/packages/cli/cliinitializer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli/index
+    to: blueprint/packages/cli/discoverclimodules
     type: direct-call
     description: Calls module / service

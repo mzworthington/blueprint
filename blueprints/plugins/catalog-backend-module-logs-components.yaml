@@ -3,50 +3,6 @@ name: Catalog-backend-module-logs Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/plugins/catalog-backend-module-logs/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-logs/src/index.ts
-      containerId: catalog-backend-module-logs
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 23
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
-  - entityRef: blueprint/plugins/catalog-backend-module-logs/module-test
-    type: background-worker
-    name: module.test Service
-    isTest: true
-    properties:
-      filepath: plugins/catalog-backend-module-logs/src/module.test.ts
-      containerId: catalog-backend-module-logs
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 46
-      sloc: 26
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
   - entityRef: blueprint/plugins/catalog-backend-module-logs/module
     type: background-worker
     name: module Service
@@ -67,8 +23,52 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
+    x: 140
     'y': 370
+  - entityRef: blueprint/plugins/catalog-backend-module-logs/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-logs/src/module.test.ts
+      containerId: catalog-backend-module-logs
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 46
+      sloc: 26
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-logs/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-logs/src/index.ts
+      containerId: catalog-backend-module-logs
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 23
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 50
 dependencies:
   - from: blueprint/plugins/catalog-backend-module-logs/module-test
     to: blueprint/plugins/catalog-backend-module-logs/module

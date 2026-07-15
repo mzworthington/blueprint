@@ -47,6 +47,72 @@ nodes:
       sinceDays: 500
     x: 870
     'y': 1650
+  - entityRef: blueprint/plugins/mcp-actions-backend/createstreamablerouter
+    type: rest-api
+    name: createStreamableRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/mcp-actions-backend/src/routers/createStreamableRouter.ts
+      containerId: mcp-actions-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 3
+      loc: 152
+      sloc: 115
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1410
+    'y': 690
+  - entityRef: blueprint/plugins/mcp-actions-backend/plugin
+    type: rest-api
+    name: plugin REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/mcp-actions-backend/src/plugin.ts
+      containerId: mcp-actions-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 9
+      loc: 173
+      sloc: 132
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1410
+    'y': 370
+  - entityRef: blueprint/plugins/mcp-actions-backend/plugin-test
+    type: background-worker
+    name: plugin.test Service
+    isTest: true
+    properties:
+      filepath: plugins/mcp-actions-backend/src/plugin.test.ts
+      containerId: mcp-actions-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 5
+      loc: 429
+      sloc: 384
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1680
+    'y': 50
   - entityRef: blueprint/plugins/mcp-actions-backend/config
     type: background-worker
     name: config Service
@@ -91,94 +157,6 @@ nodes:
       sinceDays: 500
     x: 680
     'y': 1330
-  - entityRef: blueprint/plugins/mcp-actions-backend/plugin-test
-    type: background-worker
-    name: plugin.test Service
-    isTest: true
-    properties:
-      filepath: plugins/mcp-actions-backend/src/plugin.test.ts
-      containerId: mcp-actions-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 5
-      loc: 429
-      sloc: 384
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1680
-    'y': 50
-  - entityRef: blueprint/plugins/mcp-actions-backend/plugin
-    type: rest-api
-    name: plugin REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/mcp-actions-backend/src/plugin.ts
-      containerId: mcp-actions-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 9
-      loc: 173
-      sloc: 132
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1410
-    'y': 370
-  - entityRef: blueprint/plugins/mcp-actions-backend/createstreamablerouter
-    type: rest-api
-    name: createStreamableRouter REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/mcp-actions-backend/src/routers/createStreamableRouter.ts
-      containerId: mcp-actions-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 3
-      loc: 152
-      sloc: 115
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1410
-    'y': 690
-  - entityRef: blueprint/plugins/mcp-actions-backend/handleerrors-test
-    type: background-worker
-    name: handleErrors.test Service
-    isTest: true
-    properties:
-      filepath: plugins/mcp-actions-backend/src/services/handleErrors.test.ts
-      containerId: mcp-actions-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 145
-      sloc: 109
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 1010
   - entityRef: blueprint/plugins/mcp-actions-backend/handleerrors
     type: background-worker
     name: handleErrors Service
@@ -223,6 +201,28 @@ nodes:
       sinceDays: 500
     x: 910
     'y': 690
+  - entityRef: blueprint/plugins/mcp-actions-backend/handleerrors-test
+    type: background-worker
+    name: handleErrors.test Service
+    isTest: true
+    properties:
+      filepath: plugins/mcp-actions-backend/src/services/handleErrors.test.ts
+      containerId: mcp-actions-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 145
+      sloc: 109
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 1010
   - entityRef: blueprint/plugins/mcp-actions-backend/mcpservice
     type: background-worker
     name: McpService Service
@@ -248,35 +248,35 @@ nodes:
     'y': 1010
 dependencies:
   - from: blueprint/plugins/mcp-actions-backend/index
-    to: blueprint/plugins/api-docs/alpha
+    to: blueprint/plugins/permission-node/alpha
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/mcp-actions-backend/index
-    to: blueprint/plugins/catalog-node/testutils
+    to: blueprint/plugins/catalog-react/testutils
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/metrics
-    to: blueprint/plugins/api-docs/alpha
+  - from: blueprint/plugins/mcp-actions-backend/createstreamablerouter
+    to: blueprint/plugins/mcp-actions-backend/mcpservice
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/plugin-test
-    to: blueprint/plugins/api-docs/alpha
+  - from: blueprint/plugins/mcp-actions-backend/createstreamablerouter
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/plugin-test
-    to: blueprint/plugins/mcp-actions-backend/plugin
+  - from: blueprint/plugins/mcp-actions-backend/createstreamablerouter
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/plugin-test
-    to: blueprint/plugins/api-docs/alpha
+  - from: blueprint/plugins/mcp-actions-backend/createstreamablerouter
+    to: blueprint/plugins/permission-node/alpha
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/plugin-test
-    to: blueprint/plugins/mcp-actions-backend/index
+  - from: blueprint/plugins/mcp-actions-backend/createstreamablerouter
+    to: blueprint/plugins/mcp-actions-backend/metrics
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/plugin-test
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+  - from: blueprint/plugins/mcp-actions-backend/createstreamablerouter
+    to: blueprint/plugins/mcp-actions-backend/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/mcp-actions-backend/plugin
@@ -288,103 +288,103 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/mcp-actions-backend/plugin
-    to: blueprint/plugins/api-docs/alpha
+    to: blueprint/plugins/permission-node/alpha
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/mcp-actions-backend/plugin
     to: blueprint/plugins/mcp-actions-backend/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/createstreamablerouter
+  - from: blueprint/plugins/mcp-actions-backend/plugin-test
+    to: blueprint/plugins/permission-node/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mcp-actions-backend/plugin-test
+    to: blueprint/plugins/mcp-actions-backend/plugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mcp-actions-backend/plugin-test
+    to: blueprint/plugins/permission-node/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mcp-actions-backend/plugin-test
+    to: blueprint/plugins/mcp-actions-backend/index
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mcp-actions-backend/plugin-test
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mcp-actions-backend/metrics
+    to: blueprint/plugins/permission-node/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mcp-actions-backend/handleerrors
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mcp-actions-backend/handleerrors
+    to: blueprint/plugins/mcp-actions-backend/index
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
     to: blueprint/plugins/mcp-actions-backend/mcpservice
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/createstreamablerouter
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+  - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
+    to: blueprint/plugins/permission-node/alpha
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/createstreamablerouter
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
+    to: blueprint/plugins/mcp-actions-backend/index
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/createstreamablerouter
-    to: blueprint/plugins/api-docs/alpha
+  - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/createstreamablerouter
-    to: blueprint/plugins/mcp-actions-backend/metrics
+  - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/createstreamablerouter
+  - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
+    to: blueprint/plugins/mcp-actions-backend/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
+    to: blueprint/plugins/permission-node/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
     to: blueprint/plugins/mcp-actions-backend/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/mcp-actions-backend/handleerrors-test
-    to: blueprint/plugins/search-backend-node/errors
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/mcp-actions-backend/handleerrors-test
     to: blueprint/plugins/mcp-actions-backend/handleerrors
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/handleerrors
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/handleerrors
-    to: blueprint/plugins/mcp-actions-backend/index
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
-    to: blueprint/plugins/mcp-actions-backend/mcpservice
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
-    to: blueprint/plugins/api-docs/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
-    to: blueprint/plugins/mcp-actions-backend/index
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
-    to: blueprint/plugins/mcp-actions-backend/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
-    to: blueprint/plugins/api-docs/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
-    to: blueprint/plugins/mcp-actions-backend/config
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/mcp-actions-backend/mcpservice
     to: blueprint/plugins/mcp-actions-backend/index
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/mcp-actions-backend/mcpservice
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/mcp-actions-backend/mcpservice
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/mcp-actions-backend/mcpservice
-    to: blueprint/plugins/api-docs/alpha
+    to: blueprint/plugins/permission-node/alpha
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/mcp-actions-backend/mcpservice
-    to: blueprint/plugins/search-backend-node/errors
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/mcp-actions-backend/mcpservice

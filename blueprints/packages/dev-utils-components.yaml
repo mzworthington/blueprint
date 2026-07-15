@@ -3,28 +3,6 @@ name: Dev-utils Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/dev-utils/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/dev-utils/src/components/SidebarSignOutButton/index.ts
-      containerId: dev-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 17
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
   - entityRef: blueprint/packages/dev-utils/setuptests
     type: background-worker
     name: setupTests Service
@@ -45,20 +23,20 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
+    x: 140
     'y': 50
-  - entityRef: blueprint/packages/dev-utils/buicss
+  - entityRef: blueprint/packages/dev-utils/index
     type: background-worker
-    name: BuiCss Service
+    name: index Service
     isTest: false
     properties:
-      filepath: packages/dev-utils/src/devApp/BuiCss.tsx
+      filepath: packages/dev-utils/src/index.ts
       containerId: dev-utils
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 26
+      loc: 25
       sloc: 2
       churn: 1
       authorCount: 1
@@ -67,7 +45,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 600
     'y': 50
   - entityRef: blueprint/packages/dev-utils/render-test
     type: gateway-api
@@ -89,8 +67,74 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/packages/dev-utils/buicss
+    type: background-worker
+    name: BuiCss Service
+    isTest: false
+    properties:
+      filepath: packages/dev-utils/src/devApp/BuiCss.tsx
+      containerId: dev-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 26
+      sloc: 2
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
     x: 1520
     'y': 50
+  - entityRef: blueprint/packages/dev-utils/sidebarthemeswitcher
+    type: gateway-api
+    name: SidebarThemeSwitcher UI Component
+    isTest: false
+    properties:
+      filepath: packages/dev-utils/src/devApp/SidebarThemeSwitcher.tsx
+      containerId: dev-utils
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 6
+      loc: 129
+      sloc: 101
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 830
+    'y': 690
+  - entityRef: blueprint/packages/dev-utils/sidebarthemeswitcher-test
+    type: background-worker
+    name: SidebarThemeSwitcher.test Service
+    isTest: true
+    properties:
+      filepath: packages/dev-utils/src/devApp/SidebarThemeSwitcher.test.tsx
+      containerId: dev-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 91
+      sloc: 61
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 370
   - entityRef: blueprint/packages/dev-utils/render
     type: gateway-api
     name: render UI Component
@@ -112,52 +156,8 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1520
+    x: 1060
     'y': 370
-  - entityRef: blueprint/packages/dev-utils/sidebarthemeswitcher-test
-    type: background-worker
-    name: SidebarThemeSwitcher.test Service
-    isTest: true
-    properties:
-      filepath: packages/dev-utils/src/devApp/SidebarThemeSwitcher.test.tsx
-      containerId: dev-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 91
-      sloc: 61
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1980
-    'y': 370
-  - entityRef: blueprint/packages/dev-utils/sidebarthemeswitcher
-    type: gateway-api
-    name: SidebarThemeSwitcher UI Component
-    isTest: false
-    properties:
-      filepath: packages/dev-utils/src/devApp/SidebarThemeSwitcher.tsx
-      containerId: dev-utils
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 6
-      loc: 129
-      sloc: 101
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1750
-    'y': 690
   - entityRef: blueprint/packages/dev-utils/entitygriditem
     type: gateway-api
     name: EntityGridItem UI Component
@@ -251,8 +251,16 @@ dependencies:
     to: blueprint/packages/dev-utils/render
     type: direct-call
     description: Calls module / service
+  - from: blueprint/packages/dev-utils/sidebarthemeswitcher
+    to: blueprint/packages/ui/menu
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/dev-utils/sidebarthemeswitcher-test
+    to: blueprint/packages/dev-utils/sidebarthemeswitcher
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/packages/dev-utils/render
-    to: blueprint/packages/catalog-model/alpha
+    to: blueprint/packages/core-plugin-api/alpha
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/dev-utils/render
@@ -267,14 +275,6 @@ dependencies:
     to: blueprint/packages/app-defaults/components
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/dev-utils/sidebarthemeswitcher-test
-    to: blueprint/packages/dev-utils/sidebarthemeswitcher
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/dev-utils/sidebarthemeswitcher
-    to: blueprint/packages/ui/menu
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/packages/dev-utils/entitygriditem
     to: blueprint/packages/ui/grid
     type: direct-call
@@ -284,7 +284,7 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/dev-utils/sidebarlanguageswitcher-test
-    to: blueprint/packages/catalog-model/alpha
+    to: blueprint/packages/core-plugin-api/alpha
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/dev-utils/sidebarlanguageswitcher-test
@@ -292,7 +292,7 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/dev-utils/sidebarlanguageswitcher
-    to: blueprint/packages/catalog-model/alpha
+    to: blueprint/packages/core-plugin-api/alpha
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/dev-utils/sidebarlanguageswitcher

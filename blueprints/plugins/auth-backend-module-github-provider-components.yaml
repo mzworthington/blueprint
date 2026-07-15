@@ -47,72 +47,6 @@ nodes:
       sinceDays: 500
     x: 600
     'y': 50
-  - entityRef: blueprint/plugins/auth-backend-module-github-provider/authenticator-test
-    type: background-worker
-    name: authenticator.test Service
-    isTest: true
-    properties:
-      filepath: plugins/auth-backend-module-github-provider/src/authenticator.test.ts
-      containerId: auth-backend-module-github-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 161
-      sloc: 138
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 655
-    'y': 690
-  - entityRef: blueprint/plugins/auth-backend-module-github-provider/authenticator
-    type: background-worker
-    name: authenticator Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-github-provider/src/authenticator.ts
-      containerId: auth-backend-module-github-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 9
-      loc: 143
-      sloc: 104
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 925
-    'y': 1010
-  - entityRef: blueprint/plugins/auth-backend-module-github-provider/module-test
-    type: background-worker
-    name: module.test Service
-    isTest: true
-    properties:
-      filepath: plugins/auth-backend-module-github-provider/src/module.test.ts
-      containerId: auth-backend-module-github-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 80
-      sloc: 56
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
-    'y': 50
   - entityRef: blueprint/plugins/auth-backend-module-github-provider/module
     type: background-worker
     name: module Service
@@ -135,6 +69,50 @@ nodes:
       sinceDays: 500
     x: 1060
     'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-github-provider/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-github-provider/src/module.test.ts
+      containerId: auth-backend-module-github-provider
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 80
+      sloc: 56
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-github-provider/authenticator-test
+    type: background-worker
+    name: authenticator.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-github-provider/src/authenticator.test.ts
+      containerId: auth-backend-module-github-provider
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 161
+      sloc: 138
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 965
+    'y': 690
   - entityRef: blueprint/plugins/auth-backend-module-github-provider/resolvers
     type: background-worker
     name: resolvers Service
@@ -155,19 +133,33 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1195
+    x: 1425
     'y': 690
+  - entityRef: blueprint/plugins/auth-backend-module-github-provider/authenticator
+    type: background-worker
+    name: authenticator Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-github-provider/src/authenticator.ts
+      containerId: auth-backend-module-github-provider
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 9
+      loc: 143
+      sloc: 104
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 1010
 dependencies:
   - from: blueprint/plugins/auth-backend-module-github-provider/config-d
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-github-provider/authenticator-test
-    to: blueprint/plugins/auth-backend-module-github-provider/authenticator
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-github-provider/module-test
-    to: blueprint/plugins/auth-backend-module-github-provider/module
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/auth-backend-module-github-provider/module
@@ -176,6 +168,14 @@ dependencies:
     description: Calls module / service
   - from: blueprint/plugins/auth-backend-module-github-provider/module
     to: blueprint/plugins/auth-backend-module-github-provider/resolvers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-github-provider/module-test
+    to: blueprint/plugins/auth-backend-module-github-provider/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-github-provider/authenticator-test
+    to: blueprint/plugins/auth-backend-module-github-provider/authenticator
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/auth-backend-module-github-provider/resolvers

@@ -47,19 +47,41 @@ nodes:
       sinceDays: 500
     x: 600
     'y': 50
-  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/index
+  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/catalogmodulegerritentityprovider
     type: background-worker
-    name: index Service
+    name: catalogModuleGerritEntityProvider Service
     isTest: false
     properties:
-      filepath: plugins/catalog-backend-module-gerrit/src/module/index.ts
+      filepath: plugins/catalog-backend-module-gerrit/src/module/catalogModuleGerritEntityProvider.ts
       containerId: catalog-backend-module-gerrit
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 18
-      sloc: 1
+      loc: 49
+      sloc: 27
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1385
+    'y': 370
+  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gerrit/src/index.ts
+      containerId: catalog-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 19
+      sloc: 2
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -68,28 +90,6 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 1060
-    'y': 50
-  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/setuptests
-    type: background-worker
-    name: setupTests Service
-    isTest: true
-    properties:
-      filepath: plugins/catalog-backend-module-gerrit/src/setupTests.ts
-      containerId: catalog-backend-module-gerrit
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 17
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1520
     'y': 50
   - entityRef: blueprint/plugins/catalog-backend-module-gerrit/catalogmodulegerritentityprovider-test
     type: background-worker
@@ -111,21 +111,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1980
+    x: 1520
     'y': 50
-  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/catalogmodulegerritentityprovider
+  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/types
     type: background-worker
-    name: catalogModuleGerritEntityProvider Service
+    name: types Service
     isTest: false
     properties:
-      filepath: plugins/catalog-backend-module-gerrit/src/module/catalogModuleGerritEntityProvider.ts
+      filepath: plugins/catalog-backend-module-gerrit/src/providers/types.ts
       containerId: catalog-backend-module-gerrit
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 49
-      sloc: 27
+      loc: 36
+      sloc: 16
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -133,74 +133,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1615
-    'y': 370
-  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/config-test
-    type: background-worker
-    name: config.test Service
-    isTest: true
-    properties:
-      filepath: plugins/catalog-backend-module-gerrit/src/providers/config.test.ts
-      containerId: catalog-backend-module-gerrit
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 103
-      sloc: 82
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1765
-    'y': 690
-  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/config
-    type: background-worker
-    name: config Service
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-gerrit/src/providers/config.ts
-      containerId: catalog-backend-module-gerrit
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 4
-      loc: 59
-      sloc: 34
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1940
-    'y': 1010
-  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider-test
-    type: background-worker
-    name: GerritEntityProvider.test Service
-    isTest: true
-    properties:
-      filepath: plugins/catalog-backend-module-gerrit/src/providers/GerritEntityProvider.test.ts
-      containerId: catalog-backend-module-gerrit
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 433
-      sloc: 368
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2075
-    'y': 370
+    x: 1790
+    'y': 1330
   - entityRef: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
     type: background-worker
     name: GerritEntityProvider Service
@@ -222,21 +156,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 2345
+    x: 1520
     'y': 690
-  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/types
+  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider-test
     type: background-worker
-    name: types Service
-    isTest: false
+    name: GerritEntityProvider.test Service
+    isTest: true
     properties:
-      filepath: plugins/catalog-backend-module-gerrit/src/providers/types.ts
+      filepath: plugins/catalog-backend-module-gerrit/src/providers/GerritEntityProvider.test.ts
       containerId: catalog-backend-module-gerrit
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 36
-      sloc: 16
+      loc: 433
+      sloc: 368
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -244,11 +178,81 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2075
-    'y': 1330
+    x: 1925
+    'y': 370
+  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/config
+    type: background-worker
+    name: config Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gerrit/src/providers/config.ts
+      containerId: catalog-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 4
+      loc: 59
+      sloc: 34
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2060
+    'y': 1010
+  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/config-test
+    type: background-worker
+    name: config.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-gerrit/src/providers/config.test.ts
+      containerId: catalog-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 103
+      sloc: 82
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2235
+    'y': 690
+  - entityRef: blueprint/plugins/catalog-backend-module-gerrit/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-gerrit/src/setupTests.ts
+      containerId: catalog-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 17
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1980
+    'y': 50
 dependencies:
   - from: blueprint/plugins/catalog-backend-module-gerrit/alpha
-    to: blueprint/plugins/app-module-user-settings/module
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/catalogmodulegerritentityprovider
+    to: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/catalog-backend-module-gerrit/catalogmodulegerritentityprovider-test
@@ -259,36 +263,12 @@ dependencies:
     to: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-gerrit/catalogmodulegerritentityprovider
-    to: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-gerrit/config-test
-    to: blueprint/plugins/catalog-backend-module-gerrit/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-gerrit/config-test
-    to: blueprint/plugins/catalog-backend-module-gerrit/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-gerrit/config
-    to: blueprint/plugins/catalog-backend-module-gerrit/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider-test
-    to: blueprint/plugins/catalog-backend-module-gerrit/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider-test
-    to: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
     to: blueprint/plugins/catalog-backend-module-gerrit/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
-    to: blueprint/plugins/search-backend-node/errors
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
@@ -301,5 +281,25 @@ dependencies:
     description: Calls module / service
   - from: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
     to: blueprint/plugins/catalog-backend-module-gerrit/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-gerrit/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/config
+    to: blueprint/plugins/catalog-backend-module-gerrit/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/config-test
+    to: blueprint/plugins/catalog-backend-module-gerrit/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/config-test
+    to: blueprint/plugins/catalog-backend-module-gerrit/config
     type: direct-call
     description: Calls module / service

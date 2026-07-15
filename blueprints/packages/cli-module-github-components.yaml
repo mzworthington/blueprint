@@ -3,28 +3,6 @@ name: Cli-module-github Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/cli-module-github/index
-    type: gateway-api
-    name: index UI Component
-    isTest: false
-    properties:
-      filepath: packages/cli-module-github/src/commands/create-github-app/index.ts
-      containerId: cli-module-github
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 5
-      loc: 147
-      sloc: 112
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
   - entityRef: blueprint/packages/cli-module-github/githubcreateappserver
     type: gateway-api
     name: GithubCreateAppServer UI Component
@@ -47,6 +25,28 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 370
+  - entityRef: blueprint/packages/cli-module-github/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-github/src/index.ts
+      containerId: cli-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 29
+      sloc: 12
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 50
 dependencies:
   - from: blueprint/packages/cli-module-github/githubcreateappserver
     to: blueprint/packages/backend-openapi-utils/express

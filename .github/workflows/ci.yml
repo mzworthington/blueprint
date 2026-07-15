@@ -178,14 +178,16 @@ jobs:
           bun build app/packages/cli/src/blueprint.ts --compile --target=bun-darwin-x64 --outfile=dist/macos-x64/blueprint
           bun build app/packages/cli/src/blueprint.ts --compile --target=bun-darwin-arm64 --outfile=dist/macos-arm64/blueprint
           bun build app/packages/cli/src/blueprint.ts --compile --target=bun-windows-x64 --outfile=dist/windows/blueprint.exe
+          bun app/packages/cli/scripts/copyTreeSitterWasms.ts \
+            dist/linux dist/macos-x64 dist/macos-arm64 dist/windows
 
       - name: Package Archives
         run: |
           mkdir -p dist/archives
-          tar -czf dist/archives/blueprint-linux-x64.tar.gz -C dist/linux blueprint
-          tar -czf dist/archives/blueprint-macos-x64.tar.gz -C dist/macos-x64 blueprint
-          tar -czf dist/archives/blueprint-macos-arm64.tar.gz -C dist/macos-arm64 blueprint
-          zip -j dist/archives/blueprint-windows-x64.zip dist/windows/blueprint.exe
+          tar -czf dist/archives/blueprint-linux-x64.tar.gz -C dist/linux .
+          tar -czf dist/archives/blueprint-macos-x64.tar.gz -C dist/macos-x64 .
+          tar -czf dist/archives/blueprint-macos-arm64.tar.gz -C dist/macos-arm64 .
+          (cd dist/windows && zip -r ../archives/blueprint-windows-x64.zip .)
 
       - name: Upload TS Artifacts
         uses: actions/upload-artifact@v7

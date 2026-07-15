@@ -1,0 +1,28 @@
+entityRef: blueprint/eshop/ordering-unittests
+name: Ordering.UnitTests Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/eshop/ordering-unittests/builders
+    type: background-worker
+    name: Builders Service
+    isTest: true
+    properties:
+      filepath: tests/Ordering.UnitTests/Builders.cs
+      containerId: ordering-unittests
+      technology: C# Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-unittests/globalusings
+    type: rest-api
+    name: GlobalUsings REST Endpoint
+    isTest: true
+    properties:
+      filepath: tests/Ordering.UnitTests/GlobalUsings.cs
+      containerId: ordering-unittests
+      technology: ASP.NET Core Controller / Minimal API
+      classification: api-marker
+    x: 600
+    'y': 50
+dependencies: []

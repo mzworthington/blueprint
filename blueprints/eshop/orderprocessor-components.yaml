@@ -1,0 +1,72 @@
+entityRef: blueprint/eshop/orderprocessor
+name: OrderProcessor Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/eshop/orderprocessor/extensions
+    type: background-worker
+    name: Extensions Service
+    isTest: false
+    properties:
+      filepath: src/OrderProcessor/Extensions/Extensions.cs
+      containerId: orderprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/eshop/orderprocessor/backgroundtaskoptions
+    type: background-worker
+    name: BackgroundTaskOptions Service
+    isTest: false
+    properties:
+      filepath: src/OrderProcessor/BackgroundTaskOptions.cs
+      containerId: orderprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/eshop/orderprocessor/globalusings
+    type: rest-api
+    name: GlobalUsings REST Endpoint
+    isTest: false
+    properties:
+      filepath: src/OrderProcessor/GlobalUsings.cs
+      containerId: orderprocessor
+      technology: ASP.NET Core Controller / Minimal API
+      classification: api-marker
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/eshop/orderprocessor/graceperiodconfirmedintegrationevent
+    type: background-worker
+    name: GracePeriodConfirmedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/OrderProcessor/Events/GracePeriodConfirmedIntegrationEvent.cs
+      containerId: orderprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/eshop/orderprocessor/graceperiodmanagerservice
+    type: relational-database
+    name: GracePeriodManagerService Database
+    isTest: false
+    properties:
+      filepath: src/OrderProcessor/Services/GracePeriodManagerService.cs
+      containerId: orderprocessor
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/eshop/orderprocessor/program
+    type: background-worker
+    name: Program Service
+    isTest: false
+    properties:
+      filepath: src/OrderProcessor/Program.cs
+      containerId: orderprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 2440
+    'y': 50
+dependencies: []

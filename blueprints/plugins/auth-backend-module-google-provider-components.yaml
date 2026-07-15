@@ -25,19 +25,63 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 50
-  - entityRef: blueprint/plugins/auth-backend-module-google-provider/authenticator
+  - entityRef: blueprint/plugins/auth-backend-module-google-provider/module
     type: background-worker
-    name: authenticator Service
+    name: module Service
     isTest: false
     properties:
-      filepath: plugins/auth-backend-module-google-provider/src/authenticator.ts
+      filepath: plugins/auth-backend-module-google-provider/src/module.ts
       containerId: auth-backend-module-google-provider
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 2
-      loc: 95
-      sloc: 71
+      complexity: 1
+      loc: 50
+      sloc: 31
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-google-provider/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-google-provider/src/module.test.ts
+      containerId: auth-backend-module-google-provider
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 83
+      sloc: 59
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-google-provider/resolvers
+    type: background-worker
+    name: resolvers Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-google-provider/src/resolvers.ts
+      containerId: auth-backend-module-google-provider
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 68
+      sloc: 40
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -67,43 +111,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
-    'y': 50
-  - entityRef: blueprint/plugins/auth-backend-module-google-provider/module-test
-    type: background-worker
-    name: module.test Service
-    isTest: true
-    properties:
-      filepath: plugins/auth-backend-module-google-provider/src/module.test.ts
-      containerId: auth-backend-module-google-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 83
-      sloc: 59
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
     x: 1060
     'y': 50
-  - entityRef: blueprint/plugins/auth-backend-module-google-provider/module
+  - entityRef: blueprint/plugins/auth-backend-module-google-provider/authenticator
     type: background-worker
-    name: module Service
+    name: authenticator Service
     isTest: false
     properties:
-      filepath: plugins/auth-backend-module-google-provider/src/module.ts
+      filepath: plugins/auth-backend-module-google-provider/src/authenticator.ts
       containerId: auth-backend-module-google-provider
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 50
-      sloc: 31
+      complexity: 2
+      loc: 95
+      sloc: 71
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -111,37 +133,11 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
-    'y': 370
-  - entityRef: blueprint/plugins/auth-backend-module-google-provider/resolvers
-    type: background-worker
-    name: resolvers Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-google-provider/src/resolvers.ts
-      containerId: auth-backend-module-google-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 68
-      sloc: 40
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1290
+    x: 370
     'y': 690
 dependencies:
   - from: blueprint/plugins/auth-backend-module-google-provider/config-d
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-google-provider/module-test
-    to: blueprint/plugins/auth-backend-module-google-provider/module
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/auth-backend-module-google-provider/module
@@ -150,5 +146,9 @@ dependencies:
     description: Calls module / service
   - from: blueprint/plugins/auth-backend-module-google-provider/module
     to: blueprint/plugins/auth-backend-module-google-provider/resolvers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-google-provider/module-test
+    to: blueprint/plugins/auth-backend-module-google-provider/module
     type: direct-call
     description: Calls module / service

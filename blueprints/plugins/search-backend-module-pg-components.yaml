@@ -23,65 +23,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 140
+    x: 355
     'y': 50
-  - entityRef: blueprint/plugins/search-backend-module-pg/alpha
-    type: background-worker
-    name: alpha Service
-    isTest: false
-    properties:
-      filepath: plugins/search-backend-module-pg/src/alpha.ts
-      containerId: search-backend-module-pg
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 22
-      sloc: 3
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 480
-    'y': 370
-  - entityRef: blueprint/plugins/search-backend-module-pg/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/search-backend-module-pg/src/PgSearchEngine/index.ts
-      containerId: search-backend-module-pg
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 29
-      sloc: 12
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
-  - entityRef: blueprint/plugins/search-backend-module-pg/module
+  - entityRef: blueprint/plugins/search-backend-module-pg/util-test
     type: relational-database
-    name: module Database
-    isTest: false
+    name: util.test Database
+    isTest: true
     properties:
-      filepath: plugins/search-backend-module-pg/src/module.ts
+      filepath: plugins/search-backend-module-pg/src/database/util.test.ts
       containerId: search-backend-module-pg
       technology: Prisma / SQL Database Client
       classification: database-marker
     forensics:
-      complexity: 2
+      complexity: 1
       loc: 55
-      sloc: 34
+      sloc: 32
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -89,21 +45,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 480
-    'y': 690
-  - entityRef: blueprint/plugins/search-backend-module-pg/setuptests
-    type: background-worker
-    name: setupTests Service
-    isTest: true
+    x: 140
+    'y': 370
+  - entityRef: blueprint/plugins/search-backend-module-pg/types
+    type: relational-database
+    name: types Database
+    isTest: false
     properties:
-      filepath: plugins/search-backend-module-pg/src/setupTests.ts
+      filepath: plugins/search-backend-module-pg/src/database/types.ts
       containerId: search-backend-module-pg
-      technology: TypeScript Domain Service
-      classification: default
+      technology: Prisma / SQL Database Client
+      classification: database-marker
     forensics:
       complexity: 1
-      loc: 17
-      sloc: 1
+      loc: 69
+      sloc: 42
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -111,8 +67,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
-    'y': 50
+    x: 330
+    'y': 690
   - entityRef: blueprint/plugins/search-backend-module-pg/databasedocumentstore-test
     type: relational-database
     name: DatabaseDocumentStore.test Database
@@ -133,7 +89,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1520
+    x: 815
     'y': 50
   - entityRef: blueprint/plugins/search-backend-module-pg/databasedocumentstore
     type: relational-database
@@ -156,51 +112,7 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1885
-    'y': 370
-  - entityRef: blueprint/plugins/search-backend-module-pg/types
-    type: relational-database
-    name: types Database
-    isTest: false
-    properties:
-      filepath: plugins/search-backend-module-pg/src/database/types.ts
-      containerId: search-backend-module-pg
-      technology: Prisma / SQL Database Client
-      classification: database-marker
-    forensics:
-      complexity: 1
-      loc: 69
-      sloc: 42
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
-    'y': 690
-  - entityRef: blueprint/plugins/search-backend-module-pg/util-test
-    type: relational-database
-    name: util.test Database
-    isTest: true
-    properties:
-      filepath: plugins/search-backend-module-pg/src/database/util.test.ts
-      containerId: search-backend-module-pg
-      technology: Prisma / SQL Database Client
-      classification: database-marker
-    forensics:
-      complexity: 1
-      loc: 55
-      sloc: 32
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1020
+    x: 600
     'y': 370
   - entityRef: blueprint/plugins/search-backend-module-pg/util
     type: relational-database
@@ -222,21 +134,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2115
+    x: 830
     'y': 690
-  - entityRef: blueprint/plugins/search-backend-module-pg/pgsearchengine-test
-    type: relational-database
-    name: PgSearchEngine.test Database
-    isTest: true
+  - entityRef: blueprint/plugins/search-backend-module-pg/index
+    type: background-worker
+    name: index Service
+    isTest: false
     properties:
-      filepath: plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.test.ts
+      filepath: plugins/search-backend-module-pg/src/index.ts
       containerId: search-backend-module-pg
-      technology: Prisma / SQL Database Client
-      classification: database-marker
+      technology: TypeScript Domain Service
+      classification: default
     forensics:
       complexity: 1
-      loc: 393
-      sloc: 344
+      loc: 26
+      sloc: 3
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -244,31 +156,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1655
-    'y': 690
-  - entityRef: blueprint/plugins/search-backend-module-pg/pgsearchengine
-    type: relational-database
-    name: PgSearchEngine Database
-    isTest: false
-    properties:
-      filepath: plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.ts
-      containerId: search-backend-module-pg
-      technology: Prisma / SQL Database Client
-      classification: database-marker
-    forensics:
-      complexity: 11
-      loc: 294
-      sloc: 219
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 790
-    'y': 1010
+    x: 1275
+    'y': 50
   - entityRef: blueprint/plugins/search-backend-module-pg/pgsearchengineindexer-test
     type: relational-database
     name: PgSearchEngineIndexer.test Database
@@ -289,7 +178,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1425
+    x: 570
     'y': 1010
   - entityRef: blueprint/plugins/search-backend-module-pg/pgsearchengineindexer
     type: relational-database
@@ -312,18 +201,125 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1180
+    x: 1045
     'y': 1330
+  - entityRef: blueprint/plugins/search-backend-module-pg/pgsearchengine
+    type: relational-database
+    name: PgSearchEngine Database
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.ts
+      containerId: search-backend-module-pg
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    forensics:
+      complexity: 11
+      loc: 294
+      sloc: 219
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 1030
+    'y': 1010
+  - entityRef: blueprint/plugins/search-backend-module-pg/pgsearchengine-test
+    type: relational-database
+    name: PgSearchEngine.test Database
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.test.ts
+      containerId: search-backend-module-pg
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    forensics:
+      complexity: 1
+      loc: 393
+      sloc: 344
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1545
+    'y': 690
+  - entityRef: blueprint/plugins/search-backend-module-pg/module
+    type: relational-database
+    name: module Database
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-pg/src/module.ts
+      containerId: search-backend-module-pg
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    forensics:
+      complexity: 2
+      loc: 55
+      sloc: 34
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2005
+    'y': 690
+  - entityRef: blueprint/plugins/search-backend-module-pg/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-module-pg/src/alpha.ts
+      containerId: search-backend-module-pg
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 22
+      sloc: 3
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1910
+    'y': 1010
+  - entityRef: blueprint/plugins/search-backend-module-pg/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-pg/src/setupTests.ts
+      containerId: search-backend-module-pg
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 17
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1735
+    'y': 50
 dependencies:
-  - from: blueprint/plugins/search-backend-module-pg/alpha
-    to: blueprint/plugins/search-backend-module-pg/module
+  - from: blueprint/plugins/search-backend-module-pg/util-test
+    to: blueprint/plugins/search-backend-module-pg/util
     type: read-write
     description: Queries datastore records
-  - from: blueprint/plugins/search-backend-module-pg/module
-    to: blueprint/plugins/search-backend-module-pg/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-module-pg/module
+  - from: blueprint/plugins/search-backend-module-pg/types
     to: blueprint/plugins/search-backend-module-pg/pgsearchengine
     type: read-write
     description: Queries datastore records
@@ -343,35 +339,39 @@ dependencies:
     to: blueprint/plugins/search-backend-module-pg/util
     type: read-write
     description: Queries datastore records
-  - from: blueprint/plugins/search-backend-module-pg/types
-    to: blueprint/plugins/search-backend-module-pg/pgsearchengine
-    type: read-write
-    description: Queries datastore records
-  - from: blueprint/plugins/search-backend-module-pg/util-test
-    to: blueprint/plugins/search-backend-module-pg/util
-    type: read-write
-    description: Queries datastore records
-  - from: blueprint/plugins/search-backend-module-pg/pgsearchengine-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-module-pg/pgsearchengine-test
-    to: blueprint/plugins/search-backend-module-pg/pgsearchengine
-    type: read-write
-    description: Queries datastore records
-  - from: blueprint/plugins/search-backend-module-pg/pgsearchengine-test
-    to: blueprint/plugins/search-backend-module-pg/pgsearchengineindexer
-    type: read-write
-    description: Queries datastore records
-  - from: blueprint/plugins/search-backend-module-pg/pgsearchengine
-    to: blueprint/plugins/search-backend-module-pg/pgsearchengineindexer
-    type: read-write
-    description: Queries datastore records
-  - from: blueprint/plugins/search-backend-module-pg/pgsearchengine
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/search-backend-module-pg/pgsearchengineindexer-test
     to: blueprint/plugins/search-backend-module-pg/pgsearchengineindexer
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/search-backend-module-pg/pgsearchengine
+    to: blueprint/plugins/search-backend-module-pg/pgsearchengineindexer
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/search-backend-module-pg/pgsearchengine
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-pg/pgsearchengine-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-pg/pgsearchengine-test
+    to: blueprint/plugins/search-backend-module-pg/pgsearchengine
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/search-backend-module-pg/pgsearchengine-test
+    to: blueprint/plugins/search-backend-module-pg/pgsearchengineindexer
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/search-backend-module-pg/module
+    to: blueprint/plugins/search-backend-module-pg/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-pg/module
+    to: blueprint/plugins/search-backend-module-pg/pgsearchengine
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/search-backend-module-pg/alpha
+    to: blueprint/plugins/search-backend-module-pg/module
     type: read-write
     description: Queries datastore records

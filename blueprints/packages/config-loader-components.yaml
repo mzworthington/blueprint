@@ -3,50 +3,6 @@ name: Config-loader Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/config-loader/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/config-loader/src/sources/transform/index.ts
-      containerId: config-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 20
-      sloc: 3
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2005
-    'y': 50
-  - entityRef: blueprint/packages/config-loader/loader-test
-    type: background-worker
-    name: loader.test Service
-    isTest: true
-    properties:
-      filepath: packages/config-loader/src/loader.test.ts
-      containerId: config-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 497
-      sloc: 443
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3010
-    'y': 1010
   - entityRef: blueprint/packages/config-loader/loader
     type: background-worker
     name: loader Service
@@ -67,66 +23,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 9340
+    x: 8945
     'y': 1330
-  - entityRef: blueprint/packages/config-loader/collect-test
+  - entityRef: blueprint/packages/config-loader/load
     type: background-worker
-    name: collect.test Service
-    isTest: true
-    properties:
-      filepath: packages/config-loader/src/schema/collect.test.ts
-      containerId: config-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 4
-      loc: 657
-      sloc: 597
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 370
-  - entityRef: blueprint/packages/config-loader/collect
-    type: background-worker
-    name: collect Service
+    name: load Service
     isTest: false
     properties:
-      filepath: packages/config-loader/src/schema/collect.ts
+      filepath: packages/config-loader/src/schema/load.ts
       containerId: config-loader
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 42
-      loc: 399
-      sloc: 323
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 340
-    'y': 690
-  - entityRef: blueprint/packages/config-loader/compile-test
-    type: background-worker
-    name: compile.test Service
-    isTest: true
-    properties:
-      filepath: packages/config-loader/src/schema/compile.test.ts
-      containerId: config-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 463
-      sloc: 436
+      complexity: 8
+      loc: 167
+      sloc: 125
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -134,7 +45,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2010
+    x: 600
     'y': 370
   - entityRef: blueprint/packages/config-loader/compile
     type: background-worker
@@ -157,21 +68,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1915
+    x: 895
     'y': 690
-  - entityRef: blueprint/packages/config-loader/filtering-test
+  - entityRef: blueprint/packages/config-loader/utils
     type: background-worker
-    name: filtering.test Service
-    isTest: true
+    name: utils Service
+    isTest: false
     properties:
-      filepath: packages/config-loader/src/schema/filtering.test.ts
+      filepath: packages/config-loader/src/sources/transform/utils.ts
       containerId: config-loader
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 454
-      sloc: 424
+      complexity: 3
+      loc: 27
+      sloc: 9
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -179,31 +90,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1550
-    'y': 370
-  - entityRef: blueprint/packages/config-loader/filtering
-    type: background-worker
-    name: filtering Service
-    isTest: false
-    properties:
-      filepath: packages/config-loader/src/schema/filtering.ts
-      containerId: config-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 29
-      loc: 199
-      sloc: 146
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 2735
-    'y': 690
+    x: 2880
+    'y': 1010
   - entityRef: blueprint/packages/config-loader/load-test
     type: background-worker
     name: load.test Service
@@ -224,21 +112,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2465
+    x: 600
     'y': 50
-  - entityRef: blueprint/packages/config-loader/load
+  - entityRef: blueprint/packages/config-loader/collect-test
     type: background-worker
-    name: load Service
-    isTest: false
+    name: collect.test Service
+    isTest: true
     properties:
-      filepath: packages/config-loader/src/schema/load.ts
+      filepath: packages/config-loader/src/schema/collect.test.ts
       containerId: config-loader
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 8
-      loc: 167
-      sloc: 125
+      complexity: 4
+      loc: 657
+      sloc: 597
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -246,7 +134,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2470
+    x: 140
     'y': 370
   - entityRef: blueprint/packages/config-loader/types
     type: background-worker
@@ -268,21 +156,44 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2740
+    x: 5040
     'y': 1330
-  - entityRef: blueprint/packages/config-loader/utils
+  - entityRef: blueprint/packages/config-loader/filtering
     type: background-worker
-    name: utils Service
+    name: filtering Service
     isTest: false
     properties:
-      filepath: packages/config-loader/src/sources/transform/utils.ts
+      filepath: packages/config-loader/src/schema/filtering.ts
       containerId: config-loader
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 3
-      loc: 27
-      sloc: 9
+      complexity: 29
+      loc: 199
+      sloc: 146
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 1355
+    'y': 690
+  - entityRef: blueprint/packages/config-loader/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/config-loader/src/index.ts
+      containerId: config-loader
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 40
+      sloc: 17
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -290,21 +201,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 6925
-    'y': 1010
-  - entityRef: blueprint/packages/config-loader/configsources-test
+    x: 2975
+    'y': 50
+  - entityRef: blueprint/packages/config-loader/compile-test
     type: background-worker
-    name: ConfigSources.test Service
+    name: compile.test Service
     isTest: true
     properties:
-      filepath: packages/config-loader/src/sources/ConfigSources.test.ts
+      filepath: packages/config-loader/src/schema/compile.test.ts
       containerId: config-loader
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 3
-      loc: 376
-      sloc: 320
+      complexity: 1
+      loc: 463
+      sloc: 436
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -312,8 +223,53 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3105
-    'y': 50
+    x: 2435
+    'y': 370
+  - entityRef: blueprint/packages/config-loader/collect
+    type: background-worker
+    name: collect Service
+    isTest: false
+    properties:
+      filepath: packages/config-loader/src/schema/collect.ts
+      containerId: config-loader
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 42
+      loc: 399
+      sloc: 323
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 275
+    'y': 690
+  - entityRef: blueprint/packages/config-loader/filtering-test
+    type: background-worker
+    name: filtering.test Service
+    isTest: true
+    properties:
+      filepath: packages/config-loader/src/schema/filtering.test.ts
+      containerId: config-loader
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 454
+      sloc: 424
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1275
+    'y': 370
   - entityRef: blueprint/packages/config-loader/configsources
     type: background-worker
     name: ConfigSources Service
@@ -335,21 +291,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 3180
+    x: 4230
     'y': 370
-  - entityRef: blueprint/packages/config-loader/envconfigsource-test
+  - entityRef: blueprint/packages/config-loader/remoteconfigsource-test
     type: background-worker
-    name: EnvConfigSource.test Service
+    name: RemoteConfigSource.test Service
     isTest: true
     properties:
-      filepath: packages/config-loader/src/sources/EnvConfigSource.test.ts
+      filepath: packages/config-loader/src/sources/RemoteConfigSource.test.ts
       containerId: config-loader
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 2
-      loc: 172
-      sloc: 140
+      loc: 125
+      sloc: 97
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -357,52 +313,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1200
-    'y': 690
-  - entityRef: blueprint/packages/config-loader/envconfigsource
-    type: background-worker
-    name: EnvConfigSource Service
-    isTest: false
-    properties:
-      filepath: packages/config-loader/src/sources/EnvConfigSource.ts
-      containerId: config-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 14
-      loc: 171
-      sloc: 82
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 1510
-    'y': 1010
-  - entityRef: blueprint/packages/config-loader/fileconfigsource-test
-    type: background-worker
-    name: FileConfigSource.test Service
-    isTest: true
-    properties:
-      filepath: packages/config-loader/src/sources/FileConfigSource.test.ts
-      containerId: config-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 6
-      loc: 226
-      sloc: 167
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 6385
+    x: 5190
     'y': 370
   - entityRef: blueprint/packages/config-loader/fileconfigsource
     type: background-worker
@@ -425,7 +336,7 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 4615
+    x: 2070
     'y': 690
   - entityRef: blueprint/packages/config-loader/mergedconfigsource-test
     type: background-worker
@@ -447,30 +358,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3875
+    x: 4730
     'y': 370
-  - entityRef: blueprint/packages/config-loader/mergedconfigsource
-    type: background-worker
-    name: MergedConfigSource Service
-    isTest: false
-    properties:
-      filepath: packages/config-loader/src/sources/MergedConfigSource.ts
-      containerId: config-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 8
-      loc: 119
-      sloc: 87
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3480
-    'y': 690
   - entityRef: blueprint/packages/config-loader/mutableconfigsource-test
     type: background-worker
     name: MutableConfigSource.test Service
@@ -491,65 +380,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 5840
+    x: 3960
     'y': 50
-  - entityRef: blueprint/packages/config-loader/mutableconfigsource
+  - entityRef: blueprint/packages/config-loader/envconfigsource
     type: background-worker
-    name: MutableConfigSource Service
+    name: EnvConfigSource Service
     isTest: false
     properties:
-      filepath: packages/config-loader/src/sources/MutableConfigSource.ts
-      containerId: config-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 6
-      loc: 118
-      sloc: 66
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5155
-    'y': 690
-  - entityRef: blueprint/packages/config-loader/observableconfigproxy-test
-    type: background-worker
-    name: ObservableConfigProxy.test Service
-    isTest: true
-    properties:
-      filepath: packages/config-loader/src/sources/ObservableConfigProxy.test.ts
-      containerId: config-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 171
-      sloc: 130
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4155
-    'y': 690
-  - entityRef: blueprint/packages/config-loader/observableconfigproxy
-    type: background-worker
-    name: ObservableConfigProxy Service
-    isTest: false
-    properties:
-      filepath: packages/config-loader/src/sources/ObservableConfigProxy.ts
+      filepath: packages/config-loader/src/sources/EnvConfigSource.ts
       containerId: config-loader
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 14
-      loc: 159
-      sloc: 123
+      loc: 171
+      sloc: 82
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -558,75 +403,8 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 4020
+    x: 1895
     'y': 1010
-  - entityRef: blueprint/packages/config-loader/remoteconfigsource-test
-    type: background-worker
-    name: RemoteConfigSource.test Service
-    isTest: true
-    properties:
-      filepath: packages/config-loader/src/sources/RemoteConfigSource.test.ts
-      containerId: config-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 125
-      sloc: 97
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 7400
-    'y': 370
-  - entityRef: blueprint/packages/config-loader/remoteconfigsource
-    type: background-worker
-    name: RemoteConfigSource Service
-    isTest: false
-    properties:
-      filepath: packages/config-loader/src/sources/RemoteConfigSource.ts
-      containerId: config-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 12
-      loc: 182
-      sloc: 108
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 6145
-    'y': 690
-  - entityRef: blueprint/packages/config-loader/staticconfigsource-test
-    type: background-worker
-    name: StaticConfigSource.test Service
-    isTest: true
-    properties:
-      filepath: packages/config-loader/src/sources/StaticConfigSource.test.ts
-      containerId: config-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 50
-      sloc: 30
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 6845
-    'y': 370
   - entityRef: blueprint/packages/config-loader/staticconfigsource
     type: background-worker
     name: StaticConfigSource Service
@@ -648,7 +426,73 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 5685
+    x: 3825
+    'y': 690
+  - entityRef: blueprint/packages/config-loader/fileconfigsource-test
+    type: background-worker
+    name: FileConfigSource.test Service
+    isTest: true
+    properties:
+      filepath: packages/config-loader/src/sources/FileConfigSource.test.ts
+      containerId: config-loader
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 6
+      loc: 226
+      sloc: 167
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3770
+    'y': 370
+  - entityRef: blueprint/packages/config-loader/envconfigsource-test
+    type: background-worker
+    name: EnvConfigSource.test Service
+    isTest: true
+    properties:
+      filepath: packages/config-loader/src/sources/EnvConfigSource.test.ts
+      containerId: config-loader
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 172
+      sloc: 140
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2610
+    'y': 690
+  - entityRef: blueprint/packages/config-loader/mutableconfigsource
+    type: background-worker
+    name: MutableConfigSource Service
+    isTest: false
+    properties:
+      filepath: packages/config-loader/src/sources/MutableConfigSource.ts
+      containerId: config-loader
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 6
+      loc: 118
+      sloc: 66
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3365
     'y': 690
   - entityRef: blueprint/packages/config-loader/testutils
     type: background-worker
@@ -670,21 +514,44 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 7435
+    x: 5520
     'y': 690
-  - entityRef: blueprint/packages/config-loader/apply-test
+  - entityRef: blueprint/packages/config-loader/remoteconfigsource
     type: background-worker
-    name: apply.test Service
-    isTest: true
+    name: RemoteConfigSource Service
+    isTest: false
     properties:
-      filepath: packages/config-loader/src/sources/transform/apply.test.ts
+      filepath: packages/config-loader/src/sources/RemoteConfigSource.ts
       containerId: config-loader
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 4
-      loc: 116
-      sloc: 89
+      complexity: 12
+      loc: 182
+      sloc: 108
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 4285
+    'y': 690
+  - entityRef: blueprint/packages/config-loader/observableconfigproxy-test
+    type: background-worker
+    name: ObservableConfigProxy.test Service
+    isTest: true
+    properties:
+      filepath: packages/config-loader/src/sources/ObservableConfigProxy.test.ts
+      containerId: config-loader
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 171
+      sloc: 130
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -692,8 +559,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 8585
-    'y': 50
+    x: 8550
+    'y': 690
   - entityRef: blueprint/packages/config-loader/apply
     type: background-worker
     name: apply Service
@@ -715,7 +582,7 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 8585
+    x: 6055
     'y': 370
   - entityRef: blueprint/packages/config-loader/include-test
     type: background-worker
@@ -737,7 +604,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 9045
+    x: 7055
     'y': 370
   - entityRef: blueprint/packages/config-loader/include
     type: background-worker
@@ -760,8 +627,30 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 8330
+    x: 5980
     'y': 690
+  - entityRef: blueprint/packages/config-loader/apply-test
+    type: background-worker
+    name: apply.test Service
+    isTest: true
+    properties:
+      filepath: packages/config-loader/src/sources/transform/apply.test.ts
+      containerId: config-loader
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 4
+      loc: 116
+      sloc: 89
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 6055
+    'y': 50
   - entityRef: blueprint/packages/config-loader/substitution-test
     type: background-worker
     name: substitution.test Service
@@ -782,7 +671,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 9340
+    x: 7350
     'y': 690
   - entityRef: blueprint/packages/config-loader/substitution
     type: background-worker
@@ -804,59 +693,154 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 9205
+    x: 7215
+    'y': 1010
+  - entityRef: blueprint/packages/config-loader/configsources-test
+    type: background-worker
+    name: ConfigSources.test Service
+    isTest: true
+    properties:
+      filepath: packages/config-loader/src/sources/ConfigSources.test.ts
+      containerId: config-loader
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 376
+      sloc: 320
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4730
+    'y': 50
+  - entityRef: blueprint/packages/config-loader/staticconfigsource-test
+    type: background-worker
+    name: StaticConfigSource.test Service
+    isTest: true
+    properties:
+      filepath: packages/config-loader/src/sources/StaticConfigSource.test.ts
+      containerId: config-loader
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 50
+      sloc: 30
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 6515
+    'y': 370
+  - entityRef: blueprint/packages/config-loader/mergedconfigsource
+    type: background-worker
+    name: MergedConfigSource Service
+    isTest: false
+    properties:
+      filepath: packages/config-loader/src/sources/MergedConfigSource.ts
+      containerId: config-loader
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 8
+      loc: 119
+      sloc: 87
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 8010
+    'y': 690
+  - entityRef: blueprint/packages/config-loader/observableconfigproxy
+    type: background-worker
+    name: ObservableConfigProxy Service
+    isTest: false
+    properties:
+      filepath: packages/config-loader/src/sources/ObservableConfigProxy.ts
+      containerId: config-loader
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 14
+      loc: 159
+      sloc: 123
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 8445
+    'y': 1010
+  - entityRef: blueprint/packages/config-loader/loader-test
+    type: background-worker
+    name: loader.test Service
+    isTest: true
+    properties:
+      filepath: packages/config-loader/src/loader.test.ts
+      containerId: config-loader
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 497
+      sloc: 443
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 8945
     'y': 1010
 dependencies:
-  - from: blueprint/packages/config-loader/loader-test
-    to: blueprint/packages/integration-aws-node/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/loader-test
-    to: blueprint/packages/config-loader/loader
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/loader-test
-    to: blueprint/packages/core-components/node
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/loader-test
-    to: blueprint/packages/config-loader/types
+  - from: blueprint/packages/backend-test-utils/mockservices
+    to: blueprint/packages/config-loader/observableconfigproxy
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/config-loader/loader
     to: blueprint/packages/integration-aws-node/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/backend-dynamic-feature-service/plugin-manager
-    to: blueprint/packages/config-loader/loader
+  - from: blueprint/packages/config-loader/load
+    to: blueprint/packages/integration-aws-node/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/backend-test-utils/mockservices
-    to: blueprint/packages/config-loader/observableconfigproxy
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/collect-test
+  - from: blueprint/packages/config-loader/load
     to: blueprint/packages/config-loader/types
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/config-loader/collect-test
+  - from: blueprint/packages/config-loader/load
+    to: blueprint/packages/config-loader/compile
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/load
     to: blueprint/packages/config-loader/collect
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/config-loader/collect-test
-    to: blueprint/packages/config-loader/compile
+  - from: blueprint/packages/config-loader/load
+    to: blueprint/packages/config-loader/filtering
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/config-loader/collect
+  - from: blueprint/packages/config-loader/load
     to: blueprint/packages/config-loader/types
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/config-loader/collect
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/compile-test
-    to: blueprint/packages/config-loader/compile
+  - from: blueprint/packages/config-loader/load
+    to: blueprint/packages/config-loader/utils
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/config-loader/compile
@@ -875,76 +859,60 @@ dependencies:
     to: blueprint/packages/config-loader/utils
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/config-loader/filtering-test
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/filtering-test
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/filtering-test
-    to: blueprint/packages/config-loader/filtering
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/filtering
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/filtering
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/filtering
-    to: blueprint/packages/config-loader/utils
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/packages/config-loader/load-test
     to: blueprint/packages/config-loader/load
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/config-loader/load
-    to: blueprint/packages/integration-aws-node/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/load
+  - from: blueprint/packages/config-loader/collect-test
     to: blueprint/packages/config-loader/types
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/config-loader/load
-    to: blueprint/packages/config-loader/compile
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/load
+  - from: blueprint/packages/config-loader/collect-test
     to: blueprint/packages/config-loader/collect
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/config-loader/load
-    to: blueprint/packages/config-loader/filtering
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/load
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/load
-    to: blueprint/packages/config-loader/utils
+  - from: blueprint/packages/config-loader/collect-test
+    to: blueprint/packages/config-loader/compile
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/config-loader/types
     to: blueprint/packages/integration-aws-node/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/config-loader/configsources-test
-    to: blueprint/packages/config-loader/configsources
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/configsources-test
+  - from: blueprint/packages/config-loader/filtering
     to: blueprint/packages/config-loader/types
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/config-loader/configsources-test
-    to: blueprint/packages/config-loader/mutableconfigsource
+  - from: blueprint/packages/config-loader/filtering
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/filtering
+    to: blueprint/packages/config-loader/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/compile-test
+    to: blueprint/packages/config-loader/compile
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/collect
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/collect
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/filtering-test
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/filtering-test
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/filtering-test
+    to: blueprint/packages/config-loader/filtering
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/config-loader/configsources
@@ -973,110 +941,6 @@ dependencies:
     description: Calls module / service
   - from: blueprint/packages/config-loader/configsources
     to: blueprint/packages/config-loader/observableconfigproxy
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/envconfigsource-test
-    to: blueprint/packages/config-loader/envconfigsource
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/envconfigsource-test
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/envconfigsource
-    to: blueprint/packages/integration-aws-node/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/envconfigsource
-    to: blueprint/packages/cli-common/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/envconfigsource
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/envconfigsource
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/fileconfigsource-test
-    to: blueprint/packages/config-loader/fileconfigsource
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/fileconfigsource-test
-    to: blueprint/packages/config-loader/testutils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/fileconfigsource
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/fileconfigsource
-    to: blueprint/packages/cli-common/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/fileconfigsource
-    to: blueprint/packages/config-loader/utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/mergedconfigsource-test
-    to: blueprint/packages/config-loader/mergedconfigsource
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/mergedconfigsource-test
-    to: blueprint/packages/config-loader/mutableconfigsource
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/mergedconfigsource-test
-    to: blueprint/packages/config-loader/testutils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/mergedconfigsource-test
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/mergedconfigsource
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/mutableconfigsource-test
-    to: blueprint/packages/config-loader/configsources
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/mutableconfigsource-test
-    to: blueprint/packages/config-loader/mutableconfigsource
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/mutableconfigsource-test
-    to: blueprint/packages/config-loader/testutils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/mutableconfigsource
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/mutableconfigsource
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/mutableconfigsource
-    to: blueprint/packages/config-loader/utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/observableconfigproxy-test
-    to: blueprint/packages/integration-aws-node/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/observableconfigproxy-test
-    to: blueprint/packages/config-loader/observableconfigproxy
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/observableconfigproxy
-    to: blueprint/packages/integration-aws-node/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/observableconfigproxy
-    to: blueprint/packages/config-loader/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/config-loader/remoteconfigsource-test
@@ -1091,32 +955,64 @@ dependencies:
     to: blueprint/packages/config-loader/testutils
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/config-loader/remoteconfigsource
+  - from: blueprint/packages/config-loader/fileconfigsource
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/fileconfigsource
     to: blueprint/packages/cli-common/errors
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/config-loader/remoteconfigsource
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/remoteconfigsource
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/remoteconfigsource
+  - from: blueprint/packages/config-loader/fileconfigsource
     to: blueprint/packages/config-loader/utils
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/config-loader/staticconfigsource-test
+  - from: blueprint/packages/config-loader/mergedconfigsource-test
+    to: blueprint/packages/config-loader/mergedconfigsource
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/mergedconfigsource-test
+    to: blueprint/packages/config-loader/mutableconfigsource
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/mergedconfigsource-test
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/mergedconfigsource-test
     to: blueprint/packages/config-loader/types
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/config-loader/staticconfigsource-test
-    to: blueprint/packages/config-loader/staticconfigsource
+  - from: blueprint/packages/config-loader/mutableconfigsource-test
+    to: blueprint/packages/config-loader/configsources
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/config-loader/staticconfigsource-test
+  - from: blueprint/packages/config-loader/mutableconfigsource-test
+    to: blueprint/packages/config-loader/mutableconfigsource
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/mutableconfigsource-test
     to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/envconfigsource
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/envconfigsource
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/envconfigsource
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/envconfigsource
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/utils
+    to: blueprint/packages/config-loader/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/config-loader/staticconfigsource
@@ -1131,8 +1027,32 @@ dependencies:
     to: blueprint/packages/integration-aws-node/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/config-loader/utils
+  - from: blueprint/packages/config-loader/fileconfigsource-test
+    to: blueprint/packages/config-loader/fileconfigsource
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/fileconfigsource-test
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/envconfigsource-test
+    to: blueprint/packages/config-loader/envconfigsource
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/envconfigsource-test
     to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/mutableconfigsource
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/mutableconfigsource
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/mutableconfigsource
+    to: blueprint/packages/config-loader/utils
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/config-loader/testutils
@@ -1143,8 +1063,28 @@ dependencies:
     to: blueprint/packages/config-loader/types
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/config-loader/apply-test
-    to: blueprint/packages/config-loader/apply
+  - from: blueprint/packages/config-loader/remoteconfigsource
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/remoteconfigsource
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/remoteconfigsource
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/remoteconfigsource
+    to: blueprint/packages/config-loader/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/observableconfigproxy-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/observableconfigproxy-test
+    to: blueprint/packages/config-loader/observableconfigproxy
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/config-loader/apply
@@ -1199,23 +1139,143 @@ dependencies:
     to: blueprint/packages/config-loader/types
     type: direct-call
     description: Calls module / service
+  - from: blueprint/packages/config-loader/apply-test
+    to: blueprint/packages/config-loader/apply
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/packages/config-loader/substitution-test
     to: blueprint/packages/config-loader/substitution
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/config-loader/substitution
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/substitution
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config-loader/substitution
-    to: blueprint/packages/config-loader/types
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/packages/config-loader/utils
     to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/substitution
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/substitution
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/substitution
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/configsources-test
+    to: blueprint/packages/config-loader/configsources
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/configsources-test
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/configsources-test
+    to: blueprint/packages/config-loader/mutableconfigsource
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/staticconfigsource-test
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/staticconfigsource-test
+    to: blueprint/packages/config-loader/staticconfigsource
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/staticconfigsource-test
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/mergedconfigsource
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/observableconfigproxy
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/observableconfigproxy
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/loader-test
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/loader-test
+    to: blueprint/packages/config-loader/loader
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/loader-test
+    to: blueprint/packages/core-components/node
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/config-loader/loader-test
+    to: blueprint/packages/config-loader/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/migrate-test
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/bump-test
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-node/ismonorepo-test
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-node/packagegraph-test
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-node/packagemanager-test
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-node/yarnplugin-test
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-new/writetemplatecontents-test
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/defaulttemplate-stories
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/customizabletemplate-stories
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/customscaffolderextensions
+    to: blueprint/packages/config-loader/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/entitypage-test
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/role-test
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/start-test
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-compat-api/convertlegacyapp-test
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/buildapireports-test
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/create-app/createapp-test
+    to: blueprint/packages/config-loader/testutils
     type: direct-call
     description: Calls module / service

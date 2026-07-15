@@ -3,50 +3,6 @@ name: Permission-backend Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/plugins/permission-backend/alpha
-    type: background-worker
-    name: alpha Service
-    isTest: false
-    properties:
-      filepath: plugins/permission-backend/src/alpha.ts
-      containerId: permission-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 22
-      sloc: 3
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
-  - entityRef: blueprint/plugins/permission-backend/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/permission-backend/src/service/index.ts
-      containerId: permission-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 19
-      sloc: 2
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
   - entityRef: blueprint/plugins/permission-backend/plugin
     type: background-worker
     name: plugin Service
@@ -60,6 +16,28 @@ nodes:
       complexity: 3
       loc: 95
       sloc: 67
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/permission-backend/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/permission-backend/src/alpha.ts
+      containerId: permission-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 22
+      sloc: 3
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -89,21 +67,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 600
     'y': 50
-  - entityRef: blueprint/plugins/permission-backend/permissionintegrationclient-test
-    type: rest-api
-    name: PermissionIntegrationClient.test REST Endpoint
-    isTest: true
+  - entityRef: blueprint/plugins/permission-backend/index
+    type: background-worker
+    name: index Service
+    isTest: false
     properties:
-      filepath: plugins/permission-backend/src/service/PermissionIntegrationClient.test.ts
+      filepath: plugins/permission-backend/src/service/index.ts
       containerId: permission-backend
-      technology: REST Controller / Router
-      classification: api-marker
+      technology: TypeScript Domain Service
+      classification: default
     forensics:
-      complexity: 2
-      loc: 433
-      sloc: 376
+      complexity: 1
+      loc: 19
+      sloc: 2
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -111,8 +89,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 925
-    'y': 370
+    x: 1060
+    'y': 50
   - entityRef: blueprint/plugins/permission-backend/permissionintegrationclient
     type: background-worker
     name: PermissionIntegrationClient Service
@@ -133,8 +111,31 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1345
+    x: 1655
     'y': 690
+  - entityRef: blueprint/plugins/permission-backend/router
+    type: rest-api
+    name: router REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/permission-backend/src/service/router.ts
+      containerId: permission-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 14
+      loc: 277
+      sloc: 218
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 370
   - entityRef: blueprint/plugins/permission-backend/router-test
     type: rest-api
     name: router.test REST Endpoint
@@ -157,34 +158,29 @@ nodes:
       sinceDays: 500
     x: 1520
     'y': 50
-  - entityRef: blueprint/plugins/permission-backend/router
+  - entityRef: blueprint/plugins/permission-backend/permissionintegrationclient-test
     type: rest-api
-    name: router REST Endpoint
-    isTest: false
+    name: PermissionIntegrationClient.test REST Endpoint
+    isTest: true
     properties:
-      filepath: plugins/permission-backend/src/service/router.ts
+      filepath: plugins/permission-backend/src/service/PermissionIntegrationClient.test.ts
       containerId: permission-backend
       technology: REST Controller / Router
       classification: api-marker
     forensics:
-      complexity: 14
-      loc: 277
-      sloc: 218
+      complexity: 2
+      loc: 433
+      sloc: 376
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
-      classifications:
-        - knowledge-silo
+      classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1655
+    x: 1925
     'y': 370
 dependencies:
-  - from: blueprint/plugins/permission-backend/alpha
-    to: blueprint/plugins/permission-backend/plugin
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/permission-backend/plugin
     to: blueprint/plugins/permission-backend/alpha
     type: direct-call
@@ -193,12 +189,20 @@ dependencies:
     to: blueprint/plugins/events-node/service
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/permission-backend/permissionintegrationclient-test
-    to: blueprint/plugins/permission-backend/permissionintegrationclient
+  - from: blueprint/plugins/permission-backend/alpha
+    to: blueprint/plugins/permission-backend/plugin
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/permission-backend/permissionintegrationclient
-    to: blueprint/plugins/search-backend-node/errors
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-backend/router
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-backend/router
+    to: blueprint/plugins/permission-backend/permissionintegrationclient
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/permission-backend/router-test
@@ -210,14 +214,10 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/permission-backend/router-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/permission-backend/router
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-backend/router
+  - from: blueprint/plugins/permission-backend/permissionintegrationclient-test
     to: blueprint/plugins/permission-backend/permissionintegrationclient
     type: direct-call
     description: Calls module / service

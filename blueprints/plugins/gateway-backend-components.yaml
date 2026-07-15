@@ -3,19 +3,19 @@ name: Gateway-backend Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/plugins/gateway-backend/index
-    type: background-worker
-    name: index Service
+  - entityRef: blueprint/plugins/gateway-backend/router
+    type: rest-api
+    name: router REST Endpoint
     isTest: false
     properties:
-      filepath: plugins/gateway-backend/src/index.ts
+      filepath: plugins/gateway-backend/src/router.ts
       containerId: gateway-backend
-      technology: TypeScript Domain Service
-      classification: default
+      technology: REST Controller / Router
+      classification: api-marker
     forensics:
-      complexity: 1
-      loc: 24
-      sloc: 1
+      complexity: 7
+      loc: 97
+      sloc: 72
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -24,6 +24,50 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 140
+    'y': 370
+  - entityRef: blueprint/plugins/gateway-backend/plugin
+    type: rest-api
+    name: plugin REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/gateway-backend/src/plugin.ts
+      containerId: gateway-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 51
+      sloc: 29
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/gateway-backend/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/gateway-backend/src/setupTests.ts
+      containerId: gateway-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 17
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
     'y': 50
   - entityRef: blueprint/plugins/gateway-backend/plugin-test
     type: rest-api
@@ -45,64 +89,20 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
-    'y': 50
-  - entityRef: blueprint/plugins/gateway-backend/plugin
-    type: rest-api
-    name: plugin REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/gateway-backend/src/plugin.ts
-      containerId: gateway-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 51
-      sloc: 29
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
     x: 1060
     'y': 50
-  - entityRef: blueprint/plugins/gateway-backend/router
-    type: rest-api
-    name: router REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/gateway-backend/src/router.ts
-      containerId: gateway-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 7
-      loc: 97
-      sloc: 72
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
-    'y': 370
-  - entityRef: blueprint/plugins/gateway-backend/setuptests
+  - entityRef: blueprint/plugins/gateway-backend/index
     type: background-worker
-    name: setupTests Service
-    isTest: true
+    name: index Service
+    isTest: false
     properties:
-      filepath: plugins/gateway-backend/src/setupTests.ts
+      filepath: plugins/gateway-backend/src/index.ts
       containerId: gateway-backend
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 17
+      loc: 24
       sloc: 1
       churn: 1
       authorCount: 1
@@ -114,15 +114,15 @@ nodes:
     x: 1520
     'y': 50
 dependencies:
-  - from: blueprint/plugins/gateway-backend/plugin
-    to: blueprint/plugins/gateway-backend/router
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/gateway-backend/router
-    to: blueprint/plugins/catalog-react/api
+    to: blueprint/plugins/techdocs-react/api
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/gateway-backend/router
     to: blueprint/plugins/catalog-backend-module-gitea/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/gateway-backend/plugin
+    to: blueprint/plugins/gateway-backend/router
     type: direct-call
     description: Calls module / service

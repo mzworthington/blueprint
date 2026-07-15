@@ -4,18 +4,18 @@ version: 1.0.0
 level: component
 nodes:
   - entityRef: blueprint/plugins/catalog-unprocessed-entities/index
-    type: rest-api
-    name: index REST Endpoint
+    type: background-worker
+    name: index Service
     isTest: false
     properties:
-      filepath: plugins/catalog-unprocessed-entities/src/api/index.ts
+      filepath: plugins/catalog-unprocessed-entities/src/alpha/index.ts
       containerId: catalog-unprocessed-entities
-      technology: REST Controller / Router
-      classification: api-marker
+      technology: TypeScript Domain Service
+      classification: default
     forensics:
       complexity: 1
-      loc: 58
-      sloc: 15
+      loc: 18
+      sloc: 1
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -25,6 +25,50 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 50
+  - entityRef: blueprint/plugins/catalog-unprocessed-entities/routes
+    type: background-worker
+    name: routes Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-unprocessed-entities/src/routes.ts
+      containerId: catalog-unprocessed-entities
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 21
+      sloc: 4
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 690
+  - entityRef: blueprint/plugins/catalog-unprocessed-entities/plugin
+    type: background-worker
+    name: plugin Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-unprocessed-entities/src/alpha/plugin.tsx
+      containerId: catalog-unprocessed-entities
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 97
+      sloc: 67
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 370
   - entityRef: blueprint/plugins/catalog-unprocessed-entities/alpha
     type: background-worker
     name: alpha Service
@@ -47,72 +91,6 @@ nodes:
       sinceDays: 500
     x: 600
     'y': 50
-  - entityRef: blueprint/plugins/catalog-unprocessed-entities/plugin-test
-    type: background-worker
-    name: plugin.test Service
-    isTest: true
-    properties:
-      filepath: plugins/catalog-unprocessed-entities/src/plugin.test.ts
-      containerId: catalog-unprocessed-entities
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 50
-      sloc: 29
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
-    'y': 50
-  - entityRef: blueprint/plugins/catalog-unprocessed-entities/plugin
-    type: background-worker
-    name: plugin Service
-    isTest: false
-    properties:
-      filepath: plugins/catalog-unprocessed-entities/src/alpha/plugin.tsx
-      containerId: catalog-unprocessed-entities
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 97
-      sloc: 67
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 180
-    'y': 370
-  - entityRef: blueprint/plugins/catalog-unprocessed-entities/routes
-    type: background-worker
-    name: routes Service
-    isTest: false
-    properties:
-      filepath: plugins/catalog-unprocessed-entities/src/routes.ts
-      containerId: catalog-unprocessed-entities
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 21
-      sloc: 4
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 180
-    'y': 690
   - entityRef: blueprint/plugins/catalog-unprocessed-entities/setuptests
     type: background-worker
     name: setupTests Service
@@ -126,6 +104,28 @@ nodes:
       complexity: 1
       loc: 17
       sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-unprocessed-entities/plugin-test
+    type: background-worker
+    name: plugin.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-unprocessed-entities/src/plugin.test.ts
+      containerId: catalog-unprocessed-entities
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 50
+      sloc: 29
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -155,52 +155,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1790
+    x: 1695
     'y': 1010
-  - entityRef: blueprint/plugins/catalog-unprocessed-entities/deleteentityconfirmationdialog
-    type: gateway-api
-    name: DeleteEntityConfirmationDialog UI Component
-    isTest: false
-    properties:
-      filepath: plugins/catalog-unprocessed-entities/src/components/DeleteEntityConfirmationDialog.tsx
-      containerId: catalog-unprocessed-entities
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 2
-      loc: 66
-      sloc: 45
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 910
-    'y': 690
-  - entityRef: blueprint/plugins/catalog-unprocessed-entities/entitydialog
-    type: gateway-api
-    name: EntityDialog UI Component
-    isTest: false
-    properties:
-      filepath: plugins/catalog-unprocessed-entities/src/components/EntityDialog.tsx
-      containerId: catalog-unprocessed-entities
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 90
-      sloc: 66
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1410
-    'y': 690
   - entityRef: blueprint/plugins/catalog-unprocessed-entities/failedentities
     type: gateway-api
     name: FailedEntities UI Component
@@ -222,29 +178,7 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1410
-    'y': 370
-  - entityRef: blueprint/plugins/catalog-unprocessed-entities/pendingentities
-    type: gateway-api
-    name: PendingEntities UI Component
-    isTest: false
-    properties:
-      filepath: plugins/catalog-unprocessed-entities/src/components/PendingEntities.tsx
-      containerId: catalog-unprocessed-entities
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 5
-      loc: 112
-      sloc: 89
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2020
+    x: 1600
     'y': 370
   - entityRef: blueprint/plugins/catalog-unprocessed-entities/unprocessedentities
     type: gateway-api
@@ -266,11 +200,85 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1980
+    x: 2060
     'y': 50
+  - entityRef: blueprint/plugins/catalog-unprocessed-entities/pendingentities
+    type: gateway-api
+    name: PendingEntities UI Component
+    isTest: false
+    properties:
+      filepath: plugins/catalog-unprocessed-entities/src/components/PendingEntities.tsx
+      containerId: catalog-unprocessed-entities
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 5
+      loc: 112
+      sloc: 89
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2060
+    'y': 370
+  - entityRef: blueprint/plugins/catalog-unprocessed-entities/entitydialog
+    type: gateway-api
+    name: EntityDialog UI Component
+    isTest: false
+    properties:
+      filepath: plugins/catalog-unprocessed-entities/src/components/EntityDialog.tsx
+      containerId: catalog-unprocessed-entities
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 90
+      sloc: 66
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2195
+    'y': 690
+  - entityRef: blueprint/plugins/catalog-unprocessed-entities/deleteentityconfirmationdialog
+    type: gateway-api
+    name: DeleteEntityConfirmationDialog UI Component
+    isTest: false
+    properties:
+      filepath: plugins/catalog-unprocessed-entities/src/components/DeleteEntityConfirmationDialog.tsx
+      containerId: catalog-unprocessed-entities
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 2
+      loc: 66
+      sloc: 45
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1560
+    'y': 690
 dependencies:
   - from: blueprint/plugins/catalog-unprocessed-entities/index
     to: blueprint/plugins/catalog-unprocessed-entities/plugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-unprocessed-entities/plugin
+    to: blueprint/plugins/catalog-unprocessed-entities/routes
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-unprocessed-entities/plugin
+    to: blueprint/plugins/techdocs-react/api
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/catalog-unprocessed-entities/plugin-test
@@ -281,30 +289,6 @@ dependencies:
     to: blueprint/plugins/catalog-unprocessed-entities/plugin
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/catalog-unprocessed-entities/plugin
-    to: blueprint/plugins/catalog-unprocessed-entities/routes
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-unprocessed-entities/plugin
-    to: blueprint/plugins/catalog-react/api
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-unprocessed-entities/plugin
-    to: blueprint/plugins/catalog-react/api
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-unprocessed-entities/plugin
-    to: blueprint/plugins/catalog-unprocessed-entities/routes
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-unprocessed-entities/entitydialog
-    to: blueprint/plugins/home/styles
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-unprocessed-entities/entitydialog
-    to: blueprint/plugins/catalog-unprocessed-entities/types
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/catalog-unprocessed-entities/failedentities
     to: blueprint/plugins/home/styles
     type: direct-call
@@ -318,7 +302,7 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/catalog-unprocessed-entities/failedentities
-    to: blueprint/plugins/catalog-react/api
+    to: blueprint/plugins/techdocs-react/api
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/catalog-unprocessed-entities/failedentities
@@ -327,22 +311,6 @@ dependencies:
     description: Calls module / service
   - from: blueprint/plugins/catalog-unprocessed-entities/failedentities
     to: blueprint/plugins/catalog-unprocessed-entities/deleteentityconfirmationdialog
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-unprocessed-entities/pendingentities
-    to: blueprint/plugins/home/styles
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-unprocessed-entities/pendingentities
-    to: blueprint/plugins/catalog-unprocessed-entities/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-unprocessed-entities/pendingentities
-    to: blueprint/plugins/catalog-unprocessed-entities/entitydialog
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-unprocessed-entities/pendingentities
-    to: blueprint/plugins/catalog-react/api
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/catalog-unprocessed-entities/unprocessedentities
@@ -355,5 +323,37 @@ dependencies:
     description: Calls module / service
   - from: blueprint/plugins/catalog-unprocessed-entities/unprocessedentities
     to: blueprint/plugins/catalog-unprocessed-entities/pendingentities
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-unprocessed-entities/pendingentities
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-unprocessed-entities/pendingentities
+    to: blueprint/plugins/catalog-unprocessed-entities/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-unprocessed-entities/pendingentities
+    to: blueprint/plugins/catalog-unprocessed-entities/entitydialog
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-unprocessed-entities/pendingentities
+    to: blueprint/plugins/techdocs-react/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-unprocessed-entities/entitydialog
+    to: blueprint/plugins/home/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-unprocessed-entities/entitydialog
+    to: blueprint/plugins/catalog-unprocessed-entities/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-unprocessed-entities/plugin
+    to: blueprint/plugins/techdocs-react/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-unprocessed-entities/plugin
+    to: blueprint/plugins/catalog-unprocessed-entities/routes
     type: direct-call
     description: Calls module / service

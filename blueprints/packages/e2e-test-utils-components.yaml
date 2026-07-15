@@ -3,72 +3,6 @@ name: E2e-test-utils Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/e2e-test-utils/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/e2e-test-utils/src/playwright/index.ts
-      containerId: e2e-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 19
-      sloc: 2
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
-  - entityRef: blueprint/packages/e2e-test-utils/playwright
-    type: background-worker
-    name: playwright Service
-    isTest: false
-    properties:
-      filepath: packages/e2e-test-utils/src/playwright.ts
-      containerId: e2e-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 18
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
-  - entityRef: blueprint/packages/e2e-test-utils/setuptests
-    type: background-worker
-    name: setupTests Service
-    isTest: true
-    properties:
-      filepath: packages/e2e-test-utils/src/setupTests.ts
-      containerId: e2e-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 17
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
-    'y': 50
   - entityRef: blueprint/packages/e2e-test-utils/failonbrowsererrors
     type: background-worker
     name: failOnBrowserErrors Service
@@ -89,7 +23,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1520
+    x: 140
     'y': 50
   - entityRef: blueprint/packages/e2e-test-utils/generateprojects
     type: background-worker
@@ -111,22 +45,88 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/e2e-test-utils/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/e2e-test-utils/src/index.ts
+      containerId: e2e-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 17
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/packages/e2e-test-utils/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: packages/e2e-test-utils/src/setupTests.ts
+      containerId: e2e-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 17
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/packages/e2e-test-utils/playwright
+    type: background-worker
+    name: playwright Service
+    isTest: false
+    properties:
+      filepath: packages/e2e-test-utils/src/playwright.ts
+      containerId: e2e-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 18
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
     x: 1980
     'y': 50
 dependencies:
-  - from: blueprint/packages/create-app/playwright-config
-    to: blueprint/packages/e2e-test-utils/playwright
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/create-app/playwright-config
-    to: blueprint/packages/e2e-test-utils/playwright
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/packages/e2e-test-utils/failonbrowsererrors
     to: blueprint/packages/cli-module-test-jest/test
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/e2e-test-utils/generateprojects
     to: blueprint/packages/cli-module-test-jest/test
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/create-app/playwright-config
+    to: blueprint/packages/e2e-test-utils/playwright
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/create-app/playwright-config
+    to: blueprint/packages/e2e-test-utils/playwright
     type: direct-call
     description: Calls module / service

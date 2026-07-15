@@ -69,73 +69,6 @@ nodes:
       sinceDays: 500
     x: 1060
     'y': 50
-  - entityRef: blueprint/plugins/signals-backend/router-test
-    type: rest-api
-    name: router.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/signals-backend/src/service/router.test.ts
-      containerId: signals-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 57
-      sloc: 34
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1520
-    'y': 50
-  - entityRef: blueprint/plugins/signals-backend/router
-    type: rest-api
-    name: router REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/signals-backend/src/service/router.ts
-      containerId: signals-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 14
-      loc: 152
-      sloc: 118
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
-    'y': 370
-  - entityRef: blueprint/plugins/signals-backend/signalmanager-test
-    type: background-worker
-    name: SignalManager.test Service
-    isTest: true
-    properties:
-      filepath: plugins/signals-backend/src/service/SignalManager.test.ts
-      containerId: signals-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 189
-      sloc: 140
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1520
-    'y': 370
   - entityRef: blueprint/plugins/signals-backend/signalmanager
     type: background-worker
     name: SignalManager Service
@@ -159,32 +92,99 @@ nodes:
       sinceDays: 500
     x: 1290
     'y': 690
+  - entityRef: blueprint/plugins/signals-backend/router
+    type: rest-api
+    name: router REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/signals-backend/src/service/router.ts
+      containerId: signals-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 14
+      loc: 152
+      sloc: 118
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 370
+  - entityRef: blueprint/plugins/signals-backend/router-test
+    type: rest-api
+    name: router.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/signals-backend/src/service/router.test.ts
+      containerId: signals-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 57
+      sloc: 34
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/signals-backend/signalmanager-test
+    type: background-worker
+    name: SignalManager.test Service
+    isTest: true
+    properties:
+      filepath: plugins/signals-backend/src/service/SignalManager.test.ts
+      containerId: signals-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 189
+      sloc: 140
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
+    'y': 370
 dependencies:
   - from: blueprint/plugins/signals-backend/plugin
     to: blueprint/plugins/signals-backend/router
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals-backend/signalmanager
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals-backend/signalmanager
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals-backend/router
+    to: blueprint/plugins/signals-backend/signalmanager
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/signals-backend/router
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/signals-backend/router-test
     to: blueprint/plugins/signals-backend/router
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/signals-backend/router
-    to: blueprint/plugins/signals-backend/signalmanager
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/signals-backend/router
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/signals-backend/signalmanager-test
     to: blueprint/plugins/signals-backend/signalmanager
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/signals-backend/signalmanager
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/signals-backend/signalmanager
-    to: blueprint/plugins/api-docs/config
     type: direct-call
     description: Calls module / service

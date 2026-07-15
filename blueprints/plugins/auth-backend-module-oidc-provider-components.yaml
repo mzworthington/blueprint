@@ -47,73 +47,6 @@ nodes:
       sinceDays: 500
     x: 600
     'y': 50
-  - entityRef: blueprint/plugins/auth-backend-module-oidc-provider/authenticator-test
-    type: rest-api
-    name: authenticator.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/auth-backend-module-oidc-provider/src/authenticator.test.ts
-      containerId: auth-backend-module-oidc-provider
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 4
-      loc: 639
-      sloc: 541
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 560
-    'y': 370
-  - entityRef: blueprint/plugins/auth-backend-module-oidc-provider/authenticator
-    type: background-worker
-    name: authenticator Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-oidc-provider/src/authenticator.ts
-      containerId: auth-backend-module-oidc-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 14
-      loc: 239
-      sloc: 187
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 690
-  - entityRef: blueprint/plugins/auth-backend-module-oidc-provider/module-test
-    type: background-worker
-    name: module.test Service
-    isTest: true
-    properties:
-      filepath: plugins/auth-backend-module-oidc-provider/src/module.test.ts
-      containerId: auth-backend-module-oidc-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 217
-      sloc: 183
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
-    'y': 50
   - entityRef: blueprint/plugins/auth-backend-module-oidc-provider/module
     type: background-worker
     name: module Service
@@ -136,6 +69,50 @@ nodes:
       sinceDays: 500
     x: 1060
     'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-oidc-provider/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-oidc-provider/src/module.test.ts
+      containerId: auth-backend-module-oidc-provider
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 217
+      sloc: 183
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-oidc-provider/authenticator-test
+    type: rest-api
+    name: authenticator.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-oidc-provider/src/authenticator.test.ts
+      containerId: auth-backend-module-oidc-provider
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 4
+      loc: 639
+      sloc: 541
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1560
+    'y': 370
   - entityRef: blueprint/plugins/auth-backend-module-oidc-provider/resolvers
     type: background-worker
     name: resolvers Service
@@ -156,31 +133,34 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1100
+    x: 1020
+    'y': 690
+  - entityRef: blueprint/plugins/auth-backend-module-oidc-provider/authenticator
+    type: background-worker
+    name: authenticator Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-oidc-provider/src/authenticator.ts
+      containerId: auth-backend-module-oidc-provider
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 14
+      loc: 239
+      sloc: 187
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
     'y': 690
 dependencies:
   - from: blueprint/plugins/auth-backend-module-oidc-provider/config-d
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-oidc-provider/authenticator-test
-    to: blueprint/plugins/auth-backend-module-oidc-provider/authenticator
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-oidc-provider/authenticator-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-oidc-provider/authenticator
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-oidc-provider/authenticator
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-oidc-provider/module-test
-    to: blueprint/plugins/auth-backend-module-oidc-provider/module
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/auth-backend-module-oidc-provider/module
@@ -189,5 +169,25 @@ dependencies:
     description: Calls module / service
   - from: blueprint/plugins/auth-backend-module-oidc-provider/module
     to: blueprint/plugins/auth-backend-module-oidc-provider/resolvers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-oidc-provider/module-test
+    to: blueprint/plugins/auth-backend-module-oidc-provider/module
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-oidc-provider/authenticator-test
+    to: blueprint/plugins/auth-backend-module-oidc-provider/authenticator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-oidc-provider/authenticator-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-oidc-provider/authenticator
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-oidc-provider/authenticator
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service

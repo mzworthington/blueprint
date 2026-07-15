@@ -3,19 +3,19 @@ name: Search-backend-node Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/plugins/search-backend-node/alpha
+  - entityRef: blueprint/plugins/search-backend-node/scheduler-test
     type: background-worker
-    name: alpha Service
-    isTest: false
+    name: Scheduler.test Service
+    isTest: true
     properties:
-      filepath: plugins/search-backend-node/src/alpha.ts
+      filepath: plugins/search-backend-node/src/Scheduler.test.ts
       containerId: search-backend-node
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 3
-      loc: 180
-      sloc: 99
+      loc: 244
+      sloc: 180
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -25,41 +25,19 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 50
-  - entityRef: blueprint/plugins/search-backend-node/errors
+  - entityRef: blueprint/plugins/search-backend-node/testpipeline
     type: background-worker
-    name: errors Service
+    name: TestPipeline Service
     isTest: false
     properties:
-      filepath: plugins/search-backend-node/src/errors.ts
+      filepath: plugins/search-backend-node/src/test-utils/TestPipeline.ts
       containerId: search-backend-node
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 2
-      loc: 38
-      sloc: 10
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3725
-    'y': 690
-  - entityRef: blueprint/plugins/search-backend-node/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/search-backend-node/src/test-utils/index.ts
-      containerId: search-backend-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 19
-      sloc: 2
+      complexity: 9
+      loc: 218
+      sloc: 101
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -68,6 +46,28 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend-node/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-node/src/collators/index.ts
+      containerId: search-backend-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 20
+      sloc: 2
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
     'y': 370
   - entityRef: blueprint/plugins/search-backend-node/indexbuilder-test
     type: background-worker
@@ -89,52 +89,30 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
-    'y': 50
-  - entityRef: blueprint/plugins/search-backend-node/indexbuilder
-    type: background-worker
-    name: IndexBuilder Service
-    isTest: false
-    properties:
-      filepath: plugins/search-backend-node/src/IndexBuilder.ts
-      containerId: search-backend-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 6
-      loc: 169
-      sloc: 111
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1520
-    'y': 370
-  - entityRef: blueprint/plugins/search-backend-node/scheduler-test
-    type: background-worker
-    name: Scheduler.test Service
-    isTest: true
-    properties:
-      filepath: plugins/search-backend-node/src/Scheduler.test.ts
-      containerId: search-backend-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 244
-      sloc: 180
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
     x: 1060
     'y': 50
+  - entityRef: blueprint/plugins/search-backend-node/errors
+    type: background-worker
+    name: errors Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-node/src/errors.ts
+      containerId: search-backend-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 38
+      sloc: 10
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4145
+    'y': 690
   - entityRef: blueprint/plugins/search-backend-node/scheduler
     type: background-worker
     name: Scheduler Service
@@ -155,8 +133,30 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1480
+    x: 980
     'y': 690
+  - entityRef: blueprint/plugins/search-backend-node/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-node/src/alpha.ts
+      containerId: search-backend-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 180
+      sloc: 99
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
+    'y': 50
   - entityRef: blueprint/plugins/search-backend-node/setuptests
     type: background-worker
     name: setupTests Service
@@ -177,7 +177,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1520
+    x: 1980
     'y': 50
   - entityRef: blueprint/plugins/search-backend-node/types
     type: background-worker
@@ -199,52 +199,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2210
+    x: 1440
     'y': 690
-  - entityRef: blueprint/plugins/search-backend-node/newlinedelimitedjsoncollatorfactory-test
-    type: background-worker
-    name: NewlineDelimitedJsonCollatorFactory.test Service
-    isTest: true
-    properties:
-      filepath: plugins/search-backend-node/src/collators/NewlineDelimitedJsonCollatorFactory.test.ts
-      containerId: search-backend-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 158
-      sloc: 125
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1980
-    'y': 50
-  - entityRef: blueprint/plugins/search-backend-node/newlinedelimitedjsoncollatorfactory
-    type: background-worker
-    name: NewlineDelimitedJsonCollatorFactory Service
-    isTest: false
-    properties:
-      filepath: plugins/search-backend-node/src/collators/NewlineDelimitedJsonCollatorFactory.ts
-      containerId: search-backend-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 152
-      sloc: 76
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1980
-    'y': 370
   - entityRef: blueprint/plugins/search-backend-node/lunrsearchengine-test
     type: background-worker
     name: LunrSearchEngine.test Service
@@ -288,29 +244,7 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 2710
-    'y': 370
-  - entityRef: blueprint/plugins/search-backend-node/lunrsearchengineindexer-test
-    type: background-worker
-    name: LunrSearchEngineIndexer.test Service
-    isTest: true
-    properties:
-      filepath: plugins/search-backend-node/src/engines/LunrSearchEngineIndexer.test.ts
-      containerId: search-backend-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 137
-      sloc: 101
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3170
+    x: 2575
     'y': 370
   - entityRef: blueprint/plugins/search-backend-node/lunrsearchengineindexer
     type: background-worker
@@ -332,21 +266,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2725
+    x: 2670
     'y': 690
-  - entityRef: blueprint/plugins/search-backend-node/batchsearchengineindexer-test
+  - entityRef: blueprint/plugins/search-backend-node/lunrsearchengineindexer-test
     type: background-worker
-    name: BatchSearchEngineIndexer.test Service
+    name: LunrSearchEngineIndexer.test Service
     isTest: true
     properties:
-      filepath: plugins/search-backend-node/src/indexing/BatchSearchEngineIndexer.test.ts
+      filepath: plugins/search-backend-node/src/engines/LunrSearchEngineIndexer.test.ts
       containerId: search-backend-node
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 157
-      sloc: 106
+      loc: 137
+      sloc: 101
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -354,29 +288,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3630
-    'y': 50
-  - entityRef: blueprint/plugins/search-backend-node/batchsearchengineindexer
-    type: background-worker
-    name: BatchSearchEngineIndexer Service
-    isTest: false
-    properties:
-      filepath: plugins/search-backend-node/src/indexing/BatchSearchEngineIndexer.ts
-      containerId: search-backend-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 6
-      loc: 115
-      sloc: 55
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3630
+    x: 3035
     'y': 370
   - entityRef: blueprint/plugins/search-backend-node/decoratorbase-test
     type: background-worker
@@ -398,8 +310,30 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4090
+    x: 4415
     'y': 50
+  - entityRef: blueprint/plugins/search-backend-node/batchsearchengineindexer
+    type: background-worker
+    name: BatchSearchEngineIndexer Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-node/src/indexing/BatchSearchEngineIndexer.ts
+      containerId: search-backend-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 6
+      loc: 115
+      sloc: 55
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3955
+    'y': 370
   - entityRef: blueprint/plugins/search-backend-node/decoratorbase
     type: background-worker
     name: DecoratorBase Service
@@ -420,21 +354,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4090
+    x: 4415
     'y': 370
-  - entityRef: blueprint/plugins/search-backend-node/testpipeline
+  - entityRef: blueprint/plugins/search-backend-node/batchsearchengineindexer-test
     type: background-worker
-    name: TestPipeline Service
-    isTest: false
+    name: BatchSearchEngineIndexer.test Service
+    isTest: true
     properties:
-      filepath: plugins/search-backend-node/src/test-utils/TestPipeline.ts
+      filepath: plugins/search-backend-node/src/indexing/BatchSearchEngineIndexer.test.ts
       containerId: search-backend-node
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 9
-      loc: 218
-      sloc: 101
+      complexity: 1
+      loc: 157
+      sloc: 106
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -442,99 +376,77 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4550
+    x: 3955
     'y': 50
+  - entityRef: blueprint/plugins/search-backend-node/indexbuilder
+    type: background-worker
+    name: IndexBuilder Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-node/src/IndexBuilder.ts
+      containerId: search-backend-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 6
+      loc: 169
+      sloc: 111
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1615
+    'y': 370
+  - entityRef: blueprint/plugins/search-backend-node/newlinedelimitedjsoncollatorfactory-test
+    type: background-worker
+    name: NewlineDelimitedJsonCollatorFactory.test Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-node/src/collators/NewlineDelimitedJsonCollatorFactory.test.ts
+      containerId: search-backend-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 158
+      sloc: 125
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3495
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend-node/newlinedelimitedjsoncollatorfactory
+    type: background-worker
+    name: NewlineDelimitedJsonCollatorFactory Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend-node/src/collators/NewlineDelimitedJsonCollatorFactory.ts
+      containerId: search-backend-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 152
+      sloc: 76
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3495
+    'y': 370
 dependencies:
-  - from: blueprint/plugins/auth-backend-module-auth0-provider/strategy-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-auth0-provider/strategy
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-aws-alb-provider/authenticator-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-aws-alb-provider/authenticator
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-aws-alb-provider/helpers
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-azure-easyauth-provider/authenticator
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-cloudflare-access-provider/helpers
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-gcp-iap-provider/authenticator
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-gcp-iap-provider/helpers
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-guest-provider/authenticator
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-guest-provider/resolvers
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-oauth2-proxy-provider/authenticator
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-backstage-openapi/internalopenapidocumentationprovider
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-unprocessed/unprocessedentitiesmodule
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/connections-example-backend/router
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/connections-example-backend-module-gitlab/module
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-common/permissionclient
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/util
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitlab/util-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitlab/util
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-common/scaffolderclient
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/scaffolderservice
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search/apis
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/search-backend-node/scheduler-test
+    to: blueprint/plugins/search-backend-node/index
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/search-backend-node/indexbuilder-test
@@ -543,726 +455,6 @@ dependencies:
     description: Calls module / service
   - from: blueprint/plugins/search-backend-node/indexbuilder-test
     to: blueprint/plugins/search-backend-node/index
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-node/indexbuilder
-    to: blueprint/plugins/search-backend-node/scheduler
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-node/indexbuilder
-    to: blueprint/plugins/search-backend-node/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-node/scheduler-test
-    to: blueprint/plugins/search-backend-node/index
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/techdocs/index
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/techdocs/client-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/techdocs/client
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/techdocs-node/helpers
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/app-backend/router
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend/createwhoamiaction
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend/firestorekeystore
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend/issueusertoken
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend/router
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend/cimdclient
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend/offlineaccessservice
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend/oidcerror
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend/oidcrouter
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend/oidcservice
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend/router
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-node/sendwebmessageresponse
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-node/defaultidentityclient
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-node/preparebackstageidentityresponse
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-node/cookiescopemanager
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-node/createoauthroutehandlers
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-node/oauthenvironmenthandler
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-node/state
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-node/passporthelpers
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-node/createproxyroutehandlers
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-node/commonsigninresolvers
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-node/createsigninresolverfactory
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/creategetcatalogentityaction
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/createregistercatalogentitiesaction
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/createunregistercatalogentitiesaction
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/conversion
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/defaultcatalogdatabase
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/defaultprocessingdatabase
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/util
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/connectentityproviders
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/defaultcatalogprocessingengine
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/defaultcatalogprocessingorchestrator-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/defaultcatalogprocessingorchestrator
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/processoroutputcollector
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/util
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/urlreaderprocessor
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/defaultlocationstore
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/authorizedentitiescatalog-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/authorizedentitiescatalog
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/authorizedlocationanalyzer-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/authorizedlocationanalyzer
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/authorizedlocationservice-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/authorizedlocationservice
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/authorizedrefreshservice-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/authorizedrefreshservice
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/authorizedvalidationservice-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/authorizedvalidationservice
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/catalogplugin
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/createrouter-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/createrouter
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/defaultentitiescatalog
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/defaultlocationservice-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/defaultlocationservice
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/util
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/progresstracker
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/integration-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-aws/awss3discoveryprocessor
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-azure/analyzeazuredevopswebhookevent
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/analyzebitbucketcloudwebhookevent
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-bitbucket-server/analyzebitbucketserverwebhookevent
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-bitbucket-server/bitbucketserverclient-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-bitbucket-server/bitbucketserverclient
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-bitbucket-server/bitbucketserverclient
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-bitbucket-server/bitbucketserverentityprovider
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-gitea/giteaentityprovider
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-github/analyzegithubwebhookevent
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-gitlab/analyzegitlabwebhookevent-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-gitlab/analyzegitlabwebhookevent
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/wrapperproviders
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-ldap/client
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-ldap/read
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-puppetdb/read
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-node/processingresult
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-unprocessed-entities-common/api
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/config-schema/staticschemaloader
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools/devtoolsclient
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools-backend/devtoolsbackendapi
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools-backend/router
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend-module-google-pubsub/config
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend-module-google-pubsub/config
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend-module-google-pubsub/googlepubsubconsumingeventpublisher
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend-module-google-pubsub/createpatternresolver
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-node/defaulteventsservice
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/example-todo-list-backend/router
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/example-todo-list-backend/todos
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/kubernetes-backend/requirepermission
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/kubernetes-backend/gkeclusterlocator
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/kubernetes-backend/resourcesroutes
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/kubernetes-backend/kubernetesproxy-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/kubernetes-backend/kubernetesproxy
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/kubernetes-react/kubernetesbackendclient-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/kubernetes-react/kubernetesbackendclient
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/createstreamablerouter
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/handleerrors-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/handleerrors
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/mcp-actions-backend/mcpservice
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/notifications/notificationsclient
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/notifications-backend/creategetnotificationsaction
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/notifications-backend/notificationcleaner
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/notifications-backend/parseentityorderfieldparams
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/notifications-backend/router
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/notifications-backend-module-slack/slacknotificationprocessor
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-backend/permissionintegrationclient
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-backend/router
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-node/createconditiontransformer
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-node/createpermissionintegrationrouter
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-node/createpermissionintegrationrouter
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/proxy-backend/router-credentials-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend/listscaffoldertasksaction-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend/listscaffoldertasksaction
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend/helpers
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend/router
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend/checkpermissions
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-azure/azure
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-cloud/bitbucketcloud
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-cloud/bitbucketcloudbranchrestriction
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-cloud/bitbucketcloudpullrequest
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-cloud/autocomplete-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-cloud/autocomplete
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitea/gitea
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githelpers
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/github
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/helpers
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/autocomplete-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/autocomplete
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlab
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabgroupaccessaction
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabissuecreate
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabissueedit
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabmergerequest
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabpipelinetrigger
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabprojectaccesstokencreate
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabprojectdeploytokencreate
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabprojectmigrate
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabrepopush
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabuserinfo
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitlab/helpers
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitlab/autocomplete-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitlab/autocomplete
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-sentry/createproject-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-sentry/createproject
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/fetch
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/util
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/serializedirectorycontents
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/git
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend/authorizedsearchengine
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend/router
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-module-catalog/config
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-node/newlinedelimitedjsoncollatorfactory-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-node/newlinedelimitedjsoncollatorfactory-test
-    to: blueprint/plugins/search-backend-node/newlinedelimitedjsoncollatorfactory
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-node/newlinedelimitedjsoncollatorfactory-test
-    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-node/newlinedelimitedjsoncollatorfactory
-    to: blueprint/plugins/api-docs/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/search-backend-node/lunrsearchengine-test
@@ -1278,7 +470,7 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/search-backend-node/lunrsearchengine-test
-    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    to: blueprint/plugins/kubernetes-react/test-utils
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/search-backend-node/lunrsearchengine
@@ -1294,23 +486,11 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/search-backend-node/lunrsearchengineindexer-test
-    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    to: blueprint/plugins/kubernetes-react/test-utils
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/search-backend-node/lunrsearchengineindexer-test
     to: blueprint/plugins/search-backend-node/lunrsearchengineindexer
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-node/batchsearchengineindexer-test
-    to: blueprint/plugins/search-backend-node/batchsearchengineindexer
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-node/batchsearchengineindexer-test
-    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-node/batchsearchengineindexer
-    to: blueprint/plugins/search-backend-node/errors
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/search-backend-node/decoratorbase-test
@@ -1318,274 +498,46 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/search-backend-node/decoratorbase-test
-    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    to: blueprint/plugins/kubernetes-react/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-node/batchsearchengineindexer
+    to: blueprint/plugins/search-backend-node/errors
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/search-backend-node/decoratorbase
     to: blueprint/plugins/search-backend-node/errors
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/techdocs-backend/techdocscache
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/search-backend-node/batchsearchengineindexer-test
+    to: blueprint/plugins/search-backend-node/batchsearchengineindexer
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/techdocs-backend/builder
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/search-backend-node/batchsearchengineindexer-test
+    to: blueprint/plugins/kubernetes-react/test-utils
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/techdocs-backend/docssynchronizer
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/search-backend-node/indexbuilder
+    to: blueprint/plugins/search-backend-node/scheduler
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/techdocs-backend/router
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/search-backend-node/indexbuilder
+    to: blueprint/plugins/search-backend-node/types
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/user-settings-backend/databaseusersettingsstore
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/search-backend-node/newlinedelimitedjsoncollatorfactory-test
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/user-settings-backend/router
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/search-backend-node/newlinedelimitedjsoncollatorfactory-test
+    to: blueprint/plugins/search-backend-node/newlinedelimitedjsoncollatorfactory
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/auth/useconsentsession
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/search-backend-node/newlinedelimitedjsoncollatorfactory-test
+    to: blueprint/plugins/kubernetes-react/test-utils
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/auth-backend/catalogidentityclient
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend/catalogauthresolvercontext-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend/catalogauthresolvercontext
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-react/usecookieauthrefresh
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog/parsefilterexpression
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog/deleteentitydialog
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog/entityprocessingerrorspanel
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/read-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/read
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/applypredicateentityfiltertoquery
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/common
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/entitiesbatchrequest
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/parseentityfacetparams
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/parseentityfacetsquery
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/parseentityfilterparams
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/parseentityorderfieldparams
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/parseentityorderparams
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/parseentitypaginationparams
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/parseentityquery
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/parseentitytransformparams
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/parselocationquery
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/parsequeryentitiesparams
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/write
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-import/steppreparecreatepullrequest
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-import/stepreviewlocation
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-react/unregisterentitydialog
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend/templateactionregistry-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend/templateactionregistry
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend/databasetaskstore-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend/databasetaskstore
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend/nunjucksworkflowrunner
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend/taskworker
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/techdocs/usereaderstate-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/techdocs-node/dockercontainerrunner
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/techdocs-node/helpers
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/techdocs-node/mkdocspatchers
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/techdocs-node/techdocs
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/techdocs-node/dir
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/techdocs-node/url
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/techdocs-node/awss3
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/techdocs-node/azureblobstorage
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/techdocs-node/googlestorage
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/techdocs-node/local
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/techdocs-node/openstackswift
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/user-settings/usersettingsstorage
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog/createhasmatcher
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog/createismatcher
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/buildentitysearch
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/performstitching
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder/mygroupspicker
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-rails/index
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/techdocs-node/googlemigration
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend/register
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend/templateactionhandler
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend/delete
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend/rename
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/search-backend-node/newlinedelimitedjsoncollatorfactory
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service

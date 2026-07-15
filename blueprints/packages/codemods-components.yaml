@@ -3,6 +3,50 @@ name: Codemods Service Components
 version: 1.0.0
 level: component
 nodes:
+  - entityRef: blueprint/packages/codemods/errors
+    type: background-worker
+    name: errors Service
+    isTest: false
+    properties:
+      filepath: packages/codemods/src/errors.ts
+      containerId: codemods
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 35
+      sloc: 16
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 370
+  - entityRef: blueprint/packages/codemods/core-imports-test
+    type: background-worker
+    name: core-imports.test Service
+    isTest: true
+    properties:
+      filepath: packages/codemods/src/tests/core-imports.test.ts
+      containerId: codemods
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 70
+      sloc: 41
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 50
   - entityRef: blueprint/packages/codemods/action
     type: background-worker
     name: action Service
@@ -47,28 +91,6 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 370
-  - entityRef: blueprint/packages/codemods/errors
-    type: background-worker
-    name: errors Service
-    isTest: false
-    properties:
-      filepath: packages/codemods/src/errors.ts
-      containerId: codemods
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 35
-      sloc: 16
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 370
   - entityRef: blueprint/packages/codemods/index
     type: background-worker
     name: index Service
@@ -90,28 +112,6 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 600
-    'y': 50
-  - entityRef: blueprint/packages/codemods/core-imports-test
-    type: background-worker
-    name: core-imports.test Service
-    isTest: true
-    properties:
-      filepath: packages/codemods/src/tests/core-imports.test.ts
-      containerId: codemods
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 70
-      sloc: 41
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
     'y': 50
 dependencies:
   - from: blueprint/packages/codemods/index

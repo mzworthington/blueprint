@@ -47,28 +47,6 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 370
-  - entityRef: blueprint/packages/app-defaults/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/app-defaults/src/defaults/index.ts
-      containerId: app-defaults
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 21
-      sloc: 4
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
   - entityRef: blueprint/packages/app-defaults/setuptests
     type: background-worker
     name: setupTests Service
@@ -82,6 +60,28 @@ nodes:
       complexity: 1
       loc: 18
       sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/app-defaults/themes
+    type: background-worker
+    name: themes Service
+    isTest: false
+    properties:
+      filepath: packages/app-defaults/src/defaults/themes.tsx
+      containerId: app-defaults
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 45
+      sloc: 27
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -179,19 +179,19 @@ nodes:
       sinceDays: 500
     x: 2440
     'y': 50
-  - entityRef: blueprint/packages/app-defaults/themes
+  - entityRef: blueprint/packages/app-defaults/index
     type: background-worker
-    name: themes Service
+    name: index Service
     isTest: false
     properties:
-      filepath: packages/app-defaults/src/defaults/themes.tsx
+      filepath: packages/app-defaults/src/index.ts
       containerId: app-defaults
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 45
-      sloc: 27
+      loc: 25
+      sloc: 2
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -202,16 +202,44 @@ nodes:
     x: 2900
     'y': 50
 dependencies:
+  - from: blueprint/packages/core-plugin-api/plugin
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-plugin-api/types
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-plugin-api/useelementfilter
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-plugin-api/useelementfilter-test
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-plugin-api/tracker
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-plugin-api/useanalytics
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/test-utils/appwrappers-test
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/test-utils/mockapis
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/packages/app-defaults/createapp-test
     to: blueprint/packages/app-defaults/createapp
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/app-defaults/createapp
     to: blueprint/packages/module-federation-common/defaults
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/core-components/overridablecomponents
-    to: blueprint/packages/app-defaults/components
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/app-defaults/components-test
@@ -227,14 +255,42 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/app-defaults/icons
-    to: blueprint/packages/cli-module-auth/storage
+    to: blueprint/packages/cli-node/storage
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/dev-utils/render
-    to: blueprint/packages/app-defaults/components
+  - from: blueprint/packages/core-app-api/appmanager
+    to: blueprint/packages/app-defaults/apis
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/pageblueprint
+  - from: blueprint/packages/core-app-api/appmanager-test
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/defaultauthconnector-test
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/flatroutes-beta-test
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/flatroutes-stable-test
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/featureflagged-test
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/core-app-api/flatroutes-compat-test
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/iconsapi
+    to: blueprint/packages/app-defaults/icons
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/swappablecomponentsapi
     to: blueprint/packages/app-defaults/components
     type: direct-call
     description: Calls module / service
@@ -246,15 +302,91 @@ dependencies:
     to: blueprint/packages/app-defaults/components
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/createfrontendfeatureloader-test
-    to: blueprint/packages/app-defaults/createapp
+  - from: blueprint/packages/frontend-plugin-api/approotelementblueprint-test
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/pageblueprint
+    to: blueprint/packages/app-defaults/components
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/analyticsimplementationblueprint
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/usetranslationref
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/usetranslationref-test
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/resolveextensiondefinition
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/createextension
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/resolveinputoverrides
+    to: blueprint/packages/app-defaults/apis
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/frontend-plugin-api/createfrontendplugin-test
     to: blueprint/packages/app-defaults/createapp
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/core-components/stackdetails
+  - from: blueprint/packages/frontend-plugin-api/types
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/createfrontendfeatureloader-test
+    to: blueprint/packages/app-defaults/createapp
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/createextensionblueprint
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/extensionboundary
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/createswappablecomponent
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/appnodeprovider-test
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/appnodeprovider
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/errorapiboundary
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/userouteref
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/userouteref-test
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/tracker
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-plugin-api/useanalytics
+    to: blueprint/packages/app-defaults/apis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/dev-utils/render
     to: blueprint/packages/app-defaults/components
     type: direct-call
     description: Calls module / service
@@ -262,11 +394,11 @@ dependencies:
     to: blueprint/packages/app-defaults/components
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/iconsapi
-    to: blueprint/packages/app-defaults/icons
+  - from: blueprint/packages/core-components/stackdetails
+    to: blueprint/packages/app-defaults/components
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/swappablecomponentsapi
+  - from: blueprint/packages/core-components/overridablecomponents
     to: blueprint/packages/app-defaults/components
     type: direct-call
     description: Calls module / service

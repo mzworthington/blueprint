@@ -1,0 +1,764 @@
+entityRef: blueprint/eshop/ordering-api
+name: Ordering.API Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/eshop/ordering-api/program-testing
+    type: background-worker
+    name: Program.Testing Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Program.Testing.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderservices
+    type: background-worker
+    name: OrderServices Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Apis/OrderServices.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/ordersapi
+    type: rest-api
+    name: OrdersApi REST Endpoint
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Apis/OrdersApi.cs
+      containerId: ordering-api
+      technology: ASP.NET Core Controller / Minimal API
+      classification: api-marker
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/linqselectextensions
+    type: background-worker
+    name: LinqSelectExtensions Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Extensions/LinqSelectExtensions.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderingapitrace
+    type: background-worker
+    name: OrderingApiTrace Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Extensions/OrderingApiTrace.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/extensions
+    type: background-worker
+    name: Extensions Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Extensions/Extensions.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/basketitemextensions
+    type: background-worker
+    name: BasketItemExtensions Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Extensions/BasketItemExtensions.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 2900
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderqueries
+    type: background-worker
+    name: OrderQueries Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Queries/OrderQueries.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 3360
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/iorderqueries
+    type: background-worker
+    name: IOrderQueries Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Queries/IOrderQueries.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 3820
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderviewmodel
+    type: background-worker
+    name: OrderViewModel Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Queries/OrderViewModel.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 4280
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/customerbasket
+    type: background-worker
+    name: CustomerBasket Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Models/CustomerBasket.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 4740
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/basketitem
+    type: background-worker
+    name: BasketItem Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Models/BasketItem.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 5200
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/ordershippeddomaineventhandler
+    type: background-worker
+    name: OrderShippedDomainEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/DomainEventHandlers/OrderShippedDomainEventHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 5660
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/ordercancelleddomaineventhandler
+    type: background-worker
+    name: OrderCancelledDomainEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/DomainEventHandlers/OrderCancelledDomainEventHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 6120
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderstatuschangedtoawaitingvalidationdomaineventhandler
+    type: background-worker
+    name: OrderStatusChangedToAwaitingValidationDomainEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/DomainEventHandlers/OrderStatusChangedToAwaitingValidationDomainEventHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 6580
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderstatuschangedtostockconfirmeddomaineventhandler
+    type: background-worker
+    name: OrderStatusChangedToStockConfirmedDomainEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/DomainEventHandlers/OrderStatusChangedToStockConfirmedDomainEventHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 7040
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/updateorderwhenbuyerandpaymentmethodverifieddomaineventhandler
+    type: background-worker
+    name: UpdateOrderWhenBuyerAndPaymentMethodVerifiedDomainEventHandler Service
+    isTest: false
+    properties:
+      filepath: >-
+        src/Ordering.API/Application/DomainEventHandlers/UpdateOrderWhenBuyerAndPaymentMethodVerifiedDomainEventHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 7500
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/validateoraddbuyeraggregatewhenorderstarteddomaineventhandler
+    type: background-worker
+    name: ValidateOrAddBuyerAggregateWhenOrderStartedDomainEventHandler Service
+    isTest: false
+    properties:
+      filepath: >-
+        src/Ordering.API/Application/DomainEventHandlers/ValidateOrAddBuyerAggregateWhenOrderStartedDomainEventHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 7960
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderstatuschangedtopaiddomaineventhandler
+    type: background-worker
+    name: OrderStatusChangedToPaidDomainEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/DomainEventHandlers/OrderStatusChangedToPaidDomainEventHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 8420
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/createordercommandvalidator
+    type: background-worker
+    name: CreateOrderCommandValidator Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Validations/CreateOrderCommandValidator.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 8880
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/shipordercommandvalidator
+    type: background-worker
+    name: ShipOrderCommandValidator Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Validations/ShipOrderCommandValidator.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 9340
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/cancelordercommandvalidator
+    type: background-worker
+    name: CancelOrderCommandValidator Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Validations/CancelOrderCommandValidator.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 9800
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/identifiedcommandvalidator
+    type: background-worker
+    name: IdentifiedCommandValidator Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Validations/IdentifiedCommandValidator.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 10260
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/loggingbehavior
+    type: background-worker
+    name: LoggingBehavior Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Behaviors/LoggingBehavior.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 10720
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/transactionbehavior
+    type: background-worker
+    name: TransactionBehavior Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Behaviors/TransactionBehavior.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 11180
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/validatorbehavior
+    type: background-worker
+    name: ValidatorBehavior Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Behaviors/ValidatorBehavior.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 11640
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/createorderdraftcommandhandler
+    type: background-worker
+    name: CreateOrderDraftCommandHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Commands/CreateOrderDraftCommandHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 12100
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/identifiedcommandhandler
+    type: background-worker
+    name: IdentifiedCommandHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Commands/IdentifiedCommandHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 12560
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/createorderdraftcommand
+    type: background-worker
+    name: CreateOrderDraftCommand Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Commands/CreateOrderDraftCommand.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 13020
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/setawaitingvalidationorderstatuscommand
+    type: background-worker
+    name: SetAwaitingValidationOrderStatusCommand Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Commands/SetAwaitingValidationOrderStatusCommand.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 13480
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/setpaidorderstatuscommandhandler
+    type: background-worker
+    name: SetPaidOrderStatusCommandHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 13940
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/shipordercommandhandler
+    type: background-worker
+    name: ShipOrderCommandHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Commands/ShipOrderCommandHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 14400
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/setstockconfirmedorderstatuscommand
+    type: background-worker
+    name: SetStockConfirmedOrderStatusCommand Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommand.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 14860
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/shipordercommand
+    type: background-worker
+    name: ShipOrderCommand Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Commands/ShipOrderCommand.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 15320
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/setstockrejectedorderstatuscommandhandler
+    type: background-worker
+    name: SetStockRejectedOrderStatusCommandHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Commands/SetStockRejectedOrderStatusCommandHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 15780
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/setstockconfirmedorderstatuscommandhandler
+    type: background-worker
+    name: SetStockConfirmedOrderStatusCommandHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 16240
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/setawaitingvalidationorderstatuscommandhandler
+    type: background-worker
+    name: SetAwaitingValidationOrderStatusCommandHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Commands/SetAwaitingValidationOrderStatusCommandHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 16700
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/identifiedcommand
+    type: background-worker
+    name: IdentifiedCommand Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Commands/IdentifiedCommand.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 17160
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/cancelordercommand
+    type: background-worker
+    name: CancelOrderCommand Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Commands/CancelOrderCommand.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 17620
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/setpaidorderstatuscommand
+    type: background-worker
+    name: SetPaidOrderStatusCommand Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Commands/SetPaidOrderStatusCommand.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 18080
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/cancelordercommandhandler
+    type: background-worker
+    name: CancelOrderCommandHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 18540
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/createordercommandhandler
+    type: background-worker
+    name: CreateOrderCommandHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 19000
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/setstockrejectedorderstatuscommand
+    type: background-worker
+    name: SetStockRejectedOrderStatusCommand Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Commands/SetStockRejectedOrderStatusCommand.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 19460
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/createordercommand
+    type: background-worker
+    name: CreateOrderCommand Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Commands/CreateOrderCommand.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 19920
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderingintegrationeventservice
+    type: background-worker
+    name: OrderingIntegrationEventService Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/OrderingIntegrationEventService.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 20380
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/iorderingintegrationeventservice
+    type: background-worker
+    name: IOrderingIntegrationEventService Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/IOrderingIntegrationEventService.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 20840
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderstatuschangedtoawaitingvalidationintegrationevent
+    type: background-worker
+    name: OrderStatusChangedToAwaitingValidationIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToAwaitingValidationIntegrationEvent.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 21300
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderstatuschangedtocancelledintegrationevent
+    type: background-worker
+    name: OrderStatusChangedToCancelledIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToCancelledIntegrationEvent.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 21760
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderstockrejectedintegrationevent
+    type: background-worker
+    name: OrderStockRejectedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/Events/OrderStockRejectedIntegrationEvent.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 22220
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderstatuschangedtopaidintegrationevent
+    type: background-worker
+    name: OrderStatusChangedToPaidIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToPaidIntegrationEvent.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 22680
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderstockconfirmedintegrationevent
+    type: background-worker
+    name: OrderStockConfirmedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/Events/OrderStockConfirmedIntegrationEvent.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 23140
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderpaymentfailedintegrationevent
+    type: background-worker
+    name: OrderPaymentFailedIntegrationEvent  Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent .cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 23600
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderstatuschangedtostockconfirmedintegrationevent
+    type: background-worker
+    name: OrderStatusChangedToStockConfirmedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 24060
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/graceperiodconfirmedintegrationevent
+    type: background-worker
+    name: GracePeriodConfirmedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/Events/GracePeriodConfirmedIntegrationEvent.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 24520
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderstatuschangedtoshippedintegrationevent
+    type: background-worker
+    name: OrderStatusChangedToShippedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToShippedIntegrationEvent.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 24980
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderstatuschangedtosubmittedintegrationevent
+    type: background-worker
+    name: OrderStatusChangedTosubmittedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedTosubmittedIntegrationEvent.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 25440
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderpaymentsucceededintegrationevent
+    type: background-worker
+    name: OrderPaymentSucceededIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 25900
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderstartedintegrationevent
+    type: background-worker
+    name: OrderStartedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/Events/OrderStartedIntegrationEvent.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 26360
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderstockrejectedintegrationeventhandler
+    type: background-worker
+    name: OrderStockRejectedIntegrationEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockRejectedIntegrationEventHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 26820
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderpaymentsucceededintegrationeventhandler
+    type: background-worker
+    name: OrderPaymentSucceededIntegrationEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 27280
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderpaymentfailedintegrationeventhandler
+    type: background-worker
+    name: OrderPaymentFailedIntegrationEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 27740
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderstockconfirmedintegrationeventhandler
+    type: background-worker
+    name: OrderStockConfirmedIntegrationEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockConfirmedIntegrationEventHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 28200
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/graceperiodconfirmedintegrationeventhandler
+    type: background-worker
+    name: GracePeriodConfirmedIntegrationEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/IntegrationEvents/EventHandling/GracePeriodConfirmedIntegrationEventHandler.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 28660
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/globalusings
+    type: relational-database
+    name: GlobalUsings Database
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/GlobalUsings.cs
+      containerId: ordering-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 29120
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/orderingcontextseed
+    type: background-worker
+    name: OrderingContextSeed Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Infrastructure/OrderingContextSeed.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 29580
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/iidentityservice
+    type: background-worker
+    name: IIdentityService Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Infrastructure/Services/IIdentityService.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 30040
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/identityservice
+    type: background-worker
+    name: IdentityService Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Infrastructure/Services/IdentityService.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 30500
+    'y': 50
+  - entityRef: blueprint/eshop/ordering-api/program
+    type: background-worker
+    name: Program Service
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Program.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 30960
+    'y': 50
+dependencies:
+  - from: blueprint/eshop/ordering-api/ordersapi
+    to: blueprint/eshop/clientapp/cardtype
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/ordering-api/ordersapi
+    to: blueprint/eshop/clientapp/order
+    type: direct-call
+    description: Calls module / service

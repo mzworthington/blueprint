@@ -8,37 +8,14 @@ nodes:
     name: index UI Component
     isTest: false
     properties:
-      filepath: microsite/src/pages/plugins/index.tsx
+      filepath: microsite/src/pages/demos/index.tsx
       containerId: pages
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 27
-      loc: 252
-      sloc: 219
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
-  - entityRef: blueprint/microsite/pages/link
-    type: gateway-api
-    name: link UI Component
-    isTest: false
-    properties:
-      filepath: microsite/src/pages/link.tsx
-      containerId: pages
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 3
-      loc: 19
-      sloc: 16
+      complexity: 4
+      loc: 213
+      sloc: 203
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -46,8 +23,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 140
-    'y': 690
+    x: 585
+    'y': 50
   - entityRef: blueprint/microsite/pages/_home
     type: gateway-api
     name: _home UI Component
@@ -68,7 +45,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 275
+    x: 140
     'y': 370
   - entityRef: blueprint/microsite/pages/_hubspotnewadoptersform
     type: gateway-api
@@ -90,7 +67,29 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 815
+    x: 140
+    'y': 690
+  - entityRef: blueprint/microsite/pages/link
+    type: gateway-api
+    name: link UI Component
+    isTest: false
+    properties:
+      filepath: microsite/src/pages/link.tsx
+      containerId: pages
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 3
+      loc: 19
+      sloc: 16
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
     'y': 690
   - entityRef: blueprint/microsite/pages/_plugincard
     type: gateway-api
@@ -112,47 +111,15 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 735
+    x: 815
     'y': 370
 dependencies:
-  - from: blueprint/microsite/pages/index
-    to: blueprint/microsite/pages/_home
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/microsite/components/contentblock
     to: blueprint/microsite/pages/link
     type: direct-call
     description: Calls module / service
   - from: blueprint/microsite/pages/index
-    to: blueprint/microsite/pages/link
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/microsite/pages/index
-    to: blueprint/microsite/components/bannersection
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/microsite/pages/index
-    to: blueprint/microsite/components/bannersectiongrid
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/microsite/pages/index
-    to: blueprint/microsite/components/contentblock
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/microsite/pages/index
-    to: blueprint/microsite/pages/link
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/microsite/pages/index
-    to: blueprint/microsite/components/bannersection
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/microsite/pages/index
-    to: blueprint/microsite/components/bannersectiongrid
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/microsite/pages/index
-    to: blueprint/microsite/components/contentblock
+    to: blueprint/microsite/pages/_home
     type: direct-call
     description: Calls module / service
   - from: blueprint/microsite/pages/_home
@@ -173,14 +140,6 @@ dependencies:
     description: Calls module / service
   - from: blueprint/microsite/pages/_home
     to: blueprint/microsite/pages/_hubspotnewadoptersform
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/microsite/pages/_plugincard
-    to: blueprint/microsite/pages/link
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/microsite/pages/_plugincard
-    to: blueprint/microsite/components/simplecard
     type: direct-call
     description: Calls module / service
   - from: blueprint/microsite/pages/index
@@ -209,5 +168,45 @@ dependencies:
     description: Calls module / service
   - from: blueprint/microsite/pages/index
     to: blueprint/microsite/components/pluginssearch
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/_plugincard
+    to: blueprint/microsite/pages/link
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/_plugincard
+    to: blueprint/microsite/components/simplecard
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/pages/link
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/components/bannersection
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/components/bannersectiongrid
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/components/contentblock
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/pages/link
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/components/bannersection
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/components/bannersectiongrid
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/components/contentblock
     type: direct-call
     description: Calls module / service

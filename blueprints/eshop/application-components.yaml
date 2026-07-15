@@ -1,0 +1,54 @@
+entityRef: blueprint/eshop/application
+name: Application Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/eshop/application/newordercommandhandlertest
+    type: background-worker
+    name: NewOrderCommandHandlerTest Service
+    isTest: true
+    properties:
+      filepath: tests/Ordering.UnitTests/Application/NewOrderCommandHandlerTest.cs
+      containerId: application
+      technology: C# Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/eshop/application/identifiedcommandhandlertest
+    type: background-worker
+    name: IdentifiedCommandHandlerTest Service
+    isTest: true
+    properties:
+      filepath: tests/Ordering.UnitTests/Application/IdentifiedCommandHandlerTest.cs
+      containerId: application
+      technology: C# Domain Service
+      classification: default
+    x: 600
+    'y': 50
+  - entityRef: blueprint/eshop/application/orderswebapitest
+    type: rest-api
+    name: OrdersWebApiTest REST Endpoint
+    isTest: true
+    properties:
+      filepath: tests/Ordering.UnitTests/Application/OrdersWebApiTest.cs
+      containerId: application
+      technology: ASP.NET Core Controller / Minimal API
+      classification: api-marker
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/eshop/application/setstockrejectedorderstatuscommandtest
+    type: background-worker
+    name: SetStockRejectedOrderStatusCommandTest Service
+    isTest: true
+    properties:
+      filepath: tests/Ordering.UnitTests/Application/SetStockRejectedOrderStatusCommandTest.cs
+      containerId: application
+      technology: C# Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+dependencies:
+  - from: blueprint/eshop/application/orderswebapitest
+    to: blueprint/eshop/clientapp/order
+    type: direct-call
+    description: Calls module / service

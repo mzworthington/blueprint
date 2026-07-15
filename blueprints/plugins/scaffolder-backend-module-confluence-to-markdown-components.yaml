@@ -25,28 +25,6 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-confluence-to-markdown/src/actions/confluence/index.ts
-      containerId: scaffolder-backend-module-confluence-to-markdown
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 17
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
   - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/module
     type: background-worker
     name: module Service
@@ -67,22 +45,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 600
     'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples-test
+  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-test
     type: background-worker
-    name: confluenceToMarkdown.examples.test Service
+    name: confluenceToMarkdown.test Service
     isTest: true
     properties:
-      filepath: >-
-        plugins/scaffolder-backend-module-confluence-to-markdown/src/actions/confluence/confluenceToMarkdown.examples.test.ts
+      filepath: plugins/scaffolder-backend-module-confluence-to-markdown/src/actions/confluence/confluenceToMarkdown.test.ts
       containerId: scaffolder-backend-module-confluence-to-markdown
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 149
-      sloc: 118
+      loc: 284
+      sloc: 238
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -90,8 +67,31 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1980
+    x: 1060
     'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers
+    type: background-worker
+    name: helpers Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-confluence-to-markdown/src/actions/confluence/helpers.ts
+      containerId: scaffolder-backend-module-confluence-to-markdown
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 18
+      loc: 212
+      sloc: 173
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 965
+    'y': 690
   - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples
     type: background-worker
     name: confluenceToMarkdown.examples Service
@@ -114,19 +114,41 @@ nodes:
       sinceDays: 500
     x: 1980
     'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-test
+  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers-test
     type: background-worker
-    name: confluenceToMarkdown.test Service
+    name: helpers.test Service
     isTest: true
     properties:
-      filepath: plugins/scaffolder-backend-module-confluence-to-markdown/src/actions/confluence/confluenceToMarkdown.test.ts
+      filepath: plugins/scaffolder-backend-module-confluence-to-markdown/src/actions/confluence/helpers.test.ts
       containerId: scaffolder-backend-module-confluence-to-markdown
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 284
-      sloc: 238
+      loc: 182
+      sloc: 136
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 925
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-confluence-to-markdown/src/index.ts
+      containerId: scaffolder-backend-module-confluence-to-markdown
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 25
+      sloc: 2
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -156,21 +178,22 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1615
+    x: 1385
     'y': 370
-  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers-test
+  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples-test
     type: background-worker
-    name: helpers.test Service
+    name: confluenceToMarkdown.examples.test Service
     isTest: true
     properties:
-      filepath: plugins/scaffolder-backend-module-confluence-to-markdown/src/actions/confluence/helpers.test.ts
+      filepath: >-
+        plugins/scaffolder-backend-module-confluence-to-markdown/src/actions/confluence/confluenceToMarkdown.examples.test.ts
       containerId: scaffolder-backend-module-confluence-to-markdown
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 182
-      sloc: 136
+      loc: 149
+      sloc: 118
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -178,31 +201,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1155
-    'y': 370
-  - entityRef: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers
-    type: background-worker
-    name: helpers Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-confluence-to-markdown/src/actions/confluence/helpers.ts
-      containerId: scaffolder-backend-module-confluence-to-markdown
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 18
-      loc: 212
-      sloc: 173
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 1195
-    'y': 690
+    x: 1980
+    'y': 50
 dependencies:
   - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/module
     to: blueprint/plugins/home/actions
@@ -212,36 +212,36 @@ dependencies:
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples-test
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-test
     to: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-test
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers-test
+    to: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown
@@ -249,7 +249,7 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown
-    to: blueprint/plugins/search-backend-node/errors
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown
@@ -260,19 +260,19 @@ dependencies:
     to: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers-test
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers-test
-    to: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples-test
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples-test
+    to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown-examples
     type: direct-call
     description: Calls module / service

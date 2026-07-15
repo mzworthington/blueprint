@@ -3,19 +3,19 @@ name: Cli-internal Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/cli-internal/authidentifiers
+  - entityRef: blueprint/packages/cli-internal/internalcommandnode
     type: background-worker
-    name: authIdentifiers Service
+    name: InternalCommandNode Service
     isTest: false
     properties:
-      filepath: packages/cli-internal/src/authIdentifiers.ts
+      filepath: packages/cli-internal/src/InternalCommandNode.ts
       containerId: cli-internal
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 21
-      sloc: 3
+      complexity: 3
+      loc: 70
+      sloc: 40
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -24,28 +24,6 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 140
-    'y': 50
-  - entityRef: blueprint/packages/cli-internal/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/cli-internal/src/index.ts
-      containerId: cli-internal
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 38
-      sloc: 21
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
     'y': 50
   - entityRef: blueprint/packages/cli-internal/internalclimodule
     type: background-worker
@@ -67,21 +45,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 600
     'y': 50
-  - entityRef: blueprint/packages/cli-internal/internalcommandnode
+  - entityRef: blueprint/packages/cli-internal/index
     type: background-worker
-    name: InternalCommandNode Service
+    name: index Service
     isTest: false
     properties:
-      filepath: packages/cli-internal/src/InternalCommandNode.ts
+      filepath: packages/cli-internal/src/index.ts
       containerId: cli-internal
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 3
-      loc: 70
-      sloc: 40
+      complexity: 1
+      loc: 38
+      sloc: 21
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -89,7 +67,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1520
+    x: 1060
     'y': 50
   - entityRef: blueprint/packages/cli-internal/knownpluginpackages
     type: background-worker
@@ -111,7 +89,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1980
+    x: 1520
     'y': 50
   - entityRef: blueprint/packages/cli-internal/secretstore
     type: background-worker
@@ -132,6 +110,28 @@ nodes:
       hotspotScore: 0
       classifications:
         - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/packages/cli-internal/authidentifiers
+    type: background-worker
+    name: authIdentifiers Service
+    isTest: false
+    properties:
+      filepath: packages/cli-internal/src/authIdentifiers.ts
+      containerId: cli-internal
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 21
+      sloc: 3
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
       coupledFiles: []
       sinceDays: 500
     x: 2440

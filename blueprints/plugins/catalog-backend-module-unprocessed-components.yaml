@@ -3,28 +3,6 @@ name: Catalog-backend-module-unprocessed Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/plugins/catalog-backend-module-unprocessed/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-unprocessed/src/index.ts
-      containerId: catalog-backend-module-unprocessed
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 24
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
   - entityRef: blueprint/plugins/catalog-backend-module-unprocessed/module
     type: background-worker
     name: module Service
@@ -38,6 +16,28 @@ nodes:
       complexity: 1
       loc: 74
       sloc: 48
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-backend-module-unprocessed/unprocessedentitiesmodule-test
+    type: relational-database
+    name: UnprocessedEntitiesModule.test Database
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-unprocessed/src/UnprocessedEntitiesModule.test.ts
+      containerId: catalog-backend-module-unprocessed
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    forensics:
+      complexity: 2
+      loc: 226
+      sloc: 177
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -89,21 +89,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 370
     'y': 690
-  - entityRef: blueprint/plugins/catalog-backend-module-unprocessed/unprocessedentitiesmodule-test
-    type: relational-database
-    name: UnprocessedEntitiesModule.test Database
-    isTest: true
+  - entityRef: blueprint/plugins/catalog-backend-module-unprocessed/index
+    type: background-worker
+    name: index Service
+    isTest: false
     properties:
-      filepath: plugins/catalog-backend-module-unprocessed/src/UnprocessedEntitiesModule.test.ts
+      filepath: plugins/catalog-backend-module-unprocessed/src/index.ts
       containerId: catalog-backend-module-unprocessed
-      technology: Prisma / SQL Database Client
-      classification: database-marker
+      technology: TypeScript Domain Service
+      classification: default
     forensics:
-      complexity: 2
-      loc: 226
-      sloc: 177
+      complexity: 1
+      loc: 24
+      sloc: 1
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -134,7 +134,7 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 370
     'y': 370
 dependencies:
   - from: blueprint/plugins/catalog-backend-module-unprocessed/module
@@ -150,6 +150,6 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/catalog-backend-module-unprocessed/unprocessedentitiesmodule
-    to: blueprint/plugins/search-backend-node/errors
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service

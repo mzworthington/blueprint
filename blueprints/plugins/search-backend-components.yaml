@@ -30,13 +30,13 @@ nodes:
     name: index Service
     isTest: false
     properties:
-      filepath: plugins/search-backend/src/schema/openapi/index.ts
+      filepath: plugins/search-backend/src/index.ts
       containerId: search-backend
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 18
+      loc: 24
       sloc: 1
       churn: 1
       authorCount: 1
@@ -45,52 +45,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1520
+    x: 600
     'y': 50
-  - entityRef: blueprint/plugins/search-backend/alpha
-    type: background-worker
-    name: alpha Service
-    isTest: false
-    properties:
-      filepath: plugins/search-backend/src/alpha.ts
-      containerId: search-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 22
-      sloc: 3
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 790
-    'y': 690
-  - entityRef: blueprint/plugins/search-backend/plugin-test
-    type: background-worker
-    name: plugin.test Service
-    isTest: true
-    properties:
-      filepath: plugins/search-backend/src/plugin.test.ts
-      containerId: search-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 32
-      sloc: 13
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1370
-    'y': 690
   - entityRef: blueprint/plugins/search-backend/plugin
     type: background-worker
     name: plugin Service
@@ -111,8 +67,52 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1020
+    x: 330
     'y': 1010
+  - entityRef: blueprint/plugins/search-backend/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend/src/alpha.ts
+      containerId: search-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 22
+      sloc: 3
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 330
+    'y': 690
+  - entityRef: blueprint/plugins/search-backend/search_result_utils
+    type: background-worker
+    name: search_result_utils Service
+    isTest: false
+    properties:
+      filepath: plugins/search-backend/src/utils/search_result_utils.ts
+      containerId: search-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 63
+      sloc: 34
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1100
+    'y': 1650
   - entityRef: blueprint/plugins/search-backend/setuptests
     type: background-worker
     name: setupTests Service
@@ -133,21 +133,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 1235
     'y': 50
-  - entityRef: blueprint/plugins/search-backend/createqueryaction-test
+  - entityRef: blueprint/plugins/search-backend/plugin-test
     type: background-worker
-    name: createQueryAction.test Service
+    name: plugin.test Service
     isTest: true
     properties:
-      filepath: plugins/search-backend/src/actions/createQueryAction.test.ts
+      filepath: plugins/search-backend/src/plugin.test.ts
       containerId: search-backend
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 316
-      sloc: 279
+      loc: 32
+      sloc: 13
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -155,8 +155,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
-    'y': 50
+    x: 1060
+    'y': 690
   - entityRef: blueprint/plugins/search-backend/createqueryaction
     type: background-worker
     name: createQueryAction Service
@@ -177,21 +177,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 910
+    x: 1330
     'y': 370
-  - entityRef: blueprint/plugins/search-backend/authorizedsearchengine-test
+  - entityRef: blueprint/plugins/search-backend/createqueryaction-test
     type: background-worker
-    name: AuthorizedSearchEngine.test Service
+    name: createQueryAction.test Service
     isTest: true
     properties:
-      filepath: plugins/search-backend/src/service/AuthorizedSearchEngine.test.ts
+      filepath: plugins/search-backend/src/actions/createQueryAction.test.ts
       containerId: search-backend
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 8
-      loc: 644
-      sloc: 554
+      complexity: 1
+      loc: 316
+      sloc: 279
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -199,7 +199,51 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 560
+    x: 1695
+    'y': 50
+  - entityRef: blueprint/plugins/search-backend/router
+    type: rest-api
+    name: router REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/search-backend/src/service/router.ts
+      containerId: search-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 5
+      loc: 152
+      sloc: 111
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 1330
+  - entityRef: blueprint/plugins/search-backend/router-test
+    type: rest-api
+    name: router.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/search-backend/src/service/router.test.ts
+      containerId: search-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 326
+      sloc: 274
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 830
     'y': 1010
   - entityRef: blueprint/plugins/search-backend/authorizedsearchengine
     type: background-worker
@@ -222,65 +266,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 830
+    x: 1060
     'y': 1330
-  - entityRef: blueprint/plugins/search-backend/router-test
-    type: rest-api
-    name: router.test REST Endpoint
+  - entityRef: blueprint/plugins/search-backend/authorizedsearchengine-test
+    type: background-worker
+    name: AuthorizedSearchEngine.test Service
     isTest: true
     properties:
-      filepath: plugins/search-backend/src/service/router.test.ts
-      containerId: search-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 326
-      sloc: 274
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1950
-    'y': 1010
-  - entityRef: blueprint/plugins/search-backend/router
-    type: rest-api
-    name: router REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/search-backend/src/service/router.ts
-      containerId: search-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 5
-      loc: 152
-      sloc: 111
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1910
-    'y': 1330
-  - entityRef: blueprint/plugins/search-backend/search_result_utils
-    type: background-worker
-    name: search_result_utils Service
-    isTest: false
-    properties:
-      filepath: plugins/search-backend/src/utils/search_result_utils.ts
+      filepath: plugins/search-backend/src/service/AuthorizedSearchEngine.test.ts
       containerId: search-backend
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 2
-      loc: 63
-      sloc: 34
+      complexity: 8
+      loc: 644
+      sloc: 554
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -288,17 +288,9 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1815
-    'y': 1650
+    x: 1290
+    'y': 1010
 dependencies:
-  - from: blueprint/plugins/search-backend/alpha
-    to: blueprint/plugins/search-backend/plugin
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend/plugin-test
-    to: blueprint/plugins/search-backend/plugin
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/search-backend/plugin
     to: blueprint/plugins/search-backend/alpha
     type: direct-call
@@ -319,16 +311,16 @@ dependencies:
     to: blueprint/plugins/search-backend/alpha
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/search-backend/createqueryaction-test
-    to: blueprint/plugins/search-backend/createqueryaction
+  - from: blueprint/plugins/search-backend/alpha
+    to: blueprint/plugins/search-backend/plugin
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/search-backend/createqueryaction-test
-    to: blueprint/plugins/search-backend/alpha
+  - from: blueprint/plugins/search-backend/plugin-test
+    to: blueprint/plugins/search-backend/plugin
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/search-backend/createqueryaction
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/search-backend/createqueryaction
@@ -355,24 +347,32 @@ dependencies:
     to: blueprint/plugins/search-backend/alpha
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/search-backend/authorizedsearchengine-test
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/search-backend/createqueryaction-test
+    to: blueprint/plugins/search-backend/createqueryaction
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/search-backend/authorizedsearchengine-test
-    to: blueprint/plugins/search-backend/authorizedsearchengine
+  - from: blueprint/plugins/search-backend/createqueryaction-test
+    to: blueprint/plugins/search-backend/alpha
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/search-backend/authorizedsearchengine
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/search-backend/router
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/search-backend/authorizedsearchengine
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/search-backend/router
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/router
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/router
+    to: blueprint/plugins/search-backend/search_result_utils
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/search-backend/router-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/search-backend/router-test
@@ -380,22 +380,22 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/search-backend/router-test
-    to: blueprint/plugins/catalog-node/testutils
+    to: blueprint/plugins/catalog-react/testutils
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/search-backend/router
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/search-backend/authorizedsearchengine
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/search-backend/router
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/search-backend/authorizedsearchengine
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/search-backend/router
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+  - from: blueprint/plugins/search-backend/authorizedsearchengine-test
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/search-backend/router
-    to: blueprint/plugins/search-backend/search_result_utils
+  - from: blueprint/plugins/search-backend/authorizedsearchengine-test
+    to: blueprint/plugins/search-backend/authorizedsearchengine
     type: direct-call
     description: Calls module / service

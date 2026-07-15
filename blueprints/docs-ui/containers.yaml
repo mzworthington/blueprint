@@ -3,51 +3,6 @@ name: Docs-ui Containers
 version: 1.0.0
 level: container
 nodes:
-  - entityRef: blueprint/docs-ui/docs-ui
-    type: container
-    name: Docs-ui Service
-    forensics:
-      complexity: 4
-      churn: 9
-      hotspotScore: 0
-      authorCount: 1
-      fileCount: 9
-      hotspotCount: 0
-      knowledgeSiloCount: 0
-      classifications: []
-      sinceDays: 500
-    x: 410
-    'y': 800
-  - entityRef: blueprint/docs-ui/app
-    type: container
-    name: App Service
-    forensics:
-      complexity: 5
-      churn: 5
-      hotspotScore: 0
-      authorCount: 1
-      fileCount: 5
-      hotspotCount: 0
-      knowledgeSiloCount: 0
-      classifications: []
-      sinceDays: 500
-    x: 150
-    'y': 60
-  - entityRef: blueprint/docs-ui/hooks
-    type: container
-    name: Hooks Service
-    forensics:
-      complexity: 5
-      churn: 1
-      hotspotScore: 0
-      authorCount: 1
-      fileCount: 1
-      hotspotCount: 0
-      knowledgeSiloCount: 0
-      classifications: []
-      sinceDays: 500
-    x: 670
-    'y': 60
   - entityRef: blueprint/docs-ui/snippets
     type: container
     name: Snippets Service
@@ -61,8 +16,53 @@ nodes:
       knowledgeSiloCount: 0
       classifications: []
       sinceDays: 500
-    x: 1190
+    x: 150
     'y': 60
+  - entityRef: blueprint/docs-ui/app
+    type: container
+    name: App Service
+    forensics:
+      complexity: 5
+      churn: 5
+      hotspotScore: 0
+      authorCount: 1
+      fileCount: 5
+      hotspotCount: 0
+      knowledgeSiloCount: 0
+      classifications: []
+      sinceDays: 500
+    x: 670
+    'y': 60
+  - entityRef: blueprint/docs-ui/docs-ui
+    type: container
+    name: Docs-ui Service
+    forensics:
+      complexity: 4
+      churn: 9
+      hotspotScore: 0
+      authorCount: 1
+      fileCount: 9
+      hotspotCount: 0
+      knowledgeSiloCount: 0
+      classifications: []
+      sinceDays: 500
+    x: 930
+    'y': 800
+  - entityRef: blueprint/docs-ui/changelogs
+    type: container
+    name: Changelogs Service
+    forensics:
+      complexity: 1
+      churn: 22
+      hotspotScore: 0
+      authorCount: 1
+      fileCount: 22
+      hotspotCount: 0
+      knowledgeSiloCount: 0
+      classifications: []
+      sinceDays: 500
+    x: 930
+    'y': 1170
   - entityRef: blueprint/docs-ui/components
     type: container
     name: Components Service
@@ -77,42 +77,42 @@ nodes:
       classifications:
         - knowledge-silo
       sinceDays: 500
-    x: 825
+    x: 930
     'y': 430
-  - entityRef: blueprint/docs-ui/changelogs
+  - entityRef: blueprint/docs-ui/hooks
     type: container
-    name: Changelogs Service
+    name: Hooks Service
     forensics:
-      complexity: 1
-      churn: 22
+      complexity: 5
+      churn: 1
       hotspotScore: 0
       authorCount: 1
-      fileCount: 22
+      fileCount: 1
       hotspotCount: 0
       knowledgeSiloCount: 0
       classifications: []
       sinceDays: 500
-    x: 410
-    'y': 1170
+    x: 1190
+    'y': 60
 dependencies:
   - from: blueprint/docs-ui/app
-    to: blueprint/docs-ui/components
+    to: blueprint/docs-ui/docs-ui
     type: inter-container
   - from: blueprint/docs-ui/app
-    to: blueprint/docs-ui/docs-ui
-    type: inter-container
-  - from: blueprint/docs-ui/hooks
     to: blueprint/docs-ui/components
-    type: inter-container
-  - from: blueprint/docs-ui/hooks
-    to: blueprint/docs-ui/docs-ui
     type: inter-container
   - from: blueprint/docs-ui/docs-ui
     to: blueprint/docs-ui/changelogs
     type: inter-container
+  - from: blueprint/docs-ui/changelogs
+    to: blueprint/docs-ui/docs-ui
+    type: inter-container
   - from: blueprint/docs-ui/components
     to: blueprint/docs-ui/docs-ui
     type: inter-container
-  - from: blueprint/docs-ui/changelogs
+  - from: blueprint/docs-ui/hooks
+    to: blueprint/docs-ui/components
+    type: inter-container
+  - from: blueprint/docs-ui/hooks
     to: blueprint/docs-ui/docs-ui
     type: inter-container

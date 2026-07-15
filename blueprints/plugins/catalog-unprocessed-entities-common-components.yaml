@@ -3,28 +3,6 @@ name: Catalog-unprocessed-entities-common Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/plugins/catalog-unprocessed-entities-common/index
-    type: rest-api
-    name: index REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/catalog-unprocessed-entities-common/src/api/index.ts
-      containerId: catalog-unprocessed-entities-common
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 17
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
   - entityRef: blueprint/plugins/catalog-unprocessed-entities-common/permissions
     type: background-worker
     name: permissions Service
@@ -45,7 +23,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
+    x: 140
     'y': 50
   - entityRef: blueprint/plugins/catalog-unprocessed-entities-common/setuptests
     type: background-worker
@@ -67,7 +45,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 600
     'y': 50
   - entityRef: blueprint/plugins/catalog-unprocessed-entities-common/types
     type: background-worker
@@ -89,7 +67,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1520
+    x: 1060
     'y': 370
   - entityRef: blueprint/plugins/catalog-unprocessed-entities-common/api
     type: rest-api
@@ -111,6 +89,28 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/catalog-unprocessed-entities-common/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-unprocessed-entities-common/src/index.ts
+      containerId: catalog-unprocessed-entities-common
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 26
+      sloc: 3
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
     x: 1520
     'y': 50
 dependencies:
@@ -119,6 +119,22 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/catalog-unprocessed-entities-common/api
-    to: blueprint/plugins/search-backend-node/errors
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/catalogplugin-test
+    to: blueprint/plugins/catalog-unprocessed-entities-common/permissions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/authorizedentitiescatalog-test
+    to: blueprint/plugins/catalog-unprocessed-entities-common/permissions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-common/permissionclient
+    to: blueprint/plugins/catalog-unprocessed-entities-common/permissions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-common/permissionclient-test
+    to: blueprint/plugins/catalog-unprocessed-entities-common/permissions
     type: direct-call
     description: Calls module / service

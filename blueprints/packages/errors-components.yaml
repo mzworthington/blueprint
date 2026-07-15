@@ -3,19 +3,19 @@ name: Errors Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/errors/index
+  - entityRef: blueprint/packages/errors/response-test
     type: background-worker
-    name: index Service
-    isTest: false
+    name: response.test Service
+    isTest: true
     properties:
-      filepath: packages/errors/src/serialization/index.ts
+      filepath: packages/errors/src/serialization/response.test.ts
       containerId: errors
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 21
-      sloc: 4
+      loc: 114
+      sloc: 86
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -23,8 +23,96 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 475
+    x: 250
+    'y': 370
+  - entityRef: blueprint/packages/errors/response
+    type: background-worker
+    name: response Service
+    isTest: false
+    properties:
+      filepath: packages/errors/src/serialization/response.ts
+      containerId: errors
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 7
+      loc: 99
+      sloc: 51
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 290
+    'y': 690
+  - entityRef: blueprint/packages/errors/error-test
+    type: background-worker
+    name: error.test Service
+    isTest: true
+    properties:
+      filepath: packages/errors/src/serialization/error.test.ts
+      containerId: errors
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 116
+      sloc: 90
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 750
+    'y': 690
+  - entityRef: blueprint/packages/errors/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/errors/src/errors/index.ts
+      containerId: errors
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 33
+      sloc: 16
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
     'y': 50
+  - entityRef: blueprint/packages/errors/error
+    type: background-worker
+    name: error Service
+    isTest: false
+    properties:
+      filepath: packages/errors/src/serialization/error.ts
+      containerId: errors
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 8
+      loc: 106
+      sloc: 52
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 830
+    'y': 1010
   - entityRef: blueprint/packages/errors/setuptests
     type: background-worker
     name: setupTests Service
@@ -45,21 +133,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 935
+    x: 600
     'y': 50
-  - entityRef: blueprint/packages/errors/assertion-test
+  - entityRef: blueprint/packages/errors/responseerror
     type: background-worker
-    name: assertion.test Service
-    isTest: true
+    name: ResponseError Service
+    isTest: false
     properties:
-      filepath: packages/errors/src/errors/assertion.test.ts
+      filepath: packages/errors/src/errors/ResponseError.ts
       containerId: errors
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 170
-      sloc: 132
+      complexity: 2
+      loc: 104
+      sloc: 46
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -67,7 +155,95 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 140
+    x: 1060
+    'y': 370
+  - entityRef: blueprint/packages/errors/customerrorbase
+    type: background-worker
+    name: CustomErrorBase Service
+    isTest: false
+    properties:
+      filepath: packages/errors/src/errors/CustomErrorBase.ts
+      containerId: errors
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 8
+      loc: 74
+      sloc: 29
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1695
+    'y': 1010
+  - entityRef: blueprint/packages/errors/responseerror-test
+    type: background-worker
+    name: ResponseError.test Service
+    isTest: true
+    properties:
+      filepath: packages/errors/src/errors/ResponseError.test.ts
+      containerId: errors
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 45
+      sloc: 25
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/packages/errors/common
+    type: background-worker
+    name: common Service
+    isTest: false
+    properties:
+      filepath: packages/errors/src/errors/common.ts
+      containerId: errors
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 122
+      sloc: 32
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1560
+    'y': 690
+  - entityRef: blueprint/packages/errors/common-test
+    type: background-worker
+    name: common.test Service
+    isTest: true
+    properties:
+      filepath: packages/errors/src/errors/common.test.ts
+      containerId: errors
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 57
+      sloc: 36
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
     'y': 370
   - entityRef: blueprint/packages/errors/assertion
     type: background-worker
@@ -90,118 +266,8 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 410
+    x: 1830
     'y': 1330
-  - entityRef: blueprint/packages/errors/common-test
-    type: background-worker
-    name: common.test Service
-    isTest: true
-    properties:
-      filepath: packages/errors/src/errors/common.test.ts
-      containerId: errors
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 57
-      sloc: 36
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 370
-  - entityRef: blueprint/packages/errors/common
-    type: background-worker
-    name: common Service
-    isTest: false
-    properties:
-      filepath: packages/errors/src/errors/common.ts
-      containerId: errors
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 122
-      sloc: 32
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 330
-    'y': 690
-  - entityRef: blueprint/packages/errors/customerrorbase
-    type: background-worker
-    name: CustomErrorBase Service
-    isTest: false
-    properties:
-      filepath: packages/errors/src/errors/CustomErrorBase.ts
-      containerId: errors
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 8
-      loc: 74
-      sloc: 29
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 775
-    'y': 1010
-  - entityRef: blueprint/packages/errors/responseerror-test
-    type: background-worker
-    name: ResponseError.test Service
-    isTest: true
-    properties:
-      filepath: packages/errors/src/errors/ResponseError.test.ts
-      containerId: errors
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 45
-      sloc: 25
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1395
-    'y': 50
-  - entityRef: blueprint/packages/errors/responseerror
-    type: background-worker
-    name: ResponseError Service
-    isTest: false
-    properties:
-      filepath: packages/errors/src/errors/ResponseError.ts
-      containerId: errors
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 104
-      sloc: 46
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1395
-    'y': 370
   - entityRef: blueprint/packages/errors/types
     type: background-worker
     name: types Service
@@ -222,21 +288,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2045
+    x: 805
     'y': 1330
-  - entityRef: blueprint/packages/errors/error-test
+  - entityRef: blueprint/packages/errors/assertion-test
     type: background-worker
-    name: error.test Service
+    name: assertion.test Service
     isTest: true
     properties:
-      filepath: packages/errors/src/serialization/error.test.ts
+      filepath: packages/errors/src/errors/assertion.test.ts
       containerId: errors
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 116
-      sloc: 90
+      loc: 170
+      sloc: 132
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -244,117 +310,19 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1180
-    'y': 690
-  - entityRef: blueprint/packages/errors/error
-    type: background-worker
-    name: error Service
-    isTest: false
-    properties:
-      filepath: packages/errors/src/serialization/error.ts
-      containerId: errors
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 8
-      loc: 106
-      sloc: 52
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1235
-    'y': 1010
-  - entityRef: blueprint/packages/errors/response-test
-    type: background-worker
-    name: response.test Service
-    isTest: true
-    properties:
-      filepath: packages/errors/src/serialization/response.test.ts
-      containerId: errors
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 114
-      sloc: 86
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1965
+    x: 2020
     'y': 370
-  - entityRef: blueprint/packages/errors/response
-    type: background-worker
-    name: response Service
-    isTest: false
-    properties:
-      filepath: packages/errors/src/serialization/response.ts
-      containerId: errors
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 7
-      loc: 99
-      sloc: 51
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1640
-    'y': 690
 dependencies:
-  - from: blueprint/packages/errors/assertion-test
-    to: blueprint/packages/errors/assertion
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/errors/assertion-test
-    to: blueprint/packages/errors/common
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/errors/assertion-test
-    to: blueprint/packages/errors/customerrorbase
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/errors/common-test
-    to: blueprint/packages/errors/common
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/errors/common
-    to: blueprint/packages/errors/assertion
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/errors/common
-    to: blueprint/packages/errors/customerrorbase
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/errors/customerrorbase
-    to: blueprint/packages/errors/assertion
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/errors/responseerror-test
-    to: blueprint/packages/errors/responseerror
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/errors/responseerror
-    to: blueprint/packages/errors/error
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/errors/responseerror
+  - from: blueprint/packages/errors/response-test
     to: blueprint/packages/errors/response
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/errors/responseerror
+  - from: blueprint/packages/errors/response
     to: blueprint/packages/errors/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/errors/response
+    to: blueprint/packages/errors/error
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/errors/error-test
@@ -373,15 +341,47 @@ dependencies:
     to: blueprint/packages/errors/assertion
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/errors/response-test
+  - from: blueprint/packages/errors/responseerror
+    to: blueprint/packages/errors/error
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/errors/responseerror
     to: blueprint/packages/errors/response
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/errors/response
+  - from: blueprint/packages/errors/responseerror
     to: blueprint/packages/errors/types
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/errors/response
-    to: blueprint/packages/errors/error
+  - from: blueprint/packages/errors/customerrorbase
+    to: blueprint/packages/errors/assertion
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/errors/responseerror-test
+    to: blueprint/packages/errors/responseerror
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/errors/common
+    to: blueprint/packages/errors/assertion
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/errors/common
+    to: blueprint/packages/errors/customerrorbase
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/errors/common-test
+    to: blueprint/packages/errors/common
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/errors/assertion-test
+    to: blueprint/packages/errors/assertion
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/errors/assertion-test
+    to: blueprint/packages/errors/common
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/errors/assertion-test
+    to: blueprint/packages/errors/customerrorbase
     type: direct-call
     description: Calls module / service

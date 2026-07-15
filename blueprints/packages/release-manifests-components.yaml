@@ -3,28 +3,6 @@ name: Release-manifests Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/release-manifests/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/release-manifests/src/index.ts
-      containerId: release-manifests
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 29
-      sloc: 6
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
   - entityRef: blueprint/packages/release-manifests/manifest-test
     type: background-worker
     name: manifest.test Service
@@ -45,7 +23,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
+    x: 140
     'y': 50
   - entityRef: blueprint/packages/release-manifests/manifest
     type: background-worker
@@ -67,8 +45,30 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
+    x: 140
     'y': 370
+  - entityRef: blueprint/packages/release-manifests/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/release-manifests/src/index.ts
+      containerId: release-manifests
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 29
+      sloc: 6
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 50
 dependencies:
   - from: blueprint/packages/release-manifests/manifest-test
     to: blueprint/packages/core-components/node

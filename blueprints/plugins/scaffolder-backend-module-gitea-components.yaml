@@ -3,28 +3,6 @@ name: Scaffolder-backend-module-gitea Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/plugins/scaffolder-backend-module-gitea/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-gitea/src/actions/index.ts
-      containerId: scaffolder-backend-module-gitea
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 17
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
   - entityRef: blueprint/plugins/scaffolder-backend-module-gitea/module
     type: background-worker
     name: module Service
@@ -45,74 +23,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-gitea/gitea-examples-test
-    type: background-worker
-    name: gitea.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-gitea/src/actions/gitea.examples.test.ts
-      containerId: scaffolder-backend-module-gitea
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 11
-      loc: 807
-      sloc: 735
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-gitea/gitea-examples
-    type: background-worker
-    name: gitea.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-gitea/src/actions/gitea.examples.ts
-      containerId: scaffolder-backend-module-gitea
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 177
-      sloc: 159
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1290
-    'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-gitea/gitea-test
-    type: background-worker
-    name: gitea.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-gitea/src/actions/gitea.test.ts
-      containerId: scaffolder-backend-module-gitea
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 228
-      sloc: 195
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1520
+    x: 140
     'y': 50
   - entityRef: blueprint/plugins/scaffolder-backend-module-gitea/gitea
     type: background-worker
@@ -135,8 +46,97 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1480
+    x: 600
     'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-gitea/gitea-examples
+    type: background-worker
+    name: gitea.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-gitea/src/actions/gitea.examples.ts
+      containerId: scaffolder-backend-module-gitea
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 177
+      sloc: 159
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-gitea/gitea-examples-test
+    type: background-worker
+    name: gitea.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-gitea/src/actions/gitea.examples.test.ts
+      containerId: scaffolder-backend-module-gitea
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 11
+      loc: 807
+      sloc: 735
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-gitea/gitea-test
+    type: background-worker
+    name: gitea.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-gitea/src/actions/gitea.test.ts
+      containerId: scaffolder-backend-module-gitea
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 228
+      sloc: 195
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-gitea/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-gitea/src/index.ts
+      containerId: scaffolder-backend-module-gitea
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 25
+      sloc: 2
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
+    'y': 50
 dependencies:
   - from: blueprint/plugins/scaffolder-backend-module-gitea/module
     to: blueprint/plugins/home/actions
@@ -146,12 +146,28 @@ dependencies:
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitea/gitea
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitea/gitea
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitea/gitea
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitea/gitea
+    to: blueprint/plugins/scaffolder-backend-module-gitea/gitea-examples
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-gitea/gitea-examples-test
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-gitea/gitea-examples-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-gitea/gitea-examples-test
@@ -167,26 +183,10 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-gitea/gitea-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-gitea/gitea-test
     to: blueprint/plugins/scaffolder-backend-module-gitea/gitea
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitea/gitea
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitea/gitea
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitea/gitea
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gitea/gitea
-    to: blueprint/plugins/scaffolder-backend-module-gitea/gitea-examples
     type: direct-call
     description: Calls module / service

@@ -3,6 +3,28 @@ name: Bitbucket-cloud-common Service Components
 version: 1.0.0
 level: component
 nodes:
+  - entityRef: blueprint/plugins/bitbucket-cloud-common/pagination
+    type: background-worker
+    name: pagination Service
+    isTest: false
+    properties:
+      filepath: plugins/bitbucket-cloud-common/src/pagination.ts
+      containerId: bitbucket-cloud-common
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 6
+      loc: 76
+      sloc: 51
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 1010
   - entityRef: blueprint/plugins/bitbucket-cloud-common/bitbucketcloudclient-test
     type: background-worker
     name: BitbucketCloudClient.test Service
@@ -23,51 +45,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 235
-    'y': 50
-  - entityRef: blueprint/plugins/bitbucket-cloud-common/bitbucketcloudclient
-    type: background-worker
-    name: BitbucketCloudClient Service
-    isTest: false
-    properties:
-      filepath: plugins/bitbucket-cloud-common/src/BitbucketCloudClient.ts
-      containerId: bitbucket-cloud-common
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 8
-      loc: 187
-      sloc: 147
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 235
-    'y': 370
-  - entityRef: blueprint/plugins/bitbucket-cloud-common/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/bitbucket-cloud-common/src/models/index.ts
-      containerId: bitbucket-cloud-common
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 657
-      sloc: 253
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 695
+    x: 735
     'y': 50
   - entityRef: blueprint/plugins/bitbucket-cloud-common/pagination-test
     type: background-worker
@@ -91,19 +69,19 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 690
-  - entityRef: blueprint/plugins/bitbucket-cloud-common/pagination
+  - entityRef: blueprint/plugins/bitbucket-cloud-common/index
     type: background-worker
-    name: pagination Service
+    name: index Service
     isTest: false
     properties:
-      filepath: plugins/bitbucket-cloud-common/src/pagination.ts
+      filepath: plugins/bitbucket-cloud-common/src/events/index.ts
       containerId: bitbucket-cloud-common
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 6
-      loc: 76
-      sloc: 51
+      complexity: 1
+      loc: 80
+      sloc: 45
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -111,8 +89,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 235
-    'y': 1010
+    x: 1195
+    'y': 50
   - entityRef: blueprint/plugins/bitbucket-cloud-common/setuptests
     type: background-worker
     name: setupTests Service
@@ -133,7 +111,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1155
+    x: 1655
     'y': 50
   - entityRef: blueprint/plugins/bitbucket-cloud-common/types
     type: background-worker
@@ -157,6 +135,28 @@ nodes:
       sinceDays: 500
     x: 600
     'y': 690
+  - entityRef: blueprint/plugins/bitbucket-cloud-common/bitbucketcloudclient
+    type: background-worker
+    name: BitbucketCloudClient Service
+    isTest: false
+    properties:
+      filepath: plugins/bitbucket-cloud-common/src/BitbucketCloudClient.ts
+      containerId: bitbucket-cloud-common
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 8
+      loc: 187
+      sloc: 147
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 735
+    'y': 370
 dependencies:
   - from: blueprint/plugins/bitbucket-cloud-common/bitbucketcloudclient-test
     to: blueprint/plugins/permission-common/integration
@@ -164,6 +164,14 @@ dependencies:
     description: Calls module / service
   - from: blueprint/plugins/bitbucket-cloud-common/bitbucketcloudclient-test
     to: blueprint/plugins/bitbucket-cloud-common/bitbucketcloudclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/bitbucket-cloud-common/pagination-test
+    to: blueprint/plugins/bitbucket-cloud-common/pagination
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/bitbucket-cloud-common/types
+    to: blueprint/plugins/bitbucket-cloud-common/pagination
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/bitbucket-cloud-common/bitbucketcloudclient
@@ -176,13 +184,5 @@ dependencies:
     description: Calls module / service
   - from: blueprint/plugins/bitbucket-cloud-common/bitbucketcloudclient
     to: blueprint/plugins/bitbucket-cloud-common/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/bitbucket-cloud-common/pagination-test
-    to: blueprint/plugins/bitbucket-cloud-common/pagination
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/bitbucket-cloud-common/types
-    to: blueprint/plugins/bitbucket-cloud-common/pagination
     type: direct-call
     description: Calls module / service

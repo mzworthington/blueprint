@@ -3,19 +3,19 @@ name: Scaffolder-internal Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/scaffolder-internal/index
-    type: background-worker
-    name: index Service
+  - entityRef: blueprint/packages/scaffolder-internal/internalformfield
+    type: gateway-api
+    name: InternalFormField UI Component
     isTest: false
     properties:
-      filepath: packages/scaffolder-internal/src/wiring/index.ts
+      filepath: packages/scaffolder-internal/src/wiring/InternalFormField.ts
       containerId: scaffolder-internal
-      technology: TypeScript Domain Service
-      classification: default
+      technology: React Component
+      classification: ui-import
     forensics:
       complexity: 1
-      loc: 18
-      sloc: 2
+      loc: 32
+      sloc: 12
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -24,6 +24,28 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 140
+    'y': 50
+  - entityRef: blueprint/packages/scaffolder-internal/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/scaffolder-internal/src/index.ts
+      containerId: scaffolder-internal
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 18
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
     'y': 50
   - entityRef: blueprint/packages/scaffolder-internal/internalformdecorator
     type: gateway-api
@@ -45,36 +67,14 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
-    'y': 50
-  - entityRef: blueprint/packages/scaffolder-internal/internalformfield
-    type: gateway-api
-    name: InternalFormField UI Component
-    isTest: false
-    properties:
-      filepath: packages/scaffolder-internal/src/wiring/InternalFormField.ts
-      containerId: scaffolder-internal
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 32
-      sloc: 12
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
     x: 1060
     'y': 50
 dependencies:
-  - from: blueprint/packages/scaffolder-internal/internalformdecorator
-    to: blueprint/packages/catalog-model/alpha
+  - from: blueprint/packages/scaffolder-internal/internalformfield
+    to: blueprint/packages/core-plugin-api/alpha
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/scaffolder-internal/internalformfield
-    to: blueprint/packages/catalog-model/alpha
+  - from: blueprint/packages/scaffolder-internal/internalformdecorator
+    to: blueprint/packages/core-plugin-api/alpha
     type: direct-call
     description: Calls module / service

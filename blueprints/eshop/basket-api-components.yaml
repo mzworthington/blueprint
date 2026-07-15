@@ -1,0 +1,127 @@
+entityRef: blueprint/eshop/basket-api
+name: Basket.API Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/eshop/basket-api/basketservice
+    type: background-worker
+    name: BasketService Service
+    isTest: false
+    properties:
+      filepath: src/Basket.API/Grpc/BasketService.cs
+      containerId: basket-api
+      technology: C# Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/eshop/basket-api/redisbasketrepository
+    type: relational-database
+    name: RedisBasketRepository Database
+    isTest: false
+    properties:
+      filepath: src/Basket.API/Repositories/RedisBasketRepository.cs
+      containerId: basket-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 600
+    'y': 50
+  - entityRef: blueprint/eshop/basket-api/ibasketrepository
+    type: relational-database
+    name: IBasketRepository Database
+    isTest: false
+    properties:
+      filepath: src/Basket.API/Repositories/IBasketRepository.cs
+      containerId: basket-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/eshop/basket-api/servercallcontextidentityextensions
+    type: background-worker
+    name: ServerCallContextIdentityExtensions Service
+    isTest: false
+    properties:
+      filepath: src/Basket.API/Extensions/ServerCallContextIdentityExtensions.cs
+      containerId: basket-api
+      technology: C# Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/eshop/basket-api/extensions
+    type: background-worker
+    name: Extensions Service
+    isTest: false
+    properties:
+      filepath: src/Basket.API/Extensions/Extensions.cs
+      containerId: basket-api
+      technology: C# Domain Service
+      classification: default
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/eshop/basket-api/customerbasket
+    type: background-worker
+    name: CustomerBasket Service
+    isTest: false
+    properties:
+      filepath: src/Basket.API/Model/CustomerBasket.cs
+      containerId: basket-api
+      technology: C# Domain Service
+      classification: default
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/eshop/basket-api/basketitem
+    type: background-worker
+    name: BasketItem Service
+    isTest: false
+    properties:
+      filepath: src/Basket.API/Model/BasketItem.cs
+      containerId: basket-api
+      technology: C# Domain Service
+      classification: default
+    x: 2900
+    'y': 50
+  - entityRef: blueprint/eshop/basket-api/orderstartedintegrationevent
+    type: background-worker
+    name: OrderStartedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Basket.API/IntegrationEvents/Events/OrderStartedIntegrationEvent.cs
+      containerId: basket-api
+      technology: C# Domain Service
+      classification: default
+    x: 3360
+    'y': 50
+  - entityRef: blueprint/eshop/basket-api/orderstartedintegrationeventhandler
+    type: background-worker
+    name: OrderStartedIntegrationEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Basket.API/IntegrationEvents/EventHandling/OrderStartedIntegrationEventHandler.cs
+      containerId: basket-api
+      technology: C# Domain Service
+      classification: default
+    x: 3820
+    'y': 50
+  - entityRef: blueprint/eshop/basket-api/globalusings
+    type: event-broker
+    name: GlobalUsings Message Broker
+    isTest: false
+    properties:
+      filepath: src/Basket.API/GlobalUsings.cs
+      containerId: basket-api
+      technology: C# Event Client
+      classification: event-marker
+    x: 4280
+    'y': 50
+  - entityRef: blueprint/eshop/basket-api/program
+    type: background-worker
+    name: Program Service
+    isTest: false
+    properties:
+      filepath: src/Basket.API/Program.cs
+      containerId: basket-api
+      technology: C# Domain Service
+      classification: default
+    x: 4740
+    'y': 50
+dependencies: []

@@ -3,63 +3,19 @@ name: App Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/docs-ui/app/layout
-    type: background-worker
-    name: layout Service
-    isTest: false
-    properties:
-      filepath: docs-ui/src/app/layout.tsx
-      containerId: app
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 73
-      sloc: 65
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
-  - entityRef: blueprint/docs-ui/app/providers
-    type: gateway-api
-    name: providers UI Component
-    isTest: false
-    properties:
-      filepath: docs-ui/src/app/providers.tsx
-      containerId: app
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 9
-      sloc: 6
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 370
   - entityRef: blueprint/docs-ui/app/snippets
     type: background-worker
     name: snippets Service
     isTest: false
     properties:
-      filepath: docs-ui/src/app/hooks/use-breakpoint/snippets.ts
+      filepath: docs-ui/src/app/get-started/installation/snippets.ts
       containerId: app
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 14
-      sloc: 11
+      loc: 23
+      sloc: 17
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -67,7 +23,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
+    x: 140
     'y': 50
   - entityRef: blueprint/docs-ui/app/components
     type: background-worker
@@ -89,7 +45,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 600
     'y': 50
   - entityRef: blueprint/docs-ui/app/props-definition
     type: background-worker
@@ -111,9 +67,505 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/docs-ui/app/layout
+    type: background-worker
+    name: layout Service
+    isTest: false
+    properties:
+      filepath: docs-ui/src/app/layout.tsx
+      containerId: app
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 73
+      sloc: 65
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
     x: 1520
     'y': 50
+  - entityRef: blueprint/docs-ui/app/providers
+    type: gateway-api
+    name: providers UI Component
+    isTest: false
+    properties:
+      filepath: docs-ui/src/app/providers.tsx
+      containerId: app
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 9
+      sloc: 6
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
+    'y': 370
 dependencies:
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/box
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/box
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/box
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/container
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/table
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/grid
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/docs-ui/app/layout
     to: blueprint/docs-ui/components/sidebar
     type: direct-call
@@ -140,457 +592,5 @@ dependencies:
     description: Calls module / service
   - from: blueprint/docs-ui/app/providers
     to: blueprint/docs-ui/docs-ui/playground-context
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/box
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/box
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/container
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/grid
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/box
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/table
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/docs-ui/propdefs
     type: direct-call
     description: Calls module / service

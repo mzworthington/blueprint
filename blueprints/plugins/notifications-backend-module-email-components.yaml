@@ -25,50 +25,6 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 50
-  - entityRef: blueprint/plugins/notifications-backend-module-email/extensions
-    type: background-worker
-    name: extensions Service
-    isTest: false
-    properties:
-      filepath: plugins/notifications-backend-module-email/src/extensions.ts
-      containerId: notifications-backend-module-email
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 42
-      sloc: 14
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 830
-    'y': 690
-  - entityRef: blueprint/plugins/notifications-backend-module-email/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/notifications-backend-module-email/src/processor/transports/index.ts
-      containerId: notifications-backend-module-email
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 21
-      sloc: 5
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
   - entityRef: blueprint/plugins/notifications-backend-module-email/module
     type: background-worker
     name: module Service
@@ -89,21 +45,43 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
+    x: 2900
     'y': 370
-  - entityRef: blueprint/plugins/notifications-backend-module-email/notificationsemailprocessor-test
+  - entityRef: blueprint/plugins/notifications-backend-module-email/smtp
     type: background-worker
-    name: NotificationsEmailProcessor.test Service
-    isTest: true
+    name: smtp Service
+    isTest: false
     properties:
-      filepath: plugins/notifications-backend-module-email/src/processor/NotificationsEmailProcessor.test.ts
+      filepath: plugins/notifications-backend-module-email/src/processor/transports/smtp.ts
+      containerId: notifications-backend-module-email
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 31
+      sloc: 13
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/notifications-backend-module-email/sendmail
+    type: background-worker
+    name: sendmail Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-email/src/processor/transports/sendmail.ts
       containerId: notifications-backend-module-email
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 510
-      sloc: 458
+      loc: 26
+      sloc: 9
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -112,6 +90,94 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/notifications-backend-module-email/stream
+    type: background-worker
+    name: stream Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-email/src/processor/transports/stream.ts
+      containerId: notifications-backend-module-email
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 21
+      sloc: 4
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/notifications-backend-module-email/azure
+    type: background-worker
+    name: azure Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-email/src/processor/transports/azure.ts
+      containerId: notifications-backend-module-email
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 8
+      loc: 81
+      sloc: 61
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/notifications-backend-module-email/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-email/src/index.ts
+      containerId: notifications-backend-module-email
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 25
+      sloc: 2
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/plugins/notifications-backend-module-email/ses
+    type: background-worker
+    name: ses Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-email/src/processor/transports/ses.ts
+      containerId: notifications-backend-module-email
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 43
+      sloc: 23
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2900
     'y': 50
   - entityRef: blueprint/plugins/notifications-backend-module-email/notificationsemailprocessor
     type: background-worker
@@ -134,109 +200,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 3360
     'y': 370
-  - entityRef: blueprint/plugins/notifications-backend-module-email/azure
+  - entityRef: blueprint/plugins/notifications-backend-module-email/notificationsemailprocessor-test
     type: background-worker
-    name: azure Service
-    isTest: false
+    name: NotificationsEmailProcessor.test Service
+    isTest: true
     properties:
-      filepath: plugins/notifications-backend-module-email/src/processor/transports/azure.ts
-      containerId: notifications-backend-module-email
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 8
-      loc: 81
-      sloc: 61
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1520
-    'y': 50
-  - entityRef: blueprint/plugins/notifications-backend-module-email/sendmail
-    type: background-worker
-    name: sendmail Service
-    isTest: false
-    properties:
-      filepath: plugins/notifications-backend-module-email/src/processor/transports/sendmail.ts
+      filepath: plugins/notifications-backend-module-email/src/processor/NotificationsEmailProcessor.test.ts
       containerId: notifications-backend-module-email
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 26
-      sloc: 9
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1980
-    'y': 50
-  - entityRef: blueprint/plugins/notifications-backend-module-email/ses
-    type: background-worker
-    name: ses Service
-    isTest: false
-    properties:
-      filepath: plugins/notifications-backend-module-email/src/processor/transports/ses.ts
-      containerId: notifications-backend-module-email
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 43
-      sloc: 23
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2440
-    'y': 50
-  - entityRef: blueprint/plugins/notifications-backend-module-email/smtp
-    type: background-worker
-    name: smtp Service
-    isTest: false
-    properties:
-      filepath: plugins/notifications-backend-module-email/src/processor/transports/smtp.ts
-      containerId: notifications-backend-module-email
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 31
-      sloc: 13
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2900
-    'y': 50
-  - entityRef: blueprint/plugins/notifications-backend-module-email/stream
-    type: background-worker
-    name: stream Service
-    isTest: false
-    properties:
-      filepath: plugins/notifications-backend-module-email/src/processor/transports/stream.ts
-      containerId: notifications-backend-module-email
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 21
-      sloc: 4
+      loc: 510
+      sloc: 458
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -246,9 +224,31 @@ nodes:
       sinceDays: 500
     x: 3360
     'y': 50
+  - entityRef: blueprint/plugins/notifications-backend-module-email/extensions
+    type: background-worker
+    name: extensions Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-backend-module-email/src/extensions.ts
+      containerId: notifications-backend-module-email
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 42
+      sloc: 14
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3130
+    'y': 690
 dependencies:
   - from: blueprint/plugins/notifications-backend-module-email/config-d
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/notifications-backend-module-email/module
@@ -259,47 +259,47 @@ dependencies:
     to: blueprint/plugins/notifications-backend-module-email/extensions
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/notifications-backend-module-email/notificationsemailprocessor-test
-    to: blueprint/plugins/notifications-backend-module-email/notificationsemailprocessor
+  - from: blueprint/plugins/notifications-backend-module-email/smtp
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/notifications-backend-module-email/notificationsemailprocessor-test
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/notifications-backend-module-email/sendmail
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/notifications-backend-module-email/notificationsemailprocessor-test
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+  - from: blueprint/plugins/notifications-backend-module-email/azure
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/notifications-backend-module-email/notificationsemailprocessor-test
-    to: blueprint/plugins/catalog-node/testutils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/notifications-backend-module-email/notificationsemailprocessor
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/notifications-backend-module-email/ses
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/notifications-backend-module-email/notificationsemailprocessor
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend-module-email/notificationsemailprocessor
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/notifications-backend-module-email/notificationsemailprocessor
     to: blueprint/plugins/notifications-backend-module-email/extensions
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/notifications-backend-module-email/azure
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/notifications-backend-module-email/notificationsemailprocessor-test
+    to: blueprint/plugins/notifications-backend-module-email/notificationsemailprocessor
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/notifications-backend-module-email/sendmail
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/notifications-backend-module-email/notificationsemailprocessor-test
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/notifications-backend-module-email/ses
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/notifications-backend-module-email/notificationsemailprocessor-test
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/notifications-backend-module-email/smtp
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/notifications-backend-module-email/notificationsemailprocessor-test
+    to: blueprint/plugins/catalog-react/testutils
     type: direct-call
     description: Calls module / service

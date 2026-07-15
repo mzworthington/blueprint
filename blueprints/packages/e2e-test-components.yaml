@@ -3,28 +3,6 @@ name: E2e-test Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/e2e-test/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/e2e-test/src/commands/index.ts
-      containerId: e2e-test
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 27
-      sloc: 9
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
   - entityRef: blueprint/packages/e2e-test/types-d
     type: background-worker
     name: types.d Service
@@ -38,6 +16,72 @@ nodes:
       complexity: 1
       loc: 19
       sloc: 2
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/e2e-test/helpers
+    type: background-worker
+    name: helpers Service
+    isTest: false
+    properties:
+      filepath: packages/e2e-test/src/lib/helpers.ts
+      containerId: e2e-test
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 43
+      sloc: 19
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 370
+    'y': 690
+  - entityRef: blueprint/packages/e2e-test/helpers-test
+    type: background-worker
+    name: helpers.test Service
+    isTest: true
+    properties:
+      filepath: packages/e2e-test/src/lib/helpers.test.ts
+      containerId: e2e-test
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 34
+      sloc: 15
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 370
+  - entityRef: blueprint/packages/e2e-test/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/e2e-test/src/index.ts
+      containerId: e2e-test
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 47
+      sloc: 24
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -68,53 +112,13 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 140
-    'y': 370
-  - entityRef: blueprint/packages/e2e-test/helpers-test
-    type: background-worker
-    name: helpers.test Service
-    isTest: true
-    properties:
-      filepath: packages/e2e-test/src/lib/helpers.test.ts
-      containerId: e2e-test
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 34
-      sloc: 15
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
     x: 600
     'y': 370
-  - entityRef: blueprint/packages/e2e-test/helpers
-    type: background-worker
-    name: helpers Service
-    isTest: false
-    properties:
-      filepath: packages/e2e-test/src/lib/helpers.ts
-      containerId: e2e-test
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 43
-      sloc: 19
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 370
-    'y': 690
 dependencies:
+  - from: blueprint/packages/e2e-test/helpers-test
+    to: blueprint/packages/e2e-test/helpers
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/packages/e2e-test/index
     to: blueprint/packages/e2e-test/runcommand
     type: read-write
@@ -125,9 +129,5 @@ dependencies:
     description: Calls module / service
   - from: blueprint/packages/e2e-test/runcommand
     to: blueprint/packages/cli-common/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/e2e-test/helpers-test
-    to: blueprint/packages/e2e-test/helpers
     type: direct-call
     description: Calls module / service

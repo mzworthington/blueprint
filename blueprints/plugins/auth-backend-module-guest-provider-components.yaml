@@ -25,50 +25,6 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 50
-  - entityRef: blueprint/plugins/auth-backend-module-guest-provider/authenticator
-    type: background-worker
-    name: authenticator Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-guest-provider/src/authenticator.ts
-      containerId: auth-backend-module-guest-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 39
-      sloc: 21
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 830
-    'y': 370
-  - entityRef: blueprint/plugins/auth-backend-module-guest-provider/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-guest-provider/src/index.ts
-      containerId: auth-backend-module-guest-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 24
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
   - entityRef: blueprint/plugins/auth-backend-module-guest-provider/module
     type: background-worker
     name: module Service
@@ -82,6 +38,28 @@ nodes:
       complexity: 1
       loc: 51
       sloc: 33
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-guest-provider/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-guest-provider/src/types.ts
+      containerId: auth-backend-module-guest-provider
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 22
+      sloc: 4
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -111,21 +89,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1290
+    x: 830
     'y': 370
-  - entityRef: blueprint/plugins/auth-backend-module-guest-provider/types
+  - entityRef: blueprint/plugins/auth-backend-module-guest-provider/index
     type: background-worker
-    name: types Service
+    name: index Service
     isTest: false
     properties:
-      filepath: plugins/auth-backend-module-guest-provider/src/types.ts
+      filepath: plugins/auth-backend-module-guest-provider/src/index.ts
       containerId: auth-backend-module-guest-provider
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 22
-      sloc: 4
+      loc: 24
+      sloc: 1
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -135,11 +113,29 @@ nodes:
       sinceDays: 500
     x: 1520
     'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-guest-provider/authenticator
+    type: background-worker
+    name: authenticator Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-guest-provider/src/authenticator.ts
+      containerId: auth-backend-module-guest-provider
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 39
+      sloc: 21
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 370
+    'y': 370
 dependencies:
-  - from: blueprint/plugins/auth-backend-module-guest-provider/authenticator
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/auth-backend-module-guest-provider/module
     to: blueprint/plugins/auth-backend-module-guest-provider/authenticator
     type: direct-call
@@ -149,10 +145,14 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/auth-backend-module-guest-provider/resolvers
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/auth-backend-module-guest-provider/resolvers
-    to: blueprint/plugins/search-backend-node/errors
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-guest-provider/authenticator
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service

@@ -3,19 +3,19 @@ name: App-legacy Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/app-legacy/apis
-    type: gateway-api
-    name: apis UI Component
+  - entityRef: blueprint/packages/app-legacy/authproxydiscoveryapi
+    type: background-worker
+    name: AuthProxyDiscoveryApi Service
     isTest: false
     properties:
-      filepath: packages/app-legacy/src/apis.ts
+      filepath: packages/app-legacy/src/AuthProxyDiscoveryApi.ts
       containerId: app-legacy
-      technology: React Component
-      classification: ui-import
+      technology: TypeScript Domain Service
+      classification: default
     forensics:
-      complexity: 1
-      loc: 78
-      sloc: 57
+      complexity: 4
+      loc: 58
+      sloc: 36
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -23,21 +23,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
-    'y': 690
-  - entityRef: blueprint/packages/app-legacy/app-test
-    type: gateway-api
-    name: App.test UI Component
-    isTest: true
+    x: 4320
+    'y': 1010
+  - entityRef: blueprint/packages/app-legacy/index
+    type: background-worker
+    name: index Service
+    isTest: false
     properties:
-      filepath: packages/app-legacy/src/App.test.tsx
+      filepath: packages/app-legacy/src/components/advancedSettings/index.ts
       containerId: app-legacy
-      technology: React Component
-      classification: ui-import
+      technology: TypeScript Domain Service
+      classification: default
     forensics:
       complexity: 1
-      loc: 51
-      sloc: 31
+      loc: 18
+      sloc: 1
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -45,7 +45,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4130
+    x: 2560
     'y': 50
   - entityRef: blueprint/packages/app-legacy/app
     type: gateway-api
@@ -67,52 +67,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3900
+    x: 2790
     'y': 370
-  - entityRef: blueprint/packages/app-legacy/authproxydiscoveryapi
-    type: background-worker
-    name: AuthProxyDiscoveryApi Service
-    isTest: false
-    properties:
-      filepath: packages/app-legacy/src/AuthProxyDiscoveryApi.ts
-      containerId: app-legacy
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 4
-      loc: 58
-      sloc: 36
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 330
-    'y': 1010
-  - entityRef: blueprint/packages/app-legacy/identityproviders
-    type: background-worker
-    name: identityProviders Service
-    isTest: false
-    properties:
-      filepath: packages/app-legacy/src/identityProviders.ts
-      containerId: app-legacy
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 85
-      sloc: 67
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2060
-    'y': 1010
   - entityRef: blueprint/packages/app-legacy/index-public-experimental
     type: gateway-api
     name: index-public-experimental UI Component
@@ -133,65 +89,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 140
+    x: 1140
     'y': 690
-  - entityRef: blueprint/packages/app-legacy/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/app-legacy/src/components/Root/index.ts
-      containerId: app-legacy
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 18
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3670
-    'y': 50
-  - entityRef: blueprint/packages/app-legacy/react-app-env-d
-    type: background-worker
-    name: react-app-env.d Service
-    isTest: false
-    properties:
-      filepath: packages/app-legacy/src/react-app-env.d.ts
-      containerId: app-legacy
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 16
-      sloc: 0
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4590
-    'y': 50
-  - entityRef: blueprint/packages/app-legacy/setuptests
-    type: background-worker
-    name: setupTests Service
+  - entityRef: blueprint/packages/app-legacy/app-test
+    type: gateway-api
+    name: App.test UI Component
     isTest: true
     properties:
-      filepath: packages/app-legacy/src/setupTests.ts
+      filepath: packages/app-legacy/src/App.test.tsx
       containerId: app-legacy
-      technology: TypeScript Domain Service
-      classification: default
+      technology: React Component
+      classification: ui-import
     forensics:
       complexity: 1
-      loc: 22
-      sloc: 1
+      loc: 51
+      sloc: 31
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -199,7 +111,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 5050
+    x: 3020
     'y': 50
   - entityRef: blueprint/packages/app-legacy/test-reject-network-test
     type: background-worker
@@ -221,21 +133,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 5510
+    x: 3480
     'y': 50
-  - entityRef: blueprint/packages/app-legacy/advancedsettings
-    type: gateway-api
-    name: AdvancedSettings UI Component
+  - entityRef: blueprint/packages/app-legacy/identityproviders
+    type: background-worker
+    name: identityProviders Service
     isTest: false
     properties:
-      filepath: packages/app-legacy/src/components/advancedSettings/AdvancedSettings.tsx
+      filepath: packages/app-legacy/src/identityProviders.ts
       containerId: app-legacy
-      technology: React Component
-      classification: ui-import
+      technology: TypeScript Domain Service
+      classification: default
     forensics:
-      complexity: 2
-      loc: 62
-      sloc: 42
+      complexity: 1
+      loc: 85
+      sloc: 67
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -243,65 +155,43 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
-    'y': 690
-  - entityRef: blueprint/packages/app-legacy/entitypage-test
+    x: 870
+    'y': 1010
+  - entityRef: blueprint/packages/app-legacy/apis
     type: gateway-api
-    name: EntityPage.test UI Component
+    name: apis UI Component
+    isTest: false
+    properties:
+      filepath: packages/app-legacy/src/apis.ts
+      containerId: app-legacy
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 78
+      sloc: 57
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4400
+    'y': 690
+  - entityRef: blueprint/packages/app-legacy/setuptests
+    type: background-worker
+    name: setupTests Service
     isTest: true
     properties:
-      filepath: packages/app-legacy/src/components/catalog/EntityPage.test.tsx
-      containerId: app-legacy
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 84
-      sloc: 63
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 640
-    'y': 370
-  - entityRef: blueprint/packages/app-legacy/entitypage
-    type: gateway-api
-    name: EntityPage UI Component
-    isTest: false
-    properties:
-      filepath: packages/app-legacy/src/components/catalog/EntityPage.tsx
-      containerId: app-legacy
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 466
-      sloc: 405
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1520
-    'y': 690
-  - entityRef: blueprint/packages/app-legacy/customdevtoolspage
-    type: background-worker
-    name: CustomDevToolsPage Service
-    isTest: false
-    properties:
-      filepath: packages/app-legacy/src/components/devtools/CustomDevToolsPage.tsx
+      filepath: packages/app-legacy/src/setupTests.ts
       containerId: app-legacy
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 55
-      sloc: 36
+      loc: 22
+      sloc: 1
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -309,52 +199,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1980
-    'y': 690
-  - entityRef: blueprint/packages/app-legacy/customizablehomepage
-    type: background-worker
-    name: CustomizableHomePage Service
-    isTest: false
-    properties:
-      filepath: packages/app-legacy/src/components/home/CustomizableHomePage.tsx
-      containerId: app-legacy
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 98
-      sloc: 77
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 6660
-    'y': 690
-  - entityRef: blueprint/packages/app-legacy/homepage
-    type: gateway-api
-    name: HomePage UI Component
-    isTest: false
-    properties:
-      filepath: packages/app-legacy/src/components/home/HomePage.tsx
-      containerId: app-legacy
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 126
-      sloc: 103
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3900
-    'y': 690
+    x: 3940
+    'y': 50
   - entityRef: blueprint/packages/app-legacy/shared
     type: background-worker
     name: shared Service
@@ -375,21 +221,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4130
+    x: 140
     'y': 1010
-  - entityRef: blueprint/packages/app-legacy/logofull
+  - entityRef: blueprint/packages/app-legacy/customizablehomepage
     type: background-worker
-    name: LogoFull Service
+    name: CustomizableHomePage Service
     isTest: false
     properties:
-      filepath: packages/app-legacy/src/components/Root/LogoFull.tsx
+      filepath: packages/app-legacy/src/components/home/CustomizableHomePage.tsx
       containerId: app-legacy
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 46
-      sloc: 26
+      loc: 98
+      sloc: 77
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -397,65 +243,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2980
-    'y': 1010
-  - entityRef: blueprint/packages/app-legacy/root
+    x: 140
+    'y': 690
+  - entityRef: blueprint/packages/app-legacy/defaulttemplate-stories
     type: gateway-api
-    name: Root UI Component
+    name: DefaultTemplate.stories UI Component
     isTest: false
     properties:
-      filepath: packages/app-legacy/src/components/Root/Root.tsx
+      filepath: packages/app-legacy/src/components/home/templates/DefaultTemplate.stories.tsx
       containerId: app-legacy
       technology: React Component
       classification: ui-import
-    forensics:
-      complexity: 2
-      loc: 176
-      sloc: 155
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2980
-    'y': 690
-  - entityRef: blueprint/packages/app-legacy/customscaffolderextensions
-    type: gateway-api
-    name: customScaffolderExtensions UI Component
-    isTest: false
-    properties:
-      filepath: packages/app-legacy/src/components/scaffolder/customScaffolderExtensions.tsx
-      containerId: app-legacy
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 5
-      loc: 97
-      sloc: 74
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4360
-    'y': 690
-  - entityRef: blueprint/packages/app-legacy/customscaffolderlayouts
-    type: background-worker
-    name: customScaffolderLayouts Service
-    isTest: false
-    properties:
-      filepath: packages/app-legacy/src/components/scaffolder/customScaffolderLayouts.tsx
-      containerId: app-legacy
-      technology: TypeScript Domain Service
-      classification: default
     forensics:
       complexity: 1
-      loc: 53
-      sloc: 35
+      loc: 198
+      sloc: 173
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -463,7 +265,51 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4820
+    x: 4400
+    'y': 50
+  - entityRef: blueprint/packages/app-legacy/customizabletemplate-stories
+    type: gateway-api
+    name: CustomizableTemplate.stories UI Component
+    isTest: false
+    properties:
+      filepath: packages/app-legacy/src/components/home/templates/CustomizableTemplate.stories.tsx
+      containerId: app-legacy
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 150
+      sloc: 124
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4860
+    'y': 50
+  - entityRef: blueprint/packages/app-legacy/homepage
+    type: gateway-api
+    name: HomePage UI Component
+    isTest: false
+    properties:
+      filepath: packages/app-legacy/src/components/home/HomePage.tsx
+      containerId: app-legacy
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 126
+      sloc: 103
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
     'y': 690
   - entityRef: blueprint/packages/app-legacy/decorators
     type: gateway-api
@@ -485,8 +331,52 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2520
+    x: 6470
     'y': 1010
+  - entityRef: blueprint/packages/app-legacy/customscaffolderlayouts
+    type: background-worker
+    name: customScaffolderLayouts Service
+    isTest: false
+    properties:
+      filepath: packages/app-legacy/src/components/scaffolder/customScaffolderLayouts.tsx
+      containerId: app-legacy
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 53
+      sloc: 35
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1600
+    'y': 690
+  - entityRef: blueprint/packages/app-legacy/customscaffolderextensions
+    type: gateway-api
+    name: customScaffolderExtensions UI Component
+    isTest: false
+    properties:
+      filepath: packages/app-legacy/src/components/scaffolder/customScaffolderExtensions.tsx
+      containerId: app-legacy
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 5
+      loc: 97
+      sloc: 74
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2060
+    'y': 690
   - entityRef: blueprint/packages/app-legacy/defaultpreviewtemplate
     type: background-worker
     name: defaultPreviewTemplate Service
@@ -507,7 +397,73 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 5280
+    x: 2520
+    'y': 690
+  - entityRef: blueprint/packages/app-legacy/entitypage-test
+    type: gateway-api
+    name: EntityPage.test UI Component
+    isTest: true
+    properties:
+      filepath: packages/app-legacy/src/components/catalog/EntityPage.test.tsx
+      containerId: app-legacy
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 84
+      sloc: 63
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3400
+    'y': 370
+  - entityRef: blueprint/packages/app-legacy/entitypage
+    type: gateway-api
+    name: EntityPage UI Component
+    isTest: false
+    properties:
+      filepath: packages/app-legacy/src/components/catalog/EntityPage.tsx
+      containerId: app-legacy
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 466
+      sloc: 405
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2980
+    'y': 690
+  - entityRef: blueprint/packages/app-legacy/searchpage
+    type: gateway-api
+    name: SearchPage UI Component
+    isTest: false
+    properties:
+      filepath: packages/app-legacy/src/components/search/SearchPage.tsx
+      containerId: app-legacy
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 4
+      loc: 147
+      sloc: 124
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3480
     'y': 690
   - entityRef: blueprint/packages/app-legacy/searchmodal
     type: gateway-api
@@ -529,21 +485,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3440
+    x: 5320
     'y': 1010
-  - entityRef: blueprint/packages/app-legacy/searchpage
-    type: gateway-api
-    name: SearchPage UI Component
+  - entityRef: blueprint/packages/app-legacy/customdevtoolspage
+    type: background-worker
+    name: CustomDevToolsPage Service
     isTest: false
     properties:
-      filepath: packages/app-legacy/src/components/search/SearchPage.tsx
+      filepath: packages/app-legacy/src/components/devtools/CustomDevToolsPage.tsx
       containerId: app-legacy
-      technology: React Component
-      classification: ui-import
+      technology: TypeScript Domain Service
+      classification: default
     forensics:
-      complexity: 4
-      loc: 147
-      sloc: 124
+      complexity: 1
+      loc: 55
+      sloc: 36
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -551,7 +507,51 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 5740
+    x: 3940
+    'y': 690
+  - entityRef: blueprint/packages/app-legacy/logofull
+    type: background-worker
+    name: LogoFull Service
+    isTest: false
+    properties:
+      filepath: packages/app-legacy/src/components/Root/LogoFull.tsx
+      containerId: app-legacy
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 46
+      sloc: 26
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 6010
+    'y': 1010
+  - entityRef: blueprint/packages/app-legacy/root
+    type: gateway-api
+    name: Root UI Component
+    isTest: false
+    properties:
+      filepath: packages/app-legacy/src/components/Root/Root.tsx
+      containerId: app-legacy
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 2
+      loc: 176
+      sloc: 155
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5780
     'y': 690
   - entityRef: blueprint/packages/app-legacy/techdocspage
     type: background-worker
@@ -573,21 +573,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 6200
+    x: 4860
     'y': 690
-  - entityRef: blueprint/packages/app-legacy/customizabletemplate-stories
+  - entityRef: blueprint/packages/app-legacy/advancedsettings
     type: gateway-api
-    name: CustomizableTemplate.stories UI Component
+    name: AdvancedSettings UI Component
     isTest: false
     properties:
-      filepath: packages/app-legacy/src/components/home/templates/CustomizableTemplate.stories.tsx
+      filepath: packages/app-legacy/src/components/advancedSettings/AdvancedSettings.tsx
       containerId: app-legacy
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 1
-      loc: 150
-      sloc: 124
+      complexity: 2
+      loc: 62
+      sloc: 42
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -595,21 +595,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 5970
-    'y': 50
-  - entityRef: blueprint/packages/app-legacy/defaulttemplate-stories
-    type: gateway-api
-    name: DefaultTemplate.stories UI Component
+    x: 5320
+    'y': 690
+  - entityRef: blueprint/packages/app-legacy/react-app-env-d
+    type: background-worker
+    name: react-app-env.d Service
     isTest: false
     properties:
-      filepath: packages/app-legacy/src/components/home/templates/DefaultTemplate.stories.tsx
+      filepath: packages/app-legacy/src/react-app-env.d.ts
       containerId: app-legacy
-      technology: React Component
-      classification: ui-import
+      technology: TypeScript Domain Service
+      classification: default
     forensics:
       complexity: 1
-      loc: 198
-      sloc: 173
+      loc: 16
+      sloc: 0
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -617,26 +617,26 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 6430
+    x: 5320
     'y': 50
 dependencies:
-  - from: blueprint/packages/app-legacy/apis
-    to: blueprint/packages/app-legacy/authproxydiscoveryapi
+  - from: blueprint/packages/ui/comboboxlistbox
+    to: blueprint/packages/app-legacy/shared
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/app-legacy/apis
-    to: blueprint/packages/catalog-model/alpha
+  - from: blueprint/packages/ui/selectcontent
+    to: blueprint/packages/app-legacy/shared
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/app-legacy/apis
-    to: blueprint/packages/catalog-model/alpha
+  - from: blueprint/packages/app-legacy/authproxydiscoveryapi
+    to: blueprint/packages/integration-aws-node/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/app-legacy/apis
-    to: blueprint/packages/app-legacy/decorators
+  - from: blueprint/packages/app-legacy/index
+    to: blueprint/packages/repo-tools/client
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/app-legacy/app-test
+  - from: blueprint/packages/app-legacy/index
     to: blueprint/packages/app-legacy/app
     type: direct-call
     description: Calls module / service
@@ -677,7 +677,7 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/app-legacy/app
-    to: blueprint/packages/catalog-model/alpha
+    to: blueprint/packages/core-plugin-api/alpha
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/app-legacy/app
@@ -696,10 +696,6 @@ dependencies:
     to: blueprint/packages/app-legacy/homepage
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/app-legacy/authproxydiscoveryapi
-    to: blueprint/packages/integration-aws-node/config
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/packages/app-legacy/index-public-experimental
     to: blueprint/packages/repo-tools/client
     type: direct-call
@@ -712,11 +708,7 @@ dependencies:
     to: blueprint/packages/app-legacy/authproxydiscoveryapi
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/app-legacy/index
-    to: blueprint/packages/repo-tools/client
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/index
+  - from: blueprint/packages/app-legacy/app-test
     to: blueprint/packages/app-legacy/app
     type: direct-call
     description: Calls module / service
@@ -724,144 +716,84 @@ dependencies:
     to: blueprint/packages/core-components/node
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/core-app-api/appmanager-test
-    to: blueprint/packages/app-legacy/apis
+  - from: blueprint/packages/app-legacy/apis
+    to: blueprint/packages/app-legacy/authproxydiscoveryapi
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/core-app-api/appmanager
-    to: blueprint/packages/app-legacy/apis
+  - from: blueprint/packages/app-legacy/apis
+    to: blueprint/packages/core-plugin-api/alpha
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/core-app-api/featureflagged-test
-    to: blueprint/packages/app-legacy/apis
+  - from: blueprint/packages/app-legacy/apis
+    to: blueprint/packages/core-plugin-api/alpha
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/core-app-api/flatroutes-beta-test
-    to: blueprint/packages/app-legacy/apis
+  - from: blueprint/packages/app-legacy/apis
+    to: blueprint/packages/app-legacy/decorators
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/core-app-api/flatroutes-compat-test
-    to: blueprint/packages/app-legacy/apis
+  - from: blueprint/packages/app-legacy/shared
+    to: blueprint/packages/core-components/styles
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/core-app-api/flatroutes-stable-test
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/core-plugin-api/tracker
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/core-plugin-api/useanalytics
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/core-plugin-api/useelementfilter-test
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/core-plugin-api/useelementfilter
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/core-plugin-api/plugin
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/core-plugin-api/types
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/tracker
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/useanalytics
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/analyticsimplementationblueprint
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/approotelementblueprint-test
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/appnodeprovider-test
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/appnodeprovider
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/createswappablecomponent
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/errorapiboundary
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/extensionboundary
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/userouteref-test
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/userouteref
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/usetranslationref-test
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/usetranslationref
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/createextension
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/createextensionblueprint
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/resolveextensiondefinition
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/resolveinputoverrides
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-plugin-api/types
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/test-utils/appwrappers-test
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/test-utils/mockapis
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/advancedsettings
-    to: blueprint/packages/cli-module-actions/list
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/advancedsettings
+  - from: blueprint/packages/app-legacy/customizablehomepage
     to: blueprint/packages/ui/grid
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/app-legacy/advancedsettings
-    to: blueprint/packages/ui/switch
+  - from: blueprint/packages/app-legacy/customizablehomepage
+    to: blueprint/packages/app-legacy/shared
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/defaulttemplate-stories
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/defaulttemplate-stories
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/defaulttemplate-stories
+    to: blueprint/packages/ui/grid
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/defaulttemplate-stories
+    to: blueprint/packages/core-components/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/customizabletemplate-stories
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/customizabletemplate-stories
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/homepage
+    to: blueprint/packages/ui/grid
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/homepage
+    to: blueprint/packages/core-components/styles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/homepage
+    to: blueprint/packages/app-legacy/shared
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/decorators
+    to: blueprint/packages/core-plugin-api/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/customscaffolderlayouts
+    to: blueprint/packages/ui/grid
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/customscaffolderextensions
+    to: blueprint/packages/config-loader/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/customscaffolderextensions
+    to: blueprint/packages/ui/textfield
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/app-legacy/entitypage-test
@@ -869,7 +801,7 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/app-legacy/entitypage-test
-    to: blueprint/packages/backend-openapi-utils/testutils
+    to: blueprint/packages/config-loader/testutils
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/app-legacy/entitypage
@@ -880,28 +812,28 @@ dependencies:
     to: blueprint/packages/ui/grid
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/app-legacy/customizablehomepage
+  - from: blueprint/packages/app-legacy/searchpage
     to: blueprint/packages/ui/grid
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/app-legacy/customizablehomepage
-    to: blueprint/packages/app-legacy/shared
+  - from: blueprint/packages/app-legacy/searchpage
+    to: blueprint/packages/core-components/styles
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/app-legacy/homepage
+  - from: blueprint/packages/app-legacy/searchmodal
+    to: blueprint/packages/ui/box
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/app-legacy/searchmodal
     to: blueprint/packages/ui/grid
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/app-legacy/homepage
+  - from: blueprint/packages/app-legacy/searchmodal
     to: blueprint/packages/core-components/styles
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/app-legacy/homepage
-    to: blueprint/packages/app-legacy/shared
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/shared
-    to: blueprint/packages/core-components/styles
+  - from: blueprint/packages/app-legacy/searchmodal
+    to: blueprint/packages/ui/button
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/app-legacy/logofull
@@ -932,79 +864,15 @@ dependencies:
     to: blueprint/packages/cli-module-build/build
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/app-legacy/customscaffolderextensions
-    to: blueprint/packages/catalog-client/utils
+  - from: blueprint/packages/app-legacy/advancedsettings
+    to: blueprint/packages/ui/list
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/app-legacy/customscaffolderextensions
-    to: blueprint/packages/ui/textfield
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/customscaffolderlayouts
+  - from: blueprint/packages/app-legacy/advancedsettings
     to: blueprint/packages/ui/grid
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/app-legacy/decorators
-    to: blueprint/packages/catalog-model/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/searchmodal
-    to: blueprint/packages/ui/box
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/searchmodal
-    to: blueprint/packages/ui/grid
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/searchmodal
-    to: blueprint/packages/core-components/styles
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/searchmodal
-    to: blueprint/packages/ui/button
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/searchpage
-    to: blueprint/packages/ui/grid
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/searchpage
-    to: blueprint/packages/core-components/styles
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/core-app-api/defaultauthconnector-test
-    to: blueprint/packages/app-legacy/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/ui/comboboxlistbox
-    to: blueprint/packages/app-legacy/shared
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/ui/selectcontent
-    to: blueprint/packages/app-legacy/shared
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/customizabletemplate-stories
-    to: blueprint/packages/backend-openapi-utils/testutils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/customizabletemplate-stories
-    to: blueprint/packages/integration-aws-node/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/defaulttemplate-stories
-    to: blueprint/packages/backend-openapi-utils/testutils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/defaulttemplate-stories
-    to: blueprint/packages/integration-aws-node/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/defaulttemplate-stories
-    to: blueprint/packages/ui/grid
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/defaulttemplate-stories
-    to: blueprint/packages/core-components/styles
+  - from: blueprint/packages/app-legacy/advancedsettings
+    to: blueprint/packages/ui/switch
     type: direct-call
     description: Calls module / service

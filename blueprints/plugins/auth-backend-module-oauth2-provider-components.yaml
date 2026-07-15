@@ -47,50 +47,6 @@ nodes:
       sinceDays: 500
     x: 600
     'y': 50
-  - entityRef: blueprint/plugins/auth-backend-module-oauth2-provider/authenticator
-    type: background-worker
-    name: authenticator Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-oauth2-provider/src/authenticator.ts
-      containerId: auth-backend-module-oauth2-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 100
-      sloc: 74
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 830
-    'y': 690
-  - entityRef: blueprint/plugins/auth-backend-module-oauth2-provider/module-test
-    type: background-worker
-    name: module.test Service
-    isTest: true
-    properties:
-      filepath: plugins/auth-backend-module-oauth2-provider/src/module.test.ts
-      containerId: auth-backend-module-oauth2-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 80
-      sloc: 56
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
-    'y': 50
   - entityRef: blueprint/plugins/auth-backend-module-oauth2-provider/module
     type: background-worker
     name: module Service
@@ -113,6 +69,28 @@ nodes:
       sinceDays: 500
     x: 1060
     'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-oauth2-provider/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-oauth2-provider/src/module.test.ts
+      containerId: auth-backend-module-oauth2-provider
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 80
+      sloc: 56
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 50
   - entityRef: blueprint/plugins/auth-backend-module-oauth2-provider/resolvers
     type: background-worker
     name: resolvers Service
@@ -135,13 +113,31 @@ nodes:
       sinceDays: 500
     x: 1290
     'y': 690
+  - entityRef: blueprint/plugins/auth-backend-module-oauth2-provider/authenticator
+    type: background-worker
+    name: authenticator Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-oauth2-provider/src/authenticator.ts
+      containerId: auth-backend-module-oauth2-provider
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 100
+      sloc: 74
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 830
+    'y': 690
 dependencies:
   - from: blueprint/plugins/auth-backend-module-oauth2-provider/config-d
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-oauth2-provider/module-test
-    to: blueprint/plugins/auth-backend-module-oauth2-provider/module
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/auth-backend-module-oauth2-provider/module
@@ -150,5 +146,9 @@ dependencies:
     description: Calls module / service
   - from: blueprint/plugins/auth-backend-module-oauth2-provider/module
     to: blueprint/plugins/auth-backend-module-oauth2-provider/resolvers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-oauth2-provider/module-test
+    to: blueprint/plugins/auth-backend-module-oauth2-provider/module
     type: direct-call
     description: Calls module / service

@@ -3,34 +3,12 @@ name: Components Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/docs-ui/components/banner
-    type: background-worker
-    name: Banner Service
-    isTest: false
-    properties:
-      filepath: docs-ui/src/components/Banner/Banner.tsx
-      containerId: components
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 27
-      sloc: 25
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
   - entityRef: blueprint/docs-ui/components/index
     type: background-worker
     name: index Service
     isTest: false
     properties:
-      filepath: docs-ui/src/components/Toolbar/index.ts
+      filepath: docs-ui/src/components/Banner/index.ts
       containerId: components
       technology: TypeScript Domain Service
       classification: default
@@ -47,86 +25,19 @@ nodes:
       sinceDays: 500
     x: 600
     'y': 50
-  - entityRef: blueprint/docs-ui/components/utils
-    type: background-worker
-    name: utils Service
-    isTest: false
-    properties:
-      filepath: docs-ui/src/components/Changelog/utils.tsx
-      containerId: components
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 15
-      loc: 213
-      sloc: 167
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 370
-    'y': 370
-  - entityRef: blueprint/docs-ui/components/chip
+  - entityRef: blueprint/docs-ui/components/parts
     type: gateway-api
-    name: Chip UI Component
+    name: parts UI Component
     isTest: false
     properties:
-      filepath: docs-ui/src/components/Chip/Chip.tsx
+      filepath: docs-ui/src/components/Tabs/parts.tsx
       containerId: components
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 3
-      loc: 23
-      sloc: 21
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 6320
-    'y': 1010
-  - entityRef: blueprint/docs-ui/components/client
-    type: gateway-api
-    name: client UI Component
-    isTest: false
-    properties:
-      filepath: docs-ui/src/components/Snippet/client.tsx
-      containerId: components
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 3
-      loc: 72
-      sloc: 66
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1980
-    'y': 370
-  - entityRef: blueprint/docs-ui/components/colorfamily
-    type: background-worker
-    name: ColorFamily Service
-    isTest: false
-    properties:
-      filepath: docs-ui/src/components/ColorFamily/ColorFamily.tsx
-      containerId: components
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 98
-      sloc: 93
+      complexity: 1
+      loc: 43
+      sloc: 37
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -136,19 +47,63 @@ nodes:
       sinceDays: 500
     x: 1060
     'y': 50
-  - entityRef: blueprint/docs-ui/components/columns
-    type: gateway-api
-    name: Columns UI Component
+  - entityRef: blueprint/docs-ui/components/logo
+    type: background-worker
+    name: Logo Service
     isTest: false
     properties:
-      filepath: docs-ui/src/components/Columns/Columns.tsx
+      filepath: docs-ui/src/components/Sidebar/Logo.tsx
+      containerId: components
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 21
+      sloc: 20
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 735
+    'y': 690
+  - entityRef: blueprint/docs-ui/components/sidebar
+    type: gateway-api
+    name: Sidebar UI Component
+    isTest: false
+    properties:
+      filepath: docs-ui/src/components/Sidebar/Sidebar.tsx
       containerId: components
       technology: React Component
       classification: ui-import
     forensics:
       complexity: 1
-      loc: 16
-      sloc: 14
+      loc: 29
+      sloc: 26
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 370
+  - entityRef: blueprint/docs-ui/components/baseui
+    type: background-worker
+    name: BaseUI Service
+    isTest: false
+    properties:
+      filepath: docs-ui/src/components/HeadlessBanners/BaseUI.tsx
+      containerId: components
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 45
+      sloc: 41
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -158,28 +113,6 @@ nodes:
       sinceDays: 500
     x: 1520
     'y': 50
-  - entityRef: blueprint/docs-ui/components/commandpalette
-    type: gateway-api
-    name: CommandPalette UI Component
-    isTest: false
-    properties:
-      filepath: docs-ui/src/components/CommandPalette/CommandPalette.tsx
-      containerId: components
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 77
-      sloc: 71
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4590
-    'y': 370
   - entityRef: blueprint/docs-ui/components/componentgrid
     type: background-worker
     name: ComponentGrid Service
@@ -202,19 +135,41 @@ nodes:
       sinceDays: 500
     x: 1980
     'y': 50
-  - entityRef: blueprint/docs-ui/components/customtheme
+  - entityRef: blueprint/docs-ui/components/client
     type: gateway-api
-    name: customTheme UI Component
+    name: client UI Component
     isTest: false
     properties:
-      filepath: docs-ui/src/components/CustomTheme/customTheme.tsx
+      filepath: docs-ui/src/components/Snippet/client.tsx
       containerId: components
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 14
-      loc: 177
-      sloc: 154
+      complexity: 3
+      loc: 72
+      sloc: 66
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 370
+  - entityRef: blueprint/docs-ui/components/utils
+    type: background-worker
+    name: utils Service
+    isTest: false
+    properties:
+      filepath: docs-ui/src/components/Changelog/utils.tsx
+      containerId: components
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 15
+      loc: 213
+      sloc: 167
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -223,21 +178,43 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 2440
-    'y': 50
-  - entityRef: blueprint/docs-ui/components/baseui
+    x: 2535
+    'y': 370
+  - entityRef: blueprint/docs-ui/components/container
     type: background-worker
-    name: BaseUI Service
+    name: container Service
     isTest: false
     properties:
-      filepath: docs-ui/src/components/HeadlessBanners/BaseUI.tsx
+      filepath: docs-ui/src/components/LayoutComponents/svgs/container.tsx
       containerId: components
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 2
-      loc: 45
-      sloc: 41
+      complexity: 1
+      loc: 355
+      sloc: 353
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/docs-ui/components/grid
+    type: background-worker
+    name: grid Service
+    isTest: false
+    properties:
+      filepath: docs-ui/src/components/LayoutComponents/svgs/grid.tsx
+      containerId: components
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 66
+      sloc: 65
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -247,19 +224,19 @@ nodes:
       sinceDays: 500
     x: 2900
     'y': 50
-  - entityRef: blueprint/docs-ui/components/hookgrid
+  - entityRef: blueprint/docs-ui/components/flex
     type: background-worker
-    name: HookGrid Service
+    name: flex Service
     isTest: false
     properties:
-      filepath: docs-ui/src/components/HookGrid/HookGrid.tsx
+      filepath: docs-ui/src/components/LayoutComponents/svgs/flex.tsx
       containerId: components
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 22
-      sloc: 19
+      loc: 52
+      sloc: 51
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -269,41 +246,19 @@ nodes:
       sinceDays: 500
     x: 3360
     'y': 50
-  - entityRef: blueprint/docs-ui/components/animatedmenuicon
+  - entityRef: blueprint/docs-ui/components/box
     type: background-worker
-    name: AnimatedMenuIcon Service
+    name: box Service
     isTest: false
     properties:
-      filepath: docs-ui/src/components/MobileBottomNav/AnimatedMenuIcon.tsx
+      filepath: docs-ui/src/components/LayoutComponents/svgs/box.tsx
       containerId: components
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 57
-      sloc: 54
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4050
-    'y': 370
-  - entityRef: blueprint/docs-ui/components/mobilebottomnav
-    type: gateway-api
-    name: MobileBottomNav UI Component
-    isTest: false
-    properties:
-      filepath: docs-ui/src/components/MobileBottomNav/MobileBottomNav.tsx
-      containerId: components
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 2
-      loc: 45
-      sloc: 41
+      loc: 38
+      sloc: 37
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -313,19 +268,19 @@ nodes:
       sinceDays: 500
     x: 3820
     'y': 50
-  - entityRef: blueprint/docs-ui/components/mobilemenu
+  - entityRef: blueprint/docs-ui/components/chip
     type: gateway-api
-    name: MobileMenu UI Component
+    name: Chip UI Component
     isTest: false
     properties:
-      filepath: docs-ui/src/components/MobileBottomNav/MobileMenu.tsx
+      filepath: docs-ui/src/components/Chip/Chip.tsx
       containerId: components
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 1
-      loc: 32
-      sloc: 28
+      complexity: 3
+      loc: 23
+      sloc: 21
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -333,8 +288,30 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2440
-    'y': 370
+    x: 7065
+    'y': 1010
+  - entityRef: blueprint/docs-ui/components/toolbar
+    type: gateway-api
+    name: Toolbar UI Component
+    isTest: false
+    properties:
+      filepath: docs-ui/src/components/Toolbar/Toolbar.tsx
+      containerId: components
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 4
+      loc: 149
+      sloc: 140
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4280
+    'y': 50
   - entityRef: blueprint/docs-ui/components/navigation
     type: gateway-api
     name: Navigation UI Component
@@ -356,7 +333,118 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 4415
+    x: 5430
+    'y': 690
+  - entityRef: blueprint/docs-ui/components/reactarialink
+    type: background-worker
+    name: ReactAriaLink Service
+    isTest: false
+    properties:
+      filepath: docs-ui/src/components/ReactAriaLink/ReactAriaLink.tsx
+      containerId: components
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 27
+      sloc: 16
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4740
+    'y': 50
+  - entityRef: blueprint/docs-ui/components/table
+    type: gateway-api
+    name: Table UI Component
+    isTest: false
+    properties:
+      filepath: docs-ui/src/components/Table/Table.tsx
+      containerId: components
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 60
+      sloc: 52
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 6255
+    'y': 690
+  - entityRef: blueprint/docs-ui/components/spacinggrouprow
+    type: gateway-api
+    name: SpacingGroupRow UI Component
+    isTest: false
+    properties:
+      filepath: docs-ui/src/components/PropsTable/SpacingGroupRow.tsx
+      containerId: components
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 14
+      loc: 143
+      sloc: 129
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 6565
+    'y': 370
+  - entityRef: blueprint/docs-ui/components/typepopup
+    type: gateway-api
+    name: TypePopup UI Component
+    isTest: false
+    properties:
+      filepath: docs-ui/src/components/PropsTable/TypePopup.tsx
+      containerId: components
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 2
+      loc: 50
+      sloc: 47
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 6835
+    'y': 690
+  - entityRef: blueprint/docs-ui/components/spacingpopup
+    type: gateway-api
+    name: SpacingPopup UI Component
+    isTest: false
+    properties:
+      filepath: docs-ui/src/components/PropsTable/SpacingPopup.tsx
+      containerId: components
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 48
+      sloc: 43
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 7295
     'y': 690
   - entityRef: blueprint/docs-ui/components/propstable
     type: background-worker
@@ -379,66 +467,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 6050
+    x: 6565
     'y': 50
-  - entityRef: blueprint/docs-ui/components/spacinggrouprow
+  - entityRef: blueprint/docs-ui/components/mobilebottomnav
     type: gateway-api
-    name: SpacingGroupRow UI Component
+    name: MobileBottomNav UI Component
     isTest: false
     properties:
-      filepath: docs-ui/src/components/PropsTable/SpacingGroupRow.tsx
-      containerId: components
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 14
-      loc: 143
-      sloc: 129
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 7050
-    'y': 370
-  - entityRef: blueprint/docs-ui/components/spacingpopup
-    type: gateway-api
-    name: SpacingPopup UI Component
-    isTest: false
-    properties:
-      filepath: docs-ui/src/components/PropsTable/SpacingPopup.tsx
-      containerId: components
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 48
-      sloc: 43
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 7050
-    'y': 690
-  - entityRef: blueprint/docs-ui/components/typepopup
-    type: gateway-api
-    name: TypePopup UI Component
-    isTest: false
-    properties:
-      filepath: docs-ui/src/components/PropsTable/TypePopup.tsx
+      filepath: docs-ui/src/components/MobileBottomNav/MobileBottomNav.tsx
       containerId: components
       technology: React Component
       classification: ui-import
     forensics:
       complexity: 2
-      loc: 50
-      sloc: 47
+      loc: 45
+      sloc: 41
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -446,43 +489,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 6130
-    'y': 690
-  - entityRef: blueprint/docs-ui/components/reactarialink
-    type: background-worker
-    name: ReactAriaLink Service
-    isTest: false
-    properties:
-      filepath: docs-ui/src/components/ReactAriaLink/ReactAriaLink.tsx
-      containerId: components
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 27
-      sloc: 16
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5050
+    x: 5200
     'y': 50
-  - entityRef: blueprint/docs-ui/components/logo
+  - entityRef: blueprint/docs-ui/components/animatedmenuicon
     type: background-worker
-    name: Logo Service
+    name: AnimatedMenuIcon Service
     isTest: false
     properties:
-      filepath: docs-ui/src/components/Sidebar/Logo.tsx
+      filepath: docs-ui/src/components/MobileBottomNav/AnimatedMenuIcon.tsx
       containerId: components
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 21
-      sloc: 20
+      loc: 57
+      sloc: 54
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -490,43 +511,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3900
-    'y': 690
-  - entityRef: blueprint/docs-ui/components/sidebar
-    type: gateway-api
-    name: Sidebar UI Component
-    isTest: false
-    properties:
-      filepath: docs-ui/src/components/Sidebar/Sidebar.tsx
-      containerId: components
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 29
-      sloc: 26
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5050
+    x: 4455
     'y': 370
-  - entityRef: blueprint/docs-ui/components/table
+  - entityRef: blueprint/docs-ui/components/mobilemenu
     type: gateway-api
-    name: Table UI Component
+    name: MobileMenu UI Component
     isTest: false
     properties:
-      filepath: docs-ui/src/components/Table/Table.tsx
+      filepath: docs-ui/src/components/MobileBottomNav/MobileMenu.tsx
       containerId: components
       technology: React Component
       classification: ui-import
     forensics:
       complexity: 1
-      loc: 60
-      sloc: 52
+      loc: 32
+      sloc: 28
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -534,8 +533,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 6590
-    'y': 690
+    x: 5010
+    'y': 370
   - entityRef: blueprint/docs-ui/components/tableofcontents
     type: gateway-api
     name: TableOfContents UI Component
@@ -557,21 +556,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 5510
+    x: 5470
     'y': 370
-  - entityRef: blueprint/docs-ui/components/parts
+  - entityRef: blueprint/docs-ui/components/columns
     type: gateway-api
-    name: parts UI Component
+    name: Columns UI Component
     isTest: false
     properties:
-      filepath: docs-ui/src/components/Tabs/parts.tsx
+      filepath: docs-ui/src/components/Columns/Columns.tsx
       containerId: components
       technology: React Component
       classification: ui-import
     forensics:
       complexity: 1
-      loc: 43
-      sloc: 37
+      loc: 16
+      sloc: 14
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -579,21 +578,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 5510
+    x: 7025
     'y': 50
-  - entityRef: blueprint/docs-ui/components/toolbar
+  - entityRef: blueprint/docs-ui/components/commandpalette
     type: gateway-api
-    name: Toolbar UI Component
+    name: CommandPalette UI Component
     isTest: false
     properties:
-      filepath: docs-ui/src/components/Toolbar/Toolbar.tsx
+      filepath: docs-ui/src/components/CommandPalette/CommandPalette.tsx
       containerId: components
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 4
-      loc: 149
-      sloc: 140
+      complexity: 1
+      loc: 77
+      sloc: 71
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -601,21 +600,66 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4455
-    'y': 50
-  - entityRef: blueprint/docs-ui/components/box
-    type: background-worker
-    name: box Service
+    x: 5930
+    'y': 370
+  - entityRef: blueprint/docs-ui/components/customtheme
+    type: gateway-api
+    name: customTheme UI Component
     isTest: false
     properties:
-      filepath: docs-ui/src/components/LayoutComponents/svgs/box.tsx
+      filepath: docs-ui/src/components/CustomTheme/customTheme.tsx
+      containerId: components
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 14
+      loc: 177
+      sloc: 154
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 7485
+    'y': 50
+  - entityRef: blueprint/docs-ui/components/colorfamily
+    type: background-worker
+    name: ColorFamily Service
+    isTest: false
+    properties:
+      filepath: docs-ui/src/components/ColorFamily/ColorFamily.tsx
+      containerId: components
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 98
+      sloc: 93
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 7945
+    'y': 50
+  - entityRef: blueprint/docs-ui/components/hookgrid
+    type: background-worker
+    name: HookGrid Service
+    isTest: false
+    properties:
+      filepath: docs-ui/src/components/HookGrid/HookGrid.tsx
       containerId: components
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 38
-      sloc: 37
+      loc: 22
+      sloc: 19
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -623,21 +667,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 6510
+    x: 8405
     'y': 50
-  - entityRef: blueprint/docs-ui/components/container
+  - entityRef: blueprint/docs-ui/components/banner
     type: background-worker
-    name: container Service
+    name: Banner Service
     isTest: false
     properties:
-      filepath: docs-ui/src/components/LayoutComponents/svgs/container.tsx
+      filepath: docs-ui/src/components/Banner/Banner.tsx
       containerId: components
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 355
-      sloc: 353
+      loc: 27
+      sloc: 25
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -645,257 +689,9 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 6970
-    'y': 50
-  - entityRef: blueprint/docs-ui/components/flex
-    type: background-worker
-    name: flex Service
-    isTest: false
-    properties:
-      filepath: docs-ui/src/components/LayoutComponents/svgs/flex.tsx
-      containerId: components
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 52
-      sloc: 51
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 7430
-    'y': 50
-  - entityRef: blueprint/docs-ui/components/grid
-    type: background-worker
-    name: grid Service
-    isTest: false
-    properties:
-      filepath: docs-ui/src/components/LayoutComponents/svgs/grid.tsx
-      containerId: components
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 66
-      sloc: 65
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 7890
+    x: 8865
     'y': 50
 dependencies:
-  - from: blueprint/docs-ui/app/layout
-    to: blueprint/docs-ui/components/sidebar
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/layout
-    to: blueprint/docs-ui/components/toolbar
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/layout
-    to: blueprint/docs-ui/components/customtheme
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/layout
-    to: blueprint/docs-ui/components/tableofcontents
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/layout
-    to: blueprint/docs-ui/components/mobilebottomnav
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/hooks/usecurrentpage
-    to: blueprint/docs-ui/components/navigation
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/index
-    to: blueprint/docs-ui/docs-ui/changelog
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/index
-    to: blueprint/docs-ui/docs-ui/mdx-components
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/index
-    to: blueprint/docs-ui/components/utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/utils
-    to: blueprint/docs-ui/docs-ui/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/index
-    to: blueprint/docs-ui/docs-ui/changelog
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/index
-    to: blueprint/docs-ui/docs-ui/mdx-components
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/index
-    to: blueprint/docs-ui/docs-ui/changelog
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/index
-    to: blueprint/docs-ui/components/utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/index
-    to: blueprint/docs-ui/components/client
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/commandpalette
-    to: blueprint/docs-ui/components/navigation
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/commandpalette
-    to: blueprint/docs-ui/docs-ui/data
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/componentgrid
-    to: blueprint/docs-ui/docs-ui/data
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/customtheme
-    to: blueprint/docs-ui/docs-ui/playground-context
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/hookgrid
-    to: blueprint/docs-ui/docs-ui/data
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/mobilebottomnav
-    to: blueprint/docs-ui/docs-ui/playground-context
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/mobilebottomnav
-    to: blueprint/docs-ui/components/mobilemenu
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/mobilebottomnav
-    to: blueprint/docs-ui/components/animatedmenuicon
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/mobilemenu
-    to: blueprint/docs-ui/components/navigation
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/navigation
-    to: blueprint/docs-ui/docs-ui/data
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/index
-    to: blueprint/docs-ui/docs-ui/mdx-components
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/propstable
-    to: blueprint/docs-ui/components/table
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/propstable
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/propstable
-    to: blueprint/docs-ui/components/typepopup
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/propstable
-    to: blueprint/docs-ui/components/spacingpopup
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/propstable
-    to: blueprint/docs-ui/components/spacinggrouprow
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/propstable
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/spacinggrouprow
-    to: blueprint/docs-ui/components/table
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/spacinggrouprow
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/spacinggrouprow
-    to: blueprint/docs-ui/components/spacingpopup
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/spacinggrouprow
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/spacingpopup
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/typepopup
-    to: blueprint/docs-ui/docs-ui/propdefs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/typepopup
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/sidebar
-    to: blueprint/docs-ui/components/logo
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/sidebar
-    to: blueprint/docs-ui/components/navigation
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/index
-    to: blueprint/docs-ui/components/client
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/tableofcontents
-    to: blueprint/docs-ui/components/navigation
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/index
-    to: blueprint/docs-ui/docs-ui/mdx-components
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/index
-    to: blueprint/docs-ui/docs-ui/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/toolbar
-    to: blueprint/docs-ui/docs-ui/playground-context
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/toolbar
-    to: blueprint/docs-ui/components/logo
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/components/toolbar
-    to: blueprint/docs-ui/components/commandpalette
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/box
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/docs-ui/app/props-definition
     to: blueprint/docs-ui/components/chip
     type: direct-call
@@ -916,8 +712,48 @@ dependencies:
     to: blueprint/docs-ui/components/flex
     type: direct-call
     description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/docs-ui/app/props-definition
     to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/box
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/box
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
     type: direct-call
     description: Calls module / service
   - from: blueprint/docs-ui/app/components
@@ -952,22 +788,26 @@ dependencies:
     to: blueprint/docs-ui/components/flex
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/docs-ui/app/components
     to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
     type: direct-call
     description: Calls module / service
   - from: blueprint/docs-ui/app/components
     to: blueprint/docs-ui/components/container
     type: direct-call
     description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/docs-ui/app/components
     to: blueprint/docs-ui/components/flex
     type: direct-call
@@ -982,6 +822,106 @@ dependencies:
     description: Calls module / service
   - from: blueprint/docs-ui/app/props-definition
     to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/table
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/props-definition
+    to: blueprint/docs-ui/components/chip
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/app/components
+    to: blueprint/docs-ui/components/flex
     type: direct-call
     description: Calls module / service
   - from: blueprint/docs-ui/app/components
@@ -1008,135 +948,195 @@ dependencies:
     to: blueprint/docs-ui/components/flex
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
+  - from: blueprint/docs-ui/app/layout
+    to: blueprint/docs-ui/components/sidebar
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
+  - from: blueprint/docs-ui/app/layout
+    to: blueprint/docs-ui/components/toolbar
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
+  - from: blueprint/docs-ui/app/layout
+    to: blueprint/docs-ui/components/customtheme
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
+  - from: blueprint/docs-ui/app/layout
+    to: blueprint/docs-ui/components/tableofcontents
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
+  - from: blueprint/docs-ui/app/layout
+    to: blueprint/docs-ui/components/mobilebottomnav
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
+  - from: blueprint/docs-ui/components/sidebar
+    to: blueprint/docs-ui/components/logo
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
+  - from: blueprint/docs-ui/components/sidebar
+    to: blueprint/docs-ui/components/navigation
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/docs-ui/mdx-components
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/docs-ui/changelog
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/docs-ui/mdx-components
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/docs-ui/changelog
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/components/utils
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
+  - from: blueprint/docs-ui/components/componentgrid
+    to: blueprint/docs-ui/docs-ui/data
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/components/client
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/docs-ui/changelog
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/docs-ui/mdx-components
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/box
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/components/utils
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/components
+  - from: blueprint/docs-ui/components/utils
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/toolbar
+    to: blueprint/docs-ui/docs-ui/playground-context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/toolbar
+    to: blueprint/docs-ui/components/logo
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/toolbar
+    to: blueprint/docs-ui/components/commandpalette
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/components/client
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/navigation
+    to: blueprint/docs-ui/docs-ui/data
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/docs-ui/mdx-components
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/index
+    to: blueprint/docs-ui/docs-ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/spacinggrouprow
     to: blueprint/docs-ui/components/table
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
+  - from: blueprint/docs-ui/components/spacinggrouprow
     to: blueprint/docs-ui/components/chip
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
+  - from: blueprint/docs-ui/components/spacinggrouprow
+    to: blueprint/docs-ui/components/spacingpopup
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
+  - from: blueprint/docs-ui/components/spacinggrouprow
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/typepopup
+    to: blueprint/docs-ui/docs-ui/propdefs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/typepopup
     to: blueprint/docs-ui/components/chip
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
+  - from: blueprint/docs-ui/components/spacingpopup
     to: blueprint/docs-ui/components/chip
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
+  - from: blueprint/docs-ui/components/propstable
+    to: blueprint/docs-ui/components/table
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
+  - from: blueprint/docs-ui/components/propstable
     to: blueprint/docs-ui/components/chip
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
+  - from: blueprint/docs-ui/components/propstable
+    to: blueprint/docs-ui/components/typepopup
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
+  - from: blueprint/docs-ui/components/propstable
+    to: blueprint/docs-ui/components/spacingpopup
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
+  - from: blueprint/docs-ui/components/propstable
+    to: blueprint/docs-ui/components/spacinggrouprow
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
+  - from: blueprint/docs-ui/components/propstable
+    to: blueprint/docs-ui/docs-ui/propdefs
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
+  - from: blueprint/docs-ui/components/mobilebottomnav
+    to: blueprint/docs-ui/docs-ui/playground-context
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/props-definition
-    to: blueprint/docs-ui/components/chip
+  - from: blueprint/docs-ui/components/mobilebottomnav
+    to: blueprint/docs-ui/components/mobilemenu
     type: direct-call
     description: Calls module / service
-  - from: blueprint/docs-ui/app/components
-    to: blueprint/docs-ui/components/flex
+  - from: blueprint/docs-ui/components/mobilebottomnav
+    to: blueprint/docs-ui/components/animatedmenuicon
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/mobilemenu
+    to: blueprint/docs-ui/components/navigation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/tableofcontents
+    to: blueprint/docs-ui/components/navigation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/commandpalette
+    to: blueprint/docs-ui/components/navigation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/commandpalette
+    to: blueprint/docs-ui/docs-ui/data
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/customtheme
+    to: blueprint/docs-ui/docs-ui/playground-context
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/components/hookgrid
+    to: blueprint/docs-ui/docs-ui/data
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/hooks/usecurrentpage
+    to: blueprint/docs-ui/components/navigation
     type: direct-call
     description: Calls module / service

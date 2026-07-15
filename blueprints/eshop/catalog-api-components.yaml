@@ -1,0 +1,435 @@
+entityRef: blueprint/eshop/catalog-api
+name: Catalog.API Service Components
+version: 1.0.0
+level: component
+nodes:
+  - entityRef: blueprint/eshop/catalog-api/program-testing
+    type: background-worker
+    name: Program.Testing Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Program.Testing.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 140
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/catalogapi
+    type: relational-database
+    name: CatalogApi Database
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Apis/CatalogApi.cs
+      containerId: catalog-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 600
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/hostenvironmentextensions
+    type: background-worker
+    name: HostEnvironmentExtensions Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Extensions/HostEnvironmentExtensions.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/extensions
+    type: background-worker
+    name: Extensions Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Extensions/Extensions.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/catalogservices
+    type: rest-api
+    name: CatalogServices REST Endpoint
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Model/CatalogServices.cs
+      containerId: catalog-api
+      technology: ASP.NET Core Controller / Minimal API
+      classification: api-marker
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/catalogtype
+    type: background-worker
+    name: CatalogType Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Model/CatalogType.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/catalogbrand
+    type: background-worker
+    name: CatalogBrand Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Model/CatalogBrand.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 2900
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/paginateditems
+    type: background-worker
+    name: PaginatedItems Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Model/PaginatedItems.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 3360
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/paginationrequest
+    type: background-worker
+    name: PaginationRequest Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Model/PaginationRequest.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 3820
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/catalogitem
+    type: relational-database
+    name: CatalogItem Database
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Model/CatalogItem.cs
+      containerId: catalog-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 4280
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/icatalogintegrationeventservice
+    type: background-worker
+    name: ICatalogIntegrationEventService Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/IntegrationEvents/ICatalogIntegrationEventService.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 4740
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/catalogintegrationeventservice
+    type: background-worker
+    name: CatalogIntegrationEventService Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/IntegrationEvents/CatalogIntegrationEventService.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 5200
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/confirmedorderstockitem
+    type: background-worker
+    name: ConfirmedOrderStockItem Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/IntegrationEvents/Events/ConfirmedOrderStockItem.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 5660
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/orderstatuschangedtoawaitingvalidationintegrationevent
+    type: background-worker
+    name: OrderStatusChangedToAwaitingValidationIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/IntegrationEvents/Events/OrderStatusChangedToAwaitingValidationIntegrationEvent.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 6120
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/orderstockrejectedintegrationevent
+    type: background-worker
+    name: OrderStockRejectedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/IntegrationEvents/Events/OrderStockRejectedIntegrationEvent.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 6580
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/orderstatuschangedtopaidintegrationevent
+    type: background-worker
+    name: OrderStatusChangedToPaidIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/IntegrationEvents/Events/OrderStatusChangedToPaidIntegrationEvent.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 7040
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/orderstockconfirmedintegrationevent
+    type: background-worker
+    name: OrderStockConfirmedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/IntegrationEvents/Events/OrderStockConfirmedIntegrationEvent.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 7500
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/productpricechangedintegrationevent
+    type: background-worker
+    name: ProductPriceChangedIntegrationEvent Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/IntegrationEvents/Events/ProductPriceChangedIntegrationEvent.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 7960
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/orderstockitem
+    type: background-worker
+    name: OrderStockItem Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/IntegrationEvents/Events/OrderStockItem.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 8420
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/orderstatuschangedtopaidintegrationeventhandler
+    type: background-worker
+    name: OrderStatusChangedToPaidIntegrationEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/IntegrationEvents/EventHandling/OrderStatusChangedToPaidIntegrationEventHandler.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 8880
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/orderstatuschangedtoawaitingvalidationintegrationeventhandler
+    type: background-worker
+    name: OrderStatusChangedToAwaitingValidationIntegrationEventHandler Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/IntegrationEvents/EventHandling/OrderStatusChangedToAwaitingValidationIntegrationEventHandler.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 9340
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/globalusings
+    type: relational-database
+    name: GlobalUsings Database
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/GlobalUsings.cs
+      containerId: catalog-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 9800
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/20231009153249_initial-designer
+    type: relational-database
+    name: 20231009153249_Initial.Designer Database
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Infrastructure/Migrations/20231009153249_Initial.Designer.cs
+      containerId: catalog-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 10260
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/20231018163051_removehiloandindexcatalogname-designer
+    type: relational-database
+    name: 20231018163051_RemoveHiLoAndIndexCatalogName.Designer Database
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Infrastructure/Migrations/20231018163051_RemoveHiLoAndIndexCatalogName.Designer.cs
+      containerId: catalog-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 10720
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/catalogcontextmodelsnapshot
+    type: relational-database
+    name: CatalogContextModelSnapshot Database
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Infrastructure/Migrations/CatalogContextModelSnapshot.cs
+      containerId: catalog-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 11180
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/20231026091140_outbox-designer
+    type: relational-database
+    name: 20231026091140_Outbox.Designer Database
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Infrastructure/Migrations/20231026091140_Outbox.Designer.cs
+      containerId: catalog-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 11640
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/20231018163051_removehiloandindexcatalogname
+    type: relational-database
+    name: 20231018163051_RemoveHiLoAndIndexCatalogName Database
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Infrastructure/Migrations/20231018163051_RemoveHiLoAndIndexCatalogName.cs
+      containerId: catalog-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 12100
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/20231009153249_initial
+    type: relational-database
+    name: 20231009153249_Initial Database
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Infrastructure/Migrations/20231009153249_Initial.cs
+      containerId: catalog-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 12560
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/20231026091140_outbox
+    type: relational-database
+    name: 20231026091140_Outbox Database
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Infrastructure/Migrations/20231026091140_Outbox.cs
+      containerId: catalog-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 13020
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/catalogcontext
+    type: relational-database
+    name: CatalogContext Database
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Infrastructure/CatalogContext.cs
+      containerId: catalog-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 13480
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/catalogdomainexception
+    type: background-worker
+    name: CatalogDomainException Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Infrastructure/Exceptions/CatalogDomainException.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 13940
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/catalogcontextseed
+    type: relational-database
+    name: CatalogContextSeed Database
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Infrastructure/CatalogContextSeed.cs
+      containerId: catalog-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 14400
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/catalogitementitytypeconfiguration
+    type: background-worker
+    name: CatalogItemEntityTypeConfiguration Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 14860
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/catalogbrandentitytypeconfiguration
+    type: background-worker
+    name: CatalogBrandEntityTypeConfiguration Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Infrastructure/EntityConfigurations/CatalogBrandEntityTypeConfiguration.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 15320
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/catalogtypeentitytypeconfiguration
+    type: background-worker
+    name: CatalogTypeEntityTypeConfiguration Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Infrastructure/EntityConfigurations/CatalogTypeEntityTypeConfiguration.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 15780
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/catalogai
+    type: relational-database
+    name: CatalogAI Database
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Services/CatalogAI.cs
+      containerId: catalog-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 16240
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/icatalogai
+    type: relational-database
+    name: ICatalogAI Database
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Services/ICatalogAI.cs
+      containerId: catalog-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 16700
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/program
+    type: background-worker
+    name: Program Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/Program.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 17160
+    'y': 50
+  - entityRef: blueprint/eshop/catalog-api/catalogoptions
+    type: background-worker
+    name: CatalogOptions Service
+    isTest: false
+    properties:
+      filepath: src/Catalog.API/CatalogOptions.cs
+      containerId: catalog-api
+      technology: C# Domain Service
+      classification: default
+    x: 17620
+    'y': 50
+dependencies: []

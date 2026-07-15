@@ -3,6 +3,28 @@ name: Cli Service Components
 version: 1.0.0
 level: component
 nodes:
+  - entityRef: blueprint/app/cli/copytreesitterwasms
+    type: background-worker
+    name: copyTreeSitterWasms Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/scripts/copyTreeSitterWasms.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 5
+      loc: 36
+      sloc: 25
+      churn: 0
+      authorCount: 0
+      topAuthorPercent: 0
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 1045
+    'y': 1010
   - entityRef: blueprint/app/cli/vitest-config
     type: background-worker
     name: vitest.config Service
@@ -23,319 +45,54 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 5025
+    x: 10500
     'y': 50
-  - entityRef: blueprint/app/cli/blueprint
+  - entityRef: blueprint/app/cli/loadanalysisconfig
     type: background-worker
-    name: blueprint Service
+    name: loadAnalysisConfig Service
     isTest: false
     properties:
-      filepath: app/packages/cli/src/blueprint.ts
+      filepath: app/packages/cli/src/analysis/adapters/loadAnalysisConfig.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 41
-      loc: 267
-      sloc: 231
-      churn: 8
+      complexity: 19
+      loc: 84
+      sloc: 69
+      churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.45088566827697263
+      hotspotScore: 0.05538461538461539
       classifications:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 90
-    x: 5485
-    'y': 50
-  - entityRef: blueprint/app/cli/interactivegitchoice-test
+    x: 4355
+    'y': 1330
+  - entityRef: blueprint/app/cli/consolelogger
     type: background-worker
-    name: interactiveGitChoice.test Service
-    isTest: true
-    properties:
-      filepath: app/packages/cli/src/interactiveGitChoice.test.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 57
-      sloc: 48
-      churn: 2
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 140
-    'y': 370
-  - entityRef: blueprint/app/cli/interactivegitchoice
-    type: background-worker
-    name: interactiveGitChoice Service
+    name: consoleLogger Service
     isTest: false
     properties:
-      filepath: app/packages/cli/src/interactiveGitChoice.ts
+      filepath: app/packages/cli/src/analysis/adapters/consoleLogger.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 4
-      loc: 35
+      complexity: 11
+      loc: 31
       sloc: 27
-      churn: 2
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.004830917874396135
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 450
-    'y': 690
-  - entityRef: blueprint/app/cli/parseblueprintargv-test
-    type: background-worker
-    name: parseBlueprintArgv.test Service
-    isTest: true
-    properties:
-      filepath: app/packages/cli/src/parseBlueprintArgv.test.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 83
-      sloc: 68
-      churn: 2
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 910
-    'y': 690
-  - entityRef: blueprint/app/cli/parseblueprintargv
-    type: background-worker
-    name: parseBlueprintArgv Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/parseBlueprintArgv.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 29
-      loc: 123
-      sloc: 102
-      churn: 2
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.04508856682769726
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 90
-    x: 500
-    'y': 1010
-  - entityRef: blueprint/app/cli/collectfilemetrics-test
-    type: background-worker
-    name: collectFileMetrics.test Service
-    isTest: true
-    properties:
-      filepath: app/packages/cli/src/forensics/collectFileMetrics.test.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 9
-      sloc: 7
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 15895
-    'y': 690
-  - entityRef: blueprint/app/cli/collectfilemetrics
-    type: background-worker
-    name: collectFileMetrics Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/forensics/collectFileMetrics.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 53
-      sloc: 44
-      churn: 2
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.001610305958132045
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 5485
-    'y': 690
-  - entityRef: blueprint/app/cli/fakes
-    type: background-worker
-    name: fakes Service
-    isTest: true
-    properties:
-      filepath: app/packages/cli/src/test/fakes.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 9
-      loc: 123
-      sloc: 105
-      churn: 3
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.02576489533011272
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 3705
-    'y': 690
-  - entityRef: blueprint/app/cli/componentlevelwriter-test
-    type: background-worker
-    name: componentLevelWriter.test Service
-    isTest: true
-    properties:
-      filepath: app/packages/cli/src/writers/componentLevelWriter.test.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 338
-      sloc: 313
-      churn: 2
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 5755
-    'y': 370
-  - entityRef: blueprint/app/cli/componentlevelwriter
-    type: background-worker
-    name: componentLevelWriter Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/writers/componentLevelWriter.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 49
-      sloc: 41
-      churn: 2
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.00322061191626409
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 8295
-    'y': 690
-  - entityRef: blueprint/app/cli/containerlevelwriter-test
-    type: background-worker
-    name: containerLevelWriter.test Service
-    isTest: true
-    properties:
-      filepath: app/packages/cli/src/writers/containerLevelWriter.test.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 124
-      sloc: 108
-      churn: 2
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 6295
-    'y': 370
-  - entityRef: blueprint/app/cli/containerlevelwriter
-    type: background-worker
-    name: containerLevelWriter Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/writers/containerLevelWriter.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 32
-      sloc: 28
-      churn: 2
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 8755
-    'y': 690
-  - entityRef: blueprint/app/cli/contextlevelwriter-test
-    type: background-worker
-    name: contextLevelWriter.test Service
-    isTest: true
-    properties:
-      filepath: app/packages/cli/src/writers/contextLevelWriter.test.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 162
-      sloc: 142
-      churn: 3
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.00644122383252818
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 7365
-    'y': 370
-  - entityRef: blueprint/app/cli/contextlevelwriter
-    type: background-worker
-    name: contextLevelWriter Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/writers/contextLevelWriter.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 35
-      loc: 201
-      sloc: 167
-      churn: 4
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.1642512077294686
+      hotspotScore: 0.015384615384615385
       classifications:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 90
-    x: 12375
-    'y': 690
+    x: 19220
+    'y': 1010
   - entityRef: blueprint/app/cli/consolelogger-test
     type: background-worker
     name: consoleLogger.test Service
@@ -356,31 +113,52 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 5025
+    x: 19395
     'y': 690
-  - entityRef: blueprint/app/cli/consolelogger
+  - entityRef: blueprint/app/cli/nodefilesystem
     type: background-worker
-    name: consoleLogger Service
+    name: nodeFileSystem Service
     isTest: false
     properties:
-      filepath: app/packages/cli/src/analysis/adapters/consoleLogger.ts
+      filepath: app/packages/cli/src/analysis/adapters/nodeFileSystem.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 11
-      loc: 31
-      sloc: 27
+      complexity: 9
+      loc: 68
+      sloc: 55
+      churn: 4
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.04923076923076924
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 18720
+    'y': 1010
+  - entityRef: blueprint/app/cli/treesitterparser-test
+    type: background-worker
+    name: treeSitterParser.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/cli/src/analysis/adapters/treeSitterParser.test.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 118
+      sloc: 95
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
+      hotspotScore: 0.0030769230769230774
+      classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 5125
-    'y': 1010
+    x: 4760
+    'y': 690
   - entityRef: blueprint/app/cli/dagrelayout-test
     type: background-worker
     name: dagreLayout.test Service
@@ -401,30 +179,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 6295
+    x: 18315
     'y': 690
-  - entityRef: blueprint/app/cli/dagrelayout
-    type: background-worker
-    name: dagreLayout Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/analysis/adapters/dagreLayout.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 9
-      loc: 50
-      sloc: 41
-      churn: 3
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.02576489533011272
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 6095
-    'y': 1010
   - entityRef: blueprint/app/cli/gitignorefilter-test
     type: background-worker
     name: gitignoreFilter.test Service
@@ -445,120 +201,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 17880
+    x: 950
     'y': 1330
-  - entityRef: blueprint/app/cli/gitignorefilter
-    type: background-worker
-    name: gitignoreFilter Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/analysis/adapters/gitignoreFilter.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 10
-      loc: 58
-      sloc: 40
-      churn: 2
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.014492753623188404
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 90
-    x: 18030
-    'y': 1650
-  - entityRef: blueprint/app/cli/loadanalysisconfig-test
-    type: background-worker
-    name: loadAnalysisConfig.test Service
-    isTest: true
-    properties:
-      filepath: app/packages/cli/src/analysis/adapters/loadAnalysisConfig.test.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 73
-      sloc: 59
-      churn: 2
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 18865
-    'y': 1010
-  - entityRef: blueprint/app/cli/loadanalysisconfig
-    type: background-worker
-    name: loadAnalysisConfig Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/analysis/adapters/loadAnalysisConfig.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 19
-      loc: 84
-      sloc: 69
-      churn: 2
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.02898550724637681
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 90
-    x: 19175
-    'y': 1330
-  - entityRef: blueprint/app/cli/nodefilesystem-test
-    type: background-worker
-    name: nodeFileSystem.test Service
-    isTest: true
-    properties:
-      filepath: app/packages/cli/src/analysis/adapters/nodeFileSystem.test.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 54
-      sloc: 42
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 7295
-    'y': 690
-  - entityRef: blueprint/app/cli/nodefilesystem
-    type: background-worker
-    name: nodeFileSystem Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/analysis/adapters/nodeFileSystem.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 9
-      loc: 68
-      sloc: 55
-      churn: 4
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.03864734299516908
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 6865
-    'y': 1010
   - entityRef: blueprint/app/cli/sourcepathfilter-test
     type: background-worker
     name: sourcePathFilter.test Service
@@ -579,75 +223,162 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 18405
+    x: 2710
     'y': 1010
-  - entityRef: blueprint/app/cli/sourcepathfilter
+  - entityRef: blueprint/app/cli/treesitterwasmpaths-test
     type: background-worker
-    name: sourcePathFilter Service
-    isTest: false
+    name: treeSitterWasmPaths.test Service
+    isTest: true
     properties:
-      filepath: app/packages/cli/src/analysis/adapters/sourcePathFilter.ts
+      filepath: app/packages/cli/src/analysis/adapters/treeSitterWasmPaths.test.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 12
-      loc: 47
-      sloc: 33
-      churn: 2
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.017713365539452495
-      classifications:
-        - knowledge-silo
+      complexity: 1
+      loc: 44
+      sloc: 39
+      churn: 0
+      authorCount: 0
+      topAuthorPercent: 0
+      hotspotScore: 0
+      classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 18500
-    'y': 1330
-  - entityRef: blueprint/app/cli/treesitterparser-test
+    x: 490
+    'y': 1010
+  - entityRef: blueprint/app/cli/tsmorphparser
     type: background-worker
-    name: treeSitterParser.test Service
-    isTest: true
+    name: tsMorphParser Service
+    isTest: false
     properties:
-      filepath: app/packages/cli/src/analysis/adapters/treeSitterParser.test.ts
+      filepath: app/packages/cli/src/analysis/adapters/tsMorphParser.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 3
-      loc: 118
-      sloc: 95
-      churn: 1
+      loc: 76
+      sloc: 63
+      churn: 4
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.01230769230769231
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 6165
+    'y': 1010
+  - entityRef: blueprint/app/cli/loadanalysisconfig-test
+    type: background-worker
+    name: loadAnalysisConfig.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/cli/src/analysis/adapters/loadAnalysisConfig.test.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 73
+      sloc: 59
+      churn: 2
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 11915
-    'y': 690
-  - entityRef: blueprint/app/cli/treesitterparser
+    x: 3775
+    'y': 1010
+  - entityRef: blueprint/app/cli/treesitterwasmpaths
     type: background-worker
-    name: treeSitterParser Service
+    name: treeSitterWasmPaths Service
     isTest: false
     properties:
-      filepath: app/packages/cli/src/analysis/adapters/treeSitterParser.ts
+      filepath: app/packages/cli/src/analysis/adapters/treeSitterWasmPaths.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 70
-      loc: 320
-      sloc: 279
-      churn: 4
+      complexity: 5
+      loc: 81
+      sloc: 59
+      churn: 0
+      authorCount: 0
+      topAuthorPercent: 0
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 490
+    'y': 1330
+  - entityRef: blueprint/app/cli/nodefilesystem-test
+    type: background-worker
+    name: nodeFileSystem.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/cli/src/analysis/adapters/nodeFileSystem.test.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 54
+      sloc: 42
+      churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.3333333333333333
+      hotspotScore: 0.0030769230769230774
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 18855
+    'y': 690
+  - entityRef: blueprint/app/cli/gitignorefilter
+    type: background-worker
+    name: gitignoreFilter Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/analysis/adapters/gitignoreFilter.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 10
+      loc: 58
+      sloc: 40
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.027692307692307697
       classifications:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 90
-    x: 11780
+    x: 140
+    'y': 1650
+  - entityRef: blueprint/app/cli/dagrelayout
+    type: background-worker
+    name: dagreLayout Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/analysis/adapters/dagreLayout.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 9
+      loc: 50
+      sloc: 41
+      churn: 3
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.036923076923076927
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 18180
     'y': 1010
   - entityRef: blueprint/app/cli/tsmorphparser-test
     type: background-worker
@@ -665,191 +396,58 @@ nodes:
       churn: 3
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.00644122383252818
+      hotspotScore: 0.009230769230769232
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 13930
+    x: 6680
     'y': 690
-  - entityRef: blueprint/app/cli/tsmorphparser
+  - entityRef: blueprint/app/cli/sourcepathfilter
     type: background-worker
-    name: tsMorphParser Service
+    name: sourcePathFilter Service
     isTest: false
     properties:
-      filepath: app/packages/cli/src/analysis/adapters/tsMorphParser.ts
+      filepath: app/packages/cli/src/analysis/adapters/sourcePathFilter.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 3
-      loc: 76
-      sloc: 63
+      complexity: 12
+      loc: 47
+      sloc: 33
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.03384615384615385
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 2590
+    'y': 1330
+  - entityRef: blueprint/app/cli/treesitterparser
+    type: background-worker
+    name: treeSitterParser Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/analysis/adapters/treeSitterParser.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 66
+      loc: 303
+      sloc: 265
       churn: 4
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.00966183574879227
-      classifications: []
+      hotspotScore: 0.4
+      classifications:
+        - knowledge-silo
       coupledFiles: []
       sinceDays: 90
-    x: 13700
+    x: 4625
     'y': 1010
-  - entityRef: blueprint/app/cli/analysisoptions
-    type: background-worker
-    name: analysisOptions Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/analysis/domain/analysisOptions.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 83
-      sloc: 43
-      churn: 2
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 19455
-    'y': 1650
-  - entityRef: blueprint/app/cli/analyzer-test
-    type: background-worker
-    name: analyzer.test Service
-    isTest: true
-    properties:
-      filepath: app/packages/cli/src/analysis/domain/analyzer.test.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 259
-      sloc: 138
-      churn: 10
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 10870
-    'y': 50
-  - entityRef: blueprint/app/cli/analyzer
-    type: background-worker
-    name: analyzer Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/analysis/domain/analyzer.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 39
-      loc: 291
-      sloc: 250
-      churn: 9
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.48953301127214166
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 90
-    x: 9320
-    'y': 370
-  - entityRef: blueprint/app/cli/cancellation-test
-    type: background-worker
-    name: cancellation.test Service
-    isTest: true
-    properties:
-      filepath: app/packages/cli/src/analysis/domain/cancellation.test.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 50
-      sloc: 40
-      churn: 2
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 2065
-    'y': 1010
-  - entityRef: blueprint/app/cli/cancellation
-    type: background-worker
-    name: cancellation Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/analysis/domain/cancellation.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 11
-      loc: 72
-      sloc: 50
-      churn: 2
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.01610305958132045
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 90
-    x: 1980
-    'y': 1330
-  - entityRef: blueprint/app/cli/containergrouping-test
-    type: background-worker
-    name: containerGrouping.test Service
-    isTest: true
-    properties:
-      filepath: app/packages/cli/src/analysis/domain/containerGrouping.test.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 150
-      sloc: 138
-      churn: 3
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.00322061191626409
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 17880
-    'y': 690
-  - entityRef: blueprint/app/cli/containergrouping
-    type: background-worker
-    name: containerGrouping Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/analysis/domain/containerGrouping.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 21
-      loc: 111
-      sloc: 74
-      churn: 3
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.0644122383252818
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 90
-    x: 19875
-    'y': 1330
   - entityRef: blueprint/app/cli/csharpanalyzer-test
     type: background-worker
     name: csharpAnalyzer.test Service
@@ -876,59 +474,8 @@ nodes:
           score: 1
           sharedCommits: 5
       sinceDays: 90
-    x: 9980
+    x: 15800
     'y': 690
-  - entityRef: blueprint/app/cli/csharpanalyzer
-    type: background-worker
-    name: csharpAnalyzer Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/analysis/domain/csharpAnalyzer.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 18
-      loc: 83
-      sloc: 73
-      churn: 5
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.10950080515297907
-      classifications:
-        - knowledge-silo
-      coupledFiles:
-        - path: app/packages/cli/src/analysis/domain/csharpAnalyzer.test.ts
-          score: 1
-          sharedCommits: 5
-        - path: app/packages/cli/src/analysis/domain/pythonAnalyzer.ts
-          score: 1
-          sharedCommits: 5
-      sinceDays: 90
-    x: 9980
-    'y': 1010
-  - entityRef: blueprint/app/cli/languageanalyzer
-    type: background-worker
-    name: languageAnalyzer Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/analysis/domain/languageAnalyzer.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 31
-      sloc: 26
-      churn: 3
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 10995
-    'y': 1330
   - entityRef: blueprint/app/cli/modelextractor
     type: background-worker
     name: modelExtractor Service
@@ -945,80 +492,93 @@ nodes:
       churn: 5
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.11594202898550723
+      hotspotScore: 0.13846153846153847
       classifications:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 90
-    x: 15625
+    x: 8950
     'y': 1010
-  - entityRef: blueprint/app/cli/nodetypehydrator-test
+  - entityRef: blueprint/app/cli/writer
     type: background-worker
-    name: nodeTypeHydrator.test Service
-    isTest: true
+    name: writer Service
+    isTest: false
     properties:
-      filepath: app/packages/cli/src/analysis/domain/nodeTypeHydrator.test.ts
+      filepath: app/packages/cli/src/analysis/domain/writer.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 168
-      sloc: 152
+      complexity: 4
+      loc: 28
+      sloc: 22
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0
+      hotspotScore: 0.009230769230769232
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 14160
+    x: 17465
     'y': 1010
-  - entityRef: blueprint/app/cli/nodetypehydrator
+  - entityRef: blueprint/app/cli/csharpanalyzer
     type: background-worker
-    name: nodeTypeHydrator Service
+    name: csharpAnalyzer Service
     isTest: false
     properties:
-      filepath: app/packages/cli/src/analysis/domain/nodeTypeHydrator.ts
+      filepath: app/packages/cli/src/analysis/domain/csharpAnalyzer.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 48
-      loc: 256
-      sloc: 219
-      churn: 2
+      complexity: 18
+      loc: 83
+      sloc: 73
+      churn: 5
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.07568438003220612
+      hotspotScore: 0.13076923076923078
       classifications:
         - knowledge-silo
-      coupledFiles: []
+      coupledFiles:
+        - path: app/packages/cli/src/analysis/domain/csharpAnalyzer.test.ts
+          score: 1
+          sharedCommits: 5
+        - path: app/packages/cli/src/analysis/domain/pythonAnalyzer.ts
+          score: 1
+          sharedCommits: 5
       sinceDays: 90
-    x: 11995
-    'y': 1330
-  - entityRef: blueprint/app/cli/ports
+    x: 15800
+    'y': 1010
+  - entityRef: blueprint/app/cli/pythonanalyzer
     type: background-worker
-    name: ports Service
+    name: pythonAnalyzer Service
     isTest: false
     properties:
-      filepath: app/packages/cli/src/forensics/domain/ports.ts
+      filepath: app/packages/cli/src/analysis/domain/pythonAnalyzer.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 47
-      sloc: 29
-      churn: 1
+      complexity: 18
+      loc: 83
+      sloc: 73
+      churn: 5
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
+      hotspotScore: 0.13076923076923078
+      classifications:
+        - knowledge-silo
+      coupledFiles:
+        - path: app/packages/cli/src/analysis/domain/csharpAnalyzer.test.ts
+          score: 1
+          sharedCommits: 5
+        - path: app/packages/cli/src/analysis/domain/csharpAnalyzer.ts
+          score: 1
+          sharedCommits: 5
       sinceDays: 90
-    x: 8420
-    'y': 1330
+    x: 14880
+    'y': 1010
   - entityRef: blueprint/app/cli/pythonanalyzer-test
     type: background-worker
     name: pythonAnalyzer.test Service
@@ -1039,81 +599,29 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 12835
+    x: 14880
     'y': 690
-  - entityRef: blueprint/app/cli/pythonanalyzer
+  - entityRef: blueprint/app/cli/typescriptanalyzer-test
     type: background-worker
-    name: pythonAnalyzer Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/analysis/domain/pythonAnalyzer.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 18
-      loc: 83
-      sloc: 73
-      churn: 5
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.10950080515297907
-      classifications:
-        - knowledge-silo
-      coupledFiles:
-        - path: app/packages/cli/src/analysis/domain/csharpAnalyzer.test.ts
-          score: 1
-          sharedCommits: 5
-        - path: app/packages/cli/src/analysis/domain/csharpAnalyzer.ts
-          score: 1
-          sharedCommits: 5
-      sinceDays: 90
-    x: 12835
-    'y': 1010
-  - entityRef: blueprint/app/cli/systemdiscovery-test
-    type: background-worker
-    name: systemDiscovery.test Service
+    name: typescriptAnalyzer.test Service
     isTest: true
     properties:
-      filepath: app/packages/cli/src/analysis/domain/systemDiscovery.test.ts
+      filepath: app/packages/cli/src/analysis/domain/typescriptAnalyzer.test.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 4
-      loc: 169
-      sloc: 159
-      churn: 2
+      complexity: 1
+      loc: 43
+      sloc: 38
+      churn: 3
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.004830917874396135
+      hotspotScore: 0
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 6905
-    'y': 370
-  - entityRef: blueprint/app/cli/systemdiscovery
-    type: background-worker
-    name: systemDiscovery Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/analysis/domain/systemDiscovery.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 50
-      loc: 294
-      sloc: 237
-      churn: 2
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0.07890499194847021
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 90
-    x: 6835
+    x: 12460
     'y': 690
   - entityRef: blueprint/app/cli/types
     type: background-worker
@@ -1135,30 +643,234 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 13025
+    x: 10300
     'y': 1650
-  - entityRef: blueprint/app/cli/typescriptanalyzer-test
+  - entityRef: blueprint/app/cli/systemdiscovery
     type: background-worker
-    name: typescriptAnalyzer.test Service
+    name: systemDiscovery Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/analysis/domain/systemDiscovery.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 50
+      loc: 294
+      sloc: 237
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.15076923076923077
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 5760
+    'y': 690
+  - entityRef: blueprint/app/cli/analyzer-test
+    type: background-worker
+    name: analyzer.test Service
     isTest: true
     properties:
-      filepath: app/packages/cli/src/analysis/domain/typescriptAnalyzer.test.ts
+      filepath: app/packages/cli/src/analysis/domain/analyzer.test.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 43
-      sloc: 38
-      churn: 3
+      loc: 259
+      sloc: 138
+      churn: 10
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 14620
+    x: 14030
+    'y': 50
+  - entityRef: blueprint/app/cli/ports
+    type: background-worker
+    name: ports Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/forensics/domain/ports.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 47
+      sloc: 29
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 17600
+    'y': 1330
+  - entityRef: blueprint/app/cli/analyzer
+    type: background-worker
+    name: analyzer Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/analysis/domain/analyzer.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 39
+      loc: 291
+      sloc: 250
+      churn: 9
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.5261538461538462
+      classifications:
+        - hotspot
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 11310
+    'y': 370
+  - entityRef: blueprint/app/cli/nodetypehydrator-test
+    type: background-worker
+    name: nodeTypeHydrator.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/cli/src/analysis/domain/nodeTypeHydrator.test.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 168
+      sloc: 152
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 15340
+    'y': 1010
+  - entityRef: blueprint/app/cli/cancellation
+    type: background-worker
+    name: cancellation Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/analysis/domain/cancellation.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 11
+      loc: 72
+      sloc: 50
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.03076923076923077
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 1870
+    'y': 1330
+  - entityRef: blueprint/app/cli/containergrouping
+    type: background-worker
+    name: containerGrouping Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/analysis/domain/containerGrouping.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 21
+      loc: 111
+      sloc: 74
+      churn: 3
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.09230769230769231
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 1410
+    'y': 1330
+  - entityRef: blueprint/app/cli/nodetypehydrator
+    type: background-worker
+    name: nodeTypeHydrator Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/analysis/domain/nodeTypeHydrator.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 48
+      loc: 256
+      sloc: 219
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.14461538461538462
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 15450
+    'y': 1330
+  - entityRef: blueprint/app/cli/containergrouping-test
+    type: background-worker
+    name: containerGrouping.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/cli/src/analysis/domain/containerGrouping.test.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 150
+      sloc: 138
+      churn: 3
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.004615384615384616
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 5300
     'y': 690
+  - entityRef: blueprint/app/cli/cancellation-test
+    type: background-worker
+    name: cancellation.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/cli/src/analysis/domain/cancellation.test.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 50
+      sloc: 40
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 1960
+    'y': 1010
   - entityRef: blueprint/app/cli/typescriptanalyzer
     type: background-worker
     name: typescriptAnalyzer Service
@@ -1175,116 +887,269 @@ nodes:
       churn: 3
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.08051529790660225
+      hotspotScore: 0.11538461538461539
       classifications:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 90
-    x: 14620
+    x: 12580
     'y': 1010
-  - entityRef: blueprint/app/cli/writer
+  - entityRef: blueprint/app/cli/systemdiscovery-test
     type: background-worker
-    name: writer Service
-    isTest: false
+    name: systemDiscovery.test Service
+    isTest: true
     properties:
-      filepath: app/packages/cli/src/analysis/domain/writer.ts
+      filepath: app/packages/cli/src/analysis/domain/systemDiscovery.test.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 4
-      loc: 28
-      sloc: 22
+      loc: 169
+      sloc: 159
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.004830917874396135
+      hotspotScore: 0.009230769230769232
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 8725
-    'y': 1010
-  - entityRef: blueprint/app/cli/gitloghistory-test
+    x: 5530
+    'y': 370
+  - entityRef: blueprint/app/cli/languageanalyzer
     type: background-worker
-    name: gitLogHistory.test Service
-    isTest: true
+    name: languageAnalyzer Service
+    isTest: false
     properties:
-      filepath: app/packages/cli/src/forensics/adapters/gitLogHistory.test.ts
+      filepath: app/packages/cli/src/analysis/domain/languageAnalyzer.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 41
-      sloc: 36
-      churn: 1
+      loc: 31
+      sloc: 26
+      churn: 3
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 4405
-    'y': 690
-  - entityRef: blueprint/app/cli/gitloghistory
-    type: background-worker
-    name: gitLogHistory Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/forensics/adapters/gitLogHistory.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 14
-      loc: 107
-      sloc: 90
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 90
-    x: 4310
-    'y': 1010
-  - entityRef: blueprint/app/cli/loadforensicsconfig
-    type: background-worker
-    name: loadForensicsConfig Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/forensics/adapters/loadForensicsConfig.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 16
-      loc: 104
-      sloc: 90
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 90
-    x: 2645
+    x: 13800
     'y': 1330
-  - entityRef: blueprint/app/cli/sourcefilelister
+  - entityRef: blueprint/app/cli/analysisoptions
     type: background-worker
-    name: sourceFileLister Service
+    name: analysisOptions Service
     isTest: false
     properties:
-      filepath: app/packages/cli/src/forensics/adapters/sourceFileLister.ts
+      filepath: app/packages/cli/src/analysis/domain/analysisOptions.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 5
-      loc: 42
-      sloc: 34
+      complexity: 1
+      loc: 83
+      sloc: 43
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 3385
+    'y': 1650
+  - entityRef: blueprint/app/cli/fakes
+    type: background-worker
+    name: fakes Service
+    isTest: true
+    properties:
+      filepath: app/packages/cli/src/test/fakes.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 9
+      loc: 123
+      sloc: 105
+      churn: 3
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.036923076923076927
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 12920
+    'y': 690
+  - entityRef: blueprint/app/cli/componentlevelwriter
+    type: background-worker
+    name: componentLevelWriter Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/writers/componentLevelWriter.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 49
+      sloc: 41
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.006153846153846155
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 17775
+    'y': 690
+  - entityRef: blueprint/app/cli/contextlevelwriter
+    type: background-worker
+    name: contextLevelWriter Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/writers/contextLevelWriter.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 35
+      loc: 201
+      sloc: 167
+      churn: 4
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.20923076923076925
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 11540
+    'y': 690
+  - entityRef: blueprint/app/cli/contextlevelwriter-test
+    type: background-worker
+    name: contextLevelWriter.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/cli/src/writers/contextLevelWriter.test.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 162
+      sloc: 142
+      churn: 3
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.009230769230769232
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 12230
+    'y': 370
+  - entityRef: blueprint/app/cli/containerlevelwriter-test
+    type: background-worker
+    name: containerLevelWriter.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/cli/src/writers/containerLevelWriter.test.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 124
+      sloc: 108
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 17220
+    'y': 370
+  - entityRef: blueprint/app/cli/componentlevelwriter-test
+    type: background-worker
+    name: componentLevelWriter.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/cli/src/writers/componentLevelWriter.test.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 338
+      sloc: 313
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 17680
+    'y': 370
+  - entityRef: blueprint/app/cli/containerlevelwriter
+    type: background-worker
+    name: containerLevelWriter Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/writers/containerLevelWriter.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 32
+      sloc: 28
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 17315
+    'y': 690
+  - entityRef: blueprint/app/cli/parseblueprintargv-test
+    type: background-worker
+    name: parseBlueprintArgv.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/cli/src/parseBlueprintArgv.test.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 83
+      sloc: 68
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 12000
+    'y': 690
+  - entityRef: blueprint/app/cli/collectfilemetrics-test
+    type: background-worker
+    name: collectFileMetrics.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/cli/src/forensics/collectFileMetrics.test.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 9
+      sloc: 7
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -1292,8 +1157,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 9185
-    'y': 1010
+    x: 7830
+    'y': 690
   - entityRef: blueprint/app/cli/tsmorphcomplexity-test
     type: background-worker
     name: tsMorphComplexity.test Service
@@ -1314,8 +1179,31 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 7755
+    x: 13380
     'y': 690
+  - entityRef: blueprint/app/cli/gitloghistory
+    type: background-worker
+    name: gitLogHistory Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/forensics/adapters/gitLogHistory.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 14
+      loc: 107
+      sloc: 90
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.020000000000000004
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 14380
+    'y': 1010
   - entityRef: blueprint/app/cli/tsmorphcomplexity
     type: background-worker
     name: tsMorphComplexity Service
@@ -1332,26 +1220,49 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0
+      hotspotScore: 0.018461538461538463
       classifications:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 90
-    x: 7715
+    x: 13460
     'y': 1010
-  - entityRef: blueprint/app/cli/aggregatehistory-test
+  - entityRef: blueprint/app/cli/loadforensicsconfig
     type: background-worker
-    name: aggregateHistory.test Service
+    name: loadForensicsConfig Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/forensics/adapters/loadForensicsConfig.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 16
+      loc: 104
+      sloc: 90
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.023076923076923078
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 20255
+    'y': 1330
+  - entityRef: blueprint/app/cli/gitloghistory-test
+    type: background-worker
+    name: gitLogHistory.test Service
     isTest: true
     properties:
-      filepath: app/packages/cli/src/forensics/domain/aggregateHistory.test.ts
+      filepath: app/packages/cli/src/forensics/adapters/gitLogHistory.test.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 46
-      sloc: 40
+      loc: 41
+      sloc: 36
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -1359,7 +1270,73 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 15085
+    x: 14420
+    'y': 690
+  - entityRef: blueprint/app/cli/sourcefilelister
+    type: background-worker
+    name: sourceFileLister Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/forensics/adapters/sourceFileLister.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 5
+      loc: 42
+      sloc: 34
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.006153846153846155
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 9870
+    'y': 1010
+  - entityRef: blueprint/app/cli/collectfilemetrics
+    type: background-worker
+    name: collectFileMetrics Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/forensics/collectFileMetrics.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 53
+      sloc: 44
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0030769230769230774
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 13840
+    'y': 690
+  - entityRef: blueprint/app/cli/forensicanalyzer
+    type: background-worker
+    name: forensicAnalyzer Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/forensics/domain/forensicAnalyzer.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 6
+      loc: 135
+      sloc: 113
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.007692307692307693
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 9410
     'y': 1010
   - entityRef: blueprint/app/cli/aggregatehistory
     type: background-worker
@@ -1377,12 +1354,34 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
+      hotspotScore: 0.01230769230769231
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 9180
+    'y': 1330
+  - entityRef: blueprint/app/cli/temporalcoupling-test
+    type: background-worker
+    name: temporalCoupling.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/cli/src/forensics/domain/temporalCoupling.test.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 52
+      sloc: 45
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 12925
-    'y': 1330
+    x: 7545
+    'y': 1010
   - entityRef: blueprint/app/cli/attachforensics-test
     type: background-worker
     name: attachForensics.test Service
@@ -1403,8 +1402,30 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 16355
+    x: 8290
     'y': 690
+  - entityRef: blueprint/app/cli/hotspotscoring
+    type: background-worker
+    name: hotspotScoring Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/forensics/domain/hotspotScoring.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 9
+      loc: 39
+      sloc: 26
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.01230769230769231
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 3720
+    'y': 1330
   - entityRef: blueprint/app/cli/attachforensics
     type: background-worker
     name: attachForensics Service
@@ -1421,13 +1442,35 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.03864734299516908
+      hotspotScore: 0.07384615384615385
       classifications:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 90
-    x: 16085
+    x: 8045
     'y': 1010
+  - entityRef: blueprint/app/cli/classify
+    type: background-worker
+    name: classify Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/forensics/domain/classify.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 4
+      loc: 19
+      sloc: 17
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.004615384615384616
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 7060
+    'y': 1330
   - entityRef: blueprint/app/cli/classify-test
     type: background-worker
     name: classify.test Service
@@ -1448,29 +1491,30 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 16625
+    x: 6625
     'y': 1010
-  - entityRef: blueprint/app/cli/classify
+  - entityRef: blueprint/app/cli/temporalcoupling
     type: background-worker
-    name: classify Service
+    name: temporalCoupling Service
     isTest: false
     properties:
-      filepath: app/packages/cli/src/forensics/domain/classify.ts
+      filepath: app/packages/cli/src/forensics/domain/temporalCoupling.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 4
-      loc: 19
-      sloc: 17
+      complexity: 13
+      loc: 58
+      sloc: 43
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
+      hotspotScore: 0.018461538461538463
+      classifications:
+        - knowledge-silo
       coupledFiles: []
       sinceDays: 90
-    x: 16665
+    x: 6600
     'y': 1330
   - entityRef: blueprint/app/cli/forensicanalyzer-test
     type: background-worker
@@ -1492,30 +1536,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 13295
+    x: 9315
     'y': 690
-  - entityRef: blueprint/app/cli/forensicanalyzer
-    type: background-worker
-    name: forensicAnalyzer Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/forensics/domain/forensicAnalyzer.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 6
-      loc: 135
-      sloc: 113
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 11320
-    'y': 1010
   - entityRef: blueprint/app/cli/hotspotscoring-test
     type: background-worker
     name: hotspotScoring.test Service
@@ -1536,21 +1558,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 3850
+    x: 3315
     'y': 1010
-  - entityRef: blueprint/app/cli/hotspotscoring
+  - entityRef: blueprint/app/cli/aggregatehistory-test
     type: background-worker
-    name: hotspotScoring Service
-    isTest: false
+    name: aggregateHistory.test Service
+    isTest: true
     properties:
-      filepath: app/packages/cli/src/forensics/domain/hotspotScoring.ts
+      filepath: app/packages/cli/src/forensics/domain/aggregateHistory.test.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 9
-      loc: 39
-      sloc: 26
+      complexity: 1
+      loc: 46
+      sloc: 40
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -1558,8 +1580,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 3775
-    'y': 1330
+    x: 7085
+    'y': 1010
   - entityRef: blueprint/app/cli/options
     type: background-worker
     name: options Service
@@ -1576,58 +1598,703 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0
+      hotspotScore: 0.0030769230769230774
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 2575
+    x: 20135
     'y': 1650
-  - entityRef: blueprint/app/cli/temporalcoupling-test
+  - entityRef: blueprint/app/cli/blueprint
     type: background-worker
-    name: temporalCoupling.test Service
+    name: blueprint Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/blueprint.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 41
+      loc: 267
+      sloc: 231
+      churn: 8
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.49230769230769234
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 10960
+    'y': 50
+  - entityRef: blueprint/app/cli/interactivegitchoice
+    type: background-worker
+    name: interactiveGitChoice Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/interactiveGitChoice.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 4
+      loc: 35
+      sloc: 27
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.009230769230769232
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 10770
+    'y': 690
+  - entityRef: blueprint/app/cli/interactivegitchoice-test
+    type: background-worker
+    name: interactiveGitChoice.test Service
     isTest: true
     properties:
-      filepath: app/packages/cli/src/forensics/domain/temporalCoupling.test.ts
+      filepath: app/packages/cli/src/interactiveGitChoice.test.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 52
-      sloc: 45
-      churn: 1
+      loc: 57
+      sloc: 48
+      churn: 2
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
       sinceDays: 90
-    x: 17285
-    'y': 1010
-  - entityRef: blueprint/app/cli/temporalcoupling
+    x: 10500
+    'y': 370
+  - entityRef: blueprint/app/cli/parseblueprintargv
     type: background-worker
-    name: temporalCoupling Service
+    name: parseBlueprintArgv Service
     isTest: false
     properties:
-      filepath: app/packages/cli/src/forensics/domain/temporalCoupling.ts
+      filepath: app/packages/cli/src/parseBlueprintArgv.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 13
-      loc: 58
-      sloc: 43
-      churn: 1
+      complexity: 29
+      loc: 123
+      sloc: 102
+      churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0
+      hotspotScore: 0.08615384615384616
       classifications:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 90
-    x: 17420
-    'y': 1330
+    x: 11040
+    'y': 1010
 dependencies:
+  - from: blueprint/app/cli/copytreesitterwasms
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/copytreesitterwasms
+    to: blueprint/app/cli/treesitterwasmpaths
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/loadanalysisconfig
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/loadanalysisconfig
+    to: blueprint/app/cli/analysisoptions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/consolelogger
+    to: blueprint/app/cli/ports
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/consolelogger-test
+    to: blueprint/app/cli/consolelogger
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/nodefilesystem
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/nodefilesystem
+    to: blueprint/app/cli/ports
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/treesitterparser-test
+    to: blueprint/app/cli/treesitterparser
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/treesitterparser-test
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/dagrelayout-test
+    to: blueprint/app/cli/dagrelayout
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/gitignorefilter-test
+    to: blueprint/app/cli/gitignorefilter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/gitignorefilter-test
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/sourcepathfilter-test
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/sourcepathfilter-test
+    to: blueprint/app/cli/sourcepathfilter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/treesitterwasmpaths-test
+    to: blueprint/app/cli/treesitterwasmpaths
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphparser
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphparser
+    to: blueprint/app/cli/ports
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphparser
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphparser
+    to: blueprint/app/cli/analysisoptions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphparser
+    to: blueprint/app/cli/gitignorefilter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphparser
+    to: blueprint/app/cli/sourcepathfilter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphparser
+    to: blueprint/app/cli/cancellation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/loadanalysisconfig-test
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/loadanalysisconfig-test
+    to: blueprint/app/cli/loadanalysisconfig
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/loadanalysisconfig-test
+    to: blueprint/app/cli/analysisoptions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/treesitterwasmpaths
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/nodefilesystem-test
+    to: blueprint/app/cli/nodefilesystem
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/nodefilesystem-test
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/gitignorefilter
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/dagrelayout
+    to: blueprint/app/cli/ports
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphparser-test
+    to: blueprint/app/cli/tsmorphparser
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphparser-test
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/sourcepathfilter
+    to: blueprint/app/cli/analysisoptions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/sourcepathfilter
+    to: blueprint/app/cli/gitignorefilter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/treesitterparser
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/treesitterparser
+    to: blueprint/app/cli/ports
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/treesitterparser
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/treesitterparser
+    to: blueprint/app/cli/analysisoptions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/treesitterparser
+    to: blueprint/app/cli/gitignorefilter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/treesitterparser
+    to: blueprint/app/cli/sourcepathfilter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/treesitterparser
+    to: blueprint/app/cli/cancellation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/treesitterparser
+    to: blueprint/app/cli/treesitterwasmpaths
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/csharpanalyzer-test
+    to: blueprint/app/cli/csharpanalyzer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/modelextractor
+    to: blueprint/app/cli/containergrouping
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/modelextractor
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/modelextractor
+    to: blueprint/app/cli/nodetypehydrator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/writer
+    to: blueprint/app/cli/ports
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/csharpanalyzer
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/csharpanalyzer
+    to: blueprint/app/cli/languageanalyzer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/pythonanalyzer
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/pythonanalyzer
+    to: blueprint/app/cli/languageanalyzer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/pythonanalyzer-test
+    to: blueprint/app/cli/pythonanalyzer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/typescriptanalyzer-test
+    to: blueprint/app/cli/typescriptanalyzer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/analyzer-test
+    to: blueprint/app/cli/analyzer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/analyzer-test
+    to: blueprint/app/cli/fakes
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/ports
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/analyzer
+    to: blueprint/app/cli/ports
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/analyzer
+    to: blueprint/app/cli/modelextractor
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/analyzer
+    to: blueprint/app/cli/contextlevelwriter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/analyzer
+    to: blueprint/app/cli/containerlevelwriter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/analyzer
+    to: blueprint/app/cli/componentlevelwriter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/analyzer
+    to: blueprint/app/cli/analysisoptions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/analyzer
+    to: blueprint/app/cli/systemdiscovery
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/analyzer
+    to: blueprint/app/cli/cancellation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/analyzer
+    to: blueprint/app/cli/attachforensics
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/analyzer
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/nodetypehydrator-test
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/nodetypehydrator-test
+    to: blueprint/app/cli/nodetypehydrator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/containergrouping
+    to: blueprint/app/cli/analysisoptions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/nodetypehydrator
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/containergrouping-test
+    to: blueprint/app/cli/containergrouping
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/containergrouping-test
+    to: blueprint/app/cli/modelextractor
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/cancellation-test
+    to: blueprint/app/cli/cancellation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/typescriptanalyzer
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/typescriptanalyzer
+    to: blueprint/app/cli/languageanalyzer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/systemdiscovery-test
+    to: blueprint/app/cli/systemdiscovery
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/systemdiscovery-test
+    to: blueprint/app/cli/systemdiscovery
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/languageanalyzer
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/fakes
+    to: blueprint/app/cli/ports
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/fakes
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/componentlevelwriter
+    to: blueprint/app/cli/writer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/contextlevelwriter
+    to: blueprint/app/cli/writer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/contextlevelwriter
+    to: blueprint/app/cli/attachforensics
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/contextlevelwriter-test
+    to: blueprint/app/cli/contextlevelwriter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/contextlevelwriter-test
+    to: blueprint/app/cli/fakes
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/containerlevelwriter-test
+    to: blueprint/app/cli/containerlevelwriter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/containerlevelwriter-test
+    to: blueprint/app/cli/fakes
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/componentlevelwriter-test
+    to: blueprint/app/cli/componentlevelwriter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/componentlevelwriter-test
+    to: blueprint/app/cli/fakes
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/containerlevelwriter
+    to: blueprint/app/cli/writer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/parseblueprintargv-test
+    to: blueprint/app/cli/parseblueprintargv
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/collectfilemetrics-test
+    to: blueprint/app/cli/attachforensics
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphcomplexity-test
+    to: blueprint/app/cli/tsmorphcomplexity
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/gitloghistory
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/gitloghistory
+    to: blueprint/app/cli/cancellation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/gitloghistory
+    to: blueprint/app/cli/options
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/gitloghistory
+    to: blueprint/app/cli/ports
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/gitloghistory
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphcomplexity
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphcomplexity
+    to: blueprint/app/cli/ports
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphcomplexity
+    to: blueprint/app/cli/cancellation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphcomplexity
+    to: blueprint/app/cli/options
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphcomplexity
+    to: blueprint/app/cli/ports
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/tsmorphcomplexity
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/loadforensicsconfig
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/loadforensicsconfig
+    to: blueprint/app/cli/options
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/gitloghistory-test
+    to: blueprint/app/cli/gitloghistory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/sourcefilelister
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/sourcefilelister
+    to: blueprint/app/cli/sourcepathfilter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/sourcefilelister
+    to: blueprint/app/cli/cancellation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/sourcefilelister
+    to: blueprint/app/cli/options
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/sourcefilelister
+    to: blueprint/app/cli/ports
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/collectfilemetrics
+    to: blueprint/app/core/path
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/collectfilemetrics
+    to: blueprint/app/cli/consolelogger
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/collectfilemetrics
+    to: blueprint/app/cli/forensicanalyzer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/collectfilemetrics
+    to: blueprint/app/cli/options
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/collectfilemetrics
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/collectfilemetrics
+    to: blueprint/app/cli/attachforensics
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/collectfilemetrics
+    to: blueprint/app/cli/gitloghistory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/collectfilemetrics
+    to: blueprint/app/cli/loadforensicsconfig
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/collectfilemetrics
+    to: blueprint/app/cli/sourcefilelister
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/collectfilemetrics
+    to: blueprint/app/cli/tsmorphcomplexity
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/collectfilemetrics
+    to: blueprint/app/cli/parseblueprintargv
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/forensicanalyzer
+    to: blueprint/app/cli/cancellation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/forensicanalyzer
+    to: blueprint/app/cli/aggregatehistory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/forensicanalyzer
+    to: blueprint/app/cli/classify
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/forensicanalyzer
+    to: blueprint/app/cli/hotspotscoring
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/forensicanalyzer
+    to: blueprint/app/cli/options
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/forensicanalyzer
+    to: blueprint/app/cli/ports
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/forensicanalyzer
+    to: blueprint/app/cli/temporalcoupling
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/forensicanalyzer
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/aggregatehistory
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/aggregatehistory
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/temporalcoupling-test
+    to: blueprint/app/cli/temporalcoupling
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/temporalcoupling-test
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/attachforensics-test
+    to: blueprint/app/cli/attachforensics
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/attachforensics-test
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/ports
+    to: blueprint/app/cli/options
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/ports
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/attachforensics
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/classify
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/classify-test
+    to: blueprint/app/cli/classify
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/temporalcoupling
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/forensicanalyzer-test
+    to: blueprint/app/cli/forensicanalyzer
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/forensicanalyzer-test
+    to: blueprint/app/cli/ports
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/forensicanalyzer-test
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/hotspotscoring-test
+    to: blueprint/app/cli/hotspotscoring
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/aggregatehistory-test
+    to: blueprint/app/cli/aggregatehistory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/aggregatehistory-test
+    to: blueprint/app/cli/types
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/app/cli/blueprint
     to: blueprint/app/core/path
     type: direct-call
@@ -1684,595 +2351,15 @@ dependencies:
     to: blueprint/app/cli/types
     type: direct-call
     description: Calls module / service
+  - from: blueprint/app/cli/interactivegitchoice
+    to: blueprint/app/cli/parseblueprintargv
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/app/cli/interactivegitchoice-test
     to: blueprint/app/cli/interactivegitchoice
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/cli/interactivegitchoice-test
     to: blueprint/app/cli/parseblueprintargv
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/interactivegitchoice
-    to: blueprint/app/cli/parseblueprintargv
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/parseblueprintargv-test
-    to: blueprint/app/cli/parseblueprintargv
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/collectfilemetrics-test
-    to: blueprint/app/cli/attachforensics
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/collectfilemetrics
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/collectfilemetrics
-    to: blueprint/app/cli/consolelogger
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/collectfilemetrics
-    to: blueprint/app/cli/forensicanalyzer
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/collectfilemetrics
-    to: blueprint/app/cli/options
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/collectfilemetrics
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/collectfilemetrics
-    to: blueprint/app/cli/attachforensics
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/collectfilemetrics
-    to: blueprint/app/cli/gitloghistory
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/collectfilemetrics
-    to: blueprint/app/cli/loadforensicsconfig
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/collectfilemetrics
-    to: blueprint/app/cli/sourcefilelister
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/collectfilemetrics
-    to: blueprint/app/cli/tsmorphcomplexity
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/collectfilemetrics
-    to: blueprint/app/cli/parseblueprintargv
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/fakes
-    to: blueprint/app/cli/ports
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/fakes
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/componentlevelwriter-test
-    to: blueprint/app/cli/componentlevelwriter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/componentlevelwriter-test
-    to: blueprint/app/cli/fakes
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/componentlevelwriter
-    to: blueprint/app/cli/writer
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/containerlevelwriter-test
-    to: blueprint/app/cli/containerlevelwriter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/containerlevelwriter-test
-    to: blueprint/app/cli/fakes
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/containerlevelwriter
-    to: blueprint/app/cli/writer
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/contextlevelwriter-test
-    to: blueprint/app/cli/contextlevelwriter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/contextlevelwriter-test
-    to: blueprint/app/cli/fakes
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/contextlevelwriter
-    to: blueprint/app/cli/writer
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/contextlevelwriter
-    to: blueprint/app/cli/attachforensics
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/consolelogger-test
-    to: blueprint/app/cli/consolelogger
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/consolelogger
-    to: blueprint/app/cli/ports
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/dagrelayout-test
-    to: blueprint/app/cli/dagrelayout
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/dagrelayout
-    to: blueprint/app/cli/ports
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/gitignorefilter-test
-    to: blueprint/app/cli/gitignorefilter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/gitignorefilter-test
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/gitignorefilter
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/loadanalysisconfig-test
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/loadanalysisconfig-test
-    to: blueprint/app/cli/loadanalysisconfig
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/loadanalysisconfig-test
-    to: blueprint/app/cli/analysisoptions
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/loadanalysisconfig
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/loadanalysisconfig
-    to: blueprint/app/cli/analysisoptions
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/nodefilesystem-test
-    to: blueprint/app/cli/nodefilesystem
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/nodefilesystem-test
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/nodefilesystem
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/nodefilesystem
-    to: blueprint/app/cli/ports
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/sourcepathfilter-test
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/sourcepathfilter-test
-    to: blueprint/app/cli/sourcepathfilter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/sourcepathfilter
-    to: blueprint/app/cli/analysisoptions
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/sourcepathfilter
-    to: blueprint/app/cli/gitignorefilter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/treesitterparser-test
-    to: blueprint/app/cli/treesitterparser
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/treesitterparser-test
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/treesitterparser
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/treesitterparser
-    to: blueprint/app/cli/ports
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/treesitterparser
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/treesitterparser
-    to: blueprint/app/cli/analysisoptions
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/treesitterparser
-    to: blueprint/app/cli/gitignorefilter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/treesitterparser
-    to: blueprint/app/cli/sourcepathfilter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/treesitterparser
-    to: blueprint/app/cli/cancellation
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/tsmorphparser-test
-    to: blueprint/app/cli/tsmorphparser
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/tsmorphparser-test
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/tsmorphparser
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/tsmorphparser
-    to: blueprint/app/cli/ports
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/tsmorphparser
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/tsmorphparser
-    to: blueprint/app/cli/analysisoptions
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/tsmorphparser
-    to: blueprint/app/cli/gitignorefilter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/tsmorphparser
-    to: blueprint/app/cli/sourcepathfilter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/tsmorphparser
-    to: blueprint/app/cli/cancellation
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/analyzer-test
-    to: blueprint/app/cli/analyzer
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/analyzer-test
-    to: blueprint/app/cli/fakes
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/analyzer
-    to: blueprint/app/cli/ports
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/analyzer
-    to: blueprint/app/cli/modelextractor
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/analyzer
-    to: blueprint/app/cli/contextlevelwriter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/analyzer
-    to: blueprint/app/cli/containerlevelwriter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/analyzer
-    to: blueprint/app/cli/componentlevelwriter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/analyzer
-    to: blueprint/app/cli/analysisoptions
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/analyzer
-    to: blueprint/app/cli/systemdiscovery
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/analyzer
-    to: blueprint/app/cli/cancellation
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/analyzer
-    to: blueprint/app/cli/attachforensics
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/analyzer
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/cancellation-test
-    to: blueprint/app/cli/cancellation
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/containergrouping-test
-    to: blueprint/app/cli/containergrouping
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/containergrouping-test
-    to: blueprint/app/cli/modelextractor
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/containergrouping
-    to: blueprint/app/cli/analysisoptions
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/csharpanalyzer-test
-    to: blueprint/app/cli/csharpanalyzer
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/csharpanalyzer
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/csharpanalyzer
-    to: blueprint/app/cli/languageanalyzer
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/languageanalyzer
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/modelextractor
-    to: blueprint/app/cli/containergrouping
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/modelextractor
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/modelextractor
-    to: blueprint/app/cli/nodetypehydrator
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/nodetypehydrator-test
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/nodetypehydrator-test
-    to: blueprint/app/cli/nodetypehydrator
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/nodetypehydrator
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/ports
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/pythonanalyzer-test
-    to: blueprint/app/cli/pythonanalyzer
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/pythonanalyzer
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/pythonanalyzer
-    to: blueprint/app/cli/languageanalyzer
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/systemdiscovery-test
-    to: blueprint/app/cli/systemdiscovery
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/systemdiscovery-test
-    to: blueprint/app/cli/systemdiscovery
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/typescriptanalyzer-test
-    to: blueprint/app/cli/typescriptanalyzer
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/typescriptanalyzer
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/typescriptanalyzer
-    to: blueprint/app/cli/languageanalyzer
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/writer
-    to: blueprint/app/cli/ports
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/gitloghistory-test
-    to: blueprint/app/cli/gitloghistory
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/gitloghistory
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/gitloghistory
-    to: blueprint/app/cli/cancellation
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/gitloghistory
-    to: blueprint/app/cli/options
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/gitloghistory
-    to: blueprint/app/cli/ports
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/gitloghistory
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/loadforensicsconfig
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/loadforensicsconfig
-    to: blueprint/app/cli/options
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/sourcefilelister
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/sourcefilelister
-    to: blueprint/app/cli/sourcepathfilter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/sourcefilelister
-    to: blueprint/app/cli/cancellation
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/sourcefilelister
-    to: blueprint/app/cli/options
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/sourcefilelister
-    to: blueprint/app/cli/ports
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/tsmorphcomplexity-test
-    to: blueprint/app/cli/tsmorphcomplexity
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/tsmorphcomplexity
-    to: blueprint/app/core/path
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/tsmorphcomplexity
-    to: blueprint/app/cli/ports
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/tsmorphcomplexity
-    to: blueprint/app/cli/cancellation
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/tsmorphcomplexity
-    to: blueprint/app/cli/options
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/tsmorphcomplexity
-    to: blueprint/app/cli/ports
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/tsmorphcomplexity
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/aggregatehistory-test
-    to: blueprint/app/cli/aggregatehistory
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/aggregatehistory-test
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/aggregatehistory
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/aggregatehistory
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/attachforensics-test
-    to: blueprint/app/cli/attachforensics
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/attachforensics-test
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/attachforensics
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/classify-test
-    to: blueprint/app/cli/classify
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/classify
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/forensicanalyzer-test
-    to: blueprint/app/cli/forensicanalyzer
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/forensicanalyzer-test
-    to: blueprint/app/cli/ports
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/forensicanalyzer-test
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/forensicanalyzer
-    to: blueprint/app/cli/cancellation
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/forensicanalyzer
-    to: blueprint/app/cli/aggregatehistory
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/forensicanalyzer
-    to: blueprint/app/cli/classify
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/forensicanalyzer
-    to: blueprint/app/cli/hotspotscoring
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/forensicanalyzer
-    to: blueprint/app/cli/options
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/forensicanalyzer
-    to: blueprint/app/cli/ports
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/forensicanalyzer
-    to: blueprint/app/cli/temporalcoupling
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/forensicanalyzer
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/hotspotscoring-test
-    to: blueprint/app/cli/hotspotscoring
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/ports
-    to: blueprint/app/cli/options
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/ports
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/temporalcoupling-test
-    to: blueprint/app/cli/temporalcoupling
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/temporalcoupling-test
-    to: blueprint/app/cli/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/cli/temporalcoupling
-    to: blueprint/app/cli/types
     type: direct-call
     description: Calls module / service

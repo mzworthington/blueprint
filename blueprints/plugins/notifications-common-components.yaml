@@ -3,28 +3,6 @@ name: Notifications-common Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/plugins/notifications-common/constants
-    type: background-worker
-    name: constants Service
-    isTest: false
-    properties:
-      filepath: plugins/notifications-common/src/constants.ts
-      containerId: notifications-common
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 27
-      sloc: 7
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 370
   - entityRef: blueprint/plugins/notifications-common/filters
     type: background-worker
     name: filters Service
@@ -45,21 +23,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 275
+    x: 235
     'y': 50
-  - entityRef: blueprint/plugins/notifications-common/index
+  - entityRef: blueprint/plugins/notifications-common/utils
     type: background-worker
-    name: index Service
+    name: utils Service
     isTest: false
     properties:
-      filepath: plugins/notifications-common/src/index.ts
+      filepath: plugins/notifications-common/src/utils.ts
       containerId: notifications-common
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 27
-      sloc: 4
+      complexity: 5
+      loc: 49
+      sloc: 24
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -67,8 +45,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 735
-    'y': 50
+    x: 140
+    'y': 370
   - entityRef: blueprint/plugins/notifications-common/setuptests
     type: background-worker
     name: setupTests Service
@@ -89,7 +67,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1195
+    x: 695
     'y': 50
   - entityRef: blueprint/plugins/notifications-common/types
     type: background-worker
@@ -111,21 +89,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 410
+    x: 235
     'y': 690
-  - entityRef: blueprint/plugins/notifications-common/utils
+  - entityRef: blueprint/plugins/notifications-common/constants
     type: background-worker
-    name: utils Service
+    name: constants Service
     isTest: false
     properties:
-      filepath: plugins/notifications-common/src/utils.ts
+      filepath: plugins/notifications-common/src/constants.ts
       containerId: notifications-common
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 5
-      loc: 49
-      sloc: 24
+      complexity: 1
+      loc: 27
+      sloc: 7
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -133,19 +111,37 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 680
+    x: 600
     'y': 370
+  - entityRef: blueprint/plugins/notifications-common/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-common/src/index.ts
+      containerId: notifications-common
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 27
+      sloc: 4
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1155
+    'y': 50
 dependencies:
-  - from: blueprint/plugins/home-react/extensions
+  - from: blueprint/plugins/home/types
     to: blueprint/plugins/notifications-common/utils
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/notifications-common/constants
-    to: blueprint/plugins/notifications-common/types
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/notifications-common/filters
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/notifications-common/filters
@@ -160,7 +156,11 @@ dependencies:
     to: blueprint/plugins/notifications-common/types
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/catalog/catalogtable
+  - from: blueprint/plugins/notifications-common/constants
+    to: blueprint/plugins/notifications-common/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/columns
     to: blueprint/plugins/notifications-common/utils
     type: direct-call
     description: Calls module / service
@@ -168,15 +168,19 @@ dependencies:
     to: blueprint/plugins/notifications-common/utils
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/catalog-react/columns
-    to: blueprint/plugins/notifications-common/utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/home/types
+  - from: blueprint/plugins/catalog/catalogtable
     to: blueprint/plugins/notifications-common/utils
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/catalog/entitytabsgroup
+    to: blueprint/plugins/notifications-common/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node/index
+    to: blueprint/plugins/notifications-common/filters
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home-react/extensions
     to: blueprint/plugins/notifications-common/utils
     type: direct-call
     description: Calls module / service

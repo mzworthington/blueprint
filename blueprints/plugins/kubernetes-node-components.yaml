@@ -3,63 +3,19 @@ name: Kubernetes-node Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/plugins/kubernetes-node/extensions
-    type: rest-api
-    name: extensions REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/kubernetes-node/src/extensions.ts
-      containerId: kubernetes-node
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 204
-      sloc: 86
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 655
-    'y': 370
-  - entityRef: blueprint/plugins/kubernetes-node/index
+  - entityRef: blueprint/plugins/kubernetes-node/types
     type: background-worker
-    name: index Service
+    name: types Service
     isTest: false
     properties:
-      filepath: plugins/kubernetes-node/src/types/index.ts
+      filepath: plugins/kubernetes-node/src/types/types.ts
       containerId: kubernetes-node
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 18
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
-  - entityRef: blueprint/plugins/kubernetes-node/setuptests
-    type: background-worker
-    name: setupTests Service
-    isTest: true
-    properties:
-      filepath: plugins/kubernetes-node/src/setupTests.ts
-      containerId: kubernetes-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 17
-      sloc: 1
+      loc: 273
+      sloc: 125
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -68,6 +24,28 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 600
+    'y': 690
+  - entityRef: blueprint/plugins/kubernetes-node/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/kubernetes-node/src/index.ts
+      containerId: kubernetes-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 29
+      sloc: 3
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
     'y': 50
   - entityRef: blueprint/plugins/kubernetes-node/pinnipedhelper-test
     type: background-worker
@@ -89,7 +67,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 600
     'y': 50
   - entityRef: blueprint/plugins/kubernetes-node/pinnipedhelper
     type: background-worker
@@ -111,21 +89,43 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1195
+    x: 1060
     'y': 370
-  - entityRef: blueprint/plugins/kubernetes-node/types
-    type: background-worker
-    name: types Service
+  - entityRef: blueprint/plugins/kubernetes-node/extensions
+    type: rest-api
+    name: extensions REST Endpoint
     isTest: false
     properties:
-      filepath: plugins/kubernetes-node/src/types/types.ts
+      filepath: plugins/kubernetes-node/src/extensions.ts
+      containerId: kubernetes-node
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 204
+      sloc: 86
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 370
+  - entityRef: blueprint/plugins/kubernetes-node/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/kubernetes-node/src/setupTests.ts
       containerId: kubernetes-node
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 273
-      sloc: 125
+      loc: 17
+      sloc: 1
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -134,7 +134,7 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 1060
-    'y': 690
+    'y': 50
 dependencies:
   - from: blueprint/plugins/kubernetes-node/pinnipedhelper-test
     to: blueprint/plugins/kubernetes-node/types

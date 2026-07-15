@@ -3,28 +3,6 @@ name: Permission-backend-module-policy-allow-all Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/plugins/permission-backend-module-policy-allow-all/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/permission-backend-module-policy-allow-all/src/index.ts
-      containerId: permission-backend-module-policy-allow-all
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 24
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
   - entityRef: blueprint/plugins/permission-backend-module-policy-allow-all/module
     type: background-worker
     name: module Service
@@ -45,7 +23,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
+    x: 140
     'y': 50
   - entityRef: blueprint/plugins/permission-backend-module-policy-allow-all/policy
     type: background-worker
@@ -67,11 +45,33 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
+    x: 140
     'y': 370
+  - entityRef: blueprint/plugins/permission-backend-module-policy-allow-all/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/permission-backend-module-policy-allow-all/src/index.ts
+      containerId: permission-backend-module-policy-allow-all
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 24
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 50
 dependencies:
   - from: blueprint/plugins/permission-backend-module-policy-allow-all/module
-    to: blueprint/plugins/api-docs/alpha
+    to: blueprint/plugins/permission-node/alpha
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/permission-backend-module-policy-allow-all/module

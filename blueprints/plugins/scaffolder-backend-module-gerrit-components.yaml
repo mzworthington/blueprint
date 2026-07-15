@@ -3,28 +3,6 @@ name: Scaffolder-backend-module-gerrit Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/plugins/scaffolder-backend-module-gerrit/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-gerrit/src/actions/index.ts
-      containerId: scaffolder-backend-module-gerrit
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 18
-      sloc: 2
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
   - entityRef: blueprint/plugins/scaffolder-backend-module-gerrit/module
     type: background-worker
     name: module Service
@@ -38,6 +16,28 @@ nodes:
       complexity: 1
       loc: 50
       sloc: 29
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview-test
+    type: background-worker
+    name: gerritReview.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-gerrit/src/actions/gerritReview.test.ts
+      containerId: scaffolder-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 119
+      sloc: 91
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -60,50 +60,6 @@ nodes:
       complexity: 9
       loc: 591
       sloc: 527
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit-examples
-    type: background-worker
-    name: gerrit.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-gerrit/src/actions/gerrit.examples.ts
-      containerId: scaffolder-backend-module-gerrit
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 178
-      sloc: 160
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1290
-    'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit-test
-    type: background-worker
-    name: gerrit.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-gerrit/src/actions/gerrit.test.ts
-      containerId: scaffolder-backend-module-gerrit
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 314
-      sloc: 273
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -134,8 +90,30 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1480
+    x: 2440
     'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit-examples
+    type: background-worker
+    name: gerrit.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-gerrit/src/actions/gerrit.examples.ts
+      containerId: scaffolder-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 178
+      sloc: 160
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2020
+    'y': 690
   - entityRef: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview-examples-test
     type: background-worker
     name: gerritReview.examples.test Service
@@ -156,51 +134,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1980
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview-examples
-    type: background-worker
-    name: gerritReview.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-gerrit/src/actions/gerritReview.examples.ts
-      containerId: scaffolder-backend-module-gerrit
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 127
-      sloc: 109
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2210
-    'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview-test
-    type: background-worker
-    name: gerritReview.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-gerrit/src/actions/gerritReview.test.ts
-      containerId: scaffolder-backend-module-gerrit
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 119
-      sloc: 91
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2440
+    x: 1060
     'y': 50
   - entityRef: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview
     type: background-worker
@@ -222,8 +156,74 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2400
+    x: 1060
     'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-gerrit/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-gerrit/src/index.ts
+      containerId: scaffolder-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 25
+      sloc: 2
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit-test
+    type: background-worker
+    name: gerrit.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-gerrit/src/actions/gerrit.test.ts
+      containerId: scaffolder-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 314
+      sloc: 273
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview-examples
+    type: background-worker
+    name: gerritReview.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-gerrit/src/actions/gerritReview.examples.ts
+      containerId: scaffolder-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 127
+      sloc: 109
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 690
 dependencies:
   - from: blueprint/plugins/scaffolder-backend-module-gerrit/module
     to: blueprint/plugins/home/actions
@@ -233,6 +233,18 @@ dependencies:
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview-test
+    to: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit-examples-test
     to: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit
     type: direct-call
@@ -242,31 +254,19 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit-examples-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit-examples-test
     to: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit-examples
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit-test
-    to: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit-test
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit-test
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit
@@ -286,31 +286,19 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview-examples-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview-examples-test
     to: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview-examples
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview-test
-    to: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview-test
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview-test
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview
@@ -319,5 +307,17 @@ dependencies:
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview
     to: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit-test
+    to: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit-test
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service

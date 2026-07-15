@@ -3,51 +3,6 @@ name: Cli-module-test-jest Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/cli-module-test-jest/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-test-jest/src/index.ts
-      containerId: cli-module-test-jest
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 37
-      sloc: 19
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
-  - entityRef: blueprint/packages/cli-module-test-jest/test
-    type: background-worker
-    name: test Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-test-jest/src/commands/repo/test.ts
-      containerId: cli-module-test-jest
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 57
-      loc: 450
-      sloc: 333
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 370
   - entityRef: blueprint/packages/cli-module-test-jest/test-test
     type: background-worker
     name: test.test Service
@@ -68,9 +23,62 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
+    x: 140
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-test-jest/test
+    type: background-worker
+    name: test Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-test-jest/src/commands/package/test.ts
+      containerId: cli-module-test-jest
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 16
+      loc: 102
+      sloc: 58
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 370
+  - entityRef: blueprint/packages/cli-module-test-jest/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-test-jest/src/index.ts
+      containerId: cli-module-test-jest
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 37
+      sloc: 19
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
     x: 600
     'y': 50
 dependencies:
+  - from: blueprint/packages/ui/combobox-stories
+    to: blueprint/packages/cli-module-test-jest/test
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/ui/select-stories
+    to: blueprint/packages/cli-module-test-jest/test
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/packages/app/app-test
     to: blueprint/packages/cli-module-test-jest/test
     type: direct-call
@@ -83,11 +91,7 @@ dependencies:
     to: blueprint/packages/cli-module-test-jest/test
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/create-app/playwright-config
-    to: blueprint/packages/cli-module-test-jest/test
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/create-app/playwright-config
+  - from: blueprint/packages/cli-module-test-jest/test-test
     to: blueprint/packages/cli-module-test-jest/test
     type: direct-call
     description: Calls module / service
@@ -99,15 +103,11 @@ dependencies:
     to: blueprint/packages/cli-module-test-jest/test
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-test-jest/test-test
+  - from: blueprint/packages/create-app/app-test
     to: blueprint/packages/cli-module-test-jest/test
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/ui/combobox-stories
-    to: blueprint/packages/cli-module-test-jest/test
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/ui/select-stories
+  - from: blueprint/packages/create-app/playwright-config
     to: blueprint/packages/cli-module-test-jest/test
     type: direct-call
     description: Calls module / service
@@ -115,7 +115,7 @@ dependencies:
     to: blueprint/packages/cli-module-test-jest/test
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/create-app/app-test
+  - from: blueprint/packages/create-app/playwright-config
     to: blueprint/packages/cli-module-test-jest/test
     type: direct-call
     description: Calls module / service

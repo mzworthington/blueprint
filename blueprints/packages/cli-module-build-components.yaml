@@ -3,18 +3,18 @@ name: Cli-module-build Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/cli-module-build/index
+  - entityRef: blueprint/packages/cli-module-build/a-default
     type: background-worker
-    name: index Service
-    isTest: false
+    name: a-default Service
+    isTest: true
     properties:
-      filepath: packages/cli-module-build/src/commands/package/bundle/__fixtures__/packed/frontend/src/index.ts
+      filepath: packages/cli-module-build/src/tests/transforms/__fixtures__/pkg-default/a-default.ts
       containerId: cli-module-build
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 18
+      loc: 17
       sloc: 1
       churn: 1
       authorCount: 1
@@ -23,21 +23,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4555
-    'y': 50
-  - entityRef: blueprint/packages/cli-module-build/buildworkspace
+    x: 140
+    'y': 690
+  - entityRef: blueprint/packages/cli-module-build/main
     type: background-worker
-    name: buildWorkspace Service
-    isTest: false
+    name: main Service
+    isTest: true
     properties:
-      filepath: packages/cli-module-build/src/commands/buildWorkspace.ts
+      filepath: packages/cli-module-build/src/tests/transforms/__fixtures__/pkg-default/main.ts
       containerId: cli-module-build
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 4
-      loc: 67
-      sloc: 43
+      loc: 72
+      sloc: 44
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -45,21 +45,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1020
-    'y': 690
-  - entityRef: blueprint/packages/cli-module-build/buildbackend
+    x: 250
+    'y': 370
+  - entityRef: blueprint/packages/cli-module-build/print
     type: background-worker
-    name: buildBackend Service
-    isTest: false
+    name: print Service
+    isTest: true
     properties:
-      filepath: packages/cli-module-build/src/lib/buildBackend.ts
+      filepath: packages/cli-module-build/src/tests/transforms/__fixtures__/pkg-default/print.ts
       containerId: cli-module-build
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 86
-      sloc: 56
+      loc: 20
+      sloc: 2
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -67,21 +67,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3765
-    'y': 690
-  - entityRef: blueprint/packages/cli-module-build/buildfrontend
+    x: 250
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-build/a-named
     type: background-worker
-    name: buildFrontend Service
-    isTest: false
+    name: a-named Service
+    isTest: true
     properties:
-      filepath: packages/cli-module-build/src/lib/buildFrontend.ts
+      filepath: packages/cli-module-build/src/tests/transforms/__fixtures__/pkg-default/a-named.ts
       containerId: cli-module-build
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 2
-      loc: 53
-      sloc: 34
+      complexity: 1
+      loc: 17
+      sloc: 1
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -89,54 +89,30 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2845
+    x: 600
     'y': 690
-  - entityRef: blueprint/packages/cli-module-build/config
-    type: gateway-api
-    name: config UI Component
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/bundler/config.ts
-      containerId: cli-module-build
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 33
-      loc: 426
-      sloc: 210
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 5610
-    'y': 1330
-  - entityRef: blueprint/packages/cli-module-build/entrypoints
+  - entityRef: blueprint/packages/cli-module-build/transforms-test
     type: background-worker
-    name: entryPoints Service
-    isTest: false
+    name: transforms.test Service
+    isTest: true
     properties:
-      filepath: packages/cli-module-build/src/lib/entryPoints.ts
+      filepath: packages/cli-module-build/src/tests/transforms/transforms.test.ts
       containerId: cli-module-build
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 13
-      loc: 90
-      sloc: 55
+      complexity: 1
+      loc: 260
+      sloc: 217
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
-      classifications:
-        - knowledge-silo
+      classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4035
-    'y': 1970
+    x: 830
+    'y': 50
   - entityRef: blueprint/packages/cli-module-build/optionsparser
     type: background-worker
     name: optionsParser Service
@@ -157,31 +133,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2075
+    x: 12635
     'y': 690
-  - entityRef: blueprint/packages/cli-module-build/publishing
-    type: background-worker
-    name: publishing Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/publishing.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 19
-      loc: 74
-      sloc: 45
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 910
-    'y': 1650
   - entityRef: blueprint/packages/cli-module-build/role-test
     type: background-worker
     name: role.test Service
@@ -202,96 +155,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 845
-    'y': 370
-  - entityRef: blueprint/packages/cli-module-build/role
-    type: background-worker
-    name: role Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/role.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 36
-      sloc: 16
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1480
-    'y': 690
-  - entityRef: blueprint/packages/cli-module-build/typedistproject-test
-    type: background-worker
-    name: typeDistProject.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-build/src/lib/typeDistProject.test.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 130
-      sloc: 91
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 450
-    'y': 1650
-  - entityRef: blueprint/packages/cli-module-build/typedistproject
-    type: background-worker
-    name: typeDistProject Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/typeDistProject.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 20
-      loc: 145
-      sloc: 103
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 2385
-    'y': 1970
-  - entityRef: blueprint/packages/cli-module-build/urls-test
-    type: background-worker
-    name: urls.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-build/src/lib/urls.test.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 35
-      sloc: 15
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1765
+    x: 1320
     'y': 370
   - entityRef: blueprint/packages/cli-module-build/urls
     type: background-worker
@@ -313,21 +177,44 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3305
+    x: 2090
     'y': 690
-  - entityRef: blueprint/packages/cli-module-build/clean
+  - entityRef: blueprint/packages/cli-module-build/startembeddeddb
     type: background-worker
-    name: clean Service
+    name: startEmbeddedDb Service
     isTest: false
     properties:
-      filepath: packages/cli-module-build/src/commands/repo/clean.ts
+      filepath: packages/cli-module-build/src/lib/runner/startEmbeddedDb.ts
       containerId: cli-module-build
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 5
-      loc: 54
-      sloc: 33
+      complexity: 17
+      loc: 241
+      sloc: 195
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 1400
+    'y': 690
+  - entityRef: blueprint/packages/cli-module-build/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/index.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 98
+      sloc: 71
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -335,699 +222,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 5015
+    x: 1290
     'y': 50
-  - entityRef: blueprint/packages/cli-module-build/postpack
-    type: background-worker
-    name: postpack Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/commands/package/postpack.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 26
-      sloc: 8
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 450
-    'y': 1330
-  - entityRef: blueprint/packages/cli-module-build/prepack
-    type: background-worker
-    name: prepack Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/commands/package/prepack.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 38
-      sloc: 18
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 910
-    'y': 1330
-  - entityRef: blueprint/packages/cli-module-build/build
-    type: background-worker
-    name: build Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/commands/repo/build.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 12
-      loc: 184
-      sloc: 152
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 2265
-    'y': 370
-  - entityRef: blueprint/packages/cli-module-build/start-test
-    type: background-worker
-    name: start.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-build/src/commands/repo/start.test.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 218
-      sloc: 184
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5475
-    'y': 50
-  - entityRef: blueprint/packages/cli-module-build/start
-    type: background-worker
-    name: start Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/commands/repo/start.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 25
-      loc: 275
-      sloc: 226
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 5475
-    'y': 370
-  - entityRef: blueprint/packages/cli-module-build/createfeatureenvironment
-    type: background-worker
-    name: createFeatureEnvironment Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/__testUtils__/createFeatureEnvironment.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 145
-      sloc: 112
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 355
-    'y': 1970
-  - entityRef: blueprint/packages/cli-module-build/config-test
-    type: background-worker
-    name: config.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-build/src/lib/builder/config.test.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 66
-      sloc: 42
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 1010
-  - entityRef: blueprint/packages/cli-module-build/packager-test
-    type: background-worker
-    name: packager.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-build/src/lib/builder/packager.test.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 39
-      sloc: 21
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4225
-    'y': 690
-  - entityRef: blueprint/packages/cli-module-build/packager
-    type: background-worker
-    name: packager Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/builder/packager.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 22
-      loc: 153
-      sloc: 111
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 6395
-    'y': 1010
-  - entityRef: blueprint/packages/cli-module-build/plugins-test
-    type: background-worker
-    name: plugins.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-build/src/lib/builder/plugins.test.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 8
-      loc: 349
-      sloc: 287
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1670
-    'y': 1330
-  - entityRef: blueprint/packages/cli-module-build/plugins
-    type: background-worker
-    name: plugins Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/builder/plugins.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 22
-      loc: 230
-      sloc: 134
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 3020
-    'y': 1650
-  - entityRef: blueprint/packages/cli-module-build/types
-    type: background-worker
-    name: types Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/bundler/types.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 81
-      sloc: 50
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5355
-    'y': 1970
-  - entityRef: blueprint/packages/cli-module-build/bundle
-    type: gateway-api
-    name: bundle UI Component
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/bundler/bundle.ts
-      containerId: cli-module-build
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 19
-      loc: 235
-      sloc: 186
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 7785
-    'y': 690
-  - entityRef: blueprint/packages/cli-module-build/configinjectinghtmlwebpackplugin
-    type: background-worker
-    name: ConfigInjectingHtmlWebpackPlugin Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/bundler/ConfigInjectingHtmlWebpackPlugin.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 56
-      sloc: 35
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 7030
-    'y': 1650
-  - entityRef: blueprint/packages/cli-module-build/hasreactdomclient
-    type: background-worker
-    name: hasReactDomClient Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/bundler/hasReactDomClient.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 29
-      sloc: 11
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 7570
-    'y': 1650
-  - entityRef: blueprint/packages/cli-module-build/linkworkspaces
-    type: background-worker
-    name: linkWorkspaces Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/bundler/linkWorkspaces.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 61
-      sloc: 30
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 6030
-    'y': 1650
-  - entityRef: blueprint/packages/cli-module-build/modulefederation-test
-    type: background-worker
-    name: moduleFederation.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-build/src/lib/bundler/moduleFederation.test.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 159
-      sloc: 130
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2130
-    'y': 1330
-  - entityRef: blueprint/packages/cli-module-build/modulefederation
-    type: event-broker
-    name: moduleFederation Message Broker
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/bundler/moduleFederation.ts
-      containerId: cli-module-build
-      technology: TypeScript Event Client
-      classification: event-marker
-    forensics:
-      complexity: 9
-      loc: 205
-      sloc: 154
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 6490
-    'y': 1650
-  - entityRef: blueprint/packages/cli-module-build/optimization
-    type: background-worker
-    name: optimization Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/bundler/optimization.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 7
-      loc: 101
-      sloc: 72
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5070
-    'y': 1650
-  - entityRef: blueprint/packages/cli-module-build/packagedetection
-    type: event-broker
-    name: packageDetection Message Broker
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/bundler/packageDetection.ts
-      containerId: cli-module-build
-      technology: TypeScript Event Client
-      classification: event-marker
-    forensics:
-      complexity: 18
-      loc: 176
-      sloc: 134
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 8635
-    'y': 1010
-  - entityRef: blueprint/packages/cli-module-build/paths
-    type: background-worker
-    name: paths Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/bundler/paths.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 7
-      loc: 91
-      sloc: 59
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 6545
-    'y': 2290
-  - entityRef: blueprint/packages/cli-module-build/server
-    type: gateway-api
-    name: server UI Component
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/bundler/server.ts
-      containerId: cli-module-build
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 22
-      loc: 294
-      sloc: 232
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 8985
-    'y': 690
-  - entityRef: blueprint/packages/cli-module-build/staticassethash
-    type: background-worker
-    name: staticAssetHash Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/bundler/staticAssetHash.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 20
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5815
-    'y': 1970
-  - entityRef: blueprint/packages/cli-module-build/transforms
-    type: background-worker
-    name: transforms Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/bundler/transforms.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 9
-      loc: 198
-      sloc: 165
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5570
-    'y': 1650
-  - entityRef: blueprint/packages/cli-module-build/ipcserver
-    type: background-worker
-    name: IpcServer Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/ipc/IpcServer.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 5
-      loc: 103
-      sloc: 74
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5935
-    'y': 370
-  - entityRef: blueprint/packages/cli-module-build/serverdatastore
-    type: background-worker
-    name: ServerDataStore Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/ipc/ServerDataStore.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 4
-      loc: 79
-      sloc: 50
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5935
-    'y': 50
-  - entityRef: blueprint/packages/cli-module-build/computetopologicallayers-test
-    type: background-worker
-    name: computeTopologicalLayers.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-build/src/lib/packager/computeTopologicalLayers.test.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 146
-      sloc: 100
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2590
-    'y': 1330
-  - entityRef: blueprint/packages/cli-module-build/computetopologicallayers
-    type: background-worker
-    name: computeTopologicalLayers Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/packager/computeTopologicalLayers.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 7
-      loc: 67
-      sloc: 30
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2560
-    'y': 1650
-  - entityRef: blueprint/packages/cli-module-build/createdistworkspace
-    type: background-worker
-    name: createDistWorkspace Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/packager/createDistWorkspace.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 25
-      loc: 442
-      sloc: 298
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 3050
-    'y': 1330
-  - entityRef: blueprint/packages/cli-module-build/productionpack-test
-    type: background-worker
-    name: productionPack.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-build/src/lib/packager/productionPack.test.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 199
-      sloc: 165
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4115
-    'y': 1330
-  - entityRef: blueprint/packages/cli-module-build/productionpack
-    type: background-worker
-    name: productionPack Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-build/src/lib/packager/productionPack.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 47
-      loc: 343
-      sloc: 255
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 2100
-    'y': 1650
   - entityRef: blueprint/packages/cli-module-build/runbackend-test
     type: background-worker
     name: runBackend.test Service
@@ -1048,7 +244,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 10865
+    x: 1900
     'y': 50
   - entityRef: blueprint/packages/cli-module-build/runbackend
     type: background-worker
@@ -1071,21 +267,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 10865
+    x: 1900
     'y': 370
-  - entityRef: blueprint/packages/cli-module-build/startembeddeddb
+  - entityRef: blueprint/packages/cli-module-build/entrypoints
     type: background-worker
-    name: startEmbeddedDb Service
+    name: entryPoints Service
     isTest: false
     properties:
-      filepath: packages/cli-module-build/src/lib/runner/startEmbeddedDb.ts
+      filepath: packages/cli-module-build/src/lib/entryPoints.ts
       containerId: cli-module-build
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 17
-      loc: 241
-      sloc: 195
+      complexity: 13
+      loc: 90
+      sloc: 55
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -1094,21 +290,89 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 10865
-    'y': 690
-  - entityRef: blueprint/packages/cli-module-build/transforms-test
+    x: 6910
+    'y': 1970
+  - entityRef: blueprint/packages/cli-module-build/typedistproject
     type: background-worker
-    name: transforms.test Service
+    name: typeDistProject Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/typeDistProject.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 20
+      loc: 145
+      sloc: 103
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 4695
+    'y': 1970
+  - entityRef: blueprint/packages/cli-module-build/publishing
+    type: background-worker
+    name: publishing Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/publishing.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 19
+      loc: 74
+      sloc: 45
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 5885
+    'y': 1650
+  - entityRef: blueprint/packages/cli-module-build/role
+    type: background-worker
+    name: role Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/role.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 36
+      sloc: 16
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2550
+    'y': 690
+  - entityRef: blueprint/packages/cli-module-build/typedistproject-test
+    type: background-worker
+    name: typeDistProject.test Service
     isTest: true
     properties:
-      filepath: packages/cli-module-build/src/tests/transforms/transforms.test.ts
+      filepath: packages/cli-module-build/src/lib/typeDistProject.test.ts
       containerId: cli-module-build
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 260
-      sloc: 217
+      loc: 130
+      sloc: 91
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -1116,21 +380,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 10405
-    'y': 50
-  - entityRef: blueprint/packages/cli-module-build/command
+    x: 3330
+    'y': 1650
+  - entityRef: blueprint/packages/cli-module-build/buildbackend
     type: background-worker
-    name: command Service
+    name: buildBackend Service
     isTest: false
     properties:
-      filepath: packages/cli-module-build/src/commands/package/start/command.ts
+      filepath: packages/cli-module-build/src/lib/buildBackend.ts
       containerId: cli-module-build
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 5
-      loc: 95
-      sloc: 76
+      complexity: 1
+      loc: 86
+      sloc: 56
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -1138,21 +402,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 6570
-    'y': 370
-  - entityRef: blueprint/packages/cli-module-build/command-test
+    x: 3870
+    'y': 690
+  - entityRef: blueprint/packages/cli-module-build/createdistworkspace
     type: background-worker
-    name: command.test Service
-    isTest: true
+    name: createDistWorkspace Service
+    isTest: false
     properties:
-      filepath: packages/cli-module-build/src/commands/package/bundle/command.test.ts
+      filepath: packages/cli-module-build/src/lib/packager/createDistWorkspace.ts
       containerId: cli-module-build
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 12
-      loc: 1127
-      sloc: 979
+      complexity: 25
+      loc: 442
+      sloc: 298
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -1161,21 +425,132 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 6570
-    'y': 50
-  - entityRef: blueprint/packages/cli-module-build/resolvelinkedworkspace
+    x: 3125
+    'y': 1330
+  - entityRef: blueprint/packages/cli-module-build/productionpack
     type: background-worker
-    name: resolveLinkedWorkspace Service
+    name: productionPack Service
     isTest: false
     properties:
-      filepath: packages/cli-module-build/src/commands/package/start/resolveLinkedWorkspace.ts
+      filepath: packages/cli-module-build/src/lib/packager/productionPack.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 47
+      loc: 343
+      sloc: 255
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 5155
+    'y': 1650
+  - entityRef: blueprint/packages/cli-module-build/computetopologicallayers
+    type: background-worker
+    name: computeTopologicalLayers Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/packager/computeTopologicalLayers.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 7
+      loc: 67
+      sloc: 30
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3790
+    'y': 1650
+  - entityRef: blueprint/packages/cli-module-build/computetopologicallayers-test
+    type: background-worker
+    name: computeTopologicalLayers.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-build/src/lib/packager/computeTopologicalLayers.test.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 146
+      sloc: 100
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3855
+    'y': 1330
+  - entityRef: blueprint/packages/cli-module-build/productionpack-test
+    type: background-worker
+    name: productionPack.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-build/src/lib/packager/productionPack.test.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 199
+      sloc: 165
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4315
+    'y': 1330
+  - entityRef: blueprint/packages/cli-module-build/ipcserver
+    type: background-worker
+    name: IpcServer Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/ipc/IpcServer.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 5
+      loc: 103
+      sloc: 74
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2360
+    'y': 370
+  - entityRef: blueprint/packages/cli-module-build/serverdatastore
+    type: background-worker
+    name: ServerDataStore Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/ipc/ServerDataStore.ts
       containerId: cli-module-build
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 4
-      loc: 48
-      sloc: 28
+      loc: 79
+      sloc: 50
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -1183,21 +558,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 9445
-    'y': 690
-  - entityRef: blueprint/packages/cli-module-build/startbackend
+    x: 2360
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-build/createfeatureenvironment
     type: background-worker
-    name: startBackend Service
+    name: createFeatureEnvironment Service
     isTest: false
     properties:
-      filepath: packages/cli-module-build/src/commands/package/start/startBackend.ts
+      filepath: packages/cli-module-build/src/lib/__testUtils__/createFeatureEnvironment.ts
       containerId: cli-module-build
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 2
-      loc: 70
-      sloc: 46
+      loc: 145
+      sloc: 112
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -1205,8 +580,610 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 9850
+    x: 3100
+    'y': 1970
+  - entityRef: blueprint/packages/cli-module-build/buildfrontend
+    type: background-worker
+    name: buildFrontend Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/buildFrontend.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 53
+      sloc: 34
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4330
+    'y': 690
+  - entityRef: blueprint/packages/cli-module-build/config
+    type: gateway-api
+    name: config UI Component
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/config.ts
+      containerId: cli-module-build
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 33
+      loc: 426
+      sloc: 210
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 9385
+    'y': 1330
+  - entityRef: blueprint/packages/cli-module-build/plugins-test
+    type: background-worker
+    name: plugins.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-build/src/lib/builder/plugins.test.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 8
+      loc: 349
+      sloc: 287
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4855
+    'y': 1330
+  - entityRef: blueprint/packages/cli-module-build/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/types.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 81
+      sloc: 50
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 7370
+    'y': 1970
+  - entityRef: blueprint/packages/cli-module-build/packager
+    type: background-worker
+    name: packager Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/builder/packager.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 22
+      loc: 153
+      sloc: 111
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 6775
     'y': 1010
+  - entityRef: blueprint/packages/cli-module-build/packager-test
+    type: background-worker
+    name: packager.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-build/src/lib/builder/packager.test.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 39
+      sloc: 21
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5505
+    'y': 690
+  - entityRef: blueprint/packages/cli-module-build/config-test
+    type: background-worker
+    name: config.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-build/src/lib/builder/config.test.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 66
+      sloc: 42
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4600
+    'y': 1010
+  - entityRef: blueprint/packages/cli-module-build/plugins
+    type: background-worker
+    name: plugins Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/builder/plugins.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 22
+      loc: 230
+      sloc: 134
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 7965
+    'y': 1650
+  - entityRef: blueprint/packages/cli-module-build/modulefederation-test
+    type: background-worker
+    name: moduleFederation.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/moduleFederation.test.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 159
+      sloc: 130
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5315
+    'y': 1330
+  - entityRef: blueprint/packages/cli-module-build/hasreactdomclient
+    type: background-worker
+    name: hasReactDomClient Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/hasReactDomClient.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 29
+      sloc: 11
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 10665
+    'y': 1650
+  - entityRef: blueprint/packages/cli-module-build/packagedetection
+    type: event-broker
+    name: packageDetection Message Broker
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/packageDetection.ts
+      containerId: cli-module-build
+      technology: TypeScript Event Client
+      classification: event-marker
+    forensics:
+      complexity: 18
+      loc: 176
+      sloc: 134
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 11365
+    'y': 1010
+  - entityRef: blueprint/packages/cli-module-build/optimization
+    type: background-worker
+    name: optimization Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/optimization.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 7
+      loc: 101
+      sloc: 72
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 9885
+    'y': 1650
+  - entityRef: blueprint/packages/cli-module-build/configinjectinghtmlwebpackplugin
+    type: background-worker
+    name: ConfigInjectingHtmlWebpackPlugin Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/ConfigInjectingHtmlWebpackPlugin.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 56
+      sloc: 35
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 8425
+    'y': 1650
+  - entityRef: blueprint/packages/cli-module-build/modulefederation
+    type: event-broker
+    name: moduleFederation Message Broker
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/moduleFederation.ts
+      containerId: cli-module-build
+      technology: TypeScript Event Client
+      classification: event-marker
+    forensics:
+      complexity: 9
+      loc: 205
+      sloc: 154
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 7315
+    'y': 1650
+  - entityRef: blueprint/packages/cli-module-build/linkworkspaces
+    type: background-worker
+    name: linkWorkspaces Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/linkWorkspaces.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 61
+      sloc: 30
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 8965
+    'y': 1650
+  - entityRef: blueprint/packages/cli-module-build/staticassethash
+    type: background-worker
+    name: staticAssetHash Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/staticAssetHash.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 20
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 9140
+    'y': 1970
+  - entityRef: blueprint/packages/cli-module-build/paths
+    type: background-worker
+    name: paths Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/paths.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 7
+      loc: 91
+      sloc: 59
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 10220
+    'y': 2290
+  - entityRef: blueprint/packages/cli-module-build/server
+    type: gateway-api
+    name: server UI Component
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/server.ts
+      containerId: cli-module-build
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 22
+      loc: 294
+      sloc: 232
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 10585
+    'y': 690
+  - entityRef: blueprint/packages/cli-module-build/transforms
+    type: background-worker
+    name: transforms Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/transforms.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 9
+      loc: 198
+      sloc: 165
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 9425
+    'y': 1650
+  - entityRef: blueprint/packages/cli-module-build/bundle
+    type: gateway-api
+    name: bundle UI Component
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/lib/bundler/bundle.ts
+      containerId: cli-module-build
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 19
+      loc: 235
+      sloc: 186
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 11715
+    'y': 690
+  - entityRef: blueprint/packages/cli-module-build/urls-test
+    type: background-worker
+    name: urls.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-build/src/lib/urls.test.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 35
+      sloc: 15
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2820
+    'y': 370
+  - entityRef: blueprint/packages/cli-module-build/buildworkspace
+    type: background-worker
+    name: buildWorkspace Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/buildWorkspace.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 4
+      loc: 67
+      sloc: 43
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 12175
+    'y': 690
+  - entityRef: blueprint/packages/cli-module-build/start-test
+    type: background-worker
+    name: start.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-build/src/commands/repo/start.test.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 218
+      sloc: 184
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 13770
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-build/start
+    type: background-worker
+    name: start Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/repo/start.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 25
+      loc: 275
+      sloc: 226
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 13770
+    'y': 370
+  - entityRef: blueprint/packages/cli-module-build/clean
+    type: background-worker
+    name: clean Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/clean.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 28
+      sloc: 10
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 12810
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-build/build
+    type: background-worker
+    name: build Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/repo/build.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 12
+      loc: 184
+      sloc: 152
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 8610
+    'y': 370
+  - entityRef: blueprint/packages/cli-module-build/prepack
+    type: background-worker
+    name: prepack Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/prepack.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 38
+      sloc: 18
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5775
+    'y': 1330
   - entityRef: blueprint/packages/cli-module-build/startfrontend
     type: gateway-api
     name: startFrontend UI Component
@@ -1227,8 +1204,30 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 10420
+    x: 13120
     'y': 1010
+  - entityRef: blueprint/packages/cli-module-build/resolvelinkedworkspace
+    type: background-worker
+    name: resolveLinkedWorkspace Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/start/resolveLinkedWorkspace.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 4
+      loc: 48
+      sloc: 28
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 13095
+    'y': 690
   - entityRef: blueprint/packages/cli-module-build/startpackage-test
     type: background-worker
     name: startPackage.test Service
@@ -1249,7 +1248,52 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 11325
+    x: 13040
+    'y': 370
+  - entityRef: blueprint/packages/cli-module-build/startbackend
+    type: background-worker
+    name: startBackend Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/start/startBackend.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 70
+      sloc: 46
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 14000
+    'y': 1010
+  - entityRef: blueprint/packages/cli-module-build/command
+    type: background-worker
+    name: command Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/build/command.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 12
+      loc: 164
+      sloc: 134
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 4060
     'y': 370
   - entityRef: blueprint/packages/cli-module-build/startpackage
     type: background-worker
@@ -1272,115 +1316,116 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 9975
+    x: 13555
     'y': 690
-  - entityRef: blueprint/packages/cli-module-build/a-default
+  - entityRef: blueprint/packages/cli-module-build/command-test
     type: background-worker
-    name: a-default Service
+    name: command.test Service
     isTest: true
     properties:
-      filepath: packages/cli-module-build/src/tests/transforms/__fixtures__/pkg-module/a-default.ts
+      filepath: packages/cli-module-build/src/commands/package/bundle/command.test.ts
       containerId: cli-module-build
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 17
-      sloc: 1
+      complexity: 12
+      loc: 1127
+      sloc: 979
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
-      classifications: []
+      classifications:
+        - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 12055
-    'y': 690
-  - entityRef: blueprint/packages/cli-module-build/a-named
-    type: background-worker
-    name: a-named Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-build/src/tests/transforms/__fixtures__/pkg-module/a-named.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 17
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 11595
-    'y': 690
-  - entityRef: blueprint/packages/cli-module-build/main
-    type: background-worker
-    name: main Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-build/src/tests/transforms/__fixtures__/pkg-module/main.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 4
-      loc: 73
-      sloc: 51
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 11850
-    'y': 370
-  - entityRef: blueprint/packages/cli-module-build/print
-    type: background-worker
-    name: print Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-build/src/tests/transforms/__fixtures__/pkg-module/print.ts
-      containerId: cli-module-build
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 20
-      sloc: 2
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 11850
+    x: 4060
     'y': 50
+  - entityRef: blueprint/packages/cli-module-build/postpack
+    type: background-worker
+    name: postpack Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-build/src/commands/package/postpack.ts
+      containerId: cli-module-build
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 26
+      sloc: 8
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 6235
+    'y': 1330
 dependencies:
-  - from: blueprint/packages/cli-module-build/buildworkspace
-    to: blueprint/packages/cli-module-build/packager
+  - from: blueprint/packages/app-legacy/root
+    to: blueprint/packages/cli-module-build/build
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-build/buildbackend
-    to: blueprint/packages/cli-module-build/packager
+  - from: blueprint/packages/cli-module-build/main
+    to: blueprint/packages/cli-module-build/a-named
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-build/buildfrontend
-    to: blueprint/packages/cli-module-build/config
+  - from: blueprint/packages/cli-module-build/main
+    to: blueprint/packages/cli-module-build/a-default
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/print
+    to: blueprint/packages/cli-module-build/main
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/main
+    to: blueprint/packages/cli-module-build/a-named
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/main
+    to: blueprint/packages/cli-module-build/a-default
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/print
+    to: blueprint/packages/cli-module-build/main
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/main
+    to: blueprint/packages/cli-module-build/a-named
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/main
+    to: blueprint/packages/cli-module-build/a-default
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/print
+    to: blueprint/packages/cli-module-build/main
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/cli-module-build/role-test
-    to: blueprint/packages/backend-openapi-utils/testutils
+    to: blueprint/packages/config-loader/testutils
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/cli-module-build/role-test
     to: blueprint/packages/cli-module-build/role
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/startembeddeddb
+    to: blueprint/packages/catalog-model/zod
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/startembeddeddb
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/runbackend-test
+    to: blueprint/packages/cli-module-build/runbackend
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/runbackend
+    to: blueprint/packages/cli-module-build/startembeddeddb
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/cli-module-build/typedistproject-test
@@ -1391,122 +1436,138 @@ dependencies:
     to: blueprint/packages/cli-module-build/typedistproject
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-build/urls-test
-    to: blueprint/packages/cli-module-build/urls
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/root
-    to: blueprint/packages/cli-module-build/build
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/postpack
-    to: blueprint/packages/cli-module-build/productionpack
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/prepack
-    to: blueprint/packages/cli-module-build/productionpack
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/prepack
-    to: blueprint/packages/cli-module-build/publishing
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/prepack
-    to: blueprint/packages/cli-module-build/typedistproject
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/build
-    to: blueprint/packages/cli-module-build/buildfrontend
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/build
-    to: blueprint/packages/cli-module-build/buildbackend
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/build
-    to: blueprint/packages/cli-module-build/optionsparser
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/start-test
-    to: blueprint/packages/cli-module-build/start
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/start-test
-    to: blueprint/packages/backend-openapi-utils/testutils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/start
-    to: blueprint/packages/cli-module-build/resolvelinkedworkspace
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/start
-    to: blueprint/packages/cli-module-build/startpackage
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/config-test
-    to: blueprint/packages/cli-module-build/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/config-test
-    to: blueprint/packages/cli-module-build/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/config
-    to: blueprint/packages/cli-module-build/plugins
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/config
-    to: blueprint/packages/cli-module-build/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/config
-    to: blueprint/packages/cli-module-build/entrypoints
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/packager-test
+  - from: blueprint/packages/cli-module-build/buildbackend
     to: blueprint/packages/cli-module-build/packager
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-build/packager
-    to: blueprint/packages/cli-module-build/config
+  - from: blueprint/packages/cli-module-build/createdistworkspace
+    to: blueprint/packages/cli-module-build/computetopologicallayers
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-build/packager
-    to: blueprint/packages/cli-module-build/types
+  - from: blueprint/packages/cli-module-build/createdistworkspace
+    to: blueprint/packages/cli-module-build/productionpack
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/createdistworkspace
+    to: blueprint/packages/cli-module-build/typedistproject
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/productionpack
+    to: blueprint/packages/cli-module-build/entrypoints
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/productionpack
+    to: blueprint/packages/cli-module-build/typedistproject
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/computetopologicallayers-test
+    to: blueprint/packages/cli-module-build/computetopologicallayers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/productionpack-test
+    to: blueprint/packages/cli-module-build/productionpack
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/ipcserver
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/serverdatastore
+    to: blueprint/packages/cli-module-build/ipcserver
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/buildfrontend
+    to: blueprint/packages/cli-module-build/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/cli-module-build/plugins-test
     to: blueprint/packages/cli-module-build/plugins
     type: direct-call
     description: Calls module / service
+  - from: blueprint/packages/cli-module-build/packager
+    to: blueprint/packages/cli-module-build/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/packager
+    to: blueprint/packages/cli-module-build/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/packager-test
+    to: blueprint/packages/cli-module-build/packager
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/config
+    to: blueprint/packages/cli-module-build/plugins
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/config
+    to: blueprint/packages/cli-module-build/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/config
+    to: blueprint/packages/cli-module-build/entrypoints
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/config-test
+    to: blueprint/packages/cli-module-build/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/config-test
+    to: blueprint/packages/cli-module-build/types
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/packages/cli-module-build/plugins
     to: blueprint/packages/cli-module-build/entrypoints
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-build/bundle
-    to: blueprint/packages/integration/core
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/bundle
-    to: blueprint/packages/cli-module-build/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/bundle
-    to: blueprint/packages/cli-module-build/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/bundle
-    to: blueprint/packages/cli-module-build/paths
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/bundle
-    to: blueprint/packages/cli-module-build/packagedetection
-    type: publish-subscribe
-    description: Publishes / consumes messaging topics
-  - from: blueprint/packages/cli-module-build/bundle
+  - from: blueprint/packages/cli-module-build/modulefederation-test
     to: blueprint/packages/cli-module-build/modulefederation
     type: publish-subscribe
     description: Publishes / consumes messaging topics
+  - from: blueprint/packages/cli-module-build/packagedetection
+    to: blueprint/packages/cli-module-build/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/types
+    to: blueprint/packages/cli-module-build/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/types
+    to: blueprint/packages/cli-module-build/paths
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/optimization
+    to: blueprint/packages/cli-module-build/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/optimization
+    to: blueprint/packages/integration/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/optimization
+    to: blueprint/packages/cli-module-build/staticassethash
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/configinjectinghtmlwebpackplugin
+    to: blueprint/packages/cli-module-build/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/modulefederation
+    to: blueprint/packages/cli-module-build/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/modulefederation
+    to: blueprint/packages/cli-module-build/entrypoints
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/modulefederation
+    to: blueprint/packages/cli-module-build/typedistproject
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/linkworkspaces
+    to: blueprint/packages/integration/core
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/packages/cli-module-build/config
     to: blueprint/packages/cli-module-build/types
     type: direct-call
@@ -1543,46 +1604,6 @@ dependencies:
     to: blueprint/packages/cli-module-build/staticassethash
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-build/configinjectinghtmlwebpackplugin
-    to: blueprint/packages/cli-module-build/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/linkworkspaces
-    to: blueprint/packages/integration/core
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/modulefederation-test
-    to: blueprint/packages/cli-module-build/modulefederation
-    type: publish-subscribe
-    description: Publishes / consumes messaging topics
-  - from: blueprint/packages/cli-module-build/modulefederation
-    to: blueprint/packages/cli-module-build/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/modulefederation
-    to: blueprint/packages/cli-module-build/entrypoints
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/modulefederation
-    to: blueprint/packages/cli-module-build/typedistproject
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/optimization
-    to: blueprint/packages/cli-module-build/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/optimization
-    to: blueprint/packages/integration/core
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/optimization
-    to: blueprint/packages/cli-module-build/staticassethash
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/packagedetection
-    to: blueprint/packages/cli-module-build/config
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/packages/cli-module-build/server
     to: blueprint/packages/cli-module-build/config
     type: direct-call
@@ -1623,64 +1644,128 @@ dependencies:
     to: blueprint/packages/cli-module-build/staticassethash
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-build/types
+  - from: blueprint/packages/cli-module-build/bundle
+    to: blueprint/packages/integration/core
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/bundle
     to: blueprint/packages/cli-module-build/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-build/types
+  - from: blueprint/packages/cli-module-build/bundle
+    to: blueprint/packages/cli-module-build/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/bundle
     to: blueprint/packages/cli-module-build/paths
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-build/ipcserver
-    to: blueprint/packages/cli-common/errors
+  - from: blueprint/packages/cli-module-build/bundle
+    to: blueprint/packages/cli-module-build/packagedetection
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/packages/cli-module-build/bundle
+    to: blueprint/packages/cli-module-build/modulefederation
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/packages/cli-module-build/urls-test
+    to: blueprint/packages/cli-module-build/urls
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-build/serverdatastore
-    to: blueprint/packages/cli-module-build/ipcserver
+  - from: blueprint/packages/cli-module-build/buildworkspace
+    to: blueprint/packages/cli-module-build/packager
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-build/computetopologicallayers-test
-    to: blueprint/packages/cli-module-build/computetopologicallayers
+  - from: blueprint/packages/cli-module-build/start-test
+    to: blueprint/packages/cli-module-build/start
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-build/createdistworkspace
-    to: blueprint/packages/cli-module-build/computetopologicallayers
+  - from: blueprint/packages/cli-module-build/start-test
+    to: blueprint/packages/config-loader/testutils
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-build/createdistworkspace
+  - from: blueprint/packages/cli-module-build/start
+    to: blueprint/packages/cli-module-build/resolvelinkedworkspace
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/start
+    to: blueprint/packages/cli-module-build/startpackage
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/build
+    to: blueprint/packages/cli-module-build/buildfrontend
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/build
+    to: blueprint/packages/cli-module-build/buildbackend
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/build
+    to: blueprint/packages/cli-module-build/optionsparser
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/prepack
     to: blueprint/packages/cli-module-build/productionpack
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-build/createdistworkspace
+  - from: blueprint/packages/cli-module-build/prepack
+    to: blueprint/packages/cli-module-build/publishing
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/prepack
     to: blueprint/packages/cli-module-build/typedistproject
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-build/productionpack-test
-    to: blueprint/packages/cli-module-build/productionpack
+  - from: blueprint/packages/cli-module-build/startfrontend
+    to: blueprint/packages/cli-module-build/hasreactdomclient
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-build/productionpack
-    to: blueprint/packages/cli-module-build/entrypoints
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/productionpack
-    to: blueprint/packages/cli-module-build/typedistproject
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/runbackend-test
-    to: blueprint/packages/cli-module-build/runbackend
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/runbackend
-    to: blueprint/packages/cli-module-build/startembeddeddb
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/startembeddeddb
-    to: blueprint/packages/catalog-model/zod
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/startembeddeddb
+  - from: blueprint/packages/cli-module-build/resolvelinkedworkspace
     to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/startpackage-test
+    to: blueprint/packages/cli-module-build/startpackage
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/startbackend
+    to: blueprint/packages/repo-tools/runner
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/command
+    to: blueprint/packages/cli-module-build/startpackage
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/command
+    to: blueprint/packages/cli-module-build/resolvelinkedworkspace
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/command
+    to: blueprint/packages/cli-module-build/role
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/startpackage
+    to: blueprint/packages/cli-module-build/startbackend
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/startpackage
+    to: blueprint/packages/cli-module-build/startfrontend
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/command-test
+    to: blueprint/packages/cli-module-build/command
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/command
+    to: blueprint/packages/cli-module-build/buildfrontend
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/command
+    to: blueprint/packages/cli-module-build/packager
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-build/postpack
+    to: blueprint/packages/cli-module-build/productionpack
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/cli-module-build/command
@@ -1697,89 +1782,5 @@ dependencies:
     description: Calls module / service
   - from: blueprint/packages/cli-module-build/command
     to: blueprint/packages/cli-module-build/urls
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/command-test
-    to: blueprint/packages/cli-module-build/command
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/command
-    to: blueprint/packages/cli-module-build/buildfrontend
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/command
-    to: blueprint/packages/cli-module-build/packager
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/command
-    to: blueprint/packages/cli-module-build/startpackage
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/command
-    to: blueprint/packages/cli-module-build/resolvelinkedworkspace
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/command
-    to: blueprint/packages/cli-module-build/role
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/resolvelinkedworkspace
-    to: blueprint/packages/cli-common/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/startbackend
-    to: blueprint/packages/repo-tools/runner
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/startfrontend
-    to: blueprint/packages/cli-module-build/hasreactdomclient
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/startpackage-test
-    to: blueprint/packages/cli-module-build/startpackage
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/startpackage
-    to: blueprint/packages/cli-module-build/startbackend
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/startpackage
-    to: blueprint/packages/cli-module-build/startfrontend
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/main
-    to: blueprint/packages/cli-module-build/a-named
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/main
-    to: blueprint/packages/cli-module-build/a-default
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/print
-    to: blueprint/packages/cli-module-build/main
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/main
-    to: blueprint/packages/cli-module-build/a-named
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/main
-    to: blueprint/packages/cli-module-build/a-default
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/print
-    to: blueprint/packages/cli-module-build/main
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/main
-    to: blueprint/packages/cli-module-build/a-named
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/main
-    to: blueprint/packages/cli-module-build/a-default
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/print
-    to: blueprint/packages/cli-module-build/main
     type: direct-call
     description: Calls module / service

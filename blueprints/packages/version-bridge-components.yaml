@@ -3,28 +3,6 @@ name: Version-bridge Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/version-bridge/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/version-bridge/src/lib/index.ts
-      containerId: version-bridge
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 25
-      sloc: 8
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
   - entityRef: blueprint/packages/version-bridge/setuptests
     type: background-worker
     name: setupTests Service
@@ -45,52 +23,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
+    x: 735
     'y': 50
-  - entityRef: blueprint/packages/version-bridge/globalobject-test
-    type: background-worker
-    name: globalObject.test Service
-    isTest: true
-    properties:
-      filepath: packages/version-bridge/src/lib/globalObject.test.ts
-      containerId: version-bridge
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 45
-      sloc: 22
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 235
-    'y': 370
-  - entityRef: blueprint/packages/version-bridge/globalobject
-    type: background-worker
-    name: globalObject Service
-    isTest: false
-    properties:
-      filepath: packages/version-bridge/src/lib/globalObject.ts
-      containerId: version-bridge
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 6
-      loc: 55
-      sloc: 24
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 275
-    'y': 690
   - entityRef: blueprint/packages/version-bridge/versionedcontext-test
     type: gateway-api
     name: VersionedContext.test UI Component
@@ -111,7 +45,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 1195
     'y': 50
   - entityRef: blueprint/packages/version-bridge/versionedcontext
     type: gateway-api
@@ -133,29 +67,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 695
-    'y': 370
-  - entityRef: blueprint/packages/version-bridge/versionedvalue-test
-    type: background-worker
-    name: VersionedValue.test Service
-    isTest: true
-    properties:
-      filepath: packages/version-bridge/src/lib/VersionedValue.test.ts
-      containerId: version-bridge
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 41
-      sloc: 15
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1155
+    x: 1060
     'y': 370
   - entityRef: blueprint/packages/version-bridge/versionedvalue
     type: background-worker
@@ -177,13 +89,97 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1250
+    x: 1060
     'y': 690
+  - entityRef: blueprint/packages/version-bridge/versionedvalue-test
+    type: background-worker
+    name: VersionedValue.test Service
+    isTest: true
+    properties:
+      filepath: packages/version-bridge/src/lib/VersionedValue.test.ts
+      containerId: version-bridge
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 41
+      sloc: 15
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 370
+  - entityRef: blueprint/packages/version-bridge/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/version-bridge/src/index.ts
+      containerId: version-bridge
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 24
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1655
+    'y': 50
+  - entityRef: blueprint/packages/version-bridge/globalobject
+    type: background-worker
+    name: globalObject Service
+    isTest: false
+    properties:
+      filepath: packages/version-bridge/src/lib/globalObject.ts
+      containerId: version-bridge
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 6
+      loc: 55
+      sloc: 24
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 180
+    'y': 690
+  - entityRef: blueprint/packages/version-bridge/globalobject-test
+    type: background-worker
+    name: globalObject.test Service
+    isTest: true
+    properties:
+      filepath: packages/version-bridge/src/lib/globalObject.test.ts
+      containerId: version-bridge
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 45
+      sloc: 22
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 370
 dependencies:
-  - from: blueprint/packages/version-bridge/globalobject-test
-    to: blueprint/packages/version-bridge/globalobject
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/packages/version-bridge/versionedcontext-test
     to: blueprint/packages/version-bridge/versionedcontext
     type: direct-call
@@ -202,5 +198,9 @@ dependencies:
     description: Calls module / service
   - from: blueprint/packages/version-bridge/versionedvalue-test
     to: blueprint/packages/version-bridge/versionedvalue
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/version-bridge/globalobject-test
+    to: blueprint/packages/version-bridge/globalobject
     type: direct-call
     description: Calls module / service

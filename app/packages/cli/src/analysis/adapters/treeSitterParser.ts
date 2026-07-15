@@ -2,20 +2,22 @@ import Parser from 'web-tree-sitter';
 import * as path from 'path';
 import * as fs from 'fs';
 import pc from 'picocolors';
-import { fileURLToPath } from 'url';
 import type { CodebaseParserPort } from '../domain/ports.ts';
 import type { ParsedSourceFile } from '../domain/types.ts';
 import type { AnalysisOptions } from '../domain/analysisOptions.ts';
 import { isTestSourcePath } from './gitignoreFilter.ts';
 import { createSourcePathFilter, type SourcePathFilter } from './sourcePathFilter.ts';
 import { throwIfAborted } from '../domain/cancellation.ts';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import {
+  resolveTreeSitterWasmPath,
+  treeSitterWasmSearchDirs,
+  wasmFileName,
+} from './treeSitterWasmPaths.ts';
 
 export class TreeSitterParserAdapter implements CodebaseParserPort {
   private static initPromise: Promise<void> | null = null;
   private loadedLanguages = new Map<string, Parser.Language>();
+  private missingLanguages = new Set<string>();
   private pathFilter: SourcePathFilter = createSourcePathFilter();
 
   constructor(
@@ -37,42 +39,23 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
       return this.loadedLanguages.get(langKey)!;
     }
 
-    const wasmName = `tree-sitter-${langKey}.wasm`;
-
-    // Resolve from node_modules in cwd, executable binary folder, or relative source folder
-    const localWasmPath = path.resolve(
-      process.cwd(),
-      'node_modules/tree-sitter-wasms/out',
-      wasmName
-    );
-    const binWasmPath = path.resolve(path.dirname(process.execPath), wasmName);
-    const execDirWasmPath = path.resolve(path.dirname(process.argv[0]), wasmName);
-    const relativeWasmPath = path.resolve(
-      __dirname,
-      '../../../node_modules/tree-sitter-wasms/out',
-      wasmName
-    );
-
-    let wasmPath = '';
-    if (fs.existsSync(localWasmPath)) {
-      wasmPath = localWasmPath;
-    } else if (fs.existsSync(binWasmPath)) {
-      wasmPath = binWasmPath;
-    } else if (fs.existsSync(execDirWasmPath)) {
-      wasmPath = execDirWasmPath;
-    } else if (fs.existsSync(relativeWasmPath)) {
-      wasmPath = relativeWasmPath;
+    if (this.missingLanguages.has(langKey)) {
+      return null;
     }
 
-    if (!wasmPath || !fs.existsSync(wasmPath)) {
+    const wasmPath = resolveTreeSitterWasmPath(langKey);
+
+    if (!wasmPath) {
+      this.missingLanguages.add(langKey);
+      const candidates = treeSitterWasmSearchDirs({}).map(dir =>
+        path.join(dir, wasmFileName(langKey))
+      );
       console.warn(
         pc.yellow(
           `[Warning] Could not find WASM parser for extension "${ext}". Expected at one of:\n` +
-            `  - ${localWasmPath}\n` +
-            `  - ${binWasmPath}\n` +
-            `  - ${execDirWasmPath}\n` +
-            `  - ${relativeWasmPath}\n` +
-            `Please place the .wasm file in the same directory as the executable or in your project's node_modules.`
+            candidates.map(c => `  - ${c}`).join('\n') +
+            `\nRebuild the CLI (\`pnpm --filter @blueprint/cli build\`) so parsers are copied next to the binary, ` +
+            `or install tree-sitter-wasms in the project.`
         )
       );
       return null;
@@ -122,7 +105,7 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
     }
 
     if (extensions.length === 0) {
-      extensions = ['.ts', '.tsx', '.js', '.jsx', '.py', '.go'];
+      extensions = ['.ts', '.tsx', '.js', '.jsx', '.py', '.go', '.java', '.cs'];
     }
 
     return {

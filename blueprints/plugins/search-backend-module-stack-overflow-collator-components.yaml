@@ -25,19 +25,41 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 50
-  - entityRef: blueprint/plugins/search-backend-module-stack-overflow-collator/index
+  - entityRef: blueprint/plugins/search-backend-module-stack-overflow-collator/searchstackoverflowcollatormodule
     type: background-worker
-    name: index Service
+    name: SearchStackOverflowCollatorModule Service
     isTest: false
     properties:
-      filepath: plugins/search-backend-module-stack-overflow-collator/src/module/index.ts
+      filepath: plugins/search-backend-module-stack-overflow-collator/src/module/SearchStackOverflowCollatorModule.ts
+      containerId: search-backend-module-stack-overflow-collator
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 64
+      sloc: 40
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 370
+  - entityRef: blueprint/plugins/search-backend-module-stack-overflow-collator/searchstackoverflowcollatormodule-test
+    type: background-worker
+    name: SearchStackOverflowCollatorModule.test Service
+    isTest: true
+    properties:
+      filepath: plugins/search-backend-module-stack-overflow-collator/src/module/SearchStackOverflowCollatorModule.test.ts
       containerId: search-backend-module-stack-overflow-collator
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 18
-      sloc: 1
+      loc: 56
+      sloc: 35
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -47,20 +69,19 @@ nodes:
       sinceDays: 500
     x: 600
     'y': 50
-  - entityRef: blueprint/plugins/search-backend-module-stack-overflow-collator/stackoverflowquestionscollatorfactory-test
+  - entityRef: blueprint/plugins/search-backend-module-stack-overflow-collator/index
     type: background-worker
-    name: StackOverflowQuestionsCollatorFactory.test Service
-    isTest: true
+    name: index Service
+    isTest: false
     properties:
-      filepath: >-
-        plugins/search-backend-module-stack-overflow-collator/src/collators/StackOverflowQuestionsCollatorFactory.test.ts
+      filepath: plugins/search-backend-module-stack-overflow-collator/src/collators/index.ts
       containerId: search-backend-module-stack-overflow-collator
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 6
-      loc: 507
-      sloc: 441
+      complexity: 1
+      loc: 23
+      sloc: 6
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -91,21 +112,22 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 1520
     'y': 370
-  - entityRef: blueprint/plugins/search-backend-module-stack-overflow-collator/searchstackoverflowcollatormodule-test
+  - entityRef: blueprint/plugins/search-backend-module-stack-overflow-collator/stackoverflowquestionscollatorfactory-test
     type: background-worker
-    name: SearchStackOverflowCollatorModule.test Service
+    name: StackOverflowQuestionsCollatorFactory.test Service
     isTest: true
     properties:
-      filepath: plugins/search-backend-module-stack-overflow-collator/src/module/SearchStackOverflowCollatorModule.test.ts
+      filepath: >-
+        plugins/search-backend-module-stack-overflow-collator/src/collators/StackOverflowQuestionsCollatorFactory.test.ts
       containerId: search-backend-module-stack-overflow-collator
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 56
-      sloc: 35
+      complexity: 6
+      loc: 507
+      sloc: 441
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -115,50 +137,28 @@ nodes:
       sinceDays: 500
     x: 1520
     'y': 50
-  - entityRef: blueprint/plugins/search-backend-module-stack-overflow-collator/searchstackoverflowcollatormodule
-    type: background-worker
-    name: SearchStackOverflowCollatorModule Service
-    isTest: false
-    properties:
-      filepath: plugins/search-backend-module-stack-overflow-collator/src/module/SearchStackOverflowCollatorModule.ts
-      containerId: search-backend-module-stack-overflow-collator
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 64
-      sloc: 40
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1520
-    'y': 370
 dependencies:
-  - from: blueprint/plugins/search-backend-module-stack-overflow-collator/stackoverflowquestionscollatorfactory-test
-    to: blueprint/plugins/search-backend-module-stack-overflow-collator/stackoverflowquestionscollatorfactory
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-module-stack-overflow-collator/stackoverflowquestionscollatorfactory-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-module-stack-overflow-collator/stackoverflowquestionscollatorfactory
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/search-backend-module-stack-overflow-collator/searchstackoverflowcollatormodule
+    to: blueprint/plugins/permission-node/alpha
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/search-backend-module-stack-overflow-collator/searchstackoverflowcollatormodule-test
-    to: blueprint/plugins/api-docs/alpha
+    to: blueprint/plugins/permission-node/alpha
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/search-backend-module-stack-overflow-collator/searchstackoverflowcollatormodule-test
     to: blueprint/plugins/search-backend-module-stack-overflow-collator/searchstackoverflowcollatormodule
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/search-backend-module-stack-overflow-collator/searchstackoverflowcollatormodule
-    to: blueprint/plugins/api-docs/alpha
+  - from: blueprint/plugins/search-backend-module-stack-overflow-collator/stackoverflowquestionscollatorfactory
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-stack-overflow-collator/stackoverflowquestionscollatorfactory-test
+    to: blueprint/plugins/search-backend-module-stack-overflow-collator/stackoverflowquestionscollatorfactory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-stack-overflow-collator/stackoverflowquestionscollatorfactory-test
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service

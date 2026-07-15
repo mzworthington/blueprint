@@ -3,19 +3,86 @@ name: Cli-module-migrate Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/cli-module-migrate/index
+  - entityRef: blueprint/packages/cli-module-migrate/utils
     type: background-worker
-    name: index Service
+    name: utils Service
     isTest: false
     properties:
-      filepath: packages/cli-module-migrate/src/index.ts
+      filepath: packages/cli-module-migrate/src/lib/utils.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 52
+      sloc: 30
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1560
+    'y': 1010
+  - entityRef: blueprint/packages/cli-module-migrate/yarn
+    type: background-worker
+    name: yarn Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/lib/versioning/yarn.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 4
+      loc: 42
+      sloc: 21
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 560
+    'y': 1010
+  - entityRef: blueprint/packages/cli-module-migrate/packages
+    type: background-worker
+    name: packages Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/lib/versioning/packages.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 14
+      loc: 127
+      sloc: 89
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 425
+    'y': 690
+  - entityRef: blueprint/packages/cli-module-migrate/packages-test
+    type: background-worker
+    name: packages.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-migrate/src/lib/versioning/packages.test.ts
       containerId: cli-module-migrate
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 78
-      sloc: 55
+      loc: 160
+      sloc: 128
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -23,52 +90,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 140
-    'y': 50
-  - entityRef: blueprint/packages/cli-module-migrate/packageexports
-    type: background-worker
-    name: packageExports Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-migrate/src/commands/packageExports.ts
-      containerId: cli-module-migrate
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 26
-      sloc: 8
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
-  - entityRef: blueprint/packages/cli-module-migrate/packagelintconfigs
-    type: background-worker
-    name: packageLintConfigs Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-migrate/src/commands/packageLintConfigs.ts
-      containerId: cli-module-migrate
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 8
-      loc: 93
-      sloc: 64
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
-    'y': 50
+    x: 735
+    'y': 370
   - entityRef: blueprint/packages/cli-module-migrate/packagerole
     type: background-worker
     name: packageRole Service
@@ -89,7 +112,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1520
+    x: 140
     'y': 50
   - entityRef: blueprint/packages/cli-module-migrate/packagescripts
     type: background-worker
@@ -110,6 +133,140 @@ nodes:
       hotspotScore: 0
       classifications:
         - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-migrate/migrate-test
+    type: background-worker
+    name: migrate.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-migrate/src/commands/versions/migrate.test.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 342
+      sloc: 298
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1195
+    'y': 370
+  - entityRef: blueprint/packages/cli-module-migrate/migrate
+    type: background-worker
+    name: migrate Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/commands/versions/migrate.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 13
+      loc: 173
+      sloc: 141
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 1425
+    'y': 690
+  - entityRef: blueprint/packages/cli-module-migrate/bump-test
+    type: background-worker
+    name: bump.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-migrate/src/commands/versions/bump.test.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 1356
+      sloc: 1231
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-migrate/bump
+    type: background-worker
+    name: bump Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/commands/versions/bump.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 50
+      loc: 520
+      sloc: 421
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 1655
+    'y': 370
+  - entityRef: blueprint/packages/cli-module-migrate/packagelintconfigs
+    type: background-worker
+    name: packageLintConfigs Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/commands/packageLintConfigs.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 8
+      loc: 93
+      sloc: 64
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-migrate/packageexports
+    type: background-worker
+    name: packageExports Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-migrate/src/commands/packageExports.ts
+      containerId: cli-module-migrate
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 26
+      sloc: 8
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
       coupledFiles: []
       sinceDays: 500
     x: 1980
@@ -136,41 +293,19 @@ nodes:
       sinceDays: 500
     x: 2440
     'y': 50
-  - entityRef: blueprint/packages/cli-module-migrate/utils
+  - entityRef: blueprint/packages/cli-module-migrate/index
     type: background-worker
-    name: utils Service
+    name: index Service
     isTest: false
     properties:
-      filepath: packages/cli-module-migrate/src/lib/utils.ts
-      containerId: cli-module-migrate
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 52
-      sloc: 30
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3495
-    'y': 1010
-  - entityRef: blueprint/packages/cli-module-migrate/bump-test
-    type: background-worker
-    name: bump.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-migrate/src/commands/versions/bump.test.ts
+      filepath: packages/cli-module-migrate/src/index.ts
       containerId: cli-module-migrate
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 1356
-      sloc: 1231
+      loc: 78
+      sloc: 55
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -180,144 +315,45 @@ nodes:
       sinceDays: 500
     x: 2900
     'y': 50
-  - entityRef: blueprint/packages/cli-module-migrate/bump
-    type: background-worker
-    name: bump Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-migrate/src/commands/versions/bump.ts
-      containerId: cli-module-migrate
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 50
-      loc: 520
-      sloc: 421
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 3265
-    'y': 370
-  - entityRef: blueprint/packages/cli-module-migrate/migrate-test
-    type: background-worker
-    name: migrate.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-migrate/src/commands/versions/migrate.test.ts
-      containerId: cli-module-migrate
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 342
-      sloc: 298
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3725
-    'y': 370
-  - entityRef: blueprint/packages/cli-module-migrate/migrate
-    type: background-worker
-    name: migrate Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-migrate/src/commands/versions/migrate.ts
-      containerId: cli-module-migrate
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 13
-      loc: 173
-      sloc: 141
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 3685
-    'y': 690
-  - entityRef: blueprint/packages/cli-module-migrate/packages-test
-    type: background-worker
-    name: packages.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-migrate/src/lib/versioning/packages.test.ts
-      containerId: cli-module-migrate
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 160
-      sloc: 128
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2805
-    'y': 370
-  - entityRef: blueprint/packages/cli-module-migrate/packages
-    type: background-worker
-    name: packages Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-migrate/src/lib/versioning/packages.ts
-      containerId: cli-module-migrate
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 14
-      loc: 127
-      sloc: 89
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 2670
-    'y': 690
-  - entityRef: blueprint/packages/cli-module-migrate/yarn
-    type: background-worker
-    name: yarn Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-migrate/src/lib/versioning/yarn.ts
-      containerId: cli-module-migrate
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 4
-      loc: 42
-      sloc: 21
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2535
-    'y': 1010
 dependencies:
+  - from: blueprint/packages/cli-module-migrate/yarn
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/packages
+    to: blueprint/packages/cli-module-migrate/yarn
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/packages
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/packages-test
+    to: blueprint/packages/cli-module-migrate/yarn
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/packages-test
+    to: blueprint/packages/cli-module-migrate/packages
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/packages-test
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/migrate-test
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/migrate-test
+    to: blueprint/packages/cli-module-migrate/migrate
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-migrate/migrate
+    to: blueprint/packages/cli-module-migrate/utils
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/packages/cli-module-migrate/bump-test
-    to: blueprint/packages/backend-openapi-utils/testutils
+    to: blueprint/packages/config-loader/testutils
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/cli-module-migrate/bump-test
@@ -350,41 +386,5 @@ dependencies:
     description: Calls module / service
   - from: blueprint/packages/cli-module-migrate/bump
     to: blueprint/packages/cli-module-migrate/utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-migrate/migrate-test
-    to: blueprint/packages/backend-openapi-utils/testutils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-migrate/migrate-test
-    to: blueprint/packages/cli-module-migrate/migrate
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-migrate/migrate
-    to: blueprint/packages/cli-module-migrate/utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-migrate/packages-test
-    to: blueprint/packages/cli-module-migrate/yarn
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-migrate/packages-test
-    to: blueprint/packages/cli-module-migrate/packages
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-migrate/packages-test
-    to: blueprint/packages/cli-common/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-migrate/packages
-    to: blueprint/packages/cli-module-migrate/yarn
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-migrate/packages
-    to: blueprint/packages/cli-common/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-migrate/yarn
-    to: blueprint/packages/cli-common/errors
     type: direct-call
     description: Calls module / service

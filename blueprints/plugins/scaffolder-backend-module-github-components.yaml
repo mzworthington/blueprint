@@ -3,19 +3,19 @@ name: Scaffolder-backend-module-github Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/index
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/autocomplete
     type: background-worker
-    name: index Service
+    name: autocomplete Service
     isTest: false
     properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/index.ts
+      filepath: plugins/scaffolder-backend-module-github/src/autocomplete/autocomplete.ts
       containerId: scaffolder-backend-module-github
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 33
-      sloc: 16
+      complexity: 6
+      loc: 81
+      sloc: 55
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -23,7 +23,29 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 140
+    x: 15440
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/autocomplete-test
+    type: background-worker
+    name: autocomplete.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/autocomplete/autocomplete.test.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 153
+      sloc: 117
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 15670
     'y': 50
   - entityRef: blueprint/plugins/scaffolder-backend-module-github/module
     type: background-worker
@@ -45,7 +67,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2615
+    x: 15210
     'y': 50
   - entityRef: blueprint/plugins/scaffolder-backend-module-github/util-test
     type: background-worker
@@ -67,559 +89,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 370
+    x: 410
     'y': 370
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/util
-    type: background-worker
-    name: util Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/util.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 15
-      loc: 220
-      sloc: 125
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 6155
-    'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githelpers
-    type: background-worker
-    name: gitHelpers Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/gitHelpers.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 6
-      loc: 143
-      sloc: 112
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 12965
-    'y': 1010
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/github-examples-test
-    type: background-worker
-    name: github.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/github.examples.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 166
-      sloc: 134
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 10495
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/github-examples
-    type: background-worker
-    name: github.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/github.examples.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 71
-      sloc: 53
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 11055
-    'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/github-test
-    type: background-worker
-    name: github.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/github.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 6
-      loc: 2394
-      sloc: 2144
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 12775
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/github
-    type: background-worker
-    name: github Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/github.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 245
-      sloc: 213
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 11615
-    'y': 370
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-examples-test
-    type: background-worker
-    name: githubActionsDispatch.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubActionsDispatch.examples.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 167
-      sloc: 136
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3075
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-examples
-    type: background-worker
-    name: githubActionsDispatch.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubActionsDispatch.examples.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 92
-      sloc: 74
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1070
-    'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-test
-    type: background-worker
-    name: githubActionsDispatch.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubActionsDispatch.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 194
-      sloc: 156
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch
-    type: background-worker
-    name: githubActionsDispatch Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubActionsDispatch.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 8
-      loc: 187
-      sloc: 148
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1290
-    'y': 370
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-examples-test
-    type: background-worker
-    name: githubAutolinks.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubAutolinks.examples.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 86
-      sloc: 63
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4535
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-examples
-    type: background-worker
-    name: githubAutolinks.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubAutolinks.examples.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 39
-      sloc: 21
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2340
-    'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-test
-    type: background-worker
-    name: githubAutolinks.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubAutolinks.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 147
-      sloc: 115
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubautolinks
-    type: background-worker
-    name: githubAutolinks Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubAutolinks.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 119
-      sloc: 90
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2495
-    'y': 370
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-examples-test
-    type: background-worker
-    name: githubBranchProtection.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubBranchProtection.examples.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 219
-      sloc: 187
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 8535
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-examples
-    type: background-worker
-    name: githubBranchProtection.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubBranchProtection.examples.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 92
-      sloc: 74
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 8790
-    'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-test
-    type: background-worker
-    name: githubBranchProtection.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubBranchProtection.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 228
-      sloc: 194
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 11060
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
-    type: background-worker
-    name: githubBranchProtection Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubBranchProtection.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 141
-      sloc: 112
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 9495
-    'y': 370
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-examples-test
-    type: background-worker
-    name: githubDeployKey.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubDeployKey.examples.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 105
-      sloc: 77
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 6385
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-examples
-    type: background-worker
-    name: githubDeployKey.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubDeployKey.examples.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 38
-      sloc: 21
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4395
-    'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-test
-    type: background-worker
-    name: githubDeployKey.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubDeployKey.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 123
-      sloc: 89
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2155
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey
-    type: background-worker
-    name: githubDeployKey Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubDeployKey.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 175
-      sloc: 141
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3995
-    'y': 370
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-examples-test
-    type: background-worker
-    name: githubEnvironment.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubEnvironment.examples.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 974
-      sloc: 861
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 7075
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-examples
-    type: background-worker
-    name: gitHubEnvironment.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/gitHubEnvironment.examples.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 354
-      sloc: 337
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 7640
-    'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-test
-    type: background-worker
-    name: githubEnvironment.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubEnvironment.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 517
-      sloc: 456
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4995
-    'y': 50
   - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubenvironment
     type: background-worker
     name: githubEnvironment Service
@@ -641,21 +112,65 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 5615
+    x: 13830
     'y': 370
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate-examples
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable-test
     type: background-worker
-    name: githubIssuesCreate.examples Service
-    isTest: false
+    name: githubPagesEnable.test Service
+    isTest: true
     properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubIssuesCreate.examples.ts
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubPagesEnable.test.ts
       containerId: scaffolder-backend-module-github
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 74
-      sloc: 57
+      loc: 103
+      sloc: 73
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5505
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate-test
+    type: background-worker
+    name: githubRepoCreate.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubRepoCreate.test.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 923
+      sloc: 815
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 14750
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-examples-test
+    type: background-worker
+    name: githubDeployKey.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubDeployKey.examples.test.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 105
+      sloc: 77
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -664,28 +179,6 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 140
-    'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate-test
-    type: background-worker
-    name: githubIssuesCreate.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubIssuesCreate.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 161
-      sloc: 130
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1520
     'y': 50
   - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate
     type: background-worker
@@ -707,21 +200,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 830
+    x: 11265
     'y': 370
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-examples-test
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-examples-test
     type: background-worker
-    name: githubIssuesLabel.examples.test Service
+    name: githubWebhook.examples.test Service
     isTest: true
     properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubIssuesLabel.examples.test.ts
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubWebhook.examples.test.ts
       containerId: scaffolder-backend-module-github
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 114
-      sloc: 84
+      loc: 203
+      sloc: 164
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -729,7 +222,29 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 5575
+    x: 6085
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-test
+    type: background-worker
+    name: githubWebhook.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubWebhook.test.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 313
+      sloc: 257
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 8845
     'y': 50
   - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-examples
     type: background-worker
@@ -751,65 +266,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3030
+    x: 4110
     'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-test
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/helpers
     type: background-worker
-    name: githubIssuesLabel.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubIssuesLabel.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 117
-      sloc: 89
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3575
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel
-    type: background-worker
-    name: githubIssuesLabel Service
+    name: helpers Service
     isTest: false
     properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubIssuesLabel.ts
+      filepath: plugins/scaffolder-backend-module-github/src/actions/helpers.ts
       containerId: scaffolder-backend-module-github
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 3
-      loc: 113
-      sloc: 86
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4455
-    'y': 370
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable-examples-test
-    type: background-worker
-    name: githubPagesEnable.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubPagesEnable.examples.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 13
-      loc: 447
-      sloc: 412
+      complexity: 53
+      loc: 625
+      sloc: 561
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -818,43 +289,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 8995
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable-examples
-    type: background-worker
-    name: githubPagesEnable.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubPagesEnable.examples.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 246
-      sloc: 227
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 8100
+    x: 9385
     'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable-test
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-examples-test
     type: background-worker
-    name: githubPagesEnable.test Service
+    name: githubAutolinks.examples.test Service
     isTest: true
     properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubPagesEnable.test.ts
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubAutolinks.examples.test.ts
       containerId: scaffolder-backend-module-github
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 103
-      sloc: 73
+      loc: 86
+      sloc: 63
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -862,21 +311,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 7615
+    x: 3855
     'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-examples
     type: background-worker
-    name: githubPagesEnable Service
+    name: githubDeployKey.examples Service
     isTest: false
     properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubPagesEnable.ts
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubDeployKey.examples.ts
       containerId: scaffolder-backend-module-github
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 2
-      loc: 137
-      sloc: 107
+      complexity: 1
+      loc: 38
+      sloc: 21
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -884,8 +333,52 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 7615
-    'y': 370
+    x: 140
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/github-examples-test
+    type: background-worker
+    name: github.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/github.examples.test.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 166
+      sloc: 134
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 9785
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-examples
+    type: background-worker
+    name: githubBranchProtection.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubBranchProtection.examples.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 92
+      sloc: 74
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1330
+    'y': 690
   - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-examples-test
     type: background-worker
     name: githubPullRequest.examples.test Service
@@ -906,7 +399,337 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 9915
+    x: 4315
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-test
+    type: background-worker
+    name: githubAutolinks.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubAutolinks.test.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 147
+      sloc: 115
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 6545
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-test
+    type: background-worker
+    name: githubBranchProtection.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubBranchProtection.test.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 228
+      sloc: 194
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5045
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/github
+    type: background-worker
+    name: github Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/github.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 245
+      sloc: 213
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 11940
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate-examples
+    type: background-worker
+    name: githubIssuesCreate.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubIssuesCreate.examples.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 74
+      sloc: 57
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 11225
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/github-examples
+    type: background-worker
+    name: github.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/github.examples.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 71
+      sloc: 53
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 10765
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-test
+    type: background-worker
+    name: githubDeployKey.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubDeployKey.test.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 123
+      sloc: 89
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1410
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
+    type: background-worker
+    name: githubRepoCreate Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubRepoCreate.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 147
+      sloc: 118
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 13370
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable-examples
+    type: background-worker
+    name: githubPagesEnable.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubPagesEnable.examples.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 246
+      sloc: 227
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2815
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/inputproperties
+    type: background-worker
+    name: inputProperties Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/inputProperties.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 480
+      sloc: 417
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 7370
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
+    type: background-worker
+    name: githubRepoPush Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubRepoPush.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 171
+      sloc: 138
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4855
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch
+    type: background-worker
+    name: githubActionsDispatch Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubActionsDispatch.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 8
+      loc: 187
+      sloc: 148
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 10325
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable
+    type: background-worker
+    name: githubPagesEnable Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubPagesEnable.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 137
+      sloc: 107
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3545
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/github-test
+    type: background-worker
+    name: github.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/github.test.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 6
+      loc: 2394
+      sloc: 2144
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 13235
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-examples-test
+    type: background-worker
+    name: githubRepoPush.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubRepoPush.examples.test.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 125
+      sloc: 94
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 7005
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-test
+    type: background-worker
+    name: githubEnvironment.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubEnvironment.test.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 517
+      sloc: 456
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 13830
     'y': 50
   - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-examples
     type: background-worker
@@ -928,21 +751,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 9400
+    x: 5140
     'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-test
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-examples-test
     type: background-worker
-    name: githubPullRequest.test Service
+    name: githubBranchProtection.examples.test Service
     isTest: true
     properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubPullRequest.test.ts
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubBranchProtection.examples.test.ts
       containerId: scaffolder-backend-module-github
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 1326
-      sloc: 1141
+      loc: 219
+      sloc: 187
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -950,7 +773,51 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 8075
+    x: 950
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-examples
+    type: background-worker
+    name: githubAutolinks.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubAutolinks.examples.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 39
+      sloc: 21
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4680
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-test
+    type: background-worker
+    name: githubActionsDispatch.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubActionsDispatch.test.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 194
+      sloc: 156
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 12775
     'y': 50
   - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
     type: background-worker
@@ -973,7 +840,294 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 8860
+    x: 6410
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate-test
+    type: background-worker
+    name: githubIssuesCreate.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubIssuesCreate.test.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 161
+      sloc: 130
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 11040
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-examples
+    type: background-worker
+    name: githubRepoPush.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubRepoPush.examples.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 66
+      sloc: 48
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5600
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubautolinks
+    type: background-worker
+    name: githubAutolinks Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubAutolinks.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 119
+      sloc: 90
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5775
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-test
+    type: background-worker
+    name: githubPullRequest.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubPullRequest.test.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 1326
+      sloc: 1141
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 7925
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable-examples-test
+    type: background-worker
+    name: githubPagesEnable.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubPagesEnable.examples.test.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 13
+      loc: 447
+      sloc: 412
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 1870
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-examples
+    type: background-worker
+    name: githubWebhook.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubWebhook.examples.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 121
+      sloc: 104
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 6910
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githelpers
+    type: background-worker
+    name: gitHelpers Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/gitHelpers.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 6
+      loc: 143
+      sloc: 112
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 9190
+    'y': 1010
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-examples-test
+    type: background-worker
+    name: githubActionsDispatch.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubActionsDispatch.examples.test.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 167
+      sloc: 136
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 8385
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubwebhook
+    type: background-worker
+    name: githubWebhook Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubWebhook.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 5
+      loc: 185
+      sloc: 153
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 7735
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate-examples
+    type: background-worker
+    name: githubRepoCreate.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubRepoCreate.examples.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 1040
+      sloc: 1022
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 12465
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/helpers-test
+    type: background-worker
+    name: helpers.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/helpers.test.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 48
+      sloc: 24
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4395
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-examples
+    type: background-worker
+    name: githubActionsDispatch.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubActionsDispatch.examples.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 92
+      sloc: 74
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 9845
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
+    type: background-worker
+    name: githubBranchProtection Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubBranchProtection.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 141
+      sloc: 112
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2680
     'y': 370
   - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate-examples-test
     type: background-worker
@@ -996,87 +1150,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 14205
+    x: 11630
     'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate-examples
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-test
     type: background-worker
-    name: githubRepoCreate.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubRepoCreate.examples.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 1040
-      sloc: 1022
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 15095
-    'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate-test
-    type: background-worker
-    name: githubRepoCreate.test Service
+    name: githubIssuesLabel.test Service
     isTest: true
     properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubRepoCreate.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 923
-      sloc: 815
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 15270
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
-    type: background-worker
-    name: githubRepoCreate Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubRepoCreate.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 147
-      sloc: 118
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 13920
-    'y': 370
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-examples-test
-    type: background-worker
-    name: githubRepoPush.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubRepoPush.examples.test.ts
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubIssuesLabel.test.ts
       containerId: scaffolder-backend-module-github
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 125
-      sloc: 94
+      loc: 117
+      sloc: 89
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -1084,21 +1172,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 13235
+    x: 7465
     'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-examples
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/index
     type: background-worker
-    name: githubRepoPush.examples Service
+    name: index Service
     isTest: false
     properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubRepoPush.examples.ts
+      filepath: plugins/scaffolder-backend-module-github/src/index.ts
       containerId: scaffolder-backend-module-github
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 66
-      sloc: 48
+      loc: 26
+      sloc: 3
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -1106,8 +1194,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 14635
-    'y': 690
+    x: 14290
+    'y': 50
   - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-test
     type: background-worker
     name: githubRepoPush.test Service
@@ -1128,185 +1216,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 15730
+    x: 3005
     'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
-    type: background-worker
-    name: githubRepoPush Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubRepoPush.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 171
-      sloc: 138
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 14380
-    'y': 370
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-examples-test
-    type: background-worker
-    name: githubWebhook.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubWebhook.examples.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 203
-      sloc: 164
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 12100
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-examples
-    type: background-worker
-    name: githubWebhook.examples Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubWebhook.examples.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 121
-      sloc: 104
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 11515
-    'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-test
-    type: background-worker
-    name: githubWebhook.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubWebhook.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 313
-      sloc: 257
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 9455
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubwebhook
-    type: background-worker
-    name: githubWebhook Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/githubWebhook.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 5
-      loc: 185
-      sloc: 153
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 10225
-    'y': 370
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/helpers-test
-    type: background-worker
-    name: helpers.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/helpers.test.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 48
-      sloc: 24
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 6155
-    'y': 370
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/helpers
-    type: background-worker
-    name: helpers Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/helpers.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 53
-      loc: 625
-      sloc: 561
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 11975
-    'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/inputproperties
-    type: background-worker
-    name: inputProperties Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-github/src/actions/inputProperties.ts
-      containerId: scaffolder-backend-module-github
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 480
-      sloc: 417
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 12435
-    'y': 690
   - entityRef: blueprint/plugins/scaffolder-backend-module-github/outputproperties
     type: background-worker
     name: outputProperties Service
@@ -1327,21 +1238,43 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 14165
+    x: 10305
     'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/autocomplete-test
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey
     type: background-worker
-    name: autocomplete.test Service
+    name: githubDeployKey Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubDeployKey.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 175
+      sloc: 141
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 870
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-examples-test
+    type: background-worker
+    name: githubIssuesLabel.examples.test Service
     isTest: true
     properties:
-      filepath: plugins/scaffolder-backend-module-github/src/autocomplete/autocomplete.test.ts
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubIssuesLabel.examples.test.ts
       containerId: scaffolder-backend-module-github
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 153
-      sloc: 117
+      loc: 114
+      sloc: 84
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -1349,21 +1282,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4035
+    x: 2330
     'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-github/autocomplete
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel
     type: background-worker
-    name: autocomplete Service
+    name: githubIssuesLabel Service
     isTest: false
     properties:
-      filepath: plugins/scaffolder-backend-module-github/src/autocomplete/autocomplete.ts
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubIssuesLabel.ts
       containerId: scaffolder-backend-module-github
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 6
-      loc: 81
-      sloc: 55
+      complexity: 3
+      loc: 113
+      sloc: 86
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -1371,11 +1304,102 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3455
+    x: 5315
     'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-examples-test
+    type: background-worker
+    name: githubEnvironment.examples.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/githubEnvironment.examples.test.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 974
+      sloc: 861
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 12315
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-examples
+    type: background-worker
+    name: gitHubEnvironment.examples Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/actions/gitHubEnvironment.examples.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 354
+      sloc: 337
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 13665
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-backend-module-github/util
+    type: background-worker
+    name: util Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-github/src/util.ts
+      containerId: scaffolder-backend-module-github
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 15
+      loc: 220
+      sloc: 125
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 6180
+    'y': 690
 dependencies:
+  - from: blueprint/plugins/scaffolder-backend-module-github/autocomplete
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/autocomplete
+    to: blueprint/plugins/scaffolder-backend-module-github/util
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/autocomplete
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/autocomplete-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/autocomplete-test
+    to: blueprint/plugins/scaffolder-backend-module-github/autocomplete
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/autocomplete-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/module
-    to: blueprint/plugins/api-docs/alpha
+    to: blueprint/plugins/permission-node/alpha
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/module
@@ -1394,28 +1418,140 @@ dependencies:
     to: blueprint/plugins/scaffolder-backend-module-github/util
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/util
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/util
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/util
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/kubernetes-common/error-detection
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment
     to: blueprint/plugins/scaffolder-backend-module-github/util
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githelpers
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment
+    to: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githelpers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-examples-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-examples-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate
+    to: blueprint/plugins/scaffolder-backend-module-github/util
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate
+    to: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-examples-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-examples-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubwebhook
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubwebhook
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/helpers
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/helpers
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/helpers
+    to: blueprint/plugins/scaffolder-backend-module-github/githelpers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-examples-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-examples-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubautolinks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-examples
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/github-examples-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/github-examples-test
@@ -1434,28 +1570,52 @@ dependencies:
     to: blueprint/plugins/scaffolder-backend-module-github/githelpers
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/github-test
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-examples-test
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/github-test
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-examples-test
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/github-test
-    to: blueprint/plugins/scaffolder-backend-module-github/github
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/github-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githelpers
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubautolinks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-test
+    to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/github
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/github
-    to: blueprint/plugins/search-backend-node/errors
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/github
@@ -1482,208 +1642,140 @@ dependencies:
     to: blueprint/plugins/scaffolder-backend-module-github/github-examples
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-examples-test
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-test
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-examples-test
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-examples
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-test
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-test
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
+    to: blueprint/plugins/scaffolder-backend-module-github/helpers
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
     to: blueprint/plugins/scaffolder-backend-module-github/util
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch
-    to: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-examples
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-examples-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-examples-test
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubautolinks
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-examples
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-test
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubautolinks
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks
-    to: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-examples
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks
-    to: blueprint/plugins/scaffolder-backend-module-github/util
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-examples-test
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-examples-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-examples
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-test
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
-    to: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-examples
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
     to: blueprint/plugins/scaffolder-backend-module-github/inputproperties
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
+    to: blueprint/plugins/scaffolder-backend-module-github/outputproperties
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
+    to: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
+    to: blueprint/plugins/scaffolder-backend-module-github/helpers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
     to: blueprint/plugins/scaffolder-backend-module-github/util
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
+    to: blueprint/plugins/scaffolder-backend-module-github/inputproperties
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
+    to: blueprint/plugins/scaffolder-backend-module-github/outputproperties
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
+    to: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch
+    to: blueprint/plugins/scaffolder-backend-module-github/util
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch
+    to: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable
+    to: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable
+    to: blueprint/plugins/scaffolder-backend-module-github/util
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/github-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/github-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/github-test
+    to: blueprint/plugins/scaffolder-backend-module-github/github
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/github-test
     to: blueprint/plugins/scaffolder-backend-module-github/githelpers
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-examples-test
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-examples
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-examples-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-examples-test
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-examples-test
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-test
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey
-    to: blueprint/plugins/scaffolder-backend-module-github/util
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey
-    to: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-examples
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubenvironment
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-examples-test
-    to: blueprint/plugins/catalog-node/testutils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-examples-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-examples-test
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-examples
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-examples
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-test
@@ -1691,7 +1783,7 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-test
@@ -1699,23 +1791,59 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-test
-    to: blueprint/plugins/catalog-node/testutils
+    to: blueprint/plugins/catalog-react/testutils
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-examples-test
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-examples-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-test
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
     to: blueprint/plugins/scaffolder-backend-module-github/util
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment
-    to: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-examples
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
+    to: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate-test
@@ -1727,83 +1855,43 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate-test
     to: blueprint/plugins/scaffolder-backend-module-github/util
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks
+    to: blueprint/plugins/scaffolder-backend-module-github/githubautolinks-examples
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks
     to: blueprint/plugins/scaffolder-backend-module-github/util
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate
-    to: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate-examples
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-test
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-examples-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-examples-test
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-test
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-examples
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/util
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-test
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-test
-    to: blueprint/plugins/scaffolder-backend-module-github/util
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel
-    to: blueprint/plugins/scaffolder-backend-module-github/util
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel
-    to: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-examples
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable-examples-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable-examples-test
@@ -1818,88 +1906,76 @@ dependencies:
     to: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable-examples
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable-test
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/scaffolder-backend-module-github/githelpers
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable-test
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-examples-test
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-examples-test
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable
-    to: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable-examples
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook
     to: blueprint/plugins/scaffolder-backend-module-github/util
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-examples-test
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook
+    to: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-examples
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-examples-test
+  - from: blueprint/plugins/scaffolder-backend-module-github/helpers-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/helpers-test
+    to: blueprint/plugins/scaffolder-backend-module-github/helpers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
+    to: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection-examples
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-examples
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
+    to: blueprint/plugins/scaffolder-backend-module-github/inputproperties
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-test
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
     to: blueprint/plugins/scaffolder-backend-module-github/util
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
-    to: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest-examples
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
+    to: blueprint/plugins/scaffolder-backend-module-github/githelpers
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate-examples-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate-examples-test
@@ -1918,68 +1994,24 @@ dependencies:
     to: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate-examples
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate-test
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate-test
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-test
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-test
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githelpers
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
-    to: blueprint/plugins/scaffolder-backend-module-github/helpers
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-test
     to: blueprint/plugins/scaffolder-backend-module-github/util
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
-    to: blueprint/plugins/scaffolder-backend-module-github/inputproperties
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
-    to: blueprint/plugins/scaffolder-backend-module-github/outputproperties
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
-    to: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate-examples
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-examples-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-examples-test
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-examples
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-test
@@ -1994,123 +2026,87 @@ dependencies:
     to: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
-    to: blueprint/plugins/api-docs/config
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
-    to: blueprint/plugins/scaffolder-backend-module-github/helpers
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey
     to: blueprint/plugins/scaffolder-backend-module-github/util
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
-    to: blueprint/plugins/scaffolder-backend-module-github/inputproperties
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey
+    to: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey-examples
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
-    to: blueprint/plugins/scaffolder-backend-module-github/outputproperties
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-examples-test
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
-    to: blueprint/plugins/scaffolder-backend-module-github/githubrepopush-examples
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-examples-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-examples-test
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-examples-test
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubwebhook
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-examples-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-examples
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-examples
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-test
-    to: blueprint/plugins/scaffolder-backend-module-github/githubwebhook
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-test
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-examples-test
     to: blueprint/plugins/scaffolder-backend-module-github/util
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook
-    to: blueprint/plugins/scaffolder-backend-module-github/githubwebhook-examples
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/helpers-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/helpers-test
-    to: blueprint/plugins/scaffolder-backend-module-github/helpers
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/helpers
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/helpers
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/helpers
-    to: blueprint/plugins/scaffolder-backend-module-github/githelpers
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/autocomplete-test
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/autocomplete-test
-    to: blueprint/plugins/scaffolder-backend-module-github/autocomplete
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/autocomplete-test
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/autocomplete
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/autocomplete
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel
     to: blueprint/plugins/scaffolder-backend-module-github/util
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-github/autocomplete
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel
+    to: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubenvironment
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-examples-test
+    to: blueprint/plugins/catalog-react/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-examples-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-examples-test
     to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-examples-test
+    to: blueprint/plugins/scaffolder-backend-module-github/githubenvironment-examples
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/util
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/util
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/util
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service

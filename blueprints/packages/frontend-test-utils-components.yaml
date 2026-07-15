@@ -3,19 +3,41 @@ name: Frontend-test-utils Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/frontend-test-utils/index
+  - entityRef: blueprint/packages/frontend-test-utils/mockanalyticsapi
     type: background-worker
-    name: index Service
+    name: MockAnalyticsApi Service
     isTest: false
     properties:
-      filepath: packages/frontend-test-utils/src/apis/TranslationApi/index.ts
+      filepath: packages/frontend-test-utils/src/apis/AnalyticsApi/MockAnalyticsApi.ts
+      containerId: frontend-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 45
+      sloc: 17
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 370
+  - entityRef: blueprint/packages/frontend-test-utils/mockanalyticsapi-test
+    type: background-worker
+    name: MockAnalyticsApi.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/AnalyticsApi/MockAnalyticsApi.test.ts
       containerId: frontend-test-utils
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 18
-      sloc: 1
+      loc: 65
+      sloc: 44
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -25,19 +47,19 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 50
-  - entityRef: blueprint/packages/frontend-test-utils/setuptests
+  - entityRef: blueprint/packages/frontend-test-utils/index
     type: background-worker
-    name: setupTests Service
-    isTest: true
+    name: index Service
+    isTest: false
     properties:
-      filepath: packages/frontend-test-utils/src/setupTests.ts
+      filepath: packages/frontend-test-utils/src/index.ts
       containerId: frontend-test-utils
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 4
-      loc: 33
-      sloc: 13
+      complexity: 1
+      loc: 29
+      sloc: 4
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -46,6 +68,116 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 600
+    'y': 50
+  - entityRef: blueprint/packages/frontend-test-utils/mockalertapi
+    type: background-worker
+    name: MockAlertApi Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/AlertApi/MockAlertApi.ts
+      containerId: frontend-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 104
+      sloc: 53
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 370
+  - entityRef: blueprint/packages/frontend-test-utils/mockalertapi-test
+    type: background-worker
+    name: MockAlertApi.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/AlertApi/MockAlertApi.test.ts
+      containerId: frontend-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 108
+      sloc: 71
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/packages/frontend-test-utils/createapimock
+    type: rest-api
+    name: createApiMock REST Endpoint
+    isTest: false
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/createApiMock.ts
+      containerId: frontend-test-utils
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 4
+      loc: 88
+      sloc: 32
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3495
+    'y': 690
+  - entityRef: blueprint/packages/frontend-test-utils/mockfeatureflagsapi
+    type: background-worker
+    name: MockFeatureFlagsApi Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/FeatureFlagsApi/MockFeatureFlagsApi.ts
+      containerId: frontend-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 6
+      loc: 108
+      sloc: 50
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
+    'y': 370
+  - entityRef: blueprint/packages/frontend-test-utils/mockfeatureflagsapi-test
+    type: background-worker
+    name: MockFeatureFlagsApi.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/FeatureFlagsApi/MockFeatureFlagsApi.test.ts
+      containerId: frontend-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 144
+      sloc: 99
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
     'y': 50
   - entityRef: blueprint/packages/frontend-test-utils/createapimock-test
     type: rest-api
@@ -67,43 +199,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 695
+    x: 1980
     'y': 370
-  - entityRef: blueprint/packages/frontend-test-utils/createapimock
-    type: rest-api
-    name: createApiMock REST Endpoint
+  - entityRef: blueprint/packages/frontend-test-utils/mocktranslationapi
+    type: background-worker
+    name: MockTranslationApi Service
     isTest: false
     properties:
-      filepath: packages/frontend-test-utils/src/apis/createApiMock.ts
-      containerId: frontend-test-utils
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 4
-      loc: 88
-      sloc: 32
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 980
-    'y': 690
-  - entityRef: blueprint/packages/frontend-test-utils/mockapis-test
-    type: background-worker
-    name: mockApis.test Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/mockApis.test.ts
+      filepath: packages/frontend-test-utils/src/apis/TranslationApi/MockTranslationApi.ts
       containerId: frontend-test-utils
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 120
-      sloc: 87
+      complexity: 3
+      loc: 112
+      sloc: 69
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -111,21 +221,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
-    'y': 50
-  - entityRef: blueprint/packages/frontend-test-utils/mockapis
-    type: gateway-api
-    name: mockApis UI Component
-    isTest: false
+    x: 2440
+    'y': 370
+  - entityRef: blueprint/packages/frontend-test-utils/mocktranslationapi-test
+    type: background-worker
+    name: MockTranslationApi.test Service
+    isTest: true
     properties:
-      filepath: packages/frontend-test-utils/src/apis/mockApis.ts
+      filepath: packages/frontend-test-utils/src/apis/TranslationApi/MockTranslationApi.test.tsx
       containerId: frontend-test-utils
-      technology: React Component
-      classification: ui-import
+      technology: TypeScript Domain Service
+      classification: default
     forensics:
       complexity: 2
-      loc: 463
-      sloc: 249
+      loc: 213
+      sloc: 174
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -133,51 +243,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1155
-    'y': 370
-  - entityRef: blueprint/packages/frontend-test-utils/mockwithapifactory
-    type: background-worker
-    name: MockWithApiFactory Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/MockWithApiFactory.ts
-      containerId: frontend-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 5
-      loc: 95
-      sloc: 34
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1750
-    'y': 1010
-  - entityRef: blueprint/packages/frontend-test-utils/testapiprovider-test
-    type: gateway-api
-    name: TestApiProvider.test UI Component
-    isTest: true
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/TestApiProvider.test.tsx
-      containerId: frontend-test-utils
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 108
-      sloc: 74
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1520
+    x: 2440
     'y': 50
   - entityRef: blueprint/packages/frontend-test-utils/testapiprovider
     type: gateway-api
@@ -199,8 +265,316 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1910
+    x: 6375
     'y': 690
+  - entityRef: blueprint/packages/frontend-test-utils/mockstorageapi-test
+    type: background-worker
+    name: MockStorageApi.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/StorageApi/MockStorageApi.test.ts
+      containerId: frontend-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 281
+      sloc: 216
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2900
+    'y': 50
+  - entityRef: blueprint/packages/frontend-test-utils/mockstorageapi
+    type: background-worker
+    name: MockStorageApi Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/StorageApi/MockStorageApi.ts
+      containerId: frontend-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 9
+      loc: 143
+      sloc: 106
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2900
+    'y': 370
+  - entityRef: blueprint/packages/frontend-test-utils/mockwithapifactory
+    type: background-worker
+    name: MockWithApiFactory Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/MockWithApiFactory.ts
+      containerId: frontend-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 5
+      loc: 95
+      sloc: 34
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5970
+    'y': 1010
+  - entityRef: blueprint/packages/frontend-test-utils/mockapis
+    type: gateway-api
+    name: mockApis UI Component
+    isTest: false
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/mockApis.ts
+      containerId: frontend-test-utils
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 2
+      loc: 463
+      sloc: 249
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5185
+    'y': 370
+  - entityRef: blueprint/packages/frontend-test-utils/testapiprovider-test
+    type: gateway-api
+    name: TestApiProvider.test UI Component
+    isTest: true
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/TestApiProvider.test.tsx
+      containerId: frontend-test-utils
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 108
+      sloc: 74
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4280
+    'y': 50
+  - entityRef: blueprint/packages/frontend-test-utils/mockfetchapi-test
+    type: rest-api
+    name: MockFetchApi.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/FetchApi/MockFetchApi.test.ts
+      containerId: frontend-test-utils
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 96
+      sloc: 73
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3360
+    'y': 50
+  - entityRef: blueprint/packages/frontend-test-utils/mockfetchapi
+    type: background-worker
+    name: MockFetchApi Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/FetchApi/MockFetchApi.ts
+      containerId: frontend-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 6
+      loc: 169
+      sloc: 76
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3360
+    'y': 370
+  - entityRef: blueprint/packages/frontend-test-utils/mockapis-test
+    type: background-worker
+    name: mockApis.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/mockApis.test.ts
+      containerId: frontend-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 120
+      sloc: 87
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5835
+    'y': 50
+  - entityRef: blueprint/packages/frontend-test-utils/mockpermissionapi
+    type: gateway-api
+    name: MockPermissionApi UI Component
+    isTest: false
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/PermissionApi/MockPermissionApi.ts
+      containerId: frontend-test-utils
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 47
+      sloc: 19
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3820
+    'y': 370
+  - entityRef: blueprint/packages/frontend-test-utils/mockpermissionapi-test
+    type: background-worker
+    name: MockPermissionApi.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/PermissionApi/MockPermissionApi.test.ts
+      containerId: frontend-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 48
+      sloc: 27
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3820
+    'y': 50
+  - entityRef: blueprint/packages/frontend-test-utils/mockconfigapi
+    type: background-worker
+    name: MockConfigApi Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/ConfigApi/MockConfigApi.ts
+      containerId: frontend-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 113
+      sloc: 57
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4495
+    'y': 370
+  - entityRef: blueprint/packages/frontend-test-utils/mockconfigapi-test
+    type: background-worker
+    name: MockConfigApi.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/ConfigApi/MockConfigApi.test.ts
+      containerId: frontend-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 45
+      sloc: 25
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4915
+    'y': 50
+  - entityRef: blueprint/packages/frontend-test-utils/mockerrorapi-test
+    type: background-worker
+    name: MockErrorApi.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/ErrorApi/MockErrorApi.test.ts
+      containerId: frontend-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 105
+      sloc: 74
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5375
+    'y': 50
+  - entityRef: blueprint/packages/frontend-test-utils/mockerrorapi
+    type: background-worker
+    name: MockErrorApi Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-test-utils/src/apis/ErrorApi/MockErrorApi.ts
+      containerId: frontend-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 4
+      loc: 118
+      sloc: 70
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5780
+    'y': 370
   - entityRef: blueprint/packages/frontend-test-utils/createextensiontester-test
     type: gateway-api
     name: createExtensionTester.test UI Component
@@ -221,52 +595,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1980
-    'y': 50
-  - entityRef: blueprint/packages/frontend-test-utils/createextensiontester
-    type: background-worker
-    name: createExtensionTester Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-test-utils/src/app/createExtensionTester.tsx
-      containerId: frontend-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 19
-      loc: 352
-      sloc: 257
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 1885
-    'y': 370
-  - entityRef: blueprint/packages/frontend-test-utils/renderintestapp-test
-    type: gateway-api
-    name: renderInTestApp.test UI Component
-    isTest: true
-    properties:
-      filepath: packages/frontend-test-utils/src/app/renderInTestApp.test.tsx
-      containerId: frontend-test-utils
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 153
-      sloc: 115
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2480
+    x: 6525
     'y': 50
   - entityRef: blueprint/packages/frontend-test-utils/renderintestapp
     type: gateway-api
@@ -289,8 +618,53 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 2440
+    x: 7295
     'y': 370
+  - entityRef: blueprint/packages/frontend-test-utils/createextensiontester
+    type: background-worker
+    name: createExtensionTester Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-test-utils/src/app/createExtensionTester.tsx
+      containerId: frontend-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 19
+      loc: 352
+      sloc: 257
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 6375
+    'y': 370
+  - entityRef: blueprint/packages/frontend-test-utils/renderintestapp-test
+    type: gateway-api
+    name: renderInTestApp.test UI Component
+    isTest: true
+    properties:
+      filepath: packages/frontend-test-utils/src/app/renderInTestApp.test.tsx
+      containerId: frontend-test-utils
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 153
+      sloc: 115
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 7335
+    'y': 50
   - entityRef: blueprint/packages/frontend-test-utils/rendertestapp
     type: gateway-api
     name: renderTestApp UI Component
@@ -311,175 +685,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 7080
+    x: 6835
     'y': 370
-  - entityRef: blueprint/packages/frontend-test-utils/mockalertapi-test
+  - entityRef: blueprint/packages/frontend-test-utils/setuptests
     type: background-worker
-    name: MockAlertApi.test Service
+    name: setupTests Service
     isTest: true
     properties:
-      filepath: packages/frontend-test-utils/src/apis/AlertApi/MockAlertApi.test.ts
-      containerId: frontend-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 108
-      sloc: 71
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2940
-    'y': 50
-  - entityRef: blueprint/packages/frontend-test-utils/mockalertapi
-    type: background-worker
-    name: MockAlertApi Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/AlertApi/MockAlertApi.ts
-      containerId: frontend-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 104
-      sloc: 53
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2940
-    'y': 370
-  - entityRef: blueprint/packages/frontend-test-utils/mockanalyticsapi-test
-    type: background-worker
-    name: MockAnalyticsApi.test Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/AnalyticsApi/MockAnalyticsApi.test.ts
-      containerId: frontend-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 65
-      sloc: 44
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3400
-    'y': 50
-  - entityRef: blueprint/packages/frontend-test-utils/mockanalyticsapi
-    type: background-worker
-    name: MockAnalyticsApi Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/AnalyticsApi/MockAnalyticsApi.ts
-      containerId: frontend-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 45
-      sloc: 17
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3400
-    'y': 370
-  - entityRef: blueprint/packages/frontend-test-utils/mockconfigapi-test
-    type: background-worker
-    name: MockConfigApi.test Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/ConfigApi/MockConfigApi.test.ts
-      containerId: frontend-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 45
-      sloc: 25
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3860
-    'y': 50
-  - entityRef: blueprint/packages/frontend-test-utils/mockconfigapi
-    type: background-worker
-    name: MockConfigApi Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/ConfigApi/MockConfigApi.ts
-      containerId: frontend-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 113
-      sloc: 57
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3860
-    'y': 370
-  - entityRef: blueprint/packages/frontend-test-utils/mockerrorapi-test
-    type: background-worker
-    name: MockErrorApi.test Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/ErrorApi/MockErrorApi.test.ts
-      containerId: frontend-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 105
-      sloc: 74
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4320
-    'y': 50
-  - entityRef: blueprint/packages/frontend-test-utils/mockerrorapi
-    type: background-worker
-    name: MockErrorApi Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/ErrorApi/MockErrorApi.ts
+      filepath: packages/frontend-test-utils/src/setupTests.ts
       containerId: frontend-test-utils
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 4
-      loc: 118
-      sloc: 70
+      loc: 33
+      sloc: 13
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -487,229 +707,29 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4320
-    'y': 370
-  - entityRef: blueprint/packages/frontend-test-utils/mockfeatureflagsapi-test
-    type: background-worker
-    name: MockFeatureFlagsApi.test Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/FeatureFlagsApi/MockFeatureFlagsApi.test.ts
-      containerId: frontend-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 144
-      sloc: 99
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4780
+    x: 7795
     'y': 50
-  - entityRef: blueprint/packages/frontend-test-utils/mockfeatureflagsapi
-    type: background-worker
-    name: MockFeatureFlagsApi Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/FeatureFlagsApi/MockFeatureFlagsApi.ts
-      containerId: frontend-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 6
-      loc: 108
-      sloc: 50
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4780
-    'y': 370
-  - entityRef: blueprint/packages/frontend-test-utils/mockfetchapi-test
-    type: rest-api
-    name: MockFetchApi.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/FetchApi/MockFetchApi.test.ts
-      containerId: frontend-test-utils
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 96
-      sloc: 73
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5240
-    'y': 50
-  - entityRef: blueprint/packages/frontend-test-utils/mockfetchapi
-    type: background-worker
-    name: MockFetchApi Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/FetchApi/MockFetchApi.ts
-      containerId: frontend-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 6
-      loc: 169
-      sloc: 76
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5240
-    'y': 370
-  - entityRef: blueprint/packages/frontend-test-utils/mockpermissionapi-test
-    type: background-worker
-    name: MockPermissionApi.test Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/PermissionApi/MockPermissionApi.test.ts
-      containerId: frontend-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 48
-      sloc: 27
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5700
-    'y': 50
-  - entityRef: blueprint/packages/frontend-test-utils/mockpermissionapi
-    type: gateway-api
-    name: MockPermissionApi UI Component
-    isTest: false
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/PermissionApi/MockPermissionApi.ts
-      containerId: frontend-test-utils
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 47
-      sloc: 19
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5700
-    'y': 370
-  - entityRef: blueprint/packages/frontend-test-utils/mockstorageapi-test
-    type: background-worker
-    name: MockStorageApi.test Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/StorageApi/MockStorageApi.test.ts
-      containerId: frontend-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 281
-      sloc: 216
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 6160
-    'y': 50
-  - entityRef: blueprint/packages/frontend-test-utils/mockstorageapi
-    type: background-worker
-    name: MockStorageApi Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/StorageApi/MockStorageApi.ts
-      containerId: frontend-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 9
-      loc: 143
-      sloc: 106
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 6160
-    'y': 370
-  - entityRef: blueprint/packages/frontend-test-utils/mocktranslationapi-test
-    type: background-worker
-    name: MockTranslationApi.test Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/TranslationApi/MockTranslationApi.test.tsx
-      containerId: frontend-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 213
-      sloc: 174
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 6620
-    'y': 50
-  - entityRef: blueprint/packages/frontend-test-utils/mocktranslationapi
-    type: background-worker
-    name: MockTranslationApi Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-test-utils/src/apis/TranslationApi/MockTranslationApi.ts
-      containerId: frontend-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 112
-      sloc: 69
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 6620
-    'y': 370
 dependencies:
+  - from: blueprint/packages/frontend-test-utils/mockanalyticsapi-test
+    to: blueprint/packages/frontend-test-utils/mockanalyticsapi
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/mockalertapi
+    to: blueprint/packages/ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/mockalertapi-test
+    to: blueprint/packages/frontend-test-utils/mockalertapi
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/createapimock
+    to: blueprint/packages/frontend-test-utils/mockwithapifactory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/mockfeatureflagsapi-test
+    to: blueprint/packages/frontend-test-utils/mockfeatureflagsapi
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/packages/frontend-test-utils/createapimock-test
     to: blueprint/packages/frontend-test-utils/createapimock
     type: direct-call
@@ -718,16 +738,36 @@ dependencies:
     to: blueprint/packages/frontend-test-utils/mockwithapifactory
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/createapimock
+  - from: blueprint/packages/frontend-test-utils/mocktranslationapi
+    to: blueprint/packages/ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/mocktranslationapi
+    to: blueprint/packages/frontend-plugin-api/translationref
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/mocktranslationapi
+    to: blueprint/packages/core-app-api/i18nexttranslationapi
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/mocktranslationapi-test
+    to: blueprint/packages/frontend-test-utils/mocktranslationapi
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/testapiprovider
     to: blueprint/packages/frontend-test-utils/mockwithapifactory
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mockapis-test
-    to: blueprint/packages/frontend-test-utils/mockapis
+  - from: blueprint/packages/frontend-test-utils/mockstorageapi-test
+    to: blueprint/packages/frontend-test-utils/mockstorageapi
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/mockstorageapi
+    to: blueprint/packages/ui/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/frontend-test-utils/mockapis
-    to: blueprint/packages/backend-plugin-api/types
+    to: blueprint/packages/ui/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/frontend-test-utils/mockapis
@@ -778,8 +818,40 @@ dependencies:
     to: blueprint/packages/frontend-test-utils/mockapis
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/testapiprovider
-    to: blueprint/packages/frontend-test-utils/mockwithapifactory
+  - from: blueprint/packages/frontend-test-utils/mockfetchapi-test
+    to: blueprint/packages/core-components/node
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/mockfetchapi-test
+    to: blueprint/packages/frontend-test-utils/mockfetchapi
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/mockapis-test
+    to: blueprint/packages/frontend-test-utils/mockapis
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/mockpermissionapi-test
+    to: blueprint/packages/frontend-test-utils/mockpermissionapi
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/mockconfigapi
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/mockconfigapi
+    to: blueprint/packages/ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/mockconfigapi-test
+    to: blueprint/packages/frontend-test-utils/mockconfigapi
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/mockerrorapi-test
+    to: blueprint/packages/frontend-test-utils/mockerrorapi
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/mockerrorapi
+    to: blueprint/packages/ui/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/frontend-test-utils/createextensiontester-test
@@ -790,12 +862,36 @@ dependencies:
     to: blueprint/packages/frontend-test-utils/renderintestapp
     type: direct-call
     description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/renderintestapp
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/renderintestapp
+    to: blueprint/packages/ui/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/renderintestapp
+    to: blueprint/packages/frontend-test-utils/mockwithapifactory
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/renderintestapp
+    to: blueprint/packages/core-app-api/createspecializedapp
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/renderintestapp
+    to: blueprint/packages/frontend-test-utils/testapiprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/frontend-test-utils/renderintestapp
+    to: blueprint/packages/backend-dynamic-feature-service/frontend
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/packages/frontend-test-utils/createextensiontester
     to: blueprint/packages/integration-aws-node/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/frontend-test-utils/createextensiontester
-    to: blueprint/packages/backend-plugin-api/types
+    to: blueprint/packages/ui/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/frontend-test-utils/createextensiontester
@@ -834,32 +930,8 @@ dependencies:
     to: blueprint/packages/frontend-test-utils/renderintestapp
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/renderintestapp
-    to: blueprint/packages/integration-aws-node/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/renderintestapp
-    to: blueprint/packages/backend-plugin-api/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/renderintestapp
-    to: blueprint/packages/frontend-test-utils/mockwithapifactory
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/renderintestapp
-    to: blueprint/packages/core-app-api/createspecializedapp
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/renderintestapp
-    to: blueprint/packages/frontend-test-utils/testapiprovider
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/renderintestapp
-    to: blueprint/packages/backend-dynamic-feature-service/frontend
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/packages/frontend-test-utils/rendertestapp
-    to: blueprint/packages/backend-plugin-api/types
+    to: blueprint/packages/ui/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/frontend-test-utils/rendertestapp
@@ -880,77 +952,5 @@ dependencies:
     description: Calls module / service
   - from: blueprint/packages/frontend-test-utils/rendertestapp
     to: blueprint/packages/backend-dynamic-feature-service/frontend
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mockalertapi-test
-    to: blueprint/packages/frontend-test-utils/mockalertapi
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mockalertapi
-    to: blueprint/packages/backend-plugin-api/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mockanalyticsapi-test
-    to: blueprint/packages/frontend-test-utils/mockanalyticsapi
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mockconfigapi-test
-    to: blueprint/packages/frontend-test-utils/mockconfigapi
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mockconfigapi
-    to: blueprint/packages/integration-aws-node/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mockconfigapi
-    to: blueprint/packages/backend-plugin-api/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mockerrorapi-test
-    to: blueprint/packages/frontend-test-utils/mockerrorapi
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mockerrorapi
-    to: blueprint/packages/backend-plugin-api/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mockfeatureflagsapi-test
-    to: blueprint/packages/frontend-test-utils/mockfeatureflagsapi
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mockfetchapi-test
-    to: blueprint/packages/core-components/node
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mockfetchapi-test
-    to: blueprint/packages/frontend-test-utils/mockfetchapi
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mockpermissionapi-test
-    to: blueprint/packages/frontend-test-utils/mockpermissionapi
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mockstorageapi-test
-    to: blueprint/packages/frontend-test-utils/mockstorageapi
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mockstorageapi
-    to: blueprint/packages/backend-plugin-api/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mocktranslationapi-test
-    to: blueprint/packages/frontend-test-utils/mocktranslationapi
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mocktranslationapi
-    to: blueprint/packages/backend-plugin-api/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mocktranslationapi
-    to: blueprint/packages/frontend-plugin-api/translationref
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-test-utils/mocktranslationapi
-    to: blueprint/packages/core-app-api/i18nexttranslationapi
     type: direct-call
     description: Calls module / service

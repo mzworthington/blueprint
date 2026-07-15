@@ -3,19 +3,19 @@ name: Connections-example-backend-module-gitlab Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/plugins/connections-example-backend-module-gitlab/index
+  - entityRef: blueprint/plugins/connections-example-backend-module-gitlab/module
     type: background-worker
-    name: index Service
+    name: module Service
     isTest: false
     properties:
-      filepath: plugins/connections-example-backend-module-gitlab/src/index.ts
+      filepath: plugins/connections-example-backend-module-gitlab/src/module.ts
       containerId: connections-example-backend-module-gitlab
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 17
-      sloc: 1
+      complexity: 3
+      loc: 66
+      sloc: 43
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -47,19 +47,19 @@ nodes:
       sinceDays: 500
     x: 600
     'y': 50
-  - entityRef: blueprint/plugins/connections-example-backend-module-gitlab/module
+  - entityRef: blueprint/plugins/connections-example-backend-module-gitlab/index
     type: background-worker
-    name: module Service
+    name: index Service
     isTest: false
     properties:
-      filepath: plugins/connections-example-backend-module-gitlab/src/module.ts
+      filepath: plugins/connections-example-backend-module-gitlab/src/index.ts
       containerId: connections-example-backend-module-gitlab
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 3
-      loc: 66
-      sloc: 43
+      complexity: 1
+      loc: 17
+      sloc: 1
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -71,6 +71,6 @@ nodes:
     'y': 50
 dependencies:
   - from: blueprint/plugins/connections-example-backend-module-gitlab/module
-    to: blueprint/plugins/search-backend-node/errors
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service

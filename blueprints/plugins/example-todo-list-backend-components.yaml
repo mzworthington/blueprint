@@ -69,28 +69,6 @@ nodes:
       sinceDays: 500
     x: 1060
     'y': 50
-  - entityRef: blueprint/plugins/example-todo-list-backend/router-test
-    type: rest-api
-    name: router.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/example-todo-list-backend/src/service/router.test.ts
-      containerId: example-todo-list-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 46
-      sloc: 24
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1520
-    'y': 50
   - entityRef: blueprint/plugins/example-todo-list-backend/router
     type: rest-api
     name: router REST Endpoint
@@ -113,6 +91,28 @@ nodes:
       sinceDays: 500
     x: 1060
     'y': 370
+  - entityRef: blueprint/plugins/example-todo-list-backend/router-test
+    type: rest-api
+    name: router.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/example-todo-list-backend/src/service/router.test.ts
+      containerId: example-todo-list-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 46
+      sloc: 24
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
+    'y': 50
   - entityRef: blueprint/plugins/example-todo-list-backend/todos
     type: background-worker
     name: todos Service
@@ -140,19 +140,19 @@ dependencies:
     to: blueprint/plugins/example-todo-list-backend/router
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/example-todo-list-backend/router-test
-    to: blueprint/plugins/example-todo-list-backend/router
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/example-todo-list-backend/router
     to: blueprint/plugins/example-todo-list-backend/todos
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/example-todo-list-backend/router
-    to: blueprint/plugins/search-backend-node/errors
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/example-todo-list-backend/router-test
+    to: blueprint/plugins/example-todo-list-backend/router
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/example-todo-list-backend/todos
-    to: blueprint/plugins/search-backend-node/errors
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service

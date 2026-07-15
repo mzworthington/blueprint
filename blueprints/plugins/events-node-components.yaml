@@ -47,28 +47,6 @@ nodes:
       sinceDays: 500
     x: 600
     'y': 50
-  - entityRef: blueprint/plugins/events-node/deprecated
-    type: background-worker
-    name: deprecated Service
-    isTest: false
-    properties:
-      filepath: plugins/events-node/src/deprecated.ts
-      containerId: events-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 20
-      sloc: 3
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
-    'y': 50
   - entityRef: blueprint/plugins/events-node/extensions
     type: background-worker
     name: extensions Service
@@ -89,51 +67,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1520
-    'y': 50
-  - entityRef: blueprint/plugins/events-node/index
-    type: rest-api
-    name: index REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/events-node/src/api/http/validation/index.ts
-      containerId: events-node
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 21
-      sloc: 4
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1980
-    'y': 50
-  - entityRef: blueprint/plugins/events-node/service
-    type: background-worker
-    name: service Service
-    isTest: false
-    properties:
-      filepath: plugins/events-node/src/service.ts
-      containerId: events-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 62
-      sloc: 36
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2440
+    x: 1060
     'y': 50
   - entityRef: blueprint/plugins/events-node/setuptests
     type: background-worker
@@ -155,67 +89,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2900
+    x: 1520
     'y': 50
-  - entityRef: blueprint/plugins/events-node/defaulteventsservice-test
-    type: rest-api
-    name: DefaultEventsService.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/events-node/src/api/DefaultEventsService.test.ts
-      containerId: events-node
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 14
-      loc: 457
-      sloc: 366
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 1160
-    'y': 370
-  - entityRef: blueprint/plugins/events-node/defaulteventsservice
-    type: rest-api
-    name: DefaultEventsService REST Endpoint
+  - entityRef: blueprint/plugins/events-node/index
+    type: background-worker
+    name: index Service
     isTest: false
     properties:
-      filepath: plugins/events-node/src/api/DefaultEventsService.ts
+      filepath: plugins/events-node/src/index.ts
       containerId: events-node
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 37
-      loc: 482
-      sloc: 372
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 1310
-    'y': 690
-  - entityRef: blueprint/plugins/events-node/eventbroker
-    type: rest-api
-    name: EventBroker REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/events-node/src/api/EventBroker.ts
-      containerId: events-node
-      technology: REST Controller / Router
-      classification: api-marker
+      technology: TypeScript Domain Service
+      classification: default
     forensics:
       complexity: 1
-      loc: 45
-      sloc: 8
+      loc: 26
+      sloc: 3
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -223,8 +111,30 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1850
-    'y': 690
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/events-node/deprecated
+    type: background-worker
+    name: deprecated Service
+    isTest: false
+    properties:
+      filepath: plugins/events-node/src/deprecated.ts
+      containerId: events-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 20
+      sloc: 3
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2440
+    'y': 50
   - entityRef: blueprint/plugins/events-node/eventparams
     type: rest-api
     name: EventParams REST Endpoint
@@ -245,7 +155,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2295
+    x: 3400
     'y': 1330
   - entityRef: blueprint/plugins/events-node/eventpublisher
     type: rest-api
@@ -267,7 +177,29 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1850
+    x: 1750
+    'y': 370
+  - entityRef: blueprint/plugins/events-node/subtopiceventrouter
+    type: rest-api
+    name: SubTopicEventRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-node/src/api/SubTopicEventRouter.ts
+      containerId: events-node
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 2
+      loc: 45
+      sloc: 16
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4290
     'y': 370
   - entityRef: blueprint/plugins/events-node/eventrouter-test
     type: rest-api
@@ -289,30 +221,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2390
+    x: 2670
     'y': 370
-  - entityRef: blueprint/plugins/events-node/eventrouter
-    type: rest-api
-    name: EventRouter REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/events-node/src/api/EventRouter.ts
-      containerId: events-node
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 3
-      loc: 76
-      sloc: 36
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2740
-    'y': 690
   - entityRef: blueprint/plugins/events-node/eventsservice
     type: rest-api
     name: EventsService REST Endpoint
@@ -333,30 +243,31 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2200
+    x: 3765
     'y': 1010
-  - entityRef: blueprint/plugins/events-node/eventsubscriber
+  - entityRef: blueprint/plugins/events-node/defaulteventsservice-test
     type: rest-api
-    name: EventSubscriber REST Endpoint
-    isTest: false
+    name: DefaultEventsService.test REST Endpoint
+    isTest: true
     properties:
-      filepath: plugins/events-node/src/api/EventSubscriber.ts
+      filepath: plugins/events-node/src/api/DefaultEventsService.test.ts
       containerId: events-node
       technology: REST Controller / Router
       classification: api-marker
     forensics:
-      complexity: 1
-      loc: 43
-      sloc: 5
+      complexity: 14
+      loc: 457
+      sloc: 366
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
-      classifications: []
+      classifications:
+        - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1660
-    'y': 1010
+    x: 3130
+    'y': 370
   - entityRef: blueprint/plugins/events-node/subtopiceventrouter-test
     type: rest-api
     name: SubTopicEventRouter.test REST Endpoint
@@ -377,51 +288,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3360
-    'y': 50
-  - entityRef: blueprint/plugins/events-node/subtopiceventrouter
-    type: rest-api
-    name: SubTopicEventRouter REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/events-node/src/api/SubTopicEventRouter.ts
-      containerId: events-node
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 2
-      loc: 45
-      sloc: 16
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3090
-    'y': 370
-  - entityRef: blueprint/plugins/events-node/httpbodyparseroptions
-    type: rest-api
-    name: HttpBodyParserOptions REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/events-node/src/api/http/HttpBodyParserOptions.ts
-      containerId: events-node
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 25
-      sloc: 5
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3820
+    x: 4860
     'y': 50
   - entityRef: blueprint/plugins/events-node/httppostingressoptions
     type: rest-api
@@ -443,7 +310,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4280
+    x: 3480
     'y': 50
   - entityRef: blueprint/plugins/events-node/httpbodyparser
     type: rest-api
@@ -465,21 +332,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4740
+    x: 3940
     'y': 50
-  - entityRef: blueprint/plugins/events-node/requestdetails
+  - entityRef: blueprint/plugins/events-node/httpbodyparseroptions
     type: rest-api
-    name: RequestDetails REST Endpoint
+    name: HttpBodyParserOptions REST Endpoint
     isTest: false
     properties:
-      filepath: plugins/events-node/src/api/http/validation/RequestDetails.ts
+      filepath: plugins/events-node/src/api/http/HttpBodyParserOptions.ts
       containerId: events-node
       technology: REST Controller / Router
       classification: api-marker
     forensics:
       complexity: 1
-      loc: 46
-      sloc: 8
+      loc: 25
+      sloc: 5
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -487,8 +354,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 5430
-    'y': 370
+    x: 4400
+    'y': 50
   - entityRef: blueprint/plugins/events-node/requestrejectiondetails
     type: rest-api
     name: RequestRejectionDetails REST Endpoint
@@ -509,7 +376,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4455
+    x: 2210
     'y': 690
   - entityRef: blueprint/plugins/events-node/requestvalidationcontext
     type: rest-api
@@ -531,7 +398,29 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4455
+    x: 2210
+    'y': 370
+  - entityRef: blueprint/plugins/events-node/requestdetails
+    type: rest-api
+    name: RequestDetails REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-node/src/api/http/validation/RequestDetails.ts
+      containerId: events-node
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 46
+      sloc: 8
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3710
     'y': 370
   - entityRef: blueprint/plugins/events-node/requestvalidator
     type: rest-api
@@ -553,23 +442,150 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 5200
+    x: 2900
+    'y': 50
+  - entityRef: blueprint/plugins/events-node/eventsubscriber
+    type: rest-api
+    name: EventSubscriber REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-node/src/api/EventSubscriber.ts
+      containerId: events-node
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 43
+      sloc: 5
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1615
+    'y': 1010
+  - entityRef: blueprint/plugins/events-node/eventbroker
+    type: rest-api
+    name: EventBroker REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-node/src/api/EventBroker.ts
+      containerId: events-node
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 45
+      sloc: 8
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1750
+    'y': 690
+  - entityRef: blueprint/plugins/events-node/defaulteventsservice
+    type: rest-api
+    name: DefaultEventsService REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-node/src/api/DefaultEventsService.ts
+      containerId: events-node
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 37
+      loc: 482
+      sloc: 372
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 3900
+    'y': 690
+  - entityRef: blueprint/plugins/events-node/eventrouter
+    type: rest-api
+    name: EventRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-node/src/api/EventRouter.ts
+      containerId: events-node
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 3
+      loc: 76
+      sloc: 36
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3400
+    'y': 690
+  - entityRef: blueprint/plugins/events-node/service
+    type: background-worker
+    name: service Service
+    isTest: false
+    properties:
+      filepath: plugins/events-node/src/service.ts
+      containerId: events-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 62
+      sloc: 36
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5320
     'y': 50
 dependencies:
-  - from: blueprint/plugins/events-node/service
-    to: blueprint/plugins/catalog-react/api
+  - from: blueprint/plugins/events-node/eventpublisher
+    to: blueprint/plugins/events-node/eventbroker
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/notifications-node/extensions
-    to: blueprint/plugins/events-node/service
+  - from: blueprint/plugins/events-node/subtopiceventrouter
+    to: blueprint/plugins/events-node/eventparams
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/notifications-node/lib
-    to: blueprint/plugins/events-node/service
+  - from: blueprint/plugins/events-node/subtopiceventrouter
+    to: blueprint/plugins/events-node/eventrouter
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/permission-backend/plugin
-    to: blueprint/plugins/events-node/service
+  - from: blueprint/plugins/events-node/subtopiceventrouter
+    to: blueprint/plugins/events-node/eventsservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-node/eventrouter-test
+    to: blueprint/plugins/events-node/eventparams
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-node/eventrouter-test
+    to: blueprint/plugins/events-node/eventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-node/eventrouter-test
+    to: blueprint/plugins/events-node/eventsservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-node/eventsservice
+    to: blueprint/plugins/events-node/eventparams
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/events-node/defaulteventsservice-test
@@ -584,58 +600,6 @@ dependencies:
     to: blueprint/plugins/events-node/eventsservice
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/events-node/defaulteventsservice
-    to: blueprint/plugins/events-node/eventparams
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-node/defaulteventsservice
-    to: blueprint/plugins/events-node/eventsservice
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-node/defaulteventsservice
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-node/eventbroker
-    to: blueprint/plugins/events-node/eventparams
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-node/eventbroker
-    to: blueprint/plugins/events-node/eventsubscriber
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-node/eventpublisher
-    to: blueprint/plugins/events-node/eventbroker
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-node/eventrouter-test
-    to: blueprint/plugins/events-node/eventparams
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-node/eventrouter-test
-    to: blueprint/plugins/events-node/eventrouter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-node/eventrouter-test
-    to: blueprint/plugins/events-node/eventsservice
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-node/eventrouter
-    to: blueprint/plugins/events-node/eventparams
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-node/eventrouter
-    to: blueprint/plugins/events-node/eventsservice
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-node/eventsservice
-    to: blueprint/plugins/events-node/eventparams
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-node/eventsubscriber
-    to: blueprint/plugins/events-node/eventparams
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/events-node/subtopiceventrouter-test
     to: blueprint/plugins/events-node/eventparams
     type: direct-call
@@ -646,18 +610,6 @@ dependencies:
     description: Calls module / service
   - from: blueprint/plugins/events-node/subtopiceventrouter-test
     to: blueprint/plugins/events-node/subtopiceventrouter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-node/subtopiceventrouter
-    to: blueprint/plugins/events-node/eventparams
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-node/subtopiceventrouter
-    to: blueprint/plugins/events-node/eventrouter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-node/subtopiceventrouter
-    to: blueprint/plugins/events-node/eventsservice
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/events-node/httppostingressoptions
@@ -674,5 +626,53 @@ dependencies:
     description: Calls module / service
   - from: blueprint/plugins/events-node/requestvalidator
     to: blueprint/plugins/events-node/requestvalidationcontext
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-node/eventsubscriber
+    to: blueprint/plugins/events-node/eventparams
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-node/eventbroker
+    to: blueprint/plugins/events-node/eventparams
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-node/eventbroker
+    to: blueprint/plugins/events-node/eventsubscriber
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-node/defaulteventsservice
+    to: blueprint/plugins/events-node/eventparams
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-node/defaulteventsservice
+    to: blueprint/plugins/events-node/eventsservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-node/defaulteventsservice
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-node/eventrouter
+    to: blueprint/plugins/events-node/eventparams
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-node/eventrouter
+    to: blueprint/plugins/events-node/eventsservice
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-node/service
+    to: blueprint/plugins/techdocs-react/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-backend/plugin
+    to: blueprint/plugins/events-node/service
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-node/extensions
+    to: blueprint/plugins/events-node/service
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-node/lib
+    to: blueprint/plugins/events-node/service
     type: direct-call
     description: Calls module / service

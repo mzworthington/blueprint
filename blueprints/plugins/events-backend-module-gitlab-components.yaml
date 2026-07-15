@@ -25,28 +25,6 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 50
-  - entityRef: blueprint/plugins/events-backend-module-gitlab/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/events-backend-module-gitlab/src/index.ts
-      containerId: events-backend-module-gitlab
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 37
-      sloc: 11
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
   - entityRef: blueprint/plugins/events-backend-module-gitlab/setuptests
     type: background-worker
     name: setupTests Service
@@ -67,8 +45,30 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 600
     'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-gitlab/creategitlabtokenvalidator
+    type: background-worker
+    name: createGitlabTokenValidator Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-gitlab/src/http/createGitlabTokenValidator.ts
+      containerId: events-backend-module-gitlab
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 58
+      sloc: 28
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1290
+    'y': 690
   - entityRef: blueprint/plugins/events-backend-module-gitlab/creategitlabtokenvalidator-test
     type: background-worker
     name: createGitlabTokenValidator.test Service
@@ -89,21 +89,131 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1980
+    x: 1060
     'y': 370
-  - entityRef: blueprint/plugins/events-backend-module-gitlab/creategitlabtokenvalidator
+  - entityRef: blueprint/plugins/events-backend-module-gitlab/index
     type: background-worker
-    name: createGitlabTokenValidator Service
+    name: index Service
     isTest: false
     properties:
-      filepath: plugins/events-backend-module-gitlab/src/http/createGitlabTokenValidator.ts
+      filepath: plugins/events-backend-module-gitlab/src/index.ts
       containerId: events-backend-module-gitlab
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 3
-      loc: 58
-      sloc: 28
+      complexity: 1
+      loc: 37
+      sloc: 11
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabwebhook-test
+    type: background-worker
+    name: eventsModuleGitlabWebhook.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-gitlab/src/service/eventsModuleGitlabWebhook.test.ts
+      containerId: events-backend-module-gitlab
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 103
+      sloc: 79
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabeventrouter-test
+    type: rest-api
+    name: eventsModuleGitlabEventRouter.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-gitlab/src/service/eventsModuleGitlabEventRouter.test.ts
+      containerId: events-backend-module-gitlab
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 42
+      sloc: 22
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1980
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabwebhook
+    type: background-worker
+    name: eventsModuleGitlabWebhook Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-gitlab/src/service/eventsModuleGitlabWebhook.ts
+      containerId: events-backend-module-gitlab
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 54
+      sloc: 27
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabeventrouter
+    type: rest-api
+    name: eventsModuleGitlabEventRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-gitlab/src/service/eventsModuleGitlabEventRouter.ts
+      containerId: events-backend-module-gitlab
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 43
+      sloc: 18
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1980
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-gitlab/gitlabeventrouter
+    type: rest-api
+    name: GitlabEventRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-gitlab/src/router/GitlabEventRouter.ts
+      containerId: events-backend-module-gitlab
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 4
+      loc: 57
+      sloc: 29
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -133,156 +243,46 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
-    'y': 370
-  - entityRef: blueprint/plugins/events-backend-module-gitlab/gitlabeventrouter
-    type: rest-api
-    name: GitlabEventRouter REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/events-backend-module-gitlab/src/router/GitlabEventRouter.ts
-      containerId: events-backend-module-gitlab
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 4
-      loc: 57
-      sloc: 29
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1290
-    'y': 690
-  - entityRef: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabeventrouter-test
-    type: rest-api
-    name: eventsModuleGitlabEventRouter.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/events-backend-module-gitlab/src/service/eventsModuleGitlabEventRouter.test.ts
-      containerId: events-backend-module-gitlab
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 42
-      sloc: 22
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1520
-    'y': 50
-  - entityRef: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabeventrouter
-    type: rest-api
-    name: eventsModuleGitlabEventRouter REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/events-backend-module-gitlab/src/service/eventsModuleGitlabEventRouter.ts
-      containerId: events-backend-module-gitlab
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 43
-      sloc: 18
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1520
-    'y': 370
-  - entityRef: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabwebhook-test
-    type: background-worker
-    name: eventsModuleGitlabWebhook.test Service
-    isTest: true
-    properties:
-      filepath: plugins/events-backend-module-gitlab/src/service/eventsModuleGitlabWebhook.test.ts
-      containerId: events-backend-module-gitlab
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 103
-      sloc: 79
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2440
-    'y': 50
-  - entityRef: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabwebhook
-    type: background-worker
-    name: eventsModuleGitlabWebhook Service
-    isTest: false
-    properties:
-      filepath: plugins/events-backend-module-gitlab/src/service/eventsModuleGitlabWebhook.ts
-      containerId: events-backend-module-gitlab
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 54
-      sloc: 27
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
     x: 2440
     'y': 370
 dependencies:
+  - from: blueprint/plugins/events-backend-module-gitlab/creategitlabtokenvalidator
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/plugins/events-backend-module-gitlab/creategitlabtokenvalidator-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/events-backend-module-gitlab/creategitlabtokenvalidator-test
     to: blueprint/plugins/events-backend-module-gitlab/creategitlabtokenvalidator
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/events-backend-module-gitlab/creategitlabtokenvalidator
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend-module-gitlab/gitlabeventrouter-test
-    to: blueprint/plugins/events-backend-module-gitlab/gitlabeventrouter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabeventrouter-test
-    to: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabeventrouter
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabeventrouter
-    to: blueprint/plugins/events-backend-module-gitlab/gitlabeventrouter
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabwebhook-test
-    to: blueprint/plugins/api-docs/alpha
+    to: blueprint/plugins/permission-node/alpha
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabwebhook-test
     to: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabwebhook
     type: direct-call
     description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabeventrouter-test
+    to: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabeventrouter
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabwebhook
-    to: blueprint/plugins/api-docs/alpha
+    to: blueprint/plugins/permission-node/alpha
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabwebhook
     to: blueprint/plugins/events-backend-module-gitlab/creategitlabtokenvalidator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-gitlab/eventsmodulegitlabeventrouter
+    to: blueprint/plugins/events-backend-module-gitlab/gitlabeventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-gitlab/gitlabeventrouter-test
+    to: blueprint/plugins/events-backend-module-gitlab/gitlabeventrouter
     type: direct-call
     description: Calls module / service

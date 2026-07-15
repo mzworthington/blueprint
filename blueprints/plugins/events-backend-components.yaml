@@ -30,7 +30,7 @@ nodes:
     name: index Service
     isTest: false
     properties:
-      filepath: plugins/events-backend/src/service/http/validation/index.ts
+      filepath: plugins/events-backend/src/service/hub/index.ts
       containerId: events-backend
       technology: TypeScript Domain Service
       classification: default
@@ -45,7 +45,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2440
+    x: 1980
     'y': 50
   - entityRef: blueprint/plugins/events-backend/alpha
     type: background-worker
@@ -67,30 +67,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4280
+    x: 4225
     'y': 370
-  - entityRef: blueprint/plugins/events-backend/migrations-test
-    type: relational-database
-    name: migrations.test Database
-    isTest: true
-    properties:
-      filepath: plugins/events-backend/src/migrations.test.ts
-      containerId: events-backend
-      technology: Prisma / SQL Database Client
-      classification: database-marker
-    forensics:
-      complexity: 3
-      loc: 97
-      sloc: 65
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
-    'y': 50
   - entityRef: blueprint/plugins/events-backend/setuptests
     type: background-worker
     name: setupTests Service
@@ -104,6 +82,28 @@ nodes:
       complexity: 1
       loc: 18
       sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend/migrations-test
+    type: relational-database
+    name: migrations.test Database
+    isTest: true
+    properties:
+      filepath: plugins/events-backend/src/migrations.test.ts
+      containerId: events-backend
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    forensics:
+      complexity: 3
+      loc: 97
+      sloc: 65
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -133,7 +133,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4550
+    x: 4425
     'y': 50
   - entityRef: blueprint/plugins/events-backend/eventsplugin
     type: rest-api
@@ -155,52 +155,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4415
+    x: 4480
     'y': 690
-  - entityRef: blueprint/plugins/events-backend/errors
-    type: background-worker
-    name: errors Service
-    isTest: false
-    properties:
-      filepath: plugins/events-backend/src/service/http/errors.ts
-      containerId: events-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 39
-      sloc: 19
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2210
-    'y': 690
-  - entityRef: blueprint/plugins/events-backend/httppostingresseventpublisher-test
-    type: rest-api
-    name: HttpPostIngressEventPublisher.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/events-backend/src/service/http/HttpPostIngressEventPublisher.test.ts
-      containerId: events-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 4
-      loc: 563
-      sloc: 484
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
   - entityRef: blueprint/plugins/events-backend/httppostingresseventpublisher
     type: rest-api
     name: HttpPostIngressEventPublisher REST Endpoint
@@ -223,19 +179,107 @@ nodes:
       sinceDays: 500
     x: 600
     'y': 370
-  - entityRef: blueprint/plugins/events-backend/createeventbusrouter
-    type: rest-api
-    name: createEventBusRouter REST Endpoint
+  - entityRef: blueprint/plugins/events-backend/errors
+    type: background-worker
+    name: errors Service
     isTest: false
     properties:
-      filepath: plugins/events-backend/src/service/hub/createEventBusRouter.ts
+      filepath: plugins/events-backend/src/service/http/errors.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 39
+      sloc: 19
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2020
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend/httpapplicationjsonbodyparser
+    type: background-worker
+    name: HttpApplicationJsonBodyParser Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/http/body-parser/HttpApplicationJsonBodyParser.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 4
+      loc: 45
+      sloc: 25
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1980
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend/httppostingresseventpublisher-test
+    type: rest-api
+    name: HttpPostIngressEventPublisher.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/events-backend/src/service/http/HttpPostIngressEventPublisher.test.ts
       containerId: events-backend
       technology: REST Controller / Router
       classification: api-marker
     forensics:
-      complexity: 7
-      loc: 288
-      sloc: 156
+      complexity: 4
+      loc: 563
+      sloc: 484
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend/requestvalidationcontextimpl
+    type: background-worker
+    name: RequestValidationContextImpl Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/http/validation/RequestValidationContextImpl.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 40
+      sloc: 19
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2940
+    'y': 370
+  - entityRef: blueprint/plugins/events-backend/requestvalidationcontextimpl-test
+    type: background-worker
+    name: RequestValidationContextImpl.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend/src/service/http/validation/RequestValidationContextImpl.test.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 65
+      sloc: 37
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -244,6 +288,28 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 2900
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend/memoryeventbusstore-test
+    type: background-worker
+    name: MemoryEventBusStore.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend/src/service/hub/MemoryEventBusStore.test.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 92
+      sloc: 64
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2440
     'y': 50
   - entityRef: blueprint/plugins/events-backend/databaseeventbusstore-test
     type: relational-database
@@ -258,51 +324,6 @@ nodes:
       complexity: 4
       loc: 236
       sloc: 173
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1980
-    'y': 50
-  - entityRef: blueprint/plugins/events-backend/databaseeventbusstore
-    type: relational-database
-    name: DatabaseEventBusStore Database
-    isTest: false
-    properties:
-      filepath: plugins/events-backend/src/service/hub/DatabaseEventBusStore.ts
-      containerId: events-backend
-      technology: Prisma / SQL Database Client
-      classification: database-marker
-    forensics:
-      complexity: 32
-      loc: 625
-      sloc: 515
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 2170
-    'y': 370
-  - entityRef: blueprint/plugins/events-backend/memoryeventbusstore-test
-    type: background-worker
-    name: MemoryEventBusStore.test Service
-    isTest: true
-    properties:
-      filepath: plugins/events-backend/src/service/hub/MemoryEventBusStore.test.ts
-      containerId: events-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 92
-      sloc: 64
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -333,8 +354,30 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 2820
+    x: 2440
     'y': 370
+  - entityRef: blueprint/plugins/events-backend/createeventbusrouter
+    type: rest-api
+    name: createEventBusRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-backend/src/service/hub/createEventBusRouter.ts
+      containerId: events-backend
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 7
+      loc: 288
+      sloc: 156
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3820
+    'y': 50
   - entityRef: blueprint/plugins/events-backend/types
     type: background-worker
     name: types Service
@@ -355,75 +398,648 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2860
+    x: 3980
     'y': 690
-  - entityRef: blueprint/plugins/events-backend/httpapplicationjsonbodyparser
-    type: background-worker
-    name: HttpApplicationJsonBodyParser Service
+  - entityRef: blueprint/plugins/events-backend/databaseeventbusstore
+    type: relational-database
+    name: DatabaseEventBusStore Database
     isTest: false
     properties:
-      filepath: plugins/events-backend/src/service/http/body-parser/HttpApplicationJsonBodyParser.ts
+      filepath: plugins/events-backend/src/service/hub/DatabaseEventBusStore.ts
       containerId: events-backend
-      technology: TypeScript Domain Service
-      classification: default
+      technology: Prisma / SQL Database Client
+      classification: database-marker
     forensics:
-      complexity: 4
-      loc: 45
-      sloc: 25
+      complexity: 32
+      loc: 625
+      sloc: 515
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
-      classifications: []
+      classifications:
+        - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1710
-    'y': 370
-  - entityRef: blueprint/plugins/events-backend/requestvalidationcontextimpl-test
-    type: background-worker
-    name: RequestValidationContextImpl.test Service
-    isTest: true
-    properties:
-      filepath: plugins/events-backend/src/service/http/validation/RequestValidationContextImpl.test.ts
-      containerId: events-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 65
-      sloc: 37
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3820
-    'y': 50
-  - entityRef: blueprint/plugins/events-backend/requestvalidationcontextimpl
-    type: background-worker
-    name: RequestValidationContextImpl Service
-    isTest: false
-    properties:
-      filepath: plugins/events-backend/src/service/http/validation/RequestValidationContextImpl.ts
-      containerId: events-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 40
-      sloc: 19
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3820
+    x: 3560
     'y': 370
 dependencies:
+  - from: blueprint/plugins/auth-backend-module-cloudflare-access-provider/helpers
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-node/createpermissionintegrationrouter
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-node/createpermissionintegrationrouter
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-node/createconditiontransformer
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-cloud/analyzebitbucketcloudwebhookevent
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserver
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-server/bitbucketserverpullrequest
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerrit
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gerrit/gerritreview
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder/mygroupspicker
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-unprocessed-entities-common/api
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/defaultcatalogdatabase
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/performstitching
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/buildentitysearch
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/conversion
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/util
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/defaultprocessingdatabase
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/progresstracker
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/defaultcatalogprocessingengine
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/processoroutputcollector
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/util
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/defaultcatalogprocessingorchestrator-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/defaultcatalogprocessingorchestrator
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/connectentityproviders
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/defaultlocationstore
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/integration-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/read
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/read-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/urlreaderprocessor
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/creategetcatalogentityaction
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/createunregistercatalogentitiesaction
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/createregistercatalogentitiesaction
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/authorizedrefreshservice
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/authorizedlocationanalyzer
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/authorizedvalidationservice
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/authorizedvalidationservice-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/write
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/createrouter
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/authorizedrefreshservice-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/catalogplugin
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/authorizedlocationservice-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/authorizedlocationservice
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/createrouter-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/defaultlocationservice
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/util
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/parselocationquery
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/parseentitypaginationparams
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/entitiesbatchrequest
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/parsequeryentitiesparams
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/parseentityfacetparams
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/parseentityfilterparams
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/common
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/parseentityfacetsquery
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/applypredicateentityfiltertoquery
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/parseentityquery
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/parseentityorderparams
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/parseentityorderfieldparams
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/parseentitytransformparams
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/defaultentitiescatalog
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/authorizedlocationanalyzer-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/defaultlocationservice-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/authorizedentitiescatalog-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend/authorizedentitiescatalog
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-github/analyzegithubwebhookevent
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/unregisterentitydialog
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/config
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/googlepubsubconsumingeventpublisher
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/createpatternresolver
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-google-pubsub/config
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/createproject
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/createproject-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-sentry/fetchdsn
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitea/giteaentityprovider
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-cloud/autocomplete
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-cloud/autocomplete-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-cloud/bitbucketcloudpullrequest
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-cloud/bitbucketcloud
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-bitbucket-cloud/bitbucketcloudbranchrestriction
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/user-settings/usersettingsstorage
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/example-todo-list-backend/router
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/example-todo-list-backend/todos
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend/databasetaskstore-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend/nunjucksworkflowrunner
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend/taskworker
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend/databasetaskstore
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend/templateactionregistry
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend/register
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend/rename
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend/delete
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend/templateactionhandler
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend/templateactionregistry-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend/checkpermissions
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend/listscaffoldertasksaction-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend/listscaffoldertasksaction
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend/helpers
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend/router
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/connections-example-backend-module-gitlab/module
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/config-schema/staticschemaloader
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth/useconsentsession
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend-module-slack/slacknotificationprocessor
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gerrit/gerritentityprovider
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-backend/techdocscache
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-backend/builder
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-backend/router
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-backend/docssynchronizer
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-server/bitbucketserverentityprovider
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-server/bitbucketserverclient
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-server/bitbucketserverclient
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-server/bitbucketserverclient-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-bitbucket-server/analyzebitbucketserverwebhookevent
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-ldap/read
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-ldap/client
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/deleteentitydialog
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/entityprocessingerrorspanel
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/parsefilterexpression
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/createhasmatcher
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/createismatcher
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/app-backend/router
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend-module-catalog/config
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node/scaffolderservice
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node/util
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node/fetch
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node/serializedirectorycontents
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node/git
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/autocomplete
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/autocomplete-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubenvironment
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissuescreate
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/helpers
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/github
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepocreate
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubrepopush
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubactionsdispatch
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpagesenable
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubpullrequest
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubautolinks
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githelpers
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubwebhook
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubbranchprotection
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubdeploykey
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/githubissueslabel
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-github/util
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mcp-actions-backend/createstreamablerouter
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mcp-actions-backend/handleerrors
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mcp-actions-backend/handleerrors-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/mcp-actions-backend/mcpservice
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-node/defaulteventsservice
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-aws/awss3discoveryprocessor
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/creategetnotificationsaction
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/router
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/notificationcleaner
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-backend/parseentityorderfieldparams
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/plugins/events-backend/alpha
     to: blueprint/plugins/events-backend/eventsplugin
     type: direct-call
@@ -440,16 +1056,8 @@ dependencies:
     to: blueprint/plugins/events-backend/alpha
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/events-backend/httppostingresseventpublisher-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend/httppostingresseventpublisher-test
-    to: blueprint/plugins/events-backend/httppostingresseventpublisher
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/events-backend/httppostingresseventpublisher
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/events-backend/httppostingresseventpublisher
@@ -457,46 +1065,6 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/events-backend/httppostingresseventpublisher
-    to: blueprint/plugins/events-backend/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend/createeventbusrouter
-    to: blueprint/plugins/events-backend/memoryeventbusstore
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend/createeventbusrouter
-    to: blueprint/plugins/events-backend/databaseeventbusstore
-    type: read-write
-    description: Queries datastore records
-  - from: blueprint/plugins/events-backend/createeventbusrouter
-    to: blueprint/plugins/events-backend/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend/databaseeventbusstore-test
-    to: blueprint/plugins/events-backend/databaseeventbusstore
-    type: read-write
-    description: Queries datastore records
-  - from: blueprint/plugins/events-backend/databaseeventbusstore
-    to: blueprint/plugins/events-backend/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend/databaseeventbusstore
-    to: blueprint/plugins/events-backend/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend/databaseeventbusstore
-    to: blueprint/plugins/events-backend/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend/memoryeventbusstore-test
-    to: blueprint/plugins/events-backend/memoryeventbusstore
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend/memoryeventbusstore
-    to: blueprint/plugins/events-backend/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/events-backend/memoryeventbusstore
     to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
@@ -508,7 +1076,487 @@ dependencies:
     to: blueprint/plugins/events-backend/httpapplicationjsonbodyparser
     type: direct-call
     description: Calls module / service
+  - from: blueprint/plugins/events-backend/httppostingresseventpublisher-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/httppostingresseventpublisher-test
+    to: blueprint/plugins/events-backend/httppostingresseventpublisher
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/plugins/events-backend/requestvalidationcontextimpl-test
     to: blueprint/plugins/events-backend/requestvalidationcontextimpl
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/memoryeventbusstore-test
+    to: blueprint/plugins/events-backend/memoryeventbusstore
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/databaseeventbusstore-test
+    to: blueprint/plugins/events-backend/databaseeventbusstore
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/events-backend/memoryeventbusstore
+    to: blueprint/plugins/events-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/memoryeventbusstore
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/createeventbusrouter
+    to: blueprint/plugins/events-backend/memoryeventbusstore
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/createeventbusrouter
+    to: blueprint/plugins/events-backend/databaseeventbusstore
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/events-backend/createeventbusrouter
+    to: blueprint/plugins/events-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/databaseeventbusstore
+    to: blueprint/plugins/events-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/databaseeventbusstore
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend/databaseeventbusstore
+    to: blueprint/plugins/events-backend/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-azure/azure
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/wrapperproviders
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-cookiecutter/cookiecutter
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/firestorekeystore
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/issueusertoken
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/createwhoamiaction
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/catalogidentityclient
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/catalogauthresolvercontext
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/catalogauthresolvercontext-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/offlineaccessservice
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/router
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcservice
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcerror
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/cimdclient
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend/oidcrouter
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/kubernetesbackendclient-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-react/kubernetesbackendclient
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search/apis
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-gcp-iap-provider/helpers
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-gcp-iap-provider/authenticator
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/connections-example-backend/router
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-backend/permissionintegrationclient
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-backend/router
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-azure-easyauth-provider/authenticator
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-azure/analyzeazuredevopswebhookevent
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-oauth2-proxy-provider/authenticator
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/state
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createoauthroutehandlers
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/cookiescopemanager
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/oauthenvironmenthandler
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createproxyroutehandlers
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/defaultidentityclient
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/preparebackstageidentityresponse
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/passporthelpers
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/commonsigninresolvers
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/createsigninresolverfactory
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-node/sendwebmessageresponse
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-node/processingresult
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools/devtoolsclient
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitlab/analyzegitlabwebhookevent
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-gitlab/analyzegitlabwebhookevent-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-import/stepreviewlocation
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-import/steppreparecreatepullrequest
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-unprocessed/unprocessedentitiesmodule
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-rails/index
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-guest-provider/resolvers
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-guest-provider/authenticator
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-backend/gkeclusterlocator
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-backend/requirepermission
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-backend/kubernetesproxy-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-backend/kubernetesproxy
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/kubernetes-backend/resourcesroutes
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitea/gitea
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/user-settings-backend/databaseusersettingsstore
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/user-settings-backend/router
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-puppetdb/read
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/router
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/search-backend/authorizedsearchengine
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-backstage-openapi/internalopenapidocumentationprovider
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/permission-common/permissionclient
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/index
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/usereaderstate-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/client
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs/client-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/proxy-backend/router-credentials-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-aws-alb-provider/helpers
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-aws-alb-provider/authenticator-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-aws-alb-provider/authenticator
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitlab/autocomplete
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitlab/autocomplete-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitlab/util-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitlab/helpers
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabpipelinetrigger
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabgroupaccessaction
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabprojectdeploytokencreate
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabprojectaccesstokencreate
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabrepopush
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabmergerequest
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabissuecreate
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabuserinfo
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabissueedit
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlab
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitlab/gitlabprojectmigrate
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-gitlab/util
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications/notificationsclient
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-common/scaffolderclient
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-auth0-provider/strategy
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-auth0-provider/strategy-test
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools-backend/devtoolsbackendapi
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/devtools-backend/router
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-react/usecookieauthrefresh
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-node/helpers
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-node/url
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-node/dir
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-node/googlemigration
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-node/awss3
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-node/googlestorage
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-node/local
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-node/openstackswift
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-node/azureblobstorage
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-node/helpers
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-node/techdocs
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-node/dockercontainerrunner
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/techdocs-node/mkdocspatchers
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/helpers
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-confluence-to-markdown/confluencetomarkdown
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service

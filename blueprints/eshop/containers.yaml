@@ -1,0 +1,170 @@
+entityRef: blueprint/eshop
+name: Eshop Containers
+version: 1.0.0
+level: container
+nodes:
+  - entityRef: blueprint/eshop/ordering-unittests
+    type: container
+    name: Ordering.UnitTests Service
+    x: 150
+    'y': 60
+  - entityRef: blueprint/eshop/application
+    type: container
+    name: Application Service
+    x: 670
+    'y': 60
+  - entityRef: blueprint/eshop/domain
+    type: container
+    name: Domain Service
+    x: 1190
+    'y': 60
+  - entityRef: blueprint/eshop/seedwork
+    type: container
+    name: SeedWork Service
+    x: 1710
+    'y': 60
+  - entityRef: blueprint/eshop/catalog-functionaltests
+    type: container
+    name: Catalog.FunctionalTests Service
+    x: 2230
+    'y': 60
+  - entityRef: blueprint/eshop/ordering-functionaltests
+    type: container
+    name: Ordering.FunctionalTests Service
+    x: 2750
+    'y': 60
+  - entityRef: blueprint/eshop/clientapp-unittests
+    type: container
+    name: ClientApp.UnitTests Service
+    x: 3270
+    'y': 60
+  - entityRef: blueprint/eshop/viewmodels
+    type: container
+    name: ViewModels Service
+    x: 3790
+    'y': 60
+  - entityRef: blueprint/eshop/basket-unittests
+    type: container
+    name: Basket.UnitTests Service
+    x: 4310
+    'y': 60
+  - entityRef: blueprint/eshop/core
+    type: container
+    name: Core Service
+    forensics:
+      complexity: 4
+      churn: 1
+      hotspotScore: 0
+      authorCount: 1
+      fileCount: 1
+      hotspotCount: 0
+      knowledgeSiloCount: 0
+      classifications: []
+      sinceDays: 900
+    x: 4830
+    'y': 60
+  - entityRef: blueprint/eshop/integrationeventlogef
+    type: container
+    name: IntegrationEventLogEF Service
+    x: 5350
+    'y': 60
+  - entityRef: blueprint/eshop/hybridapp
+    type: container
+    name: HybridApp Service
+    x: 5870
+    'y': 60
+  - entityRef: blueprint/eshop/clientapp
+    type: container
+    name: ClientApp Service
+    x: 4310
+    'y': 430
+  - entityRef: blueprint/eshop/webappcomponents
+    type: container
+    name: WebAppComponents Service
+    x: 6390
+    'y': 60
+  - entityRef: blueprint/eshop/eventbus
+    type: container
+    name: EventBus Service
+    x: 6910
+    'y': 60
+  - entityRef: blueprint/eshop/basket-api
+    type: container
+    name: Basket.API Service
+    x: 7430
+    'y': 60
+  - entityRef: blueprint/eshop/eshop-apphost
+    type: container
+    name: EShop.AppHost Service
+    x: 7950
+    'y': 60
+  - entityRef: blueprint/eshop/webapp
+    type: container
+    name: WebApp Service
+    x: 8470
+    'y': 60
+  - entityRef: blueprint/eshop/ordering-api
+    type: container
+    name: Ordering.API Service
+    x: 8990
+    'y': 60
+  - entityRef: blueprint/eshop/ordering-infrastructure
+    type: container
+    name: Ordering.Infrastructure Service
+    x: 9510
+    'y': 60
+  - entityRef: blueprint/eshop/paymentprocessor
+    type: container
+    name: PaymentProcessor Service
+    x: 10030
+    'y': 60
+  - entityRef: blueprint/eshop/identity-api
+    type: container
+    name: Identity.API Service
+    x: 10550
+    'y': 60
+  - entityRef: blueprint/eshop/eventbusrabbitmq
+    type: container
+    name: EventBusRabbitMQ Service
+    x: 11070
+    'y': 60
+  - entityRef: blueprint/eshop/webhookclient
+    type: container
+    name: WebhookClient Service
+    x: 11590
+    'y': 60
+  - entityRef: blueprint/eshop/eshop-servicedefaults
+    type: container
+    name: EShop.ServiceDefaults Service
+    x: 12110
+    'y': 60
+  - entityRef: blueprint/eshop/orderprocessor
+    type: container
+    name: OrderProcessor Service
+    x: 12630
+    'y': 60
+  - entityRef: blueprint/eshop/ordering-domain
+    type: container
+    name: Ordering.Domain Service
+    x: 13150
+    'y': 60
+  - entityRef: blueprint/eshop/catalog-api
+    type: container
+    name: Catalog.API Service
+    x: 13670
+    'y': 60
+  - entityRef: blueprint/eshop/webhooks-api
+    type: container
+    name: Webhooks.API Service
+    x: 14190
+    'y': 60
+dependencies:
+  - from: blueprint/eshop/application
+    to: blueprint/eshop/clientapp
+    type: inter-container
+  - from: blueprint/eshop/basket-unittests
+    to: blueprint/eshop/clientapp
+    type: inter-container
+  - from: blueprint/eshop/ordering-api
+    to: blueprint/eshop/clientapp
+    type: inter-container

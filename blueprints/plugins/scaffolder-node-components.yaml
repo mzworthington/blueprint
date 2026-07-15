@@ -3,19 +3,19 @@ name: Scaffolder-node Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/plugins/scaffolder-node/extensions
+  - entityRef: blueprint/plugins/scaffolder-node/serializer-test
     type: background-worker
-    name: extensions Service
-    isTest: false
+    name: serializer.test Service
+    isTest: true
     properties:
-      filepath: plugins/scaffolder-node/src/extensions.ts
+      filepath: plugins/scaffolder-node/src/tasks/serializer.test.ts
       containerId: scaffolder-node
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 37
-      sloc: 9
+      loc: 115
+      sloc: 93
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -25,19 +25,19 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 50
-  - entityRef: blueprint/plugins/scaffolder-node/index
+  - entityRef: blueprint/plugins/scaffolder-node/serializer
     type: background-worker
-    name: index Service
+    name: serializer Service
     isTest: false
     properties:
-      filepath: plugins/scaffolder-node/src/alpha/globals/index.ts
+      filepath: plugins/scaffolder-node/src/tasks/serializer.ts
       containerId: scaffolder-node
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 18
-      sloc: 2
+      complexity: 2
+      loc: 60
+      sloc: 31
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -45,21 +45,65 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
+    x: 140
     'y': 370
-  - entityRef: blueprint/plugins/scaffolder-node/scaffolderservice-test
+  - entityRef: blueprint/plugins/scaffolder-node/alpha
     type: background-worker
-    name: scaffolderService.test Service
-    isTest: true
+    name: alpha Service
+    isTest: false
     properties:
-      filepath: plugins/scaffolder-node/src/scaffolderService.test.ts
+      filepath: plugins/scaffolder-node/src/tasks/alpha.ts
       containerId: scaffolder-node
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 263
-      sloc: 212
+      loc: 28
+      sloc: 5
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3780
+    'y': 1010
+  - entityRef: blueprint/plugins/scaffolder-node/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-node/src/alpha/types.ts
+      containerId: scaffolder-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 31
+      sloc: 11
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 6120
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-node/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-node/src/alpha/index.ts
+      containerId: scaffolder-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 207
+      sloc: 110
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -90,8 +134,30 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1290
+    x: 5660
     'y': 690
+  - entityRef: blueprint/plugins/scaffolder-node/extensions
+    type: background-worker
+    name: extensions Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-node/src/extensions.ts
+      containerId: scaffolder-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 37
+      sloc: 9
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 50
   - entityRef: blueprint/plugins/scaffolder-node/setuptests
     type: background-worker
     name: setupTests Service
@@ -112,73 +178,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-node/testutils
-    type: background-worker
-    name: testUtils Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-node/src/testUtils.ts
-      containerId: scaffolder-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 28
-      sloc: 5
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
     x: 1060
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-node/types
-    type: background-worker
-    name: types Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-node/src/alpha/globals/types.ts
-      containerId: scaffolder-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 52
-      sloc: 27
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5700
-    'y': 690
-  - entityRef: blueprint/plugins/scaffolder-node/createtemplateaction-test
-    type: background-worker
-    name: createTemplateAction.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-node/src/actions/createTemplateAction.test.ts
-      containerId: scaffolder-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 103
-      sloc: 61
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2900
     'y': 50
   - entityRef: blueprint/plugins/scaffolder-node/createtemplateaction
     type: background-worker
@@ -200,95 +200,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2900
-    'y': 370
-  - entityRef: blueprint/plugins/scaffolder-node/executeshellcommand-test
-    type: background-worker
-    name: executeShellCommand.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-node/src/actions/executeShellCommand.test.ts
-      containerId: scaffolder-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 142
-      sloc: 104
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1980
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-node/executeshellcommand
-    type: background-worker
-    name: executeShellCommand Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-node/src/actions/executeShellCommand.ts
-      containerId: scaffolder-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 4
-      loc: 87
-      sloc: 47
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1980
-    'y': 370
-  - entityRef: blueprint/plugins/scaffolder-node/fetch-test
-    type: background-worker
-    name: fetch.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-node/src/actions/fetch.test.ts
-      containerId: scaffolder-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 267
-      sloc: 227
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2440
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-node/fetch
-    type: background-worker
-    name: fetch Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-node/src/actions/fetch.ts
-      containerId: scaffolder-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 9
-      loc: 142
-      sloc: 98
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2440
+    x: 3360
     'y': 370
   - entityRef: blueprint/plugins/scaffolder-node/githelpers-test
     type: background-worker
@@ -312,6 +224,50 @@ nodes:
       sinceDays: 500
     x: 4970
     'y': 50
+  - entityRef: blueprint/plugins/scaffolder-node/executeshellcommand-test
+    type: background-worker
+    name: executeShellCommand.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-node/src/actions/executeShellCommand.test.ts
+      containerId: scaffolder-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 142
+      sloc: 104
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2440
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-node/util-test
+    type: background-worker
+    name: util.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-node/src/actions/util.test.ts
+      containerId: scaffolder-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 277
+      sloc: 248
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1980
+    'y': 370
   - entityRef: blueprint/plugins/scaffolder-node/githelpers
     type: background-worker
     name: gitHelpers Service
@@ -333,6 +289,117 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 5200
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-node/executeshellcommand
+    type: background-worker
+    name: executeShellCommand Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-node/src/actions/executeShellCommand.ts
+      containerId: scaffolder-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 4
+      loc: 87
+      sloc: 47
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2440
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-node/util
+    type: background-worker
+    name: util Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-node/src/actions/util.ts
+      containerId: scaffolder-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 23
+      loc: 201
+      sloc: 160
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 2710
+    'y': 690
+  - entityRef: blueprint/plugins/scaffolder-node/fetch-test
+    type: background-worker
+    name: fetch.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-node/src/actions/fetch.test.ts
+      containerId: scaffolder-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 267
+      sloc: 227
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2900
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-node/createtemplateaction-test
+    type: background-worker
+    name: createTemplateAction.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-node/src/actions/createTemplateAction.test.ts
+      containerId: scaffolder-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 103
+      sloc: 61
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3360
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-node/fetch
+    type: background-worker
+    name: fetch Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-node/src/actions/fetch.ts
+      containerId: scaffolder-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 9
+      loc: 142
+      sloc: 98
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2900
     'y': 370
   - entityRef: blueprint/plugins/scaffolder-node/loggertowinstonlogger
     type: background-worker
@@ -356,19 +423,19 @@ nodes:
       sinceDays: 500
     x: 4740
     'y': 370
-  - entityRef: blueprint/plugins/scaffolder-node/util-test
+  - entityRef: blueprint/plugins/scaffolder-node/testutils
     type: background-worker
-    name: util.test Service
-    isTest: true
+    name: testUtils Service
+    isTest: false
     properties:
-      filepath: plugins/scaffolder-node/src/actions/util.test.ts
+      filepath: plugins/scaffolder-node/src/testUtils.ts
       containerId: scaffolder-node
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 2
-      loc: 277
-      sloc: 248
+      complexity: 1
+      loc: 28
+      sloc: 5
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -377,95 +444,6 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 3820
-    'y': 370
-  - entityRef: blueprint/plugins/scaffolder-node/util
-    type: background-worker
-    name: util Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-node/src/actions/util.ts
-      containerId: scaffolder-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 23
-      loc: 201
-      sloc: 160
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 3240
-    'y': 690
-  - entityRef: blueprint/plugins/scaffolder-node/deserializedirectorycontents-test
-    type: background-worker
-    name: deserializeDirectoryContents.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-node/src/files/deserializeDirectoryContents.test.ts
-      containerId: scaffolder-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 82
-      sloc: 61
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 6160
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-node/deserializedirectorycontents
-    type: background-worker
-    name: deserializeDirectoryContents Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-node/src/files/deserializeDirectoryContents.ts
-      containerId: scaffolder-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 40
-      sloc: 14
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 6200
-    'y': 370
-  - entityRef: blueprint/plugins/scaffolder-node/serializedirectorycontents-test
-    type: background-worker
-    name: serializeDirectoryContents.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-node/src/files/serializeDirectoryContents.test.ts
-      containerId: scaffolder-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 244
-      sloc: 213
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5660
     'y': 50
   - entityRef: blueprint/plugins/scaffolder-node/serializedirectorycontents
     type: background-worker
@@ -487,7 +465,95 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 5700
+    x: 7500
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-node/deserializedirectorycontents
+    type: background-worker
+    name: deserializeDirectoryContents Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-node/src/files/deserializeDirectoryContents.ts
+      containerId: scaffolder-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 40
+      sloc: 14
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 6120
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-node/serializedirectorycontents-test
+    type: background-worker
+    name: serializeDirectoryContents.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-node/src/files/serializeDirectoryContents.test.ts
+      containerId: scaffolder-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 244
+      sloc: 213
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 7500
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-node/deserializedirectorycontents-test
+    type: background-worker
+    name: deserializeDirectoryContents.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-node/src/files/deserializeDirectoryContents.test.ts
+      containerId: scaffolder-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 82
+      sloc: 61
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 6120
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-node/scaffolderservice-test
+    type: background-worker
+    name: scaffolderService.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-node/src/scaffolderService.test.ts
+      containerId: scaffolder-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 263
+      sloc: 212
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5660
     'y': 370
   - entityRef: blueprint/plugins/scaffolder-node/git-test
     type: background-worker
@@ -509,7 +575,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3360
+    x: 4280
     'y': 50
   - entityRef: blueprint/plugins/scaffolder-node/git
     type: relational-database
@@ -532,21 +598,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 3360
+    x: 4280
     'y': 370
-  - entityRef: blueprint/plugins/scaffolder-node/alpha
+  - entityRef: blueprint/plugins/scaffolder-node/createtemplatefilter
     type: background-worker
-    name: alpha Service
+    name: createTemplateFilter Service
     isTest: false
     properties:
-      filepath: plugins/scaffolder-node/src/tasks/alpha.ts
+      filepath: plugins/scaffolder-node/src/alpha/filters/createTemplateFilter.ts
       containerId: scaffolder-node
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 28
-      sloc: 5
+      loc: 35
+      sloc: 13
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -554,21 +620,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3265
-    'y': 1010
-  - entityRef: blueprint/plugins/scaffolder-node/serializer-test
+    x: 6580
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-node/createtemplateglobal
     type: background-worker
-    name: serializer.test Service
-    isTest: true
+    name: createTemplateGlobal Service
+    isTest: false
     properties:
-      filepath: plugins/scaffolder-node/src/tasks/serializer.test.ts
+      filepath: plugins/scaffolder-node/src/alpha/globals/createTemplateGlobal.ts
       containerId: scaffolder-node
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 115
-      sloc: 93
+      loc: 51
+      sloc: 20
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -576,21 +642,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4280
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-node/serializer
+    x: 7040
+    'y': 370
+  - entityRef: blueprint/plugins/scaffolder-node/scaffolderservicemock
     type: background-worker
-    name: serializer Service
+    name: scaffolderServiceMock Service
     isTest: false
     properties:
-      filepath: plugins/scaffolder-node/src/tasks/serializer.ts
+      filepath: plugins/scaffolder-node/src/testUtils/scaffolderServiceMock.ts
       containerId: scaffolder-node
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 2
-      loc: 60
-      sloc: 31
+      complexity: 1
+      loc: 47
+      sloc: 20
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -598,7 +664,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4280
+    x: 1520
     'y': 370
   - entityRef: blueprint/plugins/scaffolder-node/scaffolderservicemock-test
     type: background-worker
@@ -622,91 +688,25 @@ nodes:
       sinceDays: 500
     x: 1520
     'y': 50
-  - entityRef: blueprint/plugins/scaffolder-node/scaffolderservicemock
-    type: background-worker
-    name: scaffolderServiceMock Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-node/src/testUtils/scaffolderServiceMock.ts
-      containerId: scaffolder-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 47
-      sloc: 20
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1520
-    'y': 370
-  - entityRef: blueprint/plugins/scaffolder-node/createtemplatefilter
-    type: background-worker
-    name: createTemplateFilter Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-node/src/alpha/filters/createTemplateFilter.ts
-      containerId: scaffolder-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 35
-      sloc: 13
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 6660
-    'y': 370
-  - entityRef: blueprint/plugins/scaffolder-node/createtemplateglobal
-    type: background-worker
-    name: createTemplateGlobal Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-node/src/alpha/globals/createTemplateGlobal.ts
-      containerId: scaffolder-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 51
-      sloc: 20
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 7120
-    'y': 370
 dependencies:
-  - from: blueprint/plugins/scaffolder-node/extensions
-    to: blueprint/plugins/home/actions
+  - from: blueprint/plugins/scaffolder-node/serializer-test
+    to: blueprint/plugins/scaffolder-node/serializer
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/scaffolderservice-test
-    to: blueprint/plugins/scaffolder-node/scaffolderservice
+  - from: blueprint/plugins/scaffolder-node/types
+    to: blueprint/plugins/scaffolder-node/alpha
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-node/scaffolderservice
-    to: blueprint/plugins/search-backend-node/errors
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-node/scaffolderservice
     to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/createtemplateaction-test
-    to: blueprint/plugins/scaffolder-node/createtemplateaction
+  - from: blueprint/plugins/scaffolder-node/extensions
+    to: blueprint/plugins/home/actions
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-node/createtemplateaction
@@ -719,30 +719,6 @@ dependencies:
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-node/createtemplateaction
     to: blueprint/plugins/scaffolder-node/util
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/executeshellcommand-test
-    to: blueprint/plugins/scaffolder-node/executeshellcommand
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/fetch-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/fetch-test
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/fetch-test
-    to: blueprint/plugins/scaffolder-node/fetch
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/fetch
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/fetch
-    to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-node/githelpers-test
@@ -757,16 +733,8 @@ dependencies:
     to: blueprint/plugins/scaffolder-node/loggertowinstonlogger
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/githelpers
-    to: blueprint/plugins/catalog-backend/scm
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/loggertowinstonlogger
-    to: blueprint/plugins/scaffolder-node/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/types
-    to: blueprint/plugins/scaffolder-node/alpha
+  - from: blueprint/plugins/scaffolder-node/executeshellcommand-test
+    to: blueprint/plugins/scaffolder-node/executeshellcommand
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-node/util-test
@@ -777,8 +745,16 @@ dependencies:
     to: blueprint/plugins/scaffolder-node/util
     type: direct-call
     description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node/types
+    to: blueprint/plugins/scaffolder-node/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node/githelpers
+    to: blueprint/plugins/catalog-backend/scm
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/plugins/scaffolder-node/util
-    to: blueprint/plugins/search-backend-node/errors
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-node/util
@@ -789,24 +765,40 @@ dependencies:
     to: blueprint/plugins/scaffolder-node/createtemplateaction
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/index
-    to: blueprint/plugins/catalog-react/filters
+  - from: blueprint/plugins/scaffolder-node/fetch-test
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/index
-    to: blueprint/plugins/scaffolder-node/alpha
+  - from: blueprint/plugins/scaffolder-node/fetch-test
+    to: blueprint/plugins/permission-common/integration
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/index
+  - from: blueprint/plugins/scaffolder-node/fetch-test
+    to: blueprint/plugins/scaffolder-node/fetch
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node/createtemplateaction-test
+    to: blueprint/plugins/scaffolder-node/createtemplateaction
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node/fetch
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node/fetch
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node/loggertowinstonlogger
     to: blueprint/plugins/scaffolder-node/types
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/deserializedirectorycontents-test
-    to: blueprint/plugins/scaffolder-node/deserializedirectorycontents
+  - from: blueprint/plugins/scaffolder-node/serializedirectorycontents
+    to: blueprint/plugins/scaffolder-node/types
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/deserializedirectorycontents-test
-    to: blueprint/plugins/scaffolder-node/serializedirectorycontents
+  - from: blueprint/plugins/scaffolder-node/serializedirectorycontents
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-node/deserializedirectorycontents
@@ -817,12 +809,16 @@ dependencies:
     to: blueprint/plugins/scaffolder-node/serializedirectorycontents
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/serializedirectorycontents
-    to: blueprint/plugins/scaffolder-node/types
+  - from: blueprint/plugins/scaffolder-node/deserializedirectorycontents-test
+    to: blueprint/plugins/scaffolder-node/deserializedirectorycontents
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/serializedirectorycontents
-    to: blueprint/plugins/search-backend-node/errors
+  - from: blueprint/plugins/scaffolder-node/deserializedirectorycontents-test
+    to: blueprint/plugins/scaffolder-node/serializedirectorycontents
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node/scaffolderservice-test
+    to: blueprint/plugins/scaffolder-node/scaffolderservice
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-node/git-test
@@ -830,38 +826,42 @@ dependencies:
     type: read-write
     description: Queries datastore records
   - from: blueprint/plugins/scaffolder-node/git
-    to: blueprint/plugins/search-backend-node/errors
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/serializer-test
-    to: blueprint/plugins/scaffolder-node/serializer
+  - from: blueprint/plugins/scaffolder-node/createtemplatefilter
+    to: blueprint/plugins/scaffolder-node/types
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/types
+  - from: blueprint/plugins/scaffolder-node/createtemplatefilter
+    to: blueprint/plugins/scaffolder-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node/createtemplateglobal
+    to: blueprint/plugins/scaffolder-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node/createtemplateglobal
+    to: blueprint/plugins/scaffolder-node/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node/index
+    to: blueprint/plugins/notifications-common/filters
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node/index
     to: blueprint/plugins/scaffolder-node/alpha
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/scaffolderservicemock-test
-    to: blueprint/plugins/scaffolder-node/scaffolderservicemock
+  - from: blueprint/plugins/scaffolder-node/index
+    to: blueprint/plugins/scaffolder-node/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-node/scaffolderservicemock
     to: blueprint/plugins/scaffolder-node/scaffolderservice
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/createtemplatefilter
-    to: blueprint/plugins/scaffolder-node/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/createtemplatefilter
-    to: blueprint/plugins/scaffolder-node/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/createtemplateglobal
-    to: blueprint/plugins/scaffolder-node/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node/createtemplateglobal
-    to: blueprint/plugins/scaffolder-node/types
+  - from: blueprint/plugins/scaffolder-node/scaffolderservicemock-test
+    to: blueprint/plugins/scaffolder-node/scaffolderservicemock
     type: direct-call
     description: Calls module / service

@@ -25,19 +25,19 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 50
-  - entityRef: blueprint/plugins/notifications-node/index
+  - entityRef: blueprint/plugins/notifications-node/setuptests
     type: background-worker
-    name: index Service
-    isTest: false
+    name: setupTests Service
+    isTest: true
     properties:
-      filepath: plugins/notifications-node/src/service/index.ts
+      filepath: plugins/notifications-node/src/setupTests.ts
       containerId: notifications-node
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 18
-      sloc: 2
+      loc: 17
+      sloc: 1
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -69,19 +69,19 @@ nodes:
       sinceDays: 500
     x: 1060
     'y': 50
-  - entityRef: blueprint/plugins/notifications-node/setuptests
+  - entityRef: blueprint/plugins/notifications-node/index
     type: background-worker
-    name: setupTests Service
-    isTest: true
+    name: index Service
+    isTest: false
     properties:
-      filepath: plugins/notifications-node/src/setupTests.ts
+      filepath: plugins/notifications-node/src/service/index.ts
       containerId: notifications-node
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 17
-      sloc: 1
+      loc: 18
+      sloc: 2
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -91,50 +91,6 @@ nodes:
       sinceDays: 500
     x: 1520
     'y': 50
-  - entityRef: blueprint/plugins/notifications-node/defaultnotificationservice-test
-    type: background-worker
-    name: DefaultNotificationService.test Service
-    isTest: true
-    properties:
-      filepath: plugins/notifications-node/src/service/DefaultNotificationService.test.ts
-      containerId: notifications-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 98
-      sloc: 73
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 370
-  - entityRef: blueprint/plugins/notifications-node/defaultnotificationservice
-    type: background-worker
-    name: DefaultNotificationService Service
-    isTest: false
-    properties:
-      filepath: plugins/notifications-node/src/service/DefaultNotificationService.ts
-      containerId: notifications-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 93
-      sloc: 54
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 870
-    'y': 690
   - entityRef: blueprint/plugins/notifications-node/notificationservice
     type: background-worker
     name: NotificationService Service
@@ -157,31 +113,51 @@ nodes:
       sinceDays: 500
     x: 1060
     'y': 370
+  - entityRef: blueprint/plugins/notifications-node/defaultnotificationservice-test
+    type: background-worker
+    name: DefaultNotificationService.test Service
+    isTest: true
+    properties:
+      filepath: plugins/notifications-node/src/service/DefaultNotificationService.test.ts
+      containerId: notifications-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 98
+      sloc: 73
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
+    'y': 370
+  - entityRef: blueprint/plugins/notifications-node/defaultnotificationservice
+    type: background-worker
+    name: DefaultNotificationService Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-node/src/service/DefaultNotificationService.ts
+      containerId: notifications-node
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 93
+      sloc: 54
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1250
+    'y': 690
 dependencies:
-  - from: blueprint/plugins/catalog-backend-module-gitlab/gitlabdiscoveryprocessor-test
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-gitlab/gitlabdiscoveryprocessor
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-openapi/jsonschemarefplaceholderresolver-test
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-openapi/jsonschemarefplaceholderresolver
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-openapi/openapirefprocessor-test
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-openapi/openapirefprocessor
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/notifications-node/extensions
     to: blueprint/plugins/events-node/service
     type: direct-call
@@ -194,80 +170,12 @@ dependencies:
     to: blueprint/plugins/notifications-node/notificationservice
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-aws/awseksclusterprocessor
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-azure/azuredevopsdiscoveryprocessor-test
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-azure/azuredevopsdiscoveryprocessor
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-azure/azuredevopsentityprovider-test
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-azure/azuredevopsentityprovider-test
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-azure/azuredevopsentityprovider
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-bitbucket-server/bitbucketserverentityprovider-test
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-bitbucket-server/bitbucketserverentityprovider
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-bitbucket-server/bitbucketserverentityprovider
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-bitbucket-server/bitbucketserverlocationparser
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-github/githubdiscoveryprocessor-test
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-github/githubdiscoveryprocessor
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-github/githubmultiorgreaderprocessor
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-github/githuborgreaderprocessor
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-github/githubmultiorgentityprovider
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-gitlab/config
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-gitlab/gitlabdiscoveryentityprovider
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-gitlab/gitlaborgdiscoveryentityprovider
-    to: blueprint/plugins/notifications-node/lib
+  - from: blueprint/plugins/notifications-node/notificationservice
+    to: blueprint/plugins/notifications-node/defaultnotificationservice
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/notifications-node/defaultnotificationservice-test
-    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    to: blueprint/plugins/kubernetes-react/test-utils
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/notifications-node/defaultnotificationservice-test
@@ -276,17 +184,5 @@ dependencies:
     description: Calls module / service
   - from: blueprint/plugins/notifications-node/defaultnotificationservice
     to: blueprint/plugins/notifications-node/notificationservice
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/notifications-node/notificationservice
-    to: blueprint/plugins/notifications-node/defaultnotificationservice
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-react/usetemplateschema
-    to: blueprint/plugins/notifications-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-react/createasyncvalidators
-    to: blueprint/plugins/notifications-node/lib
     type: direct-call
     description: Calls module / service

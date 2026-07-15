@@ -3,12 +3,56 @@ name: Example-todo-list Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/plugins/example-todo-list/index
+  - entityRef: blueprint/plugins/example-todo-list/routes
     type: background-worker
-    name: index Service
+    name: routes Service
     isTest: false
     properties:
-      filepath: plugins/example-todo-list/src/components/TodoListPage/index.ts
+      filepath: plugins/example-todo-list/src/routes.ts
+      containerId: example-todo-list
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 21
+      sloc: 4
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 690
+  - entityRef: blueprint/plugins/example-todo-list/plugin
+    type: background-worker
+    name: plugin Service
+    isTest: false
+    properties:
+      filepath: plugins/example-todo-list/src/plugin.ts
+      containerId: example-todo-list
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 48
+      sloc: 19
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 370
+  - entityRef: blueprint/plugins/example-todo-list/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/example-todo-list/src/setupTests.ts
       containerId: example-todo-list
       technology: TypeScript Domain Service
       classification: default
@@ -47,19 +91,19 @@ nodes:
       sinceDays: 500
     x: 600
     'y': 50
-  - entityRef: blueprint/plugins/example-todo-list/plugin
-    type: background-worker
-    name: plugin Service
+  - entityRef: blueprint/plugins/example-todo-list/todolistpage
+    type: gateway-api
+    name: TodoListPage UI Component
     isTest: false
     properties:
-      filepath: plugins/example-todo-list/src/plugin.ts
+      filepath: plugins/example-todo-list/src/components/TodoListPage/TodoListPage.tsx
       containerId: example-todo-list
-      technology: TypeScript Domain Service
-      classification: default
+      technology: React Component
+      classification: ui-import
     forensics:
-      complexity: 1
-      loc: 48
-      sloc: 19
+      complexity: 7
+      loc: 195
+      sloc: 172
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -67,36 +111,14 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
-    'y': 370
-  - entityRef: blueprint/plugins/example-todo-list/routes
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/example-todo-list/index
     type: background-worker
-    name: routes Service
+    name: index Service
     isTest: false
     properties:
-      filepath: plugins/example-todo-list/src/routes.ts
-      containerId: example-todo-list
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 21
-      sloc: 4
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 690
-  - entityRef: blueprint/plugins/example-todo-list/setuptests
-    type: background-worker
-    name: setupTests Service
-    isTest: true
-    properties:
-      filepath: plugins/example-todo-list/src/setupTests.ts
+      filepath: plugins/example-todo-list/src/index.ts
       containerId: example-todo-list
       technology: TypeScript Domain Service
       classification: default
@@ -111,7 +133,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 1520
     'y': 50
   - entityRef: blueprint/plugins/example-todo-list/todolist
     type: gateway-api
@@ -133,37 +155,15 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1520
+    x: 1060
     'y': 370
-  - entityRef: blueprint/plugins/example-todo-list/todolistpage
-    type: gateway-api
-    name: TodoListPage UI Component
-    isTest: false
-    properties:
-      filepath: plugins/example-todo-list/src/components/TodoListPage/TodoListPage.tsx
-      containerId: example-todo-list
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 7
-      loc: 195
-      sloc: 172
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1520
-    'y': 50
 dependencies:
-  - from: blueprint/plugins/example-todo-list/plugin-test
-    to: blueprint/plugins/example-todo-list/plugin
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/example-todo-list/plugin
     to: blueprint/plugins/example-todo-list/routes
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/example-todo-list/plugin-test
+    to: blueprint/plugins/example-todo-list/plugin
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/example-todo-list/todolistpage

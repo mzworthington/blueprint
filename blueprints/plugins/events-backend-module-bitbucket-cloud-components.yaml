@@ -25,28 +25,6 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 50
-  - entityRef: blueprint/plugins/events-backend-module-bitbucket-cloud/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/events-backend-module-bitbucket-cloud/src/index.ts
-      containerId: events-backend-module-bitbucket-cloud
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 26
-      sloc: 2
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
   - entityRef: blueprint/plugins/events-backend-module-bitbucket-cloud/setuptests
     type: background-worker
     name: setupTests Service
@@ -67,43 +45,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 600
     'y': 50
-  - entityRef: blueprint/plugins/events-backend-module-bitbucket-cloud/bitbucketcloudeventrouter-test
-    type: rest-api
-    name: BitbucketCloudEventRouter.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/events-backend-module-bitbucket-cloud/src/router/BitbucketCloudEventRouter.test.ts
-      containerId: events-backend-module-bitbucket-cloud
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 54
-      sloc: 29
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 370
-    'y': 370
-  - entityRef: blueprint/plugins/events-backend-module-bitbucket-cloud/bitbucketcloudeventrouter
-    type: rest-api
-    name: BitbucketCloudEventRouter REST Endpoint
+  - entityRef: blueprint/plugins/events-backend-module-bitbucket-cloud/index
+    type: background-worker
+    name: index Service
     isTest: false
     properties:
-      filepath: plugins/events-backend-module-bitbucket-cloud/src/router/BitbucketCloudEventRouter.ts
+      filepath: plugins/events-backend-module-bitbucket-cloud/src/index.ts
       containerId: events-backend-module-bitbucket-cloud
-      technology: REST Controller / Router
-      classification: api-marker
+      technology: TypeScript Domain Service
+      classification: default
     forensics:
       complexity: 1
-      loc: 46
-      sloc: 19
+      loc: 26
+      sloc: 2
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -111,29 +67,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
-    'y': 690
-  - entityRef: blueprint/plugins/events-backend-module-bitbucket-cloud/eventsmodulebitbucketcloudeventrouter-test
-    type: rest-api
-    name: eventsModuleBitbucketCloudEventRouter.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/events-backend-module-bitbucket-cloud/src/service/eventsModuleBitbucketCloudEventRouter.test.ts
-      containerId: events-backend-module-bitbucket-cloud
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 42
-      sloc: 22
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1520
+    x: 1060
     'y': 50
   - entityRef: blueprint/plugins/events-backend-module-bitbucket-cloud/eventsmodulebitbucketcloudeventrouter
     type: rest-api
@@ -157,12 +91,78 @@ nodes:
       sinceDays: 500
     x: 830
     'y': 370
+  - entityRef: blueprint/plugins/events-backend-module-bitbucket-cloud/eventsmodulebitbucketcloudeventrouter-test
+    type: rest-api
+    name: eventsModuleBitbucketCloudEventRouter.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-cloud/src/service/eventsModuleBitbucketCloudEventRouter.test.ts
+      containerId: events-backend-module-bitbucket-cloud
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 42
+      sloc: 22
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
+    'y': 50
+  - entityRef: blueprint/plugins/events-backend-module-bitbucket-cloud/bitbucketcloudeventrouter
+    type: rest-api
+    name: BitbucketCloudEventRouter REST Endpoint
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-cloud/src/router/BitbucketCloudEventRouter.ts
+      containerId: events-backend-module-bitbucket-cloud
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 46
+      sloc: 19
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 690
+  - entityRef: blueprint/plugins/events-backend-module-bitbucket-cloud/bitbucketcloudeventrouter-test
+    type: rest-api
+    name: BitbucketCloudEventRouter.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-bitbucket-cloud/src/router/BitbucketCloudEventRouter.test.ts
+      containerId: events-backend-module-bitbucket-cloud
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 54
+      sloc: 29
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1290
+    'y': 370
 dependencies:
   - from: blueprint/plugins/events-backend-module-bitbucket-cloud/alpha
     to: blueprint/plugins/events-backend-module-bitbucket-cloud/eventsmodulebitbucketcloudeventrouter
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/events-backend-module-bitbucket-cloud/bitbucketcloudeventrouter-test
+  - from: blueprint/plugins/events-backend-module-bitbucket-cloud/eventsmodulebitbucketcloudeventrouter
     to: blueprint/plugins/events-backend-module-bitbucket-cloud/bitbucketcloudeventrouter
     type: direct-call
     description: Calls module / service
@@ -170,7 +170,7 @@ dependencies:
     to: blueprint/plugins/events-backend-module-bitbucket-cloud/eventsmodulebitbucketcloudeventrouter
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/events-backend-module-bitbucket-cloud/eventsmodulebitbucketcloudeventrouter
+  - from: blueprint/plugins/events-backend-module-bitbucket-cloud/bitbucketcloudeventrouter-test
     to: blueprint/plugins/events-backend-module-bitbucket-cloud/bitbucketcloudeventrouter
     type: direct-call
     description: Calls module / service

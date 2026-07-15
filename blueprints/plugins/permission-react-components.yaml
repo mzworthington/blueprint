@@ -3,19 +3,19 @@ name: Permission-react Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/plugins/permission-react/index
+  - entityRef: blueprint/plugins/permission-react/permissionapi
     type: background-worker
-    name: index Service
+    name: PermissionApi Service
     isTest: false
     properties:
-      filepath: plugins/permission-react/src/hooks/index.ts
+      filepath: plugins/permission-react/src/apis/PermissionApi.ts
       containerId: permission-react
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 19
-      sloc: 2
+      loc: 43
+      sloc: 13
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -24,29 +24,7 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 140
-    'y': 50
-  - entityRef: blueprint/plugins/permission-react/setuptests
-    type: background-worker
-    name: setupTests Service
-    isTest: true
-    properties:
-      filepath: plugins/permission-react/src/setupTests.ts
-      containerId: permission-react
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 18
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
+    'y': 690
   - entityRef: blueprint/plugins/permission-react/identitypermissionapi-test
     type: background-worker
     name: IdentityPermissionApi.test Service
@@ -67,7 +45,29 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 140
+    'y': 50
+  - entityRef: blueprint/plugins/permission-react/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/permission-react/src/index.ts
+      containerId: permission-react
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 25
+      sloc: 3
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
     'y': 50
   - entityRef: blueprint/plugins/permission-react/identitypermissionapi
     type: background-worker
@@ -89,21 +89,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 140
     'y': 370
-  - entityRef: blueprint/plugins/permission-react/permissionapi
+  - entityRef: blueprint/plugins/permission-react/setuptests
     type: background-worker
-    name: PermissionApi Service
-    isTest: false
+    name: setupTests Service
+    isTest: true
     properties:
-      filepath: plugins/permission-react/src/apis/PermissionApi.ts
+      filepath: plugins/permission-react/src/setupTests.ts
       containerId: permission-react
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 43
-      sloc: 13
+      loc: 18
+      sloc: 1
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -112,7 +112,7 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 1060
-    'y': 690
+    'y': 50
   - entityRef: blueprint/plugins/permission-react/requirepermission-test
     type: background-worker
     name: RequirePermission.test Service
@@ -203,11 +203,11 @@ nodes:
     'y': 370
 dependencies:
   - from: blueprint/plugins/permission-react/identitypermissionapi-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/permission-react/identitypermissionapi-test
-    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    to: blueprint/plugins/kubernetes-react/test-utils
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/permission-react/identitypermissionapi-test
@@ -219,7 +219,7 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/permission-react/identitypermissionapi
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/permission-react/requirepermission-test
@@ -227,15 +227,15 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/permission-react/requirepermission-test
-    to: blueprint/plugins/techdocs-react/hooks
+    to: blueprint/plugins/techdocs-module-addons-contrib/hooks
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/permission-react/requirepermission-test
-    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    to: blueprint/plugins/kubernetes-react/test-utils
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/permission-react/requirepermission
-    to: blueprint/plugins/techdocs-react/hooks
+    to: blueprint/plugins/techdocs-module-addons-contrib/hooks
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/permission-react/usepermission-test
@@ -243,14 +243,14 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/permission-react/usepermission-test
-    to: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    to: blueprint/plugins/kubernetes-react/test-utils
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/permission-react/usepermission-test
-    to: blueprint/plugins/search/apis
+    to: blueprint/plugins/catalog/apis
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/permission-react/usepermission
-    to: blueprint/plugins/search/apis
+    to: blueprint/plugins/catalog/apis
     type: direct-call
     description: Calls module / service

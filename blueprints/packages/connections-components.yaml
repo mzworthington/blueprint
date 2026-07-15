@@ -3,19 +3,19 @@ name: Connections Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/connections/index
+  - entityRef: blueprint/packages/connections/gitea
     type: background-worker
-    name: index Service
+    name: gitea Service
     isTest: false
     properties:
-      filepath: packages/connections/src/definitions/index.ts
+      filepath: packages/connections/src/schema/gitea.ts
       containerId: connections
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 30
-      sloc: 14
+      loc: 43
+      sloc: 25
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -23,21 +23,219 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 760
-    'y': 50
-  - entityRef: blueprint/packages/connections/service
+    x: 140
+    'y': 1330
+  - entityRef: blueprint/packages/connections/github
     type: background-worker
-    name: service Service
+    name: github Service
     isTest: false
     properties:
-      filepath: packages/connections/src/service.ts
+      filepath: packages/connections/src/schema/github.ts
+      containerId: connections
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 4
+      loc: 69
+      sloc: 50
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 1330
+  - entityRef: blueprint/packages/connections/awss3
+    type: background-worker
+    name: awsS3 Service
+    isTest: false
+    properties:
+      filepath: packages/connections/src/schema/awsS3.ts
+      containerId: connections
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 52
+      sloc: 34
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 1330
+  - entityRef: blueprint/packages/connections/github-test
+    type: background-worker
+    name: github.test Service
+    isTest: true
+    properties:
+      filepath: packages/connections/src/schema/github.test.ts
+      containerId: connections
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 178
+      sloc: 152
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4885
+    'y': 50
+  - entityRef: blueprint/packages/connections/awscodecommit
+    type: background-worker
+    name: awsCodeCommit Service
+    isTest: false
+    properties:
+      filepath: packages/connections/src/schema/awsCodeCommit.ts
+      containerId: connections
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 51
+      sloc: 33
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
+    'y': 1330
+  - entityRef: blueprint/packages/connections/gerrit
+    type: background-worker
+    name: gerrit Service
+    isTest: false
+    properties:
+      filepath: packages/connections/src/schema/gerrit.ts
+      containerId: connections
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 45
+      sloc: 27
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1980
+    'y': 1330
+  - entityRef: blueprint/packages/connections/googlegcs
+    type: background-worker
+    name: googleGcs Service
+    isTest: false
+    properties:
+      filepath: packages/connections/src/schema/googleGcs.ts
+      containerId: connections
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 42
+      sloc: 24
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2440
+    'y': 1330
+  - entityRef: blueprint/packages/connections/bitbucketserver
+    type: background-worker
+    name: bitbucketServer Service
+    isTest: false
+    properties:
+      filepath: packages/connections/src/schema/bitbucketServer.ts
+      containerId: connections
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 50
+      sloc: 32
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3155
+    'y': 1330
+  - entityRef: blueprint/packages/connections/azure
+    type: background-worker
+    name: azure Service
+    isTest: false
+    properties:
+      filepath: packages/connections/src/schema/azure.ts
+      containerId: connections
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 62
+      sloc: 44
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3965
+    'y': 1330
+  - entityRef: blueprint/packages/connections/gitlab
+    type: background-worker
+    name: gitlab Service
+    isTest: false
+    properties:
+      filepath: packages/connections/src/schema/gitlab.ts
+      containerId: connections
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 43
+      sloc: 25
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4425
+    'y': 1330
+  - entityRef: blueprint/packages/connections/bitbucketcloud
+    type: background-worker
+    name: bitbucketCloud Service
+    isTest: false
+    properties:
+      filepath: packages/connections/src/schema/bitbucketCloud.ts
       containerId: connections
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
       loc: 58
-      sloc: 35
+      sloc: 40
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -45,21 +243,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1220
-    'y': 50
-  - entityRef: blueprint/packages/connections/connection
-    type: rest-api
-    name: Connection REST Endpoint
+    x: 4885
+    'y': 1330
+  - entityRef: blueprint/packages/connections/harness
+    type: background-worker
+    name: harness Service
     isTest: false
     properties:
-      filepath: packages/connections/src/api/Connection.ts
+      filepath: packages/connections/src/schema/harness.ts
       containerId: connections
-      technology: REST Controller / Router
-      classification: api-marker
+      technology: TypeScript Domain Service
+      classification: default
     forensics:
       complexity: 1
-      loc: 73
-      sloc: 38
+      loc: 37
+      sloc: 19
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -67,8 +265,163 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 395
-    'y': 1010
+    x: 5345
+    'y': 1330
+  - entityRef: blueprint/packages/connections/azureblobstorage
+    type: background-worker
+    name: azureBlobStorage Service
+    isTest: false
+    properties:
+      filepath: packages/connections/src/schema/azureBlobStorage.ts
+      containerId: connections
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 67
+      sloc: 49
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5805
+    'y': 1330
+  - entityRef: blueprint/packages/connections/getlegacyintegrations
+    type: background-worker
+    name: getLegacyIntegrations Service
+    isTest: false
+    properties:
+      filepath: packages/connections/src/system/getLegacyIntegrations.ts
+      containerId: connections
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 40
+      loc: 414
+      sloc: 336
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 2980
+    'y': 690
+  - entityRef: blueprint/packages/connections/createconnectiontype-test
+    type: background-worker
+    name: createConnectionType.test Service
+    isTest: true
+    properties:
+      filepath: packages/connections/src/system/createConnectionType.test.ts
+      containerId: connections
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 201
+      sloc: 153
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 6265
+    'y': 1330
+  - entityRef: blueprint/packages/connections/createconnectiontype
+    type: background-worker
+    name: createConnectionType Service
+    isTest: false
+    properties:
+      filepath: packages/connections/src/system/createConnectionType.ts
+      containerId: connections
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 82
+      sloc: 64
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2900
+    'y': 1650
+  - entityRef: blueprint/packages/connections/combineconnectionsources-test
+    type: background-worker
+    name: combineConnectionSources.test Service
+    isTest: true
+    properties:
+      filepath: packages/connections/src/system/combineConnectionSources.test.ts
+      containerId: connections
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 147
+      sloc: 107
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 7305
+    'y': 370
+  - entityRef: blueprint/packages/connections/combineconnectionsources
+    type: background-worker
+    name: combineConnectionSources Service
+    isTest: false
+    properties:
+      filepath: packages/connections/src/system/combineConnectionSources.ts
+      containerId: connections
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 4
+      loc: 56
+      sloc: 27
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 7480
+    'y': 690
+  - entityRef: blueprint/packages/connections/getlegacyintegrations-test
+    type: background-worker
+    name: getLegacyIntegrations.test Service
+    isTest: true
+    properties:
+      filepath: packages/connections/src/system/getLegacyIntegrations.test.ts
+      containerId: connections
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 1117
+      sloc: 1016
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2155
+    'y': 370
   - entityRef: blueprint/packages/connections/connectionsservice
     type: rest-api
     name: ConnectionsService REST Endpoint
@@ -89,21 +442,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 140
+    x: 6980
     'y': 690
-  - entityRef: blueprint/packages/connections/connectiontype
+  - entityRef: blueprint/packages/connections/connection
     type: rest-api
-    name: ConnectionType REST Endpoint
+    name: Connection REST Endpoint
     isTest: false
     properties:
-      filepath: packages/connections/src/api/ConnectionType.ts
+      filepath: packages/connections/src/api/Connection.ts
       containerId: connections
       technology: REST Controller / Router
       classification: api-marker
     forensics:
       complexity: 1
-      loc: 113
-      sloc: 69
+      loc: 73
+      sloc: 38
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -111,30 +464,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1545
-    'y': 1970
-  - entityRef: blueprint/packages/connections/declareconnection
-    type: rest-api
-    name: declareConnection REST Endpoint
-    isTest: false
-    properties:
-      filepath: packages/connections/src/api/declareConnection.ts
-      containerId: connections
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 2
-      loc: 44
-      sloc: 20
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1680
-    'y': 50
+    x: 7250
+    'y': 1010
   - entityRef: blueprint/packages/connections/defaultconnectionservice-test
     type: rest-api
     name: DefaultConnectionService.test REST Endpoint
@@ -155,7 +486,73 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2140
+    x: 5345
+    'y': 50
+  - entityRef: blueprint/packages/connections/declareconnection
+    type: rest-api
+    name: declareConnection REST Endpoint
+    isTest: false
+    properties:
+      filepath: packages/connections/src/api/declareConnection.ts
+      containerId: connections
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 2
+      loc: 44
+      sloc: 20
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 5805
+    'y': 50
+  - entityRef: blueprint/packages/connections/connectiontype
+    type: rest-api
+    name: ConnectionType REST Endpoint
+    isTest: false
+    properties:
+      filepath: packages/connections/src/api/ConnectionType.ts
+      containerId: connections
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 113
+      sloc: 69
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 6910
+    'y': 1970
+  - entityRef: blueprint/packages/connections/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/connections/src/definitions/index.ts
+      containerId: connections
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 30
+      sloc: 14
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 6265
     'y': 50
   - entityRef: blueprint/packages/connections/defaultconnectionservice
     type: rest-api
@@ -178,7 +575,7 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1005
+    x: 6735
     'y': 370
   - entityRef: blueprint/packages/connections/lookup-test
     type: background-worker
@@ -200,30 +597,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 5680
+    x: 220
     'y': 370
-  - entityRef: blueprint/packages/connections/lookup
-    type: background-worker
-    name: lookup Service
-    isTest: false
-    properties:
-      filepath: packages/connections/src/definitions/lookup.ts
-      containerId: connections
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 37
-      sloc: 17
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3950
-    'y': 690
   - entityRef: blueprint/packages/connections/types
     type: background-worker
     name: types Service
@@ -244,21 +619,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4005
+    x: 3290
     'y': 1010
-  - entityRef: blueprint/packages/connections/awscodecommit
+  - entityRef: blueprint/packages/connections/lookup
     type: background-worker
-    name: awsCodeCommit Service
+    name: lookup Service
     isTest: false
     properties:
-      filepath: packages/connections/src/schema/awsCodeCommit.ts
+      filepath: packages/connections/src/definitions/lookup.ts
       containerId: connections
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 51
-      sloc: 33
+      complexity: 2
+      loc: 37
+      sloc: 17
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -266,87 +641,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1490
-    'y': 1330
-  - entityRef: blueprint/packages/connections/awss3
+    x: 3600
+    'y': 690
+  - entityRef: blueprint/packages/connections/service
     type: background-worker
-    name: awsS3 Service
+    name: service Service
     isTest: false
     properties:
-      filepath: packages/connections/src/schema/awsS3.ts
-      containerId: connections
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 52
-      sloc: 34
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1950
-    'y': 1330
-  - entityRef: blueprint/packages/connections/azure
-    type: background-worker
-    name: azure Service
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/azure.ts
-      containerId: connections
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 62
-      sloc: 44
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2410
-    'y': 1330
-  - entityRef: blueprint/packages/connections/azureblobstorage
-    type: background-worker
-    name: azureBlobStorage Service
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/azureBlobStorage.ts
-      containerId: connections
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 67
-      sloc: 49
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2870
-    'y': 1330
-  - entityRef: blueprint/packages/connections/bitbucketcloud
-    type: background-worker
-    name: bitbucketCloud Service
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/bitbucketCloud.ts
+      filepath: packages/connections/src/service.ts
       containerId: connections
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
       loc: 58
-      sloc: 40
+      sloc: 35
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -354,332 +663,11 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3330
-    'y': 1330
-  - entityRef: blueprint/packages/connections/bitbucketserver
-    type: background-worker
-    name: bitbucketServer Service
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/bitbucketServer.ts
-      containerId: connections
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 50
-      sloc: 32
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4340
-    'y': 1330
-  - entityRef: blueprint/packages/connections/gerrit
-    type: background-worker
-    name: gerrit Service
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/gerrit.ts
-      containerId: connections
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 45
-      sloc: 27
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4950
-    'y': 1330
-  - entityRef: blueprint/packages/connections/gitea
-    type: background-worker
-    name: gitea Service
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/gitea.ts
-      containerId: connections
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 43
-      sloc: 25
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5410
-    'y': 1330
-  - entityRef: blueprint/packages/connections/github-test
-    type: background-worker
-    name: github.test Service
-    isTest: true
-    properties:
-      filepath: packages/connections/src/schema/github.test.ts
-      containerId: connections
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 178
-      sloc: 152
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2600
+    x: 6725
     'y': 50
-  - entityRef: blueprint/packages/connections/github
-    type: background-worker
-    name: github Service
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/github.ts
-      containerId: connections
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 4
-      loc: 69
-      sloc: 50
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5870
-    'y': 1330
-  - entityRef: blueprint/packages/connections/gitlab
-    type: background-worker
-    name: gitlab Service
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/gitlab.ts
-      containerId: connections
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 43
-      sloc: 25
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 6330
-    'y': 1330
-  - entityRef: blueprint/packages/connections/googlegcs
-    type: background-worker
-    name: googleGcs Service
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/googleGcs.ts
-      containerId: connections
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 42
-      sloc: 24
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 6790
-    'y': 1330
-  - entityRef: blueprint/packages/connections/harness
-    type: background-worker
-    name: harness Service
-    isTest: false
-    properties:
-      filepath: packages/connections/src/schema/harness.ts
-      containerId: connections
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 37
-      sloc: 19
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 7250
-    'y': 1330
-  - entityRef: blueprint/packages/connections/combineconnectionsources-test
-    type: background-worker
-    name: combineConnectionSources.test Service
-    isTest: true
-    properties:
-      filepath: packages/connections/src/system/combineConnectionSources.test.ts
-      containerId: connections
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 147
-      sloc: 107
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 545
-    'y': 370
-  - entityRef: blueprint/packages/connections/combineconnectionsources
-    type: background-worker
-    name: combineConnectionSources Service
-    isTest: false
-    properties:
-      filepath: packages/connections/src/system/combineConnectionSources.ts
-      containerId: connections
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 4
-      loc: 56
-      sloc: 27
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 775
-    'y': 690
-  - entityRef: blueprint/packages/connections/createconnectiontype-test
-    type: background-worker
-    name: createConnectionType.test Service
-    isTest: true
-    properties:
-      filepath: packages/connections/src/system/createConnectionType.test.ts
-      containerId: connections
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 201
-      sloc: 153
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 7710
-    'y': 1330
-  - entityRef: blueprint/packages/connections/createconnectiontype
-    type: background-worker
-    name: createConnectionType Service
-    isTest: false
-    properties:
-      filepath: packages/connections/src/system/createConnectionType.ts
-      containerId: connections
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 82
-      sloc: 64
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5395
-    'y': 1650
-  - entityRef: blueprint/packages/connections/getlegacyintegrations-test
-    type: background-worker
-    name: getLegacyIntegrations.test Service
-    isTest: true
-    properties:
-      filepath: packages/connections/src/system/getLegacyIntegrations.test.ts
-      containerId: connections
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 1117
-      sloc: 1016
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4870
-    'y': 370
-  - entityRef: blueprint/packages/connections/getlegacyintegrations
-    type: background-worker
-    name: getLegacyIntegrations Service
-    isTest: false
-    properties:
-      filepath: packages/connections/src/system/getLegacyIntegrations.ts
-      containerId: connections
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 40
-      loc: 414
-      sloc: 336
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 4410
-    'y': 690
 dependencies:
-  - from: blueprint/packages/connections/service
-    to: blueprint/packages/catalog-client/api
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/integration/helpers-test
-    to: blueprint/packages/connections/bitbucketserver
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/integration/registry
-    to: blueprint/packages/connections/awscodecommit
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/integration/registry
-    to: blueprint/packages/connections/azureblobstorage
+  - from: blueprint/packages/app-defaults/icons
+    to: blueprint/packages/connections/github
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/integration/scmintegrations-test
@@ -730,6 +718,18 @@ dependencies:
     to: blueprint/packages/connections/googlegcs
     type: direct-call
     description: Calls module / service
+  - from: blueprint/packages/integration/registry
+    to: blueprint/packages/connections/awscodecommit
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration/registry
+    to: blueprint/packages/connections/azureblobstorage
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/integration/helpers-test
+    to: blueprint/packages/connections/bitbucketserver
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/packages/integration/scmintegrations
     to: blueprint/packages/connections/gitea
     type: direct-call
@@ -738,16 +738,136 @@ dependencies:
     to: blueprint/packages/connections/azureblobstorage
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/app-defaults/icons
-    to: blueprint/packages/connections/github
+  - from: blueprint/packages/connections/gitea
+    to: blueprint/packages/connections/createconnectiontype
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/connections/connection
+  - from: blueprint/packages/connections/github
+    to: blueprint/packages/connections/createconnectiontype
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/awss3
+    to: blueprint/packages/connections/createconnectiontype
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/github-test
+    to: blueprint/packages/catalog-client/api
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/awscodecommit
+    to: blueprint/packages/connections/createconnectiontype
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/gerrit
+    to: blueprint/packages/connections/createconnectiontype
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/googlegcs
+    to: blueprint/packages/connections/createconnectiontype
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/bitbucketserver
+    to: blueprint/packages/connections/createconnectiontype
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/azure
+    to: blueprint/packages/connections/createconnectiontype
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/gitlab
+    to: blueprint/packages/connections/createconnectiontype
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/bitbucketcloud
+    to: blueprint/packages/connections/createconnectiontype
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/harness
+    to: blueprint/packages/connections/createconnectiontype
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/azureblobstorage
+    to: blueprint/packages/connections/createconnectiontype
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/getlegacyintegrations
+    to: blueprint/packages/integration-aws-node/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/getlegacyintegrations
+    to: blueprint/packages/connections/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/createconnectiontype-test
+    to: blueprint/packages/connections/createconnectiontype
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/createconnectiontype
     to: blueprint/packages/connections/connectiontype
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/connections/connection
-    to: blueprint/packages/ui/definitions
+  - from: blueprint/packages/connections/combineconnectionsources-test
+    to: blueprint/packages/connections/combineconnectionsources
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/combineconnectionsources-test
+    to: blueprint/packages/connections/connection
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/combineconnectionsources
+    to: blueprint/packages/connections/connection
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/getlegacyintegrations-test
+    to: blueprint/packages/connections/getlegacyintegrations
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/getlegacyintegrations-test
+    to: blueprint/packages/connections/awscodecommit
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/getlegacyintegrations-test
+    to: blueprint/packages/connections/awss3
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/getlegacyintegrations-test
+    to: blueprint/packages/connections/azureblobstorage
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/getlegacyintegrations-test
+    to: blueprint/packages/connections/azure
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/getlegacyintegrations-test
+    to: blueprint/packages/connections/bitbucketcloud
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/getlegacyintegrations-test
+    to: blueprint/packages/connections/bitbucketserver
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/getlegacyintegrations-test
+    to: blueprint/packages/connections/gerrit
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/getlegacyintegrations-test
+    to: blueprint/packages/connections/gitea
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/getlegacyintegrations-test
+    to: blueprint/packages/connections/github
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/getlegacyintegrations-test
+    to: blueprint/packages/connections/gitlab
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/getlegacyintegrations-test
+    to: blueprint/packages/connections/googlegcs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/getlegacyintegrations-test
+    to: blueprint/packages/connections/harness
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/connections/connectionsservice
@@ -762,12 +882,12 @@ dependencies:
     to: blueprint/packages/connections/connectiontype
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/connections/connectiontype
-    to: blueprint/packages/ui/definitions
+  - from: blueprint/packages/connections/connection
+    to: blueprint/packages/connections/connectiontype
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/connections/declareconnection
-    to: blueprint/packages/catalog-model/alpha
+  - from: blueprint/packages/connections/connection
+    to: blueprint/packages/ui/definitions
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/connections/defaultconnectionservice-test
@@ -776,6 +896,14 @@ dependencies:
     description: Calls module / service
   - from: blueprint/packages/connections/defaultconnectionservice-test
     to: blueprint/packages/connections/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/declareconnection
+    to: blueprint/packages/core-plugin-api/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/connectiontype
+    to: blueprint/packages/ui/definitions
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/connections/defaultconnectionservice
@@ -818,191 +946,63 @@ dependencies:
     to: blueprint/packages/connections/lookup
     type: direct-call
     description: Calls module / service
+  - from: blueprint/packages/connections/types
+    to: blueprint/packages/connections/awscodecommit
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/types
+    to: blueprint/packages/connections/awss3
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/types
+    to: blueprint/packages/connections/azureblobstorage
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/types
+    to: blueprint/packages/connections/azure
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/types
+    to: blueprint/packages/connections/bitbucketcloud
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/types
+    to: blueprint/packages/connections/bitbucketserver
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/types
+    to: blueprint/packages/connections/gerrit
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/types
+    to: blueprint/packages/connections/gitea
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/types
+    to: blueprint/packages/connections/github
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/types
+    to: blueprint/packages/connections/gitlab
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/types
+    to: blueprint/packages/connections/googlegcs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/types
+    to: blueprint/packages/connections/harness
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/connections/types
+    to: blueprint/packages/connections/connectiontype
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/packages/connections/lookup
     to: blueprint/packages/connections/types
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/connections/types
-    to: blueprint/packages/connections/awscodecommit
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/types
-    to: blueprint/packages/connections/awss3
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/types
-    to: blueprint/packages/connections/azureblobstorage
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/types
-    to: blueprint/packages/connections/azure
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/types
-    to: blueprint/packages/connections/bitbucketcloud
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/types
-    to: blueprint/packages/connections/bitbucketserver
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/types
-    to: blueprint/packages/connections/gerrit
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/types
-    to: blueprint/packages/connections/gitea
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/types
-    to: blueprint/packages/connections/github
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/types
-    to: blueprint/packages/connections/gitlab
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/types
-    to: blueprint/packages/connections/googlegcs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/types
-    to: blueprint/packages/connections/harness
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/types
-    to: blueprint/packages/connections/connectiontype
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/awscodecommit
-    to: blueprint/packages/connections/createconnectiontype
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/awss3
-    to: blueprint/packages/connections/createconnectiontype
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/azure
-    to: blueprint/packages/connections/createconnectiontype
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/azureblobstorage
-    to: blueprint/packages/connections/createconnectiontype
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/bitbucketcloud
-    to: blueprint/packages/connections/createconnectiontype
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/bitbucketserver
-    to: blueprint/packages/connections/createconnectiontype
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/gerrit
-    to: blueprint/packages/connections/createconnectiontype
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/gitea
-    to: blueprint/packages/connections/createconnectiontype
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/github-test
+  - from: blueprint/packages/connections/service
     to: blueprint/packages/catalog-client/api
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/github
-    to: blueprint/packages/connections/createconnectiontype
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/gitlab
-    to: blueprint/packages/connections/createconnectiontype
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/googlegcs
-    to: blueprint/packages/connections/createconnectiontype
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/harness
-    to: blueprint/packages/connections/createconnectiontype
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/combineconnectionsources-test
-    to: blueprint/packages/connections/combineconnectionsources
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/combineconnectionsources-test
-    to: blueprint/packages/connections/connection
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/combineconnectionsources
-    to: blueprint/packages/connections/connection
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/createconnectiontype-test
-    to: blueprint/packages/connections/createconnectiontype
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/createconnectiontype
-    to: blueprint/packages/connections/connectiontype
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/getlegacyintegrations-test
-    to: blueprint/packages/connections/getlegacyintegrations
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/getlegacyintegrations-test
-    to: blueprint/packages/connections/awscodecommit
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/getlegacyintegrations-test
-    to: blueprint/packages/connections/awss3
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/getlegacyintegrations-test
-    to: blueprint/packages/connections/azureblobstorage
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/getlegacyintegrations-test
-    to: blueprint/packages/connections/azure
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/getlegacyintegrations-test
-    to: blueprint/packages/connections/bitbucketcloud
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/getlegacyintegrations-test
-    to: blueprint/packages/connections/bitbucketserver
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/getlegacyintegrations-test
-    to: blueprint/packages/connections/gerrit
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/getlegacyintegrations-test
-    to: blueprint/packages/connections/gitea
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/getlegacyintegrations-test
-    to: blueprint/packages/connections/github
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/getlegacyintegrations-test
-    to: blueprint/packages/connections/gitlab
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/getlegacyintegrations-test
-    to: blueprint/packages/connections/googlegcs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/getlegacyintegrations-test
-    to: blueprint/packages/connections/harness
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/getlegacyintegrations
-    to: blueprint/packages/integration-aws-node/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/connections/getlegacyintegrations
-    to: blueprint/packages/connections/types
     type: direct-call
     description: Calls module / service

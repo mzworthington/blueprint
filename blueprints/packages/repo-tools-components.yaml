@@ -3,19 +3,19 @@ name: Repo-tools Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/repo-tools/index
+  - entityRef: blueprint/packages/repo-tools/discovery
     type: background-worker
-    name: index Service
+    name: discovery Service
     isTest: false
     properties:
-      filepath: packages/repo-tools/src/commands/package/schema/openapi/generate/index.ts
+      filepath: packages/repo-tools/templates/typescript-backstage-client/types/discovery.ts
       containerId: repo-tools
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 8
-      loc: 103
-      sloc: 79
+      complexity: 1
+      loc: 23
+      sloc: 3
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -23,21 +23,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 10180
-    'y': 690
-  - entityRef: blueprint/packages/repo-tools/util
+    x: 1285
+    'y': 50
+  - entityRef: blueprint/packages/repo-tools/fetch
     type: background-worker
-    name: util Service
+    name: fetch Service
     isTest: false
     properties:
-      filepath: packages/repo-tools/src/commands/util.ts
+      filepath: packages/repo-tools/templates/typescript-backstage-client/types/fetch.ts
       containerId: repo-tools
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 8
-      loc: 100
-      sloc: 62
+      complexity: 1
+      loc: 23
+      sloc: 3
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -45,8 +45,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4830
-    'y': 1330
+    x: 1745
+    'y': 50
   - entityRef: blueprint/packages/repo-tools/errors
     type: background-worker
     name: errors Service
@@ -67,29 +67,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 6750
-    'y': 1330
-  - entityRef: blueprint/packages/repo-tools/exec
-    type: background-worker
-    name: exec Service
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/lib/exec.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 64
-      sloc: 42
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 7290
+    x: 140
     'y': 1330
   - entityRef: blueprint/packages/repo-tools/getpackageexportdetails
     type: background-worker
@@ -111,7 +89,96 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 6290
+    x: 8120
+    'y': 1330
+  - entityRef: blueprint/packages/repo-tools/helpers
+    type: background-worker
+    name: helpers Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/lib/openapi/helpers.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 5
+      loc: 102
+      sloc: 73
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 600
+    'y': 1330
+  - entityRef: blueprint/packages/repo-tools/dedupe-imports
+    type: background-worker
+    name: dedupe-imports Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/lib/openapi/dedupe-imports.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 11
+      loc: 75
+      sloc: 39
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 1840
+    'y': 1330
+  - entityRef: blueprint/packages/repo-tools/constants
+    type: background-worker
+    name: constants Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/package-docs/constants.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 19
+      sloc: 2
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 6970
+    'y': 1650
+  - entityRef: blueprint/packages/repo-tools/exec
+    type: background-worker
+    name: exec Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/lib/exec.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 64
+      sloc: 42
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3380
     'y': 1330
   - entityRef: blueprint/packages/repo-tools/paths-test
     type: background-worker
@@ -133,7 +200,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 180
+    x: 3070
     'y': 1010
   - entityRef: blueprint/packages/repo-tools/paths
     type: background-worker
@@ -156,7 +223,7 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 2035
+    x: 4865
     'y': 1330
   - entityRef: blueprint/packages/repo-tools/runner
     type: background-worker
@@ -178,187 +245,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 9290
-    'y': 1010
-  - entityRef: blueprint/packages/repo-tools/buildapireports-test
-    type: background-worker
-    name: buildApiReports.test Service
-    isTest: true
-    properties:
-      filepath: packages/repo-tools/src/commands/api-reports/buildApiReports.test.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 550
-      sloc: 470
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 900
-    'y': 50
-  - entityRef: blueprint/packages/repo-tools/buildapireports
-    type: background-worker
-    name: buildApiReports Service
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/commands/api-reports/buildApiReports.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 14
-      loc: 148
-      sloc: 51
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 410
-    'y': 370
-  - entityRef: blueprint/packages/repo-tools/categorizepackagedirs
-    type: background-worker
-    name: categorizePackageDirs Service
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/commands/api-reports/categorizePackageDirs.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 12
-      loc: 69
-      sloc: 45
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 690
-  - entityRef: blueprint/packages/repo-tools/codeowners
-    type: background-worker
-    name: codeowners Service
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/commands/generate-catalog-info/codeowners.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 5
-      loc: 70
-      sloc: 47
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 720
-    'y': 1010
-  - entityRef: blueprint/packages/repo-tools/generate-catalog-info
-    type: background-worker
-    name: generate-catalog-info Service
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/commands/generate-catalog-info/generate-catalog-info.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 23
-      loc: 265
-      sloc: 207
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 1315
-    'y': 690
-  - entityRef: blueprint/packages/repo-tools/utils-test
-    type: background-worker
-    name: utils.test Service
-    isTest: true
-    properties:
-      filepath: packages/repo-tools/src/commands/generate-catalog-info/utils.test.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 37
-      sloc: 17
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1180
-    'y': 1010
-  - entityRef: blueprint/packages/repo-tools/utils
-    type: background-worker
-    name: utils Service
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/commands/package-docs/utils.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 49
-      sloc: 24
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 845
-    'y': 1330
-  - entityRef: blueprint/packages/repo-tools/generate-patch
-    type: background-worker
-    name: generate-patch Service
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/commands/generate-patch/generate-patch.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 26
-      loc: 414
-      sloc: 319
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 1640
+    x: 3990
     'y': 1010
   - entityRef: blueprint/packages/repo-tools/knip-extractor
     type: background-worker
@@ -380,7 +267,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3600
+    x: 8660
     'y': 1010
   - entityRef: blueprint/packages/repo-tools/knip-reports
     type: background-worker
@@ -402,8 +289,31 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4185
+    x: 8245
     'y': 690
+  - entityRef: blueprint/packages/repo-tools/generate-patch
+    type: background-worker
+    name: generate-patch Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/generate-patch/generate-patch.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 26
+      loc: 414
+      sloc: 319
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 760
+    'y': 1010
   - entityRef: blueprint/packages/repo-tools/lint-legacy-backend-exports
     type: background-worker
     name: lint-legacy-backend-exports Service
@@ -425,88 +335,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1360
+    x: 2205
     'y': 50
-  - entityRef: blueprint/packages/repo-tools/cache-test
-    type: cache-store
-    name: Cache.test Cache
+  - entityRef: blueprint/packages/repo-tools/buildapireports-test
+    type: background-worker
+    name: buildApiReports.test Service
     isTest: true
     properties:
-      filepath: packages/repo-tools/src/commands/package-docs/Cache.test.ts
-      containerId: repo-tools
-      technology: TypeScript Cache Client
-      classification: cache-marker
-    forensics:
-      complexity: 1
-      loc: 181
-      sloc: 159
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2180
-    'y': 1010
-  - entityRef: blueprint/packages/repo-tools/cache
-    type: cache-store
-    name: Cache Cache
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/commands/package-docs/Cache.ts
-      containerId: repo-tools
-      technology: TypeScript Cache Client
-      classification: cache-marker
-    forensics:
-      complexity: 9
-      loc: 166
-      sloc: 135
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1575
-    'y': 1330
-  - entityRef: blueprint/packages/repo-tools/command
-    type: background-worker
-    name: command Service
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/commands/package-docs/command.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 18
-      loc: 232
-      sloc: 197
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 2640
-    'y': 1010
-  - entityRef: blueprint/packages/repo-tools/constants
-    type: background-worker
-    name: constants Service
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/lib/openapi/constants.ts
+      filepath: packages/repo-tools/src/commands/api-reports/buildApiReports.test.ts
       containerId: repo-tools
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 63
-      sloc: 19
+      loc: 550
+      sloc: 470
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -514,21 +357,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 7220
-    'y': 1650
-  - entityRef: blueprint/packages/repo-tools/peer-deps
+    x: 2665
+    'y': 50
+  - entityRef: blueprint/packages/repo-tools/categorizepackagedirs
     type: background-worker
-    name: peer-deps Service
+    name: categorizePackageDirs Service
     isTest: false
     properties:
-      filepath: packages/repo-tools/src/commands/peer-deps/peer-deps.ts
+      filepath: packages/repo-tools/src/commands/api-reports/categorizePackageDirs.ts
       containerId: repo-tools
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 37
-      loc: 272
-      sloc: 224
+      complexity: 12
+      loc: 69
+      sloc: 45
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -537,255 +380,30 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1820
-    'y': 50
-  - entityRef: blueprint/packages/repo-tools/type-deps
-    type: background-worker
-    name: type-deps Service
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/commands/type-deps/type-deps.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 34
-      loc: 291
-      sloc: 202
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 3140
-    'y': 1010
-  - entityRef: blueprint/packages/repo-tools/dedupe-imports
-    type: background-worker
-    name: dedupe-imports Service
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/lib/openapi/dedupe-imports.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 11
-      loc: 75
-      sloc: 39
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 10355
-    'y': 1330
-  - entityRef: blueprint/packages/repo-tools/helpers
-    type: background-worker
-    name: helpers Service
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/lib/openapi/helpers.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 5
-      loc: 102
-      sloc: 73
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 9560
-    'y': 1330
-  - entityRef: blueprint/packages/repo-tools/discovery
-    type: background-worker
-    name: discovery Service
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/templates/typescript-backstage-client/types/discovery.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 23
-      sloc: 3
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2280
-    'y': 50
-  - entityRef: blueprint/packages/repo-tools/fetch
-    type: background-worker
-    name: fetch Service
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/templates/typescript-backstage-client/types/fetch.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 23
-      sloc: 3
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2740
-    'y': 50
-  - entityRef: blueprint/packages/repo-tools/builddocs
-    type: background-worker
-    name: buildDocs Service
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/commands/api-reports/api-reports/buildDocs.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 52
-      loc: 610
-      sloc: 495
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 3200
-    'y': 50
-  - entityRef: blueprint/packages/repo-tools/createtemporarytsconfig
-    type: background-worker
-    name: createTemporaryTsConfig Service
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/commands/api-reports/api-reports/createTemporaryTsConfig.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 51
-      sloc: 25
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3660
-    'y': 50
-  - entityRef: blueprint/packages/repo-tools/generatetypedeclarations
-    type: background-worker
-    name: generateTypeDeclarations Service
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/commands/api-reports/api-reports/generateTypeDeclarations.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 56
-      sloc: 28
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 4120
-    'y': 50
-  - entityRef: blueprint/packages/repo-tools/patchapireportgeneration
-    type: background-worker
-    name: patchApiReportGeneration Service
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/commands/api-reports/api-reports/patchApiReportGeneration.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 13
-      loc: 169
-      sloc: 115
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 8305
-    'y': 1330
-  - entityRef: blueprint/packages/repo-tools/runapiextraction-test
-    type: background-worker
-    name: runApiExtraction.test Service
-    isTest: true
-    properties:
-      filepath: packages/repo-tools/src/commands/api-reports/api-reports/runApiExtraction.test.ts
-      containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 62
-      sloc: 35
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 8060
+    x: 2800
     'y': 690
-  - entityRef: blueprint/packages/repo-tools/runapiextraction
-    type: rest-api
-    name: runApiExtraction REST Endpoint
+  - entityRef: blueprint/packages/repo-tools/types
+    type: relational-database
+    name: types Database
     isTest: false
     properties:
-      filepath: packages/repo-tools/src/commands/api-reports/api-reports/runApiExtraction.ts
+      filepath: packages/repo-tools/src/commands/api-reports/sql-reports/types.ts
       containerId: repo-tools
-      technology: REST Controller / Router
-      classification: api-marker
+      technology: Prisma / SQL Database Client
+      classification: database-marker
     forensics:
-      complexity: 42
-      loc: 431
-      sloc: 336
+      complexity: 1
+      loc: 49
+      sloc: 27
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
-      classifications:
-        - knowledge-silo
+      classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 8060
-    'y': 1010
+    x: 9660
+    'y': 1650
   - entityRef: blueprint/packages/repo-tools/generateclireport
     type: background-worker
     name: generateCliReport Service
@@ -806,7 +424,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4370
+    x: 9040
     'y': 1330
   - entityRef: blueprint/packages/repo-tools/runcliextraction
     type: background-worker
@@ -829,21 +447,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 4060
+    x: 9120
     'y': 1010
-  - entityRef: blueprint/packages/repo-tools/types
-    type: relational-database
-    name: types Database
+  - entityRef: blueprint/packages/repo-tools/index
+    type: background-worker
+    name: index Service
     isTest: false
     properties:
-      filepath: packages/repo-tools/src/commands/api-reports/sql-reports/types.ts
+      filepath: packages/repo-tools/src/index.ts
       containerId: repo-tools
-      technology: Prisma / SQL Database Client
-      classification: database-marker
+      technology: TypeScript Domain Service
+      classification: default
     forensics:
-      complexity: 1
-      loc: 49
-      sloc: 27
+      complexity: 2
+      loc: 54
+      sloc: 25
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -851,21 +469,134 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 3140
-    'y': 1650
-  - entityRef: blueprint/packages/repo-tools/logapireportinstructions
+    x: 2340
+    'y': 690
+  - entityRef: blueprint/packages/repo-tools/patchapireportgeneration
     type: background-worker
-    name: logApiReportInstructions Service
+    name: patchApiReportGeneration Service
     isTest: false
     properties:
-      filepath: packages/repo-tools/src/commands/api-reports/common/logApiReportInstructions.ts
+      filepath: packages/repo-tools/src/commands/api-reports/api-reports/patchApiReportGeneration.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 13
+      loc: 169
+      sloc: 115
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 5920
+    'y': 1330
+  - entityRef: blueprint/packages/repo-tools/builddocs
+    type: background-worker
+    name: buildDocs Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/api-reports/buildDocs.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 52
+      loc: 610
+      sloc: 495
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 3125
+    'y': 50
+  - entityRef: blueprint/packages/repo-tools/runapiextraction
+    type: rest-api
+    name: runApiExtraction REST Endpoint
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/api-reports/runApiExtraction.ts
+      containerId: repo-tools
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 42
+      loc: 431
+      sloc: 336
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 7740
+    'y': 1010
+  - entityRef: blueprint/packages/repo-tools/generatetypedeclarations
+    type: background-worker
+    name: generateTypeDeclarations Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/api-reports/generateTypeDeclarations.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 56
+      sloc: 28
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3585
+    'y': 50
+  - entityRef: blueprint/packages/repo-tools/createtemporarytsconfig
+    type: background-worker
+    name: createTemporaryTsConfig Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/api-reports/createTemporaryTsConfig.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 51
+      sloc: 25
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4045
+    'y': 50
+  - entityRef: blueprint/packages/repo-tools/runapiextraction-test
+    type: background-worker
+    name: runApiExtraction.test Service
+    isTest: true
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/api-reports/runApiExtraction.test.ts
       containerId: repo-tools
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 33
-      sloc: 16
+      loc: 62
+      sloc: 35
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -873,8 +604,31 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 4580
-    'y': 50
+    x: 8705
+    'y': 690
+  - entityRef: blueprint/packages/repo-tools/buildapireports
+    type: background-worker
+    name: buildApiReports Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/buildApiReports.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 14
+      loc: 148
+      sloc: 51
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 5450
+    'y': 370
   - entityRef: blueprint/packages/repo-tools/tryrunprettier
     type: background-worker
     name: tryRunPrettier Service
@@ -895,7 +649,29 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 5040
+    x: 4505
+    'y': 50
+  - entityRef: blueprint/packages/repo-tools/logapireportinstructions
+    type: background-worker
+    name: logApiReportInstructions Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/api-reports/common/logApiReportInstructions.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 33
+      sloc: 16
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 4965
     'y': 50
   - entityRef: blueprint/packages/repo-tools/generatesqlreport
     type: background-worker
@@ -918,29 +694,7 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 5830
-    'y': 1330
-  - entityRef: blueprint/packages/repo-tools/getpgschemainfo
-    type: relational-database
-    name: getPgSchemaInfo Database
-    isTest: false
-    properties:
-      filepath: packages/repo-tools/src/commands/api-reports/sql-reports/getPgSchemaInfo.ts
-      containerId: repo-tools
-      technology: Prisma / SQL Database Client
-      classification: database-marker
-    forensics:
-      complexity: 1
-      loc: 89
-      sloc: 68
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 5370
+    x: 9635
     'y': 1330
   - entityRef: blueprint/packages/repo-tools/runsqlextraction
     type: relational-database
@@ -963,21 +717,43 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 5235
+    x: 10040
     'y': 1010
-  - entityRef: blueprint/packages/repo-tools/diff
-    type: background-worker
-    name: diff Service
+  - entityRef: blueprint/packages/repo-tools/getpgschemainfo
+    type: relational-database
+    name: getPgSchemaInfo Database
     isTest: false
     properties:
-      filepath: packages/repo-tools/src/commands/repo/schema/openapi/diff.ts
+      filepath: packages/repo-tools/src/commands/api-reports/sql-reports/getPgSchemaInfo.ts
+      containerId: repo-tools
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    forensics:
+      complexity: 1
+      loc: 89
+      sloc: 68
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 10175
+    'y': 1330
+  - entityRef: blueprint/packages/repo-tools/peer-deps
+    type: background-worker
+    name: peer-deps Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/peer-deps/peer-deps.ts
       containerId: repo-tools
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 11
-      loc: 129
-      sloc: 99
+      complexity: 37
+      loc: 272
+      sloc: 224
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -986,21 +762,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 6965
-    'y': 1010
-  - entityRef: blueprint/packages/repo-tools/fuzz
-    type: background-worker
-    name: fuzz Service
-    isTest: false
+    x: 5425
+    'y': 50
+  - entityRef: blueprint/packages/repo-tools/cache-test
+    type: cache-store
+    name: Cache.test Cache
+    isTest: true
     properties:
-      filepath: packages/repo-tools/src/commands/repo/schema/openapi/fuzz.ts
+      filepath: packages/repo-tools/src/commands/package-docs/Cache.test.ts
       containerId: repo-tools
-      technology: TypeScript Domain Service
-      classification: default
+      technology: TypeScript Cache Client
+      classification: cache-marker
     forensics:
-      complexity: 4
-      loc: 49
-      sloc: 31
+      complexity: 1
+      loc: 181
+      sloc: 159
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -1008,7 +784,186 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 7425
+    x: 1300
+    'y': 1010
+  - entityRef: blueprint/packages/repo-tools/utils
+    type: background-worker
+    name: utils Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/generate-catalog-info/utils.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 68
+      sloc: 40
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 6795
+    'y': 1330
+  - entityRef: blueprint/packages/repo-tools/cache
+    type: cache-store
+    name: Cache Cache
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/package-docs/Cache.ts
+      containerId: repo-tools
+      technology: TypeScript Cache Client
+      classification: cache-marker
+    forensics:
+      complexity: 9
+      loc: 166
+      sloc: 135
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1340
+    'y': 1330
+  - entityRef: blueprint/packages/repo-tools/command
+    type: background-worker
+    name: command Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/package-docs/command.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 18
+      loc: 232
+      sloc: 197
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 4450
+    'y': 1010
+  - entityRef: blueprint/packages/repo-tools/util
+    type: background-worker
+    name: util Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/util.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 8
+      loc: 100
+      sloc: 62
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 7470
+    'y': 1330
+  - entityRef: blueprint/packages/repo-tools/utils-test
+    type: background-worker
+    name: utils.test Service
+    isTest: true
+    properties:
+      filepath: packages/repo-tools/src/commands/generate-catalog-info/utils.test.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 37
+      sloc: 17
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 6540
+    'y': 1010
+  - entityRef: blueprint/packages/repo-tools/generate-catalog-info
+    type: background-worker
+    name: generate-catalog-info Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/generate-catalog-info/generate-catalog-info.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 23
+      loc: 265
+      sloc: 207
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 9165
+    'y': 690
+  - entityRef: blueprint/packages/repo-tools/codeowners
+    type: background-worker
+    name: codeowners Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/generate-catalog-info/codeowners.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 5
+      loc: 70
+      sloc: 47
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 8200
+    'y': 1010
+  - entityRef: blueprint/packages/repo-tools/type-deps
+    type: background-worker
+    name: type-deps Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/type-deps/type-deps.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 34
+      loc: 291
+      sloc: 202
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 9580
     'y': 1010
   - entityRef: blueprint/packages/repo-tools/lint
     type: background-worker
@@ -1030,8 +985,30 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 8520
+    x: 4150
     'y': 690
+  - entityRef: blueprint/packages/repo-tools/fuzz
+    type: background-worker
+    name: fuzz Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/package/schema/openapi/fuzz.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 7
+      loc: 97
+      sloc: 71
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2150
+    'y': 1010
   - entityRef: blueprint/packages/repo-tools/verify
     type: background-worker
     name: verify Service
@@ -1053,29 +1030,30 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 8980
+    x: 3690
     'y': 690
-  - entityRef: blueprint/packages/repo-tools/client
+  - entityRef: blueprint/packages/repo-tools/diff
     type: background-worker
-    name: client Service
+    name: diff Service
     isTest: false
     properties:
-      filepath: packages/repo-tools/src/commands/package/schema/openapi/generate/client.ts
+      filepath: packages/repo-tools/src/commands/package/schema/openapi/diff.ts
       containerId: repo-tools
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 8
-      loc: 157
-      sloc: 127
+      complexity: 12
+      loc: 80
+      sloc: 56
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
-      classifications: []
+      classifications:
+        - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 10180
+    x: 4910
     'y': 1010
   - entityRef: blueprint/packages/repo-tools/index-test
     type: background-worker
@@ -1097,8 +1075,30 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 5500
+    x: 5885
     'y': 50
+  - entityRef: blueprint/packages/repo-tools/client
+    type: background-worker
+    name: client Service
+    isTest: false
+    properties:
+      filepath: packages/repo-tools/src/commands/package/schema/openapi/generate/client.ts
+      containerId: repo-tools
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 8
+      loc: 157
+      sloc: 127
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2610
+    'y': 1010
   - entityRef: blueprint/packages/repo-tools/server
     type: background-worker
     name: server Service
@@ -1120,18 +1120,22 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 10680
+    x: 3530
     'y': 1010
 dependencies:
-  - from: blueprint/packages/app/index-public-experimental
-    to: blueprint/packages/repo-tools/client
-    type: direct-call
-    description: Calls module / service
+  - from: blueprint/packages/backend-test-utils/mockservices
+    to: blueprint/packages/repo-tools/cache
+    type: read-write
+    description: Queries datastore records
   - from: blueprint/packages/app/index
     to: blueprint/packages/repo-tools/client
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/app-legacy/index-public-experimental
+  - from: blueprint/packages/app/index-public-experimental
+    to: blueprint/packages/repo-tools/client
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/techdocs-cli-embedded-app/index
     to: blueprint/packages/repo-tools/client
     type: direct-call
     description: Calls module / service
@@ -1139,96 +1143,28 @@ dependencies:
     to: blueprint/packages/repo-tools/client
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/backend-defaults/createbackend
-    to: blueprint/packages/repo-tools/cache
-    type: read-write
-    description: Queries datastore records
-  - from: blueprint/packages/repo-tools/index
-    to: blueprint/packages/repo-tools/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/techdocs-cli-embedded-app/index
+  - from: blueprint/packages/app-legacy/index-public-experimental
     to: blueprint/packages/repo-tools/client
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/backend-test-utils/mockservices
-    to: blueprint/packages/repo-tools/cache
-    type: read-write
-    description: Queries datastore records
-  - from: blueprint/packages/repo-tools/index
-    to: blueprint/packages/repo-tools/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/index
-    to: blueprint/packages/repo-tools/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/index
-    to: blueprint/packages/repo-tools/constants
+  - from: blueprint/packages/cli-module-build/startbackend
+    to: blueprint/packages/repo-tools/runner
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/repo-tools/getpackageexportdetails
     to: blueprint/packages/repo-tools/types
     type: read-write
     description: Queries datastore records
+  - from: blueprint/packages/repo-tools/helpers
+    to: blueprint/packages/repo-tools/constants
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/packages/repo-tools/paths-test
     to: blueprint/packages/repo-tools/paths
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/repo-tools/runner
     to: blueprint/packages/repo-tools/paths
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/buildapireports-test
-    to: blueprint/packages/backend-openapi-utils/testutils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/buildapireports-test
-    to: blueprint/packages/repo-tools/categorizepackagedirs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/buildapireports-test
-    to: blueprint/packages/repo-tools/buildapireports
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/buildapireports-test
-    to: blueprint/packages/repo-tools/index
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/buildapireports
-    to: blueprint/packages/repo-tools/categorizepackagedirs
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/buildapireports
-    to: blueprint/packages/repo-tools/paths
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/buildapireports
-    to: blueprint/packages/repo-tools/index
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/codeowners
-    to: blueprint/packages/repo-tools/utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/generate-catalog-info
-    to: blueprint/packages/repo-tools/codeowners
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/generate-catalog-info
-    to: blueprint/packages/repo-tools/utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/utils-test
-    to: blueprint/packages/repo-tools/utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/generate-patch
-    to: blueprint/packages/repo-tools/exec
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/generate-patch
-    to: blueprint/packages/repo-tools/errors
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/repo-tools/knip-extractor
@@ -1243,6 +1179,106 @@ dependencies:
     to: blueprint/packages/repo-tools/paths
     type: direct-call
     description: Calls module / service
+  - from: blueprint/packages/repo-tools/generate-patch
+    to: blueprint/packages/repo-tools/exec
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/generate-patch
+    to: blueprint/packages/repo-tools/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/buildapireports-test
+    to: blueprint/packages/config-loader/testutils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/buildapireports-test
+    to: blueprint/packages/repo-tools/categorizepackagedirs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/buildapireports-test
+    to: blueprint/packages/repo-tools/buildapireports
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/buildapireports-test
+    to: blueprint/packages/repo-tools/index
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/generateclireport
+    to: blueprint/packages/repo-tools/types
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/packages/repo-tools/runcliextraction
+    to: blueprint/packages/repo-tools/util
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/runcliextraction
+    to: blueprint/packages/repo-tools/types
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/packages/repo-tools/runcliextraction
+    to: blueprint/packages/repo-tools/generateclireport
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/runcliextraction
+    to: blueprint/packages/core-app-api/common
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/patchapireportgeneration
+    to: blueprint/packages/core-app-api/common
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/runapiextraction
+    to: blueprint/packages/repo-tools/getpackageexportdetails
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/runapiextraction
+    to: blueprint/packages/core-app-api/common
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/runapiextraction
+    to: blueprint/packages/repo-tools/patchapireportgeneration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/runapiextraction-test
+    to: blueprint/packages/repo-tools/runapiextraction
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/buildapireports
+    to: blueprint/packages/repo-tools/categorizepackagedirs
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/buildapireports
+    to: blueprint/packages/repo-tools/paths
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/buildapireports
+    to: blueprint/packages/repo-tools/index
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/generatesqlreport
+    to: blueprint/packages/repo-tools/types
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/packages/repo-tools/runsqlextraction
+    to: blueprint/packages/repo-tools/types
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/packages/repo-tools/runsqlextraction
+    to: blueprint/packages/repo-tools/getpgschemainfo
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/packages/repo-tools/runsqlextraction
+    to: blueprint/packages/repo-tools/generatesqlreport
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/runsqlextraction
+    to: blueprint/packages/core-app-api/common
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/getpgschemainfo
+    to: blueprint/packages/repo-tools/types
+    type: read-write
+    description: Queries datastore records
   - from: blueprint/packages/repo-tools/cache-test
     to: blueprint/packages/repo-tools/cache
     type: read-write
@@ -1263,88 +1299,64 @@ dependencies:
     to: blueprint/packages/repo-tools/cache
     type: read-write
     description: Queries datastore records
+  - from: blueprint/packages/repo-tools/index
+    to: blueprint/packages/repo-tools/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/index
+    to: blueprint/packages/repo-tools/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/index
+    to: blueprint/packages/repo-tools/constants
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/utils-test
+    to: blueprint/packages/repo-tools/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/generate-catalog-info
+    to: blueprint/packages/repo-tools/codeowners
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/generate-catalog-info
+    to: blueprint/packages/repo-tools/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/codeowners
+    to: blueprint/packages/repo-tools/utils
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/packages/repo-tools/type-deps
     to: blueprint/packages/repo-tools/getpackageexportdetails
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/repo-tools/helpers
-    to: blueprint/packages/repo-tools/constants
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-build/startbackend
+  - from: blueprint/packages/repo-tools/lint
     to: blueprint/packages/repo-tools/runner
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/repo-tools/patchapireportgeneration
-    to: blueprint/packages/backend-openapi-utils/common
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/runapiextraction-test
-    to: blueprint/packages/repo-tools/runapiextraction
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/runapiextraction
-    to: blueprint/packages/repo-tools/getpackageexportdetails
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/runapiextraction
-    to: blueprint/packages/backend-openapi-utils/common
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/runapiextraction
-    to: blueprint/packages/repo-tools/patchapireportgeneration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/generateclireport
+  - from: blueprint/packages/repo-tools/lint
     to: blueprint/packages/repo-tools/types
     type: read-write
     description: Queries datastore records
-  - from: blueprint/packages/repo-tools/runcliextraction
-    to: blueprint/packages/repo-tools/util
+  - from: blueprint/packages/repo-tools/lint
+    to: blueprint/packages/repo-tools/helpers
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/repo-tools/runcliextraction
-    to: blueprint/packages/repo-tools/types
-    type: read-write
-    description: Queries datastore records
-  - from: blueprint/packages/repo-tools/runcliextraction
-    to: blueprint/packages/repo-tools/generateclireport
+  - from: blueprint/packages/repo-tools/fuzz
+    to: blueprint/packages/repo-tools/exec
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/repo-tools/runcliextraction
-    to: blueprint/packages/backend-openapi-utils/common
+  - from: blueprint/packages/repo-tools/verify
+    to: blueprint/packages/repo-tools/runner
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/repo-tools/generatesqlreport
-    to: blueprint/packages/repo-tools/types
-    type: read-write
-    description: Queries datastore records
-  - from: blueprint/packages/repo-tools/getpgschemainfo
-    to: blueprint/packages/repo-tools/types
-    type: read-write
-    description: Queries datastore records
-  - from: blueprint/packages/repo-tools/runsqlextraction
-    to: blueprint/packages/repo-tools/types
-    type: read-write
-    description: Queries datastore records
-  - from: blueprint/packages/repo-tools/runsqlextraction
-    to: blueprint/packages/repo-tools/getpgschemainfo
-    type: read-write
-    description: Queries datastore records
-  - from: blueprint/packages/repo-tools/runsqlextraction
-    to: blueprint/packages/repo-tools/generatesqlreport
+  - from: blueprint/packages/repo-tools/verify
+    to: blueprint/packages/repo-tools/constants
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/repo-tools/runsqlextraction
-    to: blueprint/packages/backend-openapi-utils/common
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/create-app/index
-    to: blueprint/packages/repo-tools/client
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/create-app/index
-    to: blueprint/packages/repo-tools/client
+  - from: blueprint/packages/repo-tools/verify
+    to: blueprint/packages/repo-tools/helpers
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/repo-tools/diff
@@ -1353,10 +1365,6 @@ dependencies:
     description: Calls module / service
   - from: blueprint/packages/repo-tools/diff
     to: blueprint/packages/repo-tools/constants
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/diff
-    to: blueprint/packages/repo-tools/helpers
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/repo-tools/diff
@@ -1380,35 +1388,11 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/repo-tools/diff
+    to: blueprint/packages/repo-tools/helpers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/repo-tools/diff
     to: blueprint/packages/repo-tools/util
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/fuzz
-    to: blueprint/packages/repo-tools/exec
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/lint
-    to: blueprint/packages/repo-tools/runner
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/lint
-    to: blueprint/packages/repo-tools/types
-    type: read-write
-    description: Queries datastore records
-  - from: blueprint/packages/repo-tools/lint
-    to: blueprint/packages/repo-tools/helpers
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/verify
-    to: blueprint/packages/repo-tools/runner
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/verify
-    to: blueprint/packages/repo-tools/constants
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/repo-tools/verify
-    to: blueprint/packages/repo-tools/helpers
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/repo-tools/client
@@ -1459,3 +1443,19 @@ dependencies:
     to: blueprint/packages/repo-tools/helpers
     type: direct-call
     description: Calls module / service
+  - from: blueprint/packages/repo-tools/index
+    to: blueprint/packages/repo-tools/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/create-app/index
+    to: blueprint/packages/repo-tools/client
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/create-app/index
+    to: blueprint/packages/repo-tools/client
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/backend-defaults/createbackend
+    to: blueprint/packages/repo-tools/cache
+    type: read-write
+    description: Queries datastore records

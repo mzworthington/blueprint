@@ -3,28 +3,6 @@ name: Scaffolder-backend-module-azure Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/plugins/scaffolder-backend-module-azure/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-azure/src/actions/index.ts
-      containerId: scaffolder-backend-module-azure
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 17
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
-    'y': 50
   - entityRef: blueprint/plugins/scaffolder-backend-module-azure/module
     type: background-worker
     name: module Service
@@ -45,29 +23,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
-    'y': 50
-  - entityRef: blueprint/plugins/scaffolder-backend-module-azure/azure-examples-test
-    type: background-worker
-    name: azure.examples.test Service
-    isTest: true
-    properties:
-      filepath: plugins/scaffolder-backend-module-azure/src/actions/azure.examples.test.ts
-      containerId: scaffolder-backend-module-azure
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 6
-      loc: 293
-      sloc: 243
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
+    x: 140
     'y': 50
   - entityRef: blueprint/plugins/scaffolder-backend-module-azure/azure-examples
     type: background-worker
@@ -89,21 +45,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1290
+    x: 1060
     'y': 690
-  - entityRef: blueprint/plugins/scaffolder-backend-module-azure/azure-test
+  - entityRef: blueprint/plugins/scaffolder-backend-module-azure/azure-examples-test
     type: background-worker
-    name: azure.test Service
+    name: azure.examples.test Service
     isTest: true
     properties:
-      filepath: plugins/scaffolder-backend-module-azure/src/actions/azure.test.ts
+      filepath: plugins/scaffolder-backend-module-azure/src/actions/azure.examples.test.ts
       containerId: scaffolder-backend-module-azure
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 395
-      sloc: 334
+      complexity: 6
+      loc: 293
+      sloc: 243
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -111,7 +67,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1520
+    x: 600
     'y': 50
   - entityRef: blueprint/plugins/scaffolder-backend-module-azure/azure
     type: background-worker
@@ -136,6 +92,50 @@ nodes:
       sinceDays: 500
     x: 1480
     'y': 370
+  - entityRef: blueprint/plugins/scaffolder-backend-module-azure/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/scaffolder-backend-module-azure/src/index.ts
+      containerId: scaffolder-backend-module-azure
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 25
+      sloc: 2
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/scaffolder-backend-module-azure/azure-test
+    type: background-worker
+    name: azure.test Service
+    isTest: true
+    properties:
+      filepath: plugins/scaffolder-backend-module-azure/src/actions/azure.test.ts
+      containerId: scaffolder-backend-module-azure
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 395
+      sloc: 334
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
+    'y': 50
 dependencies:
   - from: blueprint/plugins/scaffolder-backend-module-azure/module
     to: blueprint/plugins/permission-common/integration
@@ -146,7 +146,7 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-azure/azure-examples-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-azure/azure-examples-test
@@ -161,6 +161,22 @@ dependencies:
     to: blueprint/plugins/scaffolder-backend-module-azure/azure-examples
     type: direct-call
     description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-azure/azure
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-azure/azure
+    to: blueprint/plugins/permission-common/integration
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-azure/azure
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-backend-module-azure/azure
+    to: blueprint/plugins/scaffolder-backend-module-azure/azure-examples
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-azure/azure-test
     to: blueprint/plugins/scaffolder-backend-module-azure/azure
     type: direct-call
@@ -170,22 +186,6 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/scaffolder-backend-module-azure/azure-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-azure/azure
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-azure/azure
-    to: blueprint/plugins/permission-common/integration
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-azure/azure
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-azure/azure
-    to: blueprint/plugins/scaffolder-backend-module-azure/azure-examples
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service

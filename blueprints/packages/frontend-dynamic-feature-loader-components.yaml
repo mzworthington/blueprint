@@ -25,50 +25,6 @@ nodes:
       sinceDays: 500
     x: 140
     'y': 50
-  - entityRef: blueprint/packages/frontend-dynamic-feature-loader/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-dynamic-feature-loader/src/schema/openapi/index.ts
-      containerId: frontend-dynamic-feature-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 18
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 50
-  - entityRef: blueprint/packages/frontend-dynamic-feature-loader/loader-test
-    type: background-worker
-    name: loader.test Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-dynamic-feature-loader/src/loader.test.tsx
-      containerId: frontend-dynamic-feature-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 1299
-      sloc: 1210
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
-    'y': 50
   - entityRef: blueprint/packages/frontend-dynamic-feature-loader/loader
     type: background-worker
     name: loader Service
@@ -90,7 +46,7 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1060
+    x: 1520
     'y': 370
   - entityRef: blueprint/packages/frontend-dynamic-feature-loader/setuptests
     type: background-worker
@@ -112,9 +68,57 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
+    x: 600
+    'y': 50
+  - entityRef: blueprint/packages/frontend-dynamic-feature-loader/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/frontend-dynamic-feature-loader/src/index.ts
+      containerId: frontend-dynamic-feature-loader
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 24
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/packages/frontend-dynamic-feature-loader/loader-test
+    type: background-worker
+    name: loader.test Service
+    isTest: true
+    properties:
+      filepath: packages/frontend-dynamic-feature-loader/src/loader.test.tsx
+      containerId: frontend-dynamic-feature-loader
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 1299
+      sloc: 1210
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
     x: 1520
     'y': 50
 dependencies:
+  - from: blueprint/packages/frontend-dynamic-feature-loader/loader
+    to: blueprint/packages/ui/types
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
     to: blueprint/packages/frontend-dynamic-feature-loader/loader
     type: direct-call
@@ -124,7 +128,7 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
-    to: blueprint/packages/backend-plugin-api/types
+    to: blueprint/packages/ui/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
@@ -140,10 +144,10 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
-    to: blueprint/packages/backend-plugin-api/types
+    to: blueprint/packages/ui/types
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/frontend-dynamic-feature-loader/loader
-    to: blueprint/packages/backend-plugin-api/types
+  - from: blueprint/packages/backend-dynamic-feature-service/plugin-manager
+    to: blueprint/packages/frontend-dynamic-feature-loader/loader
     type: direct-call
     description: Calls module / service

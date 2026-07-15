@@ -47,50 +47,6 @@ nodes:
       sinceDays: 500
     x: 600
     'y': 50
-  - entityRef: blueprint/plugins/auth-backend-module-openshift-provider/authenticator-test
-    type: rest-api
-    name: authenticator.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/auth-backend-module-openshift-provider/src/authenticator.test.ts
-      containerId: auth-backend-module-openshift-provider
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 227
-      sloc: 182
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
-    'y': 50
-  - entityRef: blueprint/plugins/auth-backend-module-openshift-provider/authenticator
-    type: background-worker
-    name: authenticator Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-openshift-provider/src/authenticator.ts
-      containerId: auth-backend-module-openshift-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 9
-      loc: 185
-      sloc: 136
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1100
-    'y': 370
   - entityRef: blueprint/plugins/auth-backend-module-openshift-provider/module
     type: background-worker
     name: module Service
@@ -111,7 +67,29 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1560
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-openshift-provider/authenticator-test
+    type: rest-api
+    name: authenticator.test REST Endpoint
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-openshift-provider/src/authenticator.test.ts
+      containerId: auth-backend-module-openshift-provider
+      technology: REST Controller / Router
+      classification: api-marker
+    forensics:
+      complexity: 1
+      loc: 227
+      sloc: 182
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
     'y': 50
   - entityRef: blueprint/plugins/auth-backend-module-openshift-provider/resolvers
     type: background-worker
@@ -133,19 +111,33 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1600
+    x: 1560
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-openshift-provider/authenticator
+    type: background-worker
+    name: authenticator Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-openshift-provider/src/authenticator.ts
+      containerId: auth-backend-module-openshift-provider
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 9
+      loc: 185
+      sloc: 136
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
     'y': 370
 dependencies:
   - from: blueprint/plugins/auth-backend-module-openshift-provider/config-d
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-openshift-provider/authenticator-test
-    to: blueprint/plugins/auth-backend-module-openshift-provider/authenticator
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-openshift-provider/authenticator-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/auth-backend-module-openshift-provider/module
@@ -154,5 +146,13 @@ dependencies:
     description: Calls module / service
   - from: blueprint/plugins/auth-backend-module-openshift-provider/module
     to: blueprint/plugins/auth-backend-module-openshift-provider/resolvers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-openshift-provider/authenticator-test
+    to: blueprint/plugins/auth-backend-module-openshift-provider/authenticator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-openshift-provider/authenticator-test
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service

@@ -8,14 +8,14 @@ nodes:
     name: index Service
     isTest: false
     properties:
-      filepath: plugins/catalog-backend-module-incremental-ingestion/src/module/index.ts
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/index.ts
       containerId: catalog-backend-module-incremental-ingestion
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 22
-      sloc: 5
+      loc: 31
+      sloc: 8
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -23,30 +23,8 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 140
+    x: 840
     'y': 50
-  - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/types
-    type: background-worker
-    name: types Service
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-incremental-ingestion/src/types.ts
-      containerId: catalog-backend-module-incremental-ingestion
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 199
-      sloc: 68
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 425
-    'y': 1330
   - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestiondatabasemanager-test
     type: relational-database
     name: IncrementalIngestionDatabaseManager.test Database
@@ -67,8 +45,52 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1250
+    x: 410
     'y': 1330
+  - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/tables
+    type: relational-database
+    name: tables Database
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/database/tables.ts
+      containerId: catalog-backend-module-incremental-ingestion
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    forensics:
+      complexity: 1
+      loc: 119
+      sloc: 49
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 895
+    'y': 1970
+  - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/migrations
+    type: relational-database
+    name: migrations Database
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/database/migrations.ts
+      containerId: catalog-backend-module-incremental-ingestion
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    forensics:
+      complexity: 1
+      loc: 32
+      sloc: 13
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 1650
   - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestiondatabasemanager
     type: relational-database
     name: IncrementalIngestionDatabaseManager Database
@@ -90,65 +112,44 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1450
+    x: 1570
     'y': 1650
-  - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/migrations
-    type: relational-database
-    name: migrations Database
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-incremental-ingestion/src/database/migrations.ts
-      containerId: catalog-backend-module-incremental-ingestion
-      technology: Prisma / SQL Database Client
-      classification: database-marker
-    forensics:
-      complexity: 1
-      loc: 32
-      sloc: 13
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2140
-    'y': 1650
-  - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/tables
-    type: relational-database
-    name: tables Database
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-incremental-ingestion/src/database/tables.ts
-      containerId: catalog-backend-module-incremental-ingestion
-      technology: Prisma / SQL Database Client
-      classification: database-marker
-    forensics:
-      complexity: 1
-      loc: 119
-      sloc: 49
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1910
-    'y': 1970
-  - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine-test
+  - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/catalogmoduleincrementalingestionentityprovider
     type: background-worker
-    name: IncrementalIngestionEngine.test Service
+    name: catalogModuleIncrementalIngestionEntityProvider Service
+    isTest: false
+    properties:
+      filepath: >-
+        plugins/catalog-backend-module-incremental-ingestion/src/module/catalogModuleIncrementalIngestionEntityProvider.ts
+      containerId: catalog-backend-module-incremental-ingestion
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 145
+      sloc: 76
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 840
+    'y': 370
+  - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/wrapperproviders-test
+    type: background-worker
+    name: WrapperProviders.test Service
     isTest: true
     properties:
-      filepath: plugins/catalog-backend-module-incremental-ingestion/src/engine/IncrementalIngestionEngine.test.ts
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/module/WrapperProviders.test.ts
       containerId: catalog-backend-module-incremental-ingestion
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 226
-      sloc: 168
+      complexity: 3
+      loc: 118
+      sloc: 87
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -156,31 +157,30 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 520
-    'y': 690
-  - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine
-    type: background-worker
-    name: IncrementalIngestionEngine Service
+    x: 1300
+    'y': 370
+  - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/wrapperproviders
+    type: relational-database
+    name: WrapperProviders Database
     isTest: false
     properties:
-      filepath: plugins/catalog-backend-module-incremental-ingestion/src/engine/IncrementalIngestionEngine.ts
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/module/WrapperProviders.ts
       containerId: catalog-backend-module-incremental-ingestion
-      technology: TypeScript Domain Service
-      classification: default
+      technology: Prisma / SQL Database Client
+      classification: database-marker
     forensics:
-      complexity: 41
-      loc: 435
-      sloc: 378
+      complexity: 8
+      loc: 167
+      sloc: 132
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
-      classifications:
-        - knowledge-silo
+      classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1060
-    'y': 1010
+    x: 1435
+    'y': 690
   - entityRef: >-
       blueprint/plugins/catalog-backend-module-incremental-ingestion/catalogmoduleincrementalingestionentityprovider-test
     type: background-worker
@@ -203,22 +203,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
+    x: 1300
     'y': 50
-  - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/catalogmoduleincrementalingestionentityprovider
+  - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/types
     type: background-worker
-    name: catalogModuleIncrementalIngestionEntityProvider Service
+    name: types Service
     isTest: false
     properties:
-      filepath: >-
-        plugins/catalog-backend-module-incremental-ingestion/src/module/catalogModuleIncrementalIngestionEntityProvider.ts
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/types.ts
       containerId: catalog-backend-module-incremental-ingestion
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 2
-      loc: 145
-      sloc: 76
+      complexity: 1
+      loc: 199
+      sloc: 68
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -226,21 +225,44 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 940
-    'y': 370
-  - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/wrapperproviders-test
+    x: 1570
+    'y': 1330
+  - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine
     type: background-worker
-    name: WrapperProviders.test Service
+    name: IncrementalIngestionEngine Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/engine/IncrementalIngestionEngine.ts
+      containerId: catalog-backend-module-incremental-ingestion
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 41
+      loc: 435
+      sloc: 378
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 1975
+    'y': 1010
+  - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine-test
+    type: background-worker
+    name: IncrementalIngestionEngine.test Service
     isTest: true
     properties:
-      filepath: plugins/catalog-backend-module-incremental-ingestion/src/module/WrapperProviders.test.ts
+      filepath: plugins/catalog-backend-module-incremental-ingestion/src/engine/IncrementalIngestionEngine.test.ts
       containerId: catalog-backend-module-incremental-ingestion
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 3
-      loc: 118
-      sloc: 87
+      complexity: 1
+      loc: 226
+      sloc: 168
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -248,29 +270,7 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1480
-    'y': 370
-  - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/wrapperproviders
-    type: relational-database
-    name: WrapperProviders Database
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-incremental-ingestion/src/module/WrapperProviders.ts
-      containerId: catalog-backend-module-incremental-ingestion
-      technology: Prisma / SQL Database Client
-      classification: database-marker
-    forensics:
-      complexity: 8
-      loc: 167
-      sloc: 132
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1750
+    x: 2205
     'y': 690
   - entityRef: blueprint/plugins/catalog-backend-module-incremental-ingestion/routes
     type: rest-api
@@ -293,73 +293,23 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 1870
+    x: 2595
     'y': 1330
 dependencies:
-  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/types
-    to: blueprint/plugins/api-docs/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/types
-    to: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestiondatabasemanager
-    type: read-write
-    description: Queries datastore records
   - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestiondatabasemanager-test
     to: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestiondatabasemanager
-    type: read-write
-    description: Queries datastore records
-  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestiondatabasemanager
-    to: blueprint/plugins/catalog-backend-module-incremental-ingestion/tables
     type: read-write
     description: Queries datastore records
   - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/migrations
     to: blueprint/plugins/catalog-backend-module-incremental-ingestion/tables
     type: read-write
     description: Queries datastore records
-  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine-test
-    to: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine-test
-    to: blueprint/plugins/catalog-backend-module-incremental-ingestion/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine-test
-    to: blueprint/plugins/api-docs/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine
-    to: blueprint/plugins/api-docs/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine
-    to: blueprint/plugins/catalog-backend-module-incremental-ingestion/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine
-    to: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestiondatabasemanager
+  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestiondatabasemanager
+    to: blueprint/plugins/catalog-backend-module-incremental-ingestion/tables
     type: read-write
     description: Queries datastore records
-  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine
-    to: blueprint/plugins/search-backend-node/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine
-    to: blueprint/plugins/catalog-backend-module-incremental-ingestion/types
-    type: direct-call
-    description: Calls module / service
-  - from: >-
-      blueprint/plugins/catalog-backend-module-incremental-ingestion/catalogmoduleincrementalingestionentityprovider-test
-    to: blueprint/plugins/catalog-backend-module-incremental-ingestion/types
-    type: direct-call
-    description: Calls module / service
-  - from: >-
-      blueprint/plugins/catalog-backend-module-incremental-ingestion/catalogmoduleincrementalingestionentityprovider-test
-    to: blueprint/plugins/catalog-backend-module-incremental-ingestion/catalogmoduleincrementalingestionentityprovider
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/catalogmoduleincrementalingestionentityprovider
-    to: blueprint/plugins/api-docs/alpha
+    to: blueprint/plugins/permission-node/alpha
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/catalogmoduleincrementalingestionentityprovider
@@ -371,11 +321,11 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/wrapperproviders-test
-    to: blueprint/plugins/api-docs/alpha
+    to: blueprint/plugins/permission-node/alpha
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/wrapperproviders-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/wrapperproviders-test
@@ -387,11 +337,11 @@ dependencies:
     type: read-write
     description: Queries datastore records
   - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/wrapperproviders
-    to: blueprint/plugins/api-docs/alpha
+    to: blueprint/plugins/permission-node/alpha
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/wrapperproviders
-    to: blueprint/plugins/search-backend-node/errors
+    to: blueprint/plugins/events-backend/errors
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/wrapperproviders
@@ -416,6 +366,56 @@ dependencies:
     description: Calls module / service
   - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/wrapperproviders
     to: blueprint/plugins/catalog-backend-module-incremental-ingestion/types
+    type: direct-call
+    description: Calls module / service
+  - from: >-
+      blueprint/plugins/catalog-backend-module-incremental-ingestion/catalogmoduleincrementalingestionentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-incremental-ingestion/types
+    type: direct-call
+    description: Calls module / service
+  - from: >-
+      blueprint/plugins/catalog-backend-module-incremental-ingestion/catalogmoduleincrementalingestionentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-incremental-ingestion/catalogmoduleincrementalingestionentityprovider
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/types
+    to: blueprint/plugins/permission-node/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/types
+    to: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestiondatabasemanager
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine
+    to: blueprint/plugins/permission-node/alpha
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine
+    to: blueprint/plugins/catalog-backend-module-incremental-ingestion/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine
+    to: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestiondatabasemanager
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine
+    to: blueprint/plugins/catalog-backend-module-incremental-ingestion/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine-test
+    to: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine-test
+    to: blueprint/plugins/catalog-backend-module-incremental-ingestion/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/incrementalingestionengine-test
+    to: blueprint/plugins/permission-node/alpha
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/catalog-backend-module-incremental-ingestion/routes

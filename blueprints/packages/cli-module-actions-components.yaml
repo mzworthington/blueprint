@@ -3,19 +3,19 @@ name: Cli-module-actions Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/packages/cli-module-actions/index
+  - entityRef: blueprint/packages/cli-module-actions/httpjson
     type: background-worker
-    name: index Service
+    name: httpJson Service
     isTest: false
     properties:
-      filepath: packages/cli-module-actions/src/index.ts
+      filepath: packages/cli-module-actions/src/lib/httpJson.ts
       containerId: cli-module-actions
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 50
-      sloc: 32
+      complexity: 5
+      loc: 45
+      sloc: 26
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -23,21 +23,65 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1655
-    'y': 50
-  - entityRef: blueprint/packages/cli-module-actions/execute-test
+    x: 3005
+    'y': 1330
+  - entityRef: blueprint/packages/cli-module-actions/pluginsources
     type: background-worker
-    name: execute.test Service
+    name: pluginSources Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-actions/src/lib/pluginSources.ts
+      containerId: cli-module-actions
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 20
+      sloc: 2
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 830
+    'y': 1010
+  - entityRef: blueprint/packages/cli-module-actions/actionsclient
+    type: background-worker
+    name: ActionsClient Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-actions/src/lib/ActionsClient.ts
+      containerId: cli-module-actions
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 99
+      sloc: 70
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3600
+    'y': 1010
+  - entityRef: blueprint/packages/cli-module-actions/schematoflags-test
+    type: background-worker
+    name: schemaToFlags.test Service
     isTest: true
     properties:
-      filepath: packages/cli-module-actions/src/commands/execute.test.ts
+      filepath: packages/cli-module-actions/src/lib/schemaToFlags.test.ts
       containerId: cli-module-actions
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 304
-      sloc: 248
+      loc: 200
+      sloc: 158
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -45,21 +89,65 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2115
-    'y': 50
-  - entityRef: blueprint/packages/cli-module-actions/execute
+    x: 2560
+    'y': 690
+  - entityRef: blueprint/packages/cli-module-actions/format-test
     type: background-worker
-    name: execute Service
-    isTest: false
+    name: format.test Service
+    isTest: true
     properties:
-      filepath: packages/cli-module-actions/src/commands/execute.ts
+      filepath: packages/cli-module-actions/src/lib/format.test.ts
       containerId: cli-module-actions
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 21
-      loc: 176
-      sloc: 138
+      complexity: 1
+      loc: 184
+      sloc: 152
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 3790
+    'y': 370
+  - entityRef: blueprint/packages/cli-module-actions/resolveauth-test
+    type: background-worker
+    name: resolveAuth.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-actions/src/lib/resolveAuth.test.ts
+      containerId: cli-module-actions
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 97
+      sloc: 66
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1600
+    'y': 370
+  - entityRef: blueprint/packages/cli-module-actions/format
+    type: background-worker
+    name: format Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-actions/src/lib/format.ts
+      containerId: cli-module-actions
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 16
+      loc: 160
+      sloc: 117
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -68,43 +156,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 2480
-    'y': 370
-  - entityRef: blueprint/packages/cli-module-actions/list
+    x: 3305
+    'y': 690
+  - entityRef: blueprint/packages/cli-module-actions/resolveauth
     type: background-worker
-    name: list Service
+    name: resolveAuth Service
     isTest: false
     properties:
-      filepath: packages/cli-module-actions/src/commands/list.ts
-      containerId: cli-module-actions
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 62
-      sloc: 39
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3155
-    'y': 370
-  - entityRef: blueprint/packages/cli-module-actions/sourcesadd-test
-    type: background-worker
-    name: sourcesAdd.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-actions/src/commands/sourcesAdd.test.ts
+      filepath: packages/cli-module-actions/src/lib/resolveAuth.ts
       containerId: cli-module-actions
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 122
-      sloc: 86
+      loc: 39
+      sloc: 20
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -112,43 +178,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 140
-    'y': 370
-  - entityRef: blueprint/packages/cli-module-actions/sourcesadd
-    type: background-worker
-    name: sourcesAdd Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-actions/src/commands/sourcesAdd.ts
-      containerId: cli-module-actions
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 6
-      loc: 62
-      sloc: 38
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 140
+    x: 1520
     'y': 690
-  - entityRef: blueprint/packages/cli-module-actions/sourceslist
+  - entityRef: blueprint/packages/cli-module-actions/declarations-d
     type: background-worker
-    name: sourcesList Service
+    name: declarations.d Service
     isTest: false
     properties:
-      filepath: packages/cli-module-actions/src/commands/sourcesList.ts
+      filepath: packages/cli-module-actions/src/lib/declarations.d.ts
       containerId: cli-module-actions
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 3
-      loc: 38
-      sloc: 17
+      complexity: 1
+      loc: 24
+      sloc: 4
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -156,7 +200,52 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 600
+    x: 1750
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-actions/schematoflags
+    type: background-worker
+    name: schemaToFlags Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-actions/src/lib/schemaToFlags.ts
+      containerId: cli-module-actions
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 25
+      loc: 108
+      sloc: 75
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 500
+    x: 2020
+    'y': 1010
+  - entityRef: blueprint/packages/cli-module-actions/actionsclient-test
+    type: background-worker
+    name: ActionsClient.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-actions/src/lib/ActionsClient.test.ts
+      containerId: cli-module-actions
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 133
+      sloc: 96
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2100
     'y': 690
   - entityRef: blueprint/packages/cli-module-actions/sourcesremove-test
     type: background-worker
@@ -180,6 +269,28 @@ nodes:
       sinceDays: 500
     x: 1060
     'y': 370
+  - entityRef: blueprint/packages/cli-module-actions/sourcesadd-test
+    type: background-worker
+    name: sourcesAdd.test Service
+    isTest: true
+    properties:
+      filepath: packages/cli-module-actions/src/commands/sourcesAdd.test.ts
+      containerId: cli-module-actions
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 122
+      sloc: 86
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 370
   - entityRef: blueprint/packages/cli-module-actions/sourcesremove
     type: background-worker
     name: sourcesRemove Service
@@ -202,107 +313,19 @@ nodes:
       sinceDays: 500
     x: 1060
     'y': 690
-  - entityRef: blueprint/packages/cli-module-actions/actionsclient-test
+  - entityRef: blueprint/packages/cli-module-actions/execute
     type: background-worker
-    name: ActionsClient.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-actions/src/lib/ActionsClient.test.ts
-      containerId: cli-module-actions
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 133
-      sloc: 96
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2115
-    'y': 690
-  - entityRef: blueprint/packages/cli-module-actions/actionsclient
-    type: background-worker
-    name: ActionsClient Service
+    name: execute Service
     isTest: false
     properties:
-      filepath: packages/cli-module-actions/src/lib/ActionsClient.ts
+      filepath: packages/cli-module-actions/src/commands/execute.ts
       containerId: cli-module-actions
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 2
-      loc: 99
-      sloc: 70
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3640
-    'y': 1010
-  - entityRef: blueprint/packages/cli-module-actions/declarations-d
-    type: background-worker
-    name: declarations.d Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-actions/src/lib/declarations.d.ts
-      containerId: cli-module-actions
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 24
-      sloc: 4
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2575
-    'y': 50
-  - entityRef: blueprint/packages/cli-module-actions/format-test
-    type: background-worker
-    name: format.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-actions/src/lib/format.test.ts
-      containerId: cli-module-actions
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 184
-      sloc: 152
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 3830
-    'y': 370
-  - entityRef: blueprint/packages/cli-module-actions/format
-    type: background-worker
-    name: format Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-actions/src/lib/format.ts
-      containerId: cli-module-actions
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 16
-      loc: 160
-      sloc: 117
+      complexity: 21
+      loc: 176
+      sloc: 138
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -311,87 +334,21 @@ nodes:
         - knowledge-silo
       coupledFiles: []
       sinceDays: 500
-    x: 3345
-    'y': 690
-  - entityRef: blueprint/packages/cli-module-actions/httpjson
-    type: background-worker
-    name: httpJson Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-actions/src/lib/httpJson.ts
-      containerId: cli-module-actions
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 5
-      loc: 45
-      sloc: 26
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2965
-    'y': 1330
-  - entityRef: blueprint/packages/cli-module-actions/pluginsources
-    type: background-worker
-    name: pluginSources Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-actions/src/lib/pluginSources.ts
-      containerId: cli-module-actions
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 20
-      sloc: 2
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1425
-    'y': 1010
-  - entityRef: blueprint/packages/cli-module-actions/resolveauth-test
-    type: background-worker
-    name: resolveAuth.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-actions/src/lib/resolveAuth.test.ts
-      containerId: cli-module-actions
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 97
-      sloc: 66
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1600
+    x: 3115
     'y': 370
-  - entityRef: blueprint/packages/cli-module-actions/resolveauth
+  - entityRef: blueprint/packages/cli-module-actions/sourceslist
     type: background-worker
-    name: resolveAuth Service
+    name: sourcesList Service
     isTest: false
     properties:
-      filepath: packages/cli-module-actions/src/lib/resolveAuth.ts
+      filepath: packages/cli-module-actions/src/commands/sourcesList.ts
       containerId: cli-module-actions
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 39
-      sloc: 20
+      complexity: 3
+      loc: 38
+      sloc: 17
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -399,21 +356,21 @@ nodes:
       classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 1655
+    x: 600
     'y': 690
-  - entityRef: blueprint/packages/cli-module-actions/schematoflags-test
+  - entityRef: blueprint/packages/cli-module-actions/list
     type: background-worker
-    name: schemaToFlags.test Service
-    isTest: true
+    name: list Service
+    isTest: false
     properties:
-      filepath: packages/cli-module-actions/src/lib/schemaToFlags.test.ts
+      filepath: packages/cli-module-actions/src/commands/list.ts
       containerId: cli-module-actions
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 200
-      sloc: 158
+      complexity: 3
+      loc: 62
+      sloc: 39
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
@@ -422,31 +379,158 @@ nodes:
       coupledFiles: []
       sinceDays: 500
     x: 2655
-    'y': 690
-  - entityRef: blueprint/packages/cli-module-actions/schematoflags
+    'y': 370
+  - entityRef: blueprint/packages/cli-module-actions/execute-test
     type: background-worker
-    name: schemaToFlags Service
-    isTest: false
+    name: execute.test Service
+    isTest: true
     properties:
-      filepath: packages/cli-module-actions/src/lib/schemaToFlags.ts
+      filepath: packages/cli-module-actions/src/commands/execute.test.ts
       containerId: cli-module-actions
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 25
-      loc: 108
-      sloc: 75
+      complexity: 1
+      loc: 304
+      sloc: 248
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
-      classifications:
-        - knowledge-silo
+      classifications: []
       coupledFiles: []
       sinceDays: 500
-    x: 2425
-    'y': 1010
+    x: 2210
+    'y': 50
+  - entityRef: blueprint/packages/cli-module-actions/sourcesadd
+    type: background-worker
+    name: sourcesAdd Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-actions/src/commands/sourcesAdd.ts
+      containerId: cli-module-actions
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 6
+      loc: 62
+      sloc: 38
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 140
+    'y': 690
+  - entityRef: blueprint/packages/cli-module-actions/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/cli-module-actions/src/index.ts
+      containerId: cli-module-actions
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 50
+      sloc: 32
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 2670
+    'y': 50
 dependencies:
+  - from: blueprint/packages/cli-module-actions/httpjson
+    to: blueprint/packages/cli-common/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/actionsclient
+    to: blueprint/packages/cli-module-actions/httpjson
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/schematoflags-test
+    to: blueprint/packages/cli-module-actions/schematoflags
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/format-test
+    to: blueprint/packages/cli-module-actions/format
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/resolveauth-test
+    to: blueprint/packages/cli-module-actions/resolveauth
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/format
+    to: blueprint/packages/cli-module-actions/actionsclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/format
+    to: blueprint/packages/cli-module-actions/schematoflags
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/resolveauth
+    to: blueprint/packages/cli-module-actions/pluginsources
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/actionsclient-test
+    to: blueprint/packages/cli-module-actions/actionsclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/actionsclient-test
+    to: blueprint/packages/cli-module-actions/httpjson
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/sourcesremove-test
+    to: blueprint/packages/cli-module-actions/sourcesremove
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/sourcesadd-test
+    to: blueprint/packages/cli-module-actions/sourcesadd
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/sourcesremove
+    to: blueprint/packages/cli-module-actions/pluginsources
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/execute
+    to: blueprint/packages/cli-module-actions/actionsclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/execute
+    to: blueprint/packages/cli-module-actions/schematoflags
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/execute
+    to: blueprint/packages/cli-module-actions/resolveauth
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/execute
+    to: blueprint/packages/cli-module-actions/format
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/sourceslist
+    to: blueprint/packages/cli-module-actions/pluginsources
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/list
+    to: blueprint/packages/cli-module-actions/actionsclient
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/list
+    to: blueprint/packages/cli-module-actions/resolveauth
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/cli-module-actions/list
+    to: blueprint/packages/cli-module-actions/format
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/packages/cli-module-actions/execute-test
     to: blueprint/packages/cli-module-actions/execute
     type: direct-call
@@ -455,123 +539,7 @@ dependencies:
     to: blueprint/packages/cli-module-actions/resolveauth
     type: direct-call
     description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/execute
-    to: blueprint/packages/cli-module-actions/actionsclient
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/execute
-    to: blueprint/packages/cli-module-actions/schematoflags
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/execute
-    to: blueprint/packages/cli-module-actions/resolveauth
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/execute
-    to: blueprint/packages/cli-module-actions/format
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/list
-    to: blueprint/packages/cli-module-actions/actionsclient
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/list
-    to: blueprint/packages/cli-module-actions/resolveauth
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/list
-    to: blueprint/packages/cli-module-actions/format
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/sourcesadd-test
-    to: blueprint/packages/cli-module-actions/sourcesadd
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/packages/cli-module-actions/sourcesadd
     to: blueprint/packages/cli-module-actions/pluginsources
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/sourceslist
-    to: blueprint/packages/cli-module-actions/pluginsources
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/sourcesremove-test
-    to: blueprint/packages/cli-module-actions/sourcesremove
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/sourcesremove
-    to: blueprint/packages/cli-module-actions/pluginsources
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/actionsclient-test
-    to: blueprint/packages/cli-module-actions/actionsclient
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/actionsclient-test
-    to: blueprint/packages/cli-module-actions/httpjson
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/actionsclient
-    to: blueprint/packages/cli-module-actions/httpjson
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/format-test
-    to: blueprint/packages/cli-module-actions/format
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/format
-    to: blueprint/packages/cli-module-actions/actionsclient
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/format
-    to: blueprint/packages/cli-module-actions/schematoflags
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/httpjson
-    to: blueprint/packages/cli-common/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/resolveauth-test
-    to: blueprint/packages/cli-module-actions/resolveauth
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/resolveauth
-    to: blueprint/packages/cli-module-actions/pluginsources
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-actions/schematoflags-test
-    to: blueprint/packages/cli-module-actions/schematoflags
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-legacy/advancedsettings
-    to: blueprint/packages/cli-module-actions/list
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/core-components/errorpanel
-    to: blueprint/packages/cli-module-actions/list
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/core-components/linkbutton-stories
-    to: blueprint/packages/cli-module-actions/list
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/core-components/oauthrequestdialog
-    to: blueprint/packages/cli-module-actions/list
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/core-components/metadatatable
-    to: blueprint/packages/cli-module-actions/list
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/core-components/breadcrumbs-stories
-    to: blueprint/packages/cli-module-actions/list
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/core-components/breadcrumbs
-    to: blueprint/packages/cli-module-actions/list
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/core-components/headeractionmenu
-    to: blueprint/packages/cli-module-actions/list
     type: direct-call
     description: Calls module / service

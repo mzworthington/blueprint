@@ -47,72 +47,6 @@ nodes:
       sinceDays: 500
     x: 600
     'y': 50
-  - entityRef: blueprint/plugins/auth-backend-module-vmware-cloud-provider/authenticator-test
-    type: background-worker
-    name: authenticator.test Service
-    isTest: true
-    properties:
-      filepath: plugins/auth-backend-module-vmware-cloud-provider/src/authenticator.test.ts
-      containerId: auth-backend-module-vmware-cloud-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 480
-      sloc: 398
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 370
-  - entityRef: blueprint/plugins/auth-backend-module-vmware-cloud-provider/authenticator
-    type: background-worker
-    name: authenticator Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-vmware-cloud-provider/src/authenticator.ts
-      containerId: auth-backend-module-vmware-cloud-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 7
-      loc: 246
-      sloc: 199
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 830
-    'y': 690
-  - entityRef: blueprint/plugins/auth-backend-module-vmware-cloud-provider/module-test
-    type: background-worker
-    name: module.test Service
-    isTest: true
-    properties:
-      filepath: plugins/auth-backend-module-vmware-cloud-provider/src/module.test.ts
-      containerId: auth-backend-module-vmware-cloud-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 91
-      sloc: 65
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1060
-    'y': 50
   - entityRef: blueprint/plugins/auth-backend-module-vmware-cloud-provider/module
     type: background-worker
     name: module Service
@@ -135,28 +69,94 @@ nodes:
       sinceDays: 500
     x: 1060
     'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-vmware-cloud-provider/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-vmware-cloud-provider/src/module.test.ts
+      containerId: auth-backend-module-vmware-cloud-provider
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 91
+      sloc: 65
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1060
+    'y': 50
+  - entityRef: blueprint/plugins/auth-backend-module-vmware-cloud-provider/authenticator-test
+    type: background-worker
+    name: authenticator.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-vmware-cloud-provider/src/authenticator.test.ts
+      containerId: auth-backend-module-vmware-cloud-provider
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 480
+      sloc: 398
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1520
+    'y': 370
+  - entityRef: blueprint/plugins/auth-backend-module-vmware-cloud-provider/authenticator
+    type: background-worker
+    name: authenticator Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-vmware-cloud-provider/src/authenticator.ts
+      containerId: auth-backend-module-vmware-cloud-provider
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 7
+      loc: 246
+      sloc: 199
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 500
+    x: 1290
+    'y': 690
 dependencies:
   - from: blueprint/plugins/auth-backend-module-vmware-cloud-provider/config-d
-    to: blueprint/plugins/auth-backend-module-aws-alb-provider/types
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-vmware-cloud-provider/authenticator-test
-    to: blueprint/plugins/api-docs/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-vmware-cloud-provider/authenticator-test
+  - from: blueprint/plugins/auth-backend-module-vmware-cloud-provider/module
     to: blueprint/plugins/auth-backend-module-vmware-cloud-provider/authenticator
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/auth-backend-module-vmware-cloud-provider/module-test
-    to: blueprint/plugins/api-docs/config
+    to: blueprint/plugins/home/config
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/auth-backend-module-vmware-cloud-provider/module-test
     to: blueprint/plugins/auth-backend-module-vmware-cloud-provider/module
     type: direct-call
     description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-vmware-cloud-provider/module
+  - from: blueprint/plugins/auth-backend-module-vmware-cloud-provider/authenticator-test
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-vmware-cloud-provider/authenticator-test
     to: blueprint/plugins/auth-backend-module-vmware-cloud-provider/authenticator
     type: direct-call
     description: Calls module / service
