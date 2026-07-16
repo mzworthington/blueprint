@@ -95,8 +95,39 @@ export const DesignSystemShowcase: React.FC = () => {
         subtitle="System guidelines, vector assets, and glassmorphic user interface tokens."
       />
 
+      {/* Mobile sub-navigation switcher */}
+      <div className="md:hidden border-b border-[#00f0ff]/10 bg-[#061125]/60 backdrop-blur-sm sticky top-[73px] z-40">
+        <div className="flex gap-2 items-center p-3 overflow-x-auto scrollbar-none min-w-0">
+          {(
+            [
+              { id: 'identity' as const, label: 'Identity & Grid' },
+              { id: 'tokens' as const, label: 'Design Tokens' },
+              { id: 'assets' as const, label: 'Vector Asset Pack' },
+              { id: 'components' as const, label: 'UI Components' },
+              { id: 'sandbox' as const, label: 'Interactive Sandbox' },
+            ] as const
+          ).map(item => {
+            const active = activeTab === item.id;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setActiveTab(item.id)}
+                className={`rounded-lg px-3 py-1.5 text-[11px] font-mono whitespace-nowrap transition-all border shrink-0 ${
+                  active
+                    ? 'bg-[#00f0ff]/15 text-[#00f0ff] border-[#00f0ff]/30'
+                    : 'text-slate-450 hover:text-slate-200 bg-transparent border-transparent hover:bg-white/5'
+                }`}
+              >
+                {item.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       <div className="max-w-6xl w-full mx-auto px-4 md:px-8 py-8 flex-1 flex flex-col md:flex-row md:items-start gap-8">
-        <aside className="w-full md:w-56 shrink-0">
+        <aside className="hidden md:block w-full md:w-56 shrink-0">
           <div className="sticky top-28 space-y-6 text-sm">
             <div>
               <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.14em] text-[#00f0ff]">

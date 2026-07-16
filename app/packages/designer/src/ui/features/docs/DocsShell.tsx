@@ -36,6 +36,33 @@ export const DocsShell: React.FC<Props> = ({ children, title }) => {
         </nav>
       </AppHeader>
 
+      {/* Mobile docs sub-navigation switcher */}
+      <div className="lg:hidden border-b border-[#00f0ff]/10 bg-[#061125]/60 backdrop-blur-sm sticky top-[73px] z-40">
+        <div className="flex gap-2 items-center p-3 overflow-x-auto scrollbar-none min-w-0">
+          {DOCS_SIDEBAR.map((section, sIdx) => (
+            <React.Fragment key={section.title}>
+              {sIdx > 0 && <span className="text-slate-700 select-none">|</span>}
+              {section.items.map(item => {
+                const active = location === item.path;
+                return (
+                  <Link
+                    key={item.path}
+                    href={item.path}
+                    className={`rounded-lg px-3 py-1.5 text-[11px] font-mono whitespace-nowrap transition-all border shrink-0 ${
+                      active
+                        ? 'bg-[#00f0ff]/15 text-[#00f0ff] border-[#00f0ff]/30'
+                        : 'text-slate-450 hover:text-slate-200 bg-transparent border-transparent hover:bg-white/5'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
+
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[14rem_minmax(0,1fr)]">
         <aside className="hidden lg:block">
           <div className="sticky top-28 space-y-6 text-sm">
