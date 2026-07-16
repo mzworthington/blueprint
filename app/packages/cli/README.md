@@ -1,6 +1,6 @@
 # `@blueprint/cli` — Command Line AST Analyzer
 
-![Blueprint CLI Interactive Prompts](../../docs/screenshots/cli.png)
+![Blueprint CLI Interactive Prompts](../../docs/screenshots/cli.gif)
 
 Scans a local codebase, extracts modules and dependencies via static analysis, lays them out with Dagre, and writes C4-style YAML under `blueprints/`.
 
@@ -154,3 +154,15 @@ Produces `dist/blueprint` (or `dist/blueprint.exe`) and copies supported tree-si
 ```bash
 pnpm test:cli
 ```
+
+### VHS terminal demo
+
+Records the interactive CLI against this repo into `docs/screenshots/cli.gif`
+(requires [VHS](https://github.com/charmbracelet/vhs), `ttyd`, `ffmpeg`, and `bun`):
+
+```bash
+brew install vhs ffmpeg   # pulls ttyd
+pnpm test:vhs
+```
+
+Tape source: `tapes/cli-demo.tape` (scans `app/packages/**/*.{ts,tsx}`, writes to `.vhs-out/`).

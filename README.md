@@ -18,7 +18,7 @@ A front-end visual canvas web application client. Double-click boundary nodes to
 
 ## The Blueprint CLI Tool
 
-![Blueprint CLI Interactive Prompts](./docs/screenshots/cli.png)
+![Blueprint CLI Interactive Prompts](./docs/screenshots/cli.gif)
 
 A command-line static analysis (AST) codebase scanner. It parses source files, extracts modules, identifies components and dependency references, computes an optimal layout using Dagre, and outputs a valid system schema YAML configuration file inside the `blueprints/` directory.
 

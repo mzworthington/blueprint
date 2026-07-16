@@ -2,7 +2,7 @@
 
 The TypeScript CLI (`@blueprint/cli`) scans source, discovers systems, extracts components and dependencies, lays them out with Dagre, and writes multi-level blueprint YAML.
 
-![CLI prompts](../screenshots/cli.png)
+![CLI prompts](../screenshots/cli.gif)
 
 ## Modes
 
