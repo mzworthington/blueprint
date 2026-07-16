@@ -22,6 +22,8 @@ export const ActionControls: React.FC = () => {
     setIsLoading,
   } = useBlueprintStore();
 
+  const controlsDisabled = Boolean(isLoading);
+
   const handleSave = async () => {
     if (isWorkspaceOpen) {
       await saveActiveDiagram();
@@ -77,7 +79,7 @@ export const ActionControls: React.FC = () => {
       {isWorkspaceOpen ? (
         <button
           onClick={handleOpenFolder}
-          disabled={isLoading}
+          disabled={controlsDisabled}
           className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-slate-100 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           title="Open another folder workspace"
         >
@@ -87,7 +89,7 @@ export const ActionControls: React.FC = () => {
       ) : (
         <button
           onClick={handleOpenFolder}
-          disabled={isLoading}
+          disabled={controlsDisabled}
           className="flex items-center gap-1.5 bg-brand-600/15 border border-brand-500/30 text-brand-400 hover:bg-brand-600/30 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           title="Open a local directory workspace"
         >
@@ -98,7 +100,7 @@ export const ActionControls: React.FC = () => {
 
       <button
         onClick={handleLoad}
-        disabled={isLoading}
+        disabled={controlsDisabled}
         className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-slate-100 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         title="Open single YAML from disk"
       >
@@ -108,7 +110,7 @@ export const ActionControls: React.FC = () => {
 
       <button
         onClick={handleSave}
-        disabled={isLoading}
+        disabled={controlsDisabled}
         className="flex items-center gap-1.5 bg-brand-700 hover:bg-brand-800 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-lg shadow-brand-600/20 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         title={isWorkspaceOpen ? 'Save diagram directly in folder' : 'Save YAML to disk'}
       >
@@ -119,7 +121,7 @@ export const ActionControls: React.FC = () => {
       {isWorkspaceOpen && schema.level === 'component' && (
         <button
           onClick={syncExternalContainers}
-          disabled={isLoading}
+          disabled={controlsDisabled}
           className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-[#00f0ff] hover:text-cyan-300 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 hover:border-brand-500/20 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           title="Sync related container dependencies as external nodes in this view"
         >
@@ -131,7 +133,7 @@ export const ActionControls: React.FC = () => {
       {hasPendingChanges && (
         <button
           onClick={() => setIsDiffOpen(true)}
-          disabled={isLoading}
+          disabled={controlsDisabled}
           className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-amber-400 hover:text-amber-300 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 hover:border-amber-900/30 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           title="View pending local changes / diff"
           id="view-pending-changes"
@@ -143,7 +145,7 @@ export const ActionControls: React.FC = () => {
 
       <button
         onClick={undo}
-        disabled={past.length === 0 || isLoading}
+        disabled={past.length === 0 || controlsDisabled}
         className="p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 disabled:opacity-30 disabled:hover:bg-slate-900 disabled:hover:text-slate-400 transition cursor-pointer disabled:cursor-not-allowed"
         title="Undo (Cmd+Z / Ctrl+Z)"
         id="undo-action"
@@ -153,7 +155,7 @@ export const ActionControls: React.FC = () => {
 
       <button
         onClick={redo}
-        disabled={future.length === 0 || isLoading}
+        disabled={future.length === 0 || controlsDisabled}
         className="p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 disabled:opacity-30 disabled:hover:bg-slate-900 disabled:hover:text-slate-400 transition cursor-pointer disabled:cursor-not-allowed"
         title="Redo (Cmd+Shift+Z / Ctrl+Shift+Z / Cmd+Y)"
         id="redo-action"
@@ -163,7 +165,7 @@ export const ActionControls: React.FC = () => {
 
       <button
         onClick={handleClear}
-        disabled={isLoading}
+        disabled={controlsDisabled}
         className="p-1.5 rounded-lg bg-slate-900 hover:bg-red-950/20 text-slate-500 hover:text-red-400 border border-slate-800 hover:border-red-900/30 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         title="Clear canvas"
       >
