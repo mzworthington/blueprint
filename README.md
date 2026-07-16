@@ -85,3 +85,23 @@ pnpm dev   # docs (/) + workspace (/workspace) in one Vite app
 ```
 
 On GitHub Pages: documentation at `/`, canvas at `/workspace`.
+
+---
+
+## 🚀 Roadmap & Future Enhancements
+
+We are continuously improving Blueprint. Here are some of the key features and enhancements planned for the roadmap:
+
+### 1. Interactive Visual Editing
+
+- **Undo / Redo (History):** Integrate a local command history stack (Zustand state store) to easily revert visual canvas actions (e.g., node dragging, edge wiring, renaming) using standard keyboard shortcuts (`Cmd+Z` / `Ctrl+Z`).
+- **Drag-and-Drop Catalog:** Enhance the Component Catalog by allowing users to drag components from the sidebar and place them at specific canvas coordinates.
+
+### 2. Forensic Insights Expansion
+
+- **Code Churn Trend Charts:** Embed micro sparklines and trend charts in the Git forensics panel to show churn and author activity over time.
+- **Suggested Refactoring Paths:** Heuristic analyzers that highlight nodes where high AST complexity overlaps with high git churn, suggesting target candidates for modular refactoring.
+
+### 3. Integrations & Version Control
+
+- **Direct Git Branch Integration:** View active git branch states within the web app and directly commit/push schema changes to new branches.

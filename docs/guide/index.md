@@ -25,6 +25,7 @@ Use this guide if you want to understand the product, not just the internals.
 - [Canvas & workspace](./canvas.md) — panels, selection, zoom, sync
 - [CLI analysis](./cli.md) — scanners, flags, outputs
 - [Git forensics](./forensics.md) — metrics, coupling overlay, lookback
+- [Design system](./design-system.md) — visual assets & identity sandbox
 
 ## Deeper reference
 
