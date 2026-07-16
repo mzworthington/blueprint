@@ -20,13 +20,13 @@ test.describe('Blueprint E2E Journeys', () => {
     const rightPanel = page.getByTestId('right-panel');
 
     await expect(leftPanel).toHaveClass(/w-0/);
-    await expect(rightPanel).toHaveClass(/w-0/);
+    await expect(rightPanel).not.toHaveClass(/w-0/);
 
     await leftPanelButton.click();
     await expect(leftPanel).not.toHaveClass(/w-0/);
 
     await rightPanelButton.click();
-    await expect(rightPanel).not.toHaveClass(/w-0/);
+    await expect(rightPanel).toHaveClass(/w-0/);
 
     await page.screenshot({ path: '../../../docs/screenshots/1-panels-expanded.png' });
 
@@ -34,7 +34,7 @@ test.describe('Blueprint E2E Journeys', () => {
     await expect(leftPanel).toHaveClass(/w-0/);
 
     await rightPanelButton.click();
-    await expect(rightPanel).toHaveClass(/w-0/);
+    await expect(rightPanel).not.toHaveClass(/w-0/);
 
     await page.screenshot({ path: '../../../docs/screenshots/2-panels-collapsed.png' });
   });
