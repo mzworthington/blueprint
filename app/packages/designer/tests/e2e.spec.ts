@@ -28,6 +28,7 @@ test.describe('Blueprint E2E Journeys', () => {
     await rightPanelButton.click();
     await expect(rightPanel).toHaveClass(/w-0/);
 
+    await page.waitForTimeout(500);
     await page.screenshot({ path: '../../../docs/screenshots/1-panels-expanded.png' });
 
     await leftPanelButton.click();
@@ -36,6 +37,7 @@ test.describe('Blueprint E2E Journeys', () => {
     await rightPanelButton.click();
     await expect(rightPanel).not.toHaveClass(/w-0/);
 
+    await page.waitForTimeout(500);
     await page.screenshot({ path: '../../../docs/screenshots/2-panels-collapsed.png' });
   });
 
@@ -48,6 +50,7 @@ test.describe('Blueprint E2E Journeys', () => {
     await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint');
     expect(page.url()).toContain('/workspace/blueprint');
 
+    await page.waitForTimeout(1000);
     await page.screenshot({ path: '../../../docs/screenshots/3-container-level.png' });
 
     const appSystem = page.locator('.react-flow__node', { hasText: 'App System' }).first();
@@ -58,6 +61,7 @@ test.describe('Blueprint E2E Journeys', () => {
     await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint/app');
     expect(page.url()).toContain('/workspace/blueprint/app');
 
+    await page.waitForTimeout(1000);
     await page.screenshot({ path: '../../../docs/screenshots/4-zoomed-in-components.png' });
 
     const appService = page.locator('.react-flow__node', { hasText: 'App Service' }).first();
@@ -80,6 +84,7 @@ test.describe('Blueprint E2E Journeys', () => {
     await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint');
     expect(page.url()).toContain('/workspace/blueprint');
 
+    await page.waitForTimeout(1000);
     await page.screenshot({ path: '../../../docs/screenshots/5-zoomed-back-out.png' });
   });
 });
