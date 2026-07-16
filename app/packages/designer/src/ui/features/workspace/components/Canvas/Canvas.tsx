@@ -45,6 +45,7 @@ export const Canvas: React.FC = () => {
     showTests,
     showCoupling,
     showHotspotHeatmap,
+    focusedCyclePath,
     loadedSystems,
     currentFilePath,
     workspaceName,
@@ -125,10 +126,15 @@ export const Canvas: React.FC = () => {
   }, [nodes, showTests]);
 
   const displayNodes = useMemo(() => {
-    const focused = filterCouplingFocusNodes(filteredNodes, selectedNodeId, showCoupling);
+    let baseNodes = filteredNodes;
+    if (focusedCyclePath) {
+      const cycleSet = new Set(focusedCyclePath);
+      baseNodes = baseNodes.filter(n => cycleSet.has(n.id));
+    }
+    const focused = filterCouplingFocusNodes(baseNodes, selectedNodeId, showCoupling);
     const withCoupling = applyCouplingHighlights(focused, selectedNodeId, showCoupling);
     return applyHotspotHeatmap(withCoupling, showHotspotHeatmap);
-  }, [filteredNodes, selectedNodeId, showCoupling, showHotspotHeatmap]);
+  }, [filteredNodes, selectedNodeId, showCoupling, showHotspotHeatmap, focusedCyclePath]);
 
   const filteredEdges = useMemo(() => {
     if (showTests) return edges;
@@ -137,13 +143,23 @@ export const Canvas: React.FC = () => {
   }, [edges, filteredNodes, showTests]);
 
   const displayEdges = useMemo(() => {
+    if (focusedCyclePath) {
+      return filteredEdges.filter(e => {
+        for (let i = 0; i < focusedCyclePath.length - 1; i++) {
+          if (focusedCyclePath[i] === e.source && focusedCyclePath[i + 1] === e.target) {
+            return true;
+          }
+        }
+        return false;
+      });
+    }
     const couplingEdges = buildCouplingOverlayEdges(selectedNodeId, filteredNodes, showCoupling);
     // Coupling focus: hide schema deps; only show temporal-coupling links.
     if (showCoupling && couplingEdges.length > 0) return couplingEdges;
 
     const visibleNodeIds = new Set(displayNodes.map(n => n.id));
     return filteredEdges.filter(e => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target));
-  }, [filteredEdges, filteredNodes, displayNodes, selectedNodeId, showCoupling]);
+  }, [filteredEdges, filteredNodes, displayNodes, selectedNodeId, showCoupling, focusedCyclePath]);
 
   const { screenToFlowPosition } = useReactFlow();
 

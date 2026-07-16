@@ -238,4 +238,20 @@ describe('diagramState Actions & State Management', () => {
     expect(addedNode?.x).toBe(450);
     expect(addedNode?.y).toBe(600);
   });
+
+  it('should reset focusedCyclePath to null when initSchema is called', () => {
+    const store = useBlueprintStore.getState();
+    store.setFocusedCyclePath(['nodeA', 'nodeB', 'nodeA']);
+    expect(useBlueprintStore.getState().focusedCyclePath).toEqual(['nodeA', 'nodeB', 'nodeA']);
+
+    store.initSchema({
+      name: 'System C',
+      version: '1.0.0',
+      level: 'container',
+      nodes: [{ entityRef: 'nodeC', type: 'web-app', name: 'Node C' }],
+      dependencies: [],
+    });
+
+    expect(useBlueprintStore.getState().focusedCyclePath).toBeNull();
+  });
 });

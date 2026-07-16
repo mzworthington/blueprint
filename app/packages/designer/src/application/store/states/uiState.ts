@@ -22,6 +22,7 @@ export interface UiState {
   showDesignSystem: boolean;
   isDiffOpen: boolean;
   notification: ToastNotification | null;
+  focusedCyclePath: string[] | null;
   toggleShowTests: () => void;
   toggleShowCoupling: () => void;
   toggleShowHotspotHeatmap: () => void;
@@ -31,6 +32,7 @@ export interface UiState {
   setIsDiffOpen: (open: boolean) => void;
   setNotification: (notification: ToastNotification | null) => void;
   setLayoutEngine: (engine: LayoutEngineId | null) => void;
+  setFocusedCyclePath: (path: string[] | null) => void;
 }
 
 export const createUiState = (
@@ -45,6 +47,7 @@ export const createUiState = (
   showDesignSystem: false,
   isDiffOpen: false,
   notification: null,
+  focusedCyclePath: null,
   toggleShowTests: () => set(state => ({ showTests: !state.showTests })),
   toggleShowCoupling: () => set(state => ({ showCoupling: !state.showCoupling })),
   toggleShowHotspotHeatmap: () => set(state => ({ showHotspotHeatmap: !state.showHotspotHeatmap })),
@@ -54,4 +57,5 @@ export const createUiState = (
   setIsDiffOpen: open => set({ isDiffOpen: open }),
   setNotification: notification => set({ notification }),
   setLayoutEngine: engine => set({ layoutEngine: engine }),
+  setFocusedCyclePath: path => set({ focusedCyclePath: path }),
 });

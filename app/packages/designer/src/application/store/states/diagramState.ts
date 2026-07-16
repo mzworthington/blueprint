@@ -188,6 +188,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
     set({
       currentFilePath: path,
       selectedNodeId: null,
+      focusedCyclePath: null,
     });
     get().clearHistory();
     get().initSchema(system.schema);
@@ -195,6 +196,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
 
   initSchema: schema => {
     get().clearHistory();
+    set({ focusedCyclePath: null });
     const rfNodes = schema.nodes.map(mapDomainNodeToRFNode);
     const rfEdges = schema.dependencies.map(mapDomainDepToRFEdge);
     applyStateUpdates(

@@ -97,4 +97,15 @@ describe('uiState Actions & State Management', () => {
     expect(useBlueprintStore.getState().rightCollapsed).toBe(false);
     expect(useBlueprintStore.getState().selectedNodeId).toBe('nodeA');
   });
+
+  it('should initialize focusedCyclePath to null and set it via setFocusedCyclePath', () => {
+    const store = useBlueprintStore.getState();
+    expect(store.focusedCyclePath).toBe(null);
+
+    store.setFocusedCyclePath(['node-a', 'node-b', 'node-a']);
+    expect(useBlueprintStore.getState().focusedCyclePath).toEqual(['node-a', 'node-b', 'node-a']);
+
+    store.setFocusedCyclePath(null);
+    expect(useBlueprintStore.getState().focusedCyclePath).toBe(null);
+  });
 });
