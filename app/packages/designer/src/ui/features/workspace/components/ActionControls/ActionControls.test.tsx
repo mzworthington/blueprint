@@ -25,6 +25,8 @@ describe('ActionControls Component', () => {
       undo: vi.fn(),
       redo: vi.fn(),
       hasPendingChanges: false,
+      isLoading: false,
+      setIsLoading: vi.fn(),
     });
   });
 
@@ -104,9 +106,20 @@ describe('ActionControls Component', () => {
     expect(saveActiveDiagramMock).toHaveBeenCalledTimes(1);
   });
 
-  it('triggers initSchema on clearing canvas if confirmed', () => {
+  it('triggers initSchema on clearing canvas if confirmed', async () => {
     const initSchemaMock = vi.fn();
-    useBlueprintStore.setState({ initSchema: initSchemaMock });
+    const setIsLoadingMock = vi.fn();
+    useBlueprintStore.setState({ initSchema: initSchemaMock, setIsLoading: setIsLoadingMock });
+
+    // Mock dynamic import database object
+    vi.mock('../../../../../infrastructure/db/db', () => ({
+      db: {
+        originalNodes: { clear: vi.fn().mockResolvedValue(undefined) },
+        workingNodes: { clear: vi.fn().mockResolvedValue(undefined) },
+        originalDependencies: { clear: vi.fn().mockResolvedValue(undefined) },
+        workingDependencies: { clear: vi.fn().mockResolvedValue(undefined) },
+      },
+    }));
 
     const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(true);
 
@@ -114,7 +127,12 @@ describe('ActionControls Component', () => {
     const btn = screen.getByTitle('Clear canvas');
     fireEvent.click(btn);
 
-    expect(confirmSpy).toHaveBeenCalledWith('Clear the workspace and create a blank canvas?');
+    // Wait multiple ticks for async module import & clear operations to complete
+    await new Promise(resolve => setTimeout(resolve, 50));
+
+    expect(confirmSpy).toHaveBeenCalledWith(
+      'Clear the workspace, purge all IndexedDB drafts, and create a blank canvas?'
+    );
     expect(initSchemaMock).toHaveBeenCalledWith({
       name: 'Empty Workspace',
       version: '1.0.0',
@@ -139,6 +157,16 @@ describe('ActionControls Component', () => {
     expect(initSchemaMock).not.toHaveBeenCalled();
 
     confirmSpy.mockRestore();
+  });
+
+  it('disables buttons when isLoading is true', () => {
+    useBlueprintStore.setState({ isLoading: true });
+    render(<ActionControls />);
+
+    expect(screen.getByTitle('Open a local directory workspace')).toBeDisabled();
+    expect(screen.getByTitle('Open single YAML from disk')).toBeDisabled();
+    expect(screen.getByTitle('Save YAML to disk')).toBeDisabled();
+    expect(screen.getByTitle('Clear canvas')).toBeDisabled();
   });
 
   it('renders Sync Externals button and triggers sync when workspace is open and schema level is component', () => {

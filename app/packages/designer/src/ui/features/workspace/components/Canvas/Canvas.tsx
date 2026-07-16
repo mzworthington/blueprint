@@ -15,7 +15,7 @@ import { ActionControls } from '../ActionControls/ActionControls';
 import { LayoutEngineControls } from '../LayoutEngineControls/LayoutEngineControls';
 import { Searchbar } from '../Searchbar/Searchbar';
 import { SystemSelector } from '../SystemSelector/SystemSelector';
-import { AlertTriangle, CheckCircle2, Info, AlertCircle, X, ZoomOut } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, Info, AlertCircle, X, ZoomOut, Loader2 } from 'lucide-react';
 import { getSchemaEntityRef } from '@blueprint/core';
 import type { NodeType } from '@blueprint/core';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
@@ -58,6 +58,7 @@ export const Canvas: React.FC = () => {
     redo,
     recordHistory,
     addNode,
+    isLoading,
   } = useBlueprintStore();
 
   const { fitView } = useReactFlow();
@@ -332,6 +333,17 @@ export const Canvas: React.FC = () => {
               </button>
             </div>
           </Panel>
+        )}
+
+        {isLoading && (
+          <div className="absolute inset-0 bg-[#040914]/65 backdrop-blur-[4px] z-50 flex flex-col items-center justify-center gap-3 animate-fade-in pointer-events-auto">
+            <div className="p-4 rounded-2xl bg-[#061125]/85 border border-[#00f0ff]/20 shadow-[0_0_30px_rgba(0,240,255,0.15)] flex flex-col items-center gap-3 min-w-[180px] max-w-[240px] text-center">
+              <Loader2 className="w-8 h-8 animate-spin text-[#00f0ff]" />
+              <span className="text-xs font-mono tracking-wider text-slate-350 uppercase">
+                {typeof isLoading === 'string' ? isLoading : 'LOADING SCHEMA...'}
+              </span>
+            </div>
+          </div>
         )}
       </ReactFlow>
     </div>

@@ -23,6 +23,7 @@ export interface UiState {
   isDiffOpen: boolean;
   notification: ToastNotification | null;
   focusedCyclePath: string[] | null;
+  isLoading: boolean | string;
   toggleShowTests: () => void;
   toggleShowCoupling: () => void;
   toggleShowHotspotHeatmap: () => void;
@@ -33,6 +34,7 @@ export interface UiState {
   setNotification: (notification: ToastNotification | null) => void;
   setLayoutEngine: (engine: LayoutEngineId | null) => void;
   setFocusedCyclePath: (path: string[] | null) => void;
+  setIsLoading: (loading: boolean | string) => void;
 }
 
 export const createUiState = (
@@ -48,6 +50,7 @@ export const createUiState = (
   isDiffOpen: false,
   notification: null,
   focusedCyclePath: null,
+  isLoading: false,
   toggleShowTests: () => set(state => ({ showTests: !state.showTests })),
   toggleShowCoupling: () => set(state => ({ showCoupling: !state.showCoupling })),
   toggleShowHotspotHeatmap: () => set(state => ({ showHotspotHeatmap: !state.showHotspotHeatmap })),
@@ -58,4 +61,5 @@ export const createUiState = (
   setNotification: notification => set({ notification }),
   setLayoutEngine: engine => set({ layoutEngine: engine }),
   setFocusedCyclePath: path => set({ focusedCyclePath: path }),
+  setIsLoading: loading => set({ isLoading: loading }),
 });

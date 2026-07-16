@@ -18,6 +18,8 @@ export const ActionControls: React.FC = () => {
     past,
     future,
     hasPendingChanges,
+    isLoading,
+    setIsLoading,
   } = useBlueprintStore();
 
   const handleSave = async () => {
@@ -28,12 +30,38 @@ export const ActionControls: React.FC = () => {
     }
   };
 
-  const handleLoad = async () => {
-    await loadSchema();
+  const handleOpenFolder = async () => {
+    try {
+      await openWorkspaceDirectory();
+    } catch (err) {
+      console.error('Failed to open workspace directory:', err);
+    }
   };
 
-  const handleClear = () => {
-    if (confirm('Clear the workspace and create a blank canvas?')) {
+  const handleLoad = async () => {
+    try {
+      await loadSchema();
+    } catch (err) {
+      console.error('Failed to load schema:', err);
+    }
+  };
+
+  const handleClear = async () => {
+    if (confirm('Clear the workspace, purge all IndexedDB drafts, and create a blank canvas?')) {
+      setIsLoading('Cleaning workspace...');
+      const { db } = await import('../../../../../infrastructure/db/db');
+      try {
+        await Promise.all([
+          db.originalNodes.clear(),
+          db.workingNodes.clear(),
+          db.originalDependencies.clear(),
+          db.workingDependencies.clear(),
+        ]);
+      } catch (err) {
+        console.error('Failed to purge IndexedDB databases:', err);
+      } finally {
+        setIsLoading(false);
+      }
       initSchema({
         name: 'Empty Workspace',
         version: '1.0.0',
@@ -48,8 +76,9 @@ export const ActionControls: React.FC = () => {
     <div className="flex items-center gap-1.5">
       {isWorkspaceOpen ? (
         <button
-          onClick={openWorkspaceDirectory}
-          className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-slate-100 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 transition cursor-pointer"
+          onClick={handleOpenFolder}
+          disabled={isLoading}
+          className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-slate-100 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           title="Open another folder workspace"
         >
           <Folder className="w-3.5 h-3.5 text-brand-500" />
@@ -57,8 +86,9 @@ export const ActionControls: React.FC = () => {
         </button>
       ) : (
         <button
-          onClick={openWorkspaceDirectory}
-          className="flex items-center gap-1.5 bg-brand-600/15 border border-brand-500/30 text-brand-400 hover:bg-brand-600/30 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer"
+          onClick={handleOpenFolder}
+          disabled={isLoading}
+          className="flex items-center gap-1.5 bg-brand-600/15 border border-brand-500/30 text-brand-400 hover:bg-brand-600/30 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           title="Open a local directory workspace"
         >
           <Folder className="w-3.5 h-3.5 text-brand-500" />
@@ -68,7 +98,8 @@ export const ActionControls: React.FC = () => {
 
       <button
         onClick={handleLoad}
-        className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-slate-100 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 transition cursor-pointer"
+        disabled={isLoading}
+        className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-slate-100 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         title="Open single YAML from disk"
       >
         <Upload className="w-3.5 h-3.5" />
@@ -77,7 +108,8 @@ export const ActionControls: React.FC = () => {
 
       <button
         onClick={handleSave}
-        className="flex items-center gap-1.5 bg-brand-700 hover:bg-brand-800 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-lg shadow-brand-600/20 transition cursor-pointer"
+        disabled={isLoading}
+        className="flex items-center gap-1.5 bg-brand-700 hover:bg-brand-800 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-lg shadow-brand-600/20 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         title={isWorkspaceOpen ? 'Save diagram directly in folder' : 'Save YAML to disk'}
       >
         <Download className="w-3.5 h-3.5" />
@@ -87,7 +119,8 @@ export const ActionControls: React.FC = () => {
       {isWorkspaceOpen && schema.level === 'component' && (
         <button
           onClick={syncExternalContainers}
-          className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-[#00f0ff] hover:text-cyan-300 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 hover:border-brand-500/20 transition cursor-pointer"
+          disabled={isLoading}
+          className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-[#00f0ff] hover:text-cyan-300 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 hover:border-brand-500/20 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           title="Sync related container dependencies as external nodes in this view"
         >
           <Link className="w-3.5 h-3.5" />
@@ -98,7 +131,8 @@ export const ActionControls: React.FC = () => {
       {hasPendingChanges && (
         <button
           onClick={() => setIsDiffOpen(true)}
-          className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-amber-400 hover:text-amber-300 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 hover:border-amber-900/30 transition cursor-pointer"
+          disabled={isLoading}
+          className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-amber-400 hover:text-amber-300 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 hover:border-amber-900/30 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           title="View pending local changes / diff"
           id="view-pending-changes"
         >
@@ -109,7 +143,7 @@ export const ActionControls: React.FC = () => {
 
       <button
         onClick={undo}
-        disabled={past.length === 0}
+        disabled={past.length === 0 || isLoading}
         className="p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 disabled:opacity-30 disabled:hover:bg-slate-900 disabled:hover:text-slate-400 transition cursor-pointer disabled:cursor-not-allowed"
         title="Undo (Cmd+Z / Ctrl+Z)"
         id="undo-action"
@@ -119,7 +153,7 @@ export const ActionControls: React.FC = () => {
 
       <button
         onClick={redo}
-        disabled={future.length === 0}
+        disabled={future.length === 0 || isLoading}
         className="p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 disabled:opacity-30 disabled:hover:bg-slate-900 disabled:hover:text-slate-400 transition cursor-pointer disabled:cursor-not-allowed"
         title="Redo (Cmd+Shift+Z / Ctrl+Shift+Z / Cmd+Y)"
         id="redo-action"
@@ -129,7 +163,8 @@ export const ActionControls: React.FC = () => {
 
       <button
         onClick={handleClear}
-        className="p-1.5 rounded-lg bg-slate-900 hover:bg-red-950/20 text-slate-500 hover:text-red-400 border border-slate-800 hover:border-red-900/30 transition cursor-pointer"
+        disabled={isLoading}
+        className="p-1.5 rounded-lg bg-slate-900 hover:bg-red-950/20 text-slate-500 hover:text-red-400 border border-slate-800 hover:border-red-900/30 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         title="Clear canvas"
       >
         <RefreshCcw className="w-3.5 h-3.5" />

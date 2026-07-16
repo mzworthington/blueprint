@@ -79,9 +79,10 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
   },
 
   loadSchema: async () => {
-    const { fileSystemPort, importYaml, logger, setNotification } = get();
+    const { fileSystemPort, importYaml, logger, setNotification, setIsLoading } = get();
     const start = performance.now();
     logger.info('Opening file dialog for schema load');
+    setIsLoading(true);
 
     try {
       const content = await fileSystemPort.loadSchema();
@@ -107,15 +108,18 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
       logger.error('Failed to load schema file', err);
       setNotification?.({
         type: 'error',
-        title: 'Load Error',
+        title: 'Save Error',
         message: (err as Error).message || 'Error occurred while loading schema.',
       });
       return false;
+    } finally {
+      setIsLoading(false);
     }
   },
 
   openWorkspaceDirectory: async () => {
-    const { workspacePort, logger, setNotification, initSchema } = get();
+    const { workspacePort, logger, setNotification, initSchema, setIsLoading } = get();
+    setIsLoading(true);
     try {
       return await loadWorkspaceFromDirectory({
         selectDirectory: () => workspacePort.selectDirectory(),
@@ -130,6 +134,8 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
       logger.error('Failed to open workspace directory', err);
       set({ lastError: (err as Error).message || 'Failed to open workspace directory' });
       return false;
+    } finally {
+      setIsLoading(false);
     }
   },
 
