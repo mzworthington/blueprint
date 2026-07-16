@@ -3,125 +3,70 @@ name: Basket.API Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/eshop/basket-api/basketitem
-    type: background-worker
-    name: BasketItem Service
-    isTest: false
-    properties:
-      filepath: src/Basket.API/Model/BasketItem.cs
-      containerId: basket-api
-      technology: C# Domain Service
-      classification: default
-    x: 40
-    'y': 40
-  - entityRef: blueprint/eshop/basket-api/basketservice
-    type: background-worker
-    name: BasketService Service
-    isTest: false
-    properties:
-      filepath: src/Basket.API/Grpc/BasketService.cs
-      containerId: basket-api
-      technology: C# Domain Service
-      classification: default
-    x: 380
-    'y': 40
-  - entityRef: blueprint/eshop/basket-api/customerbasket
-    type: background-worker
-    name: CustomerBasket Service
-    isTest: false
-    properties:
-      filepath: src/Basket.API/Model/CustomerBasket.cs
-      containerId: basket-api
-      technology: C# Domain Service
-      classification: default
-    x: 720
-    'y': 40
   - entityRef: blueprint/eshop/basket-api/extensions
     type: background-worker
-    name: Extensions Service
-    isTest: false
-    properties:
-      filepath: src/Basket.API/Extensions/Extensions.cs
-      containerId: basket-api
-      technology: C# Domain Service
-      classification: default
-    x: 1060
-    'y': 40
-  - entityRef: blueprint/eshop/basket-api/globalusings
-    type: event-broker
-    name: GlobalUsings Message Broker
-    isTest: false
-    properties:
-      filepath: src/Basket.API/GlobalUsings.cs
-      containerId: basket-api
-      technology: C# Event Client
-      classification: event-marker
-    x: 40
-    'y': 220
-  - entityRef: blueprint/eshop/basket-api/ibasketrepository
-    type: relational-database
-    name: IBasketRepository Database
-    isTest: false
-    properties:
-      filepath: src/Basket.API/Repositories/IBasketRepository.cs
-      containerId: basket-api
-      technology: Entity Framework / DB Context
-      classification: database-marker
-    x: 380
-    'y': 220
-  - entityRef: blueprint/eshop/basket-api/orderstartedintegrationevent
-    type: background-worker
-    name: OrderStartedIntegrationEvent Service
-    isTest: false
-    properties:
-      filepath: src/Basket.API/IntegrationEvents/Events/OrderStartedIntegrationEvent.cs
-      containerId: basket-api
-      technology: C# Domain Service
-      classification: default
-    x: 720
-    'y': 220
-  - entityRef: blueprint/eshop/basket-api/orderstartedintegrationeventhandler
-    type: background-worker
-    name: OrderStartedIntegrationEventHandler Service
-    isTest: false
-    properties:
-      filepath: src/Basket.API/IntegrationEvents/EventHandling/OrderStartedIntegrationEventHandler.cs
-      containerId: basket-api
-      technology: C# Domain Service
-      classification: default
-    x: 1060
-    'y': 220
-  - entityRef: blueprint/eshop/basket-api/program
-    type: background-worker
-    name: Program Service
-    isTest: false
-    properties:
-      filepath: src/Basket.API/Program.cs
-      containerId: basket-api
-      technology: C# Domain Service
-      classification: default
-    x: 40
-    'y': 400
-  - entityRef: blueprint/eshop/basket-api/redisbasketrepository
-    type: relational-database
-    name: RedisBasketRepository Database
-    isTest: false
-    properties:
-      filepath: src/Basket.API/Repositories/RedisBasketRepository.cs
-      containerId: basket-api
-      technology: Entity Framework / DB Context
-      classification: database-marker
-    x: 380
-    'y': 400
-  - entityRef: blueprint/eshop/basket-api/servercallcontextidentityextensions
-    type: background-worker
-    name: ServerCallContextIdentityExtensions Service
+    name: Extensions Layer
     isTest: false
     properties:
       filepath: src/Basket.API/Extensions/ServerCallContextIdentityExtensions.cs
       containerId: basket-api
       technology: C# Domain Service
       classification: default
-    x: 720
-    'y': 400
+    x: 40
+    'y': 40
+  - entityRef: blueprint/eshop/basket-api/grpc
+    type: background-worker
+    name: Grpc Layer
+    isTest: false
+    properties:
+      filepath: src/Basket.API/Grpc/BasketService.cs
+      containerId: basket-api
+      technology: C# Domain Service
+      classification: default
+    x: 400
+    'y': 40
+  - entityRef: blueprint/eshop/basket-api/integrationevents
+    type: event-broker
+    name: IntegrationEvents Layer
+    isTest: false
+    properties:
+      filepath: src/Basket.API/IntegrationEvents/Events/OrderStartedIntegrationEvent.cs
+      containerId: basket-api
+      technology: C# Event Client
+      classification: event-marker
+    x: 760
+    'y': 40
+  - entityRef: blueprint/eshop/basket-api/model
+    type: background-worker
+    name: Model Layer
+    isTest: false
+    properties:
+      filepath: src/Basket.API/Model/CustomerBasket.cs
+      containerId: basket-api
+      technology: C# Domain Service
+      classification: default
+    x: 40
+    'y': 300
+  - entityRef: blueprint/eshop/basket-api/program
+    type: background-worker
+    name: Program
+    isTest: false
+    properties:
+      filepath: src/Basket.API/Program.cs
+      containerId: basket-api
+      technology: C# Domain Service
+      classification: default
+    x: 400
+    'y': 300
+  - entityRef: blueprint/eshop/basket-api/repositories
+    type: relational-database
+    name: Repositories Layer
+    isTest: false
+    properties:
+      filepath: src/Basket.API/Repositories/RedisBasketRepository.cs
+      containerId: basket-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 760
+    'y': 300
 dependencies: []

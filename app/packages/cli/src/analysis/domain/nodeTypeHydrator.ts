@@ -85,6 +85,26 @@ function pathAndNameHaystack(file: ParsedSourceFile): string {
   return `${file.relativePath} ${file.baseName}`.replace(/\\/g, '/');
 }
 
+function isApiSource(file: ParsedSourceFile, pathName: string): boolean {
+  if (
+    importMatches(file, API_IMPORT_MARKERS) ||
+    matchesAny(pathName, [
+      'Controller',
+      'Router',
+      'MinimalApi',
+      '/controllers/',
+      '/routes/',
+      '/api/',
+      '/apis/',
+    ])
+  ) {
+    return true;
+  }
+
+  const isCSharp = file.relativePath.replace(/\\/g, '/').toLowerCase().endsWith('.cs');
+  return isCSharp && /Api$/i.test(file.baseName);
+}
+
 function languagePrefix(file: ParsedSourceFile): string {
   const ext = file.relativePath.split('.').pop()?.toLowerCase() || '';
   if (ext === 'cs') return 'C#';
@@ -155,6 +175,15 @@ export function classifyParsedSource(file: ParsedSourceFile): NodeHydration {
     };
   }
 
+  if (isApiSource(file, pathName)) {
+    return {
+      type: 'rest-api',
+      label: labelFor('rest-api', file.baseName),
+      technology: technologyFor('rest-api', file),
+      reason: 'api-marker',
+    };
+  }
+
   if (
     importMatches(file, DATABASE_IMPORT_MARKERS) ||
     classMatches(file, DATABASE_CLASS_MARKERS) ||
@@ -178,32 +207,22 @@ export function classifyParsedSource(file: ParsedSourceFile): NodeHydration {
         (lower.includes('queue') || lower.includes('kafka') || lower.includes('redis'))
       );
     }) ||
-    matchesAny(pathName, ['Consumer', 'Producer', 'MessageBroker', '/messaging/', '/queue/'])
+    matchesAny(pathName, [
+      'Consumer',
+      'Producer',
+      'MessageBroker',
+      '/messaging/',
+      '/queue/',
+      'IntegrationEventHandler',
+      '/IntegrationEvents/',
+      '/EventHandling/',
+    ])
   ) {
     return {
       type: 'event-broker',
       label: labelFor('event-broker', file.baseName),
       technology: technologyFor('event-broker', file),
       reason: 'event-marker',
-    };
-  }
-
-  if (
-    importMatches(file, API_IMPORT_MARKERS) ||
-    matchesAny(pathName, [
-      'Controller',
-      'Router',
-      'MinimalApi',
-      '/controllers/',
-      '/routes/',
-      '/api/',
-    ])
-  ) {
-    return {
-      type: 'rest-api',
-      label: labelFor('rest-api', file.baseName),
-      technology: technologyFor('rest-api', file),
-      reason: 'api-marker',
     };
   }
 

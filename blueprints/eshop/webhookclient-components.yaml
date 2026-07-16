@@ -3,12 +3,12 @@ name: WebhookClient Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/eshop/webhookclient/authenticationendpoints
+  - entityRef: blueprint/eshop/webhookclient/endpoints
     type: rest-api
-    name: AuthenticationEndpoints REST Endpoint
+    name: Endpoints Layer
     isTest: false
     properties:
-      filepath: src/WebhookClient/Endpoints/AuthenticationEndpoints.cs
+      filepath: src/WebhookClient/Endpoints/WebhookEndpoints.cs
       containerId: webhookclient
       technology: ASP.NET Core Controller / Minimal API
       classification: api-marker
@@ -16,40 +16,18 @@ nodes:
     'y': 40
   - entityRef: blueprint/eshop/webhookclient/extensions
     type: rest-api
-    name: Extensions REST Endpoint
+    name: Extensions Layer
     isTest: false
     properties:
       filepath: src/WebhookClient/Extensions/Extensions.cs
       containerId: webhookclient
       technology: ASP.NET Core Controller / Minimal API
       classification: api-marker
-    x: 380
-    'y': 40
-  - entityRef: blueprint/eshop/webhookclient/globalusings
-    type: background-worker
-    name: GlobalUsings Service
-    isTest: false
-    properties:
-      filepath: src/WebhookClient/GlobalUsings.cs
-      containerId: webhookclient
-      technology: C# Domain Service
-      classification: default
-    x: 720
-    'y': 40
-  - entityRef: blueprint/eshop/webhookclient/hooksrepository
-    type: relational-database
-    name: HooksRepository Database
-    isTest: false
-    properties:
-      filepath: src/WebhookClient/Services/HooksRepository.cs
-      containerId: webhookclient
-      technology: Entity Framework / DB Context
-      classification: database-marker
-    x: 1060
+    x: 400
     'y': 40
   - entityRef: blueprint/eshop/webhookclient/program
     type: background-worker
-    name: Program Service
+    name: Program
     isTest: false
     properties:
       filepath: src/WebhookClient/Program.cs
@@ -57,93 +35,16 @@ nodes:
       technology: C# Domain Service
       classification: default
     x: 40
-    'y': 220
-  - entityRef: blueprint/eshop/webhookclient/webhookclientoptions
-    type: background-worker
-    name: WebhookClientOptions Service
+    'y': 300
+  - entityRef: blueprint/eshop/webhookclient/services
+    type: relational-database
+    name: Services Layer
     isTest: false
     properties:
-      filepath: src/WebhookClient/Services/WebhookClientOptions.cs
+      filepath: src/WebhookClient/Services/HooksRepository.cs
       containerId: webhookclient
-      technology: C# Domain Service
-      classification: default
-    x: 380
-    'y': 220
-  - entityRef: blueprint/eshop/webhookclient/webhookdata
-    type: background-worker
-    name: WebhookData Service
-    isTest: false
-    properties:
-      filepath: src/WebhookClient/Services/WebhookData.cs
-      containerId: webhookclient
-      technology: C# Domain Service
-      classification: default
-    x: 720
-    'y': 220
-  - entityRef: blueprint/eshop/webhookclient/webhookendpoints
-    type: rest-api
-    name: WebhookEndpoints REST Endpoint
-    isTest: false
-    properties:
-      filepath: src/WebhookClient/Endpoints/WebhookEndpoints.cs
-      containerId: webhookclient
-      technology: ASP.NET Core Controller / Minimal API
-      classification: api-marker
-    x: 1060
-    'y': 220
-  - entityRef: blueprint/eshop/webhookclient/webhookreceived
-    type: background-worker
-    name: WebHookReceived Service
-    isTest: false
-    properties:
-      filepath: src/WebhookClient/Services/WebHookReceived.cs
-      containerId: webhookclient
-      technology: C# Domain Service
-      classification: default
-    x: 40
-    'y': 400
-  - entityRef: blueprint/eshop/webhookclient/webhookresponse
-    type: background-worker
-    name: WebhookResponse Service
-    isTest: false
-    properties:
-      filepath: src/WebhookClient/Services/WebhookResponse.cs
-      containerId: webhookclient
-      technology: C# Domain Service
-      classification: default
-    x: 380
-    'y': 400
-  - entityRef: blueprint/eshop/webhookclient/webhooksclient
-    type: background-worker
-    name: WebHooksClient Service
-    isTest: false
-    properties:
-      filepath: src/WebhookClient/Services/WebHooksClient.cs
-      containerId: webhookclient
-      technology: C# Domain Service
-      classification: default
-    x: 720
-    'y': 400
-  - entityRef: blueprint/eshop/webhookclient/webhooksubscriptionrequest
-    type: background-worker
-    name: WebhookSubscriptionRequest Service
-    isTest: false
-    properties:
-      filepath: src/WebhookClient/Services/WebhookSubscriptionRequest.cs
-      containerId: webhookclient
-      technology: C# Domain Service
-      classification: default
-    x: 1060
-    'y': 400
-  - entityRef: blueprint/eshop/webhookclient/webhooktype
-    type: background-worker
-    name: WebhookType Service
-    isTest: false
-    properties:
-      filepath: src/WebhookClient/Services/WebhookType.cs
-      containerId: webhookclient
-      technology: C# Domain Service
-      classification: default
-    x: 40
-    'y': 580
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 400
+    'y': 300
 dependencies: []

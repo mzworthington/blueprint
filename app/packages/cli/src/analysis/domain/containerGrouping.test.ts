@@ -186,4 +186,67 @@ describe('ModelExtractor', () => {
 
     expect(containerNodesMap.get('ordering-unittests')?.isTest).toBe(true);
   });
+
+  it('rolls up C# files by layer, skips boilerplate, and types API containers', () => {
+    const extractor = new ModelExtractor('blueprint/eshop');
+    const { componentNodesMap, containerNodesMap, componentDependencies } = extractor.extractGraph([
+      {
+        filePath: 'src/Ordering.API/Application/Commands/CreateOrderCommand.cs',
+        relativePath: 'src/Ordering.API/Application/Commands/CreateOrderCommand.cs',
+        baseName: 'CreateOrderCommand',
+        isTestFile: false,
+        imports: [{ moduleSpecifier: 'eShop.Ordering.Domain' }],
+        newExpressions: [],
+        callExpressions: [],
+      },
+      {
+        filePath: 'src/Ordering.API/Application/Commands/CancelOrderCommand.cs',
+        relativePath: 'src/Ordering.API/Application/Commands/CancelOrderCommand.cs',
+        baseName: 'CancelOrderCommand',
+        isTestFile: false,
+        imports: [],
+        newExpressions: [],
+        callExpressions: [],
+      },
+      {
+        filePath: 'src/Ordering.API/Apis/OrdersApi.cs',
+        relativePath: 'src/Ordering.API/Apis/OrdersApi.cs',
+        baseName: 'OrdersApi',
+        isTestFile: false,
+        imports: [{ moduleSpecifier: 'Microsoft.AspNetCore.Http' }],
+        newExpressions: [],
+        callExpressions: [],
+      },
+      {
+        filePath: 'src/Ordering.API/GlobalUsings.cs',
+        relativePath: 'src/Ordering.API/GlobalUsings.cs',
+        baseName: 'GlobalUsings',
+        isTestFile: false,
+        imports: [{ moduleSpecifier: 'Microsoft.EntityFrameworkCore' }],
+        newExpressions: [],
+        callExpressions: [],
+      },
+      {
+        filePath: 'src/Ordering.API/Infrastructure/OrderingContextSeed.cs',
+        relativePath: 'src/Ordering.API/Infrastructure/OrderingContextSeed.cs',
+        baseName: 'OrderingContextSeed',
+        isTestFile: false,
+        imports: [],
+        newExpressions: [{ className: 'DbContext' }],
+        callExpressions: [],
+      },
+    ]);
+
+    expect(componentNodesMap.has(componentMapKey('ordering-api', 'application'))).toBe(true);
+    expect(componentNodesMap.get(componentMapKey('ordering-api', 'application'))?.name).toBe(
+      'Application Layer'
+    );
+    expect(componentNodesMap.has(componentMapKey('ordering-api', 'createordercommand'))).toBe(
+      false
+    );
+    expect(componentNodesMap.has(componentMapKey('ordering-api', 'globalusings'))).toBe(false);
+    expect(componentNodesMap.get(componentMapKey('ordering-api', 'apis'))?.type).toBe('rest-api');
+    expect(containerNodesMap.get('ordering-api')?.type).toBe('rest-api');
+    expect(componentDependencies).toEqual([]);
+  });
 });

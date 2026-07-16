@@ -114,4 +114,36 @@ namespace TestProject.Controllers
     expect(file.callExpressions).toContain('fetch');
     expect(file.namespaces).toContain('TestProject.Controllers');
   });
+
+  it('records C# object creation and base types, not parameter or field type annotations', async () => {
+    const csContent = `
+using Microsoft.EntityFrameworkCore;
+
+namespace Catalog.API
+{
+    public class CatalogContext : DbContext
+    {
+        private readonly string _name;
+
+        public CatalogContext(DbContextOptions options)
+        {
+            _name = "catalog";
+            var client = new PrismaClient();
+        }
+    }
+}
+`;
+    const csFile = path.join(tempDir, 'catalog_context.cs');
+    fs.writeFileSync(csFile, csContent, 'utf8');
+
+    const results = await parser.parseSourceFiles(`${relativePattern}/**/*.cs`);
+    const file = results.find(r => r.baseName === 'catalog_context');
+    expect(file).toBeDefined();
+
+    const classNames = file!.newExpressions.map(n => n.className);
+    expect(classNames).toContain('PrismaClient');
+    expect(classNames).toContain('DbContext');
+    expect(classNames).not.toContain('DbContextOptions');
+    expect(classNames).not.toContain('string');
+  });
 });

@@ -7,6 +7,12 @@ import {
 } from './containerGrouping.ts';
 import type { ParsedSourceFile } from './types.ts';
 import { classifyParsedSource, dependencyTypeForTarget } from './nodeTypeHydrator.ts';
+import {
+  classifyCSharpContainer,
+  isCSharpSourcePath,
+  nodeTypePriority,
+  resolveCSharpComponent,
+} from './csharpGrouping.ts';
 
 export class ModelExtractor {
   public parentRef: string;
@@ -24,39 +30,61 @@ export class ModelExtractor {
     const containerDependencies: SystemDependency[] = [];
 
     for (const file of sourceFiles) {
-      const componentId = slugify(file.baseName);
       const { containerId, displayName } = resolveContainerFromPath(
         file.relativePath,
         this.resolveOptions
       );
+
+      const componentIdentity = this.resolveComponentIdentity(file);
+      if (!componentIdentity) continue;
+
+      const { componentId, componentName } = componentIdentity;
       const mapKey = componentMapKey(containerId, componentId);
 
       const containerRef = EntityRef.child(this.parentRef, containerId);
       const componentRef = EntityRef.child(containerRef, componentId);
       const hydration = classifyParsedSource(file);
 
-      componentNodesMap.set(mapKey, {
-        entityRef: componentRef,
-        type: hydration.type,
-        name: hydration.label,
-        isTest: !!file.isTestFile,
-        properties: {
-          filepath: file.relativePath,
-          containerId,
-          technology: hydration.technology,
-          classification: hydration.reason,
-        },
-      });
+      const existing = componentNodesMap.get(mapKey);
+      if (existing) {
+        if (nodeTypePriority(hydration.type) > nodeTypePriority(existing.type)) {
+          existing.type = hydration.type;
+          existing.properties = {
+            ...existing.properties,
+            technology: hydration.technology,
+            classification: hydration.reason,
+          };
+        }
+        if (!file.isTestFile) {
+          existing.isTest = false;
+        }
+      } else {
+        componentNodesMap.set(mapKey, {
+          entityRef: componentRef,
+          type: hydration.type,
+          name: componentName,
+          isTest: !!file.isTestFile,
+          properties: {
+            filepath: file.relativePath,
+            containerId,
+            technology: hydration.technology,
+            classification: hydration.reason,
+          },
+        });
+      }
 
       if (!containerNodesMap.has(containerId)) {
+        const containerType = isCSharpSourcePath(file.relativePath)
+          ? classifyCSharpContainer(displayName, containerId)
+          : 'container';
+
         containerNodesMap.set(containerId, {
           entityRef: containerRef,
-          type: 'container',
+          type: containerType,
           name: `${displayName.charAt(0).toUpperCase()}${displayName.slice(1)} Service`,
           isTest: !!file.isTestFile,
         });
       } else if (!file.isTestFile) {
-        // Mixed packages (prod + colocated tests) stay visible as production containers.
         containerNodesMap.get(containerId)!.isTest = false;
       }
     }
@@ -75,7 +103,12 @@ export class ModelExtractor {
     };
 
     for (const file of sourceFiles) {
-      const fromComponentId = slugify(file.baseName);
+      if (isCSharpSourcePath(file.relativePath)) continue;
+
+      const componentIdentity = this.resolveComponentIdentity(file);
+      if (!componentIdentity) continue;
+
+      const fromComponentId = componentIdentity.componentId;
       const { containerId: fromContainerId } = resolveContainerFromPath(
         file.relativePath,
         this.resolveOptions
@@ -123,5 +156,18 @@ export class ModelExtractor {
     }
 
     return { componentNodesMap, componentDependencies, containerNodesMap, containerDependencies };
+  }
+
+  private resolveComponentIdentity(
+    file: ParsedSourceFile
+  ): { componentId: string; componentName: string } | null {
+    if (isCSharpSourcePath(file.relativePath)) {
+      return resolveCSharpComponent(file.relativePath, file.baseName);
+    }
+
+    return {
+      componentId: slugify(file.baseName),
+      componentName: `${file.baseName} Service`,
+    };
   }
 }

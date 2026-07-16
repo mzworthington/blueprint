@@ -3,92 +3,37 @@ name: EventBus Service Components
 version: 1.0.0
 level: component
 nodes:
-  - entityRef: blueprint/eshop/eventbus/eventbusbuilderextensions
-    type: background-worker
-    name: EventBusBuilderExtensions Service
-    isTest: false
-    properties:
-      filepath: src/EventBus/Extensions/EventBusBuilderExtensions.cs
-      containerId: eventbus
-      technology: C# Domain Service
-      classification: default
-    x: 40
-    'y': 40
-  - entityRef: blueprint/eshop/eventbus/eventbussubscriptioninfo
-    type: background-worker
-    name: EventBusSubscriptionInfo Service
-    isTest: false
-    properties:
-      filepath: src/EventBus/Abstractions/EventBusSubscriptionInfo.cs
-      containerId: eventbus
-      technology: C# Domain Service
-      classification: default
-    x: 380
-    'y': 40
-  - entityRef: blueprint/eshop/eventbus/generictypeextensions
-    type: background-worker
-    name: GenericTypeExtensions Service
-    isTest: false
-    properties:
-      filepath: src/EventBus/Extensions/GenericTypeExtensions.cs
-      containerId: eventbus
-      technology: C# Domain Service
-      classification: default
-    x: 720
-    'y': 40
-  - entityRef: blueprint/eshop/eventbus/globalusings
-    type: background-worker
-    name: GlobalUsings Service
-    isTest: false
-    properties:
-      filepath: src/EventBus/GlobalUsings.cs
-      containerId: eventbus
-      technology: C# Domain Service
-      classification: default
-    x: 40
-    'y': 220
-  - entityRef: blueprint/eshop/eventbus/ieventbus
-    type: background-worker
-    name: IEventBus Service
-    isTest: false
-    properties:
-      filepath: src/EventBus/Abstractions/IEventBus.cs
-      containerId: eventbus
-      technology: C# Domain Service
-      classification: default
-    x: 380
-    'y': 220
-  - entityRef: blueprint/eshop/eventbus/ieventbusbuilder
-    type: background-worker
-    name: IEventBusBuilder Service
+  - entityRef: blueprint/eshop/eventbus/abstractions
+    type: event-broker
+    name: Abstractions Layer
     isTest: false
     properties:
       filepath: src/EventBus/Abstractions/IEventBusBuilder.cs
       containerId: eventbus
-      technology: C# Domain Service
-      classification: default
-    x: 720
-    'y': 220
-  - entityRef: blueprint/eshop/eventbus/iintegrationeventhandler
-    type: background-worker
-    name: IIntegrationEventHandler Service
-    isTest: false
-    properties:
-      filepath: src/EventBus/Abstractions/IIntegrationEventHandler.cs
-      containerId: eventbus
-      technology: C# Domain Service
-      classification: default
+      technology: C# Event Client
+      classification: event-marker
     x: 40
-    'y': 400
-  - entityRef: blueprint/eshop/eventbus/integrationevent
+    'y': 40
+  - entityRef: blueprint/eshop/eventbus/events
     type: background-worker
-    name: IntegrationEvent Service
+    name: Events Layer
     isTest: false
     properties:
       filepath: src/EventBus/Events/IntegrationEvent.cs
       containerId: eventbus
       technology: C# Domain Service
       classification: default
-    x: 380
-    'y': 400
+    x: 400
+    'y': 40
+  - entityRef: blueprint/eshop/eventbus/extensions
+    type: background-worker
+    name: Extensions Layer
+    isTest: false
+    properties:
+      filepath: src/EventBus/Extensions/GenericTypeExtensions.cs
+      containerId: eventbus
+      technology: C# Domain Service
+      classification: default
+    x: 40
+    'y': 300
 dependencies: []

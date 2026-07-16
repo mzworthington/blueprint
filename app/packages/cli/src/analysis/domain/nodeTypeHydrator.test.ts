@@ -108,6 +108,30 @@ describe('nodeTypeHydrator', () => {
     ).toBe('rest-api');
   });
 
+  it('prefers rest-api over database when *Api.cs also has EF usings', () => {
+    const result = classifyParsedSource(
+      file({
+        baseName: 'CatalogApi',
+        relativePath: 'src/Catalog.API/Apis/CatalogApi.cs',
+        imports: [{ moduleSpecifier: 'Microsoft.EntityFrameworkCore' }],
+      })
+    );
+    expect(result.type).toBe('rest-api');
+    expect(result.reason).toBe('api-marker');
+  });
+
+  it('classifies IntegrationEventHandler paths as event-broker', () => {
+    expect(
+      classifyParsedSource(
+        file({
+          baseName: 'OrderStartedIntegrationEventHandler',
+          relativePath:
+            'src/Basket.API/IntegrationEvents/EventHandling/OrderStartedIntegrationEventHandler.cs',
+        })
+      ).type
+    ).toBe('event-broker');
+  });
+
   it('falls back to background-worker when no markers match', () => {
     const result = classifyParsedSource(
       file({

@@ -5,7 +5,7 @@ level: component
 nodes:
   - entityRef: blueprint/eshop/integrationeventlogef/eventstateenum
     type: background-worker
-    name: EventStateEnum Service
+    name: EventStateEnum
     isTest: false
     properties:
       filepath: src/IntegrationEventLogEF/EventStateEnum.cs
@@ -14,70 +14,48 @@ nodes:
       classification: default
     x: 40
     'y': 40
-  - entityRef: blueprint/eshop/integrationeventlogef/globalusings
-    type: relational-database
-    name: GlobalUsings Database
-    isTest: false
-    properties:
-      filepath: src/IntegrationEventLogEF/GlobalUsings.cs
-      containerId: integrationeventlogef
-      technology: Entity Framework / DB Context
-      classification: database-marker
-    x: 380
-    'y': 40
-  - entityRef: blueprint/eshop/integrationeventlogef/iintegrationeventlogservice
-    type: relational-database
-    name: IIntegrationEventLogService Database
-    isTest: false
-    properties:
-      filepath: src/IntegrationEventLogEF/Services/IIntegrationEventLogService.cs
-      containerId: integrationeventlogef
-      technology: Entity Framework / DB Context
-      classification: database-marker
-    x: 720
-    'y': 40
   - entityRef: blueprint/eshop/integrationeventlogef/integrationeventlogentry
     type: background-worker
-    name: IntegrationEventLogEntry Service
+    name: IntegrationEventLogEntry
     isTest: false
     properties:
       filepath: src/IntegrationEventLogEF/IntegrationEventLogEntry.cs
       containerId: integrationeventlogef
       technology: C# Domain Service
       classification: default
-    x: 40
-    'y': 220
-  - entityRef: blueprint/eshop/integrationeventlogef/integrationeventlogservice
-    type: relational-database
-    name: IntegrationEventLogService Database
-    isTest: false
-    properties:
-      filepath: src/IntegrationEventLogEF/Services/IntegrationEventLogService.cs
-      containerId: integrationeventlogef
-      technology: Entity Framework / DB Context
-      classification: database-marker
-    x: 380
-    'y': 220
+    x: 400
+    'y': 40
   - entityRef: blueprint/eshop/integrationeventlogef/integrationlogextensions
     type: background-worker
-    name: IntegrationLogExtensions Service
+    name: IntegrationLogExtensions
     isTest: false
     properties:
       filepath: src/IntegrationEventLogEF/IntegrationLogExtensions.cs
       containerId: integrationeventlogef
       technology: C# Domain Service
       classification: default
-    x: 720
-    'y': 220
-  - entityRef: blueprint/eshop/integrationeventlogef/resilienttransaction
-    type: relational-database
-    name: ResilientTransaction Database
+    x: 760
+    'y': 40
+  - entityRef: blueprint/eshop/integrationeventlogef/services
+    type: background-worker
+    name: Services Layer
+    isTest: false
+    properties:
+      filepath: src/IntegrationEventLogEF/Services/IntegrationEventLogService.cs
+      containerId: integrationeventlogef
+      technology: C# Domain Service
+      classification: default
+    x: 40
+    'y': 300
+  - entityRef: blueprint/eshop/integrationeventlogef/utilities
+    type: background-worker
+    name: Utilities Layer
     isTest: false
     properties:
       filepath: src/IntegrationEventLogEF/Utilities/ResilientTransaction.cs
       containerId: integrationeventlogef
-      technology: Entity Framework / DB Context
-      classification: database-marker
-    x: 40
-    'y': 400
+      technology: C# Domain Service
+      classification: default
+    x: 400
+    'y': 300
 dependencies: []

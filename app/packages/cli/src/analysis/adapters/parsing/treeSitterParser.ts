@@ -246,16 +246,15 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
               newExpressions.push({ className: typeNode.text });
             }
           }
-          if (node.type === 'parameter') {
-            const typeNode = node.childForFieldName('type');
-            if (typeNode) {
-              newExpressions.push({ className: typeNode.text });
-            }
-          }
-          if (node.type === 'field_declaration' || node.type === 'property_declaration') {
-            const typeNode = node.childForFieldName('type');
-            if (typeNode) {
-              newExpressions.push({ className: typeNode.text });
+          if (node.type === 'class_declaration') {
+            const baseList = node.children.find(child => child.type === 'base_list');
+            if (baseList) {
+              for (let i = 0; i < baseList.childCount; i++) {
+                const baseNode = baseList.child(i)!;
+                if (baseNode.type === 'identifier' || baseNode.type === 'generic_name') {
+                  newExpressions.push({ className: baseNode.text });
+                }
+              }
             }
           }
           if (node.type === 'invocation_expression') {

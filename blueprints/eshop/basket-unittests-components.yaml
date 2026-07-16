@@ -5,7 +5,7 @@ level: component
 nodes:
   - entityRef: blueprint/eshop/basket-unittests/basketservicetests
     type: background-worker
-    name: BasketServiceTests Service
+    name: BasketServiceTests
     isTest: true
     properties:
       filepath: tests/Basket.UnitTests/BasketServiceTests.cs
@@ -14,30 +14,15 @@ nodes:
       classification: default
     x: 40
     'y': 40
-  - entityRef: blueprint/eshop/basket-unittests/globalusings
-    type: rest-api
-    name: GlobalUsings REST Endpoint
-    isTest: true
-    properties:
-      filepath: tests/Basket.UnitTests/GlobalUsings.cs
-      containerId: basket-unittests
-      technology: ASP.NET Core Controller / Minimal API
-      classification: api-marker
-    x: 380
-    'y': 40
-  - entityRef: blueprint/eshop/basket-unittests/testservercallcontext
+  - entityRef: blueprint/eshop/basket-unittests/helpers
     type: background-worker
-    name: TestServerCallContext Service
+    name: Helpers Layer
     isTest: true
     properties:
       filepath: tests/Basket.UnitTests/Helpers/TestServerCallContext.cs
       containerId: basket-unittests
       technology: C# Domain Service
       classification: default
-    x: 40
-    'y': 220
-dependencies:
-  - from: blueprint/eshop/basket-unittests/basketservicetests
-    to: blueprint/eshop/clientapp/basketitem
-    type: direct-call
-    description: Calls module / service
+    x: 400
+    'y': 40
+dependencies: []

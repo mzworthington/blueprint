@@ -3,107 +3,37 @@ name: Ordering.UnitTests Service Components
 version: 1.0.0
 level: component
 nodes:
+  - entityRef: blueprint/eshop/ordering-unittests/application
+    type: rest-api
+    name: Application Layer
+    isTest: true
+    properties:
+      filepath: tests/Ordering.UnitTests/Application/NewOrderCommandHandlerTest.cs
+      containerId: ordering-unittests
+      technology: ASP.NET Core Controller / Minimal API
+      classification: api-marker
+    x: 40
+    'y': 40
   - entityRef: blueprint/eshop/ordering-unittests/builders
     type: background-worker
-    name: Builders Service
+    name: Builders
     isTest: true
     properties:
       filepath: tests/Ordering.UnitTests/Builders.cs
       containerId: ordering-unittests
       technology: C# Domain Service
       classification: default
-    x: 40
+    x: 400
     'y': 40
-  - entityRef: blueprint/eshop/ordering-unittests/buyeraggregatetest
+  - entityRef: blueprint/eshop/ordering-unittests/domain
     type: background-worker
-    name: BuyerAggregateTest Service
+    name: Domain Layer
     isTest: true
     properties:
       filepath: tests/Ordering.UnitTests/Domain/BuyerAggregateTest.cs
       containerId: ordering-unittests
       technology: C# Domain Service
       classification: default
-    x: 380
-    'y': 40
-  - entityRef: blueprint/eshop/ordering-unittests/globalusings
-    type: rest-api
-    name: GlobalUsings REST Endpoint
-    isTest: true
-    properties:
-      filepath: tests/Ordering.UnitTests/GlobalUsings.cs
-      containerId: ordering-unittests
-      technology: ASP.NET Core Controller / Minimal API
-      classification: api-marker
-    x: 720
-    'y': 40
-  - entityRef: blueprint/eshop/ordering-unittests/identifiedcommandhandlertest
-    type: background-worker
-    name: IdentifiedCommandHandlerTest Service
-    isTest: true
-    properties:
-      filepath: tests/Ordering.UnitTests/Application/IdentifiedCommandHandlerTest.cs
-      containerId: ordering-unittests
-      technology: C# Domain Service
-      classification: default
     x: 40
-    'y': 220
-  - entityRef: blueprint/eshop/ordering-unittests/newordercommandhandlertest
-    type: background-worker
-    name: NewOrderCommandHandlerTest Service
-    isTest: true
-    properties:
-      filepath: tests/Ordering.UnitTests/Application/NewOrderCommandHandlerTest.cs
-      containerId: ordering-unittests
-      technology: C# Domain Service
-      classification: default
-    x: 380
-    'y': 220
-  - entityRef: blueprint/eshop/ordering-unittests/orderaggregatetest
-    type: background-worker
-    name: OrderAggregateTest Service
-    isTest: true
-    properties:
-      filepath: tests/Ordering.UnitTests/Domain/OrderAggregateTest.cs
-      containerId: ordering-unittests
-      technology: C# Domain Service
-      classification: default
-    x: 720
-    'y': 220
-  - entityRef: blueprint/eshop/ordering-unittests/orderswebapitest
-    type: rest-api
-    name: OrdersWebApiTest REST Endpoint
-    isTest: true
-    properties:
-      filepath: tests/Ordering.UnitTests/Application/OrdersWebApiTest.cs
-      containerId: ordering-unittests
-      technology: ASP.NET Core Controller / Minimal API
-      classification: api-marker
-    x: 40
-    'y': 400
-  - entityRef: blueprint/eshop/ordering-unittests/setstockrejectedorderstatuscommandtest
-    type: background-worker
-    name: SetStockRejectedOrderStatusCommandTest Service
-    isTest: true
-    properties:
-      filepath: tests/Ordering.UnitTests/Application/SetStockRejectedOrderStatusCommandTest.cs
-      containerId: ordering-unittests
-      technology: C# Domain Service
-      classification: default
-    x: 380
-    'y': 400
-  - entityRef: blueprint/eshop/ordering-unittests/valueobjecttests
-    type: background-worker
-    name: ValueObjectTests Service
-    isTest: true
-    properties:
-      filepath: tests/Ordering.UnitTests/Domain/SeedWork/ValueObjectTests.cs
-      containerId: ordering-unittests
-      technology: C# Domain Service
-      classification: default
-    x: 720
-    'y': 400
-dependencies:
-  - from: blueprint/eshop/ordering-unittests/orderswebapitest
-    to: blueprint/eshop/clientapp/order
-    type: direct-call
-    description: Calls module / service
+    'y': 300
+dependencies: []
