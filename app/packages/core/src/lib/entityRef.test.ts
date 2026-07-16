@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { resolveWorkspaceEntityRefs, isEntityRef, getSchemaEntityRef } from './entityRef';
+import {
+  resolveWorkspaceEntityRefs,
+  isEntityRef,
+  getSchemaEntityRef,
+  resolveShortEntityRef,
+} from './entityRef';
 import type { SystemSchema } from '../models/schema';
 
 describe('entityRef Rules', () => {
@@ -37,6 +42,35 @@ describe('entityRef Rules', () => {
       };
       expect(getSchemaEntityRef(schema, 'My Workspace')).toBe('my-workspace');
       expect(getSchemaEntityRef(schema)).toBe('test-project');
+    });
+  });
+
+  describe('resolveShortEntityRef', () => {
+    it('should append short refs under a scoped systemId', () => {
+      expect(resolveShortEntityRef('catalog', 'backstage/catalog')).toBe(
+        'backstage/catalog/catalog'
+      );
+      expect(resolveShortEntityRef('catalog', 'mycontext/backstage')).toBe(
+        'mycontext/backstage/catalog'
+      );
+    });
+
+    it('should not double-prefix when systemId is the context root', () => {
+      expect(resolveShortEntityRef('customer', 'blueprint', 'blueprint')).toBe(
+        'blueprint/customer'
+      );
+    });
+
+    it('should prefix with context when systemId is a local container slug', () => {
+      expect(resolveShortEntityRef('catalog', 'backstage', 'mycontext')).toBe(
+        'mycontext/backstage/catalog'
+      );
+    });
+
+    it('should pass through existing FQNs', () => {
+      expect(resolveShortEntityRef('blueprint/customer', 'blueprint', 'blueprint')).toBe(
+        'blueprint/customer'
+      );
     });
   });
 
@@ -217,6 +251,27 @@ describe('entityRef Rules', () => {
 
       const catalogNodes = result.schemas['blueprints/backstage/catalog-components.yaml'].nodes;
       expect(catalogNodes[0].entityRef).toBe('mycontext/backstage/catalog/catalogclient');
+    });
+
+    it('should not double-prefix stale dependency refs on context diagrams', () => {
+      const contextSchema: SystemSchema = {
+        name: 'Blueprint Context',
+        version: '1.0.0',
+        level: 'context',
+        entityRef: 'blueprint',
+        nodes: [
+          { entityRef: 'blueprint/customer', type: 'person', name: 'Customer' },
+          { entityRef: 'blueprint/eshop', type: 'software-system', name: 'EShop' },
+        ],
+        dependencies: [{ from: 'person-5380', to: 'blueprint/eshop', type: 'direct-call' }],
+      };
+
+      const result = resolveWorkspaceEntityRefs(
+        [{ path: 'context.yaml', schema: contextSchema }],
+        'Blueprint'
+      );
+
+      expect(result.schemas['context.yaml'].dependencies[0]?.from).toBe('blueprint/person-5380');
     });
   });
 });

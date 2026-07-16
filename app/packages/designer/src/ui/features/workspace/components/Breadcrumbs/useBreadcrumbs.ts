@@ -169,19 +169,24 @@ export function useBreadcrumbs(): UseeBreadcrumbsReturn {
   const currentChildren = getSegmentChildren(currentFilePath);
 
   const segmentsWithSiblings = useMemo(() => {
-    const activeSystem = loadedSystems.find(s => s.path === currentFilePath);
-    const currentSystemId = activeSystem?.schema.entityRef || 'default';
     return segments.map((seg, idx) => {
       const sameLevelSystems = loadedSystems.filter(s => {
         if (s.schema.level !== seg.level || s.path === seg.path) return false;
-        if (isWorkspaceOpen) return true;
         if (idx === 0) return true;
-        return (s.schema.entityRef || 'default') === currentSystemId;
+
+        // Find parent segment
+        const parentSeg = segments[idx - 1];
+        if (!parentSeg) return false;
+
+        const parentSystem = loadedSystems.find(p => p.path === parentSeg.path);
+        if (!parentSystem) return false;
+
+        // Check if s is a child of the parent system
+        return parentSystem.schema.nodes.some(n => n.entityRef === s.schema.entityRef);
       });
       return { ...seg, sameLevelSystems };
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [segments, loadedSystems, currentFilePath, isWorkspaceOpen]);
+  }, [segments, loadedSystems]);
 
   return {
     openDropdownIdx,

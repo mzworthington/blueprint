@@ -84,42 +84,59 @@ export const Breadcrumbs: React.FC = () => {
 
               <div className="relative flex items-center gap-0.5">
                 {isClickable ? (
-                  <Link
-                    to={`/workspace/${seg.entityRef}`}
-                    title="Click to zoom inside"
-                    className={`flex items-center gap-1.5 transition text-left focus:outline-none shrink-0 ${
-                      seg.isZoomPreview
-                        ? 'text-brand-400 hover:text-brand-300 font-medium cursor-pointer border border-brand-500/20 px-2 py-0.5 rounded bg-brand-950/20 hover:bg-brand-950/45'
-                        : 'text-slate-500 hover:text-slate-200 cursor-pointer'
-                    }`}
-                  >
-                    <SegIcon
-                      className={`w-3.5 h-3.5 shrink-0 ${isLast && !seg.isZoomPreview ? segConfig.text : 'text-slate-600'}`}
-                    />
-                    <span className="truncate max-w-[80px] sm:max-w-[150px]">{seg.name}</span>
-                  </Link>
-                ) : (
-                  <div className="flex items-center gap-1.5 text-slate-100 font-semibold cursor-default shrink-0">
-                    <SegIcon className={`w-3.5 h-3.5 shrink-0 ${segConfig.text}`} />
-                    <span className="truncate max-w-[80px] sm:max-w-[150px]">{seg.name}</span>
-                  </div>
-                )}
+                  <>
+                    <Link
+                      to={`/workspace/${seg.entityRef}`}
+                      title="Click to zoom inside"
+                      className={`flex items-center gap-1.5 transition text-left focus:outline-none shrink-0 ${
+                        seg.isZoomPreview
+                          ? 'text-brand-400 hover:text-brand-300 font-medium cursor-pointer border border-brand-500/20 px-2 py-0.5 rounded bg-brand-950/20 hover:bg-brand-950/45'
+                          : 'text-slate-500 hover:text-slate-200 cursor-pointer'
+                      }`}
+                    >
+                      <SegIcon
+                        className={`w-3.5 h-3.5 shrink-0 ${isLast && !seg.isZoomPreview ? segConfig.text : 'text-slate-600'}`}
+                      />
+                      <span className="truncate max-w-[80px] sm:max-w-[150px]">{seg.name}</span>
+                    </Link>
 
-                {sameLevelSystems.length > 0 && (
+                    {sameLevelSystems.length > 0 && (
+                      <button
+                        onClick={e => {
+                          e.stopPropagation();
+                          setOpenDropdownIdx(openDropdownIdx === idx ? null : idx);
+                        }}
+                        className={`p-0.5 rounded hover:bg-slate-900 transition focus:outline-none cursor-pointer shrink-0 ${
+                          openDropdownIdx === idx
+                            ? 'text-brand-400 bg-slate-900/50'
+                            : 'text-slate-600 hover:text-slate-300'
+                        }`}
+                        title={`Other ${segConfig.label} systems`}
+                      >
+                        <ChevronDown className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </>
+                ) : sameLevelSystems.length > 0 ? (
                   <button
                     onClick={e => {
                       e.stopPropagation();
                       setOpenDropdownIdx(openDropdownIdx === idx ? null : idx);
                     }}
-                    className={`p-0.5 rounded hover:bg-slate-900 transition focus:outline-none cursor-pointer shrink-0 ${
-                      openDropdownIdx === idx
-                        ? 'text-brand-400 bg-slate-900/50'
-                        : 'text-slate-600 hover:text-slate-300'
+                    className={`flex items-center gap-1 hover:text-slate-200 transition text-left focus:outline-none shrink-0 font-semibold cursor-pointer ${
+                      openDropdownIdx === idx ? 'text-brand-400' : 'text-slate-100'
                     }`}
                     title={`Other ${segConfig.label} systems`}
                   >
-                    <ChevronDown className="w-3.5 h-3.5" />
+                    <SegIcon className={`w-3.5 h-3.5 shrink-0 ${segConfig.text}`} />
+                    <span className="truncate max-w-[80px] sm:max-w-[150px]">{seg.name}</span>
+                    <ChevronDown className="w-3.5 h-3.5 shrink-0 text-slate-400" />
                   </button>
+                ) : (
+                  <div className="flex items-center gap-1.5 text-slate-100 font-semibold cursor-default shrink-0">
+                    <SegIcon className={`w-3.5 h-3.5 shrink-0 ${segConfig.text}`} />
+                    <span className="truncate max-w-[80px] sm:max-w-[150px]">{seg.name}</span>
+                  </div>
                 )}
 
                 {openDropdownIdx === idx && (

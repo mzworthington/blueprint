@@ -93,6 +93,246 @@ describe('diagramState Actions & State Management', () => {
     expect(updatedState.edges[0].target).toBe('nodeB');
   });
 
+  it('should rename a context-level actor and update dependency refs', () => {
+    useBlueprintStore.setState({
+      currentFilePath: 'context.yaml',
+      workspaceName: 'Blueprint',
+      loadedSystems: [
+        {
+          path: 'context.yaml',
+          name: 'Blueprint Context',
+          schema: {
+            name: 'Blueprint Context',
+            version: '1.0.0',
+            level: 'context',
+            entityRef: 'blueprint',
+            nodes: [
+              { entityRef: 'eshop', type: 'software-system', name: 'EShop System', x: 0, y: 0 },
+              {
+                entityRef: 'testproject',
+                type: 'software-system',
+                name: 'TestProject System',
+                x: 200,
+                y: 0,
+              },
+            ],
+            dependencies: [],
+          },
+        },
+      ],
+    });
+
+    const { initSchema, addNode, onConnect, updateNode } = useBlueprintStore.getState();
+    initSchema({
+      name: 'Blueprint Context',
+      version: '1.0.0',
+      level: 'context',
+      entityRef: 'blueprint',
+      nodes: [
+        { entityRef: 'eshop', type: 'software-system', name: 'EShop System', x: 0, y: 0 },
+        {
+          entityRef: 'testproject',
+          type: 'software-system',
+          name: 'TestProject System',
+          x: 200,
+          y: 0,
+        },
+      ],
+      dependencies: [],
+    });
+
+    addNode('person' as NodeType);
+    const personId = useBlueprintStore.getState().nodes.find(n => n.data.type === 'person')!.id;
+
+    onConnect({
+      source: personId,
+      target: 'blueprint/eshop',
+      sourceHandle: 'bottom-source',
+      targetHandle: 'top-target',
+    });
+    onConnect({
+      source: personId,
+      target: 'blueprint/testproject',
+      sourceHandle: 'right-source',
+      targetHandle: 'left-target',
+    });
+
+    updateNode(personId, { name: 'Customer', entityRef: 'customer' });
+
+    const state = useBlueprintStore.getState();
+    expect(state.validationResult.isValid).toBe(true);
+    expect(state.schema.nodes.some(n => n.entityRef === 'blueprint/customer')).toBe(true);
+    expect(state.schema.dependencies.every(d => !d.from.includes('person-'))).toBe(true);
+    expect(state.schema.dependencies.every(d => !d.to.includes('person-'))).toBe(true);
+    expect(state.edges.every(e => e.source !== personId && e.target !== personId)).toBe(true);
+  });
+
+  it('should update dependency refs when renaming after entityRef was resolved to FQN', () => {
+    useBlueprintStore.setState({
+      currentFilePath: 'context.yaml',
+      workspaceName: 'Blueprint',
+      loadedSystems: [
+        {
+          path: 'context.yaml',
+          name: 'Blueprint Context',
+          schema: {
+            name: 'Blueprint Context',
+            version: '1.0.0',
+            level: 'context',
+            entityRef: 'blueprint',
+            nodes: [
+              { entityRef: 'eshop', type: 'software-system', name: 'EShop System', x: 0, y: 0 },
+            ],
+            dependencies: [],
+          },
+        },
+      ],
+    });
+
+    const { initSchema, addNode, onConnect, updateNode } = useBlueprintStore.getState();
+    initSchema({
+      name: 'Blueprint Context',
+      version: '1.0.0',
+      level: 'context',
+      entityRef: 'blueprint',
+      nodes: [{ entityRef: 'eshop', type: 'software-system', name: 'EShop System', x: 0, y: 0 }],
+      dependencies: [],
+    });
+
+    addNode('person' as NodeType);
+    const personId = useBlueprintStore.getState().nodes.find(n => n.data.type === 'person')!.id;
+    onConnect({
+      source: personId,
+      target: 'blueprint/eshop',
+      sourceHandle: 'bottom-source',
+      targetHandle: 'top-target',
+    });
+
+    // Simulate resolved canvas state: RF id stays short while data.entityRef is FQN
+    const afterConnect = useBlueprintStore.getState();
+    expect(afterConnect.nodes.find(n => n.id === personId)?.data.entityRef).toBe(
+      'blueprint/person-' + personId.split('-')[1]
+    );
+
+    // First rename succeeds
+    updateNode(personId, { name: 'Customer', entityRef: 'customer' });
+    const afterRename = useBlueprintStore.getState();
+    expect(afterRename.validationResult.isValid).toBe(true);
+
+    // Second rename attempt (e.g. user re-edits name) must not leave stale refs
+    updateNode('customer', { name: 'Customer' });
+    const afterReedit = useBlueprintStore.getState();
+    expect(afterReedit.validationResult.isValid).toBe(true);
+    expect(afterReedit.schema.dependencies.some(d => d.from.includes('person-'))).toBe(false);
+  });
+
+  it('should update edges that reference the old FQN when renaming a node', () => {
+    useBlueprintStore.setState({
+      currentFilePath: 'context.yaml',
+      workspaceName: 'Blueprint',
+      loadedSystems: [
+        {
+          path: 'context.yaml',
+          name: 'Blueprint Context',
+          schema: {
+            name: 'Blueprint Context',
+            version: '1.0.0',
+            level: 'context',
+            entityRef: 'blueprint',
+            nodes: [
+              { entityRef: 'blueprint/person-5380', type: 'person', name: 'Actor', x: 0, y: 0 },
+              {
+                entityRef: 'blueprint/eshop',
+                type: 'software-system',
+                name: 'EShop',
+                x: 0,
+                y: 100,
+              },
+            ],
+            dependencies: [
+              { from: 'blueprint/person-5380', to: 'blueprint/eshop', type: 'direct-call' },
+            ],
+          },
+        },
+      ],
+    });
+
+    const { initSchema, updateNode } = useBlueprintStore.getState();
+    initSchema({
+      name: 'Blueprint Context',
+      version: '1.0.0',
+      level: 'context',
+      entityRef: 'blueprint',
+      nodes: [
+        { entityRef: 'blueprint/person-5380', type: 'person', name: 'Actor', x: 0, y: 0 },
+        { entityRef: 'blueprint/eshop', type: 'software-system', name: 'EShop', x: 0, y: 100 },
+      ],
+      dependencies: [{ from: 'blueprint/person-5380', to: 'blueprint/eshop', type: 'direct-call' }],
+    });
+
+    updateNode('blueprint/person-5380', { name: 'Customer', entityRef: 'customer' });
+
+    const state = useBlueprintStore.getState();
+    expect(state.validationResult.isValid).toBe(true);
+    expect(state.schema.dependencies[0]?.from).toBe('blueprint/customer');
+    expect(state.edges[0]?.source).toBe('customer');
+  });
+
+  it('should update edges when canvas id is short but dependency uses resolved FQN', () => {
+    useBlueprintStore.setState({
+      currentFilePath: 'context.yaml',
+      workspaceName: 'Blueprint',
+      loadedSystems: [
+        {
+          path: 'context.yaml',
+          name: 'Blueprint Context',
+          schema: {
+            name: 'Blueprint Context',
+            version: '1.0.0',
+            level: 'context',
+            entityRef: 'blueprint',
+            nodes: [{ entityRef: 'eshop', type: 'software-system', name: 'EShop', x: 0, y: 0 }],
+            dependencies: [],
+          },
+        },
+      ],
+    });
+
+    const { initSchema, addNode, onConnect, updateNode } = useBlueprintStore.getState();
+    initSchema({
+      name: 'Blueprint Context',
+      version: '1.0.0',
+      level: 'context',
+      entityRef: 'blueprint',
+      nodes: [{ entityRef: 'eshop', type: 'software-system', name: 'EShop', x: 0, y: 0 }],
+      dependencies: [],
+    });
+
+    addNode('person' as NodeType);
+    const personId = useBlueprintStore.getState().nodes.find(n => n.data.type === 'person')!.id;
+    onConnect({
+      source: personId,
+      target: 'blueprint/eshop',
+      sourceHandle: 'bottom-source',
+      targetHandle: 'top-target',
+    });
+
+    // Simulate stale edge using resolved FQN while RF node id remains short
+    const staleEdges = useBlueprintStore.getState().edges.map(e => ({
+      ...e,
+      source: `blueprint/${personId}`,
+      id: `edge-blueprint/${personId}-${e.target}`,
+    }));
+    useBlueprintStore.setState({ edges: staleEdges });
+
+    updateNode(personId, { name: 'Customer', entityRef: 'customer' });
+
+    const state = useBlueprintStore.getState();
+    expect(state.validationResult.isValid).toBe(true);
+    expect(state.schema.dependencies[0]?.from).toBe('blueprint/customer');
+    expect(state.edges[0]?.source).toBe('customer');
+  });
+
   it('should establish a connection between nodes and detect a cycle', () => {
     const store = useBlueprintStore.getState();
 

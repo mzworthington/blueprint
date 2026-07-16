@@ -39,9 +39,15 @@ export const PropertyPanel: React.FC = () => {
     workspaceName,
   } = useBlueprintStore();
 
-  const selectedRFNode = nodes.find(n => n.id === selectedNodeId);
+  const selectedRFNode = nodes.find(
+    n => n.id === selectedNodeId || n.data.entityRef === selectedNodeId
+  );
   const selectedNode = selectedRFNode
-    ? schema.nodes.find(sn => sn.entityRef === selectedRFNode.data.entityRef)
+    ? schema.nodes.find(
+        sn =>
+          sn.entityRef === selectedRFNode.data.entityRef ||
+          sn.entityRef?.endsWith('/' + selectedRFNode.id)
+      )
     : null;
 
   const [propKey, setPropKey] = useState('');
@@ -65,20 +71,22 @@ export const PropertyPanel: React.FC = () => {
 
   const handleNameChangeLocal = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (isNode) {
-      if (!selectedNodeId) return;
+      const rfNodeId = selectedRFNode?.id || selectedNodeId;
+      if (!rfNodeId) return;
       const newName = e.target.value;
       const newId = slugify(newName).replace(/_/g, '-');
 
-      if (newId && newId !== selectedNodeId) {
-        const idExists = schema.nodes.some(
-          n => n.entityRef === newId || (n.entityRef && n.entityRef.endsWith('/' + newId))
-        );
+      if (newId && newId !== rfNodeId) {
+        const idExists = schema.nodes.some(n => {
+          if (selectedNode && n.entityRef === selectedNode.entityRef) return false;
+          return n.entityRef === newId || (n.entityRef && n.entityRef.endsWith('/' + newId));
+        });
         if (!idExists) {
-          updateNode(selectedNodeId, { name: newName, entityRef: newId });
+          updateNode(rfNodeId, { name: newName, entityRef: newId });
           return;
         }
       }
-      updateNode(selectedNodeId, { name: newName });
+      updateNode(rfNodeId, { name: newName });
     } else {
       updateSchemaName(e.target.value);
     }

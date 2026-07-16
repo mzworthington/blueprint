@@ -33,6 +33,22 @@ export interface ResolvedWorkspaceState {
 }
 
 /**
+ * Resolve a short (non-FQN) node ref under a diagram's scope.
+ * Uses schema identity (`systemId`) and optional workspace context root — not C4 level.
+ */
+export function resolveShortEntityRef(ref: string, systemId: string, contextSlug?: string): string {
+  if (!ref) return '';
+  if (ref.includes('/')) return ref;
+  if (systemId.includes('/') || !contextSlug || systemId.startsWith(`${contextSlug}/`)) {
+    return `${systemId}/${ref}`;
+  }
+  if (systemId === contextSlug) {
+    return `${contextSlug}/${ref}`;
+  }
+  return `${contextSlug}/${systemId}/${ref}`;
+}
+
+/**
  * Processes all schemas in the workspace, calculates their C4 hierarchical FQNs,
  * and sets the resolved `entityRef` on every node. It also updates dependency targets.
  *
@@ -122,10 +138,7 @@ export function resolveWorkspaceEntityRefs(
       if (ref.includes('/')) {
         return { ...node, entityRef: ref };
       }
-      const defaultRef =
-        contextSlug && !systemId.startsWith(`${contextSlug}/`)
-          ? `${contextSlug}/${systemId}/${ref}`
-          : `${systemId}/${ref}`;
+      const defaultRef = resolveShortEntityRef(ref, systemId, contextSlug);
       const entityRef = fileRefMap.get(ref) ?? defaultRef;
       return { ...node, entityRef };
     });
@@ -134,10 +147,7 @@ export function resolveWorkspaceEntityRefs(
       const getDepRef = (ref: string) => {
         if (!ref) return '';
         if (fileRefMap.has(ref)) return fileRefMap.get(ref)!;
-        if (ref.includes('/')) return ref;
-        return contextSlug && !systemId.startsWith(`${contextSlug}/`)
-          ? `${contextSlug}/${systemId}/${ref}`
-          : `${systemId}/${ref}`;
+        return resolveShortEntityRef(ref, systemId, contextSlug);
       };
       const sourceRef = getDepRef(dep.from);
       const targetRef = getDepRef(dep.to);

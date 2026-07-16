@@ -8,8 +8,38 @@ type GetFn = () => {
   nodes: BlueprintRFNode[];
   edges: BlueprintRFEdge[];
   selectedNodeId: string | null;
+  currentFilePath: string;
+  nodeRefMap: Record<string, Record<string, string>>;
   logger: { info: (m: string, meta?: Record<string, unknown>) => void };
 };
+
+function collectNodeAliases(
+  nodes: BlueprintRFNode[],
+  id: string,
+  fileRefMap: Record<string, string>
+): Set<string> {
+  const aliases = new Set<string>([id]);
+  const rfNode = nodes.find(n => n.id === id || n.data.entityRef === id || n.data.id === id);
+  if (!rfNode) return aliases;
+
+  aliases.add(rfNode.id);
+  if (rfNode.data.id) aliases.add(rfNode.data.id);
+  if (rfNode.data.entityRef) aliases.add(rfNode.data.entityRef);
+
+  const localSegment = rfNode.data.entityRef?.includes('/')
+    ? rfNode.data.entityRef.split('/').pop()
+    : rfNode.data.entityRef;
+  if (localSegment) aliases.add(localSegment);
+
+  for (const [localId, fqn] of Object.entries(fileRefMap)) {
+    if (localId === rfNode.id || fqn === rfNode.data.entityRef || fqn === rfNode.data.id) {
+      aliases.add(localId);
+      aliases.add(fqn);
+    }
+  }
+
+  return aliases;
+}
 
 export function addNodeMutation(
   set: SetFn,
@@ -63,8 +93,11 @@ export function updateNodeMutation(
 
   let nextEdges = get().edges;
   if (updates.entityRef && updates.entityRef !== id) {
+    const fileRefMap = get().nodeRefMap?.[get().currentFilePath] || {};
+    const oldAliases = collectNodeAliases(nextNodes, id, fileRefMap);
+
     nextNodes.forEach(n => {
-      if (n.id === id) {
+      if (oldAliases.has(n.id)) {
         n.id = updates.entityRef!;
         n.data.id = updates.entityRef!;
         n.data.entityRef = updates.entityRef!;
@@ -72,18 +105,18 @@ export function updateNodeMutation(
     });
     nextEdges = get().edges.map(re => {
       const updated = { ...re };
-      if (re.source === id) {
+      if (oldAliases.has(re.source)) {
         updated.source = updates.entityRef!;
         updated.id = `edge-${updates.entityRef}-${re.target}`;
       }
-      if (re.target === id) {
+      if (oldAliases.has(re.target)) {
         updated.target = updates.entityRef!;
         updated.id = `edge-${re.source}-${updates.entityRef}`;
       }
       return updated;
     });
 
-    if (get().selectedNodeId === id) {
+    if (get().selectedNodeId && oldAliases.has(get().selectedNodeId!)) {
       set({ selectedNodeId: updates.entityRef });
     }
   }
