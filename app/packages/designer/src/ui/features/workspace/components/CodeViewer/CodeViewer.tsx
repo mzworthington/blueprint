@@ -37,16 +37,13 @@ export const CodeViewer: React.FC = () => {
           : 'w-full sm:w-96 border-r border-slate-900'
       }`}
     >
-      <div className="p-4 border-b border-slate-900 flex items-center justify-between gap-2">
+      <div className="p-4 border-b border-slate-900 flex items-center justify-between bg-slate-950/40 gap-2">
         <div className="flex items-center gap-2.5 min-w-0">
-          <h3 className="font-bold text-slate-400 tracking-wider text-[10px] uppercase truncate font-mono">
+          <h3 className="font-bold text-[#00f0ff] tracking-wider text-xs uppercase truncate font-mono">
             Schema Explorer
           </h3>
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          <div className="flex items-center text-[10px] bg-slate-900/80 border border-slate-850 px-1.5 py-0.5 rounded text-slate-400 font-mono">
-            v1.0.0
-          </div>
           <button
             onClick={toggleLeftCollapsed}
             className="sm:hidden min-h-11 min-w-11 rounded-lg bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-400 hover:text-slate-200 transition cursor-pointer flex items-center justify-center text-sm"
