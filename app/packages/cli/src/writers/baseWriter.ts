@@ -1,5 +1,6 @@
 import type { LayoutPort, AnalysisFileSystemPort, LoggerPort } from '../analysis/domain/ports.ts';
 import type { SystemSchema } from '@blueprint/core';
+import { blueprintYamlLanguageServerDirective } from '@blueprint/core';
 import * as yaml from 'js-yaml';
 
 export abstract class BaseWriter {
@@ -10,7 +11,8 @@ export abstract class BaseWriter {
   ) {}
 
   protected async writeYaml(path: string, schema: SystemSchema): Promise<void> {
-    const output = yaml.dump(schema, { indent: 2, lineWidth: 120, noRefs: true });
+    const body = yaml.dump(schema, { indent: 2, lineWidth: 120, noRefs: true });
+    const output = `${blueprintYamlLanguageServerDirective()}\n${body}`;
 
     // Ensure parent directory exists
     const normalizedPath = path.replace(/\\/g, '/');

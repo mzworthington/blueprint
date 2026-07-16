@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/v1/blueprint.schema.json
 entityRef: blueprint/app/designer
 name: Designer Service Components
 version: 1.0.0
@@ -19,13 +20,13 @@ nodes:
       churn: 4
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.09230769230769231
+      hotspotScore: 0.057692307692307696
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 2440
-    'y': 40
+      sinceDays: 90
+    x: 8068
+    'y': 64
   - entityRef: blueprint/app/designer/e2e-spec
     type: background-worker
     name: e2e.spec Service
@@ -37,39 +38,51 @@ nodes:
       classification: default
     forensics:
       complexity: 2
-      loc: 86
-      sloc: 60
-      churn: 6
+      loc: 91
+      sloc: 65
+      churn: 8
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.009230769230769232
+      hotspotScore: 0.007692307692307693
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 2800
-    'y': 40
-  - entityRef: blueprint/app/designer/userservice
-    type: relational-database
-    name: UserService Database
+      sinceDays: 90
+    x: 8448
+    'y': 64
+  - entityRef: blueprint/app/designer/packages
+    type: rest-api
+    name: packages Layer
     isTest: true
     properties:
       filepath: app/packages/designer/tests/fixtures/csharp/UserService.cs
       containerId: designer
-      technology: Entity Framework / DB Context
-      classification: database-marker
-    x: 4960
-    'y': 40
-  - entityRef: blueprint/app/designer/usercontroller
-    type: rest-api
-    name: UserController REST Endpoint
-    isTest: true
-    properties:
-      filepath: app/packages/designer/tests/fixtures/csharp/UserController.cs
-      containerId: designer
       technology: ASP.NET Core Controller / Minimal API
       classification: api-marker
-    x: 4600
-    'y': 40
+    x: 9588
+    'y': 64
+  - entityRef: blueprint/app/designer/e2e-forensics-spec
+    type: background-worker
+    name: e2e-forensics.spec Service
+    isTest: true
+    properties:
+      filepath: app/packages/designer/tests/e2e-forensics.spec.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 12
+      loc: 198
+      sloc: 176
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.010576923076923078
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 7688
+    'y': 64
   - entityRef: blueprint/app/designer/playwright-config
     type: background-worker
     name: playwright.config Service
@@ -81,20 +94,20 @@ nodes:
       classification: default
     forensics:
       complexity: 2
-      loc: 30
-      sloc: 28
-      churn: 3
+      loc: 33
+      sloc: 31
+      churn: 4
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.004615384615384616
+      hotspotScore: 0.0038461538461538464
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 3520
-    'y': 40
+      sinceDays: 90
+    x: 9968
+    'y': 64
   - entityRef: blueprint/app/designer/vite-config
     type: gateway-api
-    name: vite.config UI Component
+    name: vite.config Service
     isTest: false
     properties:
       filepath: app/packages/designer/vite.config.ts
@@ -102,43 +115,44 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 5
-      loc: 64
-      sloc: 52
-      churn: 2
+      complexity: 10
+      loc: 148
+      sloc: 104
+      churn: 4
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.01230769230769231
-      classifications: []
+      hotspotScore: 0.03461538461538462
+      classifications:
+        - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 5320
-    'y': 40
+      sinceDays: 90
+    x: 10728
+    'y': 64
   - entityRef: blueprint/app/designer/index
     type: background-worker
     name: index Service
     isTest: false
     properties:
-      filepath: app/packages/designer/src/core/index.ts
+      filepath: app/packages/designer/src/ui/features/designSystem/index.ts
       containerId: designer
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 2
+      loc: 3
       sloc: 1
-      churn: 4
+      churn: 1
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 3160
-    'y': 40
+      sinceDays: 90
+    x: 8828
+    'y': 64
   - entityRef: blueprint/app/designer/designsystempage
     type: gateway-api
-    name: DesignSystemPage UI Component
+    name: DesignSystemPage Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/designSystem/DesignSystemPage.tsx
@@ -155,12 +169,12 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 1880
-    'y': 260
+      sinceDays: 90
+    x: 428
+    'y': 1024
   - entityRef: blueprint/app/designer/designsystempage-test
     type: gateway-api
-    name: DesignSystemPage.test UI Component
+    name: DesignSystemPage.test Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/ui/features/designSystem/DesignSystemPage.test.tsx
@@ -177,12 +191,12 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 1880
-    'y': 40
+      sinceDays: 90
+    x: 428
+    'y': 704
   - entityRef: blueprint/app/designer/workspacepage
     type: gateway-api
-    name: WorkspacePage UI Component
+    name: WorkspacePage Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/WorkspacePage.tsx
@@ -190,21 +204,21 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 9
+      complexity: 7
       loc: 70
-      sloc: 64
-      churn: 1
+      sloc: 63
+      churn: 3
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.01230769230769231
+      hotspotScore: 0.01730769230769231
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 6040
-    'y': 260
+      sinceDays: 90
+    x: 11488
+    'y': 384
   - entityRef: blueprint/app/designer/usesearchbar
     type: gateway-api
-    name: useSearchbar UI Component
+    name: useSearchbar Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/Searchbar/useSearchbar.ts
@@ -212,22 +226,22 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 22
-      loc: 144
-      sloc: 122
-      churn: 4
+      complexity: 21
+      loc: 126
+      sloc: 105
+      churn: 5
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.12923076923076923
+      hotspotScore: 0.09615384615384616
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 10720
-    'y': 920
+      sinceDays: 90
+    x: 15588
+    'y': 1344
   - entityRef: blueprint/app/designer/searchbar
     type: gateway-api
-    name: Searchbar UI Component
+    name: Searchbar Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/Searchbar/Searchbar.tsx
@@ -235,22 +249,21 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 11
-      loc: 124
-      sloc: 120
-      churn: 3
+      complexity: 7
+      loc: 101
+      sloc: 97
+      churn: 5
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.046153846153846156
-      classifications:
-        - knowledge-silo
+      hotspotScore: 0.028846153846153848
+      classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 10720
-    'y': 700
+      sinceDays: 90
+    x: 15588
+    'y': 1024
   - entityRef: blueprint/app/designer/searchbar-test
     type: gateway-api
-    name: Searchbar.test UI Component
+    name: Searchbar.test Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/Searchbar/Searchbar.test.tsx
@@ -267,12 +280,12 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 11520
-    'y': 480
+      sinceDays: 90
+    x: 17408
+    'y': 704
   - entityRef: blueprint/app/designer/propertypanel-test
     type: gateway-api
-    name: PropertyPanel.test UI Component
+    name: PropertyPanel.test Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/PropertyPanel/PropertyPanel.test.tsx
@@ -281,23 +294,23 @@ nodes:
       classification: ui-import
     forensics:
       complexity: 1
-      loc: 238
-      sloc: 193
-      churn: 5
+      loc: 272
+      sloc: 222
+      churn: 6
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles:
-        - path: app/packages/designer/src/ui/features/workspace/components/PropertyPanel/PropertyPanel.tsx
-          score: 0.8333333333333334
-          sharedCommits: 5
-      sinceDays: 500
-    x: 9560
-    'y': 700
+        - path: app/packages/designer/src/application/store/layoutUtils.ts
+          score: 0.75
+          sharedCommits: 6
+      sinceDays: 90
+    x: 15088
+    'y': 704
   - entityRef: blueprint/app/designer/copyablefield
     type: gateway-api
-    name: CopyableField UI Component
+    name: CopyableField Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/PropertyPanel/CopyableField.tsx
@@ -314,12 +327,12 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 1240
-    'y': 1360
+      sinceDays: 90
+    x: 2448
+    'y': 1664
   - entityRef: blueprint/app/designer/componentcatalog
     type: gateway-api
-    name: ComponentCatalog UI Component
+    name: ComponentCatalog Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/PropertyPanel/ComponentCatalog.tsx
@@ -327,21 +340,21 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 3
-      loc: 60
-      sloc: 56
-      churn: 2
+      complexity: 1
+      loc: 43
+      sloc: 39
+      churn: 5
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.006153846153846155
+      hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 5880
-    'y': 1140
+      sinceDays: 90
+    x: 4628
+    'y': 1344
   - entityRef: blueprint/app/designer/forensicssection
     type: gateway-api
-    name: ForensicsSection UI Component
+    name: ForensicsSection Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/PropertyPanel/ForensicsSection.tsx
@@ -352,19 +365,19 @@ nodes:
       complexity: 41
       loc: 305
       sloc: 285
-      churn: 4
+      churn: 5
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.24615384615384617
+      hotspotScore: 0.19230769230769232
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 1200
-    'y': 1140
+      sinceDays: 90
+    x: 4028
+    'y': 1664
   - entityRef: blueprint/app/designer/connectionssection
     type: gateway-api
-    name: ConnectionsSection UI Component
+    name: ConnectionsSection Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/PropertyPanel/ConnectionsSection.tsx
@@ -378,15 +391,15 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.018461538461538463
+      hotspotScore: 0.011538461538461539
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 1440
-    'y': 2020
+      sinceDays: 90
+    x: 8068
+    'y': 2944
   - entityRef: blueprint/app/designer/forensicssection-test
     type: gateway-api
-    name: ForensicsSection.test UI Component
+    name: ForensicsSection.test Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/PropertyPanel/ForensicsSection.test.tsx
@@ -395,20 +408,20 @@ nodes:
       classification: ui-import
     forensics:
       complexity: 1
-      loc: 104
-      sloc: 94
-      churn: 3
+      loc: 106
+      sloc: 96
+      churn: 4
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 1200
-    'y': 920
+      sinceDays: 90
+    x: 4028
+    'y': 1344
   - entityRef: blueprint/app/designer/propertypanel
     type: gateway-api
-    name: PropertyPanel UI Component
+    name: PropertyPanel Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/PropertyPanel/PropertyPanel.tsx
@@ -416,31 +429,44 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 38
-      loc: 234
-      sloc: 212
-      churn: 6
+      complexity: 43
+      loc: 249
+      sloc: 226
+      churn: 9
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.3415384615384615
+      hotspotScore: 0.3634615384615385
       classifications:
         - knowledge-silo
-      coupledFiles:
-        - path: app/packages/designer/src/application/store/layoutUtils.ts
-          score: 0.8571428571428571
-          sharedCommits: 6
-        - path: app/packages/designer/src/ui/features/workspace/components/PropertyPanel/PropertyPanel.test.tsx
-          score: 0.8333333333333334
-          sharedCommits: 5
-        - path: app/packages/designer/src/ui/features/workspace/components/Canvas/BlueprintNode.test.tsx
-          score: 0.75
-          sharedCommits: 6
-      sinceDays: 500
-    x: 5520
-    'y': 920
+      coupledFiles: []
+      sinceDays: 90
+    x: 10708
+    'y': 1024
+  - entityRef: blueprint/app/designer/workspacedisplaycontrols-test
+    type: gateway-api
+    name: WorkspaceDisplayControls.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/designer/src/ui/features/workspace/components/PropertyPanel/WorkspaceDisplayControls.test.tsx
+      containerId: designer
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 26
+      sloc: 23
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 13628
+    'y': 1024
   - entityRef: blueprint/app/designer/validationsection
     type: gateway-api
-    name: ValidationSection UI Component
+    name: ValidationSection Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/PropertyPanel/ValidationSection.tsx
@@ -448,21 +474,44 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 4
-      loc: 49
-      sloc: 46
-      churn: 2
+      complexity: 12
+      loc: 72
+      sloc: 67
+      churn: 3
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.009230769230769232
+      hotspotScore: 0.03173076923076923
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 21188
+    'y': 1344
+  - entityRef: blueprint/app/designer/workspacedisplaycontrols
+    type: gateway-api
+    name: WorkspaceDisplayControls Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/ui/features/workspace/components/PropertyPanel/WorkspaceDisplayControls.tsx
+      containerId: designer
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 3
+      loc: 82
+      sloc: 77
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0019230769230769232
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 5520
-    'y': 1140
+      sinceDays: 90
+    x: 13568
+    'y': 1344
   - entityRef: blueprint/app/designer/identitysection
     type: gateway-api
-    name: IdentitySection UI Component
+    name: IdentitySection Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/PropertyPanel/IdentitySection.tsx
@@ -476,15 +525,15 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.015384615384615385
+      hotspotScore: 0.009615384615384616
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 2360
-    'y': 1140
+      sinceDays: 90
+    x: 2448
+    'y': 1344
   - entityRef: blueprint/app/designer/propertiessection
     type: gateway-api
-    name: PropertiesSection UI Component
+    name: PropertiesSection Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/PropertyPanel/PropertiesSection.tsx
@@ -495,18 +544,18 @@ nodes:
       complexity: 3
       loc: 78
       sloc: 73
-      churn: 2
+      churn: 3
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.006153846153846155
+      hotspotScore: 0.0057692307692307696
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 2000
-    'y': 1140
+      sinceDays: 90
+    x: 7848
+    'y': 1344
   - entityRef: blueprint/app/designer/nodetypes
     type: gateway-api
-    name: nodeTypes UI Component
+    name: nodeTypes Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/PropertyPanel/nodeTypes.ts
@@ -523,12 +572,56 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 5920
-    'y': 1360
+      sinceDays: 90
+    x: 4788
+    'y': 1664
+  - entityRef: blueprint/app/designer/layoutenginecontrols
+    type: gateway-api
+    name: LayoutEngineControls Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/ui/features/workspace/components/LayoutEngineControls/LayoutEngineControls.tsx
+      containerId: designer
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 2
+      loc: 50
+      sloc: 42
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0019230769230769232
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 16808
+    'y': 1344
+  - entityRef: blueprint/app/designer/layoutenginecontrols-test
+    type: gateway-api
+    name: LayoutEngineControls.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/designer/src/ui/features/workspace/components/LayoutEngineControls/LayoutEngineControls.test.tsx
+      containerId: designer
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 20
+      sloc: 16
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 17028
+    'y': 1024
   - entityRef: blueprint/app/designer/actioncontrols-test
     type: gateway-api
-    name: ActionControls.test UI Component
+    name: ActionControls.test Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/ActionControls/ActionControls.test.tsx
@@ -537,20 +630,20 @@ nodes:
       classification: ui-import
     forensics:
       complexity: 1
-      loc: 153
-      sloc: 123
-      churn: 1
+      loc: 237
+      sloc: 191
+      churn: 3
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 8840
-    'y': 700
+      sinceDays: 90
+    x: 12688
+    'y': 1024
   - entityRef: blueprint/app/designer/actioncontrols
     type: gateway-api
-    name: ActionControls UI Component
+    name: ActionControls Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/ActionControls/ActionControls.tsx
@@ -558,21 +651,66 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 8
-      loc: 113
-      sloc: 102
+      complexity: 14
+      loc: 177
+      sloc: 162
+      churn: 5
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0625
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 12688
+    'y': 1344
+  - entityRef: blueprint/app/designer/systemselector
+    type: gateway-api
+    name: SystemSelector Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/ui/features/workspace/components/SystemSelector/SystemSelector.tsx
+      containerId: designer
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 4
+      loc: 44
+      sloc: 40
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0057692307692307696
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 18468
+    'y': 1344
+  - entityRef: blueprint/app/designer/systemselector-test
+    type: gateway-api
+    name: SystemSelector.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/designer/src/ui/features/workspace/components/SystemSelector/SystemSelector.test.tsx
+      containerId: designer
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 69
+      sloc: 60
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.01076923076923077
+      hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 8840
-    'y': 920
+      sinceDays: 90
+    x: 19008
+    'y': 1024
   - entityRef: blueprint/app/designer/usecodeviewer
     type: gateway-api
-    name: useCodeViewer UI Component
+    name: useCodeViewer Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/CodeViewer/useCodeViewer.ts
@@ -581,35 +719,26 @@ nodes:
       classification: ui-import
     forensics:
       complexity: 9
-      loc: 152
-      sloc: 126
-      churn: 5
+      loc: 144
+      sloc: 121
+      churn: 6
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.06153846153846154
+      hotspotScore: 0.046153846153846156
       classifications: []
       coupledFiles:
         - path: app/packages/designer/src/application/store/defaultData.ts
-          score: 1
+          score: 0.8333333333333334
           sharedCommits: 5
         - path: app/packages/designer/src/ui/features/workspace/components/Breadcrumbs/Breadcrumbs.test.tsx
-          score: 1
-          sharedCommits: 5
-        - path: app/packages/designer/src/ui/features/workspace/components/Breadcrumbs/useBreadcrumbs.ts
-          score: 1
-          sharedCommits: 5
-        - path: app/packages/designer/src/application/store/states/ioState.test.ts
           score: 0.8333333333333334
           sharedCommits: 5
-        - path: app/packages/designer/src/ui/features/workspace/components/DiffMenu/DiffMenu.tsx
-          score: 0.8333333333333334
-          sharedCommits: 5
-      sinceDays: 500
-    x: 13160
-    'y': 920
+      sinceDays: 90
+    x: 20428
+    'y': 1344
   - entityRef: blueprint/app/designer/codeviewer
     type: gateway-api
-    name: CodeViewer UI Component
+    name: CodeViewer Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/CodeViewer/CodeViewer.tsx
@@ -618,21 +747,21 @@ nodes:
       classification: ui-import
     forensics:
       complexity: 19
-      loc: 205
+      loc: 206
       sloc: 194
-      churn: 2
+      churn: 5
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.05538461538461539
+      hotspotScore: 0.08653846153846154
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 9200
-    'y': 700
+      sinceDays: 90
+    x: 20428
+    'y': 1024
   - entityRef: blueprint/app/designer/codeviewer-test
     type: gateway-api
-    name: CodeViewer.test UI Component
+    name: CodeViewer.test Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/CodeViewer/CodeViewer.test.tsx
@@ -649,12 +778,12 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 10320
-    'y': 480
+      sinceDays: 90
+    x: 20428
+    'y': 704
   - entityRef: blueprint/app/designer/blueprintnode-test
     type: gateway-api
-    name: BlueprintNode.test UI Component
+    name: BlueprintNode.test Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/Canvas/BlueprintNode.test.tsx
@@ -663,35 +792,26 @@ nodes:
       classification: ui-import
     forensics:
       complexity: 1
-      loc: 213
-      sloc: 182
-      churn: 8
+      loc: 223
+      sloc: 195
+      churn: 10
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles:
         - path: app/packages/designer/src/ui/features/workspace/components/Canvas/BlueprintNode.tsx
-          score: 0.8888888888888888
-          sharedCommits: 8
+          score: 0.8333333333333334
+          sharedCommits: 10
         - path: app/packages/designer/src/application/store/layoutUtils.ts
-          score: 0.875
-          sharedCommits: 7
-        - path: app/packages/designer/src/ui/features/workspace/components/Canvas/Canvas.test.tsx
-          score: 0.7777777777777778
-          sharedCommits: 7
-        - path: app/packages/designer/src/ui/features/workspace/components/Canvas/Canvas.tsx
-          score: 0.7777777777777778
-          sharedCommits: 7
-        - path: app/packages/designer/src/ui/features/workspace/components/PropertyPanel/PropertyPanel.tsx
-          score: 0.75
-          sharedCommits: 6
-      sinceDays: 500
-    x: 5320
-    'y': 700
+          score: 0.8
+          sharedCommits: 8
+      sinceDays: 90
+    x: 11868
+    'y': 1024
   - entityRef: blueprint/app/designer/canvas-test
     type: gateway-api
-    name: Canvas.test UI Component
+    name: Canvas.test Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/Canvas/Canvas.test.tsx
@@ -700,32 +820,20 @@ nodes:
       classification: ui-import
     forensics:
       complexity: 2
-      loc: 329
-      sloc: 281
-      churn: 8
+      loc: 378
+      sloc: 327
+      churn: 10
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.01230769230769231
+      hotspotScore: 0.009615384615384616
       classifications: []
-      coupledFiles:
-        - path: app/packages/designer/src/application/store/states/diagramState.ts
-          score: 0.875
-          sharedCommits: 7
-        - path: app/packages/designer/src/ui/features/workspace/components/Canvas/BlueprintNode.test.tsx
-          score: 0.7777777777777778
-          sharedCommits: 7
-        - path: app/packages/designer/src/ui/features/workspace/components/Canvas/Canvas.tsx
-          score: 0.7777777777777778
-          sharedCommits: 7
-        - path: app/packages/designer/src/application/store/states/ioState.test.ts
-          score: 0.75
-          sharedCommits: 6
-      sinceDays: 500
-    x: 5680
-    'y': 260
+      coupledFiles: []
+      sinceDays: 90
+    x: 11108
+    'y': 384
   - entityRef: blueprint/app/designer/canvas
     type: gateway-api
-    name: Canvas UI Component
+    name: Canvas Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/Canvas/Canvas.tsx
@@ -733,28 +841,23 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 35
-      loc: 280
-      sloc: 260
-      churn: 8
+      complexity: 47
+      loc: 352
+      sloc: 321
+      churn: 16
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.4184615384615385
+      hotspotScore: 0.7076923076923077
       classifications:
+        - hotspot
         - knowledge-silo
-      coupledFiles:
-        - path: app/packages/designer/src/ui/features/workspace/components/Canvas/BlueprintNode.test.tsx
-          score: 0.7777777777777778
-          sharedCommits: 7
-        - path: app/packages/designer/src/ui/features/workspace/components/Canvas/Canvas.test.tsx
-          score: 0.7777777777777778
-          sharedCommits: 7
-      sinceDays: 500
-    x: 5680
-    'y': 700
+      coupledFiles: []
+      sinceDays: 90
+    x: 11708
+    'y': 704
   - entityRef: blueprint/app/designer/blueprintnode
     type: gateway-api
-    name: BlueprintNode UI Component
+    name: BlueprintNode Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/Canvas/BlueprintNode.tsx
@@ -762,28 +865,25 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 26
-      loc: 383
-      sloc: 361
-      churn: 9
+      complexity: 31
+      loc: 374
+      sloc: 354
+      churn: 12
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.3461538461538462
+      hotspotScore: 0.34615384615384615
       classifications:
         - knowledge-silo
       coupledFiles:
         - path: app/packages/designer/src/ui/features/workspace/components/Canvas/BlueprintNode.test.tsx
-          score: 0.8888888888888888
-          sharedCommits: 8
-        - path: app/packages/designer/src/application/store/layoutUtils.ts
-          score: 0.7777777777777778
-          sharedCommits: 7
-      sinceDays: 500
-    x: 4040
-    'y': 920
+          score: 0.8333333333333334
+          sharedCommits: 10
+      sinceDays: 90
+    x: 7468
+    'y': 1344
   - entityRef: blueprint/app/designer/diffdepssection
     type: gateway-api
-    name: DiffDepsSection UI Component
+    name: DiffDepsSection Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/DiffMenu/DiffDepsSection.tsx
@@ -797,15 +897,15 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.009230769230769232
+      hotspotScore: 0.0057692307692307696
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 7800
-    'y': 2020
+      sinceDays: 90
+    x: 11868
+    'y': 2944
   - entityRef: blueprint/app/designer/diffnodessection
     type: gateway-api
-    name: DiffNodesSection UI Component
+    name: DiffNodesSection Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/DiffMenu/DiffNodesSection.tsx
@@ -819,16 +919,16 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.03384615384615385
+      hotspotScore: 0.021153846153846155
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 8200
-    'y': 2020
+      sinceDays: 90
+    x: 12468
+    'y': 2944
   - entityRef: blueprint/app/designer/diffmenu-test
     type: gateway-api
-    name: DiffMenu.test UI Component
+    name: DiffMenu.test Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/DiffMenu/DiffMenu.test.tsx
@@ -845,12 +945,12 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 9960
-    'y': 480
+      sinceDays: 90
+    x: 12088
+    'y': 704
   - entityRef: blueprint/app/designer/diffmenu
     type: gateway-api
-    name: DiffMenu UI Component
+    name: DiffMenu Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/DiffMenu/DiffMenu.tsx
@@ -864,12 +964,9 @@ nodes:
       churn: 6
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.06461538461538462
+      hotspotScore: 0.04038461538461539
       classifications: []
       coupledFiles:
-        - path: app/packages/designer/src/application/store/states/ioState.ts
-          score: 0.8571428571428571
-          sharedCommits: 6
         - path: app/packages/designer/src/infrastructure/db/db.ts
           score: 0.8571428571428571
           sharedCommits: 6
@@ -879,18 +976,12 @@ nodes:
         - path: app/packages/designer/src/ui/features/workspace/components/Breadcrumbs/Breadcrumbs.test.tsx
           score: 0.8333333333333334
           sharedCommits: 5
-        - path: app/packages/designer/src/ui/features/workspace/components/Breadcrumbs/useBreadcrumbs.ts
-          score: 0.8333333333333334
-          sharedCommits: 5
-        - path: app/packages/designer/src/ui/features/workspace/components/CodeViewer/useCodeViewer.ts
-          score: 0.8333333333333334
-          sharedCommits: 5
-      sinceDays: 500
-    x: 9960
-    'y': 700
+      sinceDays: 90
+    x: 14808
+    'y': 1024
   - entityRef: blueprint/app/designer/usediffmenu
     type: gateway-api
-    name: useDiffMenu UI Component
+    name: useDiffMenu Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/DiffMenu/useDiffMenu.ts
@@ -904,16 +995,39 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.036923076923076927
+      hotspotScore: 0.023076923076923078
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 13880
-    'y': 920
+      sinceDays: 90
+    x: 21568
+    'y': 1344
+  - entityRef: blueprint/app/designer/breadcrumbscompact
+    type: gateway-api
+    name: BreadcrumbsCompact Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/ui/features/workspace/components/Breadcrumbs/BreadcrumbsCompact.tsx
+      containerId: designer
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 16
+      loc: 200
+      sloc: 186
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.014423076923076924
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 20048
+    'y': 1024
   - entityRef: blueprint/app/designer/breadcrumbs-test
     type: gateway-api
-    name: Breadcrumbs.test UI Component
+    name: Breadcrumbs.test Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/Breadcrumbs/Breadcrumbs.test.tsx
@@ -933,24 +1047,21 @@ nodes:
         - path: app/packages/designer/src/application/store/defaultData.ts
           score: 1
           sharedCommits: 5
-        - path: app/packages/designer/src/ui/features/workspace/components/Breadcrumbs/useBreadcrumbs.ts
-          score: 1
+        - path: app/packages/designer/src/application/store/states/ioState.test.ts
+          score: 0.8333333333333334
           sharedCommits: 5
         - path: app/packages/designer/src/ui/features/workspace/components/CodeViewer/useCodeViewer.ts
-          score: 1
-          sharedCommits: 5
-        - path: app/packages/designer/src/application/store/states/ioState.test.ts
           score: 0.8333333333333334
           sharedCommits: 5
         - path: app/packages/designer/src/ui/features/workspace/components/DiffMenu/DiffMenu.tsx
           score: 0.8333333333333334
           sharedCommits: 5
-      sinceDays: 500
-    x: 11160
-    'y': 480
+      sinceDays: 90
+    x: 15608
+    'y': 704
   - entityRef: blueprint/app/designer/breadcrumbs
     type: gateway-api
-    name: Breadcrumbs UI Component
+    name: Breadcrumbs Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/Breadcrumbs/Breadcrumbs.tsx
@@ -958,22 +1069,22 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 17
-      loc: 194
-      sloc: 181
-      churn: 3
+      complexity: 20
+      loc: 211
+      sloc: 198
+      churn: 4
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.07384615384615385
+      hotspotScore: 0.07307692307692308
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 12800
-    'y': 700
+      sinceDays: 90
+    x: 19668
+    'y': 1024
   - entityRef: blueprint/app/designer/usebreadcrumbs
     type: gateway-api
-    name: useBreadcrumbs UI Component
+    name: useBreadcrumbs Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/Breadcrumbs/useBreadcrumbs.ts
@@ -981,37 +1092,88 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 31
-      loc: 202
-      sloc: 173
-      churn: 5
+      complexity: 30
+      loc: 220
+      sloc: 186
+      churn: 7
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.23076923076923078
+      hotspotScore: 0.1951923076923077
       classifications:
         - knowledge-silo
-      coupledFiles:
-        - path: app/packages/designer/src/application/store/defaultData.ts
-          score: 1
-          sharedCommits: 5
-        - path: app/packages/designer/src/ui/features/workspace/components/Breadcrumbs/Breadcrumbs.test.tsx
-          score: 1
-          sharedCommits: 5
-        - path: app/packages/designer/src/ui/features/workspace/components/CodeViewer/useCodeViewer.ts
-          score: 1
-          sharedCommits: 5
-        - path: app/packages/designer/src/application/store/states/ioState.test.ts
-          score: 0.8333333333333334
-          sharedCommits: 5
-        - path: app/packages/designer/src/ui/features/workspace/components/DiffMenu/DiffMenu.tsx
-          score: 0.8333333333333334
-          sharedCommits: 5
-      sinceDays: 500
-    x: 12800
-    'y': 920
+      coupledFiles: []
+      sinceDays: 90
+    x: 19668
+    'y': 1344
+  - entityRef: blueprint/app/designer/breadcrumbscompact-test
+    type: gateway-api
+    name: BreadcrumbsCompact.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/designer/src/ui/features/workspace/components/Breadcrumbs/BreadcrumbsCompact.test.tsx
+      containerId: designer
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 86
+      sloc: 72
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 16368
+    'y': 704
+  - entityRef: blueprint/app/designer/mobilepaneltoggles-test
+    type: gateway-api
+    name: MobilePanelToggles.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/designer/src/ui/features/workspace/components/MobilePanelToggles/MobilePanelToggles.test.tsx
+      containerId: designer
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 36
+      sloc: 30
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 17408
+    'y': 1024
+  - entityRef: blueprint/app/designer/mobilepaneltoggles
+    type: gateway-api
+    name: MobilePanelToggles Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/ui/features/workspace/components/MobilePanelToggles/MobilePanelToggles.tsx
+      containerId: designer
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 3
+      loc: 45
+      sloc: 36
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0038461538461538464
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 17408
+    'y': 1344
   - entityRef: blueprint/app/designer/header-test
     type: gateway-api
-    name: Header.test UI Component
+    name: Header.test Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/Header/Header.test.tsx
@@ -1020,20 +1182,20 @@ nodes:
       classification: ui-import
     forensics:
       complexity: 1
-      loc: 75
-      sloc: 64
-      churn: 2
+      loc: 70
+      sloc: 60
+      churn: 4
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 10720
-    'y': 260
+      sinceDays: 90
+    x: 15988
+    'y': 384
   - entityRef: blueprint/app/designer/header
     type: gateway-api
-    name: Header UI Component
+    name: Header Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/components/Header/Header.tsx
@@ -1042,20 +1204,20 @@ nodes:
       classification: ui-import
     forensics:
       complexity: 3
-      loc: 55
-      sloc: 52
-      churn: 2
+      loc: 38
+      sloc: 35
+      churn: 5
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.006153846153846155
+      hotspotScore: 0.009615384615384616
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 10720
-    'y': 480
+      sinceDays: 90
+    x: 15988
+    'y': 704
   - entityRef: blueprint/app/designer/workspacepage-test
     type: gateway-api
-    name: WorkspacePage.test UI Component
+    name: WorkspacePage.test Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/WorkspacePage.test.tsx
@@ -1066,18 +1228,18 @@ nodes:
       complexity: 1
       loc: 154
       sloc: 127
-      churn: 4
+      churn: 5
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 6040
-    'y': 40
+      sinceDays: 90
+    x: 11488
+    'y': 64
   - entityRef: blueprint/app/designer/usekeyboardnavigation-test
     type: gateway-api
-    name: useKeyboardNavigation.test UI Component
+    name: useKeyboardNavigation.test Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/hooks/useKeyboardNavigation.test.ts
@@ -1086,20 +1248,23 @@ nodes:
       classification: ui-import
     forensics:
       complexity: 1
-      loc: 175
-      sloc: 126
-      churn: 4
+      loc: 207
+      sloc: 153
+      churn: 5
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2960
-    'y': 920
+      coupledFiles:
+        - path: app/packages/designer/src/ui/features/workspace/hooks/useKeyboardNavigation.ts
+          score: 1
+          sharedCommits: 5
+      sinceDays: 90
+    x: 8348
+    'y': 1344
   - entityRef: blueprint/app/designer/usekeyboardnavigation
     type: gateway-api
-    name: useKeyboardNavigation UI Component
+    name: useKeyboardNavigation Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/hooks/useKeyboardNavigation.ts
@@ -1107,22 +1272,25 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 12
-      loc: 42
-      sloc: 34
-      churn: 4
+      complexity: 27
+      loc: 56
+      sloc: 47
+      churn: 5
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.0676923076923077
+      hotspotScore: 0.125
       classifications:
         - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 2960
-    'y': 1140
+      coupledFiles:
+        - path: app/packages/designer/src/ui/features/workspace/hooks/useKeyboardNavigation.test.ts
+          score: 1
+          sharedCommits: 5
+      sinceDays: 90
+    x: 8348
+    'y': 1664
   - entityRef: blueprint/app/designer/useurlsync
     type: gateway-api
-    name: useUrlSync UI Component
+    name: useUrlSync Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/workspace/hooks/useUrlSync.ts
@@ -1136,16 +1304,16 @@ nodes:
       churn: 3
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.04153846153846154
+      hotspotScore: 0.025961538461538463
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 13520
-    'y': 920
+      sinceDays: 90
+    x: 20808
+    'y': 1344
   - entityRef: blueprint/app/designer/docsshell
     type: gateway-api
-    name: DocsShell UI Component
+    name: DocsShell Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/docs/DocsShell.tsx
@@ -1153,18 +1321,21 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 6
-      loc: 105
-      sloc: 99
-      churn: 2
+      complexity: 8
+      loc: 112
+      sloc: 105
+      churn: 5
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.015384615384615385
+      hotspotScore: 0.03365384615384616
       classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2600
-    'y': 480
+      coupledFiles:
+        - path: app/packages/designer/src/ui/components/DesignSystemShowcase.tsx
+          score: 0.8333333333333334
+          sharedCommits: 5
+      sinceDays: 90
+    x: 2008
+    'y': 1344
   - entityRef: blueprint/app/designer/pages
     type: background-worker
     name: pages Service
@@ -1181,16 +1352,16 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.038461538461538464
+      hotspotScore: 0.02403846153846154
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 4760
-    'y': 920
+      sinceDays: 90
+    x: 5828
+    'y': 1664
   - entityRef: blueprint/app/designer/docshome
     type: gateway-api
-    name: DocsHome UI Component
+    name: DocsHome Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/docs/DocsHome.tsx
@@ -1207,12 +1378,12 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 2600
-    'y': 260
+      sinceDays: 90
+    x: 2008
+    'y': 1024
   - entityRef: blueprint/app/designer/markdownview
     type: gateway-api
-    name: MarkdownView UI Component
+    name: MarkdownView Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/docs/MarkdownView.tsx
@@ -1220,19 +1391,19 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 14
-      loc: 118
-      sloc: 114
-      churn: 1
+      complexity: 16
+      loc: 166
+      sloc: 153
+      churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.020000000000000004
+      hotspotScore: 0.028846153846153848
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 4400
-    'y': 700
+      sinceDays: 90
+    x: 5888
+    'y': 1344
   - entityRef: blueprint/app/designer/pages-test
     type: background-worker
     name: pages.test Service
@@ -1252,12 +1423,12 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 4960
-    'y': 700
+      sinceDays: 90
+    x: 6268
+    'y': 1344
   - entityRef: blueprint/app/designer/docspage
     type: gateway-api
-    name: DocsPage UI Component
+    name: DocsPage Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/features/docs/DocsPage.tsx
@@ -1271,15 +1442,126 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.0015384615384615387
+      hotspotScore: 0.0009615384615384616
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 4360
-    'y': 260
+      sinceDays: 90
+    x: 2388
+    'y': 1024
+  - entityRef: blueprint/app/designer/forensicspage
+    type: gateway-api
+    name: ForensicsPage Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/ui/features/forensics/ForensicsPage.tsx
+      containerId: designer
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 24
+      loc: 281
+      sloc: 265
+      churn: 3
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.06634615384615385
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 5508
+    'y': 1344
+  - entityRef: blueprint/app/designer/forensicssearchbar
+    type: gateway-api
+    name: ForensicsSearchbar Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/ui/features/forensics/ForensicsSearchbar.tsx
+      containerId: designer
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 9
+      loc: 88
+      sloc: 80
+      churn: 3
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.023076923076923078
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 3588
+    'y': 1664
+  - entityRef: blueprint/app/designer/forensicspage-test
+    type: gateway-api
+    name: ForensicsPage.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/designer/src/ui/features/forensics/ForensicsPage.test.tsx
+      containerId: designer
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 83
+      sloc: 76
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 12308
+    'y': 1024
+  - entityRef: blueprint/app/designer/offlinebanner-test
+    type: gateway-api
+    name: OfflineBanner.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/designer/src/ui/components/OfflineBanner/OfflineBanner.test.tsx
+      containerId: designer
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 2
+      loc: 55
+      sloc: 47
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0009615384615384616
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 7408
+    'y': 1024
+  - entityRef: blueprint/app/designer/offlinebanner
+    type: gateway-api
+    name: OfflineBanner Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/ui/components/OfflineBanner/OfflineBanner.tsx
+      containerId: designer
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 2
+      loc: 36
+      sloc: 26
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0019230769230769232
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 7028
+    'y': 1344
   - entityRef: blueprint/app/designer/mermaidpreview-test
     type: gateway-api
-    name: MermaidPreview.test UI Component
+    name: MermaidPreview.test Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/ui/components/MermaidPreview/MermaidPreview.test.tsx
@@ -1296,12 +1578,12 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 4040
-    'y': 700
+      sinceDays: 90
+    x: 9208
+    'y': 64
   - entityRef: blueprint/app/designer/mermaidpreview
     type: gateway-api
-    name: MermaidPreview UI Component
+    name: MermaidPreview Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/components/MermaidPreview/MermaidPreview.tsx
@@ -1309,22 +1591,22 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 17
-      loc: 230
-      sloc: 204
-      churn: 1
+      complexity: 18
+      loc: 245
+      sloc: 217
+      churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.02461538461538462
+      hotspotScore: 0.032692307692307694
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 4400
-    'y': 920
+      sinceDays: 90
+    x: 15608
+    'y': 384
   - entityRef: blueprint/app/designer/designsystemshowcase
     type: gateway-api
-    name: DesignSystemShowcase UI Component
+    name: DesignSystemShowcase Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/components/DesignSystemShowcase.tsx
@@ -1332,22 +1614,25 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 29
-      loc: 826
-      sloc: 782
-      churn: 3
+      complexity: 30
+      loc: 841
+      sloc: 796
+      churn: 6
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.12923076923076923
+      hotspotScore: 0.16730769230769232
       classifications:
         - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 1880
-    'y': 480
+      coupledFiles:
+        - path: app/packages/designer/src/ui/features/docs/DocsShell.tsx
+          score: 0.8333333333333334
+          sharedCommits: 5
+      sinceDays: 90
+    x: 428
+    'y': 1344
   - entityRef: blueprint/app/designer/brandmark
     type: gateway-api
-    name: BrandMark UI Component
+    name: BrandMark Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/components/AppHeader/BrandMark.tsx
@@ -1355,21 +1640,43 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 3
-      loc: 47
-      sloc: 36
+      complexity: 4
+      loc: 46
+      sloc: 35
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0057692307692307696
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 808
+    'y': 1984
+  - entityRef: blueprint/app/designer/appheader-test
+    type: gateway-api
+    name: AppHeader.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/designer/src/ui/components/AppHeader/AppHeader.test.tsx
+      containerId: designer
+      technology: React Component
+      classification: ui-import
+    forensics:
+      complexity: 1
+      loc: 56
+      sloc: 43
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.0030769230769230774
+      hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 2600
-    'y': 920
+      sinceDays: 90
+    x: 48
+    'y': 1344
   - entityRef: blueprint/app/designer/appheader
     type: gateway-api
-    name: AppHeader UI Component
+    name: AppHeader Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/ui/components/AppHeader/AppHeader.tsx
@@ -1377,21 +1684,22 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 4
-      loc: 39
-      sloc: 30
-      churn: 1
+      complexity: 16
+      loc: 132
+      sloc: 117
+      churn: 3
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.004615384615384616
-      classifications: []
+      hotspotScore: 0.04326923076923077
+      classifications:
+        - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 2600
-    'y': 700
+      sinceDays: 90
+    x: 808
+    'y': 1664
   - entityRef: blueprint/app/designer/designsystemshowcase-test
     type: gateway-api
-    name: DesignSystemShowcase.test UI Component
+    name: DesignSystemShowcase.test Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/ui/components/DesignSystemShowcase.test.tsx
@@ -1402,18 +1710,18 @@ nodes:
       complexity: 1
       loc: 36
       sloc: 29
-      churn: 3
+      churn: 4
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 2240
-    'y': 260
+      sinceDays: 90
+    x: 808
+    'y': 1024
   - entityRef: blueprint/app/designer/app
     type: gateway-api
-    name: App UI Component
+    name: App Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/App.tsx
@@ -1422,20 +1730,20 @@ nodes:
       classification: ui-import
     forensics:
       complexity: 2
-      loc: 41
-      sloc: 35
-      churn: 2
+      loc: 64
+      sloc: 55
+      churn: 5
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.0030769230769230774
+      hotspotScore: 0.004807692307692308
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 1140
+      sinceDays: 90
+    x: 7028
+    'y': 1024
   - entityRef: blueprint/app/designer/main
     type: gateway-api
-    name: main UI Component
+    name: main Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/main.tsx
@@ -1452,9 +1760,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 200
-    'y': 700
+      sinceDays: 90
+    x: 4748
+    'y': 704
   - entityRef: blueprint/app/designer/ports
     type: background-worker
     name: ports Service
@@ -1466,20 +1774,20 @@ nodes:
       classification: default
     forensics:
       complexity: 1
-      loc: 64
-      sloc: 34
-      churn: 1
+      loc: 120
+      sloc: 66
+      churn: 3
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 3880
-    'y': 40
+      sinceDays: 90
+    x: 10348
+    'y': 64
   - entityRef: blueprint/app/designer/app-test
     type: gateway-api
-    name: App.test UI Component
+    name: App.test Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/App.test.tsx
@@ -1488,20 +1796,20 @@ nodes:
       classification: ui-import
     forensics:
       complexity: 1
-      loc: 172
-      sloc: 143
-      churn: 4
+      loc: 181
+      sloc: 151
+      churn: 5
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 3680
-    'y': 920
+      sinceDays: 90
+    x: 5128
+    'y': 704
   - entityRef: blueprint/app/designer/setuptests
     type: gateway-api
-    name: setupTests UI Component
+    name: setupTests Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/setupTests.ts
@@ -1509,18 +1817,40 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
+      complexity: 2
+      loc: 24
+      sloc: 17
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0019230769230769232
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 14248
+    'y': 1344
+  - entityRef: blueprint/app/designer/setuppolyfills
+    type: background-worker
+    name: setupPolyfills Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/setupPolyfills.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
       complexity: 4
-      loc: 33
-      sloc: 23
+      loc: 18
+      sloc: 11
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.004615384615384616
+      hotspotScore: 0.0028846153846153848
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 4240
-    'y': 40
+      sinceDays: 90
+    x: 7848
+    'y': 1664
   - entityRef: blueprint/app/designer/vite-env-d
     type: background-worker
     name: vite-env.d Service
@@ -1532,20 +1862,20 @@ nodes:
       classification: default
     forensics:
       complexity: 1
-      loc: 17
+      loc: 18
       sloc: 9
-      churn: 1
+      churn: 2
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 5680
-    'y': 40
+      sinceDays: 90
+    x: 11108
+    'y': 64
   - entityRef: blueprint/app/designer/appcontext
     type: gateway-api
-    name: AppContext UI Component
+    name: AppContext Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/application/context/AppContext.tsx
@@ -1554,17 +1884,105 @@ nodes:
       classification: ui-import
     forensics:
       complexity: 2
-      loc: 48
-      sloc: 40
+      loc: 56
+      sloc: 47
+      churn: 3
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0028846153846153848
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 5128
+    'y': 1344
+  - entityRef: blueprint/app/designer/computeclientlayout
+    type: background-worker
+    name: computeClientLayout Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/application/layout/computeClientLayout.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 4
+      loc: 60
+      sloc: 47
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.0015384615384615387
+      hotspotScore: 0.0028846153846153848
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 3320
-    'y': 920
+      sinceDays: 90
+    x: 3428
+    'y': 2304
+  - entityRef: blueprint/app/designer/computeclientlayout-test
+    type: background-worker
+    name: computeClientLayout.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/designer/src/application/layout/computeClientLayout.test.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 95
+      sloc: 81
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0009615384615384616
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 3428
+    'y': 1984
+  - entityRef: blueprint/app/designer/constants
+    type: background-worker
+    name: constants Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/application/layout/constants.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 9
+      sloc: 2
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 6148
+    'y': 2944
+  - entityRef: blueprint/app/designer/gridfallback
+    type: background-worker
+    name: gridFallback Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/application/layout/gridFallback.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 3
+      loc: 26
+      sloc: 19
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0019230769230769232
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 6908
+    'y': 2624
   - entityRef: blueprint/app/designer/resolvecouplingedges
     type: background-worker
     name: resolveCouplingEdges Service
@@ -1581,13 +1999,35 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.013846153846153848
+      hotspotScore: 0.008653846153846154
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 6800
-    'y': 2020
+      sinceDays: 90
+    x: 10708
+    'y': 2944
+  - entityRef: blueprint/app/designer/rankoffenders-test
+    type: background-worker
+    name: rankOffenders.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/designer/src/application/forensics/rankOffenders.test.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 161
+      sloc: 152
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 6648
+    'y': 1344
   - entityRef: blueprint/app/designer/resolvecouplingedges-test
     type: background-worker
     name: resolveCouplingEdges.test Service
@@ -1604,12 +2044,12 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.0030769230769230774
+      hotspotScore: 0.0019230769230769232
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 7000
-    'y': 1800
+      sinceDays: 90
+    x: 10928
+    'y': 2624
   - entityRef: blueprint/app/designer/concern
     type: background-worker
     name: concern Service
@@ -1626,13 +2066,13 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.013846153846153848
+      hotspotScore: 0.008653846153846154
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 440
-    'y': 1360
+      sinceDays: 90
+    x: 3808
+    'y': 1984
   - entityRef: blueprint/app/designer/buildcouplingoverlayedges-test
     type: background-worker
     name: buildCouplingOverlayEdges.test Service
@@ -1644,17 +2084,17 @@ nodes:
       classification: default
     forensics:
       complexity: 3
-      loc: 77
-      sloc: 71
-      churn: 1
+      loc: 106
+      sloc: 97
+      churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.0030769230769230774
+      hotspotScore: 0.0038461538461538464
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 5160
-    'y': 1580
+      sinceDays: 90
+    x: 8288
+    'y': 2304
   - entityRef: blueprint/app/designer/concern-test
     type: background-worker
     name: concern.test Service
@@ -1674,9 +2114,54 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 440
-    'y': 1140
+      sinceDays: 90
+    x: 2828
+    'y': 1664
+  - entityRef: blueprint/app/designer/hotspotheatmap-test
+    type: background-worker
+    name: hotspotHeatmap.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/designer/src/application/forensics/hotspotHeatmap.test.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 84
+      sloc: 74
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 9988
+    'y': 2624
+  - entityRef: blueprint/app/designer/hotspotheatmap
+    type: background-worker
+    name: hotspotHeatmap Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/application/forensics/hotspotHeatmap.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 10
+      loc: 45
+      sloc: 30
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.008653846153846154
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 9768
+    'y': 2944
   - entityRef: blueprint/app/designer/buildcouplingoverlayedges
     type: background-worker
     name: buildCouplingOverlayEdges Service
@@ -1687,19 +2172,42 @@ nodes:
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 12
-      loc: 86
-      sloc: 72
-      churn: 1
+      complexity: 15
+      loc: 104
+      sloc: 83
+      churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.016923076923076926
+      hotspotScore: 0.026923076923076925
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 5960
-    'y': 1800
+      sinceDays: 90
+    x: 9268
+    'y': 2624
+  - entityRef: blueprint/app/designer/rankoffenders
+    type: background-worker
+    name: rankOffenders Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/application/forensics/rankOffenders.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 39
+      loc: 141
+      sloc: 117
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.03653846153846154
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 6588
+    'y': 1664
   - entityRef: blueprint/app/designer/layoututils-test
     type: background-worker
     name: layoutUtils.test Service
@@ -1719,9 +2227,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 6400
-    'y': 2020
+      sinceDays: 90
+    x: 10268
+    'y': 2944
   - entityRef: blueprint/app/designer/store-test
     type: background-worker
     name: store.test Service
@@ -1741,12 +2249,12 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 12080
-    'y': 920
+      sinceDays: 90
+    x: 18088
+    'y': 1344
   - entityRef: blueprint/app/designer/layoututils
     type: gateway-api
-    name: layoutUtils UI Component
+    name: layoutUtils Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/application/store/layoutUtils.ts
@@ -1755,30 +2263,24 @@ nodes:
       classification: ui-import
     forensics:
       complexity: 13
-      loc: 139
-      sloc: 123
-      churn: 7
+      loc: 141
+      sloc: 124
+      churn: 8
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.12923076923076923
+      hotspotScore: 0.09230769230769231
       classifications:
         - knowledge-silo
       coupledFiles:
         - path: app/packages/designer/src/ui/features/workspace/components/Canvas/BlueprintNode.test.tsx
-          score: 0.875
-          sharedCommits: 7
-        - path: app/packages/designer/src/ui/features/workspace/components/PropertyPanel/PropertyPanel.tsx
-          score: 0.8571428571428571
-          sharedCommits: 6
-        - path: app/packages/designer/src/ui/features/workspace/components/Canvas/BlueprintNode.tsx
-          score: 0.7777777777777778
-          sharedCommits: 7
-        - path: app/packages/designer/src/application/store/states/diagramState.ts
+          score: 0.8
+          sharedCommits: 8
+        - path: app/packages/designer/src/ui/features/workspace/components/PropertyPanel/PropertyPanel.test.tsx
           score: 0.75
           sharedCommits: 6
-      sinceDays: 500
-    x: 6200
-    'y': 2240
+      sinceDays: 90
+    x: 9768
+    'y': 3264
   - entityRef: blueprint/app/designer/diagramstate-test
     type: background-worker
     name: diagramState.test Service
@@ -1789,18 +2291,18 @@ nodes:
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 1
-      loc: 146
-      sloc: 123
-      churn: 4
+      complexity: 4
+      loc: 498
+      sloc: 427
+      churn: 9
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0
+      hotspotScore: 0.025961538461538463
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 11440
-    'y': 920
+      sinceDays: 90
+    x: 13188
+    'y': 1344
   - entityRef: blueprint/app/designer/iostate-test
     type: background-worker
     name: ioState.test Service
@@ -1817,15 +2319,9 @@ nodes:
       churn: 6
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.018461538461538463
+      hotspotScore: 0.011538461538461539
       classifications: []
       coupledFiles:
-        - path: app/packages/designer/src/application/store/states/diagramState.ts
-          score: 0.8571428571428571
-          sharedCommits: 6
-        - path: app/packages/designer/src/application/store/states/ioState.ts
-          score: 0.8571428571428571
-          sharedCommits: 6
         - path: app/packages/designer/src/infrastructure/db/db.ts
           score: 0.8571428571428571
           sharedCommits: 6
@@ -1835,18 +2331,9 @@ nodes:
         - path: app/packages/designer/src/ui/features/workspace/components/Breadcrumbs/Breadcrumbs.test.tsx
           score: 0.8333333333333334
           sharedCommits: 5
-        - path: app/packages/designer/src/ui/features/workspace/components/Breadcrumbs/useBreadcrumbs.ts
-          score: 0.8333333333333334
-          sharedCommits: 5
-        - path: app/packages/designer/src/ui/features/workspace/components/CodeViewer/useCodeViewer.ts
-          score: 0.8333333333333334
-          sharedCommits: 5
-        - path: app/packages/designer/src/ui/features/workspace/components/Canvas/Canvas.test.tsx
-          score: 0.75
-          sharedCommits: 6
-      sinceDays: 500
-    x: 10360
-    'y': 920
+      sinceDays: 90
+    x: 18848
+    'y': 1344
   - entityRef: blueprint/app/designer/openworkspace
     type: background-worker
     name: openWorkspace Service
@@ -1863,16 +2350,16 @@ nodes:
       churn: 3
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.08307692307692308
+      hotspotScore: 0.051923076923076926
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 14720
-    'y': 2020
+      sinceDays: 90
+    x: 22648
+    'y': 2944
   - entityRef: blueprint/app/designer/diagramstate
     type: gateway-api
-    name: diagramState UI Component
+    name: diagramState Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/application/store/states/diagramState.ts
@@ -1880,34 +2367,19 @@ nodes:
       technology: React Component
       classification: ui-import
     forensics:
-      complexity: 13
-      loc: 197
-      sloc: 173
-      churn: 7
+      complexity: 32
+      loc: 343
+      sloc: 302
+      churn: 12
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.12923076923076923
+      hotspotScore: 0.3576923076923077
       classifications:
         - knowledge-silo
-      coupledFiles:
-        - path: app/packages/designer/src/ui/features/workspace/components/Canvas/Canvas.test.tsx
-          score: 0.875
-          sharedCommits: 7
-        - path: app/packages/designer/src/application/store/states/ioState.test.ts
-          score: 0.8571428571428571
-          sharedCommits: 6
-        - path: app/packages/designer/src/application/store/layoutUtils.ts
-          score: 0.75
-          sharedCommits: 6
-        - path: app/packages/designer/src/application/store/states/ioState.ts
-          score: 0.75
-          sharedCommits: 6
-        - path: app/packages/designer/src/infrastructure/db/db.ts
-          score: 0.75
-          sharedCommits: 6
-      sinceDays: 500
-    x: 7600
-    'y': 1360
+      coupledFiles: []
+      sinceDays: 90
+    x: 9548
+    'y': 1984
   - entityRef: blueprint/app/designer/iostate
     type: background-worker
     name: ioState Service
@@ -1919,30 +2391,18 @@ nodes:
       classification: default
     forensics:
       complexity: 18
-      loc: 179
-      sloc: 167
-      churn: 7
+      loc: 191
+      sloc: 179
+      churn: 10
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.18307692307692308
+      hotspotScore: 0.16346153846153846
       classifications:
         - knowledge-silo
-      coupledFiles:
-        - path: app/packages/designer/src/infrastructure/db/db.ts
-          score: 1
-          sharedCommits: 7
-        - path: app/packages/designer/src/application/store/states/ioState.test.ts
-          score: 0.8571428571428571
-          sharedCommits: 6
-        - path: app/packages/designer/src/ui/features/workspace/components/DiffMenu/DiffMenu.tsx
-          score: 0.8571428571428571
-          sharedCommits: 6
-        - path: app/packages/designer/src/application/store/states/diagramState.ts
-          score: 0.75
-          sharedCommits: 6
-      sinceDays: 500
-    x: 14720
-    'y': 1800
+      coupledFiles: []
+      sinceDays: 90
+    x: 22648
+    'y': 2624
   - entityRef: blueprint/app/designer/uistate-test
     type: background-worker
     name: uiState.test Service
@@ -1954,17 +2414,17 @@ nodes:
       classification: default
     forensics:
       complexity: 1
-      loc: 89
-      sloc: 66
-      churn: 2
+      loc: 112
+      sloc: 83
+      churn: 5
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 12440
-    'y': 920
+      sinceDays: 90
+    x: 19288
+    'y': 1344
   - entityRef: blueprint/app/designer/uistate
     type: background-worker
     name: uiState Service
@@ -1976,17 +2436,17 @@ nodes:
       classification: default
     forensics:
       complexity: 1
-      loc: 43
-      sloc: 39
-      churn: 3
+      loc: 66
+      sloc: 56
+      churn: 8
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 15320
-    'y': 2240
+      sinceDays: 90
+    x: 23308
+    'y': 3264
   - entityRef: blueprint/app/designer/nodemutations
     type: background-worker
     name: nodeMutations Service
@@ -1997,22 +2457,22 @@ nodes:
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 12
-      loc: 97
-      sloc: 87
-      churn: 2
+      complexity: 25
+      loc: 135
+      sloc: 119
+      churn: 4
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.03384615384615385
+      hotspotScore: 0.09230769230769231
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 5880
-    'y': 1580
+      sinceDays: 90
+    x: 8728
+    'y': 2304
   - entityRef: blueprint/app/designer/edgemutations
     type: gateway-api
-    name: edgeMutations UI Component
+    name: edgeMutations Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/application/store/states/diagramState/edgeMutations.ts
@@ -2026,12 +2486,12 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.01230769230769231
+      hotspotScore: 0.007692307692307693
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 5520
-    'y': 1580
+      sinceDays: 90
+    x: 7628
+    'y': 2304
   - entityRef: blueprint/app/designer/applystateupdates
     type: background-worker
     name: applyStateUpdates Service
@@ -2043,18 +2503,18 @@ nodes:
       classification: default
     forensics:
       complexity: 14
-      loc: 121
-      sloc: 105
-      churn: 3
+      loc: 125
+      sloc: 109
+      churn: 4
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.06
+      hotspotScore: 0.05
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 5520
-    'y': 1800
+      sinceDays: 90
+    x: 7628
+    'y': 2624
   - entityRef: blueprint/app/designer/importschema
     type: background-worker
     name: importSchema Service
@@ -2071,12 +2531,12 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.015384615384615385
+      hotspotScore: 0.009615384615384616
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 4800
-    'y': 1580
+      sinceDays: 90
+    x: 7248
+    'y': 2304
   - entityRef: blueprint/app/designer/defaultidbseed
     type: background-worker
     name: defaultIdbSeed Service
@@ -2093,12 +2553,12 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.02461538461538462
+      hotspotScore: 0.015384615384615385
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 14600
-    'y': 2240
+      sinceDays: 90
+    x: 22548
+    'y': 3264
   - entityRef: blueprint/app/designer/initialstate
     type: background-worker
     name: initialState Service
@@ -2115,13 +2575,13 @@ nodes:
       churn: 3
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.046153846153846156
+      hotspotScore: 0.028846153846153848
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 8560
-    'y': 2020
+      sinceDays: 90
+    x: 21648
+    'y': 2944
   - entityRef: blueprint/app/designer/defaultidbseed-test
     type: background-worker
     name: defaultIdbSeed.test Service
@@ -2141,9 +2601,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 14360
-    'y': 2020
+      sinceDays: 90
+    x: 22268
+    'y': 2944
   - entityRef: blueprint/app/designer/syncexternalcontainers
     type: background-worker
     name: syncExternalContainers Service
@@ -2160,13 +2620,13 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.04000000000000001
+      hotspotScore: 0.025
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 6600
-    'y': 1580
+      sinceDays: 90
+    x: 9108
+    'y': 2304
   - entityRef: blueprint/app/designer/applystatehelpers
     type: background-worker
     name: applyStateHelpers Service
@@ -2183,13 +2643,13 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.1076923076923077
+      hotspotScore: 0.0673076923076923
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 960
-    'y': 2020
+      sinceDays: 90
+    x: 3148
+    'y': 2944
   - entityRef: blueprint/app/designer/defaultdata
     type: background-worker
     name: defaultData Service
@@ -2206,27 +2666,24 @@ nodes:
       churn: 5
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.06153846153846154
+      hotspotScore: 0.038461538461538464
       classifications: []
       coupledFiles:
         - path: app/packages/designer/src/ui/features/workspace/components/Breadcrumbs/Breadcrumbs.test.tsx
           score: 1
           sharedCommits: 5
-        - path: app/packages/designer/src/ui/features/workspace/components/Breadcrumbs/useBreadcrumbs.ts
-          score: 1
+        - path: app/packages/designer/src/application/store/states/ioState.test.ts
+          score: 0.8333333333333334
           sharedCommits: 5
         - path: app/packages/designer/src/ui/features/workspace/components/CodeViewer/useCodeViewer.ts
-          score: 1
-          sharedCommits: 5
-        - path: app/packages/designer/src/application/store/states/ioState.test.ts
           score: 0.8333333333333334
           sharedCommits: 5
         - path: app/packages/designer/src/ui/features/workspace/components/DiffMenu/DiffMenu.tsx
           score: 0.8333333333333334
           sharedCommits: 5
-      sinceDays: 500
-    x: 14240
-    'y': 2240
+      sinceDays: 90
+    x: 22168
+    'y': 3264
   - entityRef: blueprint/app/designer/store
     type: background-worker
     name: store Service
@@ -2246,9 +2703,252 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 11720
-    'y': 1140
+      sinceDays: 90
+    x: 16808
+    'y': 1664
+  - entityRef: blueprint/app/designer/d3hierarchylayoutadapter
+    type: background-worker
+    name: d3HierarchyLayoutAdapter Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/infrastructure/layout/d3HierarchyLayoutAdapter.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 14
+      loc: 108
+      sloc: 85
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0125
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 5768
+    'y': 2624
+  - entityRef: blueprint/app/designer/elklayoutadapter
+    type: background-worker
+    name: elkLayoutAdapter Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/infrastructure/layout/elkLayoutAdapter.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 6
+      loc: 62
+      sloc: 54
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.004807692307692308
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 6528
+    'y': 2624
+  - entityRef: blueprint/app/designer/createbrowserlayoutregistry
+    type: background-worker
+    name: createBrowserLayoutRegistry Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/infrastructure/layout/createBrowserLayoutRegistry.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 29
+      sloc: 25
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 8728
+    'y': 1664
+  - entityRef: blueprint/app/designer/lazylayoutengine-test
+    type: background-worker
+    name: lazyLayoutEngine.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/designer/src/infrastructure/layout/lazyLayoutEngine.test.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 32
+      sloc: 24
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 9108
+    'y': 1664
+  - entityRef: blueprint/app/designer/dagrelayoutadapter
+    type: background-worker
+    name: dagreLayoutAdapter Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/infrastructure/layout/dagreLayoutAdapter.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 8
+      loc: 61
+      sloc: 51
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.006730769230769231
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 6148
+    'y': 2624
+  - entityRef: blueprint/app/designer/dagrelayoutadapter-test
+    type: background-worker
+    name: dagreLayoutAdapter.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/designer/src/infrastructure/layout/dagreLayoutAdapter.test.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 23
+      sloc: 19
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 6148
+    'y': 2304
+  - entityRef: blueprint/app/designer/d3hierarchylayoutadapter-test
+    type: background-worker
+    name: d3HierarchyLayoutAdapter.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/designer/src/infrastructure/layout/d3HierarchyLayoutAdapter.test.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 24
+      sloc: 20
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 3048
+    'y': 2304
+  - entityRef: blueprint/app/designer/lazylayoutengine
+    type: background-worker
+    name: lazyLayoutEngine Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/infrastructure/layout/lazyLayoutEngine.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 21
+      sloc: 14
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0009615384615384616
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 8728
+    'y': 1984
+  - entityRef: blueprint/app/designer/elklayoutadapter-test
+    type: background-worker
+    name: elkLayoutAdapter.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/designer/src/infrastructure/layout/elkLayoutAdapter.test.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 23
+      sloc: 19
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 6528
+    'y': 2304
+  - entityRef: blueprint/app/designer/browsernetworkstatus
+    type: background-worker
+    name: browserNetworkStatus Service
+    isTest: false
+    properties:
+      filepath: app/packages/designer/src/infrastructure/network/browserNetworkStatus.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 21
+      sloc: 14
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 1188
+    'y': 1664
+  - entityRef: blueprint/app/designer/browsernetworkstatus-test
+    type: background-worker
+    name: browserNetworkStatus.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/designer/src/infrastructure/network/browserNetworkStatus.test.ts
+      containerId: designer
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 47
+      sloc: 37
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 1248
+    'y': 1344
   - entityRef: blueprint/app/designer/filesync-test
     type: background-worker
     name: fileSync.test Service
@@ -2265,12 +2965,12 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.007692307692307693
+      hotspotScore: 0.004807692307692308
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 840
-    'y': 920
+      sinceDays: 90
+    x: 1628
+    'y': 1344
   - entityRef: blueprint/app/designer/filesync
     type: background-worker
     name: fileSync Service
@@ -2287,16 +2987,16 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.05230769230769231
+      hotspotScore: 0.032692307692307694
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 800
-    'y': 1140
+      sinceDays: 90
+    x: 3208
+    'y': 1664
   - entityRef: blueprint/app/designer/schemacompare-test
     type: relational-database
-    name: schemaCompare.test Database
+    name: schemaCompare.test Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/infrastructure/db/schemaCompare.test.ts
@@ -2310,15 +3010,15 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.006153846153846155
+      hotspotScore: 0.0038461538461538464
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 15080
-    'y': 2020
+      sinceDays: 90
+    x: 23028
+    'y': 2944
   - entityRef: blueprint/app/designer/db-test
     type: relational-database
-    name: db.test Database
+    name: db.test Service
     isTest: true
     properties:
       filepath: app/packages/designer/src/infrastructure/db/db.test.ts
@@ -2335,12 +3035,12 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 7440
-    'y': 2020
+      sinceDays: 90
+    x: 11428
+    'y': 2944
   - entityRef: blueprint/app/designer/schemacompare
     type: relational-database
-    name: schemaCompare Database
+    name: schemaCompare Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/infrastructure/db/schemaCompare.ts
@@ -2354,15 +3054,15 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.02153846153846154
+      hotspotScore: 0.013461538461538462
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 14960
-    'y': 2240
+      sinceDays: 90
+    x: 22928
+    'y': 3264
   - entityRef: blueprint/app/designer/db
     type: relational-database
-    name: db Database
+    name: db Service
     isTest: false
     properties:
       filepath: app/packages/designer/src/infrastructure/db/db.ts
@@ -2376,26 +3076,19 @@ nodes:
       churn: 7
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.5276923076923077
+      hotspotScore: 0.3298076923076923
       classifications:
-        - hotspot
         - knowledge-silo
       coupledFiles:
-        - path: app/packages/designer/src/application/store/states/ioState.ts
-          score: 1
-          sharedCommits: 7
         - path: app/packages/designer/src/application/store/states/ioState.test.ts
           score: 0.8571428571428571
           sharedCommits: 6
         - path: app/packages/designer/src/ui/features/workspace/components/DiffMenu/DiffMenu.tsx
           score: 0.8571428571428571
           sharedCommits: 6
-        - path: app/packages/designer/src/application/store/states/diagramState.ts
-          score: 0.75
-          sharedCommits: 6
-      sinceDays: 500
-    x: 8200
-    'y': 2240
+      sinceDays: 90
+    x: 12468
+    'y': 3264
   - entityRef: blueprint/app/designer/logger
     type: background-worker
     name: logger Service
@@ -2412,13 +3105,13 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.015384615384615385
+      hotspotScore: 0.009615384615384616
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 1640
-    'y': 1140
+      sinceDays: 90
+    x: 4408
+    'y': 1664
 dependencies:
   - from: blueprint/app/designer/e2e-spec
     to: blueprint/app/core/path
@@ -2446,6 +3139,10 @@ dependencies:
     description: Calls module / service
   - from: blueprint/app/designer/workspacepage
     to: blueprint/app/designer/header
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/workspacepage
+    to: blueprint/app/designer/mobilepaneltoggles
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/workspacepage
@@ -2533,11 +3230,23 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/propertypanel
+    to: blueprint/app/designer/workspacedisplaycontrols
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/propertypanel
     to: blueprint/app/designer/validationsection
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/propertypanel
     to: blueprint/app/designer/resolvecouplingedges
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/workspacedisplaycontrols-test
+    to: blueprint/app/designer/workspacedisplaycontrols
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/validationsection
+    to: blueprint/app/designer/store
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/identitysection
@@ -2546,6 +3255,18 @@ dependencies:
     description: Calls module / service
   - from: blueprint/app/designer/identitysection
     to: blueprint/app/designer/copyablefield
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/layoutenginecontrols
+    to: blueprint/app/designer/store
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/layoutenginecontrols-test
+    to: blueprint/app/designer/layoutenginecontrols
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/layoutenginecontrols-test
+    to: blueprint/app/designer/store
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/actioncontrols-test
@@ -2560,12 +3281,20 @@ dependencies:
     to: blueprint/app/designer/store
     type: direct-call
     description: Calls module / service
-  - from: blueprint/app/designer/usecodeviewer
+  - from: blueprint/app/designer/systemselector
     to: blueprint/app/designer/store
     type: direct-call
     description: Calls module / service
-  - from: blueprint/app/designer/codeviewer
-    to: blueprint/app/designer/mermaidpreview
+  - from: blueprint/app/designer/systemselector-test
+    to: blueprint/app/designer/systemselector
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/systemselector-test
+    to: blueprint/app/designer/store
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/usecodeviewer
+    to: blueprint/app/designer/store
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/codeviewer
@@ -2613,11 +3342,27 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/canvas
+    to: blueprint/app/designer/layoutenginecontrols
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/canvas
+    to: blueprint/app/designer/searchbar
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/canvas
+    to: blueprint/app/designer/systemselector
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/canvas
     to: blueprint/app/designer/usekeyboardnavigation
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/canvas
     to: blueprint/app/designer/buildcouplingoverlayedges
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/canvas
+    to: blueprint/app/designer/hotspotheatmap
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/blueprintnode
@@ -2672,6 +3417,10 @@ dependencies:
     to: blueprint/app/designer/db
     type: read-write
     description: Queries datastore records
+  - from: blueprint/app/designer/breadcrumbscompact
+    to: blueprint/app/designer/usebreadcrumbs
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/app/designer/breadcrumbs-test
     to: blueprint/app/designer/breadcrumbs
     type: direct-call
@@ -2685,6 +3434,26 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/usebreadcrumbs
+    to: blueprint/app/designer/store
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/breadcrumbscompact-test
+    to: blueprint/app/designer/breadcrumbscompact
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/breadcrumbscompact-test
+    to: blueprint/app/designer/store
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/mobilepaneltoggles-test
+    to: blueprint/app/designer/mobilepaneltoggles
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/mobilepaneltoggles-test
+    to: blueprint/app/designer/store
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/mobilepaneltoggles
     to: blueprint/app/designer/store
     type: direct-call
     description: Calls module / service
@@ -2709,7 +3478,7 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/header
-    to: blueprint/app/designer/searchbar
+    to: blueprint/app/designer/breadcrumbscompact
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/workspacepage-test
@@ -2741,10 +3510,6 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/markdownview
-    to: blueprint/app/designer/mermaidpreview
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/app/designer/markdownview
     to: blueprint/app/designer/pages
     type: direct-call
     description: Calls module / service
@@ -2764,11 +3529,47 @@ dependencies:
     to: blueprint/app/designer/pages
     type: direct-call
     description: Calls module / service
+  - from: blueprint/app/designer/forensicspage
+    to: blueprint/app/designer/appheader
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/forensicspage
+    to: blueprint/app/designer/store
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/forensicspage
+    to: blueprint/app/designer/rankoffenders
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/forensicspage
+    to: blueprint/app/designer/concern
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/forensicspage
+    to: blueprint/app/designer/forensicssearchbar
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/forensicspage-test
+    to: blueprint/app/designer/forensicspage
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/forensicspage-test
+    to: blueprint/app/designer/store
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/offlinebanner-test
+    to: blueprint/app/designer/offlinebanner
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/app/designer/mermaidpreview-test
     to: blueprint/app/designer/mermaidpreview
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/designsystemshowcase
+    to: blueprint/app/designer/appheader
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/appheader-test
     to: blueprint/app/designer/appheader
     type: direct-call
     description: Calls module / service
@@ -2778,6 +3579,14 @@ dependencies:
     description: Calls module / service
   - from: blueprint/app/designer/designsystemshowcase-test
     to: blueprint/app/designer/designsystemshowcase
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/app
+    to: blueprint/app/designer/offlinebanner
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/app
+    to: blueprint/app/designer/appcontext
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/main
@@ -2793,6 +3602,18 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/app-test
+    to: blueprint/app/designer/appcontext
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/app-test
+    to: blueprint/app/designer/store
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/setuptests
+    to: blueprint/app/designer/setuppolyfills
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/setuptests
     to: blueprint/app/designer/store
     type: direct-call
     description: Calls module / service
@@ -2801,15 +3622,47 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/appcontext
+    to: blueprint/app/designer/createbrowserlayoutregistry
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/appcontext
     to: blueprint/app/designer/logger
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/appcontext
+    to: blueprint/app/designer/browsernetworkstatus
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/appcontext
     to: blueprint/app/designer/store
     type: direct-call
     description: Calls module / service
+  - from: blueprint/app/designer/computeclientlayout
+    to: blueprint/app/designer/constants
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/computeclientlayout
+    to: blueprint/app/designer/gridfallback
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/computeclientlayout-test
+    to: blueprint/app/designer/computeclientlayout
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/computeclientlayout-test
+    to: blueprint/app/designer/gridfallback
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/gridfallback
+    to: blueprint/app/designer/constants
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/app/designer/resolvecouplingedges
     to: blueprint/app/designer/layoututils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/rankoffenders-test
+    to: blueprint/app/designer/rankoffenders
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/resolvecouplingedges-test
@@ -2832,6 +3685,18 @@ dependencies:
     to: blueprint/app/designer/concern
     type: direct-call
     description: Calls module / service
+  - from: blueprint/app/designer/hotspotheatmap-test
+    to: blueprint/app/designer/layoututils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/hotspotheatmap-test
+    to: blueprint/app/designer/hotspotheatmap
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/hotspotheatmap
+    to: blueprint/app/designer/layoututils
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/app/designer/buildcouplingoverlayedges
     to: blueprint/app/designer/layoututils
     type: direct-call
@@ -2844,6 +3709,10 @@ dependencies:
     to: blueprint/app/designer/resolvecouplingedges
     type: direct-call
     description: Calls module / service
+  - from: blueprint/app/designer/rankoffenders
+    to: blueprint/app/designer/concern
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/app/designer/layoututils-test
     to: blueprint/app/designer/layoututils
     type: direct-call
@@ -2854,6 +3723,10 @@ dependencies:
     description: Calls module / service
   - from: blueprint/app/designer/diagramstate-test
     to: blueprint/app/designer/store
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/diagramstate-test
+    to: blueprint/app/designer/createbrowserlayoutregistry
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/iostate-test
@@ -2920,6 +3793,14 @@ dependencies:
     to: blueprint/app/designer/edgemutations
     type: direct-call
     description: Calls module / service
+  - from: blueprint/app/designer/diagramstate
+    to: blueprint/app/designer/computeclientlayout
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/diagramstate
+    to: blueprint/app/designer/db
+    type: read-write
+    description: Queries datastore records
   - from: blueprint/app/designer/iostate
     to: blueprint/app/designer/diagramstate
     type: direct-call
@@ -3026,6 +3907,42 @@ dependencies:
     description: Calls module / service
   - from: blueprint/app/designer/store
     to: blueprint/app/designer/iostate
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/d3hierarchylayoutadapter
+    to: blueprint/app/designer/constants
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/elklayoutadapter
+    to: blueprint/app/designer/constants
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/createbrowserlayoutregistry
+    to: blueprint/app/designer/lazylayoutengine
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/lazylayoutengine-test
+    to: blueprint/app/designer/lazylayoutengine
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/dagrelayoutadapter
+    to: blueprint/app/designer/constants
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/dagrelayoutadapter-test
+    to: blueprint/app/designer/dagrelayoutadapter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/d3hierarchylayoutadapter-test
+    to: blueprint/app/designer/d3hierarchylayoutadapter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/elklayoutadapter-test
+    to: blueprint/app/designer/elklayoutadapter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/designer/browsernetworkstatus-test
+    to: blueprint/app/designer/browsernetworkstatus
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/designer/filesync-test

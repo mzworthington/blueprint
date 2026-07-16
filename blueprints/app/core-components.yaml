@@ -1,8 +1,31 @@
+# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/v1/blueprint.schema.json
 entityRef: blueprint/app/core
 name: Core Service Components
 version: 1.0.0
 level: component
 nodes:
+  - entityRef: blueprint/app/core/generatejsonschema
+    type: background-worker
+    name: generateJsonSchema Service
+    isTest: false
+    properties:
+      filepath: app/packages/core/scripts/generateJsonSchema.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 6
+      loc: 57
+      sloc: 44
+      churn: 0
+      authorCount: 0
+      topAuthorPercent: 0
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 328
+    'y': 64
   - entityRef: blueprint/app/core/vite-config
     type: background-worker
     name: vite.config Service
@@ -22,9 +45,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 1320
-    'y': 40
+      sinceDays: 90
+    x: 1848
+    'y': 64
   - entityRef: blueprint/app/core/schema
     type: background-worker
     name: schema Service
@@ -41,13 +64,13 @@ nodes:
       churn: 5
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.1076923076923077
+      hotspotScore: 0.06730769230769232
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 700
+      sinceDays: 90
+    x: 1528
+    'y': 1024
   - entityRef: blueprint/app/core/schema-test
     type: background-worker
     name: schema.test Service
@@ -67,9 +90,53 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 480
+      sinceDays: 90
+    x: 1908
+    'y': 704
+  - entityRef: blueprint/app/core/schemaversion
+    type: background-worker
+    name: schemaVersion Service
+    isTest: false
+    properties:
+      filepath: app/packages/core/src/models/schemaVersion.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 21
+      sloc: 12
+      churn: 0
+      authorCount: 0
+      topAuthorPercent: 0
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 1088
+    'y': 704
+  - entityRef: blueprint/app/core/schemaversion-test
+    type: background-worker
+    name: schemaVersion.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/core/src/models/schemaVersion.test.ts
+      containerId: core
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 24
+      sloc: 21
+      churn: 0
+      authorCount: 0
+      topAuthorPercent: 0
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 1468
+    'y': 384
   - entityRef: blueprint/app/core/path
     type: background-worker
     name: path Service
@@ -86,12 +153,12 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.015384615384615385
+      hotspotScore: 0.009615384615384616
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 960
-    'y': 260
+      sinceDays: 90
+    x: 708
+    'y': 384
   - entityRef: blueprint/app/core/path-test
     type: background-worker
     name: path.test Service
@@ -111,9 +178,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 960
-    'y': 40
+      sinceDays: 90
+    x: 708
+    'y': 64
   - entityRef: blueprint/app/core/graph-test
     type: background-worker
     name: graph.test Service
@@ -125,17 +192,17 @@ nodes:
       classification: default
     forensics:
       complexity: 1
-      loc: 380
-      sloc: 351
+      loc: 396
+      sloc: 366
       churn: 4
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 240
-    'y': 40
+      sinceDays: 90
+    x: 1468
+    'y': 64
   - entityRef: blueprint/app/core/graph
     type: background-worker
     name: graph Service
@@ -147,18 +214,18 @@ nodes:
       classification: default
     forensics:
       complexity: 57
-      loc: 343
-      sloc: 291
+      loc: 366
+      sloc: 307
       churn: 4
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.34461538461538466
+      hotspotScore: 0.2153846153846154
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 260
+      sinceDays: 90
+    x: 1088
+    'y': 384
   - entityRef: blueprint/app/core/entityref
     type: background-worker
     name: entityRef Service
@@ -169,19 +236,19 @@ nodes:
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 44
-      loc: 172
-      sloc: 139
-      churn: 3
+      complexity: 45
+      loc: 182
+      sloc: 144
+      churn: 4
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.19846153846153844
+      hotspotScore: 0.16923076923076924
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 1520
-    'y': 480
+      sinceDays: 90
+    x: 48
+    'y': 704
   - entityRef: blueprint/app/core/slug
     type: background-worker
     name: slug Service
@@ -201,9 +268,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 920
+      sinceDays: 90
+    x: 1528
+    'y': 1344
   - entityRef: blueprint/app/core/entityref-test
     type: background-worker
     name: entityRef.test Service
@@ -215,17 +282,17 @@ nodes:
       classification: default
     forensics:
       complexity: 1
-      loc: 223
-      sloc: 188
-      churn: 3
+      loc: 278
+      sloc: 236
+      churn: 4
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 1320
-    'y': 260
+      sinceDays: 90
+    x: 48
+    'y': 384
   - entityRef: blueprint/app/core/slug-test
     type: background-worker
     name: slug.test Service
@@ -245,9 +312,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 240
-    'y': 700
+      sinceDays: 90
+    x: 1908
+    'y': 1024
   - entityRef: blueprint/app/core/index
     type: background-worker
     name: index Service
@@ -259,24 +326,36 @@ nodes:
       classification: default
     forensics:
       complexity: 1
-      loc: 5
-      sloc: 4
+      loc: 6
+      sloc: 5
       churn: 3
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 600
-    'y': 40
+      sinceDays: 90
+    x: 1088
+    'y': 64
 dependencies:
+  - from: blueprint/app/core/generatejsonschema
+    to: blueprint/app/core/schemaversion
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/core/generatejsonschema
+    to: blueprint/app/core/graph
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/app/core/schema
     to: blueprint/app/core/slug
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/core/schema-test
     to: blueprint/app/core/schema
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/core/schemaversion-test
+    to: blueprint/app/core/schemaversion
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/core/path-test
@@ -293,6 +372,10 @@ dependencies:
     description: Calls module / service
   - from: blueprint/app/core/graph
     to: blueprint/app/core/schema
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/core/graph
+    to: blueprint/app/core/schemaversion
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/core/graph

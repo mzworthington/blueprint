@@ -79,6 +79,12 @@ Useful flags: `--no-git` to skip forensics, `--git-since=90` for lookback, `--ou
 
 The CLI writes diagrams under `blueprints/` (or your `--output` path): context, containers, and components.
 
+For IDE autocomplete/validation in other repos, add this to the top of a blueprint YAML file:
+
+```yaml
+# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/v1/blueprint.schema.json
+```
+
 ## 4. Open the designer
 
 Open the hosted app:

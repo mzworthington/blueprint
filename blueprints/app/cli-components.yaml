@@ -1,8 +1,53 @@
+# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/v1/blueprint.schema.json
 entityRef: blueprint/app/cli
 name: Cli Service Components
 version: 1.0.0
 level: component
 nodes:
+  - entityRef: blueprint/app/cli/vitest-vhs-config
+    type: background-worker
+    name: vitest.vhs.config Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/vitest.vhs.config.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 13
+      sloc: 11
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 8068
+    'y': 64
+  - entityRef: blueprint/app/cli/cli-demo-test
+    type: background-worker
+    name: cli-demo.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/cli/tests/vhs/cli-demo.test.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 8
+      loc: 74
+      sloc: 63
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.006730769230769231
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 7308
+    'y': 64
   - entityRef: blueprint/app/cli/copytreesitterwasms
     type: background-worker
     name: copyTreeSitterWasms Service
@@ -16,15 +61,15 @@ nodes:
       complexity: 5
       loc: 39
       sloc: 28
-      churn: 1
+      churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.006153846153846155
+      hotspotScore: 0.007692307692307693
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 4240
-    'y': 700
+      sinceDays: 90
+    x: 4828
+    'y': 1024
   - entityRef: blueprint/app/cli/vitest-config
     type: background-worker
     name: vitest.config Service
@@ -44,9 +89,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 7800
-    'y': 40
+      sinceDays: 90
+    x: 7688
+    'y': 64
   - entityRef: blueprint/app/cli/loadanalysisconfig
     type: background-worker
     name: loadAnalysisConfig Service
@@ -63,13 +108,13 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.05538461538461539
+      hotspotScore: 0.03461538461538462
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 15800
-    'y': 920
+      sinceDays: 90
+    x: 18368
+    'y': 1344
   - entityRef: blueprint/app/cli/consolelogger
     type: background-worker
     name: consoleLogger Service
@@ -86,13 +131,13 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.015384615384615385
+      hotspotScore: 0.009615384615384616
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 10920
-    'y': 700
+      sinceDays: 90
+    x: 12188
+    'y': 1024
   - entityRef: blueprint/app/cli/gitignorefilter-test
     type: background-worker
     name: gitignoreFilter.test Service
@@ -106,15 +151,15 @@ nodes:
       complexity: 1
       loc: 29
       sloc: 26
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 13480
-    'y': 920
+      sinceDays: 90
+    x: 15368
+    'y': 1344
   - entityRef: blueprint/app/cli/sourcepathfilter-test
     type: background-worker
     name: sourcePathFilter.test Service
@@ -128,15 +173,15 @@ nodes:
       complexity: 1
       loc: 50
       sloc: 45
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 14520
-    'y': 700
+      sinceDays: 90
+    x: 16908
+    'y': 1024
   - entityRef: blueprint/app/cli/gitignorefilter
     type: background-worker
     name: gitignoreFilter Service
@@ -150,15 +195,15 @@ nodes:
       complexity: 8
       loc: 45
       sloc: 32
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
-      hotspotScore: 0
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.006730769230769231
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 13360
-    'y': 1140
+      sinceDays: 90
+    x: 15308
+    'y': 1664
   - entityRef: blueprint/app/cli/sourcepathfilter
     type: background-worker
     name: sourcePathFilter Service
@@ -172,15 +217,16 @@ nodes:
       complexity: 12
       loc: 47
       sloc: 33
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
-      hotspotScore: 0
-      classifications: []
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.021153846153846155
+      classifications:
+        - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 14360
-    'y': 920
+      sinceDays: 90
+    x: 16748
+    'y': 1344
   - entityRef: blueprint/app/cli/consolelogger-test
     type: background-worker
     name: consoleLogger.test Service
@@ -200,9 +246,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 10760
-    'y': 480
+      sinceDays: 90
+    x: 12028
+    'y': 704
   - entityRef: blueprint/app/cli/nodefilesystem
     type: background-worker
     name: nodeFileSystem Service
@@ -219,12 +265,12 @@ nodes:
       churn: 4
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.04923076923076924
+      hotspotScore: 0.03076923076923077
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 8880
-    'y': 700
+      sinceDays: 90
+    x: 9948
+    'y': 1024
   - entityRef: blueprint/app/cli/dagrelayout-test
     type: background-worker
     name: dagreLayout.test Service
@@ -236,17 +282,17 @@ nodes:
       classification: default
     forensics:
       complexity: 2
-      loc: 83
-      sloc: 69
-      churn: 3
+      loc: 78
+      sloc: 64
+      churn: 4
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.004615384615384616
+      hotspotScore: 0.0038461538461538464
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 10000
-    'y': 480
+      sinceDays: 90
+    x: 11588
+    'y': 704
   - entityRef: blueprint/app/cli/loadanalysisconfig-test
     type: background-worker
     name: loadAnalysisConfig.test Service
@@ -266,9 +312,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 15600
-    'y': 700
+      sinceDays: 90
+    x: 18148
+    'y': 1024
   - entityRef: blueprint/app/cli/nodefilesystem-test
     type: background-worker
     name: nodeFileSystem.test Service
@@ -285,12 +331,12 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.0030769230769230774
+      hotspotScore: 0.0019230769230769232
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 8880
-    'y': 480
+      sinceDays: 90
+    x: 9948
+    'y': 704
   - entityRef: blueprint/app/cli/treesitterparser-test
     type: background-worker
     name: treeSitterParser.test Service
@@ -302,17 +348,17 @@ nodes:
       classification: default
     forensics:
       complexity: 3
-      loc: 118
-      sloc: 95
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
-      hotspotScore: 0
+      loc: 150
+      sloc: 122
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0038461538461538464
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 8480
-    'y': 480
+      sinceDays: 90
+    x: 9128
+    'y': 704
   - entityRef: blueprint/app/cli/treesitterwasmpaths-test
     type: background-worker
     name: treeSitterWasmPaths.test Service
@@ -326,15 +372,15 @@ nodes:
       complexity: 1
       loc: 41
       sloc: 36
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 3160
-    'y': 700
+      sinceDays: 90
+    x: 3688
+    'y': 1024
   - entityRef: blueprint/app/cli/tsmorphparser
     type: background-worker
     name: tsMorphParser Service
@@ -348,15 +394,15 @@ nodes:
       complexity: 3
       loc: 76
       sloc: 63
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
-      hotspotScore: 0
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0038461538461538464
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 7720
-    'y': 700
+      sinceDays: 90
+    x: 8688
+    'y': 1024
   - entityRef: blueprint/app/cli/treesitterwasmpaths
     type: background-worker
     name: treeSitterWasmPaths Service
@@ -370,15 +416,15 @@ nodes:
       complexity: 5
       loc: 81
       sloc: 59
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
-      hotspotScore: 0
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.007692307692307693
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 4120
-    'y': 920
+      sinceDays: 90
+    x: 4708
+    'y': 1344
   - entityRef: blueprint/app/cli/tsmorphparser-test
     type: background-worker
     name: tsMorphParser.test Service
@@ -392,15 +438,15 @@ nodes:
       complexity: 3
       loc: 76
       sloc: 61
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
-      hotspotScore: 0
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0019230769230769232
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 7720
-    'y': 480
+      sinceDays: 90
+    x: 8688
+    'y': 704
   - entityRef: blueprint/app/cli/treesitterparser
     type: background-worker
     name: treeSitterParser Service
@@ -412,17 +458,18 @@ nodes:
       classification: default
     forensics:
       complexity: 66
-      loc: 303
-      sloc: 265
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
-      hotspotScore: 0
-      classifications: []
+      loc: 302
+      sloc: 264
+      churn: 3
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.1875
+      classifications:
+        - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 8480
-    'y': 700
+      sinceDays: 90
+    x: 9128
+    'y': 1024
   - entityRef: blueprint/app/cli/dagrelayout
     type: background-worker
     name: dagreLayout Service
@@ -434,41 +481,86 @@ nodes:
       classification: default
     forensics:
       complexity: 12
-      loc: 103
+      loc: 110
       sloc: 79
-      churn: 3
+      churn: 4
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.05076923076923077
+      hotspotScore: 0.04230769230769231
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 10000
-    'y': 700
+      sinceDays: 90
+    x: 11588
+    'y': 1024
   - entityRef: blueprint/app/cli/modelextractor
-    type: background-worker
+    type: relational-database
     name: modelExtractor Service
     isTest: false
     properties:
       filepath: app/packages/cli/src/analysis/domain/modelExtractor.ts
       containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
+      technology: Prisma / SQL Database Client
+      classification: database-marker
     forensics:
-      complexity: 20
-      loc: 128
-      sloc: 112
-      churn: 6
+      complexity: 28
+      loc: 174
+      sloc: 152
+      churn: 7
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.1753846153846154
+      hotspotScore: 0.18173076923076925
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 6880
-    'y': 700
+      sinceDays: 90
+    x: 10448
+    'y': 1024
+  - entityRef: blueprint/app/cli/csharpgrouping-test
+    type: relational-database
+    name: csharpGrouping.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/cli/src/analysis/domain/csharpGrouping.test.ts
+      containerId: cli
+      technology: Prisma / SQL Database Client
+      classification: database-marker
+    forensics:
+      complexity: 1
+      loc: 120
+      sloc: 109
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 16408
+    'y': 1024
+  - entityRef: blueprint/app/cli/csharpgrouping
+    type: background-worker
+    name: csharpGrouping Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/analysis/domain/csharpGrouping.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 24
+      loc: 101
+      sloc: 79
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.022115384615384617
+      classifications:
+        - knowledge-silo
+      coupledFiles: []
+      sinceDays: 90
+    x: 16248
+    'y': 1344
   - entityRef: blueprint/app/cli/testpath-test
     type: background-worker
     name: testPath.test Service
@@ -488,9 +580,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 13920
-    'y': 920
+      sinceDays: 90
+    x: 15868
+    'y': 1344
   - entityRef: blueprint/app/cli/csharpanalyzer-test
     type: background-worker
     name: csharpAnalyzer.test Service
@@ -504,15 +596,15 @@ nodes:
       complexity: 1
       loc: 48
       sloc: 43
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 3520
-    'y': 480
+      sinceDays: 90
+    x: 4068
+    'y': 704
   - entityRef: blueprint/app/cli/csharpanalyzer
     type: background-worker
     name: csharpAnalyzer Service
@@ -526,15 +618,16 @@ nodes:
       complexity: 18
       loc: 83
       sloc: 73
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
-      hotspotScore: 0
-      classifications: []
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.032692307692307694
+      classifications:
+        - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 3520
-    'y': 700
+      sinceDays: 90
+    x: 4068
+    'y': 1024
   - entityRef: blueprint/app/cli/pythonanalyzer
     type: background-worker
     name: pythonAnalyzer Service
@@ -548,15 +641,16 @@ nodes:
       complexity: 18
       loc: 83
       sloc: 73
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
-      hotspotScore: 0
-      classifications: []
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.032692307692307694
+      classifications:
+        - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 2040
-    'y': 700
+      sinceDays: 90
+    x: 2408
+    'y': 1024
   - entityRef: blueprint/app/cli/pythonanalyzer-test
     type: background-worker
     name: pythonAnalyzer.test Service
@@ -570,15 +664,15 @@ nodes:
       complexity: 1
       loc: 30
       sloc: 26
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 2040
-    'y': 480
+      sinceDays: 90
+    x: 2408
+    'y': 704
   - entityRef: blueprint/app/cli/typescriptanalyzer-test
     type: background-worker
     name: typescriptAnalyzer.test Service
@@ -592,15 +686,15 @@ nodes:
       complexity: 1
       loc: 43
       sloc: 38
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 560
-    'y': 480
+      sinceDays: 90
+    x: 668
+    'y': 704
   - entityRef: blueprint/app/cli/typescriptanalyzer
     type: background-worker
     name: typescriptAnalyzer Service
@@ -614,15 +708,16 @@ nodes:
       complexity: 26
       loc: 103
       sloc: 91
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
-      hotspotScore: 0
-      classifications: []
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.04807692307692308
+      classifications:
+        - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 560
-    'y': 700
+      sinceDays: 90
+    x: 668
+    'y': 1024
   - entityRef: blueprint/app/cli/languageanalyzer
     type: background-worker
     name: languageAnalyzer Service
@@ -636,37 +731,37 @@ nodes:
       complexity: 1
       loc: 31
       sloc: 26
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 2720
-    'y': 920
-  - entityRef: blueprint/app/cli/types
-    type: background-worker
-    name: types Service
-    isTest: false
-    properties:
-      filepath: app/packages/cli/src/forensics/domain/types.ts
-      containerId: cli
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 61
-      sloc: 51
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 2920
-    'y': 1140
+      sinceDays: 90
+    x: 3188
+    'y': 1344
+  - entityRef: blueprint/app/cli/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: app/packages/cli/src/analysis/domain/types.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 1
+      loc: 19
+      sloc: 16
+      churn: 3
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 3408
+    'y': 1664
   - entityRef: blueprint/app/cli/systemdiscovery
     type: background-worker
     name: systemDiscovery Service
@@ -683,13 +778,13 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.15076923076923077
+      hotspotScore: 0.09423076923076923
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 7120
-    'y': 480
+      sinceDays: 90
+    x: 7148
+    'y': 704
   - entityRef: blueprint/app/cli/testpath
     type: background-worker
     name: testPath Service
@@ -706,13 +801,13 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.016923076923076926
+      hotspotScore: 0.010576923076923078
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 13720
-    'y': 1140
+      sinceDays: 90
+    x: 15868
+    'y': 1664
   - entityRef: blueprint/app/cli/analyzer-test
     type: background-worker
     name: analyzer.test Service
@@ -732,31 +827,31 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 7440
-    'y': 40
+      sinceDays: 90
+    x: 6928
+    'y': 64
   - entityRef: blueprint/app/cli/ports
     type: background-worker
     name: ports Service
     isTest: false
     properties:
-      filepath: app/packages/cli/src/forensics/domain/ports.ts
+      filepath: app/packages/cli/src/analysis/domain/ports.ts
       containerId: cli
       technology: TypeScript Domain Service
       classification: default
     forensics:
       complexity: 1
-      loc: 47
-      sloc: 29
-      churn: 1
+      loc: 33
+      sloc: 26
+      churn: 5
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 9440
-    'y': 920
+      sinceDays: 90
+    x: 10228
+    'y': 1344
   - entityRef: blueprint/app/cli/analyzer
     type: background-worker
     name: analyzer Service
@@ -773,14 +868,13 @@ nodes:
       churn: 9
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.5261538461538462
+      hotspotScore: 0.32884615384615384
       classifications:
-        - hotspot
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 11480
-    'y': 260
+      sinceDays: 90
+    x: 13108
+    'y': 384
   - entityRef: blueprint/app/cli/nodetypehydrator-test
     type: background-worker
     name: nodeTypeHydrator.test Service
@@ -792,17 +886,17 @@ nodes:
       classification: default
     forensics:
       complexity: 1
-      loc: 168
-      sloc: 152
-      churn: 2
+      loc: 192
+      sloc: 174
+      churn: 3
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 1680
-    'y': 700
+      sinceDays: 90
+    x: 2028
+    'y': 1024
   - entityRef: blueprint/app/cli/cancellation
     type: background-worker
     name: cancellation Service
@@ -819,13 +913,13 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.03076923076923077
+      hotspotScore: 0.019230769230769232
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 920
+      sinceDays: 90
+    x: 48
+    'y': 1344
   - entityRef: blueprint/app/cli/containergrouping
     type: background-worker
     name: containerGrouping Service
@@ -842,13 +936,13 @@ nodes:
       churn: 4
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.14153846153846156
+      hotspotScore: 0.08846153846153847
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 15200
-    'y': 920
+      sinceDays: 90
+    x: 17688
+    'y': 1344
   - entityRef: blueprint/app/cli/nodetypehydrator
     type: background-worker
     name: nodeTypeHydrator Service
@@ -859,19 +953,19 @@ nodes:
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 48
-      loc: 256
-      sloc: 219
-      churn: 2
+      complexity: 50
+      loc: 275
+      sloc: 236
+      churn: 3
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.14461538461538462
+      hotspotScore: 0.14134615384615384
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 2320
-    'y': 920
+      sinceDays: 90
+    x: 2748
+    'y': 1344
   - entityRef: blueprint/app/cli/containergrouping-test
     type: background-worker
     name: containerGrouping.test Service
@@ -883,17 +977,17 @@ nodes:
       classification: default
     forensics:
       complexity: 2
-      loc: 190
-      sloc: 175
-      churn: 4
+      loc: 253
+      sloc: 236
+      churn: 6
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.006153846153846155
+      hotspotScore: 0.0057692307692307696
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 10360
-    'y': 480
+      sinceDays: 90
+    x: 12848
+    'y': 704
   - entityRef: blueprint/app/cli/cancellation-test
     type: background-worker
     name: cancellation.test Service
@@ -913,9 +1007,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 120
-    'y': 700
+      sinceDays: 90
+    x: 168
+    'y': 1024
   - entityRef: blueprint/app/cli/systemdiscovery-test
     type: background-worker
     name: systemDiscovery.test Service
@@ -932,12 +1026,12 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.009230769230769232
+      hotspotScore: 0.0057692307692307696
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 7120
-    'y': 260
+      sinceDays: 90
+    x: 7148
+    'y': 384
   - entityRef: blueprint/app/cli/analysisoptions
     type: background-worker
     name: analysisOptions Service
@@ -957,9 +1051,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 15600
-    'y': 1140
+      sinceDays: 90
+    x: 18148
+    'y': 1664
   - entityRef: blueprint/app/cli/fakes
     type: background-worker
     name: fakes Service
@@ -976,12 +1070,12 @@ nodes:
       churn: 3
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.036923076923076927
+      hotspotScore: 0.023076923076923078
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 7360
-    'y': 700
+      sinceDays: 90
+    x: 6808
+    'y': 1024
   - entityRef: blueprint/app/cli/componentlevelwriter
     type: background-worker
     name: componentLevelWriter Service
@@ -995,15 +1089,15 @@ nodes:
       complexity: 3
       loc: 49
       sloc: 41
-      churn: 2
+      churn: 3
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.006153846153846155
+      hotspotScore: 0.0057692307692307696
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 11880
-    'y': 480
+      sinceDays: 90
+    x: 13608
+    'y': 704
   - entityRef: blueprint/app/cli/contextlevelwriter
     type: background-worker
     name: contextLevelWriter Service
@@ -1017,16 +1111,16 @@ nodes:
       complexity: 35
       loc: 201
       sloc: 167
-      churn: 4
+      churn: 5
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.20923076923076925
+      hotspotScore: 0.16346153846153846
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 11520
-    'y': 480
+      sinceDays: 90
+    x: 13228
+    'y': 704
   - entityRef: blueprint/app/cli/contextlevelwriter-test
     type: background-worker
     name: contextLevelWriter.test Service
@@ -1043,12 +1137,34 @@ nodes:
       churn: 3
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.009230769230769232
+      hotspotScore: 0.0057692307692307696
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 9000
-    'y': 260
+      sinceDays: 90
+    x: 8688
+    'y': 384
+  - entityRef: blueprint/app/cli/basewriter-test
+    type: background-worker
+    name: baseWriter.test Service
+    isTest: true
+    properties:
+      filepath: app/packages/cli/src/writers/baseWriter.test.ts
+      containerId: cli
+      technology: TypeScript Domain Service
+      classification: default
+    forensics:
+      complexity: 2
+      loc: 97
+      sloc: 85
+      churn: 0
+      authorCount: 0
+      topAuthorPercent: 0
+      hotspotScore: 0
+      classifications: []
+      coupledFiles: []
+      sinceDays: 90
+    x: 12468
+    'y': 384
   - entityRef: blueprint/app/cli/containerlevelwriter-test
     type: background-worker
     name: containerLevelWriter.test Service
@@ -1068,9 +1184,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 8480
-    'y': 260
+      sinceDays: 90
+    x: 8248
+    'y': 384
   - entityRef: blueprint/app/cli/componentlevelwriter-test
     type: background-worker
     name: componentLevelWriter.test Service
@@ -1090,9 +1206,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 10760
-    'y': 260
+      sinceDays: 90
+    x: 9948
+    'y': 384
   - entityRef: blueprint/app/cli/basewriter
     type: background-worker
     name: baseWriter Service
@@ -1104,17 +1220,17 @@ nodes:
       classification: default
     forensics:
       complexity: 4
-      loc: 28
-      sloc: 22
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
-      hotspotScore: 0
+      loc: 30
+      sloc: 24
+      churn: 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0057692307692307696
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 11840
-    'y': 700
+      sinceDays: 90
+    x: 13548
+    'y': 1024
   - entityRef: blueprint/app/cli/containerlevelwriter
     type: background-worker
     name: containerLevelWriter Service
@@ -1128,15 +1244,15 @@ nodes:
       complexity: 1
       loc: 32
       sloc: 28
-      churn: 2
+      churn: 3
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 11160
-    'y': 480
+      sinceDays: 90
+    x: 12468
+    'y': 704
   - entityRef: blueprint/app/cli/parseblueprintargv-test
     type: background-worker
     name: parseBlueprintArgv.test Service
@@ -1150,15 +1266,15 @@ nodes:
       complexity: 1
       loc: 83
       sloc: 68
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 5760
-    'y': 480
+      sinceDays: 90
+    x: 7528
+    'y': 704
   - entityRef: blueprint/app/cli/blueprint
     type: background-worker
     name: blueprint Service
@@ -1169,18 +1285,19 @@ nodes:
       technology: TypeScript Domain Service
       classification: default
     forensics:
-      complexity: 41
-      loc: 267
-      sloc: 231
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
-      hotspotScore: 0
-      classifications: []
+      complexity: 42
+      loc: 278
+      sloc: 240
+      churn: 3
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.11826923076923077
+      classifications:
+        - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 320
-    'y': 40
+      sinceDays: 90
+    x: 388
+    'y': 64
   - entityRef: blueprint/app/cli/interactivegitchoice
     type: background-worker
     name: interactiveGitChoice Service
@@ -1194,15 +1311,15 @@ nodes:
       complexity: 4
       loc: 35
       sloc: 27
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
-      hotspotScore: 0
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.0028846153846153848
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 6520
-    'y': 480
+      sinceDays: 90
+    x: 7968
+    'y': 704
   - entityRef: blueprint/app/cli/interactivegitchoice-test
     type: background-worker
     name: interactiveGitChoice.test Service
@@ -1216,15 +1333,15 @@ nodes:
       complexity: 1
       loc: 57
       sloc: 48
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 5960
-    'y': 260
+      sinceDays: 90
+    x: 7748
+    'y': 384
   - entityRef: blueprint/app/cli/parseblueprintargv
     type: background-worker
     name: parseBlueprintArgv Service
@@ -1238,15 +1355,16 @@ nodes:
       complexity: 29
       loc: 123
       sloc: 102
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
-      hotspotScore: 0
-      classifications: []
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.026923076923076925
+      classifications:
+        - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 6520
-    'y': 700
+      sinceDays: 90
+    x: 7968
+    'y': 1024
   - entityRef: blueprint/app/cli/collectfilemetrics-test
     type: background-worker
     name: collectFileMetrics.test Service
@@ -1266,9 +1384,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 12320
-    'y': 700
+      sinceDays: 90
+    x: 14108
+    'y': 1024
   - entityRef: blueprint/app/cli/tsmorphcomplexity-test
     type: background-worker
     name: tsMorphComplexity.test Service
@@ -1288,9 +1406,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 3880
-    'y': 480
+      sinceDays: 90
+    x: 4448
+    'y': 704
   - entityRef: blueprint/app/cli/gitloghistory
     type: background-worker
     name: gitLogHistory Service
@@ -1307,13 +1425,13 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.020000000000000004
+      hotspotScore: 0.0125
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 5360
-    'y': 700
+      sinceDays: 90
+    x: 6088
+    'y': 1024
   - entityRef: blueprint/app/cli/tsmorphcomplexity
     type: background-worker
     name: tsMorphComplexity Service
@@ -1330,13 +1448,13 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.018461538461538463
+      hotspotScore: 0.011538461538461539
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 3880
-    'y': 700
+      sinceDays: 90
+    x: 4448
+    'y': 1024
   - entityRef: blueprint/app/cli/loadforensicsconfig
     type: background-worker
     name: loadForensicsConfig Service
@@ -1353,13 +1471,13 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.023076923076923078
+      hotspotScore: 0.014423076923076924
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 14720
-    'y': 920
+      sinceDays: 90
+    x: 17128
+    'y': 1344
   - entityRef: blueprint/app/cli/gitloghistory-test
     type: background-worker
     name: gitLogHistory.test Service
@@ -1379,9 +1497,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 5360
-    'y': 480
+      sinceDays: 90
+    x: 6088
+    'y': 704
   - entityRef: blueprint/app/cli/sourcefilelister
     type: background-worker
     name: sourceFileLister Service
@@ -1395,15 +1513,15 @@ nodes:
       complexity: 5
       loc: 42
       sloc: 34
-      churn: 1
+      churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.006153846153846155
+      hotspotScore: 0.007692307692307693
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 9240
-    'y': 700
+      sinceDays: 90
+    x: 10828
+    'y': 1024
   - entityRef: blueprint/app/cli/collectfilemetrics
     type: background-worker
     name: collectFileMetrics Service
@@ -1417,15 +1535,15 @@ nodes:
       complexity: 2
       loc: 53
       sloc: 44
-      churn: 2
+      churn: 3
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.0030769230769230774
+      hotspotScore: 0.0028846153846153848
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 8080
-    'y': 480
+      sinceDays: 90
+    x: 9508
+    'y': 704
   - entityRef: blueprint/app/cli/forensicanalyzer
     type: background-worker
     name: forensicAnalyzer Service
@@ -1442,12 +1560,12 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.007692307692307693
+      hotspotScore: 0.004807692307692308
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 4640
-    'y': 700
+      sinceDays: 90
+    x: 5268
+    'y': 1024
   - entityRef: blueprint/app/cli/aggregatehistory
     type: background-worker
     name: aggregateHistory Service
@@ -1464,12 +1582,12 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.01230769230769231
+      hotspotScore: 0.007692307692307693
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 13120
-    'y': 920
+      sinceDays: 90
+    x: 14988
+    'y': 1344
   - entityRef: blueprint/app/cli/temporalcoupling-test
     type: background-worker
     name: temporalCoupling.test Service
@@ -1489,9 +1607,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 1280
-    'y': 700
+      sinceDays: 90
+    x: 1048
+    'y': 1024
   - entityRef: blueprint/app/cli/attachforensics-test
     type: background-worker
     name: attachForensics.test Service
@@ -1511,9 +1629,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 9640
-    'y': 700
+      sinceDays: 90
+    x: 11208
+    'y': 1024
   - entityRef: blueprint/app/cli/hotspotscoring
     type: background-worker
     name: hotspotScoring Service
@@ -1530,12 +1648,12 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.01230769230769231
+      hotspotScore: 0.007692307692307693
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 1480
-    'y': 920
+      sinceDays: 90
+    x: 1648
+    'y': 1344
   - entityRef: blueprint/app/cli/attachforensics
     type: background-worker
     name: attachForensics Service
@@ -1552,13 +1670,13 @@ nodes:
       churn: 2
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.07384615384615385
+      hotspotScore: 0.046153846153846156
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 12520
-    'y': 920
+      sinceDays: 90
+    x: 14328
+    'y': 1344
   - entityRef: blueprint/app/cli/classify
     type: background-worker
     name: classify Service
@@ -1575,12 +1693,12 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.004615384615384616
+      hotspotScore: 0.0028846153846153848
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 4640
-    'y': 920
+      sinceDays: 90
+    x: 5268
+    'y': 1344
   - entityRef: blueprint/app/cli/classify-test
     type: background-worker
     name: classify.test Service
@@ -1600,9 +1718,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 5000
-    'y': 700
+      sinceDays: 90
+    x: 5648
+    'y': 1024
   - entityRef: blueprint/app/cli/temporalcoupling
     type: background-worker
     name: temporalCoupling Service
@@ -1619,13 +1737,13 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.018461538461538463
+      hotspotScore: 0.011538461538461539
       classifications:
         - knowledge-silo
       coupledFiles: []
-      sinceDays: 500
-    x: 1840
-    'y': 920
+      sinceDays: 90
+    x: 1268
+    'y': 1344
   - entityRef: blueprint/app/cli/forensicanalyzer-test
     type: background-worker
     name: forensicAnalyzer.test Service
@@ -1645,9 +1763,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 6160
-    'y': 480
+      sinceDays: 90
+    x: 6528
+    'y': 704
   - entityRef: blueprint/app/cli/hotspotscoring-test
     type: background-worker
     name: hotspotScoring.test Service
@@ -1667,9 +1785,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 920
-    'y': 700
+      sinceDays: 90
+    x: 1648
+    'y': 1024
   - entityRef: blueprint/app/cli/aggregatehistory-test
     type: background-worker
     name: aggregateHistory.test Service
@@ -1689,9 +1807,9 @@ nodes:
       hotspotScore: 0
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 12920
-    'y': 700
+      sinceDays: 90
+    x: 14768
+    'y': 1024
   - entityRef: blueprint/app/cli/options
     type: background-worker
     name: options Service
@@ -1708,12 +1826,12 @@ nodes:
       churn: 1
       authorCount: 1
       topAuthorPercent: 1
-      hotspotScore: 0.0030769230769230774
+      hotspotScore: 0.0019230769230769232
       classifications: []
       coupledFiles: []
-      sinceDays: 500
-    x: 14720
-    'y': 1140
+      sinceDays: 90
+    x: 17128
+    'y': 1664
 dependencies:
   - from: blueprint/app/cli/copytreesitterwasms
     to: blueprint/app/core/path
@@ -1899,6 +2017,18 @@ dependencies:
     to: blueprint/app/cli/nodetypehydrator
     type: direct-call
     description: Calls module / service
+  - from: blueprint/app/cli/modelextractor
+    to: blueprint/app/cli/csharpgrouping
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/csharpgrouping-test
+    to: blueprint/app/cli/csharpgrouping
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/csharpgrouping
+    to: blueprint/app/cli/testpath
+    type: direct-call
+    description: Calls module / service
   - from: blueprint/app/cli/testpath-test
     to: blueprint/app/cli/testpath
     type: direct-call
@@ -1961,8 +2091,8 @@ dependencies:
     description: Calls module / service
   - from: blueprint/app/cli/analyzer
     to: blueprint/app/cli/modelextractor
-    type: direct-call
-    description: Calls module / service
+    type: read-write
+    description: Queries datastore records
   - from: blueprint/app/cli/analyzer
     to: blueprint/app/cli/contextlevelwriter
     type: direct-call
@@ -2021,8 +2151,8 @@ dependencies:
     description: Calls module / service
   - from: blueprint/app/cli/containergrouping-test
     to: blueprint/app/cli/modelextractor
-    type: direct-call
-    description: Calls module / service
+    type: read-write
+    description: Queries datastore records
   - from: blueprint/app/cli/cancellation-test
     to: blueprint/app/cli/cancellation
     type: direct-call
@@ -2060,6 +2190,22 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/app/cli/contextlevelwriter-test
+    to: blueprint/app/cli/fakes
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/basewriter-test
+    to: blueprint/app/cli/contextlevelwriter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/basewriter-test
+    to: blueprint/app/cli/containerlevelwriter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/basewriter-test
+    to: blueprint/app/cli/componentlevelwriter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/cli/basewriter-test
     to: blueprint/app/cli/fakes
     type: direct-call
     description: Calls module / service

@@ -8,6 +8,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoDocs = path.resolve(__dirname, '../../../docs');
+const repoSchemas = path.resolve(__dirname, '../../../schemas');
 const base = process.env.VITE_BASE || '/';
 
 /** Copy docs screenshots (and other static assets) into public for production & dev. */
@@ -35,6 +36,38 @@ function syncDocsAssets(): Plugin {
   };
 }
 
+/**
+ * Publish JSON Schema for external IDE validation under /schemas/v{n}/ and /schemas/latest/.
+ * Source of truth: repo `schemas/` (generated from Zod in @blueprint/core).
+ */
+function syncJsonSchemas(): Plugin {
+  const destRoot = path.resolve(__dirname, 'public/schemas');
+
+  const sync = () => {
+    if (!fs.existsSync(repoSchemas)) return;
+    const channels = fs
+      .readdirSync(repoSchemas, { withFileTypes: true })
+      .filter(d => d.isDirectory() && (d.name === 'latest' || /^v\d+$/.test(d.name)))
+      .map(d => d.name);
+
+    for (const channel of channels) {
+      const src = path.join(repoSchemas, channel, 'blueprint.schema.json');
+      if (!fs.existsSync(src)) continue;
+      const destDir = path.join(destRoot, channel);
+      fs.mkdirSync(destDir, { recursive: true });
+      fs.copyFileSync(src, path.join(destDir, 'blueprint.schema.json'));
+    }
+  };
+
+  return {
+    name: 'sync-json-schemas',
+    buildStart: sync,
+    configureServer() {
+      sync();
+    },
+  };
+}
+
 // https://vite.dev/config/
 export default defineConfig({
   base,
@@ -42,6 +75,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
     syncDocsAssets(),
+    syncJsonSchemas(),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'favicon.png', 'icons/apple-touch-icon-dark.png'],
@@ -77,8 +111,10 @@ export default defineConfig({
       workbox: {
         // App shell + hashed bundles. Skip docs screenshots (large, non-critical offline).
         globPatterns: ['**/*.{js,css,html,ico,svg,woff2,webmanifest,png}'],
-        globIgnores: ['**/docs-assets/**'],
+        globIgnores: ['**/docs-assets/**', '**/schemas/**'],
         navigateFallback: 'index.html',
+        // Keep /schemas/* as real JSON (IDE validators + browser), not the SPA shell.
+        navigateFallbackDenylist: [/^\/schemas\//],
         cleanupOutdatedCaches: true,
         // Main designer chunk includes grammar/WASM payloads and exceeds Workbox's 2 MiB default.
         maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,

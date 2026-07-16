@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/v1/blueprint.schema.json
 entityRef: blueprint
 name: Blueprint Context
 version: 1.0.0
@@ -15,13 +16,13 @@ nodes:
     forensics:
       complexity: 4
       churn: 0
-      hotspotScore: 0
       authorCount: 0
+      hotspotScore: 0
+      classifications: []
+      sinceDays: 90
       fileCount: 1
       hotspotCount: 0
       knowledgeSiloCount: 0
-      classifications: []
-      sinceDays: 90
   - entityRef: blueprint/backstage
     type: software-system
     name: Backstage System
@@ -130,16 +131,16 @@ nodes:
     'y': 384
     forensics:
       complexity: 66
-      churn: 437
+      churn: 648
+      hotspotScore: 0.7076923076923077
       authorCount: 1
-      hotspotScore: 0.5276923076923077
+      fileCount: 233
+      hotspotCount: 1
+      knowledgeSiloCount: 69
       classifications:
         - knowledge-silo
         - hotspot
-      sinceDays: 500
-      fileCount: 188
-      hotspotCount: 2
-      knowledgeSiloCount: 52
+      sinceDays: 90
   - entityRef: blueprint/customer
     type: person
     name: Customer
@@ -147,14 +148,6 @@ nodes:
     x: 428
     'y': 384
 dependencies:
-  - from: blueprint/testproject
-    to: blueprint/app
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/testproject
-    to: blueprint/app
-    type: direct-call
-    description: Part of product system
   - from: blueprint/backstage
     to: blueprint/packages
     type: direct-call
@@ -169,10 +162,6 @@ dependencies:
     description: Part of product system
   - from: blueprint/backstage
     to: blueprint/microsite
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/testproject
-    to: blueprint/app
     type: direct-call
     description: Part of product system
   - from: blueprint/backstage
@@ -199,6 +188,22 @@ dependencies:
     to: blueprint/customer
     type: direct-call
     description: ''
+  - from: blueprint/backstage
+    to: blueprint/packages
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/plugins
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/docs-ui
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/microsite
+    type: direct-call
+    description: Part of product system
   - from: blueprint/backstage
     to: blueprint/packages
     type: direct-call

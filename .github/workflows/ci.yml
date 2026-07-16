@@ -54,6 +54,10 @@ jobs:
         run: pnpm lint
         working-directory: app
 
+      - name: Check JSON Schema is up to date
+        run: pnpm generate:schema -- --check
+        working-directory: app
+
       - name: Check Unused Code & Dependencies (Knip)
         run: pnpm knip --reporter github-actions
         working-directory: app
@@ -237,3 +241,4 @@ jobs:
             dist/blueprint-macos-x64.tar.gz
             dist/blueprint-macos-arm64.tar.gz
             dist/blueprint-windows-x64.zip
+            schemas/**/*.json

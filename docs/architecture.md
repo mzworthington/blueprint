@@ -155,6 +155,13 @@ YAML/JSON is validated against shared Zod contracts in `@blueprint/core`:
 - Entity refs match `ENTITY_REF_PATTERN` (no path-style ids).
 - Node types must match domain enums.
 
+The same Zod contract is exported as JSON Schema (`schemas/blueprint.schema.json`) for IDE hints. Regenerate with `pnpm generate:schema`. Pre-commit and CI run `generate:schema -- --check` when `app/packages/core/` changes and fail if the files are stale.
+
+Hosted on the designer site after deploy:
+
+- https://blueprint.mzworthington.co.uk/schemas/v1/blueprint.schema.json
+- https://blueprint.mzworthington.co.uk/schemas/latest/blueprint.schema.json
+
 ### 2. Structural dependency check (DFS)
 
 - Circular dependency loops are flagged and highlighted on the canvas.

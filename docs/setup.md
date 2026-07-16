@@ -75,3 +75,21 @@ Husky + lint-staged validate commits for changes under `app/`:
 
 - Prettier formatting
 - Oxlint on TypeScript
+- When `app/packages/core/` is staged, checks that `schemas/blueprint.schema.json` (and `v*` / `latest` copies) match the Zod contract — commit fails if stale; run `pnpm generate:schema` to refresh
+
+Install the recommended **YAML** extension (`redhat.vscode-yaml`). Workspace settings map `blueprints/**/*.yaml` to the local schema for autocomplete and validation.
+
+### Public schema URLs (external repos)
+
+After deploy, the same schema is served from the designer site:
+
+- **Versioned (preferred):** https://blueprint.mzworthington.co.uk/schemas/v1/blueprint.schema.json
+- **Latest:** https://blueprint.mzworthington.co.uk/schemas/latest/blueprint.schema.json
+
+In any blueprint YAML file outside this repo:
+
+```yaml
+# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/v1/blueprint.schema.json
+```
+
+Bump `SYSTEM_SCHEMA_MAJOR_VERSION` in `@blueprint/core` only when the contract breaks; `latest` always tracks main.

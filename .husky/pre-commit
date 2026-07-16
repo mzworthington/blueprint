@@ -4,6 +4,15 @@ if echo "$STAGED" | grep -qE '^cli/'; then
   echo "Skipping Rust checks — experimental cli/ tree is unmaintained and not part of CI."
 fi
 
+# Fail if Zod → JSON Schema artifacts are stale when core (or generator) changes.
+if echo "$STAGED" | grep -qE '^app/packages/core/'; then
+  echo "Core package staged — checking schemas/blueprint.schema.json is up to date..."
+  (cd app && pnpm --filter @blueprint/core generate:schema -- --check) || {
+    echo "Schema out of date. Run: cd app && pnpm generate:schema"
+    exit 1
+  }
+fi
+
 # CI runs format:check on app + repo docs/README. Keep the hook in sync.
 NEEDS_APP_CHECKS=false
 NEEDS_DOCS_FORMAT=false

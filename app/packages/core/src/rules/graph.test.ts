@@ -4,8 +4,24 @@ import {
   parseSchemaFromYaml,
   serializeSchemaToYaml,
   serializeSchemaToMermaid,
+  toSystemSchemaJsonSchema,
 } from './graph';
 import type { SystemSchema } from '../models/schema';
+
+describe('toSystemSchemaJsonSchema', () => {
+  it('exports Draft-07 JSON Schema with required blueprint fields', () => {
+    const schema = toSystemSchemaJsonSchema();
+    expect(schema.$schema).toBe('http://json-schema.org/draft-07/schema#');
+    expect(schema.$id).toBe(
+      'https://blueprint.mzworthington.co.uk/schemas/v1/blueprint.schema.json'
+    );
+    expect(schema.title).toBe('Blueprint System Schema');
+    expect(schema.type).toBe('object');
+    expect(schema.required).toEqual(expect.arrayContaining(['name', 'version', 'level', 'nodes']));
+    const props = schema.properties as Record<string, { enum?: string[] }>;
+    expect(props.level.enum).toEqual(['context', 'container', 'component', 'code']);
+  });
+});
 
 describe('Graph Validation & Cycle Detection', () => {
   it('should validate a clean, acyclic graph', () => {

@@ -36,6 +36,16 @@ Full flag table and config: see the [CLI README](https://github.com/mzworthingto
 
 YAML under the output directory — **not** a separate forensics report. Architecture graphs are the product; forensics attach onto `node.forensics` when enabled.
 
+### IDE validation
+
+Install the YAML extension, then point files at the public schema:
+
+```yaml
+# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/v1/blueprint.schema.json
+```
+
+Prefer the versioned URL (`/schemas/v1/…`). `/schemas/latest/…` tracks `main`. Details: [Setup — public schema URLs](../setup.md#public-schema-urls-external-repos).
+
 ## Cancellation
 
 **Ctrl+C** (or SIGTERM) aborts cooperatively; a second signal force-exits.
