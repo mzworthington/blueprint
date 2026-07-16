@@ -113,7 +113,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
         set({ hasPendingChanges: hasChanges });
       }
     } catch (e) {
-      // Ignore or log error
+      get().logger.error('Failed to compute pending changes diff', e);
     }
   },
 
