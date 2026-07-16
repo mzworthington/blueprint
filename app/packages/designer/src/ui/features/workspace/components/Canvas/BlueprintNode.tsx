@@ -226,7 +226,7 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
       data-coupling-highlight={data.couplingHighlight ? 'true' : undefined}
       data-hotspot-heat={heat > 0 ? heat.toFixed(2) : undefined}
       data-testid={heat > 0 ? 'hotspot-heat' : undefined}
-      className={`relative w-64 rounded-xl border p-4 transition-all duration-200 cursor-pointer overflow-hidden ${borderClass}`}
+      className={`relative w-64 rounded-xl border p-4 transition-all duration-200 cursor-pointer ${borderClass}`}
       style={{
         boxShadow:
           selected || data.external || data.couplingHighlight
