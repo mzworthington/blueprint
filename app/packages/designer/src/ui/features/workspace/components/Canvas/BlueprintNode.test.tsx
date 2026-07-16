@@ -143,23 +143,6 @@ describe('BlueprintNode Component', () => {
     expect(useBlueprintStore.getState().selectedNodeId).toBe('test-node-1');
   });
 
-  it('shows delete button when selected is true and triggers deleteNode on click', () => {
-    const props = { ...defaultProps, selected: true };
-    render(<BlueprintNode {...props} />);
-
-    const deleteBtn = screen.getByTitle('Delete component');
-    expect(deleteBtn).toBeInTheDocument();
-
-    fireEvent.click(deleteBtn);
-
-    expect(useBlueprintStore.getState().schema.nodes).toHaveLength(0);
-  });
-
-  it('does not render delete button when selected is false', () => {
-    render(<BlueprintNode {...defaultProps} />);
-    expect(screen.queryByTitle('Delete component')).not.toBeInTheDocument();
-  });
-
   it('renders TEST badge when node represents a test component', () => {
     const props = {
       ...defaultProps,

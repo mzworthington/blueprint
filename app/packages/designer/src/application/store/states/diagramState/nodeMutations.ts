@@ -11,7 +11,12 @@ type GetFn = () => {
   logger: { info: (m: string, meta?: Record<string, unknown>) => void };
 };
 
-export function addNodeMutation(set: SetFn, get: GetFn, type: NodeType): void {
+export function addNodeMutation(
+  set: SetFn,
+  get: GetFn,
+  type: NodeType,
+  position?: { x: number; y: number }
+): void {
   const entityRef = `${type}-${Date.now().toString().slice(-4)}`;
   const name = `New ${type
     .split('-')
@@ -22,8 +27,8 @@ export function addNodeMutation(set: SetFn, get: GetFn, type: NodeType): void {
     type,
     name,
     properties: {},
-    x: 100 + Math.random() * 200,
-    y: 100 + Math.random() * 200,
+    x: position?.x ?? 100 + Math.random() * 200,
+    y: position?.y ?? 100 + Math.random() * 200,
   };
 
   get().logger.info('Instantiating new visual node component', { entityRef, type, name });

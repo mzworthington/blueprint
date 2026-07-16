@@ -226,4 +226,16 @@ describe('diagramState Actions & State Management', () => {
     useBlueprintStore.getState().redo();
     expect(useBlueprintStore.getState().nodes).toHaveLength(1);
   });
+
+  it('should place a new node at the specified position if provided', () => {
+    const store = useBlueprintStore.getState();
+    const targetPosition = { x: 450, y: 600 };
+    store.addNode('relational-database' as NodeType, targetPosition);
+
+    const updatedState = useBlueprintStore.getState();
+    const addedNode = updatedState.schema.nodes.find(n => n.type === 'relational-database');
+    expect(addedNode).toBeDefined();
+    expect(addedNode?.x).toBe(450);
+    expect(addedNode?.y).toBe(600);
+  });
 });

@@ -9,7 +9,6 @@ import {
   Cpu,
   Layers,
   Share2,
-  Trash2,
   User,
   Network,
   Monitor,
@@ -177,7 +176,6 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
 
   const [, setLocation] = useLocation();
   const selectNode = useBlueprintStore(state => state.selectNode);
-  const deleteNode = useBlueprintStore(state => state.deleteNode);
   const loadedSystems = useBlueprintStore(state => state.loadedSystems);
 
   const hasSubDiagram = React.useMemo(() => {
@@ -196,11 +194,6 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     selectNode(id);
-  };
-
-  const handleDelete = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    deleteNode(id);
   };
 
   const concernBorder =
@@ -317,16 +310,6 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
           >
             <ZoomIn className="w-2.5 h-2.5" />
             <span>Zoom</span>
-          </button>
-        )}
-
-        {selected && (
-          <button
-            onClick={handleDelete}
-            className="p-1 rounded-md text-slate-400 hover:text-red-400 hover:bg-slate-800 transition"
-            title="Delete component"
-          >
-            <Trash2 className="w-4 h-4" />
           </button>
         )}
       </div>

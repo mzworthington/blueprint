@@ -41,7 +41,7 @@ export const createUiState = (
   showHotspotHeatmap: false,
   layoutEngine: null,
   leftCollapsed: true,
-  rightCollapsed: true,
+  rightCollapsed: false,
   showDesignSystem: false,
   isDiffOpen: false,
   notification: null,

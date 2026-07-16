@@ -17,6 +17,7 @@ import { Searchbar } from '../Searchbar/Searchbar';
 import { SystemSelector } from '../SystemSelector/SystemSelector';
 import { AlertTriangle, CheckCircle2, Info, AlertCircle, X, ZoomOut } from 'lucide-react';
 import { getSchemaEntityRef } from '@blueprint/core';
+import type { NodeType } from '@blueprint/core';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 import {
   applyCouplingHighlights,
@@ -55,6 +56,7 @@ export const Canvas: React.FC = () => {
     undo,
     redo,
     recordHistory,
+    addNode,
   } = useBlueprintStore();
 
   const { fitView } = useReactFlow();
@@ -143,6 +145,30 @@ export const Canvas: React.FC = () => {
     return filteredEdges.filter(e => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target));
   }, [filteredEdges, filteredNodes, displayNodes, selectedNodeId, showCoupling]);
 
+  const { screenToFlowPosition } = useReactFlow();
+
+  const onDragOver = useCallback((event: React.DragEvent) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+  }, []);
+
+  const onDrop = useCallback(
+    (event: React.DragEvent) => {
+      event.preventDefault();
+
+      const type = event.dataTransfer.getData('application/reactflow') as NodeType;
+      if (!type) return;
+
+      const position = screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
+
+      addNode(type, position);
+    },
+    [screenToFlowPosition, addNode]
+  );
+
   return (
     <div className="flex-1 h-full relative" onClick={() => selectNode(null)}>
       <ReactFlow
@@ -160,6 +186,8 @@ export const Canvas: React.FC = () => {
             setLocation(`/workspace/${node.data.entityRef}`);
           }
         }}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
         nodeTypes={nodeTypes}
         minZoom={0.05}
         maxZoom={4}

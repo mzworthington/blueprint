@@ -62,7 +62,7 @@ export interface DiagramState {
   onNodesChange: (changes: NodeChange[]) => void;
   onEdgesChange: (changes: EdgeChange[]) => void;
   onConnect: (connection: Connection) => void;
-  addNode: (type: NodeType) => void;
+  addNode: (type: NodeType, position?: { x: number; y: number }) => void;
   updateNode: (id: string, updates: Partial<SystemNode>) => void;
   deleteNode: (id: string) => void;
   selectNode: (id: string | null) => void;
@@ -283,9 +283,9 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
     connectNodesMutation(set, get, connection);
   },
 
-  addNode: type => {
+  addNode: (type, position) => {
     get().recordHistory();
-    addNodeMutation(set, get, type);
+    addNodeMutation(set, get, type, position);
   },
 
   updateNode: (id, updates) => {
