@@ -301,7 +301,7 @@ describe('ComponentLevelWriter', () => {
       '/workspace/blueprints/my-context/my-system/frontend-ui-components.yaml'
     )!;
     expect(yamlContent).toContain('x: 10');
-    expect(yamlContent).toContain("'y': 20");
+    expect(yamlContent).toContain('y: 20');
   });
 
   it('should log successful write for each container', async () => {

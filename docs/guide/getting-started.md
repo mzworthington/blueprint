@@ -82,7 +82,7 @@ The CLI writes diagrams under `blueprints/` (or your `--output` path): context, 
 For IDE autocomplete/validation in other repos, add this to the top of a blueprint YAML file:
 
 ```yaml
-# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/v1/blueprint.schema.json
+# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/v2/blueprint.schema.json
 ```
 
 ## 4. Open the designer

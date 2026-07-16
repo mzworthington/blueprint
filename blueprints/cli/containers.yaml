@@ -1,0 +1,139 @@
+# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/v2/blueprint.schema.json
+- entityRef: blueprint/cli
+  name: Cli Containers
+  version: 1.0.0
+  level: container
+  nodes:
+    - entityRef: blueprint/cli/core
+      type: container
+      name: Core Service
+      isTest: false
+      x: 108
+      y: 704
+      forensics:
+        complexity: 9
+        churn: 5
+        hotspotScore: 0.02735042735042735
+        authorCount: 1
+        fileCount: 3
+        hotspotCount: 0
+        knowledgeSiloCount: 0
+        sinceDays: 90
+    - entityRef: blueprint/cli/cli
+      type: container
+      name: Cli Service
+      isTest: false
+      x: 888
+      y: 1024
+      forensics:
+        complexity: 42
+        churn: 7
+        hotspotScore: 0.14017094017094014
+        authorCount: 1
+        fileCount: 5
+        hotspotCount: 0
+        knowledgeSiloCount: 2
+        classifications:
+          - knowledge-silo
+        sinceDays: 90
+    - entityRef: blueprint/cli/forensics
+      type: container
+      name: Forensics Service
+      isTest: false
+      x: 668
+      y: 704
+      forensics:
+        complexity: 25
+        churn: 29
+        hotspotScore: 0.041025641025641026
+        authorCount: 1
+        fileCount: 23
+        hotspotCount: 0
+        knowledgeSiloCount: 5
+        classifications:
+          - knowledge-silo
+        sinceDays: 90
+    - entityRef: blueprint/cli/writers
+      type: container
+      name: Writers Service
+      isTest: false
+      x: 388
+      y: 384
+      forensics:
+        complexity: 35
+        churn: 22
+        hotspotScore: 0.23247863247863249
+        authorCount: 1
+        fileCount: 8
+        hotspotCount: 0
+        knowledgeSiloCount: 1
+        classifications:
+          - knowledge-silo
+        sinceDays: 90
+    - entityRef: blueprint/cli/vhs
+      type: container
+      name: Vhs Service
+      isTest: true
+      x: 428
+      y: 64
+      forensics:
+        complexity: 8
+        churn: 1
+        hotspotScore: 0
+        authorCount: 1
+        fileCount: 1
+        hotspotCount: 0
+        knowledgeSiloCount: 0
+        sinceDays: 90
+    - entityRef: blueprint/cli/analysis
+      type: container
+      name: Analysis Service
+      isTest: false
+      x: 48
+      y: 64
+      forensics:
+        complexity: 66
+        churn: 110
+        hotspotScore: 0.5196581196581197
+        authorCount: 1
+        fileCount: 43
+        hotspotCount: 1
+        knowledgeSiloCount: 16
+        classifications:
+          - knowledge-silo
+          - hotspot
+        sinceDays: 90
+  dependencies:
+    - from: blueprint/cli/cli
+      to: blueprint/cli/analysis
+      type: inter-container
+    - from: blueprint/cli/cli
+      to: blueprint/cli/forensics
+      type: inter-container
+    - from: blueprint/cli/forensics
+      to: blueprint/cli/analysis
+      type: inter-container
+    - from: blueprint/cli/forensics
+      to: blueprint/cli/cli
+      type: inter-container
+    - from: blueprint/cli/core
+      to: blueprint/cli/analysis
+      type: inter-container
+    - from: blueprint/cli/writers
+      to: blueprint/cli/core
+      type: inter-container
+    - from: blueprint/cli/writers
+      to: blueprint/cli/analysis
+      type: inter-container
+    - from: blueprint/cli/writers
+      to: blueprint/cli/forensics
+      type: inter-container
+    - from: blueprint/cli/analysis
+      to: blueprint/cli/core
+      type: inter-container
+    - from: blueprint/cli/analysis
+      to: blueprint/cli/writers
+      type: inter-container
+    - from: blueprint/cli/analysis
+      to: blueprint/cli/forensics
+      type: inter-container

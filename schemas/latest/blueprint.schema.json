@@ -1,229 +1,234 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
-  "properties": {
-    "entityRef": {
-      "type": "string",
-      "minLength": 1,
-      "pattern": "^[a-zA-Z0-9_-]+(\\/[a-zA-Z0-9_-]+)*$"
-    },
-    "name": {
-      "type": "string",
-      "minLength": 1
-    },
-    "version": {
-      "type": "string",
-      "minLength": 1
-    },
-    "level": {
-      "type": "string",
-      "enum": [
-        "context",
-        "container",
-        "component",
-        "code"
-      ]
-    },
-    "id": {
-      "type": "string",
-      "minLength": 1,
-      "pattern": "^[a-zA-Z0-9_-]+(\\/[a-zA-Z0-9_-]+)*$"
-    },
-    "nodes": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "entityRef": {
-            "type": "string",
-            "minLength": 1,
-            "pattern": "^[a-zA-Z0-9_-]+(\\/[a-zA-Z0-9_-]+)*$"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "person",
-              "software-system",
-              "web-app",
-              "mobile-app",
-              "single-page-app",
-              "microservice",
-              "database",
-              "cache-store",
-              "event-broker",
-              "serverless-app",
-              "component",
-              "container",
-              "code-module",
-              "relational-database",
-              "grpc-service",
-              "serverless-function",
-              "rest-api",
-              "gateway-api",
-              "background-worker"
-            ]
-          },
-          "name": {
-            "type": "string",
-            "minLength": 1
-          },
-          "external": {
-            "type": "boolean"
-          },
+  "$id": "https://blueprint.mzworthington.co.uk/schemas/v2/blueprint.schema.json",
+  "title": "Blueprint System Schema",
+  "description": "Declarative C4 diagram schema used by Blueprint CLI and designer. Each file is a one-element YAML sequence whose first key is entityRef when present. Generated from Zod — do not edit by hand.",
+  "type": "array",
+  "minItems": 1,
+  "maxItems": 1,
+  "items": {
+    "type": "object",
+    "properties": {
+      "entityRef": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[a-zA-Z0-9_-]+(\\/[a-zA-Z0-9_-]+)*$"
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1
+      },
+      "version": {
+        "type": "string",
+        "minLength": 1
+      },
+      "level": {
+        "type": "string",
+        "enum": [
+          "context",
+          "container",
+          "component",
+          "code"
+        ]
+      },
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[a-zA-Z0-9_-]+(\\/[a-zA-Z0-9_-]+)*$"
+      },
+      "nodes": {
+        "type": "array",
+        "items": {
+          "type": "object",
           "properties": {
-            "type": "object",
-            "propertyNames": {
-              "type": "string"
+            "entityRef": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-zA-Z0-9_-]+(\\/[a-zA-Z0-9_-]+)*$"
             },
-            "additionalProperties": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "boolean"
-                }
+            "type": {
+              "type": "string",
+              "enum": [
+                "person",
+                "software-system",
+                "web-app",
+                "mobile-app",
+                "single-page-app",
+                "microservice",
+                "database",
+                "cache-store",
+                "event-broker",
+                "serverless-app",
+                "component",
+                "container",
+                "code-module",
+                "relational-database",
+                "grpc-service",
+                "serverless-function",
+                "rest-api",
+                "gateway-api",
+                "background-worker"
               ]
-            }
-          },
-          "isTest": {
-            "type": "boolean"
-          },
-          "x": {
-            "type": "number"
-          },
-          "y": {
-            "type": "number"
-          },
-          "forensics": {
-            "type": "object",
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "external": {
+              "type": "boolean"
+            },
             "properties": {
-              "complexity": {
-                "type": "number"
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
               },
-              "loc": {
-                "type": "number"
-              },
-              "sloc": {
-                "type": "number"
-              },
-              "churn": {
-                "type": "number"
-              },
-              "authorCount": {
-                "type": "number"
-              },
-              "topAuthorPercent": {
-                "type": "number"
-              },
-              "hotspotScore": {
-                "type": "number"
-              },
-              "classifications": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "enum": [
-                    "hotspot",
-                    "knowledge-silo"
-                  ]
-                }
-              },
-              "coupledFiles": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "path": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "score": {
-                      "type": "number"
-                    },
-                    "sharedCommits": {
-                      "type": "number"
-                    }
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
                   },
-                  "required": [
-                    "path",
-                    "score",
-                    "sharedCommits"
-                  ],
-                  "additionalProperties": false
-                }
-              },
-              "sinceDays": {
-                "type": "number",
-                "exclusiveMinimum": 0
-              },
-              "fileCount": {
-                "type": "number"
-              },
-              "hotspotCount": {
-                "type": "number"
-              },
-              "knowledgeSiloCount": {
-                "type": "number"
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "boolean"
+                  }
+                ]
               }
             },
-            "additionalProperties": false
-          }
-        },
-        "required": [
-          "entityRef",
-          "type",
-          "name"
-        ],
-        "additionalProperties": false
+            "isTest": {
+              "type": "boolean"
+            },
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "forensics": {
+              "type": "object",
+              "properties": {
+                "complexity": {
+                  "type": "number"
+                },
+                "loc": {
+                  "type": "number"
+                },
+                "sloc": {
+                  "type": "number"
+                },
+                "churn": {
+                  "type": "number"
+                },
+                "authorCount": {
+                  "type": "number"
+                },
+                "topAuthorPercent": {
+                  "type": "number"
+                },
+                "hotspotScore": {
+                  "type": "number"
+                },
+                "classifications": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "hotspot",
+                      "knowledge-silo"
+                    ]
+                  }
+                },
+                "coupledFiles": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "path": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "score": {
+                        "type": "number"
+                      },
+                      "sharedCommits": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "score",
+                      "sharedCommits"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "sinceDays": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "fileCount": {
+                  "type": "number"
+                },
+                "hotspotCount": {
+                  "type": "number"
+                },
+                "knowledgeSiloCount": {
+                  "type": "number"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "entityRef",
+            "type",
+            "name"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "dependencies": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "from": {
+              "type": "string",
+              "minLength": 1
+            },
+            "to": {
+              "type": "string",
+              "minLength": 1
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "direct-call",
+                "publish-subscribe",
+                "read-write",
+                "inter-container"
+              ]
+            },
+            "description": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "from",
+            "to",
+            "type"
+          ],
+          "additionalProperties": false
+        }
       }
     },
-    "dependencies": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "from": {
-            "type": "string",
-            "minLength": 1
-          },
-          "to": {
-            "type": "string",
-            "minLength": 1
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "direct-call",
-              "publish-subscribe",
-              "read-write",
-              "inter-container"
-            ]
-          },
-          "description": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "from",
-          "to",
-          "type"
-        ],
-        "additionalProperties": false
-      }
-    }
-  },
-  "required": [
-    "name",
-    "version",
-    "level",
-    "nodes"
-  ],
-  "additionalProperties": false,
-  "$id": "https://blueprint.mzworthington.co.uk/schemas/v1/blueprint.schema.json",
-  "title": "Blueprint System Schema",
-  "description": "Declarative C4 diagram schema used by Blueprint CLI and designer. Generated from Zod — do not edit by hand."
+    "required": [
+      "name",
+      "version",
+      "level",
+      "nodes"
+    ],
+    "additionalProperties": false
+  }
 }

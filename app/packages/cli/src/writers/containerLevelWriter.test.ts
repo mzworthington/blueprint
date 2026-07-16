@@ -103,7 +103,7 @@ describe('ContainerLevelWriter', () => {
 
     const yamlContent = fileSystem.writtenFiles.get('/workspace/blueprints/containers.yaml')!;
     expect(yamlContent).toContain('x: 10');
-    expect(yamlContent).toContain("'y': 20");
+    expect(yamlContent).toContain('y: 20');
   });
 
   it('should log successful write', async () => {

@@ -1,7 +1,8 @@
+import path from 'node:path';
+import { existsSync } from 'node:fs';
 import type { LayoutPort, AnalysisFileSystemPort, LoggerPort } from '../analysis/domain/ports.ts';
 import type { SystemSchema } from '@blueprint/core';
-import { blueprintYamlLanguageServerDirective } from '@blueprint/core';
-import * as yaml from 'js-yaml';
+import { SYSTEM_SCHEMA_MAJOR_VERSION, serializeSchemaToYaml } from '@blueprint/core';
 
 export abstract class BaseWriter {
   constructor(
@@ -10,20 +11,49 @@ export abstract class BaseWriter {
     protected logger: LoggerPort
   ) {}
 
-  protected async writeYaml(path: string, schema: SystemSchema): Promise<void> {
-    const body = yaml.dump(schema, { indent: 2, lineWidth: 120, noRefs: true });
-    const output = `${blueprintYamlLanguageServerDirective()}\n${body}`;
+  protected async writeYaml(pathName: string, schema: SystemSchema): Promise<void> {
+    const schemaUrl = resolveLocalSchemaUrl(pathName);
+    const output = serializeSchemaToYaml(schema, schemaUrl ? { schemaUrl } : undefined);
 
     // Ensure parent directory exists
-    const normalizedPath = path.replace(/\\/g, '/');
+    const normalizedPath = pathName.replace(/\\/g, '/');
     const lastSlash = normalizedPath.lastIndexOf('/');
     if (lastSlash !== -1) {
-      const parentDir = path.substring(0, lastSlash);
+      const parentDir = pathName.substring(0, lastSlash);
       if (parentDir && !this.fileSystem.exists(parentDir)) {
         this.fileSystem.mkdir(parentDir);
       }
     }
 
-    await this.fileSystem.writeSchema(path, output);
+    await this.fileSystem.writeSchema(pathName, output);
   }
+}
+
+/**
+ * Prefer a path-relative schema so the IDE can validate offline (remote Pages may 403
+ * until deploy). Falls back to the default language-server URL when not in this repo.
+ */
+export function resolveLocalSchemaUrl(yamlFilePath: string): string | undefined {
+  const versioned = path.join(
+    'schemas',
+    `v${SYSTEM_SCHEMA_MAJOR_VERSION}`,
+    'blueprint.schema.json'
+  );
+  const candidates = [versioned, path.join('schemas', 'blueprint.schema.json')];
+  let dir = path.dirname(path.resolve(yamlFilePath));
+
+  for (let i = 0; i < 12; i++) {
+    for (const candidate of candidates) {
+      const abs = path.join(dir, candidate);
+      if (existsSync(abs)) {
+        const rel = path.relative(path.dirname(path.resolve(yamlFilePath)), abs);
+        return rel.split(path.sep).join('/');
+      }
+    }
+    const parent = path.dirname(dir);
+    if (parent === dir) break;
+    dir = parent;
+  }
+
+  return undefined;
 }

@@ -83,13 +83,13 @@ Install the recommended **YAML** extension (`redhat.vscode-yaml`). Workspace set
 
 After deploy, the same schema is served from the designer site:
 
-- **Versioned (preferred):** https://blueprint.mzworthington.co.uk/schemas/v1/blueprint.schema.json
+- **Versioned (preferred):** https://blueprint.mzworthington.co.uk/schemas/v2/blueprint.schema.json
 - **Latest:** https://blueprint.mzworthington.co.uk/schemas/latest/blueprint.schema.json
 
 In any blueprint YAML file outside this repo:
 
 ```yaml
-# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/v1/blueprint.schema.json
+# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/v2/blueprint.schema.json
 ```
 
 Bump `SYSTEM_SCHEMA_MAJOR_VERSION` in `@blueprint/core` only when the contract breaks; `latest` always tracks main.

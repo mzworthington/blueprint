@@ -33,7 +33,7 @@ Writes `schemas/blueprint.schema.json` plus `schemas/v{n}/` and `schemas/latest/
 
 Public URLs (after GitHub Pages deploy):
 
-- https://blueprint.mzworthington.co.uk/schemas/v1/blueprint.schema.json
+- https://blueprint.mzworthington.co.uk/schemas/v2/blueprint.schema.json
 - https://blueprint.mzworthington.co.uk/schemas/latest/blueprint.schema.json
 
 ---

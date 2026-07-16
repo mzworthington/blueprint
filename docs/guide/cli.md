@@ -41,10 +41,10 @@ YAML under the output directory — **not** a separate forensics report. Archite
 Install the YAML extension, then point files at the public schema:
 
 ```yaml
-# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/v1/blueprint.schema.json
+# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/v2/blueprint.schema.json
 ```
 
-Prefer the versioned URL (`/schemas/v1/…`). `/schemas/latest/…` tracks `main`. Details: [Setup — public schema URLs](../setup.md#public-schema-urls-external-repos).
+Prefer the versioned URL (`/schemas/v2/…`). `/schemas/latest/…` tracks `main`. Details: [Setup — public schema URLs](../setup.md#public-schema-urls-external-repos).
 
 ## Cancellation
 

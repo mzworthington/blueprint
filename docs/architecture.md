@@ -159,7 +159,7 @@ The same Zod contract is exported as JSON Schema (`schemas/blueprint.schema.json
 
 Hosted on the designer site after deploy:
 
-- https://blueprint.mzworthington.co.uk/schemas/v1/blueprint.schema.json
+- https://blueprint.mzworthington.co.uk/schemas/v2/blueprint.schema.json
 - https://blueprint.mzworthington.co.uk/schemas/latest/blueprint.schema.json
 
 ### 2. Structural dependency check (DFS)

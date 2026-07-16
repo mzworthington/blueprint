@@ -1,0 +1,183 @@
+# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/v2/blueprint.schema.json
+- entityRef: blueprint/cli/cli
+  name: Cli Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/cli/cli/blueprint
+      type: background-worker
+      name: blueprint Service
+      isTest: false
+      properties:
+        filepath: src/cli/blueprint.ts
+        containerId: cli
+        technology: TypeScript Domain Service
+        classification: default
+      x: 48
+      y: 64
+      forensics:
+        complexity: 42
+        loc: 278
+        sloc: 240
+        churn: 3
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0.14017094017094014
+        classifications:
+          - knowledge-silo
+        sinceDays: 90
+    - entityRef: blueprint/cli/cli/interactivegitchoice-test
+      type: background-worker
+      name: interactiveGitChoice.test Service
+      isTest: true
+      properties:
+        filepath: src/cli/interactiveGitChoice.test.ts
+        containerId: cli
+        technology: TypeScript Domain Service
+        classification: default
+      x: 428
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 57
+        sloc: 48
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 90
+    - entityRef: blueprint/cli/cli/interactivegitchoice
+      type: background-worker
+      name: interactiveGitChoice Service
+      isTest: false
+      properties:
+        filepath: src/cli/interactiveGitChoice.ts
+        containerId: cli
+        technology: TypeScript Domain Service
+        classification: default
+      x: 268
+      y: 384
+      forensics:
+        complexity: 4
+        loc: 35
+        sloc: 27
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 90
+    - entityRef: blueprint/cli/cli/parseblueprintargv-test
+      type: background-worker
+      name: parseBlueprintArgv.test Service
+      isTest: true
+      properties:
+        filepath: src/cli/parseBlueprintArgv.test.ts
+        containerId: cli
+        technology: TypeScript Domain Service
+        classification: default
+      x: 708
+      y: 384
+      forensics:
+        complexity: 1
+        loc: 83
+        sloc: 68
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 90
+    - entityRef: blueprint/cli/cli/parseblueprintargv
+      type: background-worker
+      name: parseBlueprintArgv Service
+      isTest: false
+      properties:
+        filepath: src/cli/parseBlueprintArgv.ts
+        containerId: cli
+        technology: TypeScript Domain Service
+        classification: default
+      x: 268
+      y: 704
+      forensics:
+        complexity: 29
+        loc: 123
+        sloc: 102
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        classifications:
+          - knowledge-silo
+        sinceDays: 90
+  dependencies:
+    - from: blueprint/cli/cli/blueprint
+      to: blueprint/cli/analysis/tsmorphparser
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/cli/cli/blueprint
+      to: blueprint/cli/analysis/treesitterparser
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/cli/cli/blueprint
+      to: blueprint/cli/analysis/dagrelayout
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/cli/cli/blueprint
+      to: blueprint/cli/analysis/nodefilesystem
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/cli/cli/blueprint
+      to: blueprint/cli/analysis/consolelogger
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/cli/cli/blueprint
+      to: blueprint/cli/analysis/analyzer
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/cli/cli/blueprint
+      to: blueprint/cli/analysis/loadanalysisconfig
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/cli/cli/blueprint
+      to: blueprint/cli/analysis/cancellation
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/cli/cli/blueprint
+      to: blueprint/cli/cli/parseblueprintargv
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/cli/cli/blueprint
+      to: blueprint/cli/forensics/collectfilemetrics
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/cli/cli/blueprint
+      to: blueprint/cli/cli/interactivegitchoice
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/cli/cli/blueprint
+      to: blueprint/cli/forensics/options
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/cli/cli/blueprint
+      to: blueprint/cli/analysis/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/cli/cli/interactivegitchoice-test
+      to: blueprint/cli/cli/interactivegitchoice
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/cli/cli/interactivegitchoice-test
+      to: blueprint/cli/cli/parseblueprintargv
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/cli/cli/interactivegitchoice
+      to: blueprint/cli/cli/parseblueprintargv
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/cli/cli/parseblueprintargv-test
+      to: blueprint/cli/cli/parseblueprintargv
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/cli/forensics/collectfilemetrics
+      to: blueprint/cli/cli/parseblueprintargv
+      type: direct-call
+      description: Calls module / service
