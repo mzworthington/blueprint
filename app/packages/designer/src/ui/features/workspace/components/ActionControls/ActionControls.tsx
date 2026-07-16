@@ -1,5 +1,5 @@
 import React from 'react';
-import { Folder, Upload, Download, RefreshCcw, Link, GitCompare } from 'lucide-react';
+import { Folder, Upload, Download, RefreshCcw, Link, GitCompare, Undo, Redo } from 'lucide-react';
 import { useBlueprintStore } from '../../../../../application/store/store';
 
 export const ActionControls: React.FC = () => {
@@ -13,6 +13,11 @@ export const ActionControls: React.FC = () => {
     schema,
     syncExternalContainers,
     setIsDiffOpen,
+    undo,
+    redo,
+    past,
+    future,
+    hasPendingChanges,
   } = useBlueprintStore();
 
   const handleSave = async () => {
@@ -90,14 +95,36 @@ export const ActionControls: React.FC = () => {
         </button>
       )}
 
+      {hasPendingChanges && (
+        <button
+          onClick={() => setIsDiffOpen(true)}
+          className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-amber-400 hover:text-amber-300 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 hover:border-amber-900/30 transition cursor-pointer"
+          title="View pending local changes / diff"
+          id="view-pending-changes"
+        >
+          <GitCompare className="w-3.5 h-3.5" />
+          <span className="hidden sm:inline">Pending Changes</span>
+        </button>
+      )}
+
       <button
-        onClick={() => setIsDiffOpen(true)}
-        className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-amber-400 hover:text-amber-300 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-800 hover:border-amber-900/30 transition cursor-pointer"
-        title="View pending local changes / diff"
-        id="view-pending-changes"
+        onClick={undo}
+        disabled={past.length === 0}
+        className="p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 disabled:opacity-30 disabled:hover:bg-slate-900 disabled:hover:text-slate-400 transition cursor-pointer disabled:cursor-not-allowed"
+        title="Undo (Cmd+Z / Ctrl+Z)"
+        id="undo-action"
       >
-        <GitCompare className="w-3.5 h-3.5" />
-        <span className="hidden sm:inline">Pending Changes</span>
+        <Undo className="w-3.5 h-3.5" />
+      </button>
+
+      <button
+        onClick={redo}
+        disabled={future.length === 0}
+        className="p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 disabled:opacity-30 disabled:hover:bg-slate-900 disabled:hover:text-slate-400 transition cursor-pointer disabled:cursor-not-allowed"
+        title="Redo (Cmd+Shift+Z / Ctrl+Shift+Z / Cmd+Y)"
+        id="redo-action"
+      >
+        <Redo className="w-3.5 h-3.5" />
       </button>
 
       <button

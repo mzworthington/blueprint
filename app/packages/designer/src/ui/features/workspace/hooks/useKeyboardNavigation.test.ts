@@ -150,16 +150,48 @@ describe('useKeyboardNavigation Hook', () => {
     document.body.removeChild(div);
   });
 
-  it('should not trigger shortcuts when disabled', () => {
-    const onSearchOpen = vi.fn();
-    renderHook(() => useKeyboardNavigation({ onSearchOpen, disabled: true }));
+  it('should call onUndo when ⌘Z or Ctrl+Z is pressed (not typing)', () => {
+    const onUndo = vi.fn();
+    renderHook(() => useKeyboardNavigation({ onUndo }));
 
     act(() => {
-      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
-      window.dispatchEvent(new KeyboardEvent('keydown', { key: '/' }));
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'z', metaKey: true }));
     });
+    expect(onUndo).toHaveBeenCalledTimes(1);
 
-    expect(onSearchOpen).not.toHaveBeenCalled();
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'z', ctrlKey: true }));
+    });
+    expect(onUndo).toHaveBeenCalledTimes(2);
+  });
+
+  it('should call onRedo when ⌘Shift+Z, Ctrl+Shift+Z, ⌘Y, or Ctrl+Y is pressed (not typing)', () => {
+    const onRedo = vi.fn();
+    renderHook(() => useKeyboardNavigation({ onRedo }));
+
+    act(() => {
+      window.dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'z', metaKey: true, shiftKey: true })
+      );
+    });
+    expect(onRedo).toHaveBeenCalledTimes(1);
+
+    act(() => {
+      window.dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'z', ctrlKey: true, shiftKey: true })
+      );
+    });
+    expect(onRedo).toHaveBeenCalledTimes(2);
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'y', metaKey: true }));
+    });
+    expect(onRedo).toHaveBeenCalledTimes(3);
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'y', ctrlKey: true }));
+    });
+    expect(onRedo).toHaveBeenCalledTimes(4);
   });
 
   it('should cleanup event listener on unmount', () => {

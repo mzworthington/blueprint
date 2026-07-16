@@ -20,7 +20,21 @@ describe('ActionControls Component', () => {
         dependencies: [],
       },
       syncExternalContainers: vi.fn(),
+      past: [],
+      future: [],
+      undo: vi.fn(),
+      redo: vi.fn(),
+      hasPendingChanges: false,
     });
+  });
+
+  it('shows pending changes button only when hasPendingChanges is true', () => {
+    const { rerender } = render(<ActionControls />);
+    expect(screen.queryByTitle('View pending local changes / diff')).not.toBeInTheDocument();
+
+    useBlueprintStore.setState({ hasPendingChanges: true });
+    rerender(<ActionControls />);
+    expect(screen.getByTitle('View pending local changes / diff')).toBeInTheDocument();
   });
 
   it('renders correctly when workspace is closed', () => {
@@ -148,5 +162,47 @@ describe('ActionControls Component', () => {
     expect(syncBtn).toBeInTheDocument();
     fireEvent.click(syncBtn);
     expect(syncMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('disables undo button when past history is empty, enables and triggers action when filled', () => {
+    const undoMock = vi.fn();
+    useBlueprintStore.setState({
+      past: [],
+      undo: undoMock,
+    });
+
+    const { rerender } = render(<ActionControls />);
+    const undoBtn = screen.getByTitle('Undo (Cmd+Z / Ctrl+Z)');
+    expect(undoBtn).toBeDisabled();
+
+    useBlueprintStore.setState({
+      past: [{ nodes: [], edges: [], schema: {} as any }],
+    });
+    rerender(<ActionControls />);
+    expect(undoBtn).not.toBeDisabled();
+
+    fireEvent.click(undoBtn);
+    expect(undoMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('disables redo button when future history is empty, enables and triggers action when filled', () => {
+    const redoMock = vi.fn();
+    useBlueprintStore.setState({
+      future: [],
+      redo: redoMock,
+    });
+
+    const { rerender } = render(<ActionControls />);
+    const redoBtn = screen.getByTitle('Redo (Cmd+Shift+Z / Ctrl+Shift+Z / Cmd+Y)');
+    expect(redoBtn).toBeDisabled();
+
+    useBlueprintStore.setState({
+      future: [{ nodes: [], edges: [], schema: {} as any }],
+    });
+    rerender(<ActionControls />);
+    expect(redoBtn).not.toBeDisabled();
+
+    fireEvent.click(redoBtn);
+    expect(redoMock).toHaveBeenCalledTimes(1);
   });
 });

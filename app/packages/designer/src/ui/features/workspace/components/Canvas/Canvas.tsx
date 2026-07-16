@@ -52,6 +52,9 @@ export const Canvas: React.FC = () => {
     setNotification,
     layoutEngine,
     applyClientLayout,
+    undo,
+    redo,
+    recordHistory,
   } = useBlueprintStore();
 
   const { fitView } = useReactFlow();
@@ -83,6 +86,8 @@ export const Canvas: React.FC = () => {
 
   useKeyboardNavigation({
     onZoomOut: parentSystem ? zoomOutToParent : undefined,
+    onUndo: undo,
+    onRedo: redo,
   });
 
   useEffect(() => {
@@ -146,6 +151,7 @@ export const Canvas: React.FC = () => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        onNodeDragStart={() => recordHistory()}
         onNodeDoubleClick={(_, node) => {
           const hasSub =
             node.data?.entityRef &&

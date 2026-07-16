@@ -10,6 +10,8 @@ describe('diagramState Actions & State Management', () => {
       currentFilePath: 'blueprint.yaml',
       workspaceName: undefined,
       loadedSystems: [],
+      past: [],
+      future: [],
     });
 
     const { initSchema } = useBlueprintStore.getState();
@@ -169,5 +171,59 @@ describe('diagramState Actions & State Management', () => {
     expect(updated.nodes.find(n => n.id.includes('nodeA'))?.position.y).toBeLessThan(
       updated.nodes.find(n => n.id.includes('nodeB'))?.position.y ?? Infinity
     );
+  });
+
+  it('should support undo and redo basic workflow', () => {
+    const store = useBlueprintStore.getState();
+    expect(store.past).toHaveLength(0);
+    expect(store.future).toHaveLength(0);
+
+    // Perform action
+    store.addNode('relational-database' as NodeType);
+    expect(useBlueprintStore.getState().nodes).toHaveLength(3);
+    expect(useBlueprintStore.getState().past).toHaveLength(1);
+    expect(useBlueprintStore.getState().future).toHaveLength(0);
+
+    // Undo
+    useBlueprintStore.getState().undo();
+    expect(useBlueprintStore.getState().nodes).toHaveLength(2);
+    expect(useBlueprintStore.getState().past).toHaveLength(0);
+    expect(useBlueprintStore.getState().future).toHaveLength(1);
+
+    // Redo
+    useBlueprintStore.getState().redo();
+    expect(useBlueprintStore.getState().nodes).toHaveLength(3);
+    expect(useBlueprintStore.getState().past).toHaveLength(1);
+    expect(useBlueprintStore.getState().future).toHaveLength(0);
+  });
+
+  it('should support undo on node property updates', () => {
+    const store = useBlueprintStore.getState();
+    store.updateNode('nodeA', { name: 'New Name' });
+    expect(
+      useBlueprintStore.getState().schema.nodes.find(n => n.name === 'New Name')
+    ).toBeDefined();
+
+    useBlueprintStore.getState().undo();
+    expect(
+      useBlueprintStore.getState().schema.nodes.find(n => n.name === 'New Name')
+    ).toBeUndefined();
+
+    useBlueprintStore.getState().redo();
+    expect(
+      useBlueprintStore.getState().schema.nodes.find(n => n.name === 'New Name')
+    ).toBeDefined();
+  });
+
+  it('should support undo on node deletion', () => {
+    const store = useBlueprintStore.getState();
+    store.deleteNode('nodeB');
+    expect(useBlueprintStore.getState().nodes).toHaveLength(1);
+
+    useBlueprintStore.getState().undo();
+    expect(useBlueprintStore.getState().nodes).toHaveLength(2);
+
+    useBlueprintStore.getState().redo();
+    expect(useBlueprintStore.getState().nodes).toHaveLength(1);
   });
 });

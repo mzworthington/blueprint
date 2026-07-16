@@ -29,6 +29,7 @@ import {
   deleteDependencyMutation,
 } from './diagramState/edgeMutations';
 import { computeClientLayout } from '../../layout/computeClientLayout';
+import { computeSchemaDiff } from '../../../infrastructure/db/db';
 
 export interface DiagramState {
   schema: SystemSchema;
@@ -43,7 +44,15 @@ export interface DiagramState {
   workspaceName: string;
   loadedSystems: Array<{ path: string; name: string; schema: SystemSchema }>;
   nodeRefMap: Record<string, Record<string, string>>;
+  past: Array<{ nodes: BlueprintRFNode[]; edges: BlueprintRFEdge[]; schema: SystemSchema }>;
+  future: Array<{ nodes: BlueprintRFNode[]; edges: BlueprintRFEdge[]; schema: SystemSchema }>;
+  hasPendingChanges: boolean;
 
+  recordHistory: () => void;
+  undo: () => void;
+  redo: () => void;
+  clearHistory: () => void;
+  checkPendingChanges: () => Promise<void>;
   initSchema: (schema: SystemSchema) => void;
   updateSchemaName: (name: string) => void;
   updateSchemaLevel: (level: C4Level) => void;
@@ -85,6 +94,88 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   workspaceName: '',
   loadedSystems: initial.loadedSystems,
   nodeRefMap: initial.nodeRefMap,
+  past: [],
+  future: [],
+  hasPendingChanges: false,
+
+  checkPendingChanges: async () => {
+    const { currentFilePath, hasPendingChanges } = get();
+    if (!currentFilePath) return;
+    try {
+      const diff = await computeSchemaDiff(currentFilePath);
+      const hasChanges =
+        diff.nodes.added.length > 0 ||
+        diff.nodes.modified.length > 0 ||
+        diff.nodes.deleted.length > 0 ||
+        diff.dependencies.added.length > 0 ||
+        diff.dependencies.deleted.length > 0;
+      if (hasPendingChanges !== hasChanges) {
+        set({ hasPendingChanges: hasChanges });
+      }
+    } catch (e) {
+      // Ignore or log error
+    }
+  },
+
+  recordHistory: () => {
+    const { nodes, edges, schema } = get();
+    const snapshot = {
+      nodes: JSON.parse(JSON.stringify(nodes)),
+      edges: JSON.parse(JSON.stringify(edges)),
+      schema: JSON.parse(JSON.stringify(schema)),
+    };
+    set({
+      past: [...get().past, snapshot].slice(-50),
+      future: [],
+    });
+  },
+
+  undo: () => {
+    const { past, future, nodes, edges, schema } = get();
+    if (past.length === 0) return;
+
+    const previous = past[past.length - 1];
+    const newPast = past.slice(0, past.length - 1);
+    const currentSnapshot = {
+      nodes: JSON.parse(JSON.stringify(nodes)),
+      edges: JSON.parse(JSON.stringify(edges)),
+      schema: JSON.parse(JSON.stringify(schema)),
+    };
+
+    set({
+      past: newPast,
+      future: [currentSnapshot, ...future],
+    });
+
+    applyStateUpdates(set, get, previous.nodes, previous.edges);
+  },
+
+  redo: () => {
+    const { past, future, nodes, edges, schema } = get();
+    if (future.length === 0) return;
+
+    const next = future[0];
+    const newFuture = future.slice(1);
+    const currentSnapshot = {
+      nodes: JSON.parse(JSON.stringify(nodes)),
+      edges: JSON.parse(JSON.stringify(edges)),
+      schema: JSON.parse(JSON.stringify(schema)),
+    };
+
+    set({
+      past: [...past, currentSnapshot],
+      future: newFuture,
+    });
+
+    applyStateUpdates(set, get, next.nodes, next.edges);
+  },
+
+  clearHistory: () => {
+    set({
+      past: [],
+      future: [],
+    });
+  },
 
   selectSystem: (path: string) => {
     const { loadedSystems, logger } = get();
@@ -98,10 +189,12 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
       currentFilePath: path,
       selectedNodeId: null,
     });
+    get().clearHistory();
     get().initSchema(system.schema);
   },
 
   initSchema: schema => {
+    get().clearHistory();
     const rfNodes = schema.nodes.map(mapDomainNodeToRFNode);
     const rfEdges = schema.dependencies.map(mapDomainDepToRFEdge);
     applyStateUpdates(
@@ -160,6 +253,10 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   },
 
   onNodesChange: changes => {
+    const hasRemoval = changes.some(c => c.type === 'remove');
+    if (hasRemoval) {
+      get().recordHistory();
+    }
     const nextNodes = applyNodeChanges(changes, get().nodes) as unknown as BlueprintRFNode[];
     applyStateUpdates(set, get, nextNodes, get().edges);
   },
@@ -170,6 +267,10 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
       change => !('id' in change) || !String(change.id).startsWith('coupling-')
     );
     if (persistedChanges.length === 0) return;
+    const hasRemoval = persistedChanges.some(c => c.type === 'remove');
+    if (hasRemoval) {
+      get().recordHistory();
+    }
     const nextEdges = applyEdgeChanges(
       persistedChanges,
       get().edges
@@ -177,13 +278,25 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
     applyStateUpdates(set, get, get().nodes, nextEdges);
   },
 
-  onConnect: connection => connectNodesMutation(set, get, connection),
+  onConnect: connection => {
+    get().recordHistory();
+    connectNodesMutation(set, get, connection);
+  },
 
-  addNode: type => addNodeMutation(set, get, type),
+  addNode: type => {
+    get().recordHistory();
+    addNodeMutation(set, get, type);
+  },
 
-  updateNode: (id, updates) => updateNodeMutation(set, get, id, updates),
+  updateNode: (id, updates) => {
+    get().recordHistory();
+    updateNodeMutation(set, get, id, updates);
+  },
 
-  deleteNode: id => deleteNodeMutation(set, get, id),
+  deleteNode: id => {
+    get().recordHistory();
+    deleteNodeMutation(set, get, id);
+  },
 
   selectNode: id => {
     set({
@@ -192,9 +305,15 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
     });
   },
 
-  updateDependency: (from, to, updates) => updateDependencyMutation(set, get, from, to, updates),
+  updateDependency: (from, to, updates) => {
+    get().recordHistory();
+    updateDependencyMutation(set, get, from, to, updates);
+  },
 
-  deleteDependency: (from, to) => deleteDependencyMutation(set, get, from, to),
+  deleteDependency: (from, to) => {
+    get().recordHistory();
+    deleteDependencyMutation(set, get, from, to);
+  },
 
   syncExternalContainers: () => {
     syncExternalContainersAction(set, get);
@@ -215,6 +334,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
       (n, i) => n.position.x !== nodes[i]?.position.x || n.position.y !== nodes[i]?.position.y
     );
     if (!changed) return;
+    get().recordHistory();
     applyStateUpdates(set, get, nextNodes, edges);
   },
 });

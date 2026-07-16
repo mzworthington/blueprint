@@ -156,6 +156,7 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
         const sysId = schema.entityRef || 'default';
         const fileRefMap = nodeRefMap[currentFilePath] || {};
         await saveBaselineSchema(currentFilePath, schema, sysId, fileRefMap);
+        get().checkPendingChanges?.();
         setNotification?.({
           type: 'success',
           title: 'Save Successful',

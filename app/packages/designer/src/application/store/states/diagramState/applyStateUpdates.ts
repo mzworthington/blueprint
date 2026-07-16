@@ -112,9 +112,13 @@ export function applyStateUpdates(
     nodeRefMap: resolved.nodeRefMap,
   });
 
-  saveWorkingSchema(currentFilePath, resolvedSchema, systemId, fileRefMap).catch((err: unknown) => {
-    if (get().logger) {
-      get().logger.error('Failed to sync working schema to IndexedDB', err);
-    }
-  });
+  saveWorkingSchema(currentFilePath, resolvedSchema, systemId, fileRefMap)
+    .then(() => {
+      get().checkPendingChanges?.();
+    })
+    .catch((err: unknown) => {
+      if (get().logger) {
+        get().logger.error('Failed to sync working schema to IndexedDB', err);
+      }
+    });
 }
