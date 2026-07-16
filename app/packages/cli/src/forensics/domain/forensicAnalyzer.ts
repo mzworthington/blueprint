@@ -104,6 +104,7 @@ export class ForensicAnalyzer {
         churn: h.churn,
         authorCount: h.authorCount,
         topAuthorPercent: h.topAuthorPercent,
+        contributors: h.contributors,
         coupledFiles: couplingByPath.get(path) ?? [],
         hotspotScore,
         classifications,

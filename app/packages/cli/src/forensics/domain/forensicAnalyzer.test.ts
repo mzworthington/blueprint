@@ -85,10 +85,15 @@ describe('ForensicAnalyzer', () => {
 
     expect(hot.churn).toBe(2);
     expect(hot.authorCount).toBe(2);
+    expect(hot.contributors).toEqual([
+      { email: 'a@ex.com', commits: 1 },
+      { email: 'b@ex.com', commits: 1 },
+    ]);
     expect(hot.classifications).toContain('hotspot');
 
     expect(silo.classifications).toContain('knowledge-silo');
     expect(silo.classifications).not.toContain('hotspot');
+    expect(silo.contributors).toEqual([{ email: 'solo@ex.com', commits: 1 }]);
 
     expect(reporter.report).toHaveBeenCalledTimes(1);
   });

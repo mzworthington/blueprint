@@ -125,6 +125,12 @@ export interface CoupledFileForensics {
   sharedCommits: number;
 }
 
+export interface ContributorInfo {
+  name?: string;
+  email: string;
+  commits: number;
+}
+
 export interface NodeForensics {
   complexity?: number;
   loc?: number;
@@ -132,6 +138,7 @@ export interface NodeForensics {
   churn?: number;
   authorCount?: number;
   topAuthorPercent?: number;
+  contributors?: ContributorInfo[];
   hotspotScore?: number;
   classifications?: ForensicClassification[];
   coupledFiles?: CoupledFileForensics[];

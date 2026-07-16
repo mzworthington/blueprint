@@ -32,6 +32,10 @@ describe('aggregateNodeForensics', () => {
           authorCount: 2,
           sinceDays: 90,
           classifications: ['hotspot'],
+          contributors: [
+            { email: 'alice@ex.com', name: 'Alice', commits: 2 },
+            { email: 'bob@ex.com', name: 'Bob', commits: 1 },
+          ],
         },
       },
       {
@@ -45,6 +49,10 @@ describe('aggregateNodeForensics', () => {
           authorCount: 1,
           sinceDays: 90,
           classifications: ['knowledge-silo'],
+          contributors: [
+            { email: 'alice@ex.com', name: 'Alice', commits: 4 },
+            { email: 'charlie@ex.com', name: 'Charlie', commits: 1 },
+          ],
         },
       },
     ];
@@ -59,6 +67,11 @@ describe('aggregateNodeForensics', () => {
       knowledgeSiloCount: 1,
       sinceDays: 90,
       classifications: ['hotspot', 'knowledge-silo'],
+      contributors: [
+        { email: 'alice@ex.com', name: 'Alice', commits: 6 },
+        { email: 'bob@ex.com', name: 'Bob', commits: 1 },
+        { email: 'charlie@ex.com', name: 'Charlie', commits: 1 },
+      ],
     });
   });
 });

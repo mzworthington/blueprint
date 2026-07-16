@@ -6,6 +6,12 @@ export interface CoupledFileRef {
   sharedCommits: number;
 }
 
+export interface ContributorInfo {
+  name?: string;
+  email: string;
+  commits: number;
+}
+
 export interface FileMetrics {
   path: string;
   complexity: number;
@@ -14,6 +20,7 @@ export interface FileMetrics {
   churn: number;
   authorCount: number;
   topAuthorPercent: number;
+  contributors?: ContributorInfo[];
   coupledFiles: CoupledFileRef[];
   hotspotScore: number;
   classifications: ForensicClassification[];
@@ -31,6 +38,7 @@ export interface CoupledPair {
 export interface GitCommit {
   hash: string;
   authorEmail: string;
+  authorName?: string;
   authorDate: Date;
   paths: string[];
 }
@@ -47,6 +55,7 @@ export interface FileHistoryTraits {
   churn: number;
   authorCount: number;
   topAuthorPercent: number;
+  contributors: ContributorInfo[];
   /** Commit hashes that touched this file (within the analysis window). */
   commitHashes: string[];
 }

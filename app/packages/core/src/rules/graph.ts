@@ -128,6 +128,12 @@ const coupledFileForensicsSchema = z.object({
   sharedCommits: z.number(),
 });
 
+const contributorInfoSchema = z.object({
+  name: z.string().optional(),
+  email: z.string(),
+  commits: z.number(),
+});
+
 const nodeForensicsSchema = z.object({
   complexity: z.number().optional(),
   loc: z.number().optional(),
@@ -135,6 +141,7 @@ const nodeForensicsSchema = z.object({
   churn: z.number().optional(),
   authorCount: z.number().optional(),
   topAuthorPercent: z.number().optional(),
+  contributors: z.array(contributorInfoSchema).optional(),
   hotspotScore: z.number().optional(),
   classifications: z.array(forensicClassificationSchema).optional(),
   coupledFiles: z.array(coupledFileForensicsSchema).optional(),

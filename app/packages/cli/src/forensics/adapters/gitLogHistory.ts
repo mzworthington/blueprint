@@ -23,14 +23,15 @@ export function parseGitLogOutput(stdout: string): GitCommit[] {
 
   for (const record of records) {
     const lines = record.replace(/^\n+/, '').split('\n');
-    if (lines.length < 3) continue;
+    if (lines.length < 4) continue;
     const hash = lines[0]!.trim();
     const authorEmail = lines[1]!.trim();
-    const authorDateRaw = lines[2]!.trim();
+    const authorName = lines[2]!.trim();
+    const authorDateRaw = lines[3]!.trim();
     if (!hash || !authorEmail || !authorDateRaw) continue;
 
     const paths: string[] = [];
-    for (let i = 3; i < lines.length; i++) {
+    for (let i = 4; i < lines.length; i++) {
       const line = lines[i]!.trim().replace(/\\/g, '/');
       if (!line) continue;
       paths.push(line);
@@ -39,6 +40,7 @@ export function parseGitLogOutput(stdout: string): GitCommit[] {
     commits.push({
       hash,
       authorEmail,
+      authorName,
       authorDate: new Date(authorDateRaw),
       paths,
     });
@@ -87,7 +89,7 @@ export class GitLogHistoryAdapter implements GitHistoryPort {
         'log',
         '--no-merges',
         `--since=${options.sinceDays}.days`,
-        `--pretty=format:${RECORD_SEP}%H%n%ae%n%aI`,
+        `--pretty=format:${RECORD_SEP}%H%n%ae%n%an%n%aI`,
         '--name-only',
       ];
 

@@ -9,7 +9,10 @@ export function aggregateFileHistory(
   paths: readonly string[]
 ): FileHistoryTraits[] {
   const pathSet = new Set(paths);
-  const byPath = new Map<string, { hashes: Set<string>; authors: Map<string, number> }>();
+  const byPath = new Map<
+    string,
+    { hashes: Set<string>; authors: Map<string, { name?: string; commits: number }> }
+  >();
 
   for (const path of paths) {
     byPath.set(path, { hashes: new Set(), authors: new Map() });
@@ -21,7 +24,11 @@ export function aggregateFileHistory(
       const entry = byPath.get(path);
       if (!entry) continue;
       entry.hashes.add(commit.hash);
-      entry.authors.set(commit.authorEmail, (entry.authors.get(commit.authorEmail) ?? 0) + 1);
+      const existing = entry.authors.get(commit.authorEmail) ?? { commits: 0 };
+      entry.authors.set(commit.authorEmail, {
+        commits: existing.commits + 1,
+        name: commit.authorName || existing.name,
+      });
     }
   }
 
@@ -32,16 +39,27 @@ export function aggregateFileHistory(
     let topAuthorPercent = 0;
     if (churn > 0 && authorCount > 0) {
       let maxCommits = 0;
-      for (const count of entry.authors.values()) {
-        if (count > maxCommits) maxCommits = count;
+      for (const info of entry.authors.values()) {
+        if (info.commits > maxCommits) maxCommits = info.commits;
       }
       topAuthorPercent = maxCommits / churn;
     }
+
+    const contributors = Array.from(entry.authors.entries())
+      .map(([email, info]) => ({
+        email,
+        name: info.name,
+        commits: info.commits,
+      }))
+      .sort((a, b) => b.commits - a.commits)
+      .slice(0, 10);
+
     return {
       path,
       churn,
       authorCount,
       topAuthorPercent,
+      contributors,
       commitHashes: [...entry.hashes],
     };
   });

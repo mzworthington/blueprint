@@ -14,6 +14,13 @@ export function fileMetricsToNodeForensics(metrics: FileMetrics): NodeForensics 
     churn: metrics.churn,
     authorCount: metrics.authorCount,
     topAuthorPercent: metrics.topAuthorPercent,
+    contributors: metrics.contributors
+      ? metrics.contributors.map(c => ({
+          email: c.email,
+          name: c.name,
+          commits: c.commits,
+        }))
+      : undefined,
     hotspotScore: metrics.hotspotScore,
     classifications: [...metrics.classifications],
     coupledFiles: metrics.coupledFiles.map(c => ({
@@ -37,6 +44,7 @@ export function aggregateNodeForensics(nodes: readonly SystemNode[]): NodeForens
   let knowledgeSiloCount = 0;
   let sinceDays: number | undefined;
   const classificationSet = new Set<'hotspot' | 'knowledge-silo'>();
+  const authorsMap = new Map<string, { name?: string; commits: number }>();
 
   for (const node of withForensics) {
     const f = node.forensics!;
@@ -50,7 +58,28 @@ export function aggregateNodeForensics(nodes: readonly SystemNode[]): NodeForens
       if (c === 'hotspot') hotspotCount++;
       if (c === 'knowledge-silo') knowledgeSiloCount++;
     }
+    if (f.contributors) {
+      for (const c of f.contributors) {
+        const existing = authorsMap.get(c.email) ?? { commits: 0 };
+        authorsMap.set(c.email, {
+          commits: existing.commits + c.commits,
+          name: c.name || existing.name,
+        });
+      }
+    }
   }
+
+  const contributors =
+    authorsMap.size > 0
+      ? Array.from(authorsMap.entries())
+          .map(([email, info]) => ({
+            email,
+            name: info.name,
+            commits: info.commits,
+          }))
+          .sort((a, b) => b.commits - a.commits)
+          .slice(0, 10)
+      : undefined;
 
   return {
     complexity,
@@ -61,6 +90,7 @@ export function aggregateNodeForensics(nodes: readonly SystemNode[]): NodeForens
     hotspotCount,
     knowledgeSiloCount,
     classifications: [...classificationSet],
+    ...(contributors ? { contributors } : {}),
     ...(sinceDays !== undefined ? { sinceDays } : {}),
   };
 }
