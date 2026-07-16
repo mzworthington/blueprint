@@ -30,6 +30,19 @@ export interface UseeBreadcrumbsReturn {
   selectSystem: (path: string) => void;
 }
 
+function getNextLevel(current: C4Level): C4Level {
+  switch (current) {
+    case 'context':
+      return 'container';
+    case 'container':
+      return 'component';
+    case 'component':
+      return 'code';
+    default:
+      return 'code';
+  }
+}
+
 export function useBreadcrumbs(): UseeBreadcrumbsReturn {
   const {
     currentFilePath,
@@ -120,51 +133,51 @@ export function useBreadcrumbs(): UseeBreadcrumbsReturn {
     return loadedSystems.some(s => s.schema.entityRef === entityRef);
   }, [selectedNode, loadedSystems]);
 
-  const getNextLevel = (current: C4Level): C4Level => {
-    switch (current) {
-      case 'context':
-        return 'container';
-      case 'container':
-        return 'component';
-      case 'component':
-        return 'code';
-      default:
-        return 'code';
+  const segments = useMemo(() => {
+    const next: BreadcrumbSegment[] = [
+      ...ancestors.map(anc => ({
+        name: anc.name,
+        path: anc.path,
+        level: anc.level,
+        entityRef: anc.entityRef,
+        isZoomPreview: false,
+      })),
+      {
+        name: schema.name,
+        path: currentFilePath,
+        level: activeLevel,
+        entityRef: getSchemaEntityRef(schema, workspaceName),
+        isZoomPreview: false,
+      },
+    ];
+
+    if (hasNextHierarchy && selectedNode) {
+      const entityRef = selectedNode.entityRef;
+      const childSystem = entityRef
+        ? loadedSystems.find(s => s.schema.entityRef === entityRef)
+        : undefined;
+      const targetPath = childSystem?.path || '';
+
+      next.push({
+        name: selectedNode.name || selectedNode.entityRef || '',
+        path: targetPath,
+        level: childSystem?.schema.level || getNextLevel(activeLevel),
+        entityRef: selectedNode.entityRef || '',
+        isZoomPreview: true,
+      });
     }
-  };
 
-  const segments: BreadcrumbSegment[] = [
-    ...ancestors.map(anc => ({
-      name: anc.name,
-      path: anc.path,
-      level: anc.level,
-      entityRef: anc.entityRef,
-      isZoomPreview: false,
-    })),
-    {
-      name: schema.name,
-      path: currentFilePath,
-      level: activeLevel,
-      entityRef: getSchemaEntityRef(schema, workspaceName),
-      isZoomPreview: false,
-    },
-  ];
-
-  if (hasNextHierarchy && selectedNode) {
-    const entityRef = selectedNode.entityRef;
-    const childSystem = entityRef
-      ? loadedSystems.find(s => s.schema.entityRef === entityRef)
-      : undefined;
-    const targetPath = childSystem?.path || '';
-
-    segments.push({
-      name: selectedNode.name || selectedNode.entityRef || '',
-      path: targetPath,
-      level: childSystem?.schema.level || getNextLevel(activeLevel),
-      entityRef: selectedNode.entityRef || '',
-      isZoomPreview: true,
-    });
-  }
+    return next;
+  }, [
+    ancestors,
+    schema,
+    currentFilePath,
+    activeLevel,
+    workspaceName,
+    hasNextHierarchy,
+    selectedNode,
+    loadedSystems,
+  ]);
 
   const currentChildren = getSegmentChildren(currentFilePath);
 
