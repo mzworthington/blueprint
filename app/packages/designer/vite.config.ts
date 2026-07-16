@@ -44,7 +44,7 @@ export default defineConfig({
     syncDocsAssets(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'favicon.png', 'icons/apple-touch-icon.png'],
+      includeAssets: ['favicon.svg', 'favicon.png', 'icons/apple-touch-icon-dark.png'],
       manifest: {
         name: 'Blueprint',
         short_name: 'Blueprint',
@@ -57,17 +57,17 @@ export default defineConfig({
         scope: base,
         icons: [
           {
-            src: 'icons/pwa-192x192.png',
+            src: 'icons/pwa-192x192-dark.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: 'icons/pwa-512x512.png',
+            src: 'icons/pwa-512x512-dark.png',
             sizes: '512x512',
             type: 'image/png',
           },
           {
-            src: 'icons/pwa-512x512.png',
+            src: 'icons/pwa-512x512-dark.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
