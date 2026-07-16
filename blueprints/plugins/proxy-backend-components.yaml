@@ -1,219 +1,205 @@
-entityRef: blueprint/plugins/proxy-backend
-name: Proxy-backend Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/plugins/proxy-backend/config-d
-    type: background-worker
-    name: config.d Service
-    isTest: false
-    properties:
-      filepath: plugins/proxy-backend/config.d.ts
-      containerId: proxy-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 181
-      sloc: 49
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 40
-  - entityRef: blueprint/plugins/proxy-backend/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/proxy-backend/src/service/index.ts
-      containerId: proxy-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 19
-      sloc: 2
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 40
-  - entityRef: blueprint/plugins/proxy-backend/plugin
-    type: background-worker
-    name: plugin Service
-    isTest: false
-    properties:
-      filepath: plugins/proxy-backend/src/plugin.ts
-      containerId: proxy-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 58
-      sloc: 34
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 760
-    'y': 40
-  - entityRef: blueprint/plugins/proxy-backend/router
-    type: rest-api
-    name: router REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/proxy-backend/src/service/router.ts
-      containerId: proxy-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 29
-      loc: 369
-      sloc: 261
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 300
-  - entityRef: blueprint/plugins/proxy-backend/router-config-test
-    type: rest-api
-    name: router.config.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/proxy-backend/src/service/router.config.test.ts
-      containerId: proxy-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 111
-      sloc: 82
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 300
-  - entityRef: blueprint/plugins/proxy-backend/router-credentials-test
-    type: rest-api
-    name: router.credentials.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/proxy-backend/src/service/router.credentials.test.ts
-      containerId: proxy-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 3
-      loc: 299
-      sloc: 262
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 760
-    'y': 300
-  - entityRef: blueprint/plugins/proxy-backend/router-test
-    type: rest-api
-    name: router.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/proxy-backend/src/service/router.test.ts
-      containerId: proxy-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 2
-      loc: 654
-      sloc: 550
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 560
-  - entityRef: blueprint/plugins/proxy-backend/setuptests
-    type: background-worker
-    name: setupTests Service
-    isTest: true
-    properties:
-      filepath: plugins/proxy-backend/src/setupTests.ts
-      containerId: proxy-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 18
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 560
-dependencies:
-  - from: blueprint/plugins/proxy-backend/index
-    to: blueprint/plugins/permission-node/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/proxy-backend/plugin
-    to: blueprint/plugins/proxy-backend/router
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/proxy-backend/plugin
-    to: blueprint/plugins/permission-node/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/proxy-backend/router
-    to: blueprint/plugins/auth-backend/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/proxy-backend/router
-    to: blueprint/plugins/permission-node/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/proxy-backend/router-test
-    to: blueprint/plugins/proxy-backend/router
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/proxy-backend/router-credentials-test
-    to: blueprint/plugins/kubernetes-react/auth
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/proxy-backend/router-credentials-test
-    to: blueprint/plugins/events-backend/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/proxy-backend/router-credentials-test
-    to: blueprint/plugins/auth-backend/types
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/plugins/proxy-backend
+  name: Proxy-backend Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/plugins/proxy-backend/config-d
+      type: background-worker
+      name: config.d Service
+      isTest: false
+      properties:
+        filepath: plugins/proxy-backend/config.d.ts
+        containerId: proxy-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 181
+        sloc: 49
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/proxy-backend/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: plugins/proxy-backend/dev/index.ts
+        containerId: proxy-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 50
+        sloc: 30
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/proxy-backend/plugin
+      type: background-worker
+      name: plugin Service
+      isTest: false
+      properties:
+        filepath: plugins/proxy-backend/src/plugin.ts
+        containerId: proxy-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 760
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 58
+        sloc: 34
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/proxy-backend/router
+      type: rest-api
+      name: router Service
+      isTest: false
+      properties:
+        filepath: plugins/proxy-backend/src/service/router.ts
+        containerId: proxy-backend
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 40
+      y: 300
+      forensics:
+        complexity: 29
+        loc: 369
+        sloc: 261
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        classifications:
+          - knowledge-silo
+        sinceDays: 500
+    - entityRef: blueprint/plugins/proxy-backend/router-config-test
+      type: rest-api
+      name: router.config.test Service
+      isTest: true
+      properties:
+        filepath: plugins/proxy-backend/src/service/router.config.test.ts
+        containerId: proxy-backend
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 400
+      y: 300
+      forensics:
+        complexity: 1
+        loc: 111
+        sloc: 82
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/proxy-backend/router-credentials-test
+      type: rest-api
+      name: router.credentials.test Service
+      isTest: true
+      properties:
+        filepath: plugins/proxy-backend/src/service/router.credentials.test.ts
+        containerId: proxy-backend
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 760
+      y: 300
+      forensics:
+        complexity: 3
+        loc: 299
+        sloc: 262
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/proxy-backend/router-test
+      type: rest-api
+      name: router.test Service
+      isTest: true
+      properties:
+        filepath: plugins/proxy-backend/src/service/router.test.ts
+        containerId: proxy-backend
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 40
+      y: 560
+      forensics:
+        complexity: 2
+        loc: 654
+        sloc: 550
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/proxy-backend/setuptests
+      type: background-worker
+      name: setupTests Service
+      isTest: true
+      properties:
+        filepath: plugins/proxy-backend/src/setupTests.ts
+        containerId: proxy-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 560
+      forensics:
+        complexity: 1
+        loc: 18
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+  dependencies:
+    - from: blueprint/plugins/proxy-backend/index
+      to: blueprint/plugins/permission-node/alpha
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/proxy-backend/plugin
+      to: blueprint/plugins/proxy-backend/router
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/proxy-backend/plugin
+      to: blueprint/plugins/permission-node/alpha
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/proxy-backend/router
+      to: blueprint/plugins/auth-backend/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/proxy-backend/router
+      to: blueprint/plugins/permission-node/alpha
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/proxy-backend/router-test
+      to: blueprint/plugins/proxy-backend/router
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/proxy-backend/router-credentials-test
+      to: blueprint/plugins/kubernetes-react/auth
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/proxy-backend/router-credentials-test
+      to: blueprint/plugins/events-backend/errors
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/proxy-backend/router-credentials-test
+      to: blueprint/plugins/auth-backend/types
+      type: direct-call
+      description: Calls module / service

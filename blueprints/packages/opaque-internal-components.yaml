@@ -1,77 +1,73 @@
-entityRef: blueprint/packages/opaque-internal
-name: Opaque-internal Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/packages/opaque-internal/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/opaque-internal/src/index.ts
-      containerId: opaque-internal
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 18
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 40
-  - entityRef: blueprint/packages/opaque-internal/opaquetype
-    type: background-worker
-    name: OpaqueType Service
-    isTest: false
-    properties:
-      filepath: packages/opaque-internal/src/OpaqueType.ts
-      containerId: opaque-internal
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 12
-      loc: 168
-      sloc: 91
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 40
-  - entityRef: blueprint/packages/opaque-internal/opaquetype-test
-    type: background-worker
-    name: OpaqueType.test Service
-    isTest: true
-    properties:
-      filepath: packages/opaque-internal/src/OpaqueType.test.ts
-      containerId: opaque-internal
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 5
-      loc: 453
-      sloc: 327
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 300
-dependencies:
-  - from: blueprint/packages/opaque-internal/opaquetype-test
-    to: blueprint/packages/opaque-internal/opaquetype
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/packages/opaque-internal
+  name: Opaque-internal Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/packages/opaque-internal/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: packages/opaque-internal/src/index.ts
+        containerId: opaque-internal
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 18
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/packages/opaque-internal/opaquetype
+      type: background-worker
+      name: OpaqueType Service
+      isTest: false
+      properties:
+        filepath: packages/opaque-internal/src/OpaqueType.ts
+        containerId: opaque-internal
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 40
+      forensics:
+        complexity: 12
+        loc: 168
+        sloc: 91
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        classifications:
+          - knowledge-silo
+        sinceDays: 500
+    - entityRef: blueprint/packages/opaque-internal/opaquetype-test
+      type: background-worker
+      name: OpaqueType.test Service
+      isTest: true
+      properties:
+        filepath: packages/opaque-internal/src/OpaqueType.test.ts
+        containerId: opaque-internal
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 300
+      forensics:
+        complexity: 5
+        loc: 453
+        sloc: 327
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+  dependencies:
+    - from: blueprint/packages/opaque-internal/opaquetype-test
+      to: blueprint/packages/opaque-internal/opaquetype
+      type: direct-call
+      description: Calls module / service

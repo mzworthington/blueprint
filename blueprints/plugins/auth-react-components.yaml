@@ -1,215 +1,201 @@
-entityRef: blueprint/plugins/auth-react
-name: Auth-react Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/plugins/auth-react/cookieauthredirect
-    type: gateway-api
-    name: CookieAuthRedirect UI Component
-    isTest: false
-    properties:
-      filepath: plugins/auth-react/src/components/CookieAuthRedirect/CookieAuthRedirect.tsx
-      containerId: auth-react
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 6
-      loc: 58
-      sloc: 31
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 40
-  - entityRef: blueprint/plugins/auth-react/cookieauthrefreshprovider
-    type: gateway-api
-    name: CookieAuthRefreshProvider UI Component
-    isTest: false
-    properties:
-      filepath: plugins/auth-react/src/components/CookieAuthRefreshProvider/CookieAuthRefreshProvider.tsx
-      containerId: auth-react
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 3
-      loc: 63
-      sloc: 30
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 40
-  - entityRef: blueprint/plugins/auth-react/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-react/src/index.ts
-      containerId: auth-react
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 28
-      sloc: 2
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 760
-    'y': 40
-  - entityRef: blueprint/plugins/auth-react/usecookieauthrefresh
-    type: gateway-api
-    name: useCookieAuthRefresh UI Component
-    isTest: false
-    properties:
-      filepath: plugins/auth-react/src/hooks/useCookieAuthRefresh/useCookieAuthRefresh.tsx
-      containerId: auth-react
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 15
-      loc: 147
-      sloc: 93
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 300
-  - entityRef: blueprint/plugins/auth-react/cookieauthredirect-test
-    type: gateway-api
-    name: CookieAuthRedirect.test UI Component
-    isTest: true
-    properties:
-      filepath: plugins/auth-react/src/components/CookieAuthRedirect/CookieAuthRedirect.test.tsx
-      containerId: auth-react
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 68
-      sloc: 42
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 300
-  - entityRef: blueprint/plugins/auth-react/cookieauthrefreshprovider-test
-    type: gateway-api
-    name: CookieAuthRefreshProvider.test UI Component
-    isTest: true
-    properties:
-      filepath: plugins/auth-react/src/components/CookieAuthRefreshProvider/CookieAuthRefreshProvider.test.tsx
-      containerId: auth-react
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 165
-      sloc: 127
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 760
-    'y': 300
-  - entityRef: blueprint/plugins/auth-react/setuptests
-    type: background-worker
-    name: setupTests Service
-    isTest: true
-    properties:
-      filepath: plugins/auth-react/src/setupTests.ts
-      containerId: auth-react
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 4
-      loc: 50
-      sloc: 32
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 560
-  - entityRef: blueprint/plugins/auth-react/usecookieauthrefresh-test
-    type: gateway-api
-    name: useCookieAuthRefresh.test UI Component
-    isTest: true
-    properties:
-      filepath: plugins/auth-react/src/hooks/useCookieAuthRefresh/useCookieAuthRefresh.test.tsx
-      containerId: auth-react
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 3
-      loc: 382
-      sloc: 308
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 560
-dependencies:
-  - from: blueprint/plugins/auth-react/cookieauthredirect-test
-    to: blueprint/plugins/kubernetes-react/test-utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-react/cookieauthredirect-test
-    to: blueprint/plugins/auth-react/cookieauthredirect
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-react/cookieauthrefreshprovider-test
-    to: blueprint/plugins/auth-react/cookieauthrefreshprovider
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-react/cookieauthrefreshprovider-test
-    to: blueprint/plugins/kubernetes-react/test-utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-react/cookieauthrefreshprovider
-    to: blueprint/plugins/techdocs/hooks
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-react/usecookieauthrefresh
-    to: blueprint/plugins/events-backend/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-react/usecookieauthrefresh-test
-    to: blueprint/plugins/kubernetes-react/test-utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-react/usecookieauthrefresh-test
-    to: blueprint/plugins/auth-react/usecookieauthrefresh
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/plugins/auth-react
+  name: Auth-react Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/plugins/auth-react/cookieauthredirect
+      type: gateway-api
+      name: CookieAuthRedirect Service
+      isTest: false
+      properties:
+        filepath: plugins/auth-react/src/components/CookieAuthRedirect/CookieAuthRedirect.tsx
+        containerId: auth-react
+        technology: React Component
+        classification: ui-import
+      x: 40
+      y: 40
+      forensics:
+        complexity: 6
+        loc: 58
+        sloc: 31
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-react/cookieauthrefreshprovider
+      type: gateway-api
+      name: CookieAuthRefreshProvider Service
+      isTest: false
+      properties:
+        filepath: plugins/auth-react/src/components/CookieAuthRefreshProvider/CookieAuthRefreshProvider.tsx
+        containerId: auth-react
+        technology: React Component
+        classification: ui-import
+      x: 400
+      y: 40
+      forensics:
+        complexity: 3
+        loc: 63
+        sloc: 30
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-react/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: plugins/auth-react/src/components/CookieAuthRedirect/index.ts
+        containerId: auth-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 760
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 18
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-react/usecookieauthrefresh
+      type: gateway-api
+      name: useCookieAuthRefresh Service
+      isTest: false
+      properties:
+        filepath: plugins/auth-react/src/hooks/useCookieAuthRefresh/useCookieAuthRefresh.tsx
+        containerId: auth-react
+        technology: React Component
+        classification: ui-import
+      x: 40
+      y: 300
+      forensics:
+        complexity: 15
+        loc: 147
+        sloc: 93
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        classifications:
+          - knowledge-silo
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-react/cookieauthredirect-test
+      type: gateway-api
+      name: CookieAuthRedirect.test Service
+      isTest: true
+      properties:
+        filepath: plugins/auth-react/src/components/CookieAuthRedirect/CookieAuthRedirect.test.tsx
+        containerId: auth-react
+        technology: React Component
+        classification: ui-import
+      x: 400
+      y: 300
+      forensics:
+        complexity: 1
+        loc: 68
+        sloc: 42
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-react/cookieauthrefreshprovider-test
+      type: gateway-api
+      name: CookieAuthRefreshProvider.test Service
+      isTest: true
+      properties:
+        filepath: plugins/auth-react/src/components/CookieAuthRefreshProvider/CookieAuthRefreshProvider.test.tsx
+        containerId: auth-react
+        technology: React Component
+        classification: ui-import
+      x: 760
+      y: 300
+      forensics:
+        complexity: 1
+        loc: 165
+        sloc: 127
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-react/setuptests
+      type: background-worker
+      name: setupTests Service
+      isTest: true
+      properties:
+        filepath: plugins/auth-react/src/setupTests.ts
+        containerId: auth-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 560
+      forensics:
+        complexity: 4
+        loc: 50
+        sloc: 32
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-react/usecookieauthrefresh-test
+      type: gateway-api
+      name: useCookieAuthRefresh.test Service
+      isTest: true
+      properties:
+        filepath: plugins/auth-react/src/hooks/useCookieAuthRefresh/useCookieAuthRefresh.test.tsx
+        containerId: auth-react
+        technology: React Component
+        classification: ui-import
+      x: 400
+      y: 560
+      forensics:
+        complexity: 3
+        loc: 382
+        sloc: 308
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+  dependencies:
+    - from: blueprint/plugins/auth-react/cookieauthredirect-test
+      to: blueprint/plugins/kubernetes-react/test-utils
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/auth-react/cookieauthredirect-test
+      to: blueprint/plugins/auth-react/cookieauthredirect
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/auth-react/cookieauthrefreshprovider-test
+      to: blueprint/plugins/auth-react/cookieauthrefreshprovider
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/auth-react/cookieauthrefreshprovider-test
+      to: blueprint/plugins/kubernetes-react/test-utils
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/auth-react/cookieauthrefreshprovider
+      to: blueprint/plugins/techdocs/hooks
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/auth-react/usecookieauthrefresh
+      to: blueprint/plugins/events-backend/errors
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/auth-react/usecookieauthrefresh-test
+      to: blueprint/plugins/kubernetes-react/test-utils
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/auth-react/usecookieauthrefresh-test
+      to: blueprint/plugins/auth-react/usecookieauthrefresh
+      type: direct-call
+      description: Calls module / service

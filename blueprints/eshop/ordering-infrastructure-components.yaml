@@ -1,61 +1,62 @@
-entityRef: blueprint/eshop/ordering-infrastructure
-name: Ordering.Infrastructure Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/eshop/ordering-infrastructure/entityconfigurations
-    type: background-worker
-    name: EntityConfigurations Layer
-    isTest: false
-    properties:
-      filepath: src/Ordering.Infrastructure/EntityConfigurations/PaymentMethodEntityTypeConfiguration.cs
-      containerId: ordering-infrastructure
-      technology: C# Domain Service
-      classification: default
-    x: 40
-    'y': 40
-  - entityRef: blueprint/eshop/ordering-infrastructure/idempotency
-    type: background-worker
-    name: Idempotency Layer
-    isTest: false
-    properties:
-      filepath: src/Ordering.Infrastructure/Idempotency/RequestManager.cs
-      containerId: ordering-infrastructure
-      technology: C# Domain Service
-      classification: default
-    x: 400
-    'y': 40
-  - entityRef: blueprint/eshop/ordering-infrastructure/mediatorextension
-    type: background-worker
-    name: MediatorExtension
-    isTest: false
-    properties:
-      filepath: src/Ordering.Infrastructure/MediatorExtension.cs
-      containerId: ordering-infrastructure
-      technology: C# Domain Service
-      classification: default
-    x: 760
-    'y': 40
-  - entityRef: blueprint/eshop/ordering-infrastructure/orderingcontext
-    type: relational-database
-    name: OrderingContext
-    isTest: false
-    properties:
-      filepath: src/Ordering.Infrastructure/OrderingContext.cs
-      containerId: ordering-infrastructure
-      technology: Entity Framework / DB Context
-      classification: database-marker
-    x: 40
-    'y': 300
-  - entityRef: blueprint/eshop/ordering-infrastructure/repositories
-    type: relational-database
-    name: Repositories Layer
-    isTest: false
-    properties:
-      filepath: src/Ordering.Infrastructure/Repositories/BuyerRepository.cs
-      containerId: ordering-infrastructure
-      technology: Entity Framework / DB Context
-      classification: database-marker
-    x: 400
-    'y': 300
-dependencies: []
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/eshop/ordering-infrastructure
+  name: Ordering.Infrastructure Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/eshop/ordering-infrastructure/entityconfigurations
+      type: background-worker
+      name: EntityConfigurations Layer
+      isTest: false
+      properties:
+        filepath: src/Ordering.Infrastructure/EntityConfigurations/PaymentMethodEntityTypeConfiguration.cs
+        containerId: ordering-infrastructure
+        technology: C# Domain Service
+        classification: default
+      x: 40
+      y: 40
+    - entityRef: blueprint/eshop/ordering-infrastructure/idempotency
+      type: background-worker
+      name: Idempotency Layer
+      isTest: false
+      properties:
+        filepath: src/Ordering.Infrastructure/Idempotency/RequestManager.cs
+        containerId: ordering-infrastructure
+        technology: C# Domain Service
+        classification: default
+      x: 400
+      y: 40
+    - entityRef: blueprint/eshop/ordering-infrastructure/mediatorextension
+      type: background-worker
+      name: MediatorExtension
+      isTest: false
+      properties:
+        filepath: src/Ordering.Infrastructure/MediatorExtension.cs
+        containerId: ordering-infrastructure
+        technology: C# Domain Service
+        classification: default
+      x: 760
+      y: 40
+    - entityRef: blueprint/eshop/ordering-infrastructure/orderingcontext
+      type: relational-database
+      name: OrderingContext
+      isTest: false
+      properties:
+        filepath: src/Ordering.Infrastructure/OrderingContext.cs
+        containerId: ordering-infrastructure
+        technology: Entity Framework / DB Context
+        classification: database-marker
+      x: 40
+      y: 300
+    - entityRef: blueprint/eshop/ordering-infrastructure/repositories
+      type: relational-database
+      name: Repositories Layer
+      isTest: false
+      properties:
+        filepath: src/Ordering.Infrastructure/Repositories/BuyerRepository.cs
+        containerId: ordering-infrastructure
+        technology: Entity Framework / DB Context
+        classification: database-marker
+      x: 400
+      y: 300
+  dependencies: []

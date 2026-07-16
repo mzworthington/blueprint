@@ -1,198 +1,187 @@
-entityRef: blueprint/packages/config
-name: Config Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/packages/config/readdurationfromconfig
-    type: background-worker
-    name: readDurationFromConfig Service
-    isTest: false
-    properties:
-      filepath: packages/config/src/readDurationFromConfig.ts
-      containerId: config
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 53
-      loc: 311
-      sloc: 216
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 428
-    'y': 384
-  - entityRef: blueprint/packages/config/reader
-    type: background-worker
-    name: reader Service
-    isTest: false
-    properties:
-      filepath: packages/config/src/reader.ts
-      containerId: config
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 85
-      loc: 485
-      sloc: 381
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 808
-    'y': 384
-  - entityRef: blueprint/packages/config/types
-    type: background-worker
-    name: types Service
-    isTest: false
-    properties:
-      filepath: packages/config/src/types.ts
-      containerId: config
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 151
-      sloc: 28
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 428
-    'y': 704
-  - entityRef: blueprint/packages/config/readdurationfromconfig-test
-    type: background-worker
-    name: readDurationFromConfig.test Service
-    isTest: true
-    properties:
-      filepath: packages/config/src/readDurationFromConfig.test.ts
-      containerId: config
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 269
-      sloc: 234
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 428
-    'y': 64
-  - entityRef: blueprint/packages/config/reader-test
-    type: background-worker
-    name: reader.test Service
-    isTest: true
-    properties:
-      filepath: packages/config/src/reader.test.ts
-      containerId: config
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 795
-      sloc: 720
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 868
-    'y': 64
-  - entityRef: blueprint/packages/config/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/config/src/index.ts
-      containerId: config
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 32
-      sloc: 9
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 48
-    'y': 64
-  - entityRef: blueprint/packages/config/deprecatedtypes
-    type: background-worker
-    name: deprecatedTypes Service
-    isTest: false
-    properties:
-      filepath: packages/config/src/deprecatedTypes.ts
-      containerId: config
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 56
-      sloc: 10
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 48
-    'y': 384
-dependencies:
-  - from: blueprint/packages/config/readdurationfromconfig
-    to: blueprint/packages/cli-common/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config/readdurationfromconfig
-    to: blueprint/packages/config/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config/readdurationfromconfig
-    to: blueprint/packages/config/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config/reader
-    to: blueprint/packages/config/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config/reader
-    to: blueprint/packages/config/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config/readdurationfromconfig-test
-    to: blueprint/packages/config/readdurationfromconfig
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config/readdurationfromconfig-test
-    to: blueprint/packages/config/reader
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config/reader-test
-    to: blueprint/packages/config/reader
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/config/deprecatedtypes
-    to: blueprint/packages/config/types
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/packages/config
+  name: Config Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/packages/config/readdurationfromconfig
+      type: background-worker
+      name: readDurationFromConfig Service
+      isTest: false
+      properties:
+        filepath: packages/config/src/readDurationFromConfig.ts
+        containerId: config
+        technology: TypeScript Domain Service
+        classification: default
+      x: 428
+      y: 384
+      forensics:
+        complexity: 53
+        loc: 311
+        sloc: 216
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        classifications:
+          - knowledge-silo
+        sinceDays: 500
+    - entityRef: blueprint/packages/config/reader
+      type: background-worker
+      name: reader Service
+      isTest: false
+      properties:
+        filepath: packages/config/src/reader.ts
+        containerId: config
+        technology: TypeScript Domain Service
+        classification: default
+      x: 808
+      y: 384
+      forensics:
+        complexity: 85
+        loc: 485
+        sloc: 381
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        classifications:
+          - knowledge-silo
+        sinceDays: 500
+    - entityRef: blueprint/packages/config/types
+      type: background-worker
+      name: types Service
+      isTest: false
+      properties:
+        filepath: packages/config/src/types.ts
+        containerId: config
+        technology: TypeScript Domain Service
+        classification: default
+      x: 428
+      y: 704
+      forensics:
+        complexity: 1
+        loc: 151
+        sloc: 28
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/packages/config/readdurationfromconfig-test
+      type: background-worker
+      name: readDurationFromConfig.test Service
+      isTest: true
+      properties:
+        filepath: packages/config/src/readDurationFromConfig.test.ts
+        containerId: config
+        technology: TypeScript Domain Service
+        classification: default
+      x: 428
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 269
+        sloc: 234
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/packages/config/reader-test
+      type: background-worker
+      name: reader.test Service
+      isTest: true
+      properties:
+        filepath: packages/config/src/reader.test.ts
+        containerId: config
+        technology: TypeScript Domain Service
+        classification: default
+      x: 868
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 795
+        sloc: 720
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/packages/config/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: packages/config/src/index.ts
+        containerId: config
+        technology: TypeScript Domain Service
+        classification: default
+      x: 48
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 32
+        sloc: 9
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/packages/config/deprecatedtypes
+      type: background-worker
+      name: deprecatedTypes Service
+      isTest: false
+      properties:
+        filepath: packages/config/src/deprecatedTypes.ts
+        containerId: config
+        technology: TypeScript Domain Service
+        classification: default
+      x: 48
+      y: 384
+      forensics:
+        complexity: 1
+        loc: 56
+        sloc: 10
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+  dependencies:
+    - from: blueprint/packages/config/readdurationfromconfig
+      to: blueprint/packages/cli-common/errors
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/config/readdurationfromconfig
+      to: blueprint/packages/config/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/config/readdurationfromconfig
+      to: blueprint/packages/config/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/config/reader
+      to: blueprint/packages/config/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/config/reader
+      to: blueprint/packages/config/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/config/readdurationfromconfig-test
+      to: blueprint/packages/config/readdurationfromconfig
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/config/readdurationfromconfig-test
+      to: blueprint/packages/config/reader
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/config/reader-test
+      to: blueprint/packages/config/reader
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/config/deprecatedtypes
+      to: blueprint/packages/config/types
+      type: direct-call
+      description: Calls module / service

@@ -1,153 +1,145 @@
-entityRef: blueprint/packages/frontend-dynamic-feature-loader
-name: Frontend-dynamic-feature-loader Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/packages/frontend-dynamic-feature-loader/config-d
-    type: background-worker
-    name: config.d Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-dynamic-feature-loader/config.d.ts
-      containerId: frontend-dynamic-feature-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 23
-      sloc: 3
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 40
-  - entityRef: blueprint/packages/frontend-dynamic-feature-loader/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-dynamic-feature-loader/src/index.ts
-      containerId: frontend-dynamic-feature-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 24
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 40
-  - entityRef: blueprint/packages/frontend-dynamic-feature-loader/loader
-    type: background-worker
-    name: loader Service
-    isTest: false
-    properties:
-      filepath: packages/frontend-dynamic-feature-loader/src/loader.ts
-      containerId: frontend-dynamic-feature-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 19
-      loc: 218
-      sloc: 169
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 760
-    'y': 40
-  - entityRef: blueprint/packages/frontend-dynamic-feature-loader/loader-test
-    type: background-worker
-    name: loader.test Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-dynamic-feature-loader/src/loader.test.tsx
-      containerId: frontend-dynamic-feature-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 1299
-      sloc: 1210
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 300
-  - entityRef: blueprint/packages/frontend-dynamic-feature-loader/setuptests
-    type: background-worker
-    name: setupTests Service
-    isTest: true
-    properties:
-      filepath: packages/frontend-dynamic-feature-loader/src/setupTests.ts
-      containerId: frontend-dynamic-feature-loader
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 18
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 300
-dependencies:
-  - from: blueprint/packages/frontend-dynamic-feature-loader/loader
-    to: blueprint/packages/ui/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
-    to: blueprint/packages/frontend-dynamic-feature-loader/loader
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
-    to: blueprint/packages/core-components/node
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
-    to: blueprint/packages/ui/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
-    to: blueprint/packages/frontend-plugin-api/createfrontendfeatureloader
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
-    to: blueprint/packages/integration/core
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
-    to: blueprint/packages/integration-aws-node/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
-    to: blueprint/packages/ui/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/backend-dynamic-feature-service/plugin-manager
-    to: blueprint/packages/frontend-dynamic-feature-loader/loader
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/packages/frontend-dynamic-feature-loader
+  name: Frontend-dynamic-feature-loader Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/packages/frontend-dynamic-feature-loader/config-d
+      type: background-worker
+      name: config.d Service
+      isTest: false
+      properties:
+        filepath: packages/frontend-dynamic-feature-loader/config.d.ts
+        containerId: frontend-dynamic-feature-loader
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 23
+        sloc: 3
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/packages/frontend-dynamic-feature-loader/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: packages/frontend-dynamic-feature-loader/src/schema/openapi/index.ts
+        containerId: frontend-dynamic-feature-loader
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 18
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/packages/frontend-dynamic-feature-loader/loader
+      type: background-worker
+      name: loader Service
+      isTest: false
+      properties:
+        filepath: packages/frontend-dynamic-feature-loader/src/loader.ts
+        containerId: frontend-dynamic-feature-loader
+        technology: TypeScript Domain Service
+        classification: default
+      x: 760
+      y: 40
+      forensics:
+        complexity: 19
+        loc: 218
+        sloc: 169
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        classifications:
+          - knowledge-silo
+        sinceDays: 500
+    - entityRef: blueprint/packages/frontend-dynamic-feature-loader/loader-test
+      type: background-worker
+      name: loader.test Service
+      isTest: true
+      properties:
+        filepath: packages/frontend-dynamic-feature-loader/src/loader.test.tsx
+        containerId: frontend-dynamic-feature-loader
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 300
+      forensics:
+        complexity: 1
+        loc: 1299
+        sloc: 1210
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/packages/frontend-dynamic-feature-loader/setuptests
+      type: background-worker
+      name: setupTests Service
+      isTest: true
+      properties:
+        filepath: packages/frontend-dynamic-feature-loader/src/setupTests.ts
+        containerId: frontend-dynamic-feature-loader
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 300
+      forensics:
+        complexity: 1
+        loc: 18
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+  dependencies:
+    - from: blueprint/packages/frontend-dynamic-feature-loader/loader
+      to: blueprint/packages/ui/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
+      to: blueprint/packages/frontend-dynamic-feature-loader/loader
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
+      to: blueprint/packages/core-components/node
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
+      to: blueprint/packages/ui/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
+      to: blueprint/packages/frontend-plugin-api/createfrontendfeatureloader
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
+      to: blueprint/packages/integration/core
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
+      to: blueprint/packages/integration-aws-node/config
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/frontend-dynamic-feature-loader/loader-test
+      to: blueprint/packages/ui/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/backend-dynamic-feature-service/plugin-manager
+      to: blueprint/packages/frontend-dynamic-feature-loader/loader
+      type: direct-call
+      description: Calls module / service

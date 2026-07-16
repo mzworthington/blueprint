@@ -1,155 +1,145 @@
-entityRef: blueprint/plugins/connections-example-backend
-name: Connections-example-backend Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/plugins/connections-example-backend/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/connections-example-backend/src/index.ts
-      containerId: connections-example-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 17
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 40
-  - entityRef: blueprint/plugins/connections-example-backend/module
-    type: background-worker
-    name: module Service
-    isTest: false
-    properties:
-      filepath: plugins/connections-example-backend-module-gitlab/src/module.ts
-      containerId: connections-example-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 66
-      sloc: 43
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 40
-  - entityRef: blueprint/plugins/connections-example-backend/plugin
-    type: background-worker
-    name: plugin Service
-    isTest: false
-    properties:
-      filepath: plugins/connections-example-backend/src/plugin.ts
-      containerId: connections-example-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 61
-      sloc: 39
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 760
-    'y': 40
-  - entityRef: blueprint/plugins/connections-example-backend/router
-    type: rest-api
-    name: router REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/connections-example-backend/src/router.ts
-      containerId: connections-example-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 11
-      loc: 85
-      sloc: 60
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 300
-  - entityRef: blueprint/plugins/connections-example-backend/module-test
-    type: background-worker
-    name: module.test Service
-    isTest: true
-    properties:
-      filepath: plugins/connections-example-backend-module-gitlab/src/module.test.ts
-      containerId: connections-example-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 188
-      sloc: 159
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 300
-  - entityRef: blueprint/plugins/connections-example-backend/setuptests
-    type: background-worker
-    name: setupTests Service
-    isTest: true
-    properties:
-      filepath: plugins/connections-example-backend/src/setupTests.ts
-      containerId: connections-example-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 17
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 760
-    'y': 300
-dependencies:
-  - from: blueprint/plugins/connections-example-backend/module
-    to: blueprint/plugins/events-backend/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/connections-example-backend/index
-    to: blueprint/plugins/catalog-react/testutils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/connections-example-backend/router
-    to: blueprint/plugins/events-backend/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/connections-example-backend/plugin
-    to: blueprint/plugins/connections-example-backend/router
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/plugins/connections-example-backend
+  name: Connections-example-backend Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/plugins/connections-example-backend/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: plugins/connections-example-backend-module-gitlab/src/index.ts
+        containerId: connections-example-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 17
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/connections-example-backend/module
+      type: background-worker
+      name: module Service
+      isTest: false
+      properties:
+        filepath: plugins/connections-example-backend-module-gitlab/src/module.ts
+        containerId: connections-example-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 40
+      forensics:
+        complexity: 3
+        loc: 66
+        sloc: 43
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/connections-example-backend/plugin
+      type: background-worker
+      name: plugin Service
+      isTest: false
+      properties:
+        filepath: plugins/connections-example-backend/src/plugin.ts
+        containerId: connections-example-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 760
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 61
+        sloc: 39
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/connections-example-backend/router
+      type: rest-api
+      name: router Service
+      isTest: false
+      properties:
+        filepath: plugins/connections-example-backend/src/router.ts
+        containerId: connections-example-backend
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 40
+      y: 300
+      forensics:
+        complexity: 11
+        loc: 85
+        sloc: 60
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        classifications:
+          - knowledge-silo
+        sinceDays: 500
+    - entityRef: blueprint/plugins/connections-example-backend/module-test
+      type: background-worker
+      name: module.test Service
+      isTest: true
+      properties:
+        filepath: plugins/connections-example-backend-module-gitlab/src/module.test.ts
+        containerId: connections-example-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 300
+      forensics:
+        complexity: 1
+        loc: 188
+        sloc: 159
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/connections-example-backend/setuptests
+      type: background-worker
+      name: setupTests Service
+      isTest: true
+      properties:
+        filepath: plugins/connections-example-backend/src/setupTests.ts
+        containerId: connections-example-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 760
+      y: 300
+      forensics:
+        complexity: 1
+        loc: 17
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+  dependencies:
+    - from: blueprint/plugins/connections-example-backend/module
+      to: blueprint/plugins/events-backend/errors
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/connections-example-backend/index
+      to: blueprint/plugins/catalog-react/testutils
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/connections-example-backend/router
+      to: blueprint/plugins/events-backend/errors
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/connections-example-backend/plugin
+      to: blueprint/plugins/connections-example-backend/router
+      type: direct-call
+      description: Calls module / service

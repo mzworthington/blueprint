@@ -1,226 +1,221 @@
-# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/v1/blueprint.schema.json
-entityRef: blueprint
-name: Blueprint Context
-version: 1.0.0
-level: context
-nodes:
-  - entityRef: blueprint/eshop
-    type: software-system
-    name: EShop System
-    properties:
-      rootPath: ''
-      productId: eshop
-      role: product-hub
-    x: 808
-    'y': 704
-    forensics:
-      complexity: 4
-      churn: 0
-      authorCount: 0
-      hotspotScore: 0
-      classifications: []
-      sinceDays: 90
-      fileCount: 1
-      hotspotCount: 0
-      knowledgeSiloCount: 0
-  - entityRef: blueprint/backstage
-    type: software-system
-    name: Backstage System
-    properties:
-      rootPath: ''
-      productId: backstage
-      role: product-hub
-    x: 428
-    'y': 704
-  - entityRef: blueprint/packages
-    type: software-system
-    name: Packages System
-    properties:
-      rootPath: packages
-      productId: backstage
-      role: subsystem
-    x: 1188
-    'y': 1024
-    forensics:
-      complexity: 102
-      churn: 2058
-      authorCount: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      sinceDays: 500
-      fileCount: 2058
-      hotspotCount: 0
-      knowledgeSiloCount: 322
-  - entityRef: blueprint/plugins
-    type: software-system
-    name: Plugins System
-    properties:
-      rootPath: plugins
-      productId: backstage
-      role: subsystem
-    x: 1568
-    'y': 1024
-    forensics:
-      complexity: 96
-      churn: 2852
-      authorCount: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      sinceDays: 500
-      fileCount: 2852
-      hotspotCount: 0
-      knowledgeSiloCount: 356
-  - entityRef: blueprint/docs-ui
-    type: software-system
-    name: Docs Ui System
-    properties:
-      rootPath: docs-ui
-      productId: backstage
-      role: subsystem
-    x: 428
-    'y': 1024
-    forensics:
-      complexity: 23
-      churn: 69
-      authorCount: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      sinceDays: 500
-      fileCount: 69
-      hotspotCount: 0
-      knowledgeSiloCount: 6
-  - entityRef: blueprint/microsite
-    type: software-system
-    name: Microsite System
-    properties:
-      rootPath: microsite
-      productId: backstage
-      role: subsystem
-    x: 808
-    'y': 1024
-    forensics:
-      complexity: 8
-      churn: 17
-      authorCount: 1
-      hotspotScore: 0
-      classifications: []
-      sinceDays: 500
-      fileCount: 17
-      hotspotCount: 0
-      knowledgeSiloCount: 0
-  - entityRef: blueprint/testproject
-    type: software-system
-    name: TestProject System
-    properties:
-      rootPath: ''
-      productId: testproject
-      role: product-hub
-    x: 48
-    'y': 64
-  - entityRef: blueprint/app
-    type: software-system
-    name: App System
-    properties:
-      rootPath: app
-      productId: testproject
-      role: subsystem
-    x: 48
-    'y': 384
-    forensics:
-      complexity: 66
-      churn: 648
-      hotspotScore: 0.7076923076923077
-      authorCount: 1
-      fileCount: 233
-      hotspotCount: 1
-      knowledgeSiloCount: 69
-      classifications:
-        - knowledge-silo
-        - hotspot
-      sinceDays: 90
-  - entityRef: blueprint/customer
-    type: person
-    name: Customer
-    properties: {}
-    x: 428
-    'y': 384
-dependencies:
-  - from: blueprint/backstage
-    to: blueprint/packages
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/plugins
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/docs-ui
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/microsite
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/blueprint/person-5380
-    type: direct-call
-    description: ''
-  - from: blueprint/blueprint/person-5380
-    to: blueprint/eshop
-    type: direct-call
-    description: ''
-  - from: blueprint/blueprint/person-5380
-    to: blueprint/testproject
-    type: direct-call
-    description: ''
-  - from: blueprint/customer
-    to: blueprint/backstage
-    type: direct-call
-    description: ''
-  - from: blueprint/customer
-    to: blueprint/eshop
-    type: direct-call
-    description: ''
-  - from: blueprint/testproject
-    to: blueprint/customer
-    type: direct-call
-    description: ''
-  - from: blueprint/backstage
-    to: blueprint/packages
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/plugins
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/docs-ui
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/microsite
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/packages
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/plugins
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/docs-ui
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/microsite
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/testproject
-    to: blueprint/app
-    type: direct-call
-    description: Part of product system
+# yaml-language-server: $schema=../schemas/v2/blueprint.schema.json
+- entityRef: blueprint
+  name: Blueprint Context
+  version: 1.0.0
+  level: context
+  nodes:
+    - entityRef: blueprint/eshop
+      type: software-system
+      name: EShop System
+      properties:
+        rootPath: ''
+        productId: eshop
+        role: product-hub
+      x: 808
+      y: 704
+      forensics:
+        complexity: 4
+        churn: 0
+        hotspotScore: 0
+        authorCount: 0
+        fileCount: 1
+        hotspotCount: 0
+        knowledgeSiloCount: 0
+        sinceDays: 500
+    - entityRef: blueprint/backstage
+      type: software-system
+      name: Backstage System
+      properties:
+        rootPath: ''
+        productId: backstage
+        role: product-hub
+      x: 428
+      y: 704
+    - entityRef: blueprint/packages
+      type: software-system
+      name: Packages System
+      properties:
+        rootPath: packages
+        productId: backstage
+        role: subsystem
+      x: 1188
+      y: 1024
+      forensics:
+        complexity: 102
+        churn: 2058
+        authorCount: 1
+        hotspotScore: 0
+        classifications:
+          - knowledge-silo
+        sinceDays: 500
+        fileCount: 2058
+        hotspotCount: 0
+        knowledgeSiloCount: 320
+    - entityRef: blueprint/plugins
+      type: software-system
+      name: Plugins System
+      properties:
+        rootPath: plugins
+        productId: backstage
+        role: subsystem
+      x: 1568
+      y: 1024
+      forensics:
+        complexity: 96
+        churn: 2852
+        authorCount: 1
+        hotspotScore: 0
+        classifications:
+          - knowledge-silo
+        sinceDays: 500
+        fileCount: 2852
+        hotspotCount: 0
+        knowledgeSiloCount: 363
+    - entityRef: blueprint/docs-ui
+      type: software-system
+      name: Docs Ui System
+      properties:
+        rootPath: docs-ui
+        productId: backstage
+        role: subsystem
+      x: 428
+      y: 1024
+      forensics:
+        complexity: 23
+        churn: 69
+        authorCount: 1
+        hotspotScore: 0
+        classifications:
+          - knowledge-silo
+        sinceDays: 500
+        fileCount: 69
+        hotspotCount: 0
+        knowledgeSiloCount: 6
+    - entityRef: blueprint/microsite
+      type: software-system
+      name: Microsite System
+      properties:
+        rootPath: microsite
+        productId: backstage
+        role: subsystem
+      x: 808
+      y: 1024
+      forensics:
+        complexity: 8
+        churn: 17
+        authorCount: 1
+        hotspotScore: 0
+        sinceDays: 500
+        fileCount: 17
+        hotspotCount: 0
+        knowledgeSiloCount: 0
+    - entityRef: blueprint/testproject
+      type: software-system
+      name: TestProject System
+      properties:
+        rootPath: ''
+        productId: testproject
+        role: product-hub
+      x: 48
+      y: 64
+    - entityRef: blueprint/app
+      type: software-system
+      name: App System
+      properties:
+        rootPath: app
+        productId: testproject
+        role: subsystem
+      x: 48
+      y: 384
+      forensics:
+        complexity: 66
+        churn: 663
+        authorCount: 1
+        hotspotScore: 0.7076923076923077
+        classifications:
+          - knowledge-silo
+          - hotspot
+        sinceDays: 90
+        fileCount: 233
+        hotspotCount: 1
+        knowledgeSiloCount: 69
+    - entityRef: blueprint/customer
+      type: person
+      name: Customer
+      x: 428
+      y: 384
+  dependencies:
+    - from: blueprint/backstage
+      to: blueprint/blueprint/person-5380
+      type: direct-call
+    - from: blueprint/blueprint/person-5380
+      to: blueprint/eshop
+      type: direct-call
+    - from: blueprint/blueprint/person-5380
+      to: blueprint/testproject
+      type: direct-call
+    - from: blueprint/customer
+      to: blueprint/backstage
+      type: direct-call
+    - from: blueprint/customer
+      to: blueprint/eshop
+      type: direct-call
+    - from: blueprint/testproject
+      to: blueprint/customer
+      type: direct-call
+    - from: blueprint/backstage
+      to: blueprint/packages
+      type: direct-call
+      description: Part of product system
+    - from: blueprint/backstage
+      to: blueprint/plugins
+      type: direct-call
+      description: Part of product system
+    - from: blueprint/backstage
+      to: blueprint/docs-ui
+      type: direct-call
+      description: Part of product system
+    - from: blueprint/backstage
+      to: blueprint/microsite
+      type: direct-call
+      description: Part of product system
+    - from: blueprint/backstage
+      to: blueprint/packages
+      type: direct-call
+      description: Part of product system
+    - from: blueprint/backstage
+      to: blueprint/plugins
+      type: direct-call
+      description: Part of product system
+    - from: blueprint/backstage
+      to: blueprint/docs-ui
+      type: direct-call
+      description: Part of product system
+    - from: blueprint/backstage
+      to: blueprint/microsite
+      type: direct-call
+      description: Part of product system
+    - from: blueprint/testproject
+      to: blueprint/app
+      type: direct-call
+      description: Part of product system
+    - from: blueprint/backstage
+      to: blueprint/packages
+      type: direct-call
+      description: Part of product system
+    - from: blueprint/backstage
+      to: blueprint/plugins
+      type: direct-call
+      description: Part of product system
+    - from: blueprint/backstage
+      to: blueprint/docs-ui
+      type: direct-call
+      description: Part of product system
+    - from: blueprint/backstage
+      to: blueprint/microsite
+      type: direct-call
+      description: Part of product system
+    - from: blueprint/testproject
+      to: blueprint/app
+      type: direct-call
+      description: Part of product system

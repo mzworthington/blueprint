@@ -1,223 +1,209 @@
-entityRef: blueprint/plugins/devtools-backend
-name: Devtools-backend Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/plugins/devtools-backend/config-d
-    type: background-worker
-    name: config.d Service
-    isTest: false
-    properties:
-      filepath: plugins/devtools-backend/config.d.ts
-      containerId: devtools-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 55
-      sloc: 14
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 40
-  - entityRef: blueprint/plugins/devtools-backend/devtoolsbackendapi
-    type: rest-api
-    name: DevToolsBackendApi REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/devtools-backend/src/api/DevToolsBackendApi.ts
-      containerId: devtools-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 17
-      loc: 261
-      sloc: 210
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 40
-  - entityRef: blueprint/plugins/devtools-backend/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/devtools-backend/src/index.ts
-      containerId: devtools-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 25
-      sloc: 2
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 760
-    'y': 40
-  - entityRef: blueprint/plugins/devtools-backend/lockfile
-    type: background-worker
-    name: Lockfile Service
-    isTest: false
-    properties:
-      filepath: plugins/devtools-backend/src/util/Lockfile.ts
-      containerId: devtools-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 8
-      loc: 139
-      sloc: 96
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 300
-  - entityRef: blueprint/plugins/devtools-backend/plugin
-    type: background-worker
-    name: plugin Service
-    isTest: false
-    properties:
-      filepath: plugins/devtools-backend/src/plugin.ts
-      containerId: devtools-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 77
-      sloc: 54
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 300
-  - entityRef: blueprint/plugins/devtools-backend/router
-    type: rest-api
-    name: router REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/devtools-backend/src/service/router.ts
-      containerId: devtools-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 5
-      loc: 118
-      sloc: 77
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 760
-    'y': 300
-  - entityRef: blueprint/plugins/devtools-backend/router-test
-    type: rest-api
-    name: router.test REST Endpoint
-    isTest: true
-    properties:
-      filepath: plugins/devtools-backend/src/service/router.test.ts
-      containerId: devtools-backend
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 72
-      sloc: 48
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 560
-  - entityRef: blueprint/plugins/devtools-backend/setuptests
-    type: background-worker
-    name: setupTests Service
-    isTest: true
-    properties:
-      filepath: plugins/devtools-backend/src/setupTests.ts
-      containerId: devtools-backend
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 18
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 560
-dependencies:
-  - from: blueprint/plugins/devtools-backend/plugin
-    to: blueprint/plugins/devtools-backend/router
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools-backend/plugin
-    to: blueprint/plugins/permission-node/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools-backend/devtoolsbackendapi
-    to: blueprint/plugins/home/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools-backend/devtoolsbackendapi
-    to: blueprint/plugins/auth-backend/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools-backend/devtoolsbackendapi
-    to: blueprint/plugins/devtools-backend/lockfile
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools-backend/devtoolsbackendapi
-    to: blueprint/plugins/events-backend/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools-backend/router
-    to: blueprint/plugins/techdocs-react/api
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools-backend/router
-    to: blueprint/plugins/events-backend/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools-backend/router-test
-    to: blueprint/plugins/home/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/devtools-backend/router-test
-    to: blueprint/plugins/devtools-backend/router
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/plugins/devtools-backend
+  name: Devtools-backend Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/plugins/devtools-backend/config-d
+      type: background-worker
+      name: config.d Service
+      isTest: false
+      properties:
+        filepath: plugins/devtools-backend/config.d.ts
+        containerId: devtools-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 55
+        sloc: 14
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/devtools-backend/devtoolsbackendapi
+      type: rest-api
+      name: DevToolsBackendApi Service
+      isTest: false
+      properties:
+        filepath: plugins/devtools-backend/src/api/DevToolsBackendApi.ts
+        containerId: devtools-backend
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 400
+      y: 40
+      forensics:
+        complexity: 17
+        loc: 261
+        sloc: 210
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        classifications:
+          - knowledge-silo
+        sinceDays: 500
+    - entityRef: blueprint/plugins/devtools-backend/index
+      type: rest-api
+      name: index Service
+      isTest: false
+      properties:
+        filepath: plugins/devtools-backend/dev/index.ts
+        containerId: devtools-backend
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 760
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 22
+        sloc: 4
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/devtools-backend/lockfile
+      type: background-worker
+      name: Lockfile Service
+      isTest: false
+      properties:
+        filepath: plugins/devtools-backend/src/util/Lockfile.ts
+        containerId: devtools-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 300
+      forensics:
+        complexity: 8
+        loc: 139
+        sloc: 96
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/devtools-backend/plugin
+      type: background-worker
+      name: plugin Service
+      isTest: false
+      properties:
+        filepath: plugins/devtools-backend/src/plugin.ts
+        containerId: devtools-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 300
+      forensics:
+        complexity: 1
+        loc: 77
+        sloc: 54
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/devtools-backend/router
+      type: rest-api
+      name: router Service
+      isTest: false
+      properties:
+        filepath: plugins/devtools-backend/src/service/router.ts
+        containerId: devtools-backend
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 760
+      y: 300
+      forensics:
+        complexity: 5
+        loc: 118
+        sloc: 77
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/devtools-backend/router-test
+      type: rest-api
+      name: router.test Service
+      isTest: true
+      properties:
+        filepath: plugins/devtools-backend/src/service/router.test.ts
+        containerId: devtools-backend
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 40
+      y: 560
+      forensics:
+        complexity: 1
+        loc: 72
+        sloc: 48
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/devtools-backend/setuptests
+      type: background-worker
+      name: setupTests Service
+      isTest: true
+      properties:
+        filepath: plugins/devtools-backend/src/setupTests.ts
+        containerId: devtools-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 560
+      forensics:
+        complexity: 1
+        loc: 18
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+  dependencies:
+    - from: blueprint/plugins/devtools-backend/plugin
+      to: blueprint/plugins/devtools-backend/router
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/devtools-backend/plugin
+      to: blueprint/plugins/permission-node/alpha
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/devtools-backend/devtoolsbackendapi
+      to: blueprint/plugins/home/config
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/devtools-backend/devtoolsbackendapi
+      to: blueprint/plugins/auth-backend/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/devtools-backend/devtoolsbackendapi
+      to: blueprint/plugins/devtools-backend/lockfile
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/devtools-backend/devtoolsbackendapi
+      to: blueprint/plugins/events-backend/errors
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/devtools-backend/router
+      to: blueprint/plugins/techdocs-react/api
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/devtools-backend/router
+      to: blueprint/plugins/events-backend/errors
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/devtools-backend/router-test
+      to: blueprint/plugins/home/config
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/devtools-backend/router-test
+      to: blueprint/plugins/devtools-backend/router
+      type: direct-call
+      description: Calls module / service

@@ -1,72 +1,73 @@
-entityRef: blueprint/eshop/ordering-api
-name: Ordering.API Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/eshop/ordering-api/apis
-    type: rest-api
-    name: Apis Layer
-    isTest: false
-    properties:
-      filepath: src/Ordering.API/Apis/OrderServices.cs
-      containerId: ordering-api
-      technology: ASP.NET Core Controller / Minimal API
-      classification: api-marker
-    x: 40
-    'y': 40
-  - entityRef: blueprint/eshop/ordering-api/application
-    type: event-broker
-    name: Application Layer
-    isTest: false
-    properties:
-      filepath: src/Ordering.API/Application/Queries/OrderQueries.cs
-      containerId: ordering-api
-      technology: C# Event Client
-      classification: event-marker
-    x: 400
-    'y': 40
-  - entityRef: blueprint/eshop/ordering-api/extensions
-    type: background-worker
-    name: Extensions Layer
-    isTest: false
-    properties:
-      filepath: src/Ordering.API/Extensions/LinqSelectExtensions.cs
-      containerId: ordering-api
-      technology: C# Domain Service
-      classification: default
-    x: 760
-    'y': 40
-  - entityRef: blueprint/eshop/ordering-api/infrastructure
-    type: background-worker
-    name: Infrastructure Layer
-    isTest: false
-    properties:
-      filepath: src/Ordering.API/Infrastructure/OrderingContextSeed.cs
-      containerId: ordering-api
-      technology: C# Domain Service
-      classification: default
-    x: 40
-    'y': 300
-  - entityRef: blueprint/eshop/ordering-api/program
-    type: background-worker
-    name: Program
-    isTest: false
-    properties:
-      filepath: src/Ordering.API/Program.cs
-      containerId: ordering-api
-      technology: C# Domain Service
-      classification: default
-    x: 400
-    'y': 300
-  - entityRef: blueprint/eshop/ordering-api/program-testing
-    type: background-worker
-    name: Program.Testing
-    isTest: false
-    properties:
-      filepath: src/Ordering.API/Program.Testing.cs
-      containerId: ordering-api
-      technology: C# Domain Service
-      classification: default
-    x: 760
-    'y': 300
-dependencies: []
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/eshop/ordering-api
+  name: Ordering.API Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/eshop/ordering-api/apis
+      type: rest-api
+      name: Apis Layer
+      isTest: false
+      properties:
+        filepath: src/Ordering.API/Apis/OrderServices.cs
+        containerId: ordering-api
+        technology: ASP.NET Core Controller / Minimal API
+        classification: api-marker
+      x: 40
+      y: 40
+    - entityRef: blueprint/eshop/ordering-api/application
+      type: event-broker
+      name: Application Layer
+      isTest: false
+      properties:
+        filepath: src/Ordering.API/Application/Queries/OrderQueries.cs
+        containerId: ordering-api
+        technology: C# Event Client
+        classification: event-marker
+      x: 400
+      y: 40
+    - entityRef: blueprint/eshop/ordering-api/extensions
+      type: background-worker
+      name: Extensions Layer
+      isTest: false
+      properties:
+        filepath: src/Ordering.API/Extensions/LinqSelectExtensions.cs
+        containerId: ordering-api
+        technology: C# Domain Service
+        classification: default
+      x: 760
+      y: 40
+    - entityRef: blueprint/eshop/ordering-api/infrastructure
+      type: background-worker
+      name: Infrastructure Layer
+      isTest: false
+      properties:
+        filepath: src/Ordering.API/Infrastructure/OrderingContextSeed.cs
+        containerId: ordering-api
+        technology: C# Domain Service
+        classification: default
+      x: 40
+      y: 300
+    - entityRef: blueprint/eshop/ordering-api/program
+      type: background-worker
+      name: Program
+      isTest: false
+      properties:
+        filepath: src/Ordering.API/Program.cs
+        containerId: ordering-api
+        technology: C# Domain Service
+        classification: default
+      x: 400
+      y: 300
+    - entityRef: blueprint/eshop/ordering-api/program-testing
+      type: background-worker
+      name: Program.Testing
+      isTest: false
+      properties:
+        filepath: src/Ordering.API/Program.Testing.cs
+        containerId: ordering-api
+        technology: C# Domain Service
+        classification: default
+      x: 760
+      y: 300
+  dependencies: []

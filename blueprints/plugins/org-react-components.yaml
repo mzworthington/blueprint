@@ -1,140 +1,131 @@
-entityRef: blueprint/plugins/org-react
-name: Org-react Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/plugins/org-react/setuptests
-    type: background-worker
-    name: setupTests Service
-    isTest: true
-    properties:
-      filepath: plugins/org-react/src/setupTests.ts
-      containerId: org-react
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 17
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 808
-    'y': 64
-  - entityRef: blueprint/plugins/org-react/grouplistpicker-test
-    type: gateway-api
-    name: GroupListPicker.test UI Component
-    isTest: true
-    properties:
-      filepath: plugins/org-react/src/components/GroupListPicker/GroupListPicker.test.tsx
-      containerId: org-react
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 88
-      sloc: 62
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 48
-    'y': 64
-  - entityRef: blueprint/plugins/org-react/grouplistpickerbutton
-    type: gateway-api
-    name: GroupListPickerButton UI Component
-    isTest: false
-    properties:
-      filepath: plugins/org-react/src/components/GroupListPicker/GroupListPickerButton.tsx
-      containerId: org-react
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 1
-      loc: 72
-      sloc: 50
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 48
-    'y': 704
-  - entityRef: blueprint/plugins/org-react/grouplistpicker
-    type: gateway-api
-    name: GroupListPicker UI Component
-    isTest: false
-    properties:
-      filepath: plugins/org-react/src/components/GroupListPicker/GroupListPicker.tsx
-      containerId: org-react
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 4
-      loc: 128
-      sloc: 93
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 48
-    'y': 384
-  - entityRef: blueprint/plugins/org-react/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/org-react/src/index.ts
-      containerId: org-react
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 18
-      sloc: 2
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 428
-    'y': 64
-dependencies:
-  - from: blueprint/plugins/org-react/grouplistpicker-test
-    to: blueprint/plugins/org-react/grouplistpicker
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/org-react/grouplistpicker-test
-    to: blueprint/plugins/kubernetes-react/test-utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/org-react/grouplistpicker-test
-    to: blueprint/plugins/catalog-react/testutils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/org-react/grouplistpickerbutton
-    to: blueprint/plugins/home/styles
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/org-react/grouplistpicker
-    to: blueprint/plugins/scaffolder/autocomplete
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/org-react/grouplistpicker
-    to: blueprint/plugins/org-react/grouplistpickerbutton
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/plugins/org-react
+  name: Org-react Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/plugins/org-react/setuptests
+      type: background-worker
+      name: setupTests Service
+      isTest: true
+      properties:
+        filepath: plugins/org-react/src/setupTests.ts
+        containerId: org-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 808
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 17
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/org-react/grouplistpicker-test
+      type: gateway-api
+      name: GroupListPicker.test Service
+      isTest: true
+      properties:
+        filepath: plugins/org-react/src/components/GroupListPicker/GroupListPicker.test.tsx
+        containerId: org-react
+        technology: React Component
+        classification: ui-import
+      x: 48
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 88
+        sloc: 62
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/org-react/grouplistpickerbutton
+      type: gateway-api
+      name: GroupListPickerButton Service
+      isTest: false
+      properties:
+        filepath: plugins/org-react/src/components/GroupListPicker/GroupListPickerButton.tsx
+        containerId: org-react
+        technology: React Component
+        classification: ui-import
+      x: 48
+      y: 704
+      forensics:
+        complexity: 1
+        loc: 72
+        sloc: 50
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/org-react/grouplistpicker
+      type: gateway-api
+      name: GroupListPicker Service
+      isTest: false
+      properties:
+        filepath: plugins/org-react/src/components/GroupListPicker/GroupListPicker.tsx
+        containerId: org-react
+        technology: React Component
+        classification: ui-import
+      x: 48
+      y: 384
+      forensics:
+        complexity: 4
+        loc: 128
+        sloc: 93
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/org-react/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: plugins/org-react/src/components/GroupListPicker/index.ts
+        containerId: org-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 428
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 19
+        sloc: 2
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+  dependencies:
+    - from: blueprint/plugins/org-react/grouplistpicker-test
+      to: blueprint/plugins/org-react/grouplistpicker
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/org-react/grouplistpicker-test
+      to: blueprint/plugins/kubernetes-react/test-utils
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/org-react/grouplistpicker-test
+      to: blueprint/plugins/catalog-react/testutils
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/org-react/grouplistpickerbutton
+      to: blueprint/plugins/home/styles
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/org-react/grouplistpicker
+      to: blueprint/plugins/scaffolder/autocomplete
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/org-react/grouplistpicker
+      to: blueprint/plugins/org-react/grouplistpickerbutton
+      type: direct-call
+      description: Calls module / service

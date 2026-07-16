@@ -1,256 +1,239 @@
-entityRef: blueprint/plugins/permission-react
-name: Permission-react Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/plugins/permission-react/permissionapi
-    type: background-worker
-    name: PermissionApi Service
-    isTest: false
-    properties:
-      filepath: plugins/permission-react/src/apis/PermissionApi.ts
-      containerId: permission-react
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 43
-      sloc: 13
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 48
-    'y': 704
-  - entityRef: blueprint/plugins/permission-react/identitypermissionapi-test
-    type: background-worker
-    name: IdentityPermissionApi.test Service
-    isTest: true
-    properties:
-      filepath: plugins/permission-react/src/apis/IdentityPermissionApi.test.ts
-      containerId: permission-react
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 98
-      sloc: 73
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 48
-    'y': 64
-  - entityRef: blueprint/plugins/permission-react/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/permission-react/src/index.ts
-      containerId: permission-react
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 25
-      sloc: 3
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 428
-    'y': 64
-  - entityRef: blueprint/plugins/permission-react/identitypermissionapi
-    type: background-worker
-    name: IdentityPermissionApi Service
-    isTest: false
-    properties:
-      filepath: plugins/permission-react/src/apis/IdentityPermissionApi.ts
-      containerId: permission-react
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 73
-      sloc: 46
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 48
-    'y': 384
-  - entityRef: blueprint/plugins/permission-react/setuptests
-    type: background-worker
-    name: setupTests Service
-    isTest: true
-    properties:
-      filepath: plugins/permission-react/src/setupTests.ts
-      containerId: permission-react
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 18
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1188
-    'y': 64
-  - entityRef: blueprint/plugins/permission-react/requirepermission-test
-    type: background-worker
-    name: RequirePermission.test Service
-    isTest: true
-    properties:
-      filepath: plugins/permission-react/src/components/RequirePermission.test.tsx
-      containerId: permission-react
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 108
-      sloc: 74
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 808
-    'y': 64
-  - entityRef: blueprint/plugins/permission-react/requirepermission
-    type: gateway-api
-    name: RequirePermission UI Component
-    isTest: false
-    properties:
-      filepath: plugins/permission-react/src/components/RequirePermission.tsx
-      containerId: permission-react
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 5
-      loc: 83
-      sloc: 42
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 808
-    'y': 384
-  - entityRef: blueprint/plugins/permission-react/usepermission-test
-    type: gateway-api
-    name: usePermission.test UI Component
-    isTest: true
-    properties:
-      filepath: plugins/permission-react/src/hooks/usePermission.test.tsx
-      containerId: permission-react
-      technology: React Component
-      classification: ui-import
-    forensics:
-      complexity: 4
-      loc: 89
-      sloc: 60
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1568
-    'y': 64
-  - entityRef: blueprint/plugins/permission-react/usepermission
-    type: background-worker
-    name: usePermission Service
-    isTest: false
-    properties:
-      filepath: plugins/permission-react/src/hooks/usePermission.ts
-      containerId: permission-react
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 5
-      loc: 86
-      sloc: 41
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1568
-    'y': 384
-dependencies:
-  - from: blueprint/plugins/permission-react/identitypermissionapi-test
-    to: blueprint/plugins/home/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-react/identitypermissionapi-test
-    to: blueprint/plugins/kubernetes-react/test-utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-react/identitypermissionapi-test
-    to: blueprint/plugins/permission-react/identitypermissionapi
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-react/identitypermissionapi
-    to: blueprint/plugins/permission-react/permissionapi
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-react/identitypermissionapi
-    to: blueprint/plugins/home/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-react/requirepermission-test
-    to: blueprint/plugins/permission-react/requirepermission
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-react/requirepermission-test
-    to: blueprint/plugins/techdocs/hooks
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-react/requirepermission-test
-    to: blueprint/plugins/kubernetes-react/test-utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-react/requirepermission
-    to: blueprint/plugins/techdocs/hooks
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-react/usepermission-test
-    to: blueprint/plugins/permission-react/usepermission
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-react/usepermission-test
-    to: blueprint/plugins/kubernetes-react/test-utils
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-react/usepermission-test
-    to: blueprint/plugins/catalog/apis
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/permission-react/usepermission
-    to: blueprint/plugins/catalog/apis
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/plugins/permission-react
+  name: Permission-react Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/plugins/permission-react/permissionapi
+      type: rest-api
+      name: PermissionApi Service
+      isTest: false
+      properties:
+        filepath: plugins/permission-react/src/apis/PermissionApi.ts
+        containerId: permission-react
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 48
+      y: 704
+      forensics:
+        complexity: 1
+        loc: 43
+        sloc: 13
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/permission-react/identitypermissionapi-test
+      type: rest-api
+      name: IdentityPermissionApi.test Service
+      isTest: true
+      properties:
+        filepath: plugins/permission-react/src/apis/IdentityPermissionApi.test.ts
+        containerId: permission-react
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 48
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 98
+        sloc: 73
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/permission-react/index
+      type: rest-api
+      name: index Service
+      isTest: false
+      properties:
+        filepath: plugins/permission-react/src/apis/index.ts
+        containerId: permission-react
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 428
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 20
+        sloc: 3
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/permission-react/identitypermissionapi
+      type: rest-api
+      name: IdentityPermissionApi Service
+      isTest: false
+      properties:
+        filepath: plugins/permission-react/src/apis/IdentityPermissionApi.ts
+        containerId: permission-react
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 48
+      y: 384
+      forensics:
+        complexity: 1
+        loc: 73
+        sloc: 46
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/permission-react/setuptests
+      type: background-worker
+      name: setupTests Service
+      isTest: true
+      properties:
+        filepath: plugins/permission-react/src/setupTests.ts
+        containerId: permission-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 1188
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 18
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/permission-react/requirepermission-test
+      type: background-worker
+      name: RequirePermission.test Service
+      isTest: true
+      properties:
+        filepath: plugins/permission-react/src/components/RequirePermission.test.tsx
+        containerId: permission-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 808
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 108
+        sloc: 74
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/permission-react/requirepermission
+      type: gateway-api
+      name: RequirePermission Service
+      isTest: false
+      properties:
+        filepath: plugins/permission-react/src/components/RequirePermission.tsx
+        containerId: permission-react
+        technology: React Component
+        classification: ui-import
+      x: 808
+      y: 384
+      forensics:
+        complexity: 5
+        loc: 83
+        sloc: 42
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/permission-react/usepermission-test
+      type: gateway-api
+      name: usePermission.test Service
+      isTest: true
+      properties:
+        filepath: plugins/permission-react/src/hooks/usePermission.test.tsx
+        containerId: permission-react
+        technology: React Component
+        classification: ui-import
+      x: 1568
+      y: 64
+      forensics:
+        complexity: 4
+        loc: 89
+        sloc: 60
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/permission-react/usepermission
+      type: background-worker
+      name: usePermission Service
+      isTest: false
+      properties:
+        filepath: plugins/permission-react/src/hooks/usePermission.ts
+        containerId: permission-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 1568
+      y: 384
+      forensics:
+        complexity: 5
+        loc: 86
+        sloc: 41
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+  dependencies:
+    - from: blueprint/plugins/permission-react/identitypermissionapi-test
+      to: blueprint/plugins/home/config
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/permission-react/identitypermissionapi-test
+      to: blueprint/plugins/kubernetes-react/test-utils
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/permission-react/identitypermissionapi-test
+      to: blueprint/plugins/permission-react/identitypermissionapi
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/permission-react/identitypermissionapi
+      to: blueprint/plugins/permission-react/permissionapi
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/permission-react/identitypermissionapi
+      to: blueprint/plugins/home/config
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/permission-react/requirepermission-test
+      to: blueprint/plugins/permission-react/requirepermission
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/permission-react/requirepermission-test
+      to: blueprint/plugins/techdocs/hooks
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/permission-react/requirepermission-test
+      to: blueprint/plugins/kubernetes-react/test-utils
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/permission-react/requirepermission
+      to: blueprint/plugins/techdocs/hooks
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/permission-react/usepermission-test
+      to: blueprint/plugins/permission-react/usepermission
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/permission-react/usepermission-test
+      to: blueprint/plugins/kubernetes-react/test-utils
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/permission-react/usepermission-test
+      to: blueprint/plugins/catalog/apis
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/permission-react/usepermission
+      to: blueprint/plugins/catalog/apis
+      type: direct-call
+      description: Calls module / service

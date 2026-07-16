@@ -1,88 +1,83 @@
-entityRef: blueprint/plugins/scaffolder-node-test-utils
-name: Scaffolder-node-test-utils Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/plugins/scaffolder-node-test-utils/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-node-test-utils/src/index.ts
-      containerId: scaffolder-node-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 18
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 40
-  - entityRef: blueprint/plugins/scaffolder-node-test-utils/loggertowinstonlogger
-    type: background-worker
-    name: loggerToWinstonLogger Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-node-test-utils/src/actions/loggerToWinstonLogger.ts
-      containerId: scaffolder-node-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 7
-      loc: 68
-      sloc: 43
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 40
-  - entityRef: blueprint/plugins/scaffolder-node-test-utils/mockactioncontext
-    type: background-worker
-    name: mockActionContext Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-node-test-utils/src/actions/mockActionContext.ts
-      containerId: scaffolder-node-test-utils
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 9
-      loc: 91
-      sloc: 62
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 300
-dependencies:
-  - from: blueprint/plugins/scaffolder-node-test-utils/mockactioncontext
-    to: blueprint/plugins/auth-backend/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node-test-utils/mockactioncontext
-    to: blueprint/plugins/permission-node/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node-test-utils/mockactioncontext
-    to: blueprint/plugins/scaffolder-node-test-utils/loggertowinstonlogger
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-node-test-utils/loggertowinstonlogger
-    to: blueprint/plugins/auth-backend/types
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/plugins/scaffolder-node-test-utils
+  name: Scaffolder-node-test-utils Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/plugins/scaffolder-node-test-utils/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: plugins/scaffolder-node-test-utils/src/actions/index.ts
+        containerId: scaffolder-node-test-utils
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 18
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/scaffolder-node-test-utils/loggertowinstonlogger
+      type: background-worker
+      name: loggerToWinstonLogger Service
+      isTest: false
+      properties:
+        filepath: plugins/scaffolder-node-test-utils/src/actions/loggerToWinstonLogger.ts
+        containerId: scaffolder-node-test-utils
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 40
+      forensics:
+        complexity: 7
+        loc: 68
+        sloc: 43
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/scaffolder-node-test-utils/mockactioncontext
+      type: background-worker
+      name: mockActionContext Service
+      isTest: false
+      properties:
+        filepath: plugins/scaffolder-node-test-utils/src/actions/mockActionContext.ts
+        containerId: scaffolder-node-test-utils
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 300
+      forensics:
+        complexity: 9
+        loc: 91
+        sloc: 62
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+  dependencies:
+    - from: blueprint/plugins/scaffolder-node-test-utils/mockactioncontext
+      to: blueprint/plugins/auth-backend/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/scaffolder-node-test-utils/mockactioncontext
+      to: blueprint/plugins/permission-node/alpha
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/scaffolder-node-test-utils/mockactioncontext
+      to: blueprint/plugins/scaffolder-node-test-utils/loggertowinstonlogger
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/scaffolder-node-test-utils/loggertowinstonlogger
+      to: blueprint/plugins/auth-backend/types
+      type: direct-call
+      description: Calls module / service

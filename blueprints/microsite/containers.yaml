@@ -1,66 +1,64 @@
-entityRef: blueprint/microsite
-name: Microsite Containers
-version: 1.0.0
-level: container
-nodes:
-  - entityRef: blueprint/microsite/microsite
-    type: container
-    name: Microsite Service
-    isTest: false
-    forensics:
-      complexity: 8
-      churn: 6
-      hotspotScore: 0
-      authorCount: 1
-      fileCount: 6
-      hotspotCount: 0
-      knowledgeSiloCount: 0
-      classifications: []
-      sinceDays: 500
-    x: 48
-    'y': 704
-  - entityRef: blueprint/microsite/components
-    type: container
-    name: Components Service
-    isTest: false
-    forensics:
-      complexity: 8
-      churn: 6
-      hotspotScore: 0
-      authorCount: 1
-      fileCount: 6
-      hotspotCount: 0
-      knowledgeSiloCount: 0
-      classifications: []
-      sinceDays: 500
-    x: 48
-    'y': 64
-  - entityRef: blueprint/microsite/pages
-    type: container
-    name: Pages Service
-    isTest: false
-    forensics:
-      complexity: 4
-      churn: 5
-      hotspotScore: 0
-      authorCount: 1
-      fileCount: 5
-      hotspotCount: 0
-      knowledgeSiloCount: 0
-      classifications: []
-      sinceDays: 500
-    x: 268
-    'y': 384
-dependencies:
-  - from: blueprint/microsite/components
-    to: blueprint/microsite/pages
-    type: inter-container
-  - from: blueprint/microsite/components
-    to: blueprint/microsite/microsite
-    type: inter-container
-  - from: blueprint/microsite/pages
-    to: blueprint/microsite/components
-    type: inter-container
-  - from: blueprint/microsite/pages
-    to: blueprint/microsite/microsite
-    type: inter-container
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/microsite
+  name: Microsite Containers
+  version: 1.0.0
+  level: container
+  nodes:
+    - entityRef: blueprint/microsite/microsite
+      type: container
+      name: Microsite Service
+      isTest: false
+      x: 48
+      y: 704
+      forensics:
+        complexity: 8
+        churn: 6
+        hotspotScore: 0
+        authorCount: 1
+        fileCount: 6
+        hotspotCount: 0
+        knowledgeSiloCount: 0
+        sinceDays: 500
+    - entityRef: blueprint/microsite/components
+      type: container
+      name: Components Service
+      isTest: false
+      x: 48
+      y: 64
+      forensics:
+        complexity: 8
+        churn: 6
+        hotspotScore: 0
+        authorCount: 1
+        fileCount: 6
+        hotspotCount: 0
+        knowledgeSiloCount: 0
+        sinceDays: 500
+    - entityRef: blueprint/microsite/pages
+      type: container
+      name: Pages Service
+      isTest: false
+      x: 268
+      y: 384
+      forensics:
+        complexity: 3
+        churn: 5
+        hotspotScore: 0
+        authorCount: 1
+        fileCount: 5
+        hotspotCount: 0
+        knowledgeSiloCount: 0
+        sinceDays: 500
+  dependencies:
+    - from: blueprint/microsite/components
+      to: blueprint/microsite/pages
+      type: inter-container
+    - from: blueprint/microsite/components
+      to: blueprint/microsite/microsite
+      type: inter-container
+    - from: blueprint/microsite/pages
+      to: blueprint/microsite/components
+      type: inter-container
+    - from: blueprint/microsite/pages
+      to: blueprint/microsite/microsite
+      type: inter-container

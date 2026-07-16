@@ -1,98 +1,91 @@
-entityRef: blueprint/plugins/search-common
-name: Search-common Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/plugins/search-common/deprecated
-    type: background-worker
-    name: deprecated Service
-    isTest: false
-    properties:
-      filepath: plugins/search-common/src/deprecated.ts
-      containerId: search-common
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 69
-      sloc: 14
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 40
-  - entityRef: blueprint/plugins/search-common/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/search-common/src/index.ts
-      containerId: search-common
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 25
-      sloc: 2
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 40
-  - entityRef: blueprint/plugins/search-common/types
-    type: background-worker
-    name: types Service
-    isTest: false
-    properties:
-      filepath: plugins/search-common/src/types.ts
-      containerId: search-common
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 209
-      sloc: 55
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 300
-  - entityRef: blueprint/plugins/search-common/index-test
-    type: background-worker
-    name: index.test Service
-    isTest: true
-    properties:
-      filepath: plugins/search-common/src/index.test.ts
-      containerId: search-common
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 25
-      sloc: 6
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 300
-dependencies:
-  - from: blueprint/plugins/search-common/deprecated
-    to: blueprint/plugins/search-common/types
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/plugins/search-common
+  name: Search-common Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/plugins/search-common/deprecated
+      type: background-worker
+      name: deprecated Service
+      isTest: false
+      properties:
+        filepath: plugins/search-common/src/deprecated.ts
+        containerId: search-common
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 69
+        sloc: 14
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/search-common/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: plugins/search-common/src/index.ts
+        containerId: search-common
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 25
+        sloc: 2
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/search-common/types
+      type: background-worker
+      name: types Service
+      isTest: false
+      properties:
+        filepath: plugins/search-common/src/types.ts
+        containerId: search-common
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 300
+      forensics:
+        complexity: 1
+        loc: 209
+        sloc: 55
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/search-common/index-test
+      type: background-worker
+      name: index.test Service
+      isTest: true
+      properties:
+        filepath: plugins/search-common/src/index.test.ts
+        containerId: search-common
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 300
+      forensics:
+        complexity: 1
+        loc: 25
+        sloc: 6
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+  dependencies:
+    - from: blueprint/plugins/search-common/deprecated
+      to: blueprint/plugins/search-common/types
+      type: direct-call
+      description: Calls module / service

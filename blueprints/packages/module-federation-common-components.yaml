@@ -1,170 +1,159 @@
-entityRef: blueprint/packages/module-federation-common
-name: Module-federation-common Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/packages/module-federation-common/defaults
-    type: background-worker
-    name: defaults Service
-    isTest: false
-    properties:
-      filepath: packages/module-federation-common/src/defaults.ts
-      containerId: module-federation-common
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 105
-      sloc: 61
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 48
-    'y': 384
-  - entityRef: blueprint/packages/module-federation-common/defaults-test
-    type: background-worker
-    name: defaults.test Service
-    isTest: true
-    properties:
-      filepath: packages/module-federation-common/src/defaults.test.ts
-      containerId: module-federation-common
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 46
-      sloc: 25
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 48
-    'y': 64
-  - entityRef: blueprint/packages/module-federation-common/loadmodulefederationhostshared-test
-    type: background-worker
-    name: loadModuleFederationHostShared.test Service
-    isTest: true
-    properties:
-      filepath: packages/module-federation-common/src/loadModuleFederationHostShared.test.ts
-      containerId: module-federation-common
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 316
-      sloc: 272
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 808
-    'y': 64
-  - entityRef: blueprint/packages/module-federation-common/types
-    type: background-worker
-    name: types Service
-    isTest: false
-    properties:
-      filepath: packages/module-federation-common/src/types.ts
-      containerId: module-federation-common
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 94
-      sloc: 36
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 808
-    'y': 704
-  - entityRef: blueprint/packages/module-federation-common/loadmodulefederationhostshared
-    type: background-worker
-    name: loadModuleFederationHostShared Service
-    isTest: false
-    properties:
-      filepath: packages/module-federation-common/src/loadModuleFederationHostShared.ts
-      containerId: module-federation-common
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 5
-      loc: 72
-      sloc: 46
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 808
-    'y': 384
-  - entityRef: blueprint/packages/module-federation-common/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/module-federation-common/src/index.ts
-      containerId: module-federation-common
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 37
-      sloc: 12
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 428
-    'y': 64
-dependencies:
-  - from: blueprint/packages/module-federation-common/defaults
-    to: blueprint/packages/module-federation-common/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/module-federation-common/defaults-test
-    to: blueprint/packages/module-federation-common/defaults
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/module-federation-common/loadmodulefederationhostshared-test
-    to: blueprint/packages/module-federation-common/loadmodulefederationhostshared
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/module-federation-common/loadmodulefederationhostshared-test
-    to: blueprint/packages/module-federation-common/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/module-federation-common/loadmodulefederationhostshared-test
-    to: blueprint/packages/cli-common/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/module-federation-common/loadmodulefederationhostshared
-    to: blueprint/packages/module-federation-common/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/module-federation-common/loadmodulefederationhostshared
-    to: blueprint/packages/cli-common/errors
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app-defaults/createapp
-    to: blueprint/packages/module-federation-common/defaults
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/packages/module-federation-common
+  name: Module-federation-common Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/packages/module-federation-common/defaults
+      type: background-worker
+      name: defaults Service
+      isTest: false
+      properties:
+        filepath: packages/module-federation-common/src/defaults.ts
+        containerId: module-federation-common
+        technology: TypeScript Domain Service
+        classification: default
+      x: 48
+      y: 384
+      forensics:
+        complexity: 1
+        loc: 105
+        sloc: 61
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/packages/module-federation-common/defaults-test
+      type: background-worker
+      name: defaults.test Service
+      isTest: true
+      properties:
+        filepath: packages/module-federation-common/src/defaults.test.ts
+        containerId: module-federation-common
+        technology: TypeScript Domain Service
+        classification: default
+      x: 48
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 46
+        sloc: 25
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/packages/module-federation-common/loadmodulefederationhostshared-test
+      type: background-worker
+      name: loadModuleFederationHostShared.test Service
+      isTest: true
+      properties:
+        filepath: packages/module-federation-common/src/loadModuleFederationHostShared.test.ts
+        containerId: module-federation-common
+        technology: TypeScript Domain Service
+        classification: default
+      x: 808
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 316
+        sloc: 272
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/packages/module-federation-common/types
+      type: background-worker
+      name: types Service
+      isTest: false
+      properties:
+        filepath: packages/module-federation-common/src/types.ts
+        containerId: module-federation-common
+        technology: TypeScript Domain Service
+        classification: default
+      x: 808
+      y: 704
+      forensics:
+        complexity: 1
+        loc: 94
+        sloc: 36
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/packages/module-federation-common/loadmodulefederationhostshared
+      type: background-worker
+      name: loadModuleFederationHostShared Service
+      isTest: false
+      properties:
+        filepath: packages/module-federation-common/src/loadModuleFederationHostShared.ts
+        containerId: module-federation-common
+        technology: TypeScript Domain Service
+        classification: default
+      x: 808
+      y: 384
+      forensics:
+        complexity: 5
+        loc: 72
+        sloc: 46
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/packages/module-federation-common/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: packages/module-federation-common/src/index.ts
+        containerId: module-federation-common
+        technology: TypeScript Domain Service
+        classification: default
+      x: 428
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 37
+        sloc: 12
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+  dependencies:
+    - from: blueprint/packages/module-federation-common/defaults
+      to: blueprint/packages/module-federation-common/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/module-federation-common/defaults-test
+      to: blueprint/packages/module-federation-common/defaults
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/module-federation-common/loadmodulefederationhostshared-test
+      to: blueprint/packages/module-federation-common/loadmodulefederationhostshared
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/module-federation-common/loadmodulefederationhostshared-test
+      to: blueprint/packages/module-federation-common/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/module-federation-common/loadmodulefederationhostshared-test
+      to: blueprint/packages/cli-common/errors
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/module-federation-common/loadmodulefederationhostshared
+      to: blueprint/packages/module-federation-common/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/module-federation-common/loadmodulefederationhostshared
+      to: blueprint/packages/cli-common/errors
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/app-defaults/createapp
+      to: blueprint/packages/module-federation-common/defaults
+      type: direct-call
+      description: Calls module / service

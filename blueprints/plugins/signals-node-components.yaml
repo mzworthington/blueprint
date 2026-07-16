@@ -1,300 +1,287 @@
-entityRef: blueprint/plugins/signals-node
-name: Signals-node Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/plugins/signals-node/defaultsignalsservice
-    type: background-worker
-    name: DefaultSignalsService Service
-    isTest: false
-    properties:
-      filepath: plugins/signals-node/src/DefaultSignalsService.ts
-      containerId: signals-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 46
-      sloc: 21
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 48
-    'y': 384
-  - entityRef: blueprint/plugins/signals-node/defaultsignalsservice-test
-    type: background-worker
-    name: DefaultSignalsService.test Service
-    isTest: true
-    properties:
-      filepath: plugins/signals-node/src/DefaultSignalsService.test.ts
-      containerId: signals-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 40
-      sloc: 21
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 48
-    'y': 64
-  - entityRef: blueprint/plugins/signals-node/setuptests
-    type: background-worker
-    name: setupTests Service
-    isTest: true
-    properties:
-      filepath: plugins/signals-node/src/setupTests.ts
-      containerId: signals-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 17
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1188
-    'y': 64
-  - entityRef: blueprint/plugins/signals-node/types
-    type: background-worker
-    name: types Service
-    isTest: false
-    properties:
-      filepath: plugins/signals-node/src/types.ts
-      containerId: signals-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 34
-      sloc: 12
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 868
-    'y': 1024
-  - entityRef: blueprint/plugins/signals-node/signalsservice
-    type: background-worker
-    name: SignalsService Service
-    isTest: false
-    properties:
-      filepath: plugins/signals-node/src/SignalsService.ts
-      containerId: signals-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 29
-      sloc: 7
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1088
-    'y': 704
-  - entityRef: blueprint/plugins/signals-node/lib
-    type: background-worker
-    name: lib Service
-    isTest: false
-    properties:
-      filepath: plugins/signals-node/src/lib.ts
-      containerId: signals-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 45
-      sloc: 22
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 808
-    'y': 64
-  - entityRef: blueprint/plugins/signals-node/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/signals-node/src/index.ts
-      containerId: signals-node
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 21
-      sloc: 4
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 428
-    'y': 64
-dependencies:
-  - from: blueprint/plugins/catalog-backend/jsonschemarefplaceholderresolver-test
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/openapirefprocessor-test
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/openapirefprocessor
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/jsonschemarefplaceholderresolver
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/githubmultiorgentityprovider
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/githuborgreaderprocessor
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/githubdiscoveryprocessor-test
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/githubdiscoveryprocessor
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/githubmultiorgreaderprocessor
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/bitbucketserverlocationparser
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/bitbucketserverentityprovider
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/bitbucketserverentityprovider
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/bitbucketserverentityprovider-test
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/awseksclusterprocessor
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/signals-node/defaultsignalsservice
-    to: blueprint/plugins/signals-node/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/signals-node/defaultsignalsservice
-    to: blueprint/plugins/signals-node/signalsservice
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/signals-node/defaultsignalsservice
-    to: blueprint/plugins/signals-node/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/signals-node/defaultsignalsservice-test
-    to: blueprint/plugins/signals-node/defaultsignalsservice
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/signals-node/defaultsignalsservice-test
-    to: blueprint/plugins/signals-node/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/signals-node/signalsservice
-    to: blueprint/plugins/signals-node/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/signals-node/signalsservice
-    to: blueprint/plugins/signals-node/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/signals-node/lib
-    to: blueprint/plugins/signals-node/defaultsignalsservice
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/signals-node/lib
-    to: blueprint/plugins/signals-node/signalsservice
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/azuredevopsentityprovider
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/azuredevopsentityprovider-test
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/azuredevopsentityprovider-test
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/azuredevopsdiscoveryprocessor-test
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/azuredevopsdiscoveryprocessor
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-react/createasyncvalidators
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-react/usetemplateschema
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/gitlabdiscoveryprocessor
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/gitlabdiscoveryentityprovider
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/config
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/gitlaborgdiscoveryentityprovider
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend/gitlabdiscoveryprocessor-test
-    to: blueprint/plugins/signals-node/lib
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/plugins/signals-node
+  name: Signals-node Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/plugins/signals-node/defaultsignalsservice
+      type: background-worker
+      name: DefaultSignalsService Service
+      isTest: false
+      properties:
+        filepath: plugins/signals-node/src/DefaultSignalsService.ts
+        containerId: signals-node
+        technology: TypeScript Domain Service
+        classification: default
+      x: 48
+      y: 384
+      forensics:
+        complexity: 1
+        loc: 46
+        sloc: 21
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/signals-node/defaultsignalsservice-test
+      type: background-worker
+      name: DefaultSignalsService.test Service
+      isTest: true
+      properties:
+        filepath: plugins/signals-node/src/DefaultSignalsService.test.ts
+        containerId: signals-node
+        technology: TypeScript Domain Service
+        classification: default
+      x: 48
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 40
+        sloc: 21
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/signals-node/setuptests
+      type: background-worker
+      name: setupTests Service
+      isTest: true
+      properties:
+        filepath: plugins/signals-node/src/setupTests.ts
+        containerId: signals-node
+        technology: TypeScript Domain Service
+        classification: default
+      x: 1188
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 17
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/signals-node/types
+      type: background-worker
+      name: types Service
+      isTest: false
+      properties:
+        filepath: plugins/signals-node/src/types.ts
+        containerId: signals-node
+        technology: TypeScript Domain Service
+        classification: default
+      x: 868
+      y: 1024
+      forensics:
+        complexity: 1
+        loc: 34
+        sloc: 12
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/signals-node/signalsservice
+      type: background-worker
+      name: SignalsService Service
+      isTest: false
+      properties:
+        filepath: plugins/signals-node/src/SignalsService.ts
+        containerId: signals-node
+        technology: TypeScript Domain Service
+        classification: default
+      x: 1088
+      y: 704
+      forensics:
+        complexity: 1
+        loc: 29
+        sloc: 7
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/signals-node/lib
+      type: background-worker
+      name: lib Service
+      isTest: false
+      properties:
+        filepath: plugins/signals-node/src/lib.ts
+        containerId: signals-node
+        technology: TypeScript Domain Service
+        classification: default
+      x: 808
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 45
+        sloc: 22
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/signals-node/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: plugins/signals-node/src/index.ts
+        containerId: signals-node
+        technology: TypeScript Domain Service
+        classification: default
+      x: 428
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 21
+        sloc: 4
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+  dependencies:
+    - from: blueprint/plugins/catalog-backend/jsonschemarefplaceholderresolver-test
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/openapirefprocessor-test
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/openapirefprocessor
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/jsonschemarefplaceholderresolver
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/githubmultiorgentityprovider
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/githuborgreaderprocessor
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/githubdiscoveryprocessor-test
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/githubdiscoveryprocessor
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/githubmultiorgreaderprocessor
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/bitbucketserverlocationparser
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/bitbucketserverentityprovider
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/bitbucketserverentityprovider
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/bitbucketserverentityprovider-test
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/awseksclusterprocessor
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/signals-node/defaultsignalsservice
+      to: blueprint/plugins/signals-node/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/signals-node/defaultsignalsservice
+      to: blueprint/plugins/signals-node/signalsservice
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/signals-node/defaultsignalsservice
+      to: blueprint/plugins/signals-node/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/signals-node/defaultsignalsservice-test
+      to: blueprint/plugins/signals-node/defaultsignalsservice
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/signals-node/defaultsignalsservice-test
+      to: blueprint/plugins/signals-node/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/signals-node/signalsservice
+      to: blueprint/plugins/signals-node/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/signals-node/signalsservice
+      to: blueprint/plugins/signals-node/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/signals-node/lib
+      to: blueprint/plugins/signals-node/defaultsignalsservice
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/signals-node/lib
+      to: blueprint/plugins/signals-node/signalsservice
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/azuredevopsentityprovider
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/azuredevopsentityprovider-test
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/azuredevopsentityprovider-test
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/azuredevopsdiscoveryprocessor-test
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/azuredevopsdiscoveryprocessor
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/scaffolder-react/createasyncvalidators
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/scaffolder-react/usetemplateschema
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/gitlabdiscoveryprocessor
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/gitlabdiscoveryentityprovider
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/config
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/gitlaborgdiscoveryentityprovider
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend/gitlabdiscoveryprocessor-test
+      to: blueprint/plugins/signals-node/lib
+      type: direct-call
+      description: Calls module / service

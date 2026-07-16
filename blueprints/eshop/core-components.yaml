@@ -1,50 +1,49 @@
-entityRef: blueprint/eshop/core
-name: Core Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/eshop/core/activityextensions
-    type: background-worker
-    name: ActivityExtensions
-    isTest: false
-    properties:
-      filepath: src/Shared/ActivityExtensions.cs
-      containerId: core
-      technology: C# Domain Service
-      classification: default
-    x: 40
-    'y': 40
-  - entityRef: blueprint/eshop/core/migratedbcontextextensions
-    type: relational-database
-    name: MigrateDbContextExtensions
-    isTest: false
-    properties:
-      filepath: src/Shared/MigrateDbContextExtensions.cs
-      containerId: core
-      technology: Entity Framework / DB Context
-      classification: database-marker
-    x: 400
-    'y': 40
-  - entityRef: blueprint/eshop/core/playwright-config
-    type: background-worker
-    name: playwright.config Service
-    isTest: false
-    properties:
-      filepath: playwright.config.ts
-      containerId: core
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 4
-      loc: 96
-      sloc: 40
-      churn: 0
-      authorCount: 0
-      topAuthorPercent: 0
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 90
-    x: 40
-    'y': 300
-dependencies: []
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/eshop/core
+  name: Core Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/eshop/core/activityextensions
+      type: background-worker
+      name: ActivityExtensions
+      isTest: false
+      properties:
+        filepath: src/Shared/ActivityExtensions.cs
+        containerId: core
+        technology: C# Domain Service
+        classification: default
+      x: 40
+      y: 40
+    - entityRef: blueprint/eshop/core/migratedbcontextextensions
+      type: relational-database
+      name: MigrateDbContextExtensions
+      isTest: false
+      properties:
+        filepath: src/Shared/MigrateDbContextExtensions.cs
+        containerId: core
+        technology: Entity Framework / DB Context
+        classification: database-marker
+      x: 400
+      y: 40
+    - entityRef: blueprint/eshop/core/playwright-config
+      type: background-worker
+      name: playwright.config Service
+      isTest: false
+      properties:
+        filepath: playwright.config.ts
+        containerId: core
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 300
+      forensics:
+        complexity: 4
+        loc: 96
+        sloc: 40
+        churn: 0
+        authorCount: 0
+        topAuthorPercent: 0
+        hotspotScore: 0
+        sinceDays: 500
+  dependencies: []

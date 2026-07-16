@@ -1,39 +1,40 @@
-entityRef: blueprint/eshop/paymentprocessor
-name: PaymentProcessor Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/eshop/paymentprocessor/integrationevents
-    type: event-broker
-    name: IntegrationEvents Layer
-    isTest: false
-    properties:
-      filepath: src/PaymentProcessor/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs
-      containerId: paymentprocessor
-      technology: C# Event Client
-      classification: event-marker
-    x: 40
-    'y': 40
-  - entityRef: blueprint/eshop/paymentprocessor/paymentoptions
-    type: background-worker
-    name: PaymentOptions
-    isTest: false
-    properties:
-      filepath: src/PaymentProcessor/PaymentOptions.cs
-      containerId: paymentprocessor
-      technology: C# Domain Service
-      classification: default
-    x: 400
-    'y': 40
-  - entityRef: blueprint/eshop/paymentprocessor/program
-    type: background-worker
-    name: Program
-    isTest: false
-    properties:
-      filepath: src/PaymentProcessor/Program.cs
-      containerId: paymentprocessor
-      technology: C# Domain Service
-      classification: default
-    x: 40
-    'y': 300
-dependencies: []
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/eshop/paymentprocessor
+  name: PaymentProcessor Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/eshop/paymentprocessor/integrationevents
+      type: event-broker
+      name: IntegrationEvents Layer
+      isTest: false
+      properties:
+        filepath: src/PaymentProcessor/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs
+        containerId: paymentprocessor
+        technology: C# Event Client
+        classification: event-marker
+      x: 40
+      y: 40
+    - entityRef: blueprint/eshop/paymentprocessor/paymentoptions
+      type: background-worker
+      name: PaymentOptions
+      isTest: false
+      properties:
+        filepath: src/PaymentProcessor/PaymentOptions.cs
+        containerId: paymentprocessor
+        technology: C# Domain Service
+        classification: default
+      x: 400
+      y: 40
+    - entityRef: blueprint/eshop/paymentprocessor/program
+      type: background-worker
+      name: Program
+      isTest: false
+      properties:
+        filepath: src/PaymentProcessor/Program.cs
+        containerId: paymentprocessor
+        technology: C# Domain Service
+        classification: default
+      x: 40
+      y: 300
+  dependencies: []

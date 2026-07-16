@@ -1,16 +1,26 @@
 import { describe, it, expect, beforeEach } from 'vitest';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { blueprintYamlLanguageServerDirective } from '@blueprint/core';
 import { ContextLevelWriter } from './contextLevelWriter.ts';
 import { ContainerLevelWriter } from './containerLevelWriter.ts';
 import { ComponentLevelWriter } from './componentLevelWriter.ts';
+import { resolveLocalSchemaUrl } from './baseWriter.ts';
 import type { SystemNode, SystemDependency } from '@blueprint/core';
 import { MockLayout, MockFileSystem, MockLogger } from '../test/fakes.ts';
 
-function expectSchemaDirective(yamlContent: string): void {
+function expectSchemaDirective(yamlContent: string, schemaUrl?: string): void {
   const firstLine = yamlContent.split('\n')[0];
-  expect(firstLine).toBe(blueprintYamlLanguageServerDirective());
-  expect(yamlContent.startsWith(`${blueprintYamlLanguageServerDirective()}\n`)).toBe(true);
+  expect(firstLine).toBe(blueprintYamlLanguageServerDirective(schemaUrl));
 }
+
+describe('resolveLocalSchemaUrl', () => {
+  it('resolves a path-relative schema from this repo blueprints tree', () => {
+    const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../../..');
+    const yamlPath = path.join(repoRoot, 'blueprints/cli/containers.yaml');
+    expect(resolveLocalSchemaUrl(yamlPath)).toBe('../../schemas/v2/blueprint.schema.json');
+  });
+});
 
 describe('BaseWriter YAML schema directive', () => {
   let layout: MockLayout;
@@ -85,8 +95,8 @@ describe('BaseWriter YAML schema directive', () => {
       containerNodesMap
     );
 
-    const written = [...fileSystem.writtenFiles.entries()].filter(([path]) =>
-      path.endsWith('-components.yaml')
+    const written = [...fileSystem.writtenFiles.entries()].filter(([p]) =>
+      p.endsWith('-components.yaml')
     );
     expect(written.length).toBeGreaterThan(0);
     for (const [, yamlContent] of written) {
