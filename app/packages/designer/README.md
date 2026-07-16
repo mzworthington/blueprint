@@ -11,6 +11,7 @@ It functions as a local-first, interactive diagramming canvas where designers ca
 - **Bi-directional Sync:** Edit diagrams graphically on the canvas, or edit the underlying declarative YAML configuration directly in the side-by-side text code viewer.
 - **C4 Architecture Navigation:** Double-click boundary nodes (e.g. system containers) to drill down into components, and press `Escape` to zoom back out to higher-level views.
 - **Local-first Sync:** System layouts are persisted dynamically using browser storage or synchronized with local files via file sync adapters.
+- **Offline / PWA:** Production builds register a service worker that precaches the app shell so returning visits work offline; local IndexedDB and File System Access continue without a network. Installable via the browser “Install app” / Add to Home Screen prompt.
 - **Design System Showcase:** Includes a built-in Design System Showcase page (`/design-system`) demonstrating all atomic component states, buttons, property panel attributes, and visual styles.
 
 ---

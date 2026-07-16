@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from './App';
+import { AppProvider } from './application/context/AppContext';
 import { useBlueprintStore } from './application/store/store';
 
 vi.mock('./ui/features/workspace/components/Searchbar/Searchbar', () => ({
@@ -18,6 +19,14 @@ vi.mock('@xyflow/react', () => ({
     setCenter: vi.fn(),
   }),
 }));
+
+function renderApp() {
+  return render(
+    <AppProvider>
+      <App />
+    </AppProvider>
+  );
+}
 
 describe('App Layout and Collapsible Panels', () => {
   const originalLocation = window.location;
@@ -60,7 +69,7 @@ describe('App Layout and Collapsible Panels', () => {
   });
 
   it('should have panels hidden by default and support toggling them', () => {
-    render(<App />);
+    renderApp();
 
     const leftToggle = screen.getByLabelText('Toggle Left Panel');
     const rightToggle = screen.getByLabelText('Toggle Right Panel');
@@ -97,7 +106,7 @@ describe('App Layout and Collapsible Panels', () => {
 
     useBlueprintStore.setState({ workspaceName: 'My Super Cool Workspace', isWorkspaceOpen: true });
 
-    render(<App />);
+    renderApp();
 
     expect(spyReplaceState).toHaveBeenCalledWith(null, '', '/workspace/my-super-cool-workspace');
 
@@ -153,7 +162,7 @@ describe('App Layout and Collapsible Panels', () => {
 
     const spySelectSystem = vi.spyOn(useBlueprintStore.getState(), 'selectSystem');
 
-    render(<App />);
+    renderApp();
 
     // Simulate navigating back/forward to target-system
     (window.location as any).pathname = '/workspace/target-system';

@@ -6,12 +6,15 @@ import {
 } from '../../infrastructure/fileSystem/fileSync';
 import { createBrowserLayoutRegistry } from '../../infrastructure/layout/createBrowserLayoutRegistry';
 import { ConsoleLoggerAdapter } from '../../infrastructure/logging/logger';
+import { BrowserNetworkStatusAdapter } from '../../infrastructure/network/browserNetworkStatus';
+import type { NetworkStatusPort } from '../../core';
 import { useBlueprintStore } from '../store/store';
 
 interface AppContextProps {
   fileSystemPort: typeof BrowserFileSystemAdapter;
   workspacePort: typeof BrowserWorkspaceAdapter;
   logger: typeof ConsoleLoggerAdapter;
+  networkStatus: NetworkStatusPort;
 }
 
 const AppContext = createContext<AppContextProps | null>(null);
@@ -35,6 +38,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         fileSystemPort: BrowserFileSystemAdapter,
         workspacePort: BrowserWorkspaceAdapter,
         logger: ConsoleLoggerAdapter,
+        networkStatus: BrowserNetworkStatusAdapter,
       }}
     >
       {children}

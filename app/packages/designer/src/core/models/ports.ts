@@ -100,3 +100,20 @@ export interface LayoutRegistryPort {
 export const noopLayoutRegistry: LayoutRegistryPort = {
   get: () => undefined,
 };
+
+/**
+ * Driven outbound port for runtime network connectivity belief
+ * (`navigator.onLine` / online-offline events in the browser).
+ * Not a guarantee of reachability — only what the host reports.
+ */
+export interface NetworkStatusPort {
+  isOnline(): boolean;
+  /** Subscribe to connectivity changes; returns unsubscribe. */
+  subscribe(listener: (online: boolean) => void): () => void;
+}
+
+/** Safe default: always online, no subscriptions (tests / SSR). */
+export const alwaysOnlineNetworkStatus: NetworkStatusPort = {
+  isOnline: () => true,
+  subscribe: () => () => {},
+};
