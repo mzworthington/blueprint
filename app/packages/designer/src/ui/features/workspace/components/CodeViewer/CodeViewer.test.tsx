@@ -144,6 +144,7 @@ nodes:
 
     expect(screen.getByRole('button', { name: /preview/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /code/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^import$/i })).toBeInTheDocument();
 
     const mockedSvg = await screen.findByText('Mocked Mermaid SVG');
     expect(mockedSvg).toBeInTheDocument();
@@ -151,6 +152,15 @@ nodes:
     fireEvent.click(screen.getByRole('button', { name: /code/i }));
 
     expect(screen.getByText(content => content.includes('graph TD'))).toBeInTheDocument();
+  });
+
+  it('should open mermaid import dialog from the mermaid tab', () => {
+    render(<CodeViewer />);
+
+    fireEvent.click(screen.getByRole('button', { name: /mermaid\.js/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^import$/i }));
+
+    expect(useBlueprintStore.getState().isImportMermaidOpen).toBe(true);
   });
 
   it('should filter test components from YAML, JSON, and Mermaid views based on showTests state', () => {

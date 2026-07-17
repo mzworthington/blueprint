@@ -1,4 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
+import { expectWorkspaceFolderActionAvailable, openWorkspaceFolder } from './helpers/toolbar';
 
 const DISK_CONTEXT_YAML = `entityRef: e2e
 name: E2E Context
@@ -222,10 +223,10 @@ test.describe('Disk-first workspace open', () => {
     await page.goto('/workspace');
 
     // Wait for app + Dexie to initialize, then plant a polluted draft.
-    await expect(page.getByTitle('Open a local directory workspace')).toBeVisible();
+    await expectWorkspaceFolderActionAvailable(page);
     await seedStaleDraft(page);
 
-    await page.getByTitle('Open a local directory workspace').click();
+    await openWorkspaceFolder(page);
 
     await expect(page.getByText('Loaded files from disk')).toBeVisible({ timeout: 10000 });
     await expect(page.getByText(/stale local draft/i)).toBeVisible();

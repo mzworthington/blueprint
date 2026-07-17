@@ -236,6 +236,7 @@ describe('Canvas Component', () => {
 
     render(<Canvas />);
 
+    fireEvent.click(screen.getByLabelText('Open menu'));
     fireEvent.click(screen.getByTitle('Open a local directory workspace'));
 
     await waitFor(() => {

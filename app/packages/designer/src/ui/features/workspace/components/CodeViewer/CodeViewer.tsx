@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import { Copy, Check, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Copy, Check, AlertCircle, CheckCircle2, GitMerge } from 'lucide-react';
 import { useCodeViewer } from './useCodeViewer';
 
 const MermaidPreview = lazy(() =>
@@ -22,6 +22,7 @@ export const CodeViewer: React.FC = () => {
     handleCopy,
     handleSaveYaml,
     handleSaveJson,
+    handleOpenMermaidImport,
     lastError,
     clearError,
     leftCollapsed,
@@ -164,22 +165,34 @@ export const CodeViewer: React.FC = () => {
                 <div />
               )}
 
-              <button
-                onClick={handleCopy}
-                className="px-3 py-1.5 rounded-lg bg-[#040914] border border-[#00f0ff]/20 hover:border-[#00f0ff]/50 hover:bg-[#00f0ff]/5 text-slate-300 hover:text-white transition flex items-center gap-1.5 text-xs font-semibold shadow-md cursor-pointer z-10"
-              >
-                {copied ? (
-                  <>
-                    <Check className="w-3.5 h-3.5 text-emerald-400" />
-                    <span className="text-emerald-400 font-bold">Copied!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-3.5 h-3.5" />
-                    <span>Copy</span>
-                  </>
-                )}
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleOpenMermaidImport}
+                  className="px-3 py-1.5 rounded-lg bg-[#040914] border border-[#00f0ff]/20 hover:border-[#00f0ff]/50 hover:bg-[#00f0ff]/5 text-[#00f0ff] hover:text-cyan-300 transition flex items-center gap-1.5 text-xs font-semibold shadow-md cursor-pointer z-10"
+                  title="Import Mermaid diagram into the active schema"
+                  id="import-mermaid-action"
+                >
+                  <GitMerge className="w-3.5 h-3.5" />
+                  <span>Import</span>
+                </button>
+
+                <button
+                  onClick={handleCopy}
+                  className="px-3 py-1.5 rounded-lg bg-[#040914] border border-[#00f0ff]/20 hover:border-[#00f0ff]/50 hover:bg-[#00f0ff]/5 text-slate-300 hover:text-white transition flex items-center gap-1.5 text-xs font-semibold shadow-md cursor-pointer z-10"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <span className="text-emerald-400 font-bold">Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5" />
+                      <span>Copy</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
 
             {activeTab === 'mermaid' && mermaidMode === 'preview' ? (

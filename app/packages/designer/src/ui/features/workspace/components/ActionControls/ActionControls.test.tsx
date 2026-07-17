@@ -1,7 +1,33 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ActionControls } from './ActionControls';
+import {
+  ToolbarOpenMenu,
+  ToolbarSaveButton,
+  ToolbarEditActions,
+  ToolbarOverflowMenu,
+} from './ActionControls';
 import { useBlueprintStore } from '../../../../../application/store/store';
+
+const toolbarActions = (
+  <div className="flex items-center gap-1.5">
+    <ToolbarOpenMenu />
+    <ToolbarSaveButton />
+    <ToolbarEditActions />
+    <ToolbarOverflowMenu />
+  </div>
+);
+
+function renderToolbarActions() {
+  return render(toolbarActions);
+}
+
+function openOpenMenu() {
+  fireEvent.click(screen.getByLabelText('Open menu'));
+}
+
+function openMoreMenu() {
+  fireEvent.click(screen.getByLabelText('More actions'));
+}
 
 describe('ActionControls Component', () => {
   beforeEach(() => {
@@ -20,6 +46,7 @@ describe('ActionControls Component', () => {
         dependencies: [],
       },
       syncExternalContainers: vi.fn(),
+      setIsDiffOpen: vi.fn(),
       past: [],
       future: [],
       undo: vi.fn(),
@@ -27,45 +54,51 @@ describe('ActionControls Component', () => {
       hasPendingChanges: false,
       isLoading: false,
       setIsLoading: vi.fn(),
+      layoutEngine: null,
+      setLayoutEngine: vi.fn(),
     });
   });
 
   it('shows pending changes button only when hasPendingChanges is true', () => {
-    const { rerender } = render(<ActionControls />);
+    const { rerender } = renderToolbarActions();
     expect(screen.queryByTitle('View pending local changes / diff')).not.toBeInTheDocument();
 
     useBlueprintStore.setState({ hasPendingChanges: true });
-    rerender(<ActionControls />);
+    rerender(toolbarActions);
+    openMoreMenu();
     expect(screen.getByTitle('View pending local changes / diff')).toBeInTheDocument();
   });
 
   it('renders correctly when workspace is closed', () => {
-    render(<ActionControls />);
+    renderToolbarActions();
 
-    const openFolderBtn = screen.getByTitle('Open a local directory workspace');
-    expect(openFolderBtn).toBeInTheDocument();
+    openOpenMenu();
+    expect(screen.getByTitle('Open a local directory workspace')).toBeInTheDocument();
     expect(screen.getByTitle('Open single YAML from disk')).toBeInTheDocument();
+
     expect(screen.getByTitle('Save YAML to disk')).toBeInTheDocument();
+
+    openMoreMenu();
     expect(screen.getByTitle('Clear canvas')).toBeInTheDocument();
   });
 
   it('renders correctly when workspace is open', () => {
     useBlueprintStore.setState({ isWorkspaceOpen: true });
-    render(<ActionControls />);
+    renderToolbarActions();
 
-    const openFolderBtn = screen.getByTitle('Open another folder workspace');
-    expect(openFolderBtn).toBeInTheDocument();
+    openOpenMenu();
+    expect(screen.getByTitle('Open another folder workspace')).toBeInTheDocument();
     expect(screen.getByTitle('Save diagram directly in folder')).toBeInTheDocument();
-    expect(screen.getByText('Save')).toBeInTheDocument();
+    expect(screen.getAllByText('Save').length).toBeGreaterThan(0);
   });
 
   it('triggers openWorkspaceDirectory on clicking Open Folder', () => {
     const openWorkspaceDirectoryMock = vi.fn();
     useBlueprintStore.setState({ openWorkspaceDirectory: openWorkspaceDirectoryMock });
 
-    render(<ActionControls />);
-    const btn = screen.getByTitle('Open a local directory workspace');
-    fireEvent.click(btn);
+    renderToolbarActions();
+    openOpenMenu();
+    fireEvent.click(screen.getByTitle('Open a local directory workspace'));
 
     expect(openWorkspaceDirectoryMock).toHaveBeenCalledTimes(1);
   });
@@ -74,9 +107,9 @@ describe('ActionControls Component', () => {
     const loadSchemaMock = vi.fn();
     useBlueprintStore.setState({ loadSchema: loadSchemaMock });
 
-    render(<ActionControls />);
-    const btn = screen.getByTitle('Open single YAML from disk');
-    fireEvent.click(btn);
+    renderToolbarActions();
+    openOpenMenu();
+    fireEvent.click(screen.getByTitle('Open single YAML from disk'));
 
     expect(loadSchemaMock).toHaveBeenCalledTimes(1);
   });
@@ -85,9 +118,8 @@ describe('ActionControls Component', () => {
     const saveSchemaMock = vi.fn();
     useBlueprintStore.setState({ saveSchema: saveSchemaMock });
 
-    render(<ActionControls />);
-    const btn = screen.getByTitle('Save YAML to disk');
-    fireEvent.click(btn);
+    renderToolbarActions();
+    fireEvent.click(screen.getByTitle('Save YAML to disk'));
 
     expect(saveSchemaMock).toHaveBeenCalledTimes(1);
   });
@@ -99,9 +131,8 @@ describe('ActionControls Component', () => {
       saveActiveDiagram: saveActiveDiagramMock,
     });
 
-    render(<ActionControls />);
-    const btn = screen.getByTitle('Save diagram directly in folder');
-    fireEvent.click(btn);
+    renderToolbarActions();
+    fireEvent.click(screen.getByTitle('Save diagram directly in folder'));
 
     expect(saveActiveDiagramMock).toHaveBeenCalledTimes(1);
   });
@@ -111,7 +142,6 @@ describe('ActionControls Component', () => {
     const setIsLoadingMock = vi.fn();
     useBlueprintStore.setState({ initSchema: initSchemaMock, setIsLoading: setIsLoadingMock });
 
-    // Mock dynamic import database object
     vi.mock('../../../../../infrastructure/db/db', () => ({
       db: {
         originalNodes: { clear: vi.fn().mockResolvedValue(undefined) },
@@ -123,11 +153,10 @@ describe('ActionControls Component', () => {
 
     const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(true);
 
-    render(<ActionControls />);
-    const btn = screen.getByTitle('Clear canvas');
-    fireEvent.click(btn);
+    renderToolbarActions();
+    openMoreMenu();
+    fireEvent.click(screen.getByTitle('Clear canvas'));
 
-    // Wait multiple ticks for async module import & clear operations to complete
     await new Promise(resolve => setTimeout(resolve, 50));
 
     expect(confirmSpy).toHaveBeenCalledWith(
@@ -150,9 +179,9 @@ describe('ActionControls Component', () => {
 
     const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(false);
 
-    render(<ActionControls />);
-    const btn = screen.getByTitle('Clear canvas');
-    fireEvent.click(btn);
+    renderToolbarActions();
+    openMoreMenu();
+    fireEvent.click(screen.getByTitle('Clear canvas'));
 
     expect(initSchemaMock).not.toHaveBeenCalled();
 
@@ -161,12 +190,11 @@ describe('ActionControls Component', () => {
 
   it('disables buttons when isLoading is true', () => {
     useBlueprintStore.setState({ isLoading: true });
-    render(<ActionControls />);
+    renderToolbarActions();
 
-    expect(screen.getByTitle('Open a local directory workspace')).toBeDisabled();
-    expect(screen.getByTitle('Open single YAML from disk')).toBeDisabled();
+    expect(screen.getByLabelText('Open menu')).toBeDisabled();
     expect(screen.getByTitle('Save YAML to disk')).toBeDisabled();
-    expect(screen.getByTitle('Clear canvas')).toBeDisabled();
+    expect(screen.getByLabelText('More actions')).toBeDisabled();
   });
 
   it('renders Sync Externals button and triggers sync when workspace is open and schema level is component', () => {
@@ -183,7 +211,8 @@ describe('ActionControls Component', () => {
       syncExternalContainers: syncMock,
     });
 
-    render(<ActionControls />);
+    renderToolbarActions();
+    openMoreMenu();
     const syncBtn = screen.getByTitle(
       'Sync related container dependencies as external nodes in this view'
     );
@@ -199,14 +228,14 @@ describe('ActionControls Component', () => {
       undo: undoMock,
     });
 
-    const { rerender } = render(<ActionControls />);
+    const { rerender } = renderToolbarActions();
     const undoBtn = screen.getByTitle('Undo (Cmd+Z / Ctrl+Z)');
     expect(undoBtn).toBeDisabled();
 
     useBlueprintStore.setState({
       past: [{ nodes: [], edges: [], schema: {} as any }],
     });
-    rerender(<ActionControls />);
+    rerender(toolbarActions);
     expect(undoBtn).not.toBeDisabled();
 
     fireEvent.click(undoBtn);
@@ -220,14 +249,14 @@ describe('ActionControls Component', () => {
       redo: redoMock,
     });
 
-    const { rerender } = render(<ActionControls />);
+    const { rerender } = renderToolbarActions();
     const redoBtn = screen.getByTitle('Redo (Cmd+Shift+Z / Ctrl+Shift+Z / Cmd+Y)');
     expect(redoBtn).toBeDisabled();
 
     useBlueprintStore.setState({
       future: [{ nodes: [], edges: [], schema: {} as any }],
     });
-    rerender(<ActionControls />);
+    rerender(toolbarActions);
     expect(redoBtn).not.toBeDisabled();
 
     fireEvent.click(redoBtn);

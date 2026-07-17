@@ -21,6 +21,7 @@ export interface UiState {
   rightCollapsed: boolean;
   showDesignSystem: boolean;
   isDiffOpen: boolean;
+  isImportMermaidOpen: boolean;
   notification: ToastNotification | null;
   focusedCyclePath: string[] | null;
   isLoading: boolean | string;
@@ -31,6 +32,7 @@ export interface UiState {
   toggleRightCollapsed: () => void;
   setShowDesignSystem: (show: boolean) => void;
   setIsDiffOpen: (open: boolean) => void;
+  setIsImportMermaidOpen: (open: boolean) => void;
   setNotification: (notification: ToastNotification | null) => void;
   setLayoutEngine: (engine: LayoutEngineId | null) => void;
   setFocusedCyclePath: (path: string[] | null) => void;
@@ -48,6 +50,7 @@ export const createUiState = (
   rightCollapsed: false,
   showDesignSystem: false,
   isDiffOpen: false,
+  isImportMermaidOpen: false,
   notification: null,
   focusedCyclePath: null,
   isLoading: false,
@@ -58,6 +61,7 @@ export const createUiState = (
   toggleRightCollapsed: () => set(state => ({ rightCollapsed: !state.rightCollapsed })),
   setShowDesignSystem: show => set({ showDesignSystem: show }),
   setIsDiffOpen: open => set({ isDiffOpen: open }),
+  setIsImportMermaidOpen: open => set({ isImportMermaidOpen: open }),
   setNotification: notification => set({ notification }),
   setLayoutEngine: engine => set({ layoutEngine: engine }),
   setFocusedCyclePath: path => set({ focusedCyclePath: path }),

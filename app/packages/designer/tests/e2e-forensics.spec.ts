@@ -1,4 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
+import { openWorkspaceFolder } from './helpers/toolbar';
 
 const CONTEXT_YAML = `entityRef: e2e
 name: E2E Context
@@ -149,8 +150,7 @@ test.describe('Forensics ranking', () => {
     await installFakeWorkspacePicker(page);
     await page.goto('/workspace');
 
-    await expect(page.getByTitle('Open a local directory workspace')).toBeVisible();
-    await page.getByTitle('Open a local directory workspace').click();
+    await openWorkspaceFolder(page);
 
     await page.locator('button[aria-label="Toggle Right Panel"]').click();
     await expect(page.locator('#workspace-name-input')).toHaveValue('E2E Context', {

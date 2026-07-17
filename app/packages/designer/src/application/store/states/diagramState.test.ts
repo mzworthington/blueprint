@@ -494,4 +494,30 @@ describe('diagramState Actions & State Management', () => {
 
     expect(useBlueprintStore.getState().focusedCyclePath).toBeNull();
   });
+
+  it('should merge mermaid import into active diagram without removing existing nodes', () => {
+    const store = useBlueprintStore.getState();
+    const beforeCount = store.schema.nodes.length;
+
+    const mermaid = `graph TD
+      Cache[("Redis Cache")]`;
+
+    const success = store.importMermaid(mermaid, {});
+    expect(success).toBe(true);
+
+    const updated = useBlueprintStore.getState();
+    expect(updated.schema.nodes.length).toBeGreaterThan(beforeCount);
+    expect(updated.schema.nodes.some(n => n.name === 'Redis Cache')).toBe(true);
+    expect(updated.schema.nodes.some(n => n.name === 'Node A')).toBe(true);
+    expect(updated.schema.nodes.some(n => n.name === 'Node B')).toBe(true);
+  });
+
+  it('should preview mermaid import merge plan', () => {
+    const store = useBlueprintStore.getState();
+    const preview = store.previewMermaidImport(`graph TD
+      NewSvc["New Service"]`);
+
+    expect(preview.parseResult.format).toBe('flowchart');
+    expect(preview.mergePlan.additions.nodes.length).toBeGreaterThanOrEqual(1);
+  });
 });

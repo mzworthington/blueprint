@@ -24,6 +24,7 @@ export interface UseCodeViewerReturn {
   handleCopy: () => Promise<void>;
   handleSaveYaml: () => boolean;
   handleSaveJson: () => boolean;
+  handleOpenMermaidImport: () => void;
   // Store passthrough
   lastError: string | null;
   clearError: () => void;
@@ -60,6 +61,7 @@ export function useCodeViewer(): UseCodeViewerReturn {
     leftCollapsed,
     toggleLeftCollapsed,
     isWorkspaceOpen,
+    setIsImportMermaidOpen,
   } = useBlueprintStore();
 
   const [activeTab, setActiveTab] = useState<Tab>('yaml');
@@ -116,6 +118,10 @@ export function useCodeViewer(): UseCodeViewerReturn {
     return importJson(jsonText);
   };
 
+  const handleOpenMermaidImport = () => {
+    setIsImportMermaidOpen(true);
+  };
+
   const availableTabs = ['yaml', 'json', 'mermaid'] as const;
 
   return {
@@ -134,6 +140,7 @@ export function useCodeViewer(): UseCodeViewerReturn {
     handleCopy,
     handleSaveYaml,
     handleSaveJson,
+    handleOpenMermaidImport,
     lastError,
     clearError,
     leftCollapsed,

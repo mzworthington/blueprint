@@ -11,12 +11,18 @@ import {
   type NodeType,
   type C4Level,
   type ValidationResult,
+  type ConflictResolutions,
 } from '@blueprint/core';
 import { mapDomainNodeToRFNode, mapDomainDepToRFEdge } from '../layoutUtils';
 import type { BlueprintRFNode, BlueprintRFEdge } from '../layoutUtils';
 import { applyStateUpdates } from './diagramState/applyStateUpdates';
 import { syncExternalContainers as syncExternalContainersAction } from './diagramState/syncExternalContainers';
 import { importSchemaContent } from './diagramState/importSchema';
+import {
+  executeMermaidImport,
+  previewMermaidImport,
+  type MermaidImportPreview,
+} from './diagramState/importMermaid';
 import { createDiagramInitialState } from './diagramState/initialState';
 import {
   addNodeMutation,
@@ -58,6 +64,8 @@ export interface DiagramState {
   updateSchemaLevel: (level: C4Level) => void;
   importYaml: (yamlContent: string) => boolean;
   importJson: (jsonContent: string) => boolean;
+  previewMermaidImport: (mermaid: string) => MermaidImportPreview;
+  importMermaid: (mermaid: string, resolutions: ConflictResolutions) => boolean;
   clearError: () => void;
   onNodesChange: (changes: NodeChange[]) => void;
   onEdgesChange: (changes: EdgeChange[]) => void;
@@ -249,6 +257,20 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
       return false;
     }
   },
+
+  previewMermaidImport: mermaid => {
+    const { schema, loadedSystems, currentFilePath, workspaceName, isWorkspaceOpen } = get();
+    return previewMermaidImport(
+      mermaid,
+      schema,
+      loadedSystems,
+      currentFilePath,
+      workspaceName,
+      isWorkspaceOpen
+    );
+  },
+
+  importMermaid: (mermaid, resolutions) => executeMermaidImport(set, get, mermaid, resolutions),
 
   clearError: () => {
     set({ lastError: null });

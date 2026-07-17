@@ -8,6 +8,7 @@ import { Header } from './components/Header/Header';
 import { MobilePanelToggles } from './components/MobilePanelToggles/MobilePanelToggles';
 import { useBlueprintStore } from '../../../application/store/store';
 import { DiffMenu } from './components/DiffMenu/DiffMenu';
+import { ImportMermaidDialog } from './components/ImportMermaidDialog/ImportMermaidDialog';
 import { useUrlSync } from './hooks/useUrlSync';
 
 export const WorkspacePage: React.FC = () => {
@@ -18,6 +19,8 @@ export const WorkspacePage: React.FC = () => {
     toggleRightCollapsed,
     isDiffOpen,
     setIsDiffOpen,
+    isImportMermaidOpen,
+    setIsImportMermaidOpen,
   } = useBlueprintStore();
 
   useUrlSync();
@@ -64,6 +67,10 @@ export const WorkspacePage: React.FC = () => {
         </div>
       </div>
       <DiffMenu isOpen={isDiffOpen} onClose={() => setIsDiffOpen(false)} />
+      <ImportMermaidDialog
+        isOpen={isImportMermaidOpen}
+        onClose={() => setIsImportMermaidOpen(false)}
+      />
     </ReactFlowProvider>
   );
 };
