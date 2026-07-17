@@ -20,7 +20,10 @@ export const defaultLoadedSystems: Array<{ path: string; name: string; schema: S
 
 Object.entries(defaultBlueprintModules).forEach(([filePath, module]) => {
   const fileName = getFileName(filePath);
-  const cleanPath = filePath.replace('../../../../../blueprints/', '');
+  // Glob keys vary by Vite/CWD (`../…/blueprints/…`); keep paths workspace-relative.
+  const blueprintsMarker = 'blueprints/';
+  const markerIdx = filePath.lastIndexOf(blueprintsMarker);
+  const cleanPath = markerIdx >= 0 ? filePath.slice(markerIdx + blueprintsMarker.length) : fileName;
 
   try {
     const yamlContent = module.default;

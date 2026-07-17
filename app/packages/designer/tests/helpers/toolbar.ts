@@ -19,8 +19,17 @@ export async function continueWithSandbox(page: Page) {
   await expect(dialog).toHaveCount(0);
 }
 
-/** Opens the toolbar Open menu and chooses Open Folder. */
+/** Opens a workspace folder via the startup chooser when present, else the toolbar. */
 export async function openWorkspaceFolder(page: Page) {
+  const startupOpen = page.getByTestId('startup-open-directory');
+  try {
+    await startupOpen.waitFor({ state: 'visible', timeout: 5_000 });
+    await startupOpen.click();
+    return;
+  } catch {
+    // Startup chooser not showing (deep link or already dismissed).
+  }
+
   await continueWithSandbox(page);
 
   const menuButton = page.getByRole('button', { name: 'Open menu' });
@@ -33,8 +42,14 @@ export async function openWorkspaceFolder(page: Page) {
   await folderItem.click();
 }
 
-/** Asserts the workspace folder action is reachable from the toolbar. */
+/** Asserts the workspace folder action is reachable (startup chooser or toolbar). */
 export async function expectWorkspaceFolderActionAvailable(page: Page) {
+  const startupOpen = page.getByTestId('startup-open-directory');
+  if (await startupOpen.isVisible().catch(() => false)) {
+    await expect(startupOpen).toBeVisible();
+    return;
+  }
+
   await continueWithSandbox(page);
   await expect(page.getByRole('button', { name: 'Open menu' })).toBeVisible();
 }

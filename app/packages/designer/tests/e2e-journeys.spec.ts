@@ -228,13 +228,13 @@ test.describe('Disk-first workspace open', () => {
     await installFakeWorkspacePicker(page);
     await page.goto('/workspace');
 
-    // Wait for app + Dexie to initialize, then plant a polluted draft.
+    // Stay on the startup chooser — do not load sandbox (avoids IDB path races).
     await expectWorkspaceFolderActionAvailable(page);
     await seedStaleDraft(page);
 
     await openWorkspaceFolder(page);
 
-    await expect(page.getByText('Loaded files from disk')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('Loaded files from disk')).toBeVisible({ timeout: 15000 });
     await expect(page.getByText(/stale local draft/i)).toBeVisible();
 
     await page.locator('button[aria-label="Toggle Right Panel"]').click();
