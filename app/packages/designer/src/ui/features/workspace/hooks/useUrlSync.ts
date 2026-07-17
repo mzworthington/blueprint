@@ -10,10 +10,18 @@ import { getSchemaEntityRef } from '@blueprint/core';
  *  - Reads the URL slug (entityRef) and selects the matching diagram system.
  *  - On store changes (active diagram switched), pushes the new path to URL.
  *  - Handles root paths by selecting the highest-level diagram (usually context).
+ *  - Leaves bare `/workspace` alone while the startup chooser is open.
  */
 export function useUrlSync(): void {
-  const { schema, loadedSystems, selectSystem, currentFilePath, workspaceName, isWorkspaceOpen } =
-    useBlueprintStore();
+  const {
+    schema,
+    loadedSystems,
+    selectSystem,
+    currentFilePath,
+    workspaceName,
+    isWorkspaceOpen,
+    isStartupOpen,
+  } = useBlueprintStore();
 
   const [location, setLocation] = useLocation();
   const [match, params] = useRoute('/workspace/*');
@@ -26,6 +34,10 @@ export function useUrlSync(): void {
     if (!isWorkspaceRoute) return;
 
     const entityRef = params?.['*']?.replace(/\/$/, '');
+    const isWorkspaceRoot = location === '/workspace' || location === '/workspace/';
+
+    // Keep bare /workspace stable until the user picks sandbox / folder / Mermaid.
+    if (isWorkspaceRoot && isStartupOpen) return;
 
     let foundSystem: (typeof loadedSystems)[0] | undefined;
 
@@ -68,5 +80,6 @@ export function useUrlSync(): void {
     match,
     params,
     isWorkspaceOpen,
+    isStartupOpen,
   ]);
 }

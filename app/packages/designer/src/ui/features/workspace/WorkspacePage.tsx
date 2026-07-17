@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ReactFlowProvider } from '@xyflow/react';
+import { useLocation } from 'wouter';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { CodeViewer } from './components/CodeViewer/CodeViewer';
 import { Canvas } from './components/Canvas/Canvas';
@@ -9,9 +10,15 @@ import { MobilePanelToggles } from './components/MobilePanelToggles/MobilePanelT
 import { useBlueprintStore } from '../../../application/store/store';
 import { DiffMenu } from './components/DiffMenu/DiffMenu';
 import { ImportMermaidDialog } from './components/ImportMermaidDialog/ImportMermaidDialog';
+import { StartupWorkspaceDialog } from './components/StartupWorkspaceDialog/StartupWorkspaceDialog';
 import { useUrlSync } from './hooks/useUrlSync';
 
+function isWorkspaceRootPath(location: string): boolean {
+  return location === '/workspace' || location === '/workspace/';
+}
+
 export const WorkspacePage: React.FC = () => {
+  const [location] = useLocation();
   const {
     leftCollapsed,
     rightCollapsed,
@@ -21,9 +28,41 @@ export const WorkspacePage: React.FC = () => {
     setIsDiffOpen,
     isImportMermaidOpen,
     setIsImportMermaidOpen,
+    isStartupOpen,
+    setIsStartupOpen,
+    openWorkspaceDirectory,
+    resetToEmptyWorkspace,
   } = useBlueprintStore();
 
   useUrlSync();
+
+  // Deep links (/workspace/…) skip the chooser; only bare /workspace shows it.
+  useEffect(() => {
+    if (!isWorkspaceRootPath(location) && isStartupOpen) {
+      setIsStartupOpen(false);
+    }
+  }, [location, isStartupOpen, setIsStartupOpen]);
+
+  const handleLoadSandbox = useCallback(() => {
+    setIsStartupOpen(false);
+  }, [setIsStartupOpen]);
+
+  const handleOpenDirectory = useCallback(async () => {
+    try {
+      const opened = await openWorkspaceDirectory();
+      if (opened) setIsStartupOpen(false);
+    } catch (err) {
+      console.error('Failed to open workspace directory:', err);
+    }
+  }, [openWorkspaceDirectory, setIsStartupOpen]);
+
+  const handleImportMermaid = useCallback(() => {
+    resetToEmptyWorkspace();
+    setIsStartupOpen(false);
+    setIsImportMermaidOpen(true);
+  }, [resetToEmptyWorkspace, setIsStartupOpen, setIsImportMermaidOpen]);
+
+  const showStartup = isStartupOpen && isWorkspaceRootPath(location);
 
   return (
     <ReactFlowProvider>
@@ -70,6 +109,12 @@ export const WorkspacePage: React.FC = () => {
       <ImportMermaidDialog
         isOpen={isImportMermaidOpen}
         onClose={() => setIsImportMermaidOpen(false)}
+      />
+      <StartupWorkspaceDialog
+        isOpen={showStartup}
+        onLoadSandbox={handleLoadSandbox}
+        onOpenDirectory={() => void handleOpenDirectory()}
+        onImportMermaid={handleImportMermaid}
       />
     </ReactFlowProvider>
   );

@@ -1,5 +1,9 @@
 import { test, expect, type Page } from '@playwright/test';
-import { expectWorkspaceFolderActionAvailable, openWorkspaceFolder } from './helpers/toolbar';
+import {
+  continueWithSandbox,
+  expectWorkspaceFolderActionAvailable,
+  openWorkspaceFolder,
+} from './helpers/toolbar';
 
 const DISK_CONTEXT_YAML = `entityRef: e2e
 name: E2E Context
@@ -170,6 +174,7 @@ async function seedStaleDraft(page: Page) {
 test.describe('Hierarchy zoom journeys', () => {
   test('Zoom out button and breadcrumb return to parent', async ({ page }) => {
     await page.goto('/workspace/blueprint');
+    await continueWithSandbox(page);
     await page.locator('button[aria-label="Toggle Right Panel"]').click();
     await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint');
 
@@ -202,6 +207,7 @@ test.describe('Hierarchy zoom journeys', () => {
 
   test('Backspace zooms out one level', async ({ page }) => {
     await page.goto('/workspace/blueprint');
+    await continueWithSandbox(page);
     await page.locator('button[aria-label="Toggle Right Panel"]').click();
 
     const appSystem = page.locator('.react-flow__node', { hasText: 'App System' }).first();

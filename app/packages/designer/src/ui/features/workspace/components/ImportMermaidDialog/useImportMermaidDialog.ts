@@ -12,8 +12,15 @@ const FORMAT_LABELS: Record<string, string> = {
 };
 
 export function useImportMermaidDialog(isOpen: boolean, onClose: () => void) {
-  const { previewMermaidImport, importMermaid, lastError, clearError, setNotification } =
-    useBlueprintStore();
+  const {
+    previewMermaidImport,
+    importMermaid,
+    lastError,
+    clearError,
+    setNotification,
+    setLayoutEngine,
+    applyClientLayout,
+  } = useBlueprintStore();
 
   const [mermaidText, setMermaidText] = useState('');
   const [parseError, setParseError] = useState<string | null>(null);
@@ -51,7 +58,7 @@ export function useImportMermaidDialog(isOpen: boolean, onClose: () => void) {
     setResolutions(prev => ({ ...prev, [entityRef]: resolution }));
   }, []);
 
-  const handleApply = useCallback(() => {
+  const handleApply = useCallback(async () => {
     if (!mermaidText.trim()) return;
     setApplying(true);
     try {
@@ -66,17 +73,28 @@ export function useImportMermaidDialog(isOpen: boolean, onClose: () => void) {
       }
       const success = importMermaid(source, conflictResolutions);
       if (success) {
+        setLayoutEngine('elk');
+        await applyClientLayout();
         setNotification({
           type: 'success',
           title: 'Import complete',
-          message: 'Mermaid diagram merged into the active schema. Commit via Pending Changes.',
+          message: 'Mermaid diagram merged and laid out with ELK. Commit via Pending Changes.',
         });
         onClose();
       }
     } finally {
       setApplying(false);
     }
-  }, [mermaidText, preview, resolutions, importMermaid, setNotification, onClose]);
+  }, [
+    mermaidText,
+    preview,
+    resolutions,
+    importMermaid,
+    setLayoutEngine,
+    applyClientLayout,
+    setNotification,
+    onClose,
+  ]);
 
   const formatLabel = preview ? (FORMAT_LABELS[preview.parseResult.format] ?? 'Unknown') : null;
 

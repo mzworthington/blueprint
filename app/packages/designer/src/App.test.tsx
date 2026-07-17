@@ -45,6 +45,7 @@ describe('App Layout and Collapsible Panels', () => {
       workspaceName: undefined,
       leftCollapsed: true,
       rightCollapsed: true,
+      isStartupOpen: false,
       schema: {
         name: 'Empty Workspace',
         version: '1.0.0',

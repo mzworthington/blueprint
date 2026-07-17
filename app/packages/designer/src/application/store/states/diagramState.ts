@@ -31,6 +31,7 @@ import {
   type MermaidImportPreview,
 } from './diagramState/importMermaid';
 import { createDiagramInitialState } from './diagramState/initialState';
+import { resetToEmptyWorkspace as resetToEmptyWorkspaceAction } from './diagramState/resetToEmptyWorkspace';
 import {
   addNodeMutation,
   updateNodeMutation,
@@ -68,6 +69,8 @@ export interface DiagramState {
   clearHistory: () => void;
   checkPendingChanges: () => Promise<void>;
   initSchema: (schema: SystemSchema) => void;
+  /** Blank canvas with no sandbox systems — used before Mermaid import from startup. */
+  resetToEmptyWorkspace: () => void;
   updateSchemaName: (name: string) => void;
   updateSchemaLevel: (level: C4Level) => void;
   importYaml: (yamlContent: string) => boolean;
@@ -230,6 +233,10 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
       schema.level,
       schema.entityRef ?? null
     );
+  },
+
+  resetToEmptyWorkspace: () => {
+    resetToEmptyWorkspaceAction(set, get);
   },
 
   updateSchemaName: name => {

@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
+import { continueWithSandbox } from './helpers/toolbar';
 
 test.describe('Blueprint E2E Journeys', () => {
   test.beforeAll(async () => {
@@ -12,6 +13,7 @@ test.describe('Blueprint E2E Journeys', () => {
 
   test('Workspace Selection & Visual Panel Collapse', async ({ page }) => {
     await page.goto('/workspace');
+    await continueWithSandbox(page);
 
     const leftPanelButton = page.locator('button[aria-label="Toggle Left Panel"]');
     const rightPanelButton = page.locator('button[aria-label="Toggle Right Panel"]');
@@ -43,7 +45,7 @@ test.describe('Blueprint E2E Journeys', () => {
 
   test('Visual C4 Navigation (Zoom In / Zoom Out / URL Routing)', async ({ page }) => {
     await page.goto('/workspace/blueprint');
-
+    await continueWithSandbox(page);
     await page.locator('button[aria-label="Toggle Right Panel"]').click();
 
     await expect(page.locator('#workspace-name-input')).toHaveValue('Blueprint Context');

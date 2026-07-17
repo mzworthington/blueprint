@@ -55,6 +55,7 @@ describe('WorkspacePage Component', () => {
     useBlueprintStore.setState({
       leftCollapsed: true,
       rightCollapsed: true,
+      isStartupOpen: false,
       workspaceName: 'Initial Name',
       currentFilePath: 'initial.yaml',
       schema: {
@@ -149,5 +150,65 @@ describe('WorkspacePage Component', () => {
     expect(mockSetLocation).toHaveBeenCalledWith('/workspace/awesome-redirect-system', {
       replace: true,
     });
+  });
+
+  it('resets to an empty workspace when Mermaid is chosen from startup', () => {
+    mockLocation = '/workspace';
+    mockParams = { '*': '' };
+    useBlueprintStore.setState({
+      isStartupOpen: true,
+      schema: {
+        name: 'Sandbox',
+        version: '1.0.0',
+        level: 'context',
+        nodes: [{ entityRef: 'a/sys', name: 'Sys', type: 'software-system' }],
+        dependencies: [],
+      },
+      loadedSystems: [
+        {
+          path: 'context.yaml',
+          name: 'Sandbox',
+          schema: {
+            name: 'Sandbox',
+            version: '1.0.0',
+            level: 'context',
+            nodes: [{ entityRef: 'a/sys', name: 'Sys', type: 'software-system' }],
+            dependencies: [],
+          },
+        },
+      ],
+      currentFilePath: 'context.yaml',
+    });
+
+    render(<WorkspacePage />);
+    fireEvent.click(screen.getByTestId('startup-import-mermaid'));
+
+    const state = useBlueprintStore.getState();
+    expect(state.isStartupOpen).toBe(false);
+    expect(state.isImportMermaidOpen).toBe(true);
+    expect(state.schema.nodes).toEqual([]);
+    expect(state.loadedSystems).toHaveLength(1);
+    expect(state.loadedSystems[0]?.schema.nodes).toEqual([]);
+  });
+
+  it('does not show the startup chooser on deep-linked workspace routes', () => {
+    mockLocation = '/workspace/blueprint';
+    mockParams = { '*': 'blueprint' };
+    useBlueprintStore.setState({ isStartupOpen: true });
+
+    render(<WorkspacePage />);
+
+    expect(screen.queryByTestId('startup-workspace-dialog')).not.toBeInTheDocument();
+    expect(useBlueprintStore.getState().isStartupOpen).toBe(false);
+  });
+
+  it('shows the startup chooser on bare /workspace', () => {
+    mockLocation = '/workspace';
+    mockParams = { '*': '' };
+    useBlueprintStore.setState({ isStartupOpen: true });
+
+    render(<WorkspacePage />);
+
+    expect(screen.getByTestId('startup-workspace-dialog')).toBeInTheDocument();
   });
 });
