@@ -1,10 +1,4 @@
-import type {
-  C4Level,
-  NodeType,
-  SystemDependency,
-  SystemNode,
-  SystemSchema,
-} from '../models/schema';
+import type { C4Level, NodeType, SystemDependency, SystemSchema } from '../models/schema';
 import { slugify } from '../lib/slug';
 import { resolveShortEntityRef } from '../lib/entityRef';
 
@@ -80,20 +74,6 @@ function detectFormat(source: string): MermaidFormat {
   if (/^C4Component\b/i.test(trimmed)) return 'c4-component';
   if (/^(graph|flowchart)\s+(TD|TB|BT|RL|LR)/i.test(trimmed)) return 'flowchart';
   return 'unknown';
-}
-
-function parseQuotedArgs(args: string): string[] {
-  const results: string[] = [];
-  const regex = /"([^"]*)"/g;
-  let match: RegExpExecArray | null;
-  while ((match = regex.exec(args)) !== null) {
-    results.push(match[1]);
-  }
-  const firstArg = args.trim().split(',')[0]?.trim();
-  if (firstArg && !firstArg.startsWith('"')) {
-    results.unshift(firstArg);
-  }
-  return results;
 }
 
 function parseC4Element(line: string): ParsedNode | null {
@@ -211,7 +191,7 @@ function parseC4(
   };
 }
 
-function inferTypeFromShape(shape: string, level: C4Level, fallback: NodeType): NodeType {
+function inferTypeFromShape(shape: string, fallback: NodeType): NodeType {
   if (shape === 'database') return 'relational-database';
   if (shape === 'diamond') return 'event-broker';
   if (shape === 'subroutine') return 'serverless-function';
@@ -242,7 +222,7 @@ function parseFlowchartNode(line: string, defaultType: NodeType): ParsedNode | n
       const rawName = match[2]?.trim() || match[1];
       const name = rawName.replace(/^👤\s*/, '').replace(/\s*\(External\)$/, '');
       const external = /\(External\)/.test(rawName);
-      const type = inferTypeFromShape(shape, 'container', defaultType);
+      const type = inferTypeFromShape(shape, defaultType);
       return { id, name, type, external: external || undefined };
     }
   }

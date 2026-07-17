@@ -260,14 +260,13 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
 
   previewMermaidImport: mermaid => {
     const { schema, loadedSystems, currentFilePath, workspaceName, isWorkspaceOpen } = get();
-    return previewMermaidImport(
-      mermaid,
-      schema,
+    return previewMermaidImport(mermaid, {
+      baseSchema: schema,
       loadedSystems,
       currentFilePath,
       workspaceName,
-      isWorkspaceOpen
-    );
+      isWorkspaceOpen,
+    });
   },
 
   importMermaid: (mermaid, resolutions) => executeMermaidImport(set, get, mermaid, resolutions),

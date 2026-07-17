@@ -7,7 +7,7 @@
     "dev": "pnpm --filter @blueprint/designer dev",
     "dev:cli": "pnpm --filter @blueprint/cli dev",
     "build": "pnpm --filter @blueprint/designer build && pnpm --filter @blueprint/cli build",
-    "lint": "oxlint -c .oxlintrc.json",
+    "lint": "oxlint -c .oxlintrc.json --deny-warnings",
     "preview": "pnpm --filter @blueprint/designer preview",
     "test": "pnpm -r test",
     "test:core": "pnpm --filter @blueprint/core test",
@@ -37,17 +37,17 @@
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
-      "prettier --config ../.prettierrc --ignore-path ../.prettierignore --write",
-      "oxlint -c .oxlintrc.json"
+      "prettier --config ../.prettierrc --ignore-path ../.prettierignore --check",
+      "oxlint -c .oxlintrc.json --deny-warnings"
     ],
     "**/*.{css,json,md}": [
-      "prettier --config ../.prettierrc --ignore-path ../.prettierignore --write"
+      "prettier --config ../.prettierrc --ignore-path ../.prettierignore --check"
     ],
-    "../docs/**/*.md": [
-      "prettier --config ../.prettierrc --ignore-path ../.prettierignore --write"
+    "../docs/**/*.{md,ts}": [
+      "prettier --config ../.prettierrc --ignore-path ../.prettierignore --check"
     ],
     "../*.md": [
-      "prettier --config ../.prettierrc --ignore-path ../.prettierignore --write"
+      "prettier --config ../.prettierrc --ignore-path ../.prettierignore --check"
     ]
   }
 }

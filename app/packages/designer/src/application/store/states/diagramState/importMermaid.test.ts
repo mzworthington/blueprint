@@ -22,14 +22,13 @@ describe('previewMermaidImport', () => {
       Cache[("Redis Cache")]
       Gateway --> Cache`;
 
-    const preview = previewMermaidImport(
-      mermaid,
+    const preview = previewMermaidImport(mermaid, {
       baseSchema,
-      [{ path: 'blueprint.yaml', name: 'Test Workspace', schema: baseSchema }],
-      'blueprint.yaml',
-      'Test Workspace',
-      true
-    );
+      loadedSystems: [{ path: 'blueprint.yaml', name: 'Test Workspace', schema: baseSchema }],
+      currentFilePath: 'blueprint.yaml',
+      workspaceName: 'Test Workspace',
+      isWorkspaceOpen: true,
+    });
 
     expect(preview.parseResult.format).toBe('flowchart');
     expect(preview.mergePlan.additions.nodes.length).toBeGreaterThanOrEqual(1);

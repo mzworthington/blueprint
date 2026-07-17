@@ -29,6 +29,8 @@ if [ "$NEEDS_APP_CHECKS" = true ] || [ "$NEEDS_DOCS_FORMAT" = true ]; then
   echo "Detected staged app/docs changes. Running PNPM checks..."
   cd app
   pnpm exec lint-staged
+  # Match CI: full-repo format check, not just auto-fix on staged paths.
+  pnpm run format:check
   if [ "$NEEDS_APP_CHECKS" = true ]; then
     pnpm run lint
     pnpm knip

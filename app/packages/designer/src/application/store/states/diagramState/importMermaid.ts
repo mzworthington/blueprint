@@ -9,11 +9,19 @@ import {
   type MermaidParseResult,
   type SystemSchema,
 } from '@blueprint/core';
-import type { BlueprintRFEdge, BlueprintRFNode } from '../../layoutUtils';
+import type { BlueprintRFNode } from '../../layoutUtils';
 import { mapDomainDepToRFEdge, mapDomainNodeToRFNode } from '../../layoutUtils';
 import { applyStateUpdates } from './applyStateUpdates';
 
 type LoadedSystem = { path: string; name: string; schema: SystemSchema };
+
+export interface MermaidImportContext {
+  baseSchema: SystemSchema;
+  loadedSystems: LoadedSystem[];
+  currentFilePath: string;
+  workspaceName: string;
+  isWorkspaceOpen: boolean;
+}
 
 export interface MermaidImportPreview {
   parseResult: MermaidParseResult;
@@ -21,40 +29,52 @@ export interface MermaidImportPreview {
   scopedImported: SystemSchema;
 }
 
-export function previewMermaidImport(
-  mermaid: string,
-  baseSchema: SystemSchema,
+function workspaceRoot(workspaceName: string, isWorkspaceOpen: boolean): string | undefined {
+  return isWorkspaceOpen ? workspaceName : undefined;
+}
+
+function systemsWithSchema(
   loadedSystems: LoadedSystem[],
   currentFilePath: string,
-  workspaceName: string,
-  isWorkspaceOpen: boolean
+  schema: SystemSchema
+): Array<{ path: string; schema: SystemSchema }> {
+  const systems = loadedSystems.map(sys => ({
+    path: sys.path,
+    schema: sys.path === currentFilePath ? schema : sys.schema,
+  }));
+
+  if (!systems.some(sys => sys.path === currentFilePath)) {
+    systems.push({ path: currentFilePath, schema });
+  }
+
+  return systems;
+}
+
+function resolveScopedSchema(context: MermaidImportContext, schema: SystemSchema): SystemSchema {
+  const resolved = resolveWorkspaceEntityRefs(
+    systemsWithSchema(context.loadedSystems, context.currentFilePath, schema),
+    workspaceRoot(context.workspaceName, context.isWorkspaceOpen)
+  );
+
+  return resolved.schemas[context.currentFilePath] ?? schema;
+}
+
+export function previewMermaidImport(
+  mermaid: string,
+  context: MermaidImportContext
 ): MermaidImportPreview {
   const parentEntityRef = getSchemaEntityRef(
-    baseSchema,
-    isWorkspaceOpen ? workspaceName : undefined
+    context.baseSchema,
+    workspaceRoot(context.workspaceName, context.isWorkspaceOpen)
   );
 
   const parseResult = parseMermaidToSchema(mermaid, {
-    targetLevel: baseSchema.level,
+    targetLevel: context.baseSchema.level,
     parentEntityRef,
   });
 
-  const systemsForResolve = loadedSystems.map(sys =>
-    sys.path === currentFilePath
-      ? { path: sys.path, schema: parseResult.schema }
-      : { path: sys.path, schema: sys.schema }
-  );
-  if (!systemsForResolve.some(s => s.path === currentFilePath)) {
-    systemsForResolve.push({ path: currentFilePath, schema: parseResult.schema });
-  }
-
-  const resolved = resolveWorkspaceEntityRefs(
-    systemsForResolve,
-    isWorkspaceOpen ? workspaceName : undefined
-  );
-
-  const scopedImported = resolved.schemas[currentFilePath] ?? parseResult.schema;
-  const mergePlan = computeImportMergePlan(baseSchema, scopedImported);
+  const scopedImported = resolveScopedSchema(context, parseResult.schema);
+  const mergePlan = computeImportMergePlan(context.baseSchema, scopedImported);
 
   return { parseResult, mergePlan, scopedImported };
 }
@@ -64,18 +84,50 @@ function layoutNewNodes(
   mergedSchema: SystemSchema,
   previousRefs: Set<string>
 ): BlueprintRFNode[] {
-  const maxX = existingNodes.reduce((max, n) => Math.max(max, n.position.x), 0);
+  const maxX = existingNodes.reduce((max, node) => Math.max(max, node.position.x), 0);
   const offsetX = existingNodes.length > 0 ? maxX + 320 : 100;
-  const newDomainNodes = mergedSchema.nodes.filter(n => !previousRefs.has(n.entityRef));
+  const newDomainNodes = mergedSchema.nodes.filter(node => !previousRefs.has(node.entityRef));
 
-  return newDomainNodes.map((n, i) => {
-    const rf = mapDomainNodeToRFNode({
-      ...n,
-      x: offsetX + (i % 3) * 280,
-      y: 100 + Math.floor(i / 3) * 180,
-    });
-    return rf;
+  return newDomainNodes.map((node, index) =>
+    mapDomainNodeToRFNode({
+      ...node,
+      x: offsetX + (index % 3) * 280,
+      y: 100 + Math.floor(index / 3) * 180,
+    })
+  );
+}
+
+function syncNodeFromSchema(node: BlueprintRFNode, finalSchema: SystemSchema): BlueprintRFNode {
+  const ref = node.data.entityRef || node.id;
+  const domain = finalSchema.nodes.find(schemaNode => schemaNode.entityRef === ref);
+  if (!domain) return node;
+
+  return {
+    ...node,
+    data: {
+      ...node.data,
+      name: domain.name,
+      type: domain.type,
+      external: domain.external,
+      entityRef: domain.entityRef,
+    },
+  };
+}
+
+function buildMergedRfNodes(
+  existingNodes: BlueprintRFNode[],
+  finalSchema: SystemSchema,
+  previousRefs: Set<string>
+): BlueprintRFNode[] {
+  const preservedNodes = existingNodes.filter(node => {
+    const ref = node.data.entityRef || node.id;
+    return finalSchema.nodes.some(schemaNode => schemaNode.entityRef === ref);
   });
+
+  return [
+    ...preservedNodes.map(node => syncNodeFromSchema(node, finalSchema)),
+    ...layoutNewNodes(preservedNodes, finalSchema, previousRefs),
+  ];
 }
 
 export function executeMermaidImport(
@@ -83,7 +135,6 @@ export function executeMermaidImport(
   get: () => {
     schema: SystemSchema;
     nodes: BlueprintRFNode[];
-    edges: BlueprintRFEdge[];
     currentFilePath: string;
     loadedSystems: LoadedSystem[];
     workspaceName: string;
@@ -97,79 +148,49 @@ export function executeMermaidImport(
 ): boolean {
   try {
     set({ lastError: null });
+
     const {
       schema: baseSchema,
       nodes,
-      edges,
       currentFilePath,
       loadedSystems,
       workspaceName,
       isWorkspaceOpen,
+      recordHistory,
+      checkPendingChanges,
     } = get();
 
-    const { scopedImported } = previewMermaidImport(
-      mermaid,
+    const context: MermaidImportContext = {
       baseSchema,
       loadedSystems,
       currentFilePath,
       workspaceName,
-      isWorkspaceOpen
-    );
+      isWorkspaceOpen,
+    };
 
-    const previousRefs = new Set(baseSchema.nodes.map(n => n.entityRef));
+    const { scopedImported } = previewMermaidImport(mermaid, context);
+    const previousRefs = new Set(baseSchema.nodes.map(node => node.entityRef));
     const merged = applyImportMergePlan(baseSchema, scopedImported, resolutions);
-
-    const resolved = resolveWorkspaceEntityRefs(
-      loadedSystems.map(sys =>
-        sys.path === currentFilePath ? { path: sys.path, schema: merged } : sys
-      ),
-      isWorkspaceOpen ? workspaceName : undefined
-    );
-
-    const finalSchema = resolved.schemas[currentFilePath] ?? merged;
-
-    const preservedNodes = nodes.filter(n => {
-      const ref = n.data.entityRef || n.id;
-      return finalSchema.nodes.some(fn => fn.entityRef === ref);
-    });
-
-    const newRfNodes = layoutNewNodes(preservedNodes, finalSchema, previousRefs);
-    const mergedRfNodes = [
-      ...preservedNodes.map(n => {
-        const domain = finalSchema.nodes.find(fn => fn.entityRef === (n.data.entityRef || n.id));
-        return domain
-          ? {
-              ...n,
-              data: {
-                ...n.data,
-                name: domain.name,
-                type: domain.type,
-                external: domain.external,
-                entityRef: domain.entityRef,
-              },
-            }
-          : n;
-      }),
-      ...newRfNodes,
-    ];
-
+    const finalSchema = resolveScopedSchema(context, merged);
+    const mergedRfNodes = buildMergedRfNodes(nodes, finalSchema, previousRefs);
     const mergedRfEdges = finalSchema.dependencies.map(mapDomainDepToRFEdge);
 
-    get().recordHistory();
+    recordHistory();
     applyStateUpdates(set, get, mergedRfNodes, mergedRfEdges);
 
-    const nextLoadedSystems = loadedSystems.map(sys =>
-      sys.path === currentFilePath ? { ...sys, schema: finalSchema, name: finalSchema.name } : sys
-    );
-    set({ loadedSystems: nextLoadedSystems });
-    void get().checkPendingChanges();
+    set({
+      loadedSystems: loadedSystems.map(sys =>
+        sys.path === currentFilePath ? { ...sys, schema: finalSchema, name: finalSchema.name } : sys
+      ),
+    });
+    void checkPendingChanges();
 
     return true;
-  } catch (e: unknown) {
+  } catch (error: unknown) {
     const errorMsg =
-      (e instanceof Error ? e.message : undefined) || 'Failed to import Mermaid diagram';
+      (error instanceof Error ? error.message : undefined) || 'Failed to import Mermaid diagram';
     set({ lastError: errorMsg });
-    get().logger.error('Failed to import Mermaid diagram', e);
+    get().logger.error('Failed to import Mermaid diagram', error);
     return false;
   }
 }
