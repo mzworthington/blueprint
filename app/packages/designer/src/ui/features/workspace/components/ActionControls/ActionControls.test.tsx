@@ -197,30 +197,6 @@ describe('ActionControls Component', () => {
     expect(screen.getByLabelText('More actions')).toBeDisabled();
   });
 
-  it('renders Sync Externals button and triggers sync when workspace is open and schema level is component', () => {
-    const syncMock = vi.fn();
-    useBlueprintStore.setState({
-      isWorkspaceOpen: true,
-      schema: {
-        name: 'Test Component Schema',
-        version: '1.0.0',
-        level: 'component',
-        nodes: [],
-        dependencies: [],
-      },
-      syncExternalContainers: syncMock,
-    });
-
-    renderToolbarActions();
-    openMoreMenu();
-    const syncBtn = screen.getByTitle(
-      'Sync related container dependencies as external nodes in this view'
-    );
-    expect(syncBtn).toBeInTheDocument();
-    fireEvent.click(syncBtn);
-    expect(syncMock).toHaveBeenCalledTimes(1);
-  });
-
   it('disables undo button when past history is empty, enables and triggers action when filled', () => {
     const undoMock = vi.fn();
     useBlueprintStore.setState({

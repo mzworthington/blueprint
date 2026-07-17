@@ -25,6 +25,29 @@ describe('PropertyPanel UI Component', () => {
     });
   });
 
+  it('should render External Dependencies section when no node is selected and workspace is loaded', () => {
+    useBlueprintStore.setState({
+      loadedSystems: [
+        {
+          path: 'containers.yaml',
+          name: 'Containers',
+          schema: {
+            name: 'Containers',
+            version: '1.0.0',
+            level: 'container',
+            nodes: [],
+            dependencies: [],
+          },
+        },
+      ],
+      listWorkspaceExternalCandidates: () => [],
+    });
+
+    render(<PropertyPanel />);
+    expect(screen.getByText('External Dependencies')).toBeInTheDocument();
+    expect(screen.getByLabelText('Search external dependencies')).toBeInTheDocument();
+  });
+
   it('should render Workspace config and Catalog when no node is selected', () => {
     render(<PropertyPanel />);
 
@@ -72,6 +95,25 @@ describe('PropertyPanel UI Component', () => {
 
     expect(screen.getByText('Architecture Valid')).toBeInTheDocument();
     expect(screen.getByText(/No cyclic loops or invalid boundaries/i)).toBeInTheDocument();
+  });
+
+  it('should hide validation success when connection issues exist', () => {
+    useBlueprintStore.setState({
+      validationResult: {
+        isValid: false,
+        issues: [
+          {
+            type: 'invalid-connection',
+            message: 'Dependency source node "missing-node" does not exist.',
+          },
+        ],
+      },
+    });
+
+    render(<PropertyPanel />);
+
+    expect(screen.queryByText('Architecture Valid')).not.toBeInTheDocument();
+    expect(screen.getByText('Validation Alert')).toBeInTheDocument();
   });
 
   it('should show cycle warning alert when circular dependency is triggered', () => {

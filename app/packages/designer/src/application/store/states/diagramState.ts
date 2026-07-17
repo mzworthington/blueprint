@@ -12,11 +12,18 @@ import {
   type C4Level,
   type ValidationResult,
   type ConflictResolutions,
+  type ExternalCandidateFilters,
+  type WorkspaceEntity,
 } from '@blueprint/core';
 import { mapDomainNodeToRFNode, mapDomainDepToRFEdge } from '../layoutUtils';
 import type { BlueprintRFNode, BlueprintRFEdge } from '../layoutUtils';
 import { applyStateUpdates } from './diagramState/applyStateUpdates';
 import { syncExternalContainers as syncExternalContainersAction } from './diagramState/syncExternalContainers';
+import {
+  addExternalDependencies as addExternalDependenciesAction,
+  listWorkspaceExternalCandidates as listWorkspaceExternalCandidatesAction,
+  syncSuggestedExternals as syncSuggestedExternalsAction,
+} from './diagramState/externalDependencies';
 import { importSchemaContent } from './diagramState/importSchema';
 import {
   executeMermaidImport,
@@ -77,6 +84,9 @@ export interface DiagramState {
   updateDependency: (from: string, to: string, updates: Partial<SystemDependency>) => void;
   deleteDependency: (from: string, to: string) => void;
   selectSystem: (path: string) => void;
+  listWorkspaceExternalCandidates: (filters?: ExternalCandidateFilters) => WorkspaceEntity[];
+  addExternalDependencies: (entityRefs: string[]) => void;
+  syncSuggestedExternals: () => void;
   syncExternalContainers: () => void;
   /**
    * Apply the selected layout engine and sync positions into schema / YAML.
@@ -340,6 +350,20 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
 
   syncExternalContainers: () => {
     syncExternalContainersAction(set, get);
+  },
+
+  listWorkspaceExternalCandidates: (filters?: ExternalCandidateFilters) => {
+    return listWorkspaceExternalCandidatesAction(get, filters);
+  },
+
+  addExternalDependencies: (entityRefs: string[]) => {
+    get().recordHistory();
+    addExternalDependenciesAction(set, get, entityRefs);
+  },
+
+  syncSuggestedExternals: () => {
+    get().recordHistory();
+    syncSuggestedExternalsAction(set, get);
   },
 
   applyClientLayout: async (signal?: AbortSignal) => {

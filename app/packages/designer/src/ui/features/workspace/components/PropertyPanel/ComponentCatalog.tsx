@@ -13,7 +13,7 @@ export const ComponentCatalog: React.FC<ComponentCatalogProps> = ({ onAddNode })
   };
 
   return (
-    <div className="border-t border-slate-900 pt-4">
+    <div className="border-t border-slate-900 pt-4 w-full min-w-0">
       <h4 className="text-[10px] font-bold font-mono text-brand-400 uppercase tracking-wider mb-3">
         Component Catalog
       </h4>

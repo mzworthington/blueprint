@@ -4,7 +4,6 @@ import {
   Upload,
   Download,
   RefreshCcw,
-  Link,
   GitCompare,
   Undo,
   Redo,
@@ -241,16 +240,11 @@ export const ToolbarEditActions: React.FC = () => {
 
 export const ToolbarOverflowMenu: React.FC = () => {
   const { controlsDisabled, handleClear } = useClearAction();
-  const isWorkspaceOpen = useBlueprintStore(s => s.isWorkspaceOpen);
-  const schema = useBlueprintStore(s => s.schema);
-  const syncExternalContainers = useBlueprintStore(s => s.syncExternalContainers);
   const setIsDiffOpen = useBlueprintStore(s => s.setIsDiffOpen);
   const hasPendingChanges = useBlueprintStore(s => s.hasPendingChanges);
   const layoutEngine = useBlueprintStore(s => s.layoutEngine);
   const setLayoutEngine = useBlueprintStore(s => s.setLayoutEngine);
   const { open, toggle, close, ref } = useToolbarMenu();
-
-  const showSyncExternals = isWorkspaceOpen && schema.level === 'component';
 
   return (
     <div ref={ref} className="relative shrink-0">
@@ -295,23 +289,6 @@ export const ToolbarOverflowMenu: React.FC = () => {
               ))}
             </select>
           </div>
-
-          {showSyncExternals ? (
-            <button
-              type="button"
-              role="menuitem"
-              onClick={() => {
-                close();
-                syncExternalContainers();
-              }}
-              disabled={controlsDisabled}
-              className={menuItemClass}
-              title="Sync related container dependencies as external nodes in this view"
-            >
-              <Link className="w-3.5 h-3.5 text-[#00f0ff] shrink-0" />
-              Sync Externals
-            </button>
-          ) : null}
 
           {hasPendingChanges ? (
             <button

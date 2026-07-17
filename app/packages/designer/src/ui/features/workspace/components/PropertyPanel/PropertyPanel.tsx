@@ -9,6 +9,7 @@ import { PropertiesSection } from './PropertiesSection';
 import { ForensicsSection } from './ForensicsSection';
 import { ConnectionsSection } from './ConnectionsSection';
 import { ComponentCatalog } from './ComponentCatalog';
+import { ExternalDependenciesSection } from './ExternalDependenciesSection';
 import { WorkspaceDisplayControls } from './WorkspaceDisplayControls';
 import { ValidationSection } from './ValidationSection';
 import { resolveCouplingEdges } from '../../../../../application/forensics/resolveCouplingEdges';
@@ -37,6 +38,7 @@ export const PropertyPanel: React.FC = () => {
     rightCollapsed,
     toggleRightCollapsed,
     workspaceName,
+    loadedSystems,
   } = useBlueprintStore();
 
   const selectedRFNode = nodes.find(
@@ -230,10 +232,11 @@ export const PropertyPanel: React.FC = () => {
               </div>
             </>
           ) : (
-            <>
-              <ComponentCatalog onAddNode={addNode} />
+            <div className="flex flex-col gap-6 w-full min-w-0">
+              {loadedSystems.length > 0 ? <ExternalDependenciesSection /> : null}
               <ValidationSection validationResult={validationResult} />
-            </>
+              <ComponentCatalog onAddNode={addNode} />
+            </div>
           )}
         </div>
       </div>

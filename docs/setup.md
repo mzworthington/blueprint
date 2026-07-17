@@ -75,6 +75,7 @@ Husky + lint-staged validate commits for changes under `app/` and `docs/`:
 
 - Prettier formatting (`--check`, matching CI `format:check`)
 - Oxlint on TypeScript (`--deny-warnings`)
+- TypeScript typecheck (`tsc -b`, matching the build step)
 - When `app/packages/core/` is staged, checks that `schemas/blueprint.schema.json` (and `v*` / `latest` copies) match the Zod contract — commit fails if stale; run `pnpm generate:schema` to refresh
 
 Install the recommended **YAML** extension (`redhat.vscode-yaml`). Workspace settings map `blueprints/**/*.yaml` to the local schema for autocomplete and validation.
