@@ -1042,6 +1042,127 @@
         classifications:
           - knowledge-silo
         sinceDays: 500
+    - entityRef: blueprint/packages/core-app-api/common
+      type: background-worker
+      name: common Service (External)
+      external: true
+      properties:
+        filepath: packages/core-app-api/src/lib/AuthSessionManager/common.ts
+        containerId: core-app-api
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1784
+    - entityRef: blueprint/packages/backend-defaults/createbackend
+      type: background-worker
+      name: CreateBackend Service (External)
+      external: true
+      properties:
+        filepath: packages/backend-defaults/src/CreateBackend.ts
+        containerId: backend-defaults
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 1784
+    - entityRef: blueprint/packages/app/index
+      type: gateway-api
+      name: index Service (External)
+      external: true
+      properties:
+        filepath: packages/app/src/index.tsx
+        containerId: app
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 1784
+    - entityRef: blueprint/packages/techdocs-cli-embedded-app/index
+      type: gateway-api
+      name: index Service (External)
+      external: true
+      properties:
+        filepath: packages/techdocs-cli-embedded-app/src/index.tsx
+        containerId: techdocs-cli-embedded-app
+        technology: React Component
+        classification: ui-import
+      x: 100
+      y: 1904
+    - entityRef: blueprint/packages/app-legacy/index
+      type: gateway-api
+      name: index Service (External)
+      external: true
+      properties:
+        filepath: packages/app-legacy/src/index.tsx
+        containerId: app-legacy
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 1904
+    - entityRef: blueprint/packages/create-app/index
+      type: gateway-api
+      name: index Service (External)
+      external: true
+      properties:
+        filepath: packages/create-app/templates/legacy-app/packages/app/src/index.tsx
+        containerId: create-app
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 1904
+    - entityRef: blueprint/packages/app/index-public-experimental
+      type: gateway-api
+      name: index-public-experimental Service (External)
+      external: true
+      properties:
+        filepath: packages/app/src/index-public-experimental.tsx
+        containerId: app
+        technology: React Component
+        classification: ui-import
+      x: 100
+      y: 2024
+    - entityRef: blueprint/packages/app-legacy/index-public-experimental
+      type: gateway-api
+      name: index-public-experimental Service (External)
+      external: true
+      properties:
+        filepath: packages/app-legacy/src/index-public-experimental.tsx
+        containerId: app-legacy
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 2024
+    - entityRef: blueprint/packages/backend-test-utils/mockservices
+      type: relational-database
+      name: mockServices Service (External)
+      external: true
+      properties:
+        filepath: packages/backend-test-utils/src/services/mockServices.ts
+        containerId: backend-test-utils
+        technology: Prisma / SQL Database Client
+        classification: database-marker
+      x: 460
+      y: 2024
+    - entityRef: blueprint/packages/cli-module-build/startbackend
+      type: background-worker
+      name: startBackend Service (External)
+      external: true
+      properties:
+        filepath: packages/cli-module-build/src/commands/package/start/startBackend.ts
+        containerId: cli-module-build
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 2144
+    - entityRef: blueprint/packages/config-loader/testutils
+      type: background-worker
+      name: testUtils Service (External)
+      external: true
+      properties:
+        filepath: packages/config-loader/src/sources/__testUtils__/testUtils.ts
+        containerId: config-loader
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 2144
   dependencies:
     - from: blueprint/packages/backend-test-utils/mockservices
       to: blueprint/packages/repo-tools/cache
@@ -1067,7 +1188,7 @@
       to: blueprint/packages/repo-tools/client
       type: direct-call
       description: Calls module / service
-    - from: blueprint/packages/cli/startbackend
+    - from: blueprint/packages/cli-module-build/startbackend
       to: blueprint/packages/repo-tools/runner
       type: direct-call
       description: Calls module / service

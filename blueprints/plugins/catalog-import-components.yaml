@@ -896,6 +896,127 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/techdocs-react/api
+      type: background-worker
+      name: api Service (External)
+      external: true
+      properties:
+        filepath: plugins/techdocs-react/src/api.ts
+        containerId: techdocs-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 2424
+    - entityRef: blueprint/plugins/scaffolder/autocomplete
+      type: gateway-api
+      name: Autocomplete Service (External)
+      external: true
+      properties:
+        filepath: plugins/scaffolder/src/components/fields/Autocomplete/Autocomplete.tsx
+        containerId: scaffolder
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 2424
+    - entityRef: blueprint/plugins/scaffolder-react/cardheader
+      type: gateway-api
+      name: CardHeader Service (External)
+      external: true
+      properties:
+        filepath: plugins/scaffolder-react/src/next/components/TemplateCard/CardHeader.tsx
+        containerId: scaffolder-react
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 2424
+    - entityRef: blueprint/plugins/home/config
+      type: rest-api
+      name: config Service (External)
+      external: true
+      properties:
+        filepath: plugins/home/src/api/config.ts
+        containerId: home
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 100
+      y: 2544
+    - entityRef: blueprint/plugins/events-backend/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: plugins/events-backend/src/service/http/errors.ts
+        containerId: events-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 2544
+    - entityRef: blueprint/plugins/techdocs-module-addons-contrib/hooks
+      type: gateway-api
+      name: hooks Service (External)
+      external: true
+      properties:
+        filepath: plugins/techdocs-module-addons-contrib/src/ReportIssue/hooks.ts
+        containerId: techdocs-module-addons-contrib
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 2544
+    - entityRef: blueprint/plugins/permission-common/integration
+      type: background-worker
+      name: integration Service (External)
+      external: true
+      properties:
+        filepath: plugins/permission-common/src/types/integration.ts
+        containerId: permission-common
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 2664
+    - entityRef: blueprint/plugins/scaffolder-react/stepper
+      type: gateway-api
+      name: Stepper Service (External)
+      external: true
+      properties:
+        filepath: plugins/scaffolder-react/src/next/components/Stepper/Stepper.tsx
+        containerId: scaffolder-react
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 2664
+    - entityRef: blueprint/plugins/home/styles
+      type: background-worker
+      name: styles Service (External)
+      external: true
+      properties:
+        filepath: plugins/home/src/homePageComponents/QuickStart/styles.ts
+        containerId: home
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 2664
+    - entityRef: blueprint/plugins/kubernetes-react/test-utils
+      type: gateway-api
+      name: test-utils Service (External)
+      external: true
+      properties:
+        filepath: plugins/kubernetes-react/src/hooks/test-utils.tsx
+        containerId: kubernetes-react
+        technology: React Component
+        classification: ui-import
+      x: 100
+      y: 2784
+    - entityRef: blueprint/plugins/catalog-react/testutils
+      type: background-worker
+      name: testUtils Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-react/src/testUtils.ts
+        containerId: catalog-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 2784
   dependencies:
     - from: blueprint/plugins/catalog-import/index
       to: blueprint/plugins/catalog-import/importpage
@@ -982,7 +1103,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/catalog-import/importinfocard
-      to: blueprint/plugins/techdocs/hooks
+      to: blueprint/plugins/techdocs-module-addons-contrib/hooks
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/catalog-import/importinfocard
@@ -1254,7 +1375,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/catalog-import/steppreparecreatepullrequest
-      to: blueprint/plugins/techdocs/hooks
+      to: blueprint/plugins/techdocs-module-addons-contrib/hooks
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/catalog-import/steppreparecreatepullrequest
@@ -1306,7 +1427,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/catalog-import/previewcataloginfocomponent
-      to: blueprint/plugins/techdocs/hooks
+      to: blueprint/plugins/techdocs-module-addons-contrib/hooks
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/catalog-import/usecatalogfilename

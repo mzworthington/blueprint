@@ -948,6 +948,61 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/packages/integration-aws-node/config
+      type: background-worker
+      name: config Service (External)
+      external: true
+      properties:
+        filepath: packages/integration-aws-node/src/config.ts
+        containerId: integration-aws-node
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1144
+    - entityRef: blueprint/packages/backend-defaults/createbackend
+      type: background-worker
+      name: CreateBackend Service (External)
+      external: true
+      properties:
+        filepath: packages/backend-defaults/src/CreateBackend.ts
+        containerId: backend-defaults
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 1144
+    - entityRef: blueprint/packages/cli-common/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: packages/cli-common/src/errors.ts
+        containerId: cli-common
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 1144
+    - entityRef: blueprint/packages/backend-openapi-utils/express
+      type: rest-api
+      name: express Service (External)
+      external: true
+      properties:
+        filepath: packages/backend-openapi-utils/src/types/express.ts
+        containerId: backend-openapi-utils
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 100
+      y: 1264
+    - entityRef: blueprint/packages/backend-test-utils/mockservices
+      type: relational-database
+      name: mockServices Service (External)
+      external: true
+      properties:
+        filepath: packages/backend-test-utils/src/services/mockServices.ts
+        containerId: backend-test-utils
+        technology: Prisma / SQL Database Client
+        classification: database-marker
+      x: 280
+      y: 1264
   dependencies:
     - from: blueprint/packages/backend-test-utils/mockservices
       to: blueprint/packages/backend-plugin-api/database

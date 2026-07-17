@@ -404,16 +404,71 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/techdocs-react/api
+      type: background-worker
+      name: api Service (External)
+      external: true
+      properties:
+        filepath: plugins/techdocs-react/src/api.ts
+        containerId: techdocs-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1464
+    - entityRef: blueprint/plugins/events-backend/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: plugins/events-backend/src/service/http/errors.ts
+        containerId: events-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 1464
+    - entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module
+      type: background-worker
+      name: module Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-backend-module-scaffolder-entity-model/src/module.ts
+        containerId: catalog-backend-module-scaffolder-entity-model
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 1464
+    - entityRef: blueprint/plugins/notifications-backend-module-email/module
+      type: background-worker
+      name: module Service (External)
+      external: true
+      properties:
+        filepath: plugins/notifications-backend-module-email/src/module.ts
+        containerId: notifications-backend-module-email
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1584
+    - entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module-test
+      type: background-worker
+      name: module.test Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-backend-module-scaffolder-entity-model/src/module.test.ts
+        containerId: catalog-backend-module-scaffolder-entity-model
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 1584
   dependencies:
-    - from: blueprint/plugins/catalog-backend/module
+    - from: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module
       to: blueprint/plugins/catalog-node/processor
       type: direct-call
       description: Calls module / service
-    - from: blueprint/plugins/catalog-backend/module-test
+    - from: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module-test
       to: blueprint/plugins/catalog-node/processor
       type: direct-call
       description: Calls module / service
-    - from: blueprint/plugins/notifications-backend/module
+    - from: blueprint/plugins/notifications-backend-module-email/module
       to: blueprint/plugins/catalog-node/processor
       type: direct-call
       description: Calls module / service

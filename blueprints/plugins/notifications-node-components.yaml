@@ -144,6 +144,28 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/events-node/service
+      type: background-worker
+      name: service Service (External)
+      external: true
+      properties:
+        filepath: plugins/events-node/src/service.ts
+        containerId: events-node
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 824
+    - entityRef: blueprint/plugins/kubernetes-react/test-utils
+      type: gateway-api
+      name: test-utils Service (External)
+      external: true
+      properties:
+        filepath: plugins/kubernetes-react/src/hooks/test-utils.tsx
+        containerId: kubernetes-react
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 824
   dependencies:
     - from: blueprint/plugins/notifications-node/extensions
       to: blueprint/plugins/events-node/service

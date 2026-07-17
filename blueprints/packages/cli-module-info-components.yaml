@@ -1,59 +1,79 @@
-entityRef: blueprint/packages/cli-module-info
-name: Cli-module-info Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/packages/cli-module-info/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-info/src/index.ts
-      containerId: cli-module-info
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 29
-      sloc: 12
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 40
-  - entityRef: blueprint/packages/cli-module-info/info
-    type: background-worker
-    name: info Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-info/src/commands/info.ts
-      containerId: cli-module-info
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 30
-      loc: 259
-      sloc: 194
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 40
-dependencies:
-  - from: blueprint/packages/app/app
-    to: blueprint/packages/cli-module-info/info
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/core-components/gaugecard-stories
-    to: blueprint/packages/cli-module-info/info
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/packages/cli-module-info
+  name: Cli-module-info Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/packages/cli-module-info/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: packages/cli-module-info/src/index.ts
+        containerId: cli-module-info
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 29
+        sloc: 12
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/packages/cli-module-info/info
+      type: background-worker
+      name: info Service
+      isTest: false
+      properties:
+        filepath: packages/cli-module-info/src/commands/info.ts
+        containerId: cli-module-info
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 40
+      forensics:
+        complexity: 30
+        loc: 259
+        sloc: 194
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        classifications:
+          - knowledge-silo
+        sinceDays: 500
+    - entityRef: blueprint/packages/app/app
+      type: gateway-api
+      name: App Service (External)
+      external: true
+      properties:
+        filepath: packages/app/src/App.tsx
+        containerId: app
+        technology: React Component
+        classification: ui-import
+      x: 580
+      y: 100
+    - entityRef: blueprint/packages/core-components/gaugecard-stories
+      type: gateway-api
+      name: GaugeCard.stories Service (External)
+      external: true
+      properties:
+        filepath: packages/core-components/src/components/ProgressBars/GaugeCard.stories.tsx
+        containerId: core-components
+        technology: React Component
+        classification: ui-import
+      x: 100
+      y: 220
+  dependencies:
+    - from: blueprint/packages/app/app
+      to: blueprint/packages/cli-module-info/info
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/core-components/gaugecard-stories
+      to: blueprint/packages/cli-module-info/info
+      type: direct-call
+      description: Calls module / service

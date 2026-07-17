@@ -206,9 +206,53 @@
         classifications:
           - knowledge-silo
         sinceDays: 500
+    - entityRef: blueprint/plugins/events-backend/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: plugins/events-backend/src/service/http/errors.ts
+        containerId: events-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1144
+    - entityRef: blueprint/plugins/permission-common/integration
+      type: background-worker
+      name: integration Service (External)
+      external: true
+      properties:
+        filepath: plugins/permission-common/src/types/integration.ts
+        containerId: permission-common
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 1144
+    - entityRef: blueprint/plugins/kubernetes-react/test-utils
+      type: gateway-api
+      name: test-utils Service (External)
+      external: true
+      properties:
+        filepath: plugins/kubernetes-react/src/hooks/test-utils.tsx
+        containerId: kubernetes-react
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 1144
+    - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+      type: background-worker
+      name: types Service (External)
+      external: true
+      properties:
+        filepath: plugins/auth-backend-module-cloudflare-access-provider/src/types.ts
+        containerId: auth-backend-module-cloudflare-access-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1264
   dependencies:
     - from: blueprint/plugins/scaffolder-common/taskspec
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-common/scaffolderclient-test
@@ -224,11 +268,11 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-common/templateentityv1beta3
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-common/api
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-common/api
@@ -244,7 +288,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-common/catalogmodel
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-common/templateentityv1beta3-test
@@ -260,7 +304,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-common/scaffolderclient
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-common/scaffolderclient

@@ -166,6 +166,61 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/permission-node/alpha
+      type: background-worker
+      name: alpha Service (External)
+      external: true
+      properties:
+        filepath: plugins/permission-node/src/alpha.ts
+        containerId: permission-node
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 680
+    - entityRef: blueprint/plugins/techdocs-react/api
+      type: background-worker
+      name: api Service (External)
+      external: true
+      properties:
+        filepath: plugins/techdocs-react/src/api.ts
+        containerId: techdocs-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 680
+    - entityRef: blueprint/plugins/home/config
+      type: rest-api
+      name: config Service (External)
+      external: true
+      properties:
+        filepath: plugins/home/src/api/config.ts
+        containerId: home
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 460
+      y: 680
+    - entityRef: blueprint/plugins/events-backend/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: plugins/events-backend/src/service/http/errors.ts
+        containerId: events-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 800
+    - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+      type: background-worker
+      name: types Service (External)
+      external: true
+      properties:
+        filepath: plugins/auth-backend-module-cloudflare-access-provider/src/types.ts
+        containerId: auth-backend-module-cloudflare-access-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 800
   dependencies:
     - from: blueprint/plugins/devtools-backend/plugin
       to: blueprint/plugins/devtools-backend/router
@@ -180,7 +235,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/devtools-backend/devtoolsbackendapi
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/devtools-backend/devtoolsbackendapi

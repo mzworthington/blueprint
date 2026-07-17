@@ -1018,6 +1018,50 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/kubernetes-react/auth
+      type: background-worker
+      name: auth Service (External)
+      external: true
+      properties:
+        filepath: plugins/kubernetes-react/src/hooks/auth.ts
+        containerId: kubernetes-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1464
+    - entityRef: blueprint/plugins/home/config
+      type: rest-api
+      name: config Service (External)
+      external: true
+      properties:
+        filepath: plugins/home/src/api/config.ts
+        containerId: home
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 280
+      y: 1464
+    - entityRef: blueprint/plugins/events-backend/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: plugins/events-backend/src/service/http/errors.ts
+        containerId: events-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 1464
+    - entityRef: blueprint/plugins/catalog-react/testutils
+      type: background-worker
+      name: testUtils Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-react/src/testUtils.ts
+        containerId: catalog-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1584
   dependencies:
     - from: blueprint/plugins/kubernetes-backend/catalogclusterlocator-test
       to: blueprint/plugins/kubernetes-backend/catalogclusterlocator

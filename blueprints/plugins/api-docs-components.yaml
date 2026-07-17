@@ -924,31 +924,40 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
-    - entityRef: blueprint/plugins/api-docs/widgets
+    - entityRef: blueprint/plugins/home/styles
       type: background-worker
-      name: widgets Service
-      isTest: false
+      name: styles Service (External)
+      external: true
       properties:
-        filepath: plugins/api-docs-module-protoc-gen-doc/src/widgets.tsx
-        containerId: api-docs
+        filepath: plugins/home/src/homePageComponents/QuickStart/styles.ts
+        containerId: home
         technology: TypeScript Domain Service
         classification: default
-      x: 7388
-      y: 64
-      forensics:
-        complexity: 2
-        loc: 29
-        sloc: 8
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
+      x: 100
+      y: 2744
+    - entityRef: blueprint/plugins/kubernetes-react/test-utils
+      type: gateway-api
+      name: test-utils Service (External)
+      external: true
+      properties:
+        filepath: plugins/kubernetes-react/src/hooks/test-utils.tsx
+        containerId: kubernetes-react
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 2744
+    - entityRef: blueprint/plugins/catalog-react/testutils
+      type: background-worker
+      name: testUtils Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-react/src/testUtils.ts
+        containerId: catalog-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 2744
   dependencies:
-    - from: blueprint/plugins/scaffolder-react/index
-      to: blueprint/plugins/api-docs/widgets
-      type: direct-call
-      description: Calls module / service
     - from: blueprint/plugins/api-docs/plugin
       to: blueprint/plugins/api-docs/apidefinitioncard
       type: direct-call

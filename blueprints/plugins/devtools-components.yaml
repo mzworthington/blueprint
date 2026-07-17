@@ -508,6 +508,83 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/techdocs-react/api
+      type: background-worker
+      name: api Service (External)
+      external: true
+      properties:
+        filepath: plugins/techdocs-react/src/api.ts
+        containerId: techdocs-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1144
+    - entityRef: blueprint/plugins/scaffolder/autocomplete
+      type: gateway-api
+      name: Autocomplete Service (External)
+      external: true
+      properties:
+        filepath: plugins/scaffolder/src/components/fields/Autocomplete/Autocomplete.tsx
+        containerId: scaffolder
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 1144
+    - entityRef: blueprint/plugins/home/content
+      type: gateway-api
+      name: Content Service (External)
+      external: true
+      properties:
+        filepath: plugins/home/src/homePageComponents/QuickStart/Content.tsx
+        containerId: home
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 1144
+    - entityRef: blueprint/plugins/events-backend/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: plugins/events-backend/src/service/http/errors.ts
+        containerId: events-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1264
+    - entityRef: blueprint/plugins/techdocs-module-addons-contrib/hooks
+      type: gateway-api
+      name: hooks Service (External)
+      external: true
+      properties:
+        filepath: plugins/techdocs-module-addons-contrib/src/ReportIssue/hooks.ts
+        containerId: techdocs-module-addons-contrib
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 1264
+    - entityRef: blueprint/plugins/catalog-backend/refresh
+      type: background-worker
+      name: refresh Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-backend/src/processing/refresh.ts
+        containerId: catalog-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 1264
+    - entityRef: blueprint/plugins/home/styles
+      type: background-worker
+      name: styles Service (External)
+      external: true
+      properties:
+        filepath: plugins/home/src/homePageComponents/QuickStart/styles.ts
+        containerId: home
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1384
   dependencies:
     - from: blueprint/plugins/devtools/index
       to: blueprint/plugins/devtools/plugin
@@ -562,7 +639,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/devtools/scheduledtaskscontent
-      to: blueprint/plugins/techdocs/hooks
+      to: blueprint/plugins/techdocs-module-addons-contrib/hooks
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/devtools/scheduledtaskscontent
@@ -590,7 +667,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/devtools/configcontent
-      to: blueprint/plugins/techdocs/hooks
+      to: blueprint/plugins/techdocs-module-addons-contrib/hooks
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/devtools/infocontent
@@ -598,7 +675,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/devtools/infocontent
-      to: blueprint/plugins/techdocs/hooks
+      to: blueprint/plugins/techdocs-module-addons-contrib/hooks
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/devtools/infocontent
@@ -614,7 +691,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/devtools/externaldependenciescontent
-      to: blueprint/plugins/techdocs/hooks
+      to: blueprint/plugins/techdocs-module-addons-contrib/hooks
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/devtools/useconfig

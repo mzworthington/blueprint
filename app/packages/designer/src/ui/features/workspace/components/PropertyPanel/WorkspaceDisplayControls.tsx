@@ -3,6 +3,8 @@ import React from 'react';
 interface WorkspaceDisplayControlsProps {
   showTests: boolean;
   onToggleShowTests: () => void;
+  showExternals: boolean;
+  onToggleShowExternals: () => void;
   showHotspotHeatmap: boolean;
   onToggleShowHotspotHeatmap: () => void;
 }
@@ -50,6 +52,8 @@ function DisplaySwitch({
 export const WorkspaceDisplayControls: React.FC<WorkspaceDisplayControlsProps> = ({
   showTests,
   onToggleShowTests,
+  showExternals,
+  onToggleShowExternals,
   showHotspotHeatmap,
   onToggleShowHotspotHeatmap,
 }) => (
@@ -65,6 +69,13 @@ export const WorkspaceDisplayControls: React.FC<WorkspaceDisplayControlsProps> =
       checked={showTests}
       onToggle={onToggleShowTests}
       testId="toggle-show-tests"
+      onClassName="bg-brand-600"
+    />
+    <DisplaySwitch
+      label="Show Externals"
+      checked={showExternals}
+      onToggle={onToggleShowExternals}
+      testId="toggle-show-externals"
       onClassName="bg-brand-600"
     />
     <DisplaySwitch

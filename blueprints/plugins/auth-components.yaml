@@ -188,9 +188,42 @@
         classifications:
           - knowledge-silo
         sinceDays: 500
+    - entityRef: blueprint/plugins/catalog-backend-module-ldap/client
+      type: background-worker
+      name: client Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-backend-module-ldap/src/ldap/client.ts
+        containerId: catalog-backend-module-ldap
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 824
+    - entityRef: blueprint/plugins/events-backend/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: plugins/events-backend/src/service/http/errors.ts
+        containerId: events-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 824
+    - entityRef: blueprint/plugins/kubernetes-react/test-utils
+      type: gateway-api
+      name: test-utils Service (External)
+      external: true
+      properties:
+        filepath: plugins/kubernetes-react/src/hooks/test-utils.tsx
+        containerId: kubernetes-react
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 824
   dependencies:
     - from: blueprint/plugins/auth/index
-      to: blueprint/plugins/catalog-backend/client
+      to: blueprint/plugins/catalog-backend-module-ldap/client
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/auth/plugin

@@ -19,7 +19,7 @@ import {
   normalizeFilePath,
 } from '../../forensics/domain/attachForensics.ts';
 import type { FileMetrics } from '../../forensics/domain/types.ts';
-
+import { applyExternalDependenciesPass } from '../../writers/externalDependenciesPass.ts';
 export interface CodebaseAnalyzerDependencies {
   parser: CodebaseParserPort;
   layout: LayoutPort;
@@ -283,6 +283,9 @@ export class CodebaseAnalyzer {
         ? { forensicsComponentNodes: allComponentNodes }
         : undefined
     );
+
+    throwIfAborted(signal);
+    await applyExternalDependenciesPass(rootDir, this.deps.fileSystem, this.deps.logger);
 
     throwIfAborted(signal);
     this.deps.logger.info(`✅ Multi-level structural blueprint generation complete.`);

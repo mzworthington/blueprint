@@ -4,66 +4,6 @@
   version: 1.0.0
   level: component
   nodes:
-    - entityRef: blueprint/plugins/permission-backend/module
-      type: background-worker
-      name: module Service
-      isTest: false
-      properties:
-        filepath: plugins/permission-backend-module-policy-allow-all/src/module.ts
-        containerId: permission-backend
-        technology: TypeScript Domain Service
-        classification: default
-      x: 428
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 37
-        sloc: 15
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/permission-backend/policy
-      type: background-worker
-      name: policy Service
-      isTest: false
-      properties:
-        filepath: plugins/permission-backend-module-policy-allow-all/src/policy.ts
-        containerId: permission-backend
-        technology: TypeScript Domain Service
-        classification: default
-      x: 1188
-      y: 384
-      forensics:
-        complexity: 1
-        loc: 37
-        sloc: 19
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/permission-backend/index
-      type: background-worker
-      name: index Service
-      isTest: false
-      properties:
-        filepath: plugins/permission-backend-module-policy-allow-all/src/index.ts
-        containerId: permission-backend
-        technology: TypeScript Domain Service
-        classification: default
-      x: 48
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 24
-        sloc: 1
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
     - entityRef: blueprint/plugins/permission-backend/plugin
       type: background-worker
       name: plugin Service
@@ -74,7 +14,7 @@
         technology: TypeScript Domain Service
         classification: default
       x: 428
-      y: 704
+      y: 384
       forensics:
         complexity: 3
         loc: 95
@@ -94,7 +34,7 @@
         technology: TypeScript Domain Service
         classification: default
       x: 428
-      y: 384
+      y: 64
       forensics:
         complexity: 1
         loc: 22
@@ -113,11 +53,31 @@
         containerId: permission-backend
         technology: TypeScript Domain Service
         classification: default
-      x: 1948
+      x: 1568
       y: 64
       forensics:
         complexity: 1
         loc: 18
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/permission-backend/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: plugins/permission-backend/src/index.ts
+        containerId: permission-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 808
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 22
         sloc: 1
         churn: 1
         authorCount: 1
@@ -133,7 +93,7 @@
         containerId: permission-backend
         technology: TypeScript Domain Service
         classification: default
-      x: 1568
+      x: 1188
       y: 704
       forensics:
         complexity: 4
@@ -153,7 +113,7 @@
         containerId: permission-backend
         technology: REST Controller / Router
         classification: api-marker
-      x: 1568
+      x: 1188
       y: 384
       forensics:
         complexity: 14
@@ -175,7 +135,7 @@
         containerId: permission-backend
         technology: REST Controller / Router
         classification: api-marker
-      x: 1568
+      x: 1188
       y: 64
       forensics:
         complexity: 3
@@ -195,7 +155,7 @@
         containerId: permission-backend
         technology: REST Controller / Router
         classification: api-marker
-      x: 808
+      x: 48
       y: 384
       forensics:
         complexity: 2
@@ -206,15 +166,40 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/home/config
+      type: rest-api
+      name: config Service (External)
+      external: true
+      properties:
+        filepath: plugins/home/src/api/config.ts
+        containerId: home
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 100
+      y: 824
+    - entityRef: blueprint/plugins/events-backend/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: plugins/events-backend/src/service/http/errors.ts
+        containerId: events-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 824
+    - entityRef: blueprint/plugins/events-node/service
+      type: background-worker
+      name: service Service (External)
+      external: true
+      properties:
+        filepath: plugins/events-node/src/service.ts
+        containerId: events-node
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 824
   dependencies:
-    - from: blueprint/plugins/permission-backend/module
-      to: blueprint/plugins/permission-backend/alpha
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/permission-backend/module
-      to: blueprint/plugins/permission-backend/policy
-      type: direct-call
-      description: Calls module / service
     - from: blueprint/plugins/permission-backend/plugin
       to: blueprint/plugins/permission-backend/alpha
       type: direct-call

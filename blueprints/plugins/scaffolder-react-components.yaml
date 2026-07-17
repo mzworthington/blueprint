@@ -2470,6 +2470,182 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/techdocs-react/api
+      type: background-worker
+      name: api Service (External)
+      external: true
+      properties:
+        filepath: plugins/techdocs-react/src/api.ts
+        containerId: techdocs-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 3064
+    - entityRef: blueprint/plugins/scaffolder/autocomplete
+      type: gateway-api
+      name: Autocomplete Service (External)
+      external: true
+      properties:
+        filepath: plugins/scaffolder/src/components/fields/Autocomplete/Autocomplete.tsx
+        containerId: scaffolder
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 3064
+    - entityRef: blueprint/plugins/kubernetes-react/containercard
+      type: gateway-api
+      name: ContainerCard Service (External)
+      external: true
+      properties:
+        filepath: plugins/kubernetes-react/src/components/Pods/PodDrawer/ContainerCard.tsx
+        containerId: kubernetes-react
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 3064
+    - entityRef: blueprint/plugins/catalog-backend-module-gitea/core
+      type: background-worker
+      name: core Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-backend-module-gitea/src/providers/core.ts
+        containerId: catalog-backend-module-gitea
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 3184
+    - entityRef: blueprint/plugins/scaffolder/customfieldexplorer
+      type: gateway-api
+      name: CustomFieldExplorer Service (External)
+      external: true
+      properties:
+        filepath: plugins/scaffolder/src/alpha/components/TemplateEditorPage/CustomFieldExplorer.tsx
+        containerId: scaffolder
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 3184
+    - entityRef: blueprint/plugins/scaffolder/extensions
+      type: gateway-api
+      name: extensions Service (External)
+      external: true
+      properties:
+        filepath: plugins/scaffolder/src/alpha/extensions.tsx
+        containerId: scaffolder
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 3184
+    - entityRef: blueprint/plugins/techdocs-module-addons-contrib/hooks
+      type: gateway-api
+      name: hooks Service (External)
+      external: true
+      properties:
+        filepath: plugins/techdocs-module-addons-contrib/src/ReportIssue/hooks.ts
+        containerId: techdocs-module-addons-contrib
+        technology: React Component
+        classification: ui-import
+      x: 100
+      y: 3304
+    - entityRef: blueprint/plugins/catalog-import/importstepper
+      type: gateway-api
+      name: ImportStepper Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-import/src/components/ImportStepper/ImportStepper.tsx
+        containerId: catalog-import
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 3304
+    - entityRef: blueprint/plugins/signals-node/lib
+      type: background-worker
+      name: lib Service (External)
+      external: true
+      properties:
+        filepath: plugins/signals-node/src/lib.ts
+        containerId: signals-node
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 3304
+    - entityRef: blueprint/plugins/catalog-import/previewcataloginfocomponent
+      type: background-worker
+      name: PreviewCatalogInfoComponent Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-import/src/components/StepPrepareCreatePullRequest/PreviewCatalogInfoComponent.tsx
+        containerId: catalog-import
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 3424
+    - entityRef: blueprint/plugins/catalog-import/previewpullrequestcomponent
+      type: background-worker
+      name: PreviewPullRequestComponent Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-import/src/components/StepPrepareCreatePullRequest/PreviewPullRequestComponent.tsx
+        containerId: catalog-import
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 3424
+    - entityRef: blueprint/plugins/kubernetes-react/stepsprogress
+      type: gateway-api
+      name: StepsProgress Service (External)
+      external: true
+      properties:
+        filepath: plugins/kubernetes-react/src/components/CustomResources/ArgoRollouts/StepsProgress.tsx
+        containerId: kubernetes-react
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 3424
+    - entityRef: blueprint/plugins/home/styles
+      type: background-worker
+      name: styles Service (External)
+      external: true
+      properties:
+        filepath: plugins/home/src/homePageComponents/QuickStart/styles.ts
+        containerId: home
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 3544
+    - entityRef: blueprint/plugins/scaffolder/taskstatusstepper
+      type: gateway-api
+      name: TaskStatusStepper Service (External)
+      external: true
+      properties:
+        filepath: plugins/scaffolder/src/alpha/components/TemplateEditorPage/DryRunResults/TaskStatusStepper.tsx
+        containerId: scaffolder
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 3544
+    - entityRef: blueprint/plugins/kubernetes-react/test-utils
+      type: gateway-api
+      name: test-utils Service (External)
+      external: true
+      properties:
+        filepath: plugins/kubernetes-react/src/hooks/test-utils.tsx
+        containerId: kubernetes-react
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 3544
+    - entityRef: blueprint/plugins/api-docs-module-protoc-gen-doc/widgets
+      type: background-worker
+      name: widgets Service (External)
+      external: true
+      properties:
+        filepath: plugins/api-docs-module-protoc-gen-doc/src/widgets.tsx
+        containerId: api-docs-module-protoc-gen-doc
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 3664
   dependencies:
     - from: blueprint/plugins/scaffolder/taskstatusstepper
       to: blueprint/plugins/scaffolder-react/stepper
@@ -2656,11 +2832,11 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-react/index
-      to: blueprint/plugins/catalog-backend/core
+      to: blueprint/plugins/catalog-backend-module-gitea/core
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-react/index
-      to: blueprint/plugins/api-docs/widgets
+      to: blueprint/plugins/api-docs-module-protoc-gen-doc/widgets
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-react/timewidget
@@ -2848,7 +3024,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-react/form
-      to: blueprint/plugins/catalog-backend/core
+      to: blueprint/plugins/catalog-backend-module-gitea/core
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-react/form
@@ -3080,7 +3256,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-react/stepper
-      to: blueprint/plugins/catalog-backend/core
+      to: blueprint/plugins/catalog-backend-module-gitea/core
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-react/stepper
@@ -3092,7 +3268,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-react/stepper
-      to: blueprint/plugins/techdocs/hooks
+      to: blueprint/plugins/techdocs-module-addons-contrib/hooks
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-react/stepper
@@ -3476,7 +3652,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-react/rjsf
-      to: blueprint/plugins/catalog-backend/core
+      to: blueprint/plugins/catalog-backend-module-gitea/core
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-react/createscaffolderfieldextension
@@ -3500,7 +3676,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-react/types
-      to: blueprint/plugins/catalog-backend/core
+      to: blueprint/plugins/catalog-backend-module-gitea/core
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-react/types
@@ -3512,7 +3688,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-react/createscaffolderlayout
-      to: blueprint/plugins/catalog-backend/core
+      to: blueprint/plugins/catalog-backend-module-gitea/core
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/scaffolder-react/usecustomfieldextensions-test

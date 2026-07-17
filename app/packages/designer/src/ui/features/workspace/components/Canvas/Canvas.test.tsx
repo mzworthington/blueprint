@@ -135,6 +135,39 @@ describe('Canvas Component', () => {
     expect(screen.getByTestId('edges-count')).toHaveTextContent('1');
   });
 
+  it('hides external nodes when showExternals is off', () => {
+    const { initSchema } = useBlueprintStore.getState();
+    initSchema({
+      name: 'Externals Canvas',
+      version: '1.0.0',
+      level: 'component',
+      nodes: [
+        {
+          entityRef: 'comp-a',
+          type: 'component',
+          name: 'A',
+          x: 0,
+          y: 0,
+        },
+        {
+          entityRef: 'comp-ext',
+          type: 'component',
+          name: 'External Peer',
+          external: true,
+          x: 100,
+          y: 100,
+        },
+      ],
+      dependencies: [{ from: 'comp-a', to: 'comp-ext', type: 'direct-call' }],
+    });
+    useBlueprintStore.setState({ showTests: true, showExternals: false });
+
+    render(<Canvas />);
+
+    expect(screen.getByTestId('nodes-count')).toHaveTextContent('1');
+    expect(screen.getByTestId('edges-count')).toHaveTextContent('0');
+  });
+
   it('applies hotspot heat to nodes when showHotspotHeatmap is on', () => {
     const { initSchema } = useBlueprintStore.getState();
     initSchema({

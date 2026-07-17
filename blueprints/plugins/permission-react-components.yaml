@@ -184,6 +184,50 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/catalog/apis
+      type: gateway-api
+      name: apis Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog/src/alpha/apis.tsx
+        containerId: catalog
+        technology: React Component
+        classification: ui-import
+      x: 100
+      y: 824
+    - entityRef: blueprint/plugins/home/config
+      type: rest-api
+      name: config Service (External)
+      external: true
+      properties:
+        filepath: plugins/home/src/api/config.ts
+        containerId: home
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 280
+      y: 824
+    - entityRef: blueprint/plugins/techdocs-module-addons-contrib/hooks
+      type: gateway-api
+      name: hooks Service (External)
+      external: true
+      properties:
+        filepath: plugins/techdocs-module-addons-contrib/src/ReportIssue/hooks.ts
+        containerId: techdocs-module-addons-contrib
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 824
+    - entityRef: blueprint/plugins/kubernetes-react/test-utils
+      type: gateway-api
+      name: test-utils Service (External)
+      external: true
+      properties:
+        filepath: plugins/kubernetes-react/src/hooks/test-utils.tsx
+        containerId: kubernetes-react
+        technology: React Component
+        classification: ui-import
+      x: 100
+      y: 944
   dependencies:
     - from: blueprint/plugins/permission-react/identitypermissionapi-test
       to: blueprint/plugins/home/config
@@ -210,7 +254,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/permission-react/requirepermission-test
-      to: blueprint/plugins/techdocs/hooks
+      to: blueprint/plugins/techdocs-module-addons-contrib/hooks
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/permission-react/requirepermission-test
@@ -218,7 +262,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/permission-react/requirepermission
-      to: blueprint/plugins/techdocs/hooks
+      to: blueprint/plugins/techdocs-module-addons-contrib/hooks
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/permission-react/usepermission-test

@@ -6,6 +6,8 @@ import {
   materializeExternalNodes,
   suggestExternalDependencies,
   computeExternalNodePositions,
+  enrichSchemaWithExternals,
+  enrichWorkspaceWithExternals,
 } from './workspaceExternals';
 
 const containerSchema: SystemSchema = {
@@ -207,6 +209,142 @@ describe('workspaceExternals', () => {
       const positions = computeExternalNodePositions(3, [{ x: 100, y: 100 }]);
       expect(positions).toHaveLength(3);
       expect(positions[0]).toEqual({ x: 280, y: 100 });
+    });
+  });
+
+  describe('enrichSchemaWithExternals', () => {
+    it('materializes suggested cross-container components and neighbor containers', () => {
+      const index = buildWorkspaceEntityIndex(loadedSystems);
+      const enriched = enrichSchemaWithExternals(vhsComponents, loadedSystems, index);
+
+      const byRef = new Map(enriched.nodes.map(n => [n.entityRef, n]));
+      expect(byRef.get('blueprint/cli/analysis')).toMatchObject({
+        external: true,
+        type: 'container',
+      });
+      expect(byRef.get('blueprint/cli/writers/context-level-writer')).toMatchObject({
+        external: true,
+        type: 'background-worker',
+      });
+      expect(byRef.get('blueprint/cli/vhs/cli-demo-test')?.external).toBeFalsy();
+      expect(enriched.nodes.filter(n => !n.external)).toHaveLength(vhsComponents.nodes.length);
+    });
+
+    it('is idempotent when externals are already present', () => {
+      const index = buildWorkspaceEntityIndex(loadedSystems);
+      const once = enrichSchemaWithExternals(vhsComponents, loadedSystems, index);
+      const twice = enrichSchemaWithExternals(once, loadedSystems, index);
+      expect(twice.nodes.map(n => n.entityRef).sort()).toEqual(
+        once.nodes.map(n => n.entityRef).sort()
+      );
+      expect(twice.nodes.filter(n => n.external).every(n => n.external === true)).toBe(true);
+    });
+
+    it('on container diagrams only materializes container-level externals', () => {
+      const active: SystemSchema = {
+        ...containerSchema,
+        nodes: [containerSchema.nodes[0]],
+        dependencies: [
+          {
+            from: 'blueprint/cli/vhs',
+            to: 'blueprint/cli/analysis',
+            type: 'inter-container',
+          },
+        ],
+      };
+      const index = buildWorkspaceEntityIndex(loadedSystems);
+      const enriched = enrichSchemaWithExternals(active, loadedSystems, index);
+
+      const externals = enriched.nodes.filter(n => n.external);
+      expect(externals.every(n => n.type === 'container')).toBe(true);
+      expect(externals.map(n => n.entityRef)).toContain('blueprint/cli/analysis');
+      expect(externals.map(n => n.entityRef)).not.toContain(
+        'blueprint/cli/writers/context-level-writer'
+      );
+    });
+
+    it('on context diagrams never materializes component-level noise', () => {
+      const contextSchema: SystemSchema = {
+        entityRef: 'blueprint',
+        name: 'Blueprint Context',
+        version: '1.0.0',
+        level: 'context',
+        nodes: [
+          {
+            entityRef: 'blueprint/cli',
+            type: 'software-system',
+            name: 'Cli System',
+          },
+        ],
+        dependencies: [
+          {
+            from: 'blueprint/cli',
+            to: 'blueprint/cli/vhs/cli-demo-test',
+            type: 'direct-call',
+          },
+        ],
+      };
+      const loaded = [
+        ...loadedSystems,
+        { path: 'context.yaml', name: 'Context', schema: contextSchema },
+      ];
+      const index = buildWorkspaceEntityIndex(loaded);
+      const enriched = enrichSchemaWithExternals(contextSchema, loaded, index);
+
+      expect(enriched.nodes.every(n => !n.external || n.type === 'software-system')).toBe(true);
+      expect(enriched.nodes.map(n => n.entityRef)).not.toContain('blueprint/cli/vhs/cli-demo-test');
+    });
+
+    it('unresolved mode only adds dangling dependency endpoints', () => {
+      const active: SystemSchema = {
+        ...vhsComponents,
+        dependencies: [
+          {
+            from: 'blueprint/cli/vhs/cli-demo-test',
+            to: 'blueprint/cli/analysis',
+            type: 'direct-call',
+          },
+        ],
+      };
+      const index = buildWorkspaceEntityIndex(loadedSystems);
+      const enriched = enrichSchemaWithExternals(active, loadedSystems, index, {
+        mode: 'unresolved',
+      });
+
+      const externalRefs = enriched.nodes.filter(n => n.external).map(n => n.entityRef);
+      expect(externalRefs).toEqual(['blueprint/cli/analysis']);
+    });
+
+    it('skips context schemas when enrichLevels excludes them', () => {
+      const contextSchema: SystemSchema = {
+        entityRef: 'blueprint',
+        name: 'Blueprint Context',
+        version: '1.0.0',
+        level: 'context',
+        nodes: [{ entityRef: 'blueprint/cli', type: 'software-system', name: 'Cli' }],
+        dependencies: [],
+      };
+      const index = buildWorkspaceEntityIndex(loadedSystems);
+      const enriched = enrichSchemaWithExternals(contextSchema, loadedSystems, index, {
+        enrichLevels: ['component', 'container'],
+      });
+      expect(enriched).toBe(contextSchema);
+    });
+  });
+
+  describe('enrichWorkspaceWithExternals', () => {
+    it('enriches every schema using a shared workspace index', () => {
+      const result = enrichWorkspaceWithExternals(loadedSystems);
+      const writers = result.find(s => s.path === 'writers-components.yaml')!.schema;
+      const vhs = result.find(s => s.path === 'vhs-components.yaml')!.schema;
+
+      expect(writers.nodes.some(n => n.entityRef === 'blueprint/cli/vhs/cli-demo-test')).toBe(true);
+      expect(
+        writers.nodes.find(n => n.entityRef === 'blueprint/cli/vhs/cli-demo-test')?.external
+      ).toBe(true);
+      expect(vhs.nodes.some(n => n.entityRef === 'blueprint/cli/analysis' && n.external)).toBe(
+        true
+      );
     });
   });
 });

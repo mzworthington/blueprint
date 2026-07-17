@@ -1,76 +1,82 @@
-entityRef: blueprint/plugins/api-docs-module-protoc-gen-doc
-name: Api-docs-module-protoc-gen-doc Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/plugins/api-docs-module-protoc-gen-doc/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/api-docs-module-protoc-gen-doc/src/index.ts
-      containerId: api-docs-module-protoc-gen-doc
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 24
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 40
-  - entityRef: blueprint/plugins/api-docs-module-protoc-gen-doc/widgets
-    type: background-worker
-    name: widgets Service
-    isTest: false
-    properties:
-      filepath: plugins/api-docs-module-protoc-gen-doc/src/widgets.tsx
-      containerId: api-docs-module-protoc-gen-doc
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 29
-      sloc: 8
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 40
-  - entityRef: blueprint/plugins/api-docs-module-protoc-gen-doc/setuptests
-    type: background-worker
-    name: setupTests Service
-    isTest: true
-    properties:
-      filepath: plugins/api-docs-module-protoc-gen-doc/src/setupTests.ts
-      containerId: api-docs-module-protoc-gen-doc
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 18
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 300
-dependencies:
-  - from: blueprint/plugins/scaffolder-react/index
-    to: blueprint/plugins/api-docs-module-protoc-gen-doc/widgets
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/plugins/api-docs-module-protoc-gen-doc
+  name: Api-docs-module-protoc-gen-doc Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/plugins/api-docs-module-protoc-gen-doc/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: plugins/api-docs-module-protoc-gen-doc/src/index.ts
+        containerId: api-docs-module-protoc-gen-doc
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 24
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/api-docs-module-protoc-gen-doc/widgets
+      type: background-worker
+      name: widgets Service
+      isTest: false
+      properties:
+        filepath: plugins/api-docs-module-protoc-gen-doc/src/widgets.tsx
+        containerId: api-docs-module-protoc-gen-doc
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 40
+      forensics:
+        complexity: 2
+        loc: 29
+        sloc: 8
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/api-docs-module-protoc-gen-doc/setuptests
+      type: background-worker
+      name: setupTests Service
+      isTest: true
+      properties:
+        filepath: plugins/api-docs-module-protoc-gen-doc/src/setupTests.ts
+        containerId: api-docs-module-protoc-gen-doc
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 300
+      forensics:
+        complexity: 1
+        loc: 18
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/scaffolder-react/index
+      type: rest-api
+      name: index Service (External)
+      external: true
+      properties:
+        filepath: plugins/scaffolder-react/src/next/blueprints/index.ts
+        containerId: scaffolder-react
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 580
+      y: 300
+  dependencies:
+    - from: blueprint/plugins/scaffolder-react/index
+      to: blueprint/plugins/api-docs-module-protoc-gen-doc/widgets
+      type: direct-call
+      description: Calls module / service

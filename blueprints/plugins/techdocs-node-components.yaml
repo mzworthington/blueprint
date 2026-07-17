@@ -622,6 +622,72 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/home/config
+      type: rest-api
+      name: config Service (External)
+      external: true
+      properties:
+        filepath: plugins/home/src/api/config.ts
+        containerId: home
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 100
+      y: 1784
+    - entityRef: blueprint/plugins/events-backend/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: plugins/events-backend/src/service/http/errors.ts
+        containerId: events-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 1784
+    - entityRef: blueprint/plugins/permission-common/integration
+      type: background-worker
+      name: integration Service (External)
+      external: true
+      properties:
+        filepath: plugins/permission-common/src/types/integration.ts
+        containerId: permission-common
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 1784
+    - entityRef: blueprint/plugins/catalog-backend/migrations
+      type: relational-database
+      name: migrations Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-backend/src/database/migrations.ts
+        containerId: catalog-backend
+        technology: Prisma / SQL Database Client
+        classification: database-marker
+      x: 100
+      y: 1904
+    - entityRef: blueprint/plugins/scaffolder/templateeditorintro
+      type: gateway-api
+      name: TemplateEditorIntro Service (External)
+      external: true
+      properties:
+        filepath: plugins/scaffolder/src/alpha/components/TemplateEditorPage/TemplateEditorIntro.tsx
+        containerId: scaffolder
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 1904
+    - entityRef: blueprint/plugins/catalog-react/testutils
+      type: background-worker
+      name: testUtils Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-react/src/testUtils.ts
+        containerId: catalog-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 1904
   dependencies:
     - from: blueprint/plugins/scaffolder/templateeditorintro
       to: blueprint/plugins/techdocs-node/publish

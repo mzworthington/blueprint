@@ -166,6 +166,39 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/events-backend/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: plugins/events-backend/src/service/http/errors.ts
+        containerId: events-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 680
+    - entityRef: blueprint/plugins/techdocs-module-addons-contrib/hooks
+      type: gateway-api
+      name: hooks Service (External)
+      external: true
+      properties:
+        filepath: plugins/techdocs-module-addons-contrib/src/ReportIssue/hooks.ts
+        containerId: techdocs-module-addons-contrib
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 680
+    - entityRef: blueprint/plugins/kubernetes-react/test-utils
+      type: gateway-api
+      name: test-utils Service (External)
+      external: true
+      properties:
+        filepath: plugins/kubernetes-react/src/hooks/test-utils.tsx
+        containerId: kubernetes-react
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 680
   dependencies:
     - from: blueprint/plugins/auth-react/cookieauthredirect-test
       to: blueprint/plugins/kubernetes-react/test-utils
@@ -184,7 +217,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/auth-react/cookieauthrefreshprovider
-      to: blueprint/plugins/techdocs/hooks
+      to: blueprint/plugins/techdocs-module-addons-contrib/hooks
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/auth-react/usecookieauthrefresh

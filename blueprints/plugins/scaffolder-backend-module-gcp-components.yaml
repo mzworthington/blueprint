@@ -1,114 +1,129 @@
-entityRef: blueprint/plugins/scaffolder-backend-module-gcp
-name: Scaffolder-backend-module-gcp Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/plugins/scaffolder-backend-module-gcp/config-d
-    type: background-worker
-    name: config.d Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-gcp/config.d.ts
-      containerId: scaffolder-backend-module-gcp
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 26
-      sloc: 5
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 40
-  - entityRef: blueprint/plugins/scaffolder-backend-module-gcp/gcpbucketworkspaceprovider
-    type: background-worker
-    name: GcpBucketWorkspaceProvider Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-gcp/src/providers/GcpBucketWorkspaceProvider.ts
-      containerId: scaffolder-backend-module-gcp
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 5
-      loc: 108
-      sloc: 81
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 40
-  - entityRef: blueprint/plugins/scaffolder-backend-module-gcp/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-gcp/src/index.ts
-      containerId: scaffolder-backend-module-gcp
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 24
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 300
-  - entityRef: blueprint/plugins/scaffolder-backend-module-gcp/module
-    type: background-worker
-    name: module Service
-    isTest: false
-    properties:
-      filepath: plugins/scaffolder-backend-module-gcp/src/module.ts
-      containerId: scaffolder-backend-module-gcp
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 45
-      sloc: 24
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 300
-dependencies:
-  - from: blueprint/plugins/scaffolder-backend-module-gcp/module
-    to: blueprint/plugins/permission-node/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gcp/module
-    to: blueprint/plugins/scaffolder-backend-module-gcp/gcpbucketworkspaceprovider
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gcp/gcpbucketworkspaceprovider
-    to: blueprint/plugins/home/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gcp/gcpbucketworkspaceprovider
-    to: blueprint/plugins/permission-node/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/scaffolder-backend-module-gcp/gcpbucketworkspaceprovider
-    to: blueprint/plugins/permission-node/alpha
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/plugins/scaffolder-backend-module-gcp
+  name: Scaffolder-backend-module-gcp Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/plugins/scaffolder-backend-module-gcp/config-d
+      type: background-worker
+      name: config.d Service
+      isTest: false
+      properties:
+        filepath: plugins/scaffolder-backend-module-gcp/config.d.ts
+        containerId: scaffolder-backend-module-gcp
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 26
+        sloc: 5
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/scaffolder-backend-module-gcp/gcpbucketworkspaceprovider
+      type: background-worker
+      name: GcpBucketWorkspaceProvider Service
+      isTest: false
+      properties:
+        filepath: plugins/scaffolder-backend-module-gcp/src/providers/GcpBucketWorkspaceProvider.ts
+        containerId: scaffolder-backend-module-gcp
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 40
+      forensics:
+        complexity: 5
+        loc: 108
+        sloc: 81
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/scaffolder-backend-module-gcp/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: plugins/scaffolder-backend-module-gcp/src/index.ts
+        containerId: scaffolder-backend-module-gcp
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 300
+      forensics:
+        complexity: 1
+        loc: 24
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/scaffolder-backend-module-gcp/module
+      type: background-worker
+      name: module Service
+      isTest: false
+      properties:
+        filepath: plugins/scaffolder-backend-module-gcp/src/module.ts
+        containerId: scaffolder-backend-module-gcp
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 300
+      forensics:
+        complexity: 1
+        loc: 45
+        sloc: 24
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/permission-node/alpha
+      type: background-worker
+      name: alpha Service (External)
+      external: true
+      properties:
+        filepath: plugins/permission-node/src/alpha.ts
+        containerId: permission-node
+        technology: TypeScript Domain Service
+        classification: default
+      x: 580
+      y: 300
+    - entityRef: blueprint/plugins/home/config
+      type: rest-api
+      name: config Service (External)
+      external: true
+      properties:
+        filepath: plugins/home/src/api/config.ts
+        containerId: home
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 100
+      y: 420
+  dependencies:
+    - from: blueprint/plugins/scaffolder-backend-module-gcp/module
+      to: blueprint/plugins/permission-node/alpha
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/scaffolder-backend-module-gcp/module
+      to: blueprint/plugins/scaffolder-backend-module-gcp/gcpbucketworkspaceprovider
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/scaffolder-backend-module-gcp/gcpbucketworkspaceprovider
+      to: blueprint/plugins/home/config
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/scaffolder-backend-module-gcp/gcpbucketworkspaceprovider
+      to: blueprint/plugins/permission-node/alpha
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/scaffolder-backend-module-gcp/gcpbucketworkspaceprovider
+      to: blueprint/plugins/permission-node/alpha
+      type: direct-call
+      description: Calls module / service

@@ -4130,6 +4130,182 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/packages/core-plugin-api/alpha
+      type: background-worker
+      name: alpha Service (External)
+      external: true
+      properties:
+        filepath: packages/core-plugin-api/src/alpha.ts
+        containerId: core-plugin-api
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 2424
+    - entityRef: blueprint/packages/catalog-client/api
+      type: background-worker
+      name: api Service (External)
+      external: true
+      properties:
+        filepath: packages/catalog-client/src/types/api.ts
+        containerId: catalog-client
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 2424
+    - entityRef: blueprint/packages/core-plugin-api/auth
+      type: rest-api
+      name: auth Service (External)
+      external: true
+      properties:
+        filepath: packages/core-plugin-api/src/apis/definitions/auth.ts
+        containerId: core-plugin-api
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 460
+      y: 2424
+    - entityRef: blueprint/packages/repo-tools/cache
+      type: cache-store
+      name: Cache Service (External)
+      external: true
+      properties:
+        filepath: packages/repo-tools/src/commands/package-docs/Cache.ts
+        containerId: repo-tools
+        technology: TypeScript Cache Client
+        classification: cache-marker
+      x: 100
+      y: 2544
+    - entityRef: blueprint/packages/backend-plugin-api/database
+      type: relational-database
+      name: database Service (External)
+      external: true
+      properties:
+        filepath: packages/backend-plugin-api/src/services/utilities/database.ts
+        containerId: backend-plugin-api
+        technology: Prisma / SQL Database Client
+        classification: database-marker
+      x: 280
+      y: 2544
+    - entityRef: blueprint/packages/frontend-defaults/discovery
+      type: background-worker
+      name: discovery Service (External)
+      external: true
+      properties:
+        filepath: packages/frontend-defaults/src/discovery.ts
+        containerId: frontend-defaults
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 2544
+    - entityRef: blueprint/packages/cli-common/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: packages/cli-common/src/errors.ts
+        containerId: cli-common
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 2664
+    - entityRef: blueprint/packages/backend-openapi-utils/express
+      type: rest-api
+      name: express Service (External)
+      external: true
+      properties:
+        filepath: packages/backend-openapi-utils/src/types/express.ts
+        containerId: backend-openapi-utils
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 280
+      y: 2664
+    - entityRef: blueprint/packages/cli-module-auth/http
+      type: background-worker
+      name: http Service (External)
+      external: true
+      properties:
+        filepath: packages/cli-module-auth/src/lib/http.ts
+        containerId: cli-module-auth
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 2664
+    - entityRef: blueprint/packages/core-components/lifecycle
+      type: background-worker
+      name: Lifecycle Service (External)
+      external: true
+      properties:
+        filepath: packages/core-components/src/components/Lifecycle/Lifecycle.tsx
+        containerId: core-components
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 2784
+    - entityRef: blueprint/packages/backend-test-utils/memcache
+      type: cache-store
+      name: memcache Service (External)
+      external: true
+      properties:
+        filepath: packages/backend-test-utils/src/cache/memcache.ts
+        containerId: backend-test-utils
+        technology: TypeScript Cache Client
+        classification: cache-marker
+      x: 280
+      y: 2784
+    - entityRef: blueprint/packages/core-components/node
+      type: gateway-api
+      name: Node Service (External)
+      external: true
+      properties:
+        filepath: packages/core-components/src/components/DependencyGraph/Node.tsx
+        containerId: core-components
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 2784
+    - entityRef: blueprint/packages/backend-test-utils/redis
+      type: event-broker
+      name: redis Service (External)
+      external: true
+      properties:
+        filepath: packages/backend-test-utils/src/cache/redis.ts
+        containerId: backend-test-utils
+        technology: TypeScript Event Client
+        classification: event-marker
+      x: 100
+      y: 2904
+    - entityRef: blueprint/packages/backend-dynamic-feature-service/rootlogger
+      type: background-worker
+      name: rootLogger Service (External)
+      external: true
+      properties:
+        filepath: packages/backend-dynamic-feature-service/src/schemas/rootLogger.ts
+        containerId: backend-dynamic-feature-service
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 2904
+    - entityRef: blueprint/packages/cli-node/storage
+      type: background-worker
+      name: storage Service (External)
+      external: true
+      properties:
+        filepath: packages/cli-node/src/auth/storage.ts
+        containerId: cli-node
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 2904
+    - entityRef: blueprint/packages/backend-test-utils/valkey
+      type: cache-store
+      name: valkey Service (External)
+      external: true
+      properties:
+        filepath: packages/backend-test-utils/src/cache/valkey.ts
+        containerId: backend-test-utils
+        technology: TypeScript Cache Client
+        classification: cache-marker
+      x: 100
+      y: 3024
   dependencies:
     - from: blueprint/packages/backend-defaults/config-d
       to: blueprint/packages/backend-defaults/types
@@ -4252,7 +4428,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/packages/backend-defaults/httprouterservicefactory
-      to: blueprint/packages/cli/http
+      to: blueprint/packages/cli-module-auth/http
       type: direct-call
       description: Calls module / service
     - from: blueprint/packages/backend-defaults/httprouterservicefactory
@@ -5124,7 +5300,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/packages/backend-defaults/roothttprouterservicefactory
-      to: blueprint/packages/cli/http
+      to: blueprint/packages/cli-module-auth/http
       type: direct-call
       description: Calls module / service
     - from: blueprint/packages/backend-defaults/roothttprouterservicefactory

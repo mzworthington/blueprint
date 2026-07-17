@@ -8,6 +8,8 @@ export interface ToastNotification {
 
 export interface UiState {
   showTests: boolean;
+  /** When false, hide nodes marked `external` on the canvas (display-only). */
+  showExternals: boolean;
   /** When true (and a node is selected), focus the canvas on that node and its coupled peers. */
   showCoupling: boolean;
   /** When true, tint canvas nodes by forensics.hotspotScore (display-only). */
@@ -26,6 +28,7 @@ export interface UiState {
   focusedCyclePath: string[] | null;
   isLoading: boolean | string;
   toggleShowTests: () => void;
+  toggleShowExternals: () => void;
   toggleShowCoupling: () => void;
   toggleShowHotspotHeatmap: () => void;
   toggleLeftCollapsed: () => void;
@@ -43,6 +46,7 @@ export const createUiState = (
   set: (partial: Partial<UiState> | ((state: UiState) => Partial<UiState>)) => void
 ): UiState => ({
   showTests: false,
+  showExternals: true,
   showCoupling: false,
   showHotspotHeatmap: false,
   layoutEngine: null,
@@ -55,6 +59,7 @@ export const createUiState = (
   focusedCyclePath: null,
   isLoading: false,
   toggleShowTests: () => set(state => ({ showTests: !state.showTests })),
+  toggleShowExternals: () => set(state => ({ showExternals: !state.showExternals })),
   toggleShowCoupling: () => set(state => ({ showCoupling: !state.showCoupling })),
   toggleShowHotspotHeatmap: () => set(state => ({ showHotspotHeatmap: !state.showHotspotHeatmap })),
   toggleLeftCollapsed: () => set(state => ({ leftCollapsed: !state.leftCollapsed })),

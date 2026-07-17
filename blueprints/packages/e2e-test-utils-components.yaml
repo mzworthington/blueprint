@@ -104,13 +104,35 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/packages/create-app/playwright-config
+      type: background-worker
+      name: playwright.config Service (External)
+      external: true
+      properties:
+        filepath: packages/create-app/templates/legacy-app/playwright.config.ts
+        containerId: create-app
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 420
+    - entityRef: blueprint/packages/cli-module-test-jest/test
+      type: background-worker
+      name: test Service (External)
+      external: true
+      properties:
+        filepath: packages/cli-module-test-jest/src/commands/repo/test.ts
+        containerId: cli-module-test-jest
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 420
   dependencies:
     - from: blueprint/packages/e2e-test-utils/failonbrowsererrors
-      to: blueprint/packages/cli/test
+      to: blueprint/packages/cli-module-test-jest/test
       type: direct-call
       description: Calls module / service
     - from: blueprint/packages/e2e-test-utils/generateprojects
-      to: blueprint/packages/cli/test
+      to: blueprint/packages/cli-module-test-jest/test
       type: direct-call
       description: Calls module / service
     - from: blueprint/packages/create-app/playwright-config

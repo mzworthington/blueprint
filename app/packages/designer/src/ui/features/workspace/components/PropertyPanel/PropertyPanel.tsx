@@ -31,6 +31,8 @@ export const PropertyPanel: React.FC = () => {
     deleteDependency,
     showTests,
     toggleShowTests,
+    showExternals,
+    toggleShowExternals,
     showCoupling,
     toggleShowCoupling,
     showHotspotHeatmap,
@@ -182,6 +184,8 @@ export const PropertyPanel: React.FC = () => {
           <WorkspaceDisplayControls
             showTests={showTests}
             onToggleShowTests={toggleShowTests}
+            showExternals={showExternals}
+            onToggleShowExternals={toggleShowExternals}
             showHotspotHeatmap={showHotspotHeatmap}
             onToggleShowHotspotHeatmap={toggleShowHotspotHeatmap}
           />

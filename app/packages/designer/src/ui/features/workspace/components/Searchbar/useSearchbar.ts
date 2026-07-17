@@ -22,7 +22,7 @@ export interface UseSearchbarReturn {
 }
 
 export function useSearchbar(): UseSearchbarReturn {
-  const { schema, showTests, selectNode } = useBlueprintStore();
+  const { schema, showTests, showExternals, selectNode } = useBlueprintStore();
   const reactFlowInstance = useReactFlow();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -55,6 +55,7 @@ export function useSearchbar(): UseSearchbarReturn {
     const q = searchQuery.toLowerCase();
     return schema.nodes.filter(n => {
       if (!showTests && n.isTest) return false;
+      if (!showExternals && n.external) return false;
       const matchName = n.name?.toLowerCase().includes(q);
       const matchId = n.entityRef?.toLowerCase().includes(q);
       const matchType = n.type?.toLowerCase().includes(q);
@@ -63,7 +64,7 @@ export function useSearchbar(): UseSearchbarReturn {
         Object.values(n.properties).some(val => String(val).toLowerCase().includes(q));
       return matchName || matchId || matchType || matchProps;
     });
-  }, [schema.nodes, searchQuery, showTests]);
+  }, [schema.nodes, searchQuery, showTests, showExternals]);
 
   // Reset highlighted index whenever the query changes
   useEffect(() => {

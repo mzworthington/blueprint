@@ -630,6 +630,72 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/home/actions
+      type: gateway-api
+      name: Actions Service (External)
+      external: true
+      properties:
+        filepath: plugins/home/src/homePageComponents/VisitedByType/Actions.tsx
+        containerId: home
+        technology: React Component
+        classification: ui-import
+      x: 100
+      y: 1144
+    - entityRef: blueprint/plugins/home/config
+      type: rest-api
+      name: config Service (External)
+      external: true
+      properties:
+        filepath: plugins/home/src/api/config.ts
+        containerId: home
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 280
+      y: 1144
+    - entityRef: blueprint/plugins/events-backend/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: plugins/events-backend/src/service/http/errors.ts
+        containerId: events-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 1144
+    - entityRef: blueprint/plugins/notifications-common/filters
+      type: background-worker
+      name: filters Service (External)
+      external: true
+      properties:
+        filepath: plugins/notifications-common/src/filters.ts
+        containerId: notifications-common
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1264
+    - entityRef: blueprint/plugins/permission-common/integration
+      type: background-worker
+      name: integration Service (External)
+      external: true
+      properties:
+        filepath: plugins/permission-common/src/types/integration.ts
+        containerId: permission-common
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 1264
+    - entityRef: blueprint/plugins/catalog-backend/scm
+      type: background-worker
+      name: scm Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-backend/src/processors/codeowners/scm.ts
+        containerId: catalog-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 1264
   dependencies:
     - from: blueprint/plugins/scaffolder-node/serializer-test
       to: blueprint/plugins/scaffolder-node/serializer

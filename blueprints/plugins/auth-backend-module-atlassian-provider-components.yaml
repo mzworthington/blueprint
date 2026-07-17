@@ -1,198 +1,194 @@
-entityRef: blueprint/plugins/auth-backend-module-atlassian-provider
-name: Auth-backend-module-atlassian-provider Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/plugins/auth-backend-module-atlassian-provider/authenticator
-    type: background-worker
-    name: authenticator Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-atlassian-provider/src/authenticator.ts
-      containerId: auth-backend-module-atlassian-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 87
-      sloc: 63
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 40
-  - entityRef: blueprint/plugins/auth-backend-module-atlassian-provider/config-d
-    type: background-worker
-    name: config.d Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-atlassian-provider/config.d.ts
-      containerId: auth-backend-module-atlassian-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 56
-      sloc: 34
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 40
-  - entityRef: blueprint/plugins/auth-backend-module-atlassian-provider/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-atlassian-provider/src/index.ts
-      containerId: auth-backend-module-atlassian-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 24
-      sloc: 3
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 760
-    'y': 40
-  - entityRef: blueprint/plugins/auth-backend-module-atlassian-provider/module
-    type: background-worker
-    name: module Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-atlassian-provider/src/module.ts
-      containerId: auth-backend-module-atlassian-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 49
-      sloc: 31
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 300
-  - entityRef: blueprint/plugins/auth-backend-module-atlassian-provider/resolvers
-    type: background-worker
-    name: resolvers Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-atlassian-provider/src/resolvers.ts
-      containerId: auth-backend-module-atlassian-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 65
-      sloc: 37
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 300
-  - entityRef: blueprint/plugins/auth-backend-module-atlassian-provider/types-d
-    type: rest-api
-    name: types.d REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-atlassian-provider/src/types.d.ts
-      containerId: auth-backend-module-atlassian-provider
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 27
-      sloc: 9
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 760
-    'y': 300
-  - entityRef: blueprint/plugins/auth-backend-module-atlassian-provider/authenticator-test
-    type: background-worker
-    name: authenticator.test Service
-    isTest: true
-    properties:
-      filepath: plugins/auth-backend-module-atlassian-provider/src/authenticator.test.ts
-      containerId: auth-backend-module-atlassian-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 33
-      sloc: 16
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 560
-  - entityRef: blueprint/plugins/auth-backend-module-atlassian-provider/module-test
-    type: background-worker
-    name: module.test Service
-    isTest: true
-    properties:
-      filepath: plugins/auth-backend-module-atlassian-provider/src/module.test.ts
-      containerId: auth-backend-module-atlassian-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 172
-      sloc: 140
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 560
-dependencies:
-  - from: blueprint/plugins/auth-backend-module-atlassian-provider/config-d
-    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-atlassian-provider/module
-    to: blueprint/plugins/auth-backend-module-atlassian-provider/authenticator
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-atlassian-provider/module
-    to: blueprint/plugins/auth-backend-module-atlassian-provider/resolvers
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-atlassian-provider/module-test
-    to: blueprint/plugins/auth-backend-module-atlassian-provider/module
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/plugins/auth-backend-module-atlassian-provider
+  name: Auth-backend-module-atlassian-provider Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/plugins/auth-backend-module-atlassian-provider/authenticator
+      type: background-worker
+      name: authenticator Service
+      isTest: false
+      properties:
+        filepath: plugins/auth-backend-module-atlassian-provider/src/authenticator.ts
+        containerId: auth-backend-module-atlassian-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 40
+      forensics:
+        complexity: 3
+        loc: 87
+        sloc: 63
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-backend-module-atlassian-provider/config-d
+      type: background-worker
+      name: config.d Service
+      isTest: false
+      properties:
+        filepath: plugins/auth-backend-module-atlassian-provider/config.d.ts
+        containerId: auth-backend-module-atlassian-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 56
+        sloc: 34
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-backend-module-atlassian-provider/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: plugins/auth-backend-module-atlassian-provider/dev/index.ts
+        containerId: auth-backend-module-atlassian-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 760
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 25
+        sloc: 5
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-backend-module-atlassian-provider/module
+      type: background-worker
+      name: module Service
+      isTest: false
+      properties:
+        filepath: plugins/auth-backend-module-atlassian-provider/src/module.ts
+        containerId: auth-backend-module-atlassian-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 300
+      forensics:
+        complexity: 1
+        loc: 49
+        sloc: 31
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-backend-module-atlassian-provider/resolvers
+      type: background-worker
+      name: resolvers Service
+      isTest: false
+      properties:
+        filepath: plugins/auth-backend-module-atlassian-provider/src/resolvers.ts
+        containerId: auth-backend-module-atlassian-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 300
+      forensics:
+        complexity: 3
+        loc: 65
+        sloc: 37
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-backend-module-atlassian-provider/types-d
+      type: rest-api
+      name: types.d Service
+      isTest: false
+      properties:
+        filepath: plugins/auth-backend-module-atlassian-provider/src/types.d.ts
+        containerId: auth-backend-module-atlassian-provider
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 760
+      y: 300
+      forensics:
+        complexity: 1
+        loc: 27
+        sloc: 9
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-backend-module-atlassian-provider/authenticator-test
+      type: background-worker
+      name: authenticator.test Service
+      isTest: true
+      properties:
+        filepath: plugins/auth-backend-module-atlassian-provider/src/authenticator.test.ts
+        containerId: auth-backend-module-atlassian-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 560
+      forensics:
+        complexity: 1
+        loc: 33
+        sloc: 16
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-backend-module-atlassian-provider/module-test
+      type: background-worker
+      name: module.test Service
+      isTest: true
+      properties:
+        filepath: plugins/auth-backend-module-atlassian-provider/src/module.test.ts
+        containerId: auth-backend-module-atlassian-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 560
+      forensics:
+        complexity: 1
+        loc: 172
+        sloc: 140
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+      type: background-worker
+      name: types Service (External)
+      external: true
+      properties:
+        filepath: plugins/auth-backend-module-cloudflare-access-provider/src/types.ts
+        containerId: auth-backend-module-cloudflare-access-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 680
+  dependencies:
+    - from: blueprint/plugins/auth-backend-module-atlassian-provider/config-d
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/auth-backend-module-atlassian-provider/module
+      to: blueprint/plugins/auth-backend-module-atlassian-provider/authenticator
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/auth-backend-module-atlassian-provider/module
+      to: blueprint/plugins/auth-backend-module-atlassian-provider/resolvers
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/auth-backend-module-atlassian-provider/module-test
+      to: blueprint/plugins/auth-backend-module-atlassian-provider/module
+      type: direct-call
+      description: Calls module / service

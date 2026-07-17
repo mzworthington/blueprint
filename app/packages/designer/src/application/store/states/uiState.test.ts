@@ -5,6 +5,7 @@ describe('uiState Actions & State Management', () => {
   it('should initialize with correct default UI state', () => {
     const state = useBlueprintStore.getState();
     expect(state.showTests).toBe(false);
+    expect(state.showExternals).toBe(true);
     expect(state.showCoupling).toBe(false);
     expect(state.showHotspotHeatmap).toBe(false);
     expect(state.leftCollapsed).toBe(true);
@@ -33,6 +34,17 @@ describe('uiState Actions & State Management', () => {
 
     store.toggleShowTests();
     expect(useBlueprintStore.getState().showTests).toBe(false);
+  });
+
+  it('should toggle showExternals property via toggleShowExternals action', () => {
+    const store = useBlueprintStore.getState();
+    expect(store.showExternals).toBe(true);
+
+    store.toggleShowExternals();
+    expect(useBlueprintStore.getState().showExternals).toBe(false);
+
+    store.toggleShowExternals();
+    expect(useBlueprintStore.getState().showExternals).toBe(true);
   });
 
   it('should toggle showCoupling property via toggleShowCoupling action', () => {

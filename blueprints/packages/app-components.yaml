@@ -286,6 +286,138 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/packages/core-plugin-api/alpha
+      type: background-worker
+      name: alpha Service (External)
+      external: true
+      properties:
+        filepath: packages/core-plugin-api/src/alpha.ts
+        containerId: core-plugin-api
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 824
+    - entityRef: blueprint/packages/ui/box
+      type: gateway-api
+      name: Box Service (External)
+      external: true
+      properties:
+        filepath: packages/ui/src/components/Box/Box.tsx
+        containerId: ui
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 824
+    - entityRef: blueprint/packages/repo-tools/client
+      type: background-worker
+      name: client Service (External)
+      external: true
+      properties:
+        filepath: packages/repo-tools/src/commands/package/schema/openapi/generate/client.ts
+        containerId: repo-tools
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 824
+    - entityRef: blueprint/packages/core-plugin-api/extensions
+      type: gateway-api
+      name: extensions Service (External)
+      external: true
+      properties:
+        filepath: packages/core-plugin-api/src/extensions/extensions.tsx
+        containerId: core-plugin-api
+        technology: React Component
+        classification: ui-import
+      x: 100
+      y: 944
+    - entityRef: blueprint/packages/core-plugin-api/extensions-test
+      type: gateway-api
+      name: extensions.test Service (External)
+      external: true
+      properties:
+        filepath: packages/core-plugin-api/src/extensions/extensions.test.tsx
+        containerId: core-plugin-api
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 944
+    - entityRef: blueprint/packages/core-app-api/flatroutes-beta-test
+      type: gateway-api
+      name: FlatRoutes.beta.test Service (External)
+      external: true
+      properties:
+        filepath: packages/core-app-api/src/routing/FlatRoutes.beta.test.tsx
+        containerId: core-app-api
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 944
+    - entityRef: blueprint/packages/core-app-api/flatroutes-compat-test
+      type: gateway-api
+      name: FlatRoutes.compat.test Service (External)
+      external: true
+      properties:
+        filepath: packages/core-app-api/src/routing/FlatRoutes.compat.test.tsx
+        containerId: core-app-api
+        technology: React Component
+        classification: ui-import
+      x: 100
+      y: 1064
+    - entityRef: blueprint/packages/core-app-api/flatroutes-stable-test
+      type: gateway-api
+      name: FlatRoutes.stable.test Service (External)
+      external: true
+      properties:
+        filepath: packages/core-app-api/src/routing/FlatRoutes.stable.test.tsx
+        containerId: core-app-api
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 1064
+    - entityRef: blueprint/packages/cli-module-info/info
+      type: background-worker
+      name: info Service (External)
+      external: true
+      properties:
+        filepath: packages/cli-module-info/src/commands/info.ts
+        containerId: cli-module-info
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 1064
+    - entityRef: blueprint/packages/ui/menu
+      type: gateway-api
+      name: Menu Service (External)
+      external: true
+      properties:
+        filepath: packages/ui/src/components/Menu/Menu.tsx
+        containerId: ui
+        technology: React Component
+        classification: ui-import
+      x: 100
+      y: 1184
+    - entityRef: blueprint/packages/core-components/styles
+      type: background-worker
+      name: styles Service (External)
+      external: true
+      properties:
+        filepath: packages/core-components/src/layout/SignInPage/styles.tsx
+        containerId: core-components
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 1184
+    - entityRef: blueprint/packages/cli-module-test-jest/test
+      type: background-worker
+      name: test Service (External)
+      external: true
+      properties:
+        filepath: packages/cli-module-test-jest/src/commands/repo/test.ts
+        containerId: cli-module-test-jest
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 1184
   dependencies:
     - from: blueprint/packages/core-plugin-api/extensions-test
       to: blueprint/packages/app/app
@@ -296,15 +428,15 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/packages/app/app-test
-      to: blueprint/packages/cli/test
+      to: blueprint/packages/cli-module-test-jest/test
       type: direct-call
       description: Calls module / service
     - from: blueprint/packages/app/homepage-test
-      to: blueprint/packages/cli/test
+      to: blueprint/packages/cli-module-test-jest/test
       type: direct-call
       description: Calls module / service
     - from: blueprint/packages/app/searchpage-test
-      to: blueprint/packages/cli/test
+      to: blueprint/packages/cli-module-test-jest/test
       type: direct-call
       description: Calls module / service
     - from: blueprint/packages/app/index
@@ -360,7 +492,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/packages/app/app
-      to: blueprint/packages/cli/info
+      to: blueprint/packages/cli-module-info/info
       type: direct-call
       description: Calls module / service
     - from: blueprint/packages/app/index-public-experimental

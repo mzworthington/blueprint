@@ -1,180 +1,178 @@
-entityRef: blueprint/plugins/auth-backend-module-gitlab-provider
-name: Auth-backend-module-gitlab-provider Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/plugins/auth-backend-module-gitlab-provider/config-d
-    type: background-worker
-    name: config.d Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-gitlab-provider/config.d.ts
-      containerId: auth-backend-module-gitlab-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 60
-      sloc: 38
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 48
-    'y': 64
-  - entityRef: blueprint/plugins/auth-backend-module-gitlab-provider/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-gitlab-provider/src/index.ts
-      containerId: auth-backend-module-gitlab-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 26
-      sloc: 3
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 428
-    'y': 64
-  - entityRef: blueprint/plugins/auth-backend-module-gitlab-provider/module
-    type: background-worker
-    name: module Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-gitlab-provider/src/module.ts
-      containerId: auth-backend-module-gitlab-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 49
-      sloc: 31
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 808
-    'y': 384
-  - entityRef: blueprint/plugins/auth-backend-module-gitlab-provider/types-d
-    type: rest-api
-    name: types.d REST Endpoint
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-gitlab-provider/src/types.d.ts
-      containerId: auth-backend-module-gitlab-provider
-      technology: REST Controller / Router
-      classification: api-marker
-    forensics:
-      complexity: 1
-      loc: 26
-      sloc: 8
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1188
-    'y': 64
-  - entityRef: blueprint/plugins/auth-backend-module-gitlab-provider/module-test
-    type: background-worker
-    name: module.test Service
-    isTest: true
-    properties:
-      filepath: plugins/auth-backend-module-gitlab-provider/src/module.test.ts
-      containerId: auth-backend-module-gitlab-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 79
-      sloc: 55
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 808
-    'y': 64
-  - entityRef: blueprint/plugins/auth-backend-module-gitlab-provider/resolvers
-    type: background-worker
-    name: resolvers Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-gitlab-provider/src/resolvers.ts
-      containerId: auth-backend-module-gitlab-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 6
-      loc: 115
-      sloc: 79
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1028
-    'y': 704
-  - entityRef: blueprint/plugins/auth-backend-module-gitlab-provider/authenticator
-    type: background-worker
-    name: authenticator Service
-    isTest: false
-    properties:
-      filepath: plugins/auth-backend-module-gitlab-provider/src/authenticator.ts
-      containerId: auth-backend-module-gitlab-provider
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 90
-      sloc: 65
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 808
-    'y': 1024
-dependencies:
-  - from: blueprint/plugins/auth-backend-module-gitlab-provider/config-d
-    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-gitlab-provider/module
-    to: blueprint/plugins/auth-backend-module-gitlab-provider/authenticator
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-gitlab-provider/module
-    to: blueprint/plugins/auth-backend-module-gitlab-provider/resolvers
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-gitlab-provider/module-test
-    to: blueprint/plugins/auth-backend-module-gitlab-provider/module
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/auth-backend-module-gitlab-provider/resolvers
-    to: blueprint/plugins/auth-backend-module-gitlab-provider/authenticator
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/plugins/auth-backend-module-gitlab-provider
+  name: Auth-backend-module-gitlab-provider Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/plugins/auth-backend-module-gitlab-provider/config-d
+      type: background-worker
+      name: config.d Service
+      isTest: false
+      properties:
+        filepath: plugins/auth-backend-module-gitlab-provider/config.d.ts
+        containerId: auth-backend-module-gitlab-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 48
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 60
+        sloc: 38
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-backend-module-gitlab-provider/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: plugins/auth-backend-module-gitlab-provider/dev/index.ts
+        containerId: auth-backend-module-gitlab-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 428
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 25
+        sloc: 5
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-backend-module-gitlab-provider/module
+      type: background-worker
+      name: module Service
+      isTest: false
+      properties:
+        filepath: plugins/auth-backend-module-gitlab-provider/src/module.ts
+        containerId: auth-backend-module-gitlab-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 808
+      y: 384
+      forensics:
+        complexity: 1
+        loc: 49
+        sloc: 31
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-backend-module-gitlab-provider/types-d
+      type: rest-api
+      name: types.d Service
+      isTest: false
+      properties:
+        filepath: plugins/auth-backend-module-gitlab-provider/src/types.d.ts
+        containerId: auth-backend-module-gitlab-provider
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 1188
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 26
+        sloc: 8
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-backend-module-gitlab-provider/module-test
+      type: background-worker
+      name: module.test Service
+      isTest: true
+      properties:
+        filepath: plugins/auth-backend-module-gitlab-provider/src/module.test.ts
+        containerId: auth-backend-module-gitlab-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 808
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 79
+        sloc: 55
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-backend-module-gitlab-provider/resolvers
+      type: background-worker
+      name: resolvers Service
+      isTest: false
+      properties:
+        filepath: plugins/auth-backend-module-gitlab-provider/src/resolvers.ts
+        containerId: auth-backend-module-gitlab-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 1028
+      y: 704
+      forensics:
+        complexity: 6
+        loc: 115
+        sloc: 79
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-backend-module-gitlab-provider/authenticator
+      type: background-worker
+      name: authenticator Service
+      isTest: false
+      properties:
+        filepath: plugins/auth-backend-module-gitlab-provider/src/authenticator.ts
+        containerId: auth-backend-module-gitlab-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 808
+      y: 1024
+      forensics:
+        complexity: 2
+        loc: 90
+        sloc: 65
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+      type: background-worker
+      name: types Service (External)
+      external: true
+      properties:
+        filepath: plugins/auth-backend-module-cloudflare-access-provider/src/types.ts
+        containerId: auth-backend-module-cloudflare-access-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1144
+  dependencies:
+    - from: blueprint/plugins/auth-backend-module-gitlab-provider/config-d
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/auth-backend-module-gitlab-provider/module
+      to: blueprint/plugins/auth-backend-module-gitlab-provider/authenticator
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/auth-backend-module-gitlab-provider/module
+      to: blueprint/plugins/auth-backend-module-gitlab-provider/resolvers
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/auth-backend-module-gitlab-provider/module-test
+      to: blueprint/plugins/auth-backend-module-gitlab-provider/module
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/auth-backend-module-gitlab-provider/resolvers
+      to: blueprint/plugins/auth-backend-module-gitlab-provider/authenticator
+      type: direct-call
+      description: Calls module / service

@@ -146,6 +146,28 @@
         classifications:
           - knowledge-silo
         sinceDays: 500
+    - entityRef: blueprint/plugins/kubernetes-react/test-utils
+      type: gateway-api
+      name: test-utils Service (External)
+      external: true
+      properties:
+        filepath: plugins/kubernetes-react/src/hooks/test-utils.tsx
+        containerId: kubernetes-react
+        technology: React Component
+        classification: ui-import
+      x: 100
+      y: 824
+    - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+      type: background-worker
+      name: types Service (External)
+      external: true
+      properties:
+        filepath: plugins/auth-backend-module-cloudflare-access-provider/src/types.ts
+        containerId: auth-backend-module-cloudflare-access-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 824
   dependencies:
     - from: blueprint/plugins/signals/index
       to: blueprint/plugins/signals/plugin
@@ -172,6 +194,6 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/signals/signalclient
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service

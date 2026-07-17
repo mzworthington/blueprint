@@ -564,6 +564,204 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/packages/core-plugin-api/alpha
+      type: background-worker
+      name: alpha Service (External)
+      external: true
+      properties:
+        filepath: packages/core-plugin-api/src/alpha.ts
+        containerId: core-plugin-api
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1144
+    - entityRef: blueprint/packages/ui/box
+      type: gateway-api
+      name: Box Service (External)
+      external: true
+      properties:
+        filepath: packages/ui/src/components/Box/Box.tsx
+        containerId: ui
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 1144
+    - entityRef: blueprint/packages/cli-module-build/build
+      type: background-worker
+      name: build Service (External)
+      external: true
+      properties:
+        filepath: packages/cli-module-build/src/commands/repo/build.ts
+        containerId: cli-module-build
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 1144
+    - entityRef: blueprint/packages/ui/button
+      type: gateway-api
+      name: Button Service (External)
+      external: true
+      properties:
+        filepath: packages/ui/src/components/Button/Button.tsx
+        containerId: ui
+        technology: React Component
+        classification: ui-import
+      x: 100
+      y: 1264
+    - entityRef: blueprint/packages/repo-tools/client
+      type: background-worker
+      name: client Service (External)
+      external: true
+      properties:
+        filepath: packages/repo-tools/src/commands/package/schema/openapi/generate/client.ts
+        containerId: repo-tools
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 1264
+    - entityRef: blueprint/packages/ui/comboboxlistbox
+      type: gateway-api
+      name: ComboboxListBox Service (External)
+      external: true
+      properties:
+        filepath: packages/ui/src/components/Combobox/ComboboxListBox.tsx
+        containerId: ui
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 1264
+    - entityRef: blueprint/packages/integration-aws-node/config
+      type: background-worker
+      name: config Service (External)
+      external: true
+      properties:
+        filepath: packages/integration-aws-node/src/config.ts
+        containerId: integration-aws-node
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1384
+    - entityRef: blueprint/packages/ui/grid
+      type: gateway-api
+      name: Grid Service (External)
+      external: true
+      properties:
+        filepath: packages/ui/src/components/Grid/Grid.tsx
+        containerId: ui
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 1384
+    - entityRef: blueprint/packages/ui/list
+      type: gateway-api
+      name: List Service (External)
+      external: true
+      properties:
+        filepath: packages/ui/src/components/List/List.tsx
+        containerId: ui
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 1384
+    - entityRef: blueprint/packages/techdocs-cli-embedded-app/logoicon
+      type: background-worker
+      name: LogoIcon Service (External)
+      external: true
+      properties:
+        filepath: packages/techdocs-cli-embedded-app/src/components/Sidebar/LogoIcon.tsx
+        containerId: techdocs-cli-embedded-app
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1504
+    - entityRef: blueprint/packages/ui/menu
+      type: gateway-api
+      name: Menu Service (External)
+      external: true
+      properties:
+        filepath: packages/ui/src/components/Menu/Menu.tsx
+        containerId: ui
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 1504
+    - entityRef: blueprint/packages/core-components/node
+      type: gateway-api
+      name: Node Service (External)
+      external: true
+      properties:
+        filepath: packages/core-components/src/components/DependencyGraph/Node.tsx
+        containerId: core-components
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 1504
+    - entityRef: blueprint/packages/ui/selectcontent
+      type: gateway-api
+      name: SelectContent Service (External)
+      external: true
+      properties:
+        filepath: packages/ui/src/components/Select/SelectContent.tsx
+        containerId: ui
+        technology: React Component
+        classification: ui-import
+      x: 100
+      y: 1624
+    - entityRef: blueprint/packages/core-components/styles
+      type: background-worker
+      name: styles Service (External)
+      external: true
+      properties:
+        filepath: packages/core-components/src/layout/SignInPage/styles.tsx
+        containerId: core-components
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 1624
+    - entityRef: blueprint/packages/ui/switch
+      type: gateway-api
+      name: Switch Service (External)
+      external: true
+      properties:
+        filepath: packages/ui/src/components/Switch/Switch.tsx
+        containerId: ui
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 1624
+    - entityRef: blueprint/packages/config-loader/testutils
+      type: background-worker
+      name: testUtils Service (External)
+      external: true
+      properties:
+        filepath: packages/config-loader/src/sources/__testUtils__/testUtils.ts
+        containerId: config-loader
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1744
+    - entityRef: blueprint/packages/ui/textfield
+      type: gateway-api
+      name: TextField Service (External)
+      external: true
+      properties:
+        filepath: packages/ui/src/components/TextField/TextField.tsx
+        containerId: ui
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 1744
+    - entityRef: blueprint/packages/config-loader/utils
+      type: background-worker
+      name: utils Service (External)
+      external: true
+      properties:
+        filepath: packages/config-loader/src/schema/utils.ts
+        containerId: config-loader
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 1744
   dependencies:
     - from: blueprint/packages/ui/comboboxlistbox
       to: blueprint/packages/app-legacy/shared
@@ -806,7 +1004,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/packages/app-legacy/root
-      to: blueprint/packages/cli/build
+      to: blueprint/packages/cli-module-build/build
       type: direct-call
       description: Calls module / service
     - from: blueprint/packages/app-legacy/advancedsettings

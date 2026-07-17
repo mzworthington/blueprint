@@ -1,188 +1,186 @@
-entityRef: blueprint/plugins/search-backend-module-explore
-name: Search-backend-module-explore Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/plugins/search-backend-module-explore/config-d
-    type: background-worker
-    name: config.d Service
-    isTest: false
-    properties:
-      filepath: plugins/search-backend-module-explore/config.d.ts
-      containerId: search-backend-module-explore
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 34
-      sloc: 10
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 48
-    'y': 64
-  - entityRef: blueprint/plugins/search-backend-module-explore/module
-    type: background-worker
-    name: module Service
-    isTest: false
-    properties:
-      filepath: plugins/search-backend-module-explore/src/module.ts
-      containerId: search-backend-module-explore
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 81
-      sloc: 50
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 868
-    'y': 704
-  - entityRef: blueprint/plugins/search-backend-module-explore/alpha
-    type: background-worker
-    name: alpha Service
-    isTest: false
-    properties:
-      filepath: plugins/search-backend-module-explore/src/alpha.ts
-      containerId: search-backend-module-explore
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 25
-      sloc: 3
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 808
-    'y': 384
-  - entityRef: blueprint/plugins/search-backend-module-explore/module-test
-    type: background-worker
-    name: module.test Service
-    isTest: true
-    properties:
-      filepath: plugins/search-backend-module-explore/src/module.test.ts
-      containerId: search-backend-module-explore
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 58
-      sloc: 37
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 808
-    'y': 64
-  - entityRef: blueprint/plugins/search-backend-module-explore/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/search-backend-module-explore/src/collators/index.ts
-      containerId: search-backend-module-explore
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 18
-      sloc: 1
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 428
-    'y': 64
-  - entityRef: blueprint/plugins/search-backend-module-explore/tooldocumentcollatorfactory
-    type: background-worker
-    name: ToolDocumentCollatorFactory Service
-    isTest: false
-    properties:
-      filepath: plugins/search-backend-module-explore/src/collators/ToolDocumentCollatorFactory.ts
-      containerId: search-backend-module-explore
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 3
-      loc: 113
-      sloc: 67
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 868
-    'y': 1024
-  - entityRef: blueprint/plugins/search-backend-module-explore/tooldocumentcollatorfactory-test
-    type: background-worker
-    name: ToolDocumentCollatorFactory.test Service
-    isTest: true
-    properties:
-      filepath: plugins/search-backend-module-explore/src/collators/ToolDocumentCollatorFactory.test.ts
-      containerId: search-backend-module-explore
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 117
-      sloc: 86
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 1248
-    'y': 704
-dependencies:
-  - from: blueprint/plugins/search-backend-module-explore/module
-    to: blueprint/plugins/search-backend-module-explore/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-module-explore/module
-    to: blueprint/plugins/search-backend-module-explore/tooldocumentcollatorfactory
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-module-explore/alpha
-    to: blueprint/plugins/search-backend-module-explore/module
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-module-explore/module-test
-    to: blueprint/plugins/search-backend-module-explore/alpha
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-module-explore/module-test
-    to: blueprint/plugins/search-backend-module-explore/module
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-module-explore/tooldocumentcollatorfactory
-    to: blueprint/plugins/home/config
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/search-backend-module-explore/tooldocumentcollatorfactory-test
-    to: blueprint/plugins/search-backend-module-explore/tooldocumentcollatorfactory
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/plugins/search-backend-module-explore
+  name: Search-backend-module-explore Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/plugins/search-backend-module-explore/config-d
+      type: background-worker
+      name: config.d Service
+      isTest: false
+      properties:
+        filepath: plugins/search-backend-module-explore/config.d.ts
+        containerId: search-backend-module-explore
+        technology: TypeScript Domain Service
+        classification: default
+      x: 48
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 34
+        sloc: 10
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/search-backend-module-explore/module
+      type: background-worker
+      name: module Service
+      isTest: false
+      properties:
+        filepath: plugins/search-backend-module-explore/src/module.ts
+        containerId: search-backend-module-explore
+        technology: TypeScript Domain Service
+        classification: default
+      x: 868
+      y: 704
+      forensics:
+        complexity: 2
+        loc: 81
+        sloc: 50
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/search-backend-module-explore/alpha
+      type: background-worker
+      name: alpha Service
+      isTest: false
+      properties:
+        filepath: plugins/search-backend-module-explore/src/alpha.ts
+        containerId: search-backend-module-explore
+        technology: TypeScript Domain Service
+        classification: default
+      x: 808
+      y: 384
+      forensics:
+        complexity: 1
+        loc: 25
+        sloc: 3
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/search-backend-module-explore/module-test
+      type: background-worker
+      name: module.test Service
+      isTest: true
+      properties:
+        filepath: plugins/search-backend-module-explore/src/module.test.ts
+        containerId: search-backend-module-explore
+        technology: TypeScript Domain Service
+        classification: default
+      x: 808
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 58
+        sloc: 37
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/search-backend-module-explore/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: plugins/search-backend-module-explore/src/index.ts
+        containerId: search-backend-module-explore
+        technology: TypeScript Domain Service
+        classification: default
+      x: 428
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 24
+        sloc: 2
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/search-backend-module-explore/tooldocumentcollatorfactory
+      type: background-worker
+      name: ToolDocumentCollatorFactory Service
+      isTest: false
+      properties:
+        filepath: plugins/search-backend-module-explore/src/collators/ToolDocumentCollatorFactory.ts
+        containerId: search-backend-module-explore
+        technology: TypeScript Domain Service
+        classification: default
+      x: 868
+      y: 1024
+      forensics:
+        complexity: 3
+        loc: 113
+        sloc: 67
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/search-backend-module-explore/tooldocumentcollatorfactory-test
+      type: background-worker
+      name: ToolDocumentCollatorFactory.test Service
+      isTest: true
+      properties:
+        filepath: plugins/search-backend-module-explore/src/collators/ToolDocumentCollatorFactory.test.ts
+        containerId: search-backend-module-explore
+        technology: TypeScript Domain Service
+        classification: default
+      x: 1248
+      y: 704
+      forensics:
+        complexity: 1
+        loc: 117
+        sloc: 86
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/home/config
+      type: rest-api
+      name: config Service (External)
+      external: true
+      properties:
+        filepath: plugins/home/src/api/config.ts
+        containerId: home
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 100
+      y: 1144
+  dependencies:
+    - from: blueprint/plugins/search-backend-module-explore/module
+      to: blueprint/plugins/search-backend-module-explore/alpha
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/search-backend-module-explore/module
+      to: blueprint/plugins/search-backend-module-explore/tooldocumentcollatorfactory
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/search-backend-module-explore/alpha
+      to: blueprint/plugins/search-backend-module-explore/module
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/search-backend-module-explore/module-test
+      to: blueprint/plugins/search-backend-module-explore/alpha
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/search-backend-module-explore/module-test
+      to: blueprint/plugins/search-backend-module-explore/module
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/search-backend-module-explore/tooldocumentcollatorfactory
+      to: blueprint/plugins/home/config
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/search-backend-module-explore/tooldocumentcollatorfactory-test
+      to: blueprint/plugins/search-backend-module-explore/tooldocumentcollatorfactory
+      type: direct-call
+      description: Calls module / service

@@ -84,16 +84,38 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/techdocs-react/api
+      type: background-worker
+      name: api Service (External)
+      external: true
+      properties:
+        filepath: plugins/techdocs-react/src/api.ts
+        containerId: techdocs-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 580
+      y: 300
+    - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+      type: background-worker
+      name: types Service (External)
+      external: true
+      properties:
+        filepath: plugins/auth-backend-module-cloudflare-access-provider/src/types.ts
+        containerId: auth-backend-module-cloudflare-access-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 420
   dependencies:
     - from: blueprint/plugins/signals-react/usesignal
       to: blueprint/plugins/techdocs-react/api
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/signals-react/usesignal
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/signals-react/signalapi
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service

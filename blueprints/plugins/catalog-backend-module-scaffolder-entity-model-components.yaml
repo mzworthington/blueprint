@@ -1,132 +1,134 @@
-entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model
-name: Catalog-backend-module-scaffolder-entity-model Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module
-    type: background-worker
-    name: module Service
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-scaffolder-entity-model/src/module.ts
-      containerId: catalog-backend-module-scaffolder-entity-model
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 41
-      sloc: 17
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 428
-    'y': 384
-  - entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/scaffolderentitiesprocessor
-    type: background-worker
-    name: ScaffolderEntitiesProcessor Service
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-scaffolder-entity-model/src/processor/ScaffolderEntitiesProcessor.ts
-      containerId: catalog-backend-module-scaffolder-entity-model
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 6
-      loc: 104
-      sloc: 74
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 808
-    'y': 384
-  - entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/scaffolderentitiesprocessor-test
-    type: background-worker
-    name: ScaffolderEntitiesProcessor.test Service
-    isTest: true
-    properties:
-      filepath: plugins/catalog-backend-module-scaffolder-entity-model/src/processor/ScaffolderEntitiesProcessor.test.ts
-      containerId: catalog-backend-module-scaffolder-entity-model
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 81
-      sloc: 57
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 808
-    'y': 64
-  - entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: plugins/catalog-backend-module-scaffolder-entity-model/src/index.ts
-      containerId: catalog-backend-module-scaffolder-entity-model
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 25
-      sloc: 2
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 48
-    'y': 64
-  - entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module-test
-    type: background-worker
-    name: module.test Service
-    isTest: true
-    properties:
-      filepath: plugins/catalog-backend-module-scaffolder-entity-model/src/module.test.ts
-      containerId: catalog-backend-module-scaffolder-entity-model
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 35
-      sloc: 16
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 428
-    'y': 64
-dependencies:
-  - from: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module
-    to: blueprint/plugins/catalog-node/processor
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/scaffolderentitiesprocessor-test
-    to: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/scaffolderentitiesprocessor
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module-test
-    to: blueprint/plugins/catalog-node/processor
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module-test
-    to: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model
+  name: Catalog-backend-module-scaffolder-entity-model Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module
+      type: background-worker
+      name: module Service
+      isTest: false
+      properties:
+        filepath: plugins/catalog-backend-module-scaffolder-entity-model/src/module.ts
+        containerId: catalog-backend-module-scaffolder-entity-model
+        technology: TypeScript Domain Service
+        classification: default
+      x: 428
+      y: 384
+      forensics:
+        complexity: 1
+        loc: 41
+        sloc: 17
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/scaffolderentitiesprocessor
+      type: background-worker
+      name: ScaffolderEntitiesProcessor Service
+      isTest: false
+      properties:
+        filepath: plugins/catalog-backend-module-scaffolder-entity-model/src/processor/ScaffolderEntitiesProcessor.ts
+        containerId: catalog-backend-module-scaffolder-entity-model
+        technology: TypeScript Domain Service
+        classification: default
+      x: 808
+      y: 384
+      forensics:
+        complexity: 6
+        loc: 104
+        sloc: 74
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/scaffolderentitiesprocessor-test
+      type: background-worker
+      name: ScaffolderEntitiesProcessor.test Service
+      isTest: true
+      properties:
+        filepath: plugins/catalog-backend-module-scaffolder-entity-model/src/processor/ScaffolderEntitiesProcessor.test.ts
+        containerId: catalog-backend-module-scaffolder-entity-model
+        technology: TypeScript Domain Service
+        classification: default
+      x: 808
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 81
+        sloc: 57
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: plugins/catalog-backend-module-scaffolder-entity-model/src/processor/index.ts
+        containerId: catalog-backend-module-scaffolder-entity-model
+        technology: TypeScript Domain Service
+        classification: default
+      x: 48
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 18
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module-test
+      type: background-worker
+      name: module.test Service
+      isTest: true
+      properties:
+        filepath: plugins/catalog-backend-module-scaffolder-entity-model/src/module.test.ts
+        containerId: catalog-backend-module-scaffolder-entity-model
+        technology: TypeScript Domain Service
+        classification: default
+      x: 428
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 35
+        sloc: 16
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/catalog-node/processor
+      type: rest-api
+      name: processor Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-node/src/api/processor.ts
+        containerId: catalog-node
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 100
+      y: 504
+  dependencies:
+    - from: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module
+      to: blueprint/plugins/catalog-node/processor
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/scaffolderentitiesprocessor-test
+      to: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/scaffolderentitiesprocessor
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module-test
+      to: blueprint/plugins/catalog-node/processor
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module-test
+      to: blueprint/plugins/catalog-backend-module-scaffolder-entity-model/module
+      type: direct-call
+      description: Calls module / service

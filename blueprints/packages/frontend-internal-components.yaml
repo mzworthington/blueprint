@@ -206,6 +206,28 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/packages/frontend-plugin-api/createextension
+      type: background-worker
+      name: createExtension Service (External)
+      external: true
+      properties:
+        filepath: packages/frontend-plugin-api/src/wiring/createExtension.ts
+        containerId: frontend-plugin-api
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 680
+    - entityRef: blueprint/packages/ui/types
+      type: gateway-api
+      name: types Service (External)
+      external: true
+      properties:
+        filepath: packages/ui/src/types.ts
+        containerId: ui
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 680
   dependencies:
     - from: blueprint/packages/frontend-internal/internalfrontendplugin
       to: blueprint/packages/ui/types

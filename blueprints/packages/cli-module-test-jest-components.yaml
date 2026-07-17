@@ -1,121 +1,216 @@
-entityRef: blueprint/packages/cli-module-test-jest
-name: Cli-module-test-jest Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/packages/cli-module-test-jest/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-test-jest/src/index.ts
-      containerId: cli-module-test-jest
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 37
-      sloc: 19
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 40
-  - entityRef: blueprint/packages/cli-module-test-jest/test
-    type: background-worker
-    name: test Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-test-jest/src/commands/package/test.ts
-      containerId: cli-module-test-jest
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 16
-      loc: 102
-      sloc: 58
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 40
-  - entityRef: blueprint/packages/cli-module-test-jest/test-test
-    type: background-worker
-    name: test.test Service
-    isTest: true
-    properties:
-      filepath: packages/cli-module-test-jest/src/commands/repo/test.test.ts
-      containerId: cli-module-test-jest
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 2
-      loc: 104
-      sloc: 74
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 300
-dependencies:
-  - from: blueprint/packages/ui/combobox-stories
-    to: blueprint/packages/cli-module-test-jest/test
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/ui/select-stories
-    to: blueprint/packages/cli-module-test-jest/test
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app/app-test
-    to: blueprint/packages/cli-module-test-jest/test
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app/homepage-test
-    to: blueprint/packages/cli-module-test-jest/test
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/app/searchpage-test
-    to: blueprint/packages/cli-module-test-jest/test
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/cli-module-test-jest/test-test
-    to: blueprint/packages/cli-module-test-jest/test
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/e2e-test-utils/failonbrowsererrors
-    to: blueprint/packages/cli-module-test-jest/test
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/e2e-test-utils/generateprojects
-    to: blueprint/packages/cli-module-test-jest/test
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/create-app/app-test
-    to: blueprint/packages/cli-module-test-jest/test
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/create-app/playwright-config
-    to: blueprint/packages/cli-module-test-jest/test
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/create-app/app-test
-    to: blueprint/packages/cli-module-test-jest/test
-    type: direct-call
-    description: Calls module / service
-  - from: blueprint/packages/create-app/playwright-config
-    to: blueprint/packages/cli-module-test-jest/test
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/packages/cli-module-test-jest
+  name: Cli-module-test-jest Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/packages/cli-module-test-jest/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: packages/cli-module-test-jest/src/index.ts
+        containerId: cli-module-test-jest
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 37
+        sloc: 19
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/packages/cli-module-test-jest/test
+      type: background-worker
+      name: test Service
+      isTest: false
+      properties:
+        filepath: packages/cli-module-test-jest/src/commands/repo/test.ts
+        containerId: cli-module-test-jest
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 40
+      forensics:
+        complexity: 57
+        loc: 450
+        sloc: 333
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        classifications:
+          - knowledge-silo
+        sinceDays: 500
+    - entityRef: blueprint/packages/cli-module-test-jest/test-test
+      type: background-worker
+      name: test.test Service
+      isTest: true
+      properties:
+        filepath: packages/cli-module-test-jest/src/commands/repo/test.test.ts
+        containerId: cli-module-test-jest
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 300
+      forensics:
+        complexity: 2
+        loc: 104
+        sloc: 74
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/packages/app/app-test
+      type: background-worker
+      name: app.test Service (External)
+      external: true
+      properties:
+        filepath: packages/app/e2e-tests/app.test.ts
+        containerId: app
+        technology: TypeScript Domain Service
+        classification: default
+      x: 580
+      y: 300
+    - entityRef: blueprint/packages/create-app/app-test
+      type: gateway-api
+      name: app.test Service (External)
+      external: true
+      properties:
+        filepath: packages/create-app/templates/legacy-app/packages/app/e2e-tests/app.test.ts
+        containerId: create-app
+        technology: React Component
+        classification: ui-import
+      x: 100
+      y: 420
+    - entityRef: blueprint/packages/ui/combobox-stories
+      type: gateway-api
+      name: Combobox.stories Service (External)
+      external: true
+      properties:
+        filepath: packages/ui/src/components/Combobox/Combobox.stories.tsx
+        containerId: ui
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 420
+    - entityRef: blueprint/packages/e2e-test-utils/failonbrowsererrors
+      type: background-worker
+      name: failOnBrowserErrors Service (External)
+      external: true
+      properties:
+        filepath: packages/e2e-test-utils/src/playwright/failOnBrowserErrors.ts
+        containerId: e2e-test-utils
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 420
+    - entityRef: blueprint/packages/e2e-test-utils/generateprojects
+      type: background-worker
+      name: generateProjects Service (External)
+      external: true
+      properties:
+        filepath: packages/e2e-test-utils/src/playwright/generateProjects.ts
+        containerId: e2e-test-utils
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 540
+    - entityRef: blueprint/packages/app/homepage-test
+      type: background-worker
+      name: HomePage.test Service (External)
+      external: true
+      properties:
+        filepath: packages/app/e2e-tests/HomePage.test.ts
+        containerId: app
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 540
+    - entityRef: blueprint/packages/create-app/playwright-config
+      type: background-worker
+      name: playwright.config Service (External)
+      external: true
+      properties:
+        filepath: packages/create-app/templates/legacy-app/playwright.config.ts
+        containerId: create-app
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 540
+    - entityRef: blueprint/packages/app/searchpage-test
+      type: background-worker
+      name: SearchPage.test Service (External)
+      external: true
+      properties:
+        filepath: packages/app/e2e-tests/SearchPage.test.ts
+        containerId: app
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 660
+    - entityRef: blueprint/packages/ui/select-stories
+      type: gateway-api
+      name: Select.stories Service (External)
+      external: true
+      properties:
+        filepath: packages/ui/src/components/Select/Select.stories.tsx
+        containerId: ui
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 660
+  dependencies:
+    - from: blueprint/packages/ui/combobox-stories
+      to: blueprint/packages/cli-module-test-jest/test
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/ui/select-stories
+      to: blueprint/packages/cli-module-test-jest/test
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/app/app-test
+      to: blueprint/packages/cli-module-test-jest/test
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/app/homepage-test
+      to: blueprint/packages/cli-module-test-jest/test
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/app/searchpage-test
+      to: blueprint/packages/cli-module-test-jest/test
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/cli-module-test-jest/test-test
+      to: blueprint/packages/cli-module-test-jest/test
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/e2e-test-utils/failonbrowsererrors
+      to: blueprint/packages/cli-module-test-jest/test
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/e2e-test-utils/generateprojects
+      to: blueprint/packages/cli-module-test-jest/test
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/create-app/app-test
+      to: blueprint/packages/cli-module-test-jest/test
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/create-app/playwright-config
+      to: blueprint/packages/cli-module-test-jest/test
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/create-app/app-test
+      to: blueprint/packages/cli-module-test-jest/test
+      type: direct-call
+      description: Calls module / service
+    - from: blueprint/packages/create-app/playwright-config
+      to: blueprint/packages/cli-module-test-jest/test
+      type: direct-call
+      description: Calls module / service

@@ -166,6 +166,50 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/permission-node/alpha
+      type: background-worker
+      name: alpha Service (External)
+      external: true
+      properties:
+        filepath: plugins/permission-node/src/alpha.ts
+        containerId: permission-node
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 680
+    - entityRef: blueprint/plugins/kubernetes-react/auth
+      type: background-worker
+      name: auth Service (External)
+      external: true
+      properties:
+        filepath: plugins/kubernetes-react/src/hooks/auth.ts
+        containerId: kubernetes-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 680
+    - entityRef: blueprint/plugins/events-backend/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: plugins/events-backend/src/service/http/errors.ts
+        containerId: events-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 680
+    - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+      type: background-worker
+      name: types Service (External)
+      external: true
+      properties:
+        filepath: plugins/auth-backend-module-cloudflare-access-provider/src/types.ts
+        containerId: auth-backend-module-cloudflare-access-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 800
   dependencies:
     - from: blueprint/plugins/proxy-backend/index
       to: blueprint/plugins/permission-node/alpha
@@ -180,7 +224,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/proxy-backend/router
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/proxy-backend/router
@@ -200,6 +244,6 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/proxy-backend/router-credentials-test
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service

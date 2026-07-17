@@ -332,6 +332,28 @@
         classifications:
           - knowledge-silo
         sinceDays: 500
+    - entityRef: blueprint/packages/integration-aws-node/config
+      type: background-worker
+      name: config Service (External)
+      external: true
+      properties:
+        filepath: packages/integration-aws-node/src/config.ts
+        containerId: integration-aws-node
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 824
+    - entityRef: blueprint/packages/frontend-defaults/discovery
+      type: background-worker
+      name: discovery Service (External)
+      external: true
+      properties:
+        filepath: packages/frontend-defaults/src/discovery.ts
+        containerId: frontend-defaults
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 824
   dependencies:
     - from: blueprint/packages/techdocs-cli/publisherconfig-test
       to: blueprint/packages/techdocs-cli/publisherconfig

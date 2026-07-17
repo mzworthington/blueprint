@@ -1140,6 +1140,83 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/techdocs-react/api
+      type: background-worker
+      name: api Service (External)
+      external: true
+      properties:
+        filepath: plugins/techdocs-react/src/api.ts
+        containerId: techdocs-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 2104
+    - entityRef: blueprint/plugins/scaffolder/autocomplete
+      type: gateway-api
+      name: Autocomplete Service (External)
+      external: true
+      properties:
+        filepath: plugins/scaffolder/src/components/fields/Autocomplete/Autocomplete.tsx
+        containerId: scaffolder
+        technology: React Component
+        classification: ui-import
+      x: 280
+      y: 2104
+    - entityRef: blueprint/plugins/app/components
+      type: gateway-api
+      name: components Service (External)
+      external: true
+      properties:
+        filepath: plugins/app/src/extensions/components.tsx
+        containerId: app
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 2104
+    - entityRef: blueprint/plugins/techdocs-module-addons-contrib/hooks
+      type: gateway-api
+      name: hooks Service (External)
+      external: true
+      properties:
+        filepath: plugins/techdocs-module-addons-contrib/src/ReportIssue/hooks.ts
+        containerId: techdocs-module-addons-contrib
+        technology: React Component
+        classification: ui-import
+      x: 100
+      y: 2224
+    - entityRef: blueprint/plugins/home/styles
+      type: background-worker
+      name: styles Service (External)
+      external: true
+      properties:
+        filepath: plugins/home/src/homePageComponents/QuickStart/styles.ts
+        containerId: home
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 2224
+    - entityRef: blueprint/plugins/kubernetes-react/test-utils
+      type: gateway-api
+      name: test-utils Service (External)
+      external: true
+      properties:
+        filepath: plugins/kubernetes-react/src/hooks/test-utils.tsx
+        containerId: kubernetes-react
+        technology: React Component
+        classification: ui-import
+      x: 460
+      y: 2224
+    - entityRef: blueprint/plugins/catalog-react/testutils
+      type: background-worker
+      name: testUtils Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-react/src/testUtils.ts
+        containerId: catalog-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 2344
   dependencies:
     - from: blueprint/plugins/catalog-graph/index
       to: blueprint/plugins/catalog-graph/types
@@ -1470,7 +1547,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/catalog-graph/selectedrelationsfilter
-      to: blueprint/plugins/techdocs/hooks
+      to: blueprint/plugins/techdocs-module-addons-contrib/hooks
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/catalog-graph/cataloggraphpage-test

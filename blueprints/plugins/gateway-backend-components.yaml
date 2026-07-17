@@ -104,13 +104,35 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/techdocs-react/api
+      type: background-worker
+      name: api Service (External)
+      external: true
+      properties:
+        filepath: plugins/techdocs-react/src/api.ts
+        containerId: techdocs-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 420
+    - entityRef: blueprint/plugins/catalog-backend-module-gitea/core
+      type: background-worker
+      name: core Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-backend-module-gitea/src/providers/core.ts
+        containerId: catalog-backend-module-gitea
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 420
   dependencies:
     - from: blueprint/plugins/gateway-backend/router
       to: blueprint/plugins/techdocs-react/api
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/gateway-backend/router
-      to: blueprint/plugins/catalog-backend/core
+      to: blueprint/plugins/catalog-backend-module-gitea/core
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/gateway-backend/plugin

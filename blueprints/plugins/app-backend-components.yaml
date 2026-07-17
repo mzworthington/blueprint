@@ -466,6 +466,50 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/home/config
+      type: rest-api
+      name: config Service (External)
+      external: true
+      properties:
+        filepath: plugins/home/src/api/config.ts
+        containerId: home
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 100
+      y: 1144
+    - entityRef: blueprint/plugins/events-backend/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: plugins/events-backend/src/service/http/errors.ts
+        containerId: events-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 1144
+    - entityRef: blueprint/plugins/scaffolder-backend/template
+      type: background-worker
+      name: template Service (External)
+      external: true
+      properties:
+        filepath: plugins/scaffolder-backend/src/scaffolder/actions/builtin/fetch/template.ts
+        containerId: scaffolder-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 1144
+    - entityRef: blueprint/plugins/catalog-react/testutils
+      type: background-worker
+      name: testUtils Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-react/src/testUtils.ts
+        containerId: catalog-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1264
   dependencies:
     - from: blueprint/plugins/app-backend/injectconfigintostatic-test
       to: blueprint/plugins/app-backend/injectconfigintostatic

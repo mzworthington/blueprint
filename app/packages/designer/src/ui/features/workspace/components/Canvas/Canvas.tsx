@@ -40,6 +40,7 @@ export const Canvas: React.FC = () => {
     lastError,
     clearError,
     showTests,
+    showExternals,
     showCoupling,
     showHotspotHeatmap,
     focusedCyclePath,
@@ -119,9 +120,12 @@ export const Canvas: React.FC = () => {
   }, [notification, setNotification]);
 
   const filteredNodes = useMemo(() => {
-    if (showTests) return nodes;
-    return nodes.filter(n => !n.data.isTest);
-  }, [nodes, showTests]);
+    return nodes.filter(n => {
+      if (!showTests && n.data.isTest) return false;
+      if (!showExternals && n.data.external) return false;
+      return true;
+    });
+  }, [nodes, showTests, showExternals]);
 
   const displayNodes = useMemo(() => {
     let baseNodes = filteredNodes;
@@ -135,10 +139,10 @@ export const Canvas: React.FC = () => {
   }, [filteredNodes, selectedNodeId, showCoupling, showHotspotHeatmap, focusedCyclePath]);
 
   const filteredEdges = useMemo(() => {
-    if (showTests) return edges;
+    if (showTests && showExternals) return edges;
     const visibleNodeIds = new Set(filteredNodes.map(n => n.id));
     return edges.filter(e => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target));
-  }, [edges, filteredNodes, showTests]);
+  }, [edges, filteredNodes, showTests, showExternals]);
 
   const displayEdges = useMemo(() => {
     if (focusedCyclePath) {

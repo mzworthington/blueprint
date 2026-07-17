@@ -226,6 +226,50 @@
         classifications:
           - knowledge-silo
         sinceDays: 500
+    - entityRef: blueprint/plugins/permission-node/alpha
+      type: background-worker
+      name: alpha Service (External)
+      external: true
+      properties:
+        filepath: plugins/permission-node/src/alpha.ts
+        containerId: permission-node
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1784
+    - entityRef: blueprint/plugins/events-backend/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: plugins/events-backend/src/service/http/errors.ts
+        containerId: events-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 1784
+    - entityRef: blueprint/plugins/catalog-react/testutils
+      type: background-worker
+      name: testUtils Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-react/src/testUtils.ts
+        containerId: catalog-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 460
+      y: 1784
+    - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+      type: background-worker
+      name: types Service (External)
+      external: true
+      properties:
+        filepath: plugins/auth-backend-module-cloudflare-access-provider/src/types.ts
+        containerId: auth-backend-module-cloudflare-access-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 1904
   dependencies:
     - from: blueprint/plugins/mcp-actions-backend/index
       to: blueprint/plugins/permission-node/alpha
@@ -240,7 +284,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/mcp-actions-backend/createstreamablerouter
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/mcp-actions-backend/createstreamablerouter
@@ -292,7 +336,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/mcp-actions-backend/plugin-test
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/mcp-actions-backend/metrics
@@ -320,7 +364,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
@@ -352,11 +396,11 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/mcp-actions-backend/mcpservice
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/mcp-actions-backend/mcpservice
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/mcp-actions-backend/mcpservice

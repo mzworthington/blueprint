@@ -28,6 +28,23 @@ export interface ExternalCandidateFilters {
   search?: string;
 }
 
+export type ExternalEnrichMode = 'suggested' | 'unresolved';
+
+export interface EnrichExternalsOptions {
+  /** Default: `suggested` (neighbor containers + cross-diagram + unresolved). */
+  mode?: ExternalEnrichMode;
+  /**
+   * On container-level diagrams, only materialize container-level entities.
+   * Default: true.
+   */
+  containersOnlyOnContainerDiagrams?: boolean;
+  /**
+   * Only enrich schemas at these C4 levels. When set, other levels are returned unchanged.
+   * Useful for CLI passes that should never touch context diagrams.
+   */
+  enrichLevels?: C4Level[];
+}
+
 const EXTERNAL_NAME_SUFFIX = ' (External)';
 
 function normalizeSearch(value: string): string {
@@ -199,7 +216,10 @@ function collectContainerNeighborRefs(
 
   if (activeSchema.level !== 'component' || !activeSchema.entityRef) return [];
 
-  const parentSystem = loadedSystems.find(s => s.schema.level === 'container');
+  const parentRef = EntityRefUtil.getParent(activeSchema.entityRef);
+  const parentSystem = loadedSystems.find(
+    s => s.schema.level === 'container' && s.schema.entityRef === parentRef
+  );
   if (!parentSystem) return [];
 
   const activeContainerRef = activeSchema.entityRef;
@@ -217,6 +237,9 @@ function collectCrossDiagramRefs(
   activeSchema: SystemSchema,
   loadedSystems: LoadedSystemInput[]
 ): EntityRef[] {
+  // Context scopes (e.g. `blueprint`) match almost every ref — never fan out here.
+  if (activeSchema.level === 'context') return [];
+
   const scope = activeSchema.entityRef?.trim();
   if (!scope) return [];
 
@@ -276,4 +299,86 @@ export function suggestExternalDependencies(
   }
 
   return entities.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function filterEntitiesForDiagramLevel(
+  activeSchema: SystemSchema,
+  entities: WorkspaceEntity[],
+  options: EnrichExternalsOptions
+): WorkspaceEntity[] {
+  if (activeSchema.level === 'context') {
+    return entities.filter(entity => entity.sourceSchemaLevel === 'context');
+  }
+
+  const containersOnly = options.containersOnlyOnContainerDiagrams !== false;
+  if (containersOnly && activeSchema.level === 'container') {
+    return entities.filter(entity => entity.sourceSchemaLevel === 'container');
+  }
+
+  return entities;
+}
+
+function selectEntitiesForEnrichment(
+  activeSchema: SystemSchema,
+  loadedSystems: LoadedSystemInput[],
+  index: WorkspaceEntityIndex,
+  options: EnrichExternalsOptions
+): WorkspaceEntity[] {
+  const mode = options.mode ?? 'suggested';
+  const entities =
+    mode === 'unresolved'
+      ? collectUnresolvedDependencyRefs(activeSchema)
+          .map(ref => index.byRef.get(ref))
+          .filter((entity): entity is WorkspaceEntity => !!entity)
+          .filter(entity => !isExcludedFromExternalCandidates(entity.entityRef, activeSchema))
+          .sort((a, b) => a.name.localeCompare(b.name))
+      : suggestExternalDependencies(activeSchema, loadedSystems, index);
+
+  return filterEntitiesForDiagramLevel(activeSchema, entities, options);
+}
+
+/**
+ * Merge suggested (or unresolved) external proxy nodes onto a schema.
+ * Idempotent: entities already on the diagram are left unchanged.
+ */
+export function enrichSchemaWithExternals(
+  activeSchema: SystemSchema,
+  loadedSystems: LoadedSystemInput[],
+  index: WorkspaceEntityIndex,
+  options: EnrichExternalsOptions = {}
+): SystemSchema {
+  if (options.enrichLevels && !options.enrichLevels.includes(activeSchema.level)) {
+    return activeSchema;
+  }
+
+  const entities = selectEntitiesForEnrichment(activeSchema, loadedSystems, index, options);
+  const missing = entities.filter(entity => !isOnActiveDiagram(entity.entityRef, activeSchema));
+  if (missing.length === 0) return activeSchema;
+
+  const positions = computeExternalNodePositions(
+    missing.length,
+    activeSchema.nodes.map(n => ({ x: n.x ?? 0, y: n.y ?? 0 }))
+  );
+  const externalNodes = materializeExternalNodes(missing, positions);
+
+  return {
+    ...activeSchema,
+    nodes: [...activeSchema.nodes, ...externalNodes],
+  };
+}
+
+/**
+ * Enrich every schema in a workspace using a shared entity index.
+ * Index is built from the input schemas (before enrichment) so ownership stays with
+ * the canonical non-external definitions.
+ */
+export function enrichWorkspaceWithExternals(
+  loadedSystems: LoadedSystemInput[],
+  options: EnrichExternalsOptions = {}
+): LoadedSystemInput[] {
+  const index = buildWorkspaceEntityIndex(loadedSystems);
+  return loadedSystems.map(system => ({
+    ...system,
+    schema: enrichSchemaWithExternals(system.schema, loadedSystems, index, options),
+  }));
 }

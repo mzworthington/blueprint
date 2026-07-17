@@ -1,77 +1,73 @@
-entityRef: blueprint/packages/cli-module-lint
-name: Cli-module-lint Service Components
-version: 1.0.0
-level: component
-nodes:
-  - entityRef: blueprint/packages/cli-module-lint/index
-    type: background-worker
-    name: index Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-lint/src/index.ts
-      containerId: cli-module-lint
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 1
-      loc: 35
-      sloc: 17
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 40
-  - entityRef: blueprint/packages/cli-module-lint/lint
-    type: background-worker
-    name: lint Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-lint/src/commands/package/lint.ts
-      containerId: cli-module-lint
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 10
-      loc: 101
-      sloc: 72
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      coupledFiles: []
-      sinceDays: 500
-    x: 400
-    'y': 40
-  - entityRef: blueprint/packages/cli-module-lint/optionsparser
-    type: background-worker
-    name: optionsParser Service
-    isTest: false
-    properties:
-      filepath: packages/cli-module-lint/src/lib/optionsParser.ts
-      containerId: cli-module-lint
-      technology: TypeScript Domain Service
-      classification: default
-    forensics:
-      complexity: 4
-      loc: 41
-      sloc: 21
-      churn: 1
-      authorCount: 1
-      topAuthorPercent: 1
-      hotspotScore: 0
-      classifications: []
-      coupledFiles: []
-      sinceDays: 500
-    x: 40
-    'y': 300
-dependencies:
-  - from: blueprint/packages/cli-module-lint/lint
-    to: blueprint/packages/cli-module-lint/optionsparser
-    type: direct-call
-    description: Calls module / service
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/packages/cli-module-lint
+  name: Cli-module-lint Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/packages/cli-module-lint/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: packages/cli-module-lint/src/index.ts
+        containerId: cli-module-lint
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 40
+      forensics:
+        complexity: 1
+        loc: 35
+        sloc: 17
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/packages/cli-module-lint/lint
+      type: background-worker
+      name: lint Service
+      isTest: false
+      properties:
+        filepath: packages/cli-module-lint/src/commands/repo/lint.ts
+        containerId: cli-module-lint
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 40
+      forensics:
+        complexity: 30
+        loc: 354
+        sloc: 291
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        classifications:
+          - knowledge-silo
+        sinceDays: 500
+    - entityRef: blueprint/packages/cli-module-lint/optionsparser
+      type: background-worker
+      name: optionsParser Service
+      isTest: false
+      properties:
+        filepath: packages/cli-module-lint/src/lib/optionsParser.ts
+        containerId: cli-module-lint
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 300
+      forensics:
+        complexity: 4
+        loc: 41
+        sloc: 21
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+  dependencies:
+    - from: blueprint/packages/cli-module-lint/lint
+      to: blueprint/packages/cli-module-lint/optionsparser
+      type: direct-call
+      description: Calls module / service

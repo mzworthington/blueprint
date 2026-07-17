@@ -166,13 +166,35 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/events-backend/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: plugins/events-backend/src/service/http/errors.ts
+        containerId: events-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 100
+      y: 824
+    - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+      type: background-worker
+      name: types Service (External)
+      external: true
+      properties:
+        filepath: plugins/auth-backend-module-cloudflare-access-provider/src/types.ts
+        containerId: auth-backend-module-cloudflare-access-provider
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 824
   dependencies:
     - from: blueprint/plugins/user-settings-backend/databaseusersettingsstore
       to: blueprint/plugins/events-backend/errors
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/user-settings-backend/databaseusersettingsstore
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/user-settings-backend/databaseusersettingsstore
@@ -184,7 +206,7 @@
       type: read-write
       description: Queries datastore records
     - from: blueprint/plugins/user-settings-backend/usersettingsstore
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/user-settings-backend/plugin
@@ -212,6 +234,6 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/user-settings-backend/router-test
-      to: blueprint/plugins/auth-backend/types
+      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
       type: direct-call
       description: Calls module / service
