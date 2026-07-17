@@ -113,62 +113,73 @@ async function installFakeWorkspacePicker(page: Page) {
   );
 }
 
+/**
+ * Plants a topology that differs from disk YAML for context.yaml.
+ * Must run only after Dexie has already created BlueprintDatabase (e.g. after
+ * a successful workspace open). Creating stores via onupgradeneeded races Dexie
+ * and breaks subsequent openWorkspaceDirectory in CI.
+ */
 async function seedStaleDraft(page: Page) {
-  await page.evaluate(async () => {
-    await new Promise<void>((resolve, reject) => {
+  const seeded = await page.evaluate(async () => {
+    const db = await new Promise<IDBDatabase>((resolve, reject) => {
       const req = indexedDB.open('BlueprintDatabase');
-      req.onerror = () => reject(req.error);
-      req.onsuccess = () => {
-        const db = req.result;
-        const tx = db.transaction(['workingNodes', 'workingDependencies'], 'readwrite');
-        const nodes = tx.objectStore('workingNodes');
-        const deps = tx.objectStore('workingDependencies');
-        nodes.put({
-          entityRef: 'e2e/orphan',
-          id: 'orphan',
-          systemId: 'e2e',
-          type: 'microservice',
-          name: 'Stale Orphan',
-          properties: {},
-          filePath: 'context.yaml',
-        });
-        nodes.put({
-          entityRef: 'e2e/app',
-          id: 'app',
-          systemId: 'e2e',
-          type: 'software-system',
-          name: 'App System',
-          properties: {},
-          filePath: 'context.yaml',
-        });
-        deps.put({
-          id: 'e2e/orphan->e2e/app',
-          fromRef: 'e2e/orphan',
-          toRef: 'e2e/app',
-          type: 'direct-call',
-          description: 'Part of product system',
-          filePath: 'context.yaml',
-        });
-        tx.oncomplete = () => resolve();
-        tx.onerror = () => reject(tx.error);
-      };
-      req.onupgradeneeded = () => {
-        const db = req.result;
-        if (!db.objectStoreNames.contains('workingNodes')) {
-          db.createObjectStore('workingNodes', { keyPath: 'entityRef' });
-        }
-        if (!db.objectStoreNames.contains('workingDependencies')) {
-          db.createObjectStore('workingDependencies', { keyPath: 'id' });
-        }
-        if (!db.objectStoreNames.contains('originalNodes')) {
-          db.createObjectStore('originalNodes', { keyPath: 'entityRef' });
-        }
-        if (!db.objectStoreNames.contains('originalDependencies')) {
-          db.createObjectStore('originalDependencies', { keyPath: 'id' });
-        }
-      };
+      req.onerror = () => reject(req.error ?? new Error('indexedDB open failed'));
+      req.onsuccess = () => resolve(req.result);
     });
+
+    if (
+      !db.objectStoreNames.contains('workingNodes') ||
+      !db.objectStoreNames.contains('workingDependencies')
+    ) {
+      db.close();
+      throw new Error('BlueprintDatabase stores missing — Dexie not initialized');
+    }
+
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction(['workingNodes', 'workingDependencies'], 'readwrite');
+      const nodes = tx.objectStore('workingNodes');
+      const deps = tx.objectStore('workingDependencies');
+      nodes.put({
+        entityRef: 'e2e/orphan',
+        id: 'orphan',
+        systemId: 'e2e',
+        type: 'microservice',
+        name: 'Stale Orphan',
+        properties: {},
+        filePath: 'context.yaml',
+      });
+      nodes.put({
+        entityRef: 'e2e/app',
+        id: 'app',
+        systemId: 'e2e',
+        type: 'software-system',
+        name: 'App System',
+        properties: {},
+        filePath: 'context.yaml',
+      });
+      deps.put({
+        id: 'e2e/orphan->e2e/app',
+        fromRef: 'e2e/orphan',
+        toRef: 'e2e/app',
+        type: 'direct-call',
+        description: 'Part of product system',
+        filePath: 'context.yaml',
+      });
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error ?? new Error('seed transaction failed'));
+    });
+
+    const orphan = await new Promise<unknown>((resolve, reject) => {
+      const tx = db.transaction(['workingNodes'], 'readonly');
+      const req = tx.objectStore('workingNodes').get('e2e/orphan');
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+    db.close();
+    return Boolean(orphan);
   });
+
+  expect(seeded).toBe(true);
 }
 
 test.describe('Hierarchy zoom journeys', () => {
@@ -228,18 +239,34 @@ test.describe('Disk-first workspace open', () => {
     await installFakeWorkspacePicker(page);
     await page.goto('/workspace');
 
-    // Stay on the startup chooser — do not load sandbox (avoids IDB path races).
+    // Open once first so Dexie creates BlueprintDatabase (seeding before that
+    // races Dexie schema setup and aborts folder open in CI).
     await expectWorkspaceFolderActionAvailable(page);
-    await seedStaleDraft(page);
-
     await openWorkspaceFolder(page);
-
-    await expect(page.getByText('Loaded files from disk')).toBeVisible({ timeout: 15000 });
-    await expect(page.getByText(/stale local draft/i)).toBeVisible();
+    await expect(page.getByTestId('startup-workspace-dialog')).toHaveCount(0, {
+      timeout: 15000,
+    });
 
     await page.locator('button[aria-label="Toggle Right Panel"]').click();
-    await expect(page.locator('#workspace-name-input')).toHaveValue('E2E Context');
+    await expect(page.locator('#workspace-name-input')).toHaveValue('E2E Context', {
+      timeout: 10000,
+    });
 
+    // Initial open may toast when discarding the sandbox IDB seed — wait it out.
+    const discardToast = page.getByText('Loaded files from disk');
+    if (await discardToast.isVisible().catch(() => false)) {
+      await expect(discardToast).toHaveCount(0, { timeout: 10000 });
+    }
+
+    await seedStaleDraft(page);
+
+    // Arm toast wait before re-open — info toasts auto-dismiss after 4s.
+    const toastVisible = discardToast.waitFor({ state: 'visible', timeout: 15000 });
+    await openWorkspaceFolder(page);
+    await toastVisible;
+    await expect(page.getByText(/stale local draft/i)).toBeVisible();
+
+    await expect(page.locator('#workspace-name-input')).toHaveValue('E2E Context');
     await expect(page.locator('.react-flow__node', { hasText: 'App System' })).toBeVisible();
     await expect(page.locator('.react-flow__node', { hasText: 'Stale Orphan' })).toHaveCount(0);
   });

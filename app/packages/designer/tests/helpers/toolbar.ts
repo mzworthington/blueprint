@@ -22,12 +22,10 @@ export async function continueWithSandbox(page: Page) {
 /** Opens a workspace folder via the startup chooser when present, else the toolbar. */
 export async function openWorkspaceFolder(page: Page) {
   const startupOpen = page.getByTestId('startup-open-directory');
-  try {
-    await startupOpen.waitFor({ state: 'visible', timeout: 5_000 });
+  // Prefer a quick visibility check — do not burn 5s waiting when the chooser is gone.
+  if (await startupOpen.isVisible().catch(() => false)) {
     await startupOpen.click();
     return;
-  } catch {
-    // Startup chooser not showing (deep link or already dismissed).
   }
 
   await continueWithSandbox(page);
