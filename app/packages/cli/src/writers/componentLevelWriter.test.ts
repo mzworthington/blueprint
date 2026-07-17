@@ -1,19 +1,17 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { ComponentLevelWriter } from './componentLevelWriter.ts';
 import type { SystemNode, SystemDependency } from '@blueprint/core';
-import { MockLayout, MockFileSystem, MockLogger } from '../test/fakes.ts';
+import { MockFileSystem, MockLogger } from '../test/fakes.ts';
 
 describe('ComponentLevelWriter', () => {
-  let layout: MockLayout;
   let fileSystem: MockFileSystem;
   let logger: MockLogger;
   let writer: ComponentLevelWriter;
 
   beforeEach(() => {
-    layout = new MockLayout();
     fileSystem = new MockFileSystem();
     logger = new MockLogger();
-    writer = new ComponentLevelWriter(layout, fileSystem, logger);
+    writer = new ComponentLevelWriter(fileSystem, logger);
   });
 
   it('should write component schemas for each container', async () => {
@@ -268,7 +266,7 @@ describe('ComponentLevelWriter', () => {
     expect(yamlContent).toContain('to: my-context/my-system/domain-logic/component-c');
   });
 
-  it('should compute layout for component nodes', async () => {
+  it('writes component nodes without layout positions', async () => {
     const componentNodesMap = new Map<string, SystemNode>([
       [
         'component-a',
@@ -300,8 +298,8 @@ describe('ComponentLevelWriter', () => {
     const yamlContent = fileSystem.writtenFiles.get(
       '/workspace/blueprints/my-context/my-system/frontend-ui-components.yaml'
     )!;
-    expect(yamlContent).toContain('x: 10');
-    expect(yamlContent).toContain('y: 20');
+    expect(yamlContent).not.toMatch(/\bx:\s*\d+/);
+    expect(yamlContent).not.toMatch(/\by:\s*\d+/);
   });
 
   it('should log successful write for each container', async () => {

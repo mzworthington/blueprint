@@ -17,10 +17,7 @@ export class ContainerLevelWriter extends BaseWriter {
       name: `${systemId.charAt(0).toUpperCase() + systemId.slice(1)} Containers`,
       version: '1.0.0',
       level: 'container',
-      nodes: await this.layout.computeLayout(
-        Array.from(containerNodesMap.values()),
-        containerDependencies
-      ),
+      nodes: Array.from(containerNodesMap.values()),
       dependencies: containerDependencies,
     };
 

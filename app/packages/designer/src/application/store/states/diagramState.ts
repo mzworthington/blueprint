@@ -49,6 +49,7 @@ export interface DiagramState {
   nodes: BlueprintRFNode[];
   edges: BlueprintRFEdge[];
   selectedNodeId: string | null;
+  selectedEdgeId: string | null;
   validationResult: ValidationResult;
   yamlCode: string;
   lastError: string | null;
@@ -81,6 +82,7 @@ export interface DiagramState {
   updateNode: (id: string, updates: Partial<SystemNode>) => void;
   deleteNode: (id: string) => void;
   selectNode: (id: string | null) => void;
+  selectEdge: (id: string | null) => void;
   updateDependency: (from: string, to: string, updates: Partial<SystemDependency>) => void;
   deleteDependency: (from: string, to: string) => void;
   selectSystem: (path: string) => void;
@@ -104,6 +106,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   nodes: initial.nodes,
   edges: initial.edges,
   selectedNodeId: null,
+  selectedEdgeId: null,
   validationResult: initial.validationResult,
   yamlCode: initial.yamlCode,
   lastError: null,
@@ -206,6 +209,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
     set({
       currentFilePath: path,
       selectedNodeId: null,
+      selectedEdgeId: null,
       focusedCyclePath: null,
     });
     get().clearHistory();
@@ -334,6 +338,15 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   selectNode: id => {
     set({
       selectedNodeId: id,
+      selectedEdgeId: id ? null : get().selectedEdgeId,
+      rightCollapsed: id ? false : get().rightCollapsed,
+    });
+  },
+
+  selectEdge: id => {
+    set({
+      selectedEdgeId: id,
+      selectedNodeId: id ? null : get().selectedNodeId,
       rightCollapsed: id ? false : get().rightCollapsed,
     });
   },
@@ -345,7 +358,12 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
 
   deleteDependency: (from, to) => {
     get().recordHistory();
+    const { selectedEdgeId, edges } = get();
+    const selected = edges.find(e => e.id === selectedEdgeId);
     deleteDependencyMutation(set, get, from, to);
+    if (selected && selected.source === from && selected.target === to) {
+      set({ selectedEdgeId: null });
+    }
   },
 
   syncExternalContainers: () => {

@@ -10,6 +10,7 @@ import { ForensicsSection } from './ForensicsSection';
 import { ConnectionsSection } from './ConnectionsSection';
 import { ComponentCatalog } from './ComponentCatalog';
 import { ExternalDependenciesSection } from './ExternalDependenciesSection';
+import { SelectedDependencySection } from './SelectedDependencySection';
 import { WorkspaceDisplayControls } from './WorkspaceDisplayControls';
 import { ValidationSection } from './ValidationSection';
 import { resolveCouplingEdges } from '../../../../../application/forensics/resolveCouplingEdges';
@@ -18,6 +19,7 @@ export const PropertyPanel: React.FC = () => {
   const {
     schema,
     selectedNodeId,
+    selectedEdgeId,
     nodes,
     edges,
     validationResult,
@@ -27,6 +29,7 @@ export const PropertyPanel: React.FC = () => {
     updateNode,
     deleteNode,
     selectNode,
+    selectEdge,
     updateDependency,
     deleteDependency,
     showTests,
@@ -56,16 +59,25 @@ export const PropertyPanel: React.FC = () => {
       )
     : null;
 
+  const selectedEdge = selectedEdgeId ? edges.find(e => e.id === selectedEdgeId) || null : null;
+  const edgeEndpointMissing = selectedEdge
+    ? !nodes.some(n => n.id === selectedEdge.source) ||
+      !nodes.some(n => n.id === selectedEdge.target)
+    : false;
+
   const [propKey, setPropKey] = useState('');
   const [propVal, setPropVal] = useState('');
 
   const isNode = !!selectedNode;
+  const isEdge = !!selectedEdge;
 
-  const titleType = isNode
-    ? NODE_TYPES.find(nt => nt.type === selectedNode.type)?.label || 'Component'
-    : schema.level === 'component' || schema.level === 'code'
-      ? 'Diagram'
-      : 'Workspace';
+  const titleType = isEdge
+    ? 'Dependency'
+    : isNode
+      ? NODE_TYPES.find(nt => nt.type === selectedNode.type)?.label || 'Component'
+      : schema.level === 'component' || schema.level === 'code'
+        ? 'Diagram'
+        : 'Workspace';
 
   const nameValue = isNode ? selectedNode.name : schema.name;
   const nameInputId = isNode ? 'component-name-input' : 'workspace-name-input';
@@ -154,6 +166,14 @@ export const PropertyPanel: React.FC = () => {
               Clear Selection
             </button>
           )}
+          {selectedEdgeId && (
+            <button
+              onClick={() => selectEdge(null)}
+              className="text-xs font-mono text-slate-400 hover:text-brand-400 cursor-pointer transition focus:outline-none"
+            >
+              Clear Selection
+            </button>
+          )}
           <button
             onClick={toggleRightCollapsed}
             className="sm:hidden min-h-11 min-w-11 rounded-lg bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-400 hover:text-slate-200 transition cursor-pointer flex items-center justify-center text-sm"
@@ -167,21 +187,23 @@ export const PropertyPanel: React.FC = () => {
 
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
         <div className="space-y-6">
-          <IdentitySection
-            isNode={isNode}
-            schema={schema}
-            selectedNode={selectedNode ?? null}
-            nameValue={nameValue}
-            nameInputId={nameInputId}
-            entityRefValue={entityRefValue}
-            entityRefInputId={entityRefInputId}
-            selectId={selectId}
-            onNameChange={handleNameChangeLocal}
-            onTypeOrLevelChange={handleTypeOrLevelChange}
-            onExternalChange={checked =>
-              updateNode(selectedNode?.entityRef || '', { external: checked })
-            }
-          />
+          {!isEdge ? (
+            <IdentitySection
+              isNode={isNode}
+              schema={schema}
+              selectedNode={selectedNode ?? null}
+              nameValue={nameValue}
+              nameInputId={nameInputId}
+              entityRefValue={entityRefValue}
+              entityRefInputId={entityRefInputId}
+              selectId={selectId}
+              onNameChange={handleNameChangeLocal}
+              onTypeOrLevelChange={handleTypeOrLevelChange}
+              onExternalChange={checked =>
+                updateNode(selectedNode?.entityRef || '', { external: checked })
+              }
+            />
+          ) : null}
 
           <WorkspaceDisplayControls
             showTests={showTests}
@@ -194,7 +216,16 @@ export const PropertyPanel: React.FC = () => {
             onToggleShowHotspotHeatmap={toggleShowHotspotHeatmap}
           />
 
-          {isNode && selectedNode ? (
+          {isEdge && selectedEdge ? (
+            <SelectedDependencySection
+              edge={selectedEdge}
+              schemaNodes={schema.nodes}
+              isDangling={edgeEndpointMissing}
+              onUpdateDependency={updateDependency}
+              onDeleteDependency={deleteDependency}
+              onSelectNode={selectNode}
+            />
+          ) : isNode && selectedNode ? (
             <>
               {selectedNode.forensics ? (
                 <ForensicsSection

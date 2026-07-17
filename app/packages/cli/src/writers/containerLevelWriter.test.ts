@@ -1,19 +1,17 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { ContainerLevelWriter } from './containerLevelWriter.ts';
 import type { SystemNode, SystemDependency } from '@blueprint/core';
-import { MockLayout, MockFileSystem, MockLogger } from '../test/fakes.ts';
+import { MockFileSystem, MockLogger } from '../test/fakes.ts';
 
 describe('ContainerLevelWriter', () => {
-  let layout: MockLayout;
   let fileSystem: MockFileSystem;
   let logger: MockLogger;
   let writer: ContainerLevelWriter;
 
   beforeEach(() => {
-    layout = new MockLayout();
     fileSystem = new MockFileSystem();
     logger = new MockLogger();
-    writer = new ContainerLevelWriter(layout, fileSystem, logger);
+    writer = new ContainerLevelWriter(fileSystem, logger);
   });
 
   it('should write container schema with correct entityRef', async () => {
@@ -80,7 +78,7 @@ describe('ContainerLevelWriter', () => {
     expect(yamlContent).toContain('name: My-system Containers');
   });
 
-  it('should compute layout for container nodes', async () => {
+  it('writes container nodes without layout positions', async () => {
     const containerNodesMap = new Map<string, SystemNode>([
       [
         'service-a',
@@ -102,8 +100,8 @@ describe('ContainerLevelWriter', () => {
     );
 
     const yamlContent = fileSystem.writtenFiles.get('/workspace/blueprints/containers.yaml')!;
-    expect(yamlContent).toContain('x: 10');
-    expect(yamlContent).toContain('y: 20');
+    expect(yamlContent).not.toMatch(/\bx:\s*\d+/);
+    expect(yamlContent).not.toMatch(/\by:\s*\d+/);
   });
 
   it('should log successful write', async () => {

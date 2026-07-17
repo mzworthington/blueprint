@@ -32,7 +32,7 @@ export class ComponentLevelWriter extends BaseWriter {
         name: `${containerNode.name} Components`,
         version: '1.0.0',
         level: 'component',
-        nodes: await this.layout.computeLayout(internalComponents, internalEdges),
+        nodes: internalComponents,
         dependencies: internalEdges,
       };
 

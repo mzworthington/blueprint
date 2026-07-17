@@ -4,6 +4,46 @@
   version: 1.0.0
   level: component
   nodes:
+    - entityRef: blueprint/plugins/signals-react/setuptests
+      type: background-worker
+      name: setupTests Service
+      isTest: true
+      properties:
+        filepath: plugins/signals-react/src/setupTests.ts
+        containerId: signals-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 428
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 17
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/signals-react/usesignal
+      type: gateway-api
+      name: useSignal Service
+      isTest: false
+      properties:
+        filepath: plugins/signals-react/src/hooks/useSignal.ts
+        containerId: signals-react
+        technology: React Component
+        classification: ui-import
+      x: 1188
+      y: 64
+      forensics:
+        complexity: 4
+        loc: 53
+        sloc: 30
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
     - entityRef: blueprint/plugins/signals-react/index
       type: rest-api
       name: index Service
@@ -13,8 +53,8 @@
         containerId: signals-react
         technology: REST Controller / Router
         classification: api-marker
-      x: 40
-      y: 40
+      x: 48
+      y: 64
       forensics:
         complexity: 1
         loc: 17
@@ -33,52 +73,12 @@
         containerId: signals-react
         technology: REST Controller / Router
         classification: api-marker
-      x: 400
-      y: 40
+      x: 808
+      y: 64
       forensics:
         complexity: 1
         loc: 36
         sloc: 14
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/signals-react/usesignal
-      type: gateway-api
-      name: useSignal Service
-      isTest: false
-      properties:
-        filepath: plugins/signals-react/src/hooks/useSignal.ts
-        containerId: signals-react
-        technology: React Component
-        classification: ui-import
-      x: 40
-      y: 300
-      forensics:
-        complexity: 4
-        loc: 53
-        sloc: 30
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/signals-react/setuptests
-      type: background-worker
-      name: setupTests Service
-      isTest: true
-      properties:
-        filepath: plugins/signals-react/src/setupTests.ts
-        containerId: signals-react
-        technology: TypeScript Domain Service
-        classification: default
-      x: 400
-      y: 300
-      forensics:
-        complexity: 1
-        loc: 17
-        sloc: 1
         churn: 1
         authorCount: 1
         topAuthorPercent: 1
@@ -93,8 +93,8 @@
         containerId: techdocs-react
         technology: TypeScript Domain Service
         classification: default
-      x: 580
-      y: 300
+      x: 1248
+      y: 384
     - entityRef: blueprint/plugins/auth-backend/types
       type: background-worker
       name: types Service (External)
@@ -104,8 +104,8 @@
         containerId: auth-backend
         technology: TypeScript Domain Service
         classification: default
-      x: 100
-      y: 420
+      x: 808
+      y: 384
   dependencies:
     - from: blueprint/plugins/signals-react/usesignal
       to: blueprint/plugins/techdocs-react/api

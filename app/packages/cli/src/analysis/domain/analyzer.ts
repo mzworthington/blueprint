@@ -20,6 +20,7 @@ import {
 } from '../../forensics/domain/attachForensics.ts';
 import type { FileMetrics } from '../../forensics/domain/types.ts';
 import { applyExternalDependenciesPass } from '../../writers/externalDependenciesPass.ts';
+import { applyLayoutPass } from '../../writers/layoutPass.ts';
 export interface CodebaseAnalyzerDependencies {
   parser: CodebaseParserPort;
   layout: LayoutPort;
@@ -186,21 +187,9 @@ export class CodebaseAnalyzer {
     const rootDir = this.deps.fileSystem.getAbsolutePath(outputDir || 'blueprints');
     if (!this.deps.fileSystem.exists(rootDir)) this.deps.fileSystem.mkdir(rootDir);
 
-    const contextWriter = new ContextLevelWriter(
-      this.deps.layout,
-      this.deps.fileSystem,
-      this.deps.logger
-    );
-    const containerWriter = new ContainerLevelWriter(
-      this.deps.layout,
-      this.deps.fileSystem,
-      this.deps.logger
-    );
-    const componentWriter = new ComponentLevelWriter(
-      this.deps.layout,
-      this.deps.fileSystem,
-      this.deps.logger
-    );
+    const contextWriter = new ContextLevelWriter(this.deps.fileSystem, this.deps.logger);
+    const containerWriter = new ContainerLevelWriter(this.deps.fileSystem, this.deps.logger);
+    const componentWriter = new ComponentLevelWriter(this.deps.fileSystem, this.deps.logger);
 
     const emittedSystems = systems.filter(system => {
       const files = partitioned.get(system.id) || [];
@@ -286,6 +275,9 @@ export class CodebaseAnalyzer {
 
     throwIfAborted(signal);
     await applyExternalDependenciesPass(rootDir, this.deps.fileSystem, this.deps.logger);
+
+    throwIfAborted(signal);
+    await applyLayoutPass(rootDir, this.deps.layout, this.deps.fileSystem, this.deps.logger);
 
     throwIfAborted(signal);
     this.deps.logger.info(`✅ Multi-level structural blueprint generation complete.`);

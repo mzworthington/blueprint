@@ -1,12 +1,11 @@
 import path from 'node:path';
 import { existsSync } from 'node:fs';
-import type { LayoutPort, AnalysisFileSystemPort, LoggerPort } from '../analysis/domain/ports.ts';
+import type { AnalysisFileSystemPort, LoggerPort } from '../analysis/domain/ports.ts';
 import type { SystemSchema } from '@blueprint/core';
 import { SYSTEM_SCHEMA_MAJOR_VERSION, serializeSchemaToYaml } from '@blueprint/core';
 
 export abstract class BaseWriter {
   constructor(
-    protected layout: LayoutPort,
     protected fileSystem: AnalysisFileSystemPort,
     protected logger: LoggerPort
   ) {}

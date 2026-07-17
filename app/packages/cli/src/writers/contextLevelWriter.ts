@@ -156,11 +156,6 @@ export class ContextLevelWriter extends BaseWriter {
       });
     }
 
-    contextSchema.nodes = await this.layout.computeLayout(
-      contextSchema.nodes,
-      contextSchema.dependencies
-    );
-
     await this.writeYaml(targetPath, contextSchema);
     this.logger.info(`📄 Saved Context schema for [${contextRef}]: ${targetPath}`);
   }

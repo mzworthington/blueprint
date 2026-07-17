@@ -4,6 +4,26 @@
   version: 1.0.0
   level: component
   nodes:
+    - entityRef: blueprint/plugins/auth-react/setuptests
+      type: background-worker
+      name: setupTests Service
+      isTest: true
+      properties:
+        filepath: plugins/auth-react/src/setupTests.ts
+        containerId: auth-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 1188
+      y: 64
+      forensics:
+        complexity: 4
+        loc: 50
+        sloc: 32
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
     - entityRef: blueprint/plugins/auth-react/cookieauthredirect
       type: gateway-api
       name: CookieAuthRedirect Service
@@ -13,8 +33,8 @@
         containerId: auth-react
         technology: React Component
         classification: ui-import
-      x: 40
-      y: 40
+      x: 48
+      y: 384
       forensics:
         complexity: 6
         loc: 58
@@ -24,21 +44,21 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
-    - entityRef: blueprint/plugins/auth-react/cookieauthrefreshprovider
+    - entityRef: blueprint/plugins/auth-react/cookieauthredirect-test
       type: gateway-api
-      name: CookieAuthRefreshProvider Service
-      isTest: false
+      name: CookieAuthRedirect.test Service
+      isTest: true
       properties:
-        filepath: plugins/auth-react/src/components/CookieAuthRefreshProvider/CookieAuthRefreshProvider.tsx
+        filepath: plugins/auth-react/src/components/CookieAuthRedirect/CookieAuthRedirect.test.tsx
         containerId: auth-react
         technology: React Component
         classification: ui-import
-      x: 400
-      y: 40
+      x: 48
+      y: 64
       forensics:
-        complexity: 3
-        loc: 63
-        sloc: 30
+        complexity: 1
+        loc: 68
+        sloc: 42
         churn: 1
         authorCount: 1
         topAuthorPercent: 1
@@ -53,54 +73,12 @@
         containerId: auth-react
         technology: TypeScript Domain Service
         classification: default
-      x: 760
-      y: 40
+      x: 808
+      y: 64
       forensics:
         complexity: 1
         loc: 18
         sloc: 1
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth-react/usecookieauthrefresh
-      type: gateway-api
-      name: useCookieAuthRefresh Service
-      isTest: false
-      properties:
-        filepath: plugins/auth-react/src/hooks/useCookieAuthRefresh/useCookieAuthRefresh.tsx
-        containerId: auth-react
-        technology: React Component
-        classification: ui-import
-      x: 40
-      y: 300
-      forensics:
-        complexity: 15
-        loc: 147
-        sloc: 93
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        classifications:
-          - knowledge-silo
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth-react/cookieauthredirect-test
-      type: gateway-api
-      name: CookieAuthRedirect.test Service
-      isTest: true
-      properties:
-        filepath: plugins/auth-react/src/components/CookieAuthRedirect/CookieAuthRedirect.test.tsx
-        containerId: auth-react
-        technology: React Component
-        classification: ui-import
-      x: 400
-      y: 300
-      forensics:
-        complexity: 1
-        loc: 68
-        sloc: 42
         churn: 1
         authorCount: 1
         topAuthorPercent: 1
@@ -115,8 +93,8 @@
         containerId: auth-react
         technology: React Component
         classification: ui-import
-      x: 760
-      y: 300
+      x: 428
+      y: 64
       forensics:
         complexity: 1
         loc: 165
@@ -126,25 +104,47 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
-    - entityRef: blueprint/plugins/auth-react/setuptests
-      type: background-worker
-      name: setupTests Service
-      isTest: true
+    - entityRef: blueprint/plugins/auth-react/cookieauthrefreshprovider
+      type: gateway-api
+      name: CookieAuthRefreshProvider Service
+      isTest: false
       properties:
-        filepath: plugins/auth-react/src/setupTests.ts
+        filepath: plugins/auth-react/src/components/CookieAuthRefreshProvider/CookieAuthRefreshProvider.tsx
         containerId: auth-react
-        technology: TypeScript Domain Service
-        classification: default
-      x: 40
-      y: 560
+        technology: React Component
+        classification: ui-import
+      x: 428
+      y: 384
       forensics:
-        complexity: 4
-        loc: 50
-        sloc: 32
+        complexity: 3
+        loc: 63
+        sloc: 30
         churn: 1
         authorCount: 1
         topAuthorPercent: 1
         hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/auth-react/usecookieauthrefresh
+      type: gateway-api
+      name: useCookieAuthRefresh Service
+      isTest: false
+      properties:
+        filepath: plugins/auth-react/src/hooks/useCookieAuthRefresh/useCookieAuthRefresh.tsx
+        containerId: auth-react
+        technology: React Component
+        classification: ui-import
+      x: 1568
+      y: 384
+      forensics:
+        complexity: 15
+        loc: 147
+        sloc: 93
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        classifications:
+          - knowledge-silo
         sinceDays: 500
     - entityRef: blueprint/plugins/auth-react/usecookieauthrefresh-test
       type: gateway-api
@@ -155,8 +155,8 @@
         containerId: auth-react
         technology: React Component
         classification: ui-import
-      x: 400
-      y: 560
+      x: 1568
+      y: 64
       forensics:
         complexity: 3
         loc: 382
@@ -175,8 +175,8 @@
         containerId: events-backend
         technology: TypeScript Domain Service
         classification: default
-      x: 100
-      y: 680
+      x: 1568
+      y: 704
     - entityRef: blueprint/plugins/techdocs/hooks
       type: gateway-api
       name: hooks Service (External)
@@ -186,8 +186,8 @@
         containerId: techdocs
         technology: React Component
         classification: ui-import
-      x: 280
-      y: 680
+      x: 428
+      y: 704
     - entityRef: blueprint/plugins/kubernetes-react/test-utils
       type: gateway-api
       name: test-utils Service (External)
@@ -197,8 +197,8 @@
         containerId: kubernetes-react
         technology: React Component
         classification: ui-import
-      x: 460
-      y: 680
+      x: 1188
+      y: 384
   dependencies:
     - from: blueprint/plugins/auth-react/cookieauthredirect-test
       to: blueprint/plugins/kubernetes-react/test-utils

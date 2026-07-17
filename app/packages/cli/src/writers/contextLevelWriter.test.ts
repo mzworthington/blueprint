@@ -4,7 +4,7 @@ import {
   productHubDependenciesForSystems,
   PRODUCT_EDGE_DESCRIPTION,
 } from './contextLevelWriter.ts';
-import { MockLayout, MockFileSystem, MockLogger } from '../test/fakes.ts';
+import { MockFileSystem, MockLogger } from '../test/fakes.ts';
 
 describe('productHubDependenciesForSystems', () => {
   it('fans spokes into the product hub and ignores other products', () => {
@@ -49,16 +49,14 @@ describe('productHubDependenciesForSystems', () => {
 });
 
 describe('ContextLevelWriter', () => {
-  let layout: MockLayout;
   let fileSystem: MockFileSystem;
   let logger: MockLogger;
   let writer: ContextLevelWriter;
 
   beforeEach(() => {
-    layout = new MockLayout();
     fileSystem = new MockFileSystem();
     logger = new MockLogger();
-    writer = new ContextLevelWriter(layout, fileSystem, logger);
+    writer = new ContextLevelWriter(fileSystem, logger);
   });
 
   it('should write context schema with correct entityRef', async () => {

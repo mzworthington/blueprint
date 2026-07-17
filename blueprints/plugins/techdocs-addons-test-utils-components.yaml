@@ -4,6 +4,17 @@
   version: 1.0.0
   level: component
   nodes:
+    - entityRef: blueprint/plugins/catalog-react/testutils
+      type: background-worker
+      name: testUtils Service (External)
+      external: true
+      properties:
+        filepath: plugins/catalog-react/src/testUtils.ts
+        containerId: catalog-react
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 40
     - entityRef: blueprint/plugins/techdocs-addons-test-utils/index
       type: background-worker
       name: index Service
@@ -13,7 +24,7 @@
         containerId: techdocs-addons-test-utils
         technology: TypeScript Domain Service
         classification: default
-      x: 40
+      x: 400
       y: 40
       forensics:
         complexity: 1
@@ -33,8 +44,8 @@
         containerId: techdocs-addons-test-utils
         technology: React Component
         classification: ui-import
-      x: 400
-      y: 40
+      x: 40
+      y: 300
       forensics:
         complexity: 9
         loc: 367
@@ -53,7 +64,7 @@
         containerId: techdocs-addons-test-utils
         technology: TypeScript Domain Service
         classification: default
-      x: 40
+      x: 400
       y: 300
       forensics:
         complexity: 1
@@ -64,17 +75,6 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
-    - entityRef: blueprint/plugins/catalog-react/testutils
-      type: background-worker
-      name: testUtils Service (External)
-      external: true
-      properties:
-        filepath: plugins/catalog-react/src/testUtils.ts
-        containerId: catalog-react
-        technology: TypeScript Domain Service
-        classification: default
-      x: 580
-      y: 300
   dependencies:
     - from: blueprint/plugins/techdocs-addons-test-utils/test-utils
       to: blueprint/plugins/catalog-react/testutils

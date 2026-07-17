@@ -7,7 +7,7 @@ import { ContainerLevelWriter } from './containerLevelWriter.ts';
 import { ComponentLevelWriter } from './componentLevelWriter.ts';
 import { resolveLocalSchemaUrl } from './baseWriter.ts';
 import type { SystemNode, SystemDependency } from '@blueprint/core';
-import { MockLayout, MockFileSystem, MockLogger } from '../test/fakes.ts';
+import { MockFileSystem, MockLogger } from '../test/fakes.ts';
 
 function expectSchemaDirective(yamlContent: string, schemaUrl?: string): void {
   const firstLine = yamlContent.split('\n')[0];
@@ -23,18 +23,16 @@ describe('resolveLocalSchemaUrl', () => {
 });
 
 describe('BaseWriter YAML schema directive', () => {
-  let layout: MockLayout;
   let fileSystem: MockFileSystem;
   let logger: MockLogger;
 
   beforeEach(() => {
-    layout = new MockLayout();
     fileSystem = new MockFileSystem();
     logger = new MockLogger();
   });
 
   it('prepends the yaml-language-server schema line on context.yaml', async () => {
-    const writer = new ContextLevelWriter(layout, fileSystem, logger);
+    const writer = new ContextLevelWriter(fileSystem, logger);
     await writer.write('/workspace/blueprints', 'my-context', 'my-system');
 
     const yamlContent = fileSystem.writtenFiles.get('/workspace/blueprints/context.yaml')!;
@@ -43,7 +41,7 @@ describe('BaseWriter YAML schema directive', () => {
   });
 
   it('prepends the yaml-language-server schema line on containers.yaml', async () => {
-    const writer = new ContainerLevelWriter(layout, fileSystem, logger);
+    const writer = new ContainerLevelWriter(fileSystem, logger);
     const containerNodesMap = new Map<string, SystemNode>([
       [
         'frontend-ui',
@@ -66,7 +64,7 @@ describe('BaseWriter YAML schema directive', () => {
   });
 
   it('prepends the yaml-language-server schema line on component YAML files', async () => {
-    const writer = new ComponentLevelWriter(layout, fileSystem, logger);
+    const writer = new ComponentLevelWriter(fileSystem, logger);
     const containerNodesMap = new Map<string, SystemNode>([
       [
         'frontend-ui',

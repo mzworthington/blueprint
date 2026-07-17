@@ -44,6 +44,17 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/events-backend/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: plugins/events-backend/src/service/http/errors.ts
+        containerId: events-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 40
+      y: 300
     - entityRef: blueprint/plugins/connections-example-backend-module-gitlab/module-test
       type: background-worker
       name: module.test Service
@@ -53,7 +64,7 @@
         containerId: connections-example-backend-module-gitlab
         technology: TypeScript Domain Service
         classification: default
-      x: 40
+      x: 400
       y: 300
       forensics:
         complexity: 1
@@ -64,17 +75,6 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
-    - entityRef: blueprint/plugins/events-backend/errors
-      type: background-worker
-      name: errors Service (External)
-      external: true
-      properties:
-        filepath: plugins/events-backend/src/service/http/errors.ts
-        containerId: events-backend
-        technology: TypeScript Domain Service
-        classification: default
-      x: 580
-      y: 300
   dependencies:
     - from: blueprint/plugins/connections-example-backend-module-gitlab/module
       to: blueprint/plugins/events-backend/errors

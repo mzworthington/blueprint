@@ -38,6 +38,8 @@ export const Canvas: React.FC = () => {
     onConnect,
     selectNode,
     selectedNodeId,
+    selectEdge,
+    selectedEdgeId,
     lastError,
     clearError,
     showTests,
@@ -169,8 +171,38 @@ export const Canvas: React.FC = () => {
     if (showCoupling && couplingEdges.length > 0) return couplingEdges;
 
     const visibleNodeIds = new Set(displayNodes.map(n => n.id));
-    return filteredEdges.filter(e => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target));
-  }, [filteredEdges, filteredNodes, displayNodes, selectedNodeId, showCoupling, focusedCyclePath]);
+    let next = filteredEdges.filter(
+      e => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target)
+    );
+
+    // Keep a selected edge visible even if an endpoint was filtered away (dangling).
+    if (selectedEdgeId && !next.some(e => e.id === selectedEdgeId)) {
+      const selected = edges.find(e => e.id === selectedEdgeId);
+      if (selected) next = [...next, selected];
+    }
+
+    return next.map(e => {
+      const isSelected = e.id === selectedEdgeId;
+      return {
+        ...e,
+        selected: isSelected,
+        style: {
+          ...e.style,
+          stroke: isSelected ? '#00f0ff' : e.style?.stroke,
+          strokeWidth: isSelected ? 3 : ((e.style?.strokeWidth as number | undefined) ?? 2),
+        },
+      };
+    });
+  }, [
+    filteredEdges,
+    filteredNodes,
+    displayNodes,
+    selectedNodeId,
+    selectedEdgeId,
+    showCoupling,
+    focusedCyclePath,
+    edges,
+  ]);
 
   const { screenToFlowPosition } = useReactFlow();
 
@@ -197,13 +229,31 @@ export const Canvas: React.FC = () => {
   );
 
   return (
-    <div className="flex-1 h-full relative" onClick={() => selectNode(null)}>
+    <div
+      className="flex-1 h-full relative"
+      onClick={() => {
+        selectNode(null);
+        selectEdge(null);
+      }}
+    >
       <ReactFlow
         nodes={displayNodes}
         edges={displayEdges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        onNodeClick={(event, node) => {
+          event.stopPropagation();
+          selectNode(node.id);
+        }}
+        onEdgeClick={(event, edge) => {
+          event.stopPropagation();
+          selectEdge(edge.id);
+        }}
+        onPaneClick={() => {
+          selectNode(null);
+          selectEdge(null);
+        }}
         onNodeDragStart={() => recordHistory()}
         onNodeDoubleClick={(_, node) => {
           const hasSub =
@@ -216,6 +266,8 @@ export const Canvas: React.FC = () => {
         onDragOver={onDragOver}
         onDrop={onDrop}
         nodeTypes={nodeTypes}
+        edgesFocusable
+        elementsSelectable
         minZoom={0.05}
         maxZoom={4}
         fitView

@@ -4,21 +4,21 @@
   version: 1.0.0
   level: component
   nodes:
-    - entityRef: blueprint/plugins/gateway-backend/index
-      type: background-worker
-      name: index Service
+    - entityRef: blueprint/plugins/gateway-backend/router
+      type: rest-api
+      name: router Service
       isTest: false
       properties:
-        filepath: plugins/gateway-backend/src/index.ts
+        filepath: plugins/gateway-backend/src/router.ts
         containerId: gateway-backend
-        technology: TypeScript Domain Service
-        classification: default
-      x: 40
-      y: 40
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 428
+      y: 384
       forensics:
-        complexity: 1
-        loc: 24
-        sloc: 1
+        complexity: 7
+        loc: 97
+        sloc: 72
         churn: 1
         authorCount: 1
         topAuthorPercent: 1
@@ -33,52 +33,12 @@
         containerId: gateway-backend
         technology: REST Controller / Router
         classification: api-marker
-      x: 400
-      y: 40
+      x: 428
+      y: 64
       forensics:
         complexity: 1
         loc: 51
         sloc: 29
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/gateway-backend/router
-      type: rest-api
-      name: router Service
-      isTest: false
-      properties:
-        filepath: plugins/gateway-backend/src/router.ts
-        containerId: gateway-backend
-        technology: REST Controller / Router
-        classification: api-marker
-      x: 760
-      y: 40
-      forensics:
-        complexity: 7
-        loc: 97
-        sloc: 72
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/gateway-backend/plugin-test
-      type: rest-api
-      name: plugin.test Service
-      isTest: true
-      properties:
-        filepath: plugins/gateway-backend/src/plugin.test.ts
-        containerId: gateway-backend
-        technology: REST Controller / Router
-        classification: api-marker
-      x: 40
-      y: 300
-      forensics:
-        complexity: 2
-        loc: 213
-        sloc: 171
         churn: 1
         authorCount: 1
         topAuthorPercent: 1
@@ -93,11 +53,51 @@
         containerId: gateway-backend
         technology: TypeScript Domain Service
         classification: default
-      x: 400
-      y: 300
+      x: 1188
+      y: 64
       forensics:
         complexity: 1
         loc: 17
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/gateway-backend/plugin-test
+      type: rest-api
+      name: plugin.test Service
+      isTest: true
+      properties:
+        filepath: plugins/gateway-backend/src/plugin.test.ts
+        containerId: gateway-backend
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 808
+      y: 64
+      forensics:
+        complexity: 2
+        loc: 213
+        sloc: 171
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/gateway-backend/index
+      type: background-worker
+      name: index Service
+      isTest: false
+      properties:
+        filepath: plugins/gateway-backend/src/index.ts
+        containerId: gateway-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 48
+      y: 64
+      forensics:
+        complexity: 1
+        loc: 24
         sloc: 1
         churn: 1
         authorCount: 1
@@ -113,8 +113,8 @@
         containerId: techdocs-react
         technology: TypeScript Domain Service
         classification: default
-      x: 100
-      y: 420
+      x: 808
+      y: 704
     - entityRef: blueprint/plugins/catalog-backend/core
       type: background-worker
       name: core Service (External)
@@ -124,8 +124,8 @@
         containerId: catalog-backend
         technology: TypeScript Domain Service
         classification: default
-      x: 280
-      y: 420
+      x: 428
+      y: 704
   dependencies:
     - from: blueprint/plugins/gateway-backend/router
       to: blueprint/plugins/techdocs-react/api
