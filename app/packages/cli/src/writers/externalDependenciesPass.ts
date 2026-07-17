@@ -46,11 +46,24 @@ export function listBlueprintSchemaPaths(
 
 function schemasEqualForExternals(a: SystemSchema, b: SystemSchema): boolean {
   if (a.nodes.length !== b.nodes.length) return false;
+  if (a.dependencies.length !== b.dependencies.length) return false;
+
   const aRefs = new Set(a.nodes.map(n => `${n.entityRef}:${!!n.external}`));
   const bRefs = new Set(b.nodes.map(n => `${n.entityRef}:${!!n.external}`));
   if (aRefs.size !== bRefs.size) return false;
   for (const ref of aRefs) {
     if (!bRefs.has(ref)) return false;
+  }
+
+  const aDeps = new Set(
+    a.dependencies.map(d => `${d.from}\0${d.to}\0${d.type}\0${d.description ?? ''}`)
+  );
+  const bDeps = new Set(
+    b.dependencies.map(d => `${d.from}\0${d.to}\0${d.type}\0${d.description ?? ''}`)
+  );
+  if (aDeps.size !== bDeps.size) return false;
+  for (const dep of aDeps) {
+    if (!bDeps.has(dep)) return false;
   }
   return true;
 }
@@ -106,7 +119,9 @@ export async function applyExternalDependenciesPass(
   }
 
   if (schemasUpdated > 0) {
-    logger.info(`🔗 External dependencies: updated ${schemasUpdated} schema(s) with proxy nodes.`);
+    logger.info(
+      `🔗 External dependencies: updated ${schemasUpdated} schema(s) (proxy nodes + container couplings).`
+    );
   }
 
   return { schemasScanned: loaded.length, schemasUpdated };

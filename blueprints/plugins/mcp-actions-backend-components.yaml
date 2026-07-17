@@ -259,13 +259,13 @@
         classification: default
       x: 460
       y: 1784
-    - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    - entityRef: blueprint/plugins/auth-backend/types
       type: background-worker
       name: types Service (External)
       external: true
       properties:
         filepath: plugins/auth-backend-module-cloudflare-access-provider/src/types.ts
-        containerId: auth-backend-module-cloudflare-access-provider
+        containerId: auth-backend
         technology: TypeScript Domain Service
         classification: default
       x: 100
@@ -284,7 +284,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/mcp-actions-backend/createstreamablerouter
-      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+      to: blueprint/plugins/auth-backend/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/mcp-actions-backend/createstreamablerouter
@@ -336,7 +336,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/mcp-actions-backend/plugin-test
-      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+      to: blueprint/plugins/auth-backend/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/mcp-actions-backend/metrics
@@ -364,7 +364,7 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
-      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+      to: blueprint/plugins/auth-backend/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/mcp-actions-backend/mcpservice-test
@@ -396,11 +396,11 @@
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/mcp-actions-backend/mcpservice
-      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+      to: blueprint/plugins/auth-backend/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/mcp-actions-backend/mcpservice
-      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+      to: blueprint/plugins/auth-backend/types
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/mcp-actions-backend/mcpservice

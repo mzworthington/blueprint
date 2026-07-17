@@ -158,9 +158,11 @@ describe('BlueprintNode Component', () => {
       ...defaultProps,
       data: { ...defaultProps.data, external: true },
     };
-    render(<BlueprintNode {...props} />);
+    const { container } = render(<BlueprintNode {...props} />);
 
     expect(screen.getByText('(External)')).toBeInTheDocument();
+    const card = container.querySelector('.bg-cyan-950\\/70');
+    expect(card).toBeTruthy();
   });
 
   it('shows Zoom indicator when node has a sub-diagram link in loadedSystems', () => {

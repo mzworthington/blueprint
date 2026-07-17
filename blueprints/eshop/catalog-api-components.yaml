@@ -1,0 +1,106 @@
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/eshop/catalog-api
+  name: Catalog.API Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/eshop/catalog-api/apis
+      type: rest-api
+      name: Apis Layer
+      isTest: false
+      properties:
+        filepath: src/Catalog.API/Apis/CatalogApi.cs
+        containerId: catalog-api
+        technology: ASP.NET Core Controller / Minimal API
+        classification: api-marker
+      x: 40
+      y: 40
+    - entityRef: blueprint/eshop/catalog-api/catalogoptions
+      type: background-worker
+      name: CatalogOptions
+      isTest: false
+      properties:
+        filepath: src/Catalog.API/CatalogOptions.cs
+        containerId: catalog-api
+        technology: C# Domain Service
+        classification: default
+      x: 400
+      y: 40
+    - entityRef: blueprint/eshop/catalog-api/extensions
+      type: background-worker
+      name: Extensions Layer
+      isTest: false
+      properties:
+        filepath: src/Catalog.API/Extensions/HostEnvironmentExtensions.cs
+        containerId: catalog-api
+        technology: C# Domain Service
+        classification: default
+      x: 760
+      y: 40
+    - entityRef: blueprint/eshop/catalog-api/infrastructure
+      type: relational-database
+      name: Infrastructure Layer
+      isTest: false
+      properties:
+        filepath: src/Catalog.API/Infrastructure/CatalogContext.cs
+        containerId: catalog-api
+        technology: Entity Framework / DB Context
+        classification: database-marker
+      x: 40
+      y: 300
+    - entityRef: blueprint/eshop/catalog-api/integrationevents
+      type: event-broker
+      name: IntegrationEvents Layer
+      isTest: false
+      properties:
+        filepath: src/Catalog.API/IntegrationEvents/ICatalogIntegrationEventService.cs
+        containerId: catalog-api
+        technology: C# Event Client
+        classification: event-marker
+      x: 400
+      y: 300
+    - entityRef: blueprint/eshop/catalog-api/model
+      type: rest-api
+      name: Model Layer
+      isTest: false
+      properties:
+        filepath: src/Catalog.API/Model/CatalogServices.cs
+        containerId: catalog-api
+        technology: ASP.NET Core Controller / Minimal API
+        classification: api-marker
+      x: 760
+      y: 300
+    - entityRef: blueprint/eshop/catalog-api/program
+      type: background-worker
+      name: Program
+      isTest: false
+      properties:
+        filepath: src/Catalog.API/Program.cs
+        containerId: catalog-api
+        technology: C# Domain Service
+        classification: default
+      x: 40
+      y: 560
+    - entityRef: blueprint/eshop/catalog-api/program-testing
+      type: background-worker
+      name: Program.Testing
+      isTest: false
+      properties:
+        filepath: src/Catalog.API/Program.Testing.cs
+        containerId: catalog-api
+        technology: C# Domain Service
+        classification: default
+      x: 400
+      y: 560
+    - entityRef: blueprint/eshop/catalog-api/services
+      type: relational-database
+      name: Services Layer
+      isTest: false
+      properties:
+        filepath: src/Catalog.API/Services/CatalogAI.cs
+        containerId: catalog-api
+        technology: Entity Framework / DB Context
+        classification: database-marker
+      x: 760
+      y: 560
+  dependencies: []

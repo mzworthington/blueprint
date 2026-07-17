@@ -2606,17 +2606,6 @@
         classification: default
       x: 100
       y: 5424
-    - entityRef: blueprint/packages/cli-common/errors
-      type: background-worker
-      name: errors Service (External)
-      external: true
-      properties:
-        filepath: packages/cli-common/src/errors.ts
-        containerId: cli-common
-        technology: TypeScript Domain Service
-        classification: default
-      x: 280
-      y: 5424
     - entityRef: blueprint/packages/backend-openapi-utils/errors
       type: background-worker
       name: errors Service (External)
@@ -2624,6 +2613,17 @@
       properties:
         filepath: packages/backend-openapi-utils/src/schema/errors.ts
         containerId: backend-openapi-utils
+        technology: TypeScript Domain Service
+        classification: default
+      x: 280
+      y: 5424
+    - entityRef: blueprint/packages/cli-common/errors
+      type: background-worker
+      name: errors Service (External)
+      external: true
+      properties:
+        filepath: packages/cli-common/src/errors.ts
+        containerId: cli-common
         technology: TypeScript Domain Service
         classification: default
       x: 460
@@ -2705,13 +2705,13 @@
         classification: default
       x: 100
       y: 5784
-    - entityRef: blueprint/packages/cli-module-build/startembeddeddb
+    - entityRef: blueprint/packages/cli/startembeddeddb
       type: background-worker
       name: startEmbeddedDb Service (External)
       external: true
       properties:
         filepath: packages/cli-module-build/src/lib/runner/startEmbeddedDb.ts
-        containerId: cli-module-build
+        containerId: cli
         technology: TypeScript Domain Service
         classification: default
       x: 280
@@ -3972,7 +3972,7 @@
       to: blueprint/packages/catalog-model/util
       type: direct-call
       description: Calls module / service
-    - from: blueprint/packages/cli-module-build/startembeddeddb
+    - from: blueprint/packages/cli/startembeddeddb
       to: blueprint/packages/catalog-model/zod
       type: direct-call
       description: Calls module / service

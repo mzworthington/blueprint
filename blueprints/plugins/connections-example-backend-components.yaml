@@ -9,7 +9,7 @@
       name: index Service
       isTest: false
       properties:
-        filepath: plugins/connections-example-backend/dev/index.ts
+        filepath: plugins/connections-example-backend-module-gitlab/src/index.ts
         containerId: connections-example-backend
         technology: TypeScript Domain Service
         classification: default
@@ -17,8 +17,28 @@
       y: 40
       forensics:
         complexity: 1
-        loc: 64
-        sloc: 27
+        loc: 17
+        sloc: 1
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/connections-example-backend/module
+      type: background-worker
+      name: module Service
+      isTest: false
+      properties:
+        filepath: plugins/connections-example-backend-module-gitlab/src/module.ts
+        containerId: connections-example-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 40
+      forensics:
+        complexity: 3
+        loc: 66
+        sloc: 43
         churn: 1
         authorCount: 1
         topAuthorPercent: 1
@@ -33,7 +53,7 @@
         containerId: connections-example-backend
         technology: TypeScript Domain Service
         classification: default
-      x: 400
+      x: 760
       y: 40
       forensics:
         complexity: 1
@@ -66,6 +86,26 @@
         classifications:
           - knowledge-silo
         sinceDays: 500
+    - entityRef: blueprint/plugins/connections-example-backend/module-test
+      type: background-worker
+      name: module.test Service
+      isTest: true
+      properties:
+        filepath: plugins/connections-example-backend-module-gitlab/src/module.test.ts
+        containerId: connections-example-backend
+        technology: TypeScript Domain Service
+        classification: default
+      x: 400
+      y: 300
+      forensics:
+        complexity: 1
+        loc: 188
+        sloc: 159
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
     - entityRef: blueprint/plugins/connections-example-backend/setuptests
       type: background-worker
       name: setupTests Service
@@ -75,7 +115,7 @@
         containerId: connections-example-backend
         technology: TypeScript Domain Service
         classification: default
-      x: 400
+      x: 760
       y: 300
       forensics:
         complexity: 1
@@ -95,8 +135,8 @@
         containerId: events-backend
         technology: TypeScript Domain Service
         classification: default
-      x: 580
-      y: 300
+      x: 100
+      y: 420
     - entityRef: blueprint/plugins/catalog-react/testutils
       type: background-worker
       name: testUtils Service (External)
@@ -106,9 +146,13 @@
         containerId: catalog-react
         technology: TypeScript Domain Service
         classification: default
-      x: 100
+      x: 280
       y: 420
   dependencies:
+    - from: blueprint/plugins/connections-example-backend/module
+      to: blueprint/plugins/events-backend/errors
+      type: direct-call
+      description: Calls module / service
     - from: blueprint/plugins/connections-example-backend/index
       to: blueprint/plugins/catalog-react/testutils
       type: direct-call

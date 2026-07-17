@@ -115,24 +115,24 @@
         classification: default
       x: 100
       y: 420
-    - entityRef: blueprint/packages/cli-module-test-jest/test
+    - entityRef: blueprint/packages/cli/test
       type: background-worker
       name: test Service (External)
       external: true
       properties:
         filepath: packages/cli-module-test-jest/src/commands/repo/test.ts
-        containerId: cli-module-test-jest
+        containerId: cli
         technology: TypeScript Domain Service
         classification: default
       x: 280
       y: 420
   dependencies:
     - from: blueprint/packages/e2e-test-utils/failonbrowsererrors
-      to: blueprint/packages/cli-module-test-jest/test
+      to: blueprint/packages/cli/test
       type: direct-call
       description: Calls module / service
     - from: blueprint/packages/e2e-test-utils/generateprojects
-      to: blueprint/packages/cli-module-test-jest/test
+      to: blueprint/packages/cli/test
       type: direct-call
       description: Calls module / service
     - from: blueprint/packages/create-app/playwright-config

@@ -13,12 +13,12 @@
       forensics:
         complexity: 8
         churn: 6
-        hotspotScore: 0
         authorCount: 1
+        hotspotScore: 0
+        sinceDays: 500
         fileCount: 6
         hotspotCount: 0
         knowledgeSiloCount: 0
-        sinceDays: 500
     - entityRef: blueprint/microsite/components
       type: container
       name: Components Service
@@ -28,12 +28,12 @@
       forensics:
         complexity: 8
         churn: 6
-        hotspotScore: 0
         authorCount: 1
+        hotspotScore: 0
+        sinceDays: 500
         fileCount: 6
         hotspotCount: 0
         knowledgeSiloCount: 0
-        sinceDays: 500
     - entityRef: blueprint/microsite/pages
       type: container
       name: Pages Service
@@ -43,22 +43,26 @@
       forensics:
         complexity: 3
         churn: 5
-        hotspotScore: 0
         authorCount: 1
+        hotspotScore: 0
+        sinceDays: 500
         fileCount: 5
         hotspotCount: 0
         knowledgeSiloCount: 0
-        sinceDays: 500
   dependencies:
     - from: blueprint/microsite/components
       to: blueprint/microsite/pages
       type: inter-container
+      description: contentBlock Service → link Service
     - from: blueprint/microsite/components
       to: blueprint/microsite/microsite
       type: inter-container
+      description: pluginsFilter Service → types Service
     - from: blueprint/microsite/pages
       to: blueprint/microsite/components
       type: inter-container
+      description: _home Service → bannerSection Service (+8 more)
     - from: blueprint/microsite/pages
       to: blueprint/microsite/microsite
       type: inter-container
+      description: index Service → calcIsNewPlugin Service (+2 more)

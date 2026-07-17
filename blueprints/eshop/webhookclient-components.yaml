@@ -1,0 +1,51 @@
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/eshop/webhookclient
+  name: WebhookClient Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/eshop/webhookclient/endpoints
+      type: rest-api
+      name: Endpoints Layer
+      isTest: false
+      properties:
+        filepath: src/WebhookClient/Endpoints/WebhookEndpoints.cs
+        containerId: webhookclient
+        technology: ASP.NET Core Controller / Minimal API
+        classification: api-marker
+      x: 40
+      y: 40
+    - entityRef: blueprint/eshop/webhookclient/extensions
+      type: rest-api
+      name: Extensions Layer
+      isTest: false
+      properties:
+        filepath: src/WebhookClient/Extensions/Extensions.cs
+        containerId: webhookclient
+        technology: ASP.NET Core Controller / Minimal API
+        classification: api-marker
+      x: 400
+      y: 40
+    - entityRef: blueprint/eshop/webhookclient/program
+      type: background-worker
+      name: Program
+      isTest: false
+      properties:
+        filepath: src/WebhookClient/Program.cs
+        containerId: webhookclient
+        technology: C# Domain Service
+        classification: default
+      x: 40
+      y: 300
+    - entityRef: blueprint/eshop/webhookclient/services
+      type: relational-database
+      name: Services Layer
+      isTest: false
+      properties:
+        filepath: src/WebhookClient/Services/HooksRepository.cs
+        containerId: webhookclient
+        technology: Entity Framework / DB Context
+        classification: database-marker
+      x: 400
+      y: 300
+  dependencies: []

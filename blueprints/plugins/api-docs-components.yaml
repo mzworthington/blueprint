@@ -924,6 +924,37 @@
         topAuthorPercent: 1
         hotspotScore: 0
         sinceDays: 500
+    - entityRef: blueprint/plugins/api-docs/widgets
+      type: background-worker
+      name: widgets Service
+      isTest: false
+      properties:
+        filepath: plugins/api-docs-module-protoc-gen-doc/src/widgets.tsx
+        containerId: api-docs
+        technology: TypeScript Domain Service
+        classification: default
+      x: 7388
+      y: 64
+      forensics:
+        complexity: 2
+        loc: 29
+        sloc: 8
+        churn: 1
+        authorCount: 1
+        topAuthorPercent: 1
+        hotspotScore: 0
+        sinceDays: 500
+    - entityRef: blueprint/plugins/scaffolder-react/index
+      type: rest-api
+      name: index Service (External)
+      external: true
+      properties:
+        filepath: plugins/scaffolder-react/src/next/blueprints/index.ts
+        containerId: scaffolder-react
+        technology: REST Controller / Router
+        classification: api-marker
+      x: 100
+      y: 2744
     - entityRef: blueprint/plugins/home/styles
       type: background-worker
       name: styles Service (External)
@@ -933,7 +964,7 @@
         containerId: home
         technology: TypeScript Domain Service
         classification: default
-      x: 100
+      x: 280
       y: 2744
     - entityRef: blueprint/plugins/kubernetes-react/test-utils
       type: gateway-api
@@ -944,7 +975,7 @@
         containerId: kubernetes-react
         technology: React Component
         classification: ui-import
-      x: 280
+      x: 460
       y: 2744
     - entityRef: blueprint/plugins/catalog-react/testutils
       type: background-worker
@@ -955,9 +986,13 @@
         containerId: catalog-react
         technology: TypeScript Domain Service
         classification: default
-      x: 460
-      y: 2744
+      x: 100
+      y: 2864
   dependencies:
+    - from: blueprint/plugins/scaffolder-react/index
+      to: blueprint/plugins/api-docs/widgets
+      type: direct-call
+      description: Calls module / service
     - from: blueprint/plugins/api-docs/plugin
       to: blueprint/plugins/api-docs/apidefinitioncard
       type: direct-call

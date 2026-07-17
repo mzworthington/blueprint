@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/eshop/ordering-functionaltests
+  name: Ordering.FunctionalTests Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/eshop/ordering-functionaltests/autoauthorizemiddleware
+      type: background-worker
+      name: AutoAuthorizeMiddleware
+      isTest: true
+      properties:
+        filepath: tests/Ordering.FunctionalTests/AutoAuthorizeMiddleware.cs
+        containerId: ordering-functionaltests
+        technology: C# Domain Service
+        classification: default
+      x: 40
+      y: 40
+    - entityRef: blueprint/eshop/ordering-functionaltests/orderingapifixture
+      type: rest-api
+      name: OrderingApiFixture
+      isTest: true
+      properties:
+        filepath: tests/Ordering.FunctionalTests/OrderingApiFixture.cs
+        containerId: ordering-functionaltests
+        technology: ASP.NET Core Controller / Minimal API
+        classification: api-marker
+      x: 400
+      y: 40
+    - entityRef: blueprint/eshop/ordering-functionaltests/orderingapitests
+      type: rest-api
+      name: OrderingApiTests
+      isTest: true
+      properties:
+        filepath: tests/Ordering.FunctionalTests/OrderingApiTests.cs
+        containerId: ordering-functionaltests
+        technology: ASP.NET Core Controller / Minimal API
+        classification: api-marker
+      x: 40
+      y: 300
+  dependencies: []

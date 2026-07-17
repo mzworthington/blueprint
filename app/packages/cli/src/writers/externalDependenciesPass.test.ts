@@ -27,7 +27,6 @@ const containers: SystemSchema = {
   ],
   dependencies: [
     { from: 'blueprint/cli/vhs', to: 'blueprint/cli/analysis', type: 'inter-container' },
-    { from: 'blueprint/cli/writers', to: 'blueprint/cli/vhs', type: 'inter-container' },
   ],
 };
 
@@ -122,6 +121,19 @@ describe('applyExternalDependenciesPass', () => {
     expect(writers.nodes.some(n => n.entityRef === 'blueprint/cli/analysis' && n.external)).toBe(
       false
     );
+  });
+
+  it('rolls component couplings up onto containers.yaml as inter-container edges', async () => {
+    await applyExternalDependenciesPass(rootDir, fileSystem, logger);
+
+    const containersSchema = parseSchemaFromYaml(
+      await fileSystem.readSchema(`${rootDir}/cli/containers.yaml`)
+    );
+    const edge = containersSchema.dependencies.find(
+      d => d.from === 'blueprint/cli/writers' && d.to === 'blueprint/cli/vhs'
+    );
+    expect(edge).toMatchObject({ type: 'inter-container' });
+    expect(edge?.description).toMatch(/Context Level Writer/);
   });
 
   it('does not add component noise onto context.yaml', async () => {

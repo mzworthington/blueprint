@@ -346,5 +346,37 @@ describe('workspaceExternals', () => {
         true
       );
     });
+
+    it('rolls component-level cross-container deps up onto the container diagram', () => {
+      const sparseContainers: SystemSchema = {
+        ...containerSchema,
+        nodes: [containerSchema.nodes[0]],
+        dependencies: [],
+      };
+      const systems = [
+        { path: 'containers.yaml', name: 'Containers', schema: sparseContainers },
+        { path: 'vhs-components.yaml', name: 'Vhs', schema: vhsComponents },
+        { path: 'writers-components.yaml', name: 'Writers', schema: writersComponents },
+      ];
+
+      const result = enrichWorkspaceWithExternals(systems, {
+        mode: 'unresolved',
+        enrichLevels: ['component', 'container'],
+      });
+      const containers = result.find(s => s.path === 'containers.yaml')!.schema;
+
+      const edge = containers.dependencies.find(
+        d => d.from === 'blueprint/cli/writers' && d.to === 'blueprint/cli/vhs'
+      );
+      expect(edge).toMatchObject({
+        type: 'inter-container',
+      });
+      expect(edge?.description).toContain('Context Level Writer');
+      expect(edge?.description).toContain('cli-demo.test Service');
+      expect(containers.nodes.find(n => n.entityRef === 'blueprint/cli/writers')).toMatchObject({
+        external: true,
+        type: 'container',
+      });
+    });
   });
 });

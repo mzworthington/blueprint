@@ -7,11 +7,12 @@ import type {
 import {
   buildWorkspaceEntityIndex,
   computeExternalNodePositions,
+  enrichContainerSchemaFromComponentDeps,
   listExternalCandidates,
   materializeExternalNodes,
   suggestExternalDependencies,
 } from '@blueprint/core';
-import { mapDomainNodeToRFNode } from '../../layoutUtils';
+import { mapDomainDepToRFEdge, mapDomainNodeToRFNode } from '../../layoutUtils';
 import type { BlueprintRFEdge, BlueprintRFNode } from '../../layoutUtils';
 import { applyStateUpdates } from './applyStateUpdates';
 import type { ToastNotification } from '../uiState';
@@ -95,6 +96,71 @@ function mergeExternalNodesOntoCanvas(
   return changedCount;
 }
 
+/**
+ * Apply a rolled-up container schema: merge new external container nodes and
+ * inter-container edges (with component-pair descriptions) onto the canvas.
+ */
+function applyContainerRollupToCanvas(
+  set: (partial: Record<string, unknown>) => void,
+  get: StoreGet,
+  enriched: SystemSchema
+): { nodesAdded: number; edgesAdded: number } {
+  const currentNodes = [...(get().nodes as BlueprintRFNode[])];
+  const currentEdges = [...(get().edges as BlueprintRFEdge[])];
+  const byId = new Map(currentNodes.map(n => [n.id, n]));
+
+  let nodesAdded = 0;
+  for (const domain of enriched.nodes) {
+    const existing = byId.get(domain.entityRef);
+    if (existing) {
+      if (domain.external && !existing.data.external) {
+        const idx = currentNodes.findIndex(n => n.id === existing.id);
+        currentNodes[idx] = {
+          ...existing,
+          data: { ...existing.data, external: true, name: domain.name },
+        };
+        nodesAdded++;
+      }
+      continue;
+    }
+    currentNodes.push(mapDomainNodeToRFNode(domain));
+    nodesAdded++;
+  }
+
+  const edgeKeys = new Set(currentEdges.map(e => `${e.source}\0${e.target}`));
+  let edgesAdded = 0;
+  for (const dep of enriched.dependencies) {
+    const key = `${dep.from}\0${dep.to}`;
+    if (edgeKeys.has(key)) {
+      // Refresh label when rollup provides a component-pair description
+      if (dep.description) {
+        const idx = currentEdges.findIndex(e => e.source === dep.from && e.target === dep.to);
+        if (idx !== -1 && !currentEdges[idx]!.data?.description) {
+          const existing = currentEdges[idx]!;
+          currentEdges[idx] = {
+            ...existing,
+            label: dep.description,
+            data: {
+              type: existing.data?.type ?? dep.type,
+              description: dep.description,
+            },
+          };
+        }
+      }
+      continue;
+    }
+    currentEdges.push(mapDomainDepToRFEdge(dep));
+    edgeKeys.add(key);
+    edgesAdded++;
+  }
+
+  if (nodesAdded > 0 || edgesAdded > 0) {
+    applyStateUpdates(set, get, currentNodes, currentEdges);
+  }
+
+  return { nodesAdded, edgesAdded };
+}
+
 export function addExternalDependencies(
   set: (partial: Record<string, unknown>) => void,
   get: StoreGet,
@@ -129,6 +195,39 @@ export function syncSuggestedExternals(
   if (!context) return;
 
   const index = buildWorkspaceEntityIndex(context.loadedSystems);
+
+  if (context.schema.level === 'container') {
+    const rolled = enrichContainerSchemaFromComponentDeps(
+      context.schema,
+      context.loadedSystems,
+      index
+    );
+    const { nodesAdded, edgesAdded } = applyContainerRollupToCanvas(set, get, rolled);
+
+    if (nodesAdded > 0 || edgesAdded > 0) {
+      get().logger.info(
+        `Synced container couplings: ${edgesAdded} edge(s), ${nodesAdded} external node(s).`
+      );
+      get().setNotification?.({
+        type: 'success',
+        title: 'Sync externals',
+        message: `Added ${edgesAdded} coupling line${edgesAdded === 1 ? '' : 's'} from component dependencies${
+          nodesAdded > 0
+            ? ` and ${nodesAdded} external container${nodesAdded === 1 ? '' : 's'}`
+            : ''
+        }.`,
+      });
+    } else {
+      get().logger.info('Container diagram already reflects component-level couplings.');
+      get().setNotification?.({
+        type: 'info',
+        title: 'Sync externals',
+        message: 'Container couplings from component dependencies are already on the diagram.',
+      });
+    }
+    return;
+  }
+
   const suggested = suggestExternalDependencies(context.schema, context.loadedSystems, index);
 
   if (suggested.length === 0) {

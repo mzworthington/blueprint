@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
+- entityRef: blueprint/eshop/eshop-apphost
+  name: EShop.AppHost Service Components
+  version: 1.0.0
+  level: component
+  nodes:
+    - entityRef: blueprint/eshop/eshop-apphost/extensions
+      type: background-worker
+      name: Extensions
+      isTest: false
+      properties:
+        filepath: src/eShop.AppHost/Extensions.cs
+        containerId: eshop-apphost
+        technology: C# Domain Service
+        classification: default
+      x: 40
+      y: 40
+    - entityRef: blueprint/eshop/eshop-apphost/program
+      type: background-worker
+      name: Program
+      isTest: false
+      properties:
+        filepath: src/eShop.AppHost/Program.cs
+        containerId: eshop-apphost
+        technology: C# Domain Service
+        classification: default
+      x: 400
+      y: 40
+  dependencies: []

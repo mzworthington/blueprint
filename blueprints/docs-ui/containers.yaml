@@ -13,12 +13,12 @@
       forensics:
         complexity: 1
         churn: 1
-        hotspotScore: 0
         authorCount: 1
+        hotspotScore: 0
+        sinceDays: 500
         fileCount: 1
         hotspotCount: 0
         knowledgeSiloCount: 0
-        sinceDays: 500
     - entityRef: blueprint/docs-ui/app
       type: container
       name: App Service
@@ -28,12 +28,12 @@
       forensics:
         complexity: 3
         churn: 5
-        hotspotScore: 0
         authorCount: 1
+        hotspotScore: 0
+        sinceDays: 500
         fileCount: 5
         hotspotCount: 0
         knowledgeSiloCount: 0
-        sinceDays: 500
     - entityRef: blueprint/docs-ui/docs-ui
       type: container
       name: Docs-ui Service
@@ -43,12 +43,12 @@
       forensics:
         complexity: 4
         churn: 9
-        hotspotScore: 0
         authorCount: 1
+        hotspotScore: 0
+        sinceDays: 500
         fileCount: 9
         hotspotCount: 0
         knowledgeSiloCount: 0
-        sinceDays: 500
     - entityRef: blueprint/docs-ui/changelogs
       type: container
       name: Changelogs Service
@@ -58,12 +58,12 @@
       forensics:
         complexity: 1
         churn: 22
-        hotspotScore: 0
         authorCount: 1
+        hotspotScore: 0
+        sinceDays: 500
         fileCount: 22
         hotspotCount: 0
         knowledgeSiloCount: 0
-        sinceDays: 500
     - entityRef: blueprint/docs-ui/components
       type: container
       name: Components Service
@@ -73,14 +73,14 @@
       forensics:
         complexity: 23
         churn: 31
-        hotspotScore: 0
         authorCount: 1
-        fileCount: 31
-        hotspotCount: 0
-        knowledgeSiloCount: 6
+        hotspotScore: 0
         classifications:
           - knowledge-silo
         sinceDays: 500
+        fileCount: 31
+        hotspotCount: 0
+        knowledgeSiloCount: 6
     - entityRef: blueprint/docs-ui/hooks
       type: container
       name: Hooks Service
@@ -90,31 +90,38 @@
       forensics:
         complexity: 5
         churn: 1
-        hotspotScore: 0
         authorCount: 1
+        hotspotScore: 0
+        sinceDays: 500
         fileCount: 1
         hotspotCount: 0
         knowledgeSiloCount: 0
-        sinceDays: 500
   dependencies:
     - from: blueprint/docs-ui/app
       to: blueprint/docs-ui/docs-ui
       type: inter-container
+      description: props-definition Service → propDefs Service (+1 more)
     - from: blueprint/docs-ui/app
       to: blueprint/docs-ui/components
       type: inter-container
+      description: props-definition Service → Chip Service (+10 more)
     - from: blueprint/docs-ui/docs-ui
       to: blueprint/docs-ui/changelogs
       type: inter-container
+      description: changelog Service → v0.16.0 Service (+21 more)
     - from: blueprint/docs-ui/changelogs
       to: blueprint/docs-ui/docs-ui
       type: inter-container
+      description: v0.7.0 Service → types Service (+21 more)
     - from: blueprint/docs-ui/components
       to: blueprint/docs-ui/docs-ui
       type: inter-container
+      description: index Service → mdx-components Service (+13 more)
     - from: blueprint/docs-ui/hooks
       to: blueprint/docs-ui/components
       type: inter-container
+      description: useCurrentPage Service → Navigation Service
     - from: blueprint/docs-ui/hooks
       to: blueprint/docs-ui/docs-ui
       type: inter-container
+      description: useCurrentPage Service → getPageName Service

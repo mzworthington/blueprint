@@ -748,13 +748,13 @@
         classification: default
       x: 100
       y: 3024
-    - entityRef: blueprint/packages/cli-module-github/githubcreateappserver
+    - entityRef: blueprint/packages/cli/githubcreateappserver
       type: gateway-api
       name: GithubCreateAppServer Service (External)
       external: true
       properties:
         filepath: packages/cli-module-github/src/commands/create-github-app/GithubCreateAppServer.ts
-        containerId: cli-module-github
+        containerId: cli
         technology: React Component
         classification: ui-import
       x: 280
@@ -935,13 +935,13 @@
         classification: api-marker
       x: 460
       y: 3624
-    - entityRef: blueprint/packages/cli-module-new/router
+    - entityRef: blueprint/packages/cli/router
       type: rest-api
       name: router Service (External)
       external: true
       properties:
         filepath: packages/cli-module-new/templates/backend-plugin/src/router.ts
-        containerId: cli-module-new
+        containerId: cli
         technology: REST Controller / Router
         classification: api-marker
       x: 100
@@ -957,13 +957,13 @@
         classification: api-marker
       x: 280
       y: 3744
-    - entityRef: blueprint/packages/cli-module-new/router-test
+    - entityRef: blueprint/packages/cli/router-test
       type: rest-api
       name: router.test Service (External)
       external: true
       properties:
         filepath: packages/cli-module-new/templates/backend-plugin/src/router.test.ts
-        containerId: cli-module-new
+        containerId: cli
         technology: REST Controller / Router
         classification: api-marker
       x: 460
@@ -1026,11 +1026,11 @@
       to: blueprint/packages/backend-openapi-utils/express
       type: direct-call
       description: Calls module / service
-    - from: blueprint/packages/cli-module-new/router
+    - from: blueprint/packages/cli/router
       to: blueprint/packages/backend-openapi-utils/express
       type: direct-call
       description: Calls module / service
-    - from: blueprint/packages/cli-module-new/router-test
+    - from: blueprint/packages/cli/router-test
       to: blueprint/packages/backend-openapi-utils/express
       type: direct-call
       description: Calls module / service
@@ -1054,7 +1054,7 @@
       to: blueprint/packages/backend-openapi-utils/express
       type: direct-call
       description: Calls module / service
-    - from: blueprint/packages/cli-module-github/githubcreateappserver
+    - from: blueprint/packages/cli/githubcreateappserver
       to: blueprint/packages/backend-openapi-utils/express
       type: direct-call
       description: Calls module / service

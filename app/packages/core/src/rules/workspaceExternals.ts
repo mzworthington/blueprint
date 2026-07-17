@@ -1,4 +1,11 @@
-import type { C4Level, EntityRef, NodeType, SystemNode, SystemSchema } from '../models/schema';
+import type {
+  C4Level,
+  EntityRef,
+  NodeType,
+  SystemDependency,
+  SystemNode,
+  SystemSchema,
+} from '../models/schema';
 import { EntityRef as EntityRefUtil } from '../models/schema';
 
 export interface LoadedSystemInput {
@@ -371,14 +378,224 @@ export function enrichSchemaWithExternals(
  * Enrich every schema in a workspace using a shared entity index.
  * Index is built from the input schemas (before enrichment) so ownership stays with
  * the canonical non-external definitions.
+ *
+ * Container diagrams additionally receive inter-container edges rolled up from
+ * cross-container component dependencies, then unresolved endpoints are materialized.
  */
 export function enrichWorkspaceWithExternals(
   loadedSystems: LoadedSystemInput[],
   options: EnrichExternalsOptions = {}
 ): LoadedSystemInput[] {
   const index = buildWorkspaceEntityIndex(loadedSystems);
-  return loadedSystems.map(system => ({
-    ...system,
-    schema: enrichSchemaWithExternals(system.schema, loadedSystems, index, options),
-  }));
+  return loadedSystems.map(system => {
+    let schema = system.schema;
+    if (schema.level === 'container') {
+      schema = enrichContainerSchemaFromComponentDeps(schema, loadedSystems, index);
+    }
+    schema = enrichSchemaWithExternals(schema, loadedSystems, index, options);
+    return { ...system, schema };
+  });
+}
+
+function displayNameForRef(ref: EntityRef, index: WorkspaceEntityIndex): string {
+  const entity = index.byRef.get(ref);
+  if (entity?.name) {
+    return entity.name.replace(/\s*\(External\)\s*$/i, '').trim();
+  }
+  return EntityRefUtil.leaf(ref);
+}
+
+export interface CrossContainerComponentDep {
+  fromComponent: EntityRef;
+  toComponent: EntityRef;
+  fromContainer: EntityRef;
+  toContainer: EntityRef;
+  type: SystemDependency['type'];
+}
+
+/**
+ * List component→component dependencies that cross container boundaries.
+ * Uses parent entityRefs (not EntityRef.getLevel) so monorepo paths like
+ * `context/system/container/component` still roll up correctly.
+ */
+export function listCrossContainerComponentDependencies(
+  loadedSystems: LoadedSystemInput[]
+): CrossContainerComponentDep[] {
+  const results: CrossContainerComponentDep[] = [];
+  const seen = new Set<string>();
+
+  for (const system of loadedSystems) {
+    if (system.schema.level !== 'component') continue;
+    for (const dep of system.schema.dependencies) {
+      const fromContainer = EntityRefUtil.getParent(dep.from);
+      const toContainer = EntityRefUtil.getParent(dep.to);
+      if (!fromContainer || !toContainer || fromContainer === toContainer) continue;
+
+      // Ignore edges that are already container↔container (no further parent leaf).
+      // Component refs always have a container parent that itself has a parent (system).
+      if (!EntityRefUtil.getParent(fromContainer) || !EntityRefUtil.getParent(toContainer)) {
+        continue;
+      }
+
+      const key = `${dep.from}\0${dep.to}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+
+      results.push({
+        fromComponent: dep.from,
+        toComponent: dep.to,
+        fromContainer,
+        toContainer,
+        type: dep.type,
+      });
+    }
+  }
+
+  return results;
+}
+
+function edgeTouchesContainerDiagram(dep: SystemDependency, schema: SystemSchema): boolean {
+  const onDiagram = new Set(schema.nodes.map(n => n.entityRef));
+  // Only roll up edges that connect to something already on this diagram.
+  return onDiagram.has(dep.from) || onDiagram.has(dep.to);
+}
+
+/**
+ * Roll cross-container component dependencies up into inter-container edges on a
+ * container diagram, and materialize any missing container endpoints as externals.
+ */
+export function enrichContainerSchemaFromComponentDeps(
+  containerSchema: SystemSchema,
+  loadedSystems: LoadedSystemInput[],
+  index: WorkspaceEntityIndex
+): SystemSchema {
+  if (containerSchema.level !== 'container') return containerSchema;
+
+  const pairs = listCrossContainerComponentDependencies(loadedSystems);
+  if (pairs.length === 0) return containerSchema;
+
+  const existing = new Set(containerSchema.dependencies.map(d => `${d.from}\0${d.to}`));
+  const byKey = new Map<string, { dep: SystemDependency; labels: string[] }>();
+
+  for (const pair of pairs) {
+    const rolled: SystemDependency = {
+      from: pair.fromContainer,
+      to: pair.toContainer,
+      type: 'inter-container',
+    };
+    if (!edgeTouchesContainerDiagram(rolled, containerSchema)) continue;
+
+    const key = `${rolled.from}\0${rolled.to}`;
+    const label = `${displayNameForRef(pair.fromComponent, index)} → ${displayNameForRef(pair.toComponent, index)}`;
+    const entry = byKey.get(key);
+    if (entry) {
+      entry.labels.push(label);
+    } else {
+      byKey.set(key, { dep: rolled, labels: [label] });
+    }
+  }
+
+  const additions: SystemDependency[] = [];
+  for (const { dep, labels } of byKey.values()) {
+    const key = `${dep.from}\0${dep.to}`;
+    if (existing.has(key)) continue;
+    const description =
+      labels.length === 1 ? labels[0]! : `${labels[0]} (+${labels.length - 1} more)`;
+    additions.push({ ...dep, description });
+  }
+
+  const describe = (key: string): string | undefined => {
+    const entry = byKey.get(key);
+    if (!entry) return undefined;
+    const { labels } = entry;
+    return labels.length === 1 ? labels[0]! : `${labels[0]} (+${labels.length - 1} more)`;
+  };
+
+  let depsChanged = additions.length > 0;
+  const mergedDeps =
+    additions.length === 0
+      ? containerSchema.dependencies.map(dep => {
+          if (dep.description) return dep;
+          const description = describe(`${dep.from}\0${dep.to}`);
+          if (!description) return dep;
+          depsChanged = true;
+          return { ...dep, description };
+        })
+      : [
+          ...containerSchema.dependencies.map(dep => {
+            if (dep.description) return dep;
+            const description = describe(`${dep.from}\0${dep.to}`);
+            return description ? { ...dep, description } : dep;
+          }),
+          ...additions,
+        ];
+
+  let next: SystemSchema = depsChanged
+    ? { ...containerSchema, dependencies: mergedDeps }
+    : containerSchema;
+
+  const endpointRefs = new Set<EntityRef>();
+  for (const dep of next.dependencies) {
+    if (dep.type !== 'inter-container') continue;
+    endpointRefs.add(dep.from);
+    endpointRefs.add(dep.to);
+  }
+
+  const missingEntities: WorkspaceEntity[] = [];
+  for (const ref of endpointRefs) {
+    if (isOnActiveDiagram(ref, next)) continue;
+    const entity = resolveContainerEntity(ref, index, loadedSystems);
+    if (entity) missingEntities.push(entity);
+  }
+
+  if (missingEntities.length === 0) return next;
+
+  const positions = computeExternalNodePositions(
+    missingEntities.length,
+    next.nodes.map(n => ({ x: n.x ?? 0, y: n.y ?? 0 }))
+  );
+  return {
+    ...next,
+    nodes: [...next.nodes, ...materializeExternalNodes(missingEntities, positions)],
+  };
+}
+
+function resolveContainerEntity(
+  ref: EntityRef,
+  index: WorkspaceEntityIndex,
+  loadedSystems: LoadedSystemInput[]
+): WorkspaceEntity | undefined {
+  const direct = index.byRef.get(ref);
+  if (direct) return direct;
+
+  for (const system of loadedSystems) {
+    if (system.schema.level !== 'container') continue;
+    const node = system.schema.nodes.find(n => n.entityRef === ref);
+    if (node) {
+      return {
+        entityRef: ref,
+        name: node.name,
+        type: node.type,
+        sourceSchemaLevel: 'container',
+        sourcePath: system.path,
+        properties: node.properties,
+      };
+    }
+  }
+
+  // Synthesize from a known child component under this container.
+  for (const entity of index.byRef.values()) {
+    if (EntityRefUtil.getParent(entity.entityRef) !== ref) continue;
+    const leaf = EntityRefUtil.leaf(ref);
+    const titled = leaf.charAt(0).toUpperCase() + leaf.slice(1);
+    return {
+      entityRef: ref,
+      name: `${titled} Service`,
+      type: 'container',
+      sourceSchemaLevel: 'container',
+      sourcePath: entity.sourcePath,
+    };
+  }
+
+  return undefined;
 }

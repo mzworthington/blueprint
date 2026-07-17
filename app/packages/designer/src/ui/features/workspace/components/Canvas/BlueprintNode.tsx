@@ -204,7 +204,7 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
         : null;
 
   const borderClass = data.external
-    ? 'border-dashed border-slate-700 bg-slate-950/45 opacity-70 shadow-none hover:border-slate-500'
+    ? 'border-dashed border-cyan-600/70 bg-cyan-950/70 shadow-[0_0_12px_rgba(8,145,178,0.18)] hover:border-cyan-500/80'
     : selected
       ? 'border-brand-500 shadow-[0_0_15px_rgba(139,92,246,0.3)] bg-slate-900/90 scale-102'
       : data.couplingHighlight
@@ -318,7 +318,7 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
         <h4 className="font-semibold text-slate-100 truncate text-base leading-tight">
           {name}
           {data.external && (
-            <span className="text-[10px] text-slate-500 font-normal ml-1.5">(External)</span>
+            <span className="text-[10px] text-cyan-400/90 font-normal ml-1.5">(External)</span>
           )}
         </h4>
         <p

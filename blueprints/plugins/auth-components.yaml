@@ -188,13 +188,13 @@
         classifications:
           - knowledge-silo
         sinceDays: 500
-    - entityRef: blueprint/plugins/catalog-backend-module-ldap/client
+    - entityRef: blueprint/plugins/catalog-backend/client
       type: background-worker
       name: client Service (External)
       external: true
       properties:
         filepath: plugins/catalog-backend-module-ldap/src/ldap/client.ts
-        containerId: catalog-backend-module-ldap
+        containerId: catalog-backend
         technology: TypeScript Domain Service
         classification: default
       x: 100
@@ -223,7 +223,7 @@
       y: 824
   dependencies:
     - from: blueprint/plugins/auth/index
-      to: blueprint/plugins/catalog-backend-module-ldap/client
+      to: blueprint/plugins/catalog-backend/client
       type: direct-call
       description: Calls module / service
     - from: blueprint/plugins/auth/plugin
