@@ -121,6 +121,8 @@ Shared by designer and CLI. TypeScript + Zod — no Protocol Buffers.
 
 - **[schema.ts](../app/packages/core/src/models/schema.ts):** Domain types, `EntityRef` helpers, validation result types.
 - **[graph.ts](../app/packages/core/src/rules/graph.ts):** Zod contracts, cycle detection, YAML/JSON parse & serialize, Mermaid export.
+- **[mermaidImport.ts](../app/packages/core/src/rules/mermaidImport.ts) / [schemaMerge.ts](../app/packages/core/src/rules/schemaMerge.ts):** Parse Mermaid → `SystemSchema` and merge plans with conflict resolutions (designer import wizard).
+- **[workspaceExternals.ts](../app/packages/core/src/rules/workspaceExternals.ts):** Suggest / add external proxy nodes across loaded workspace schemas.
 - **[path.ts](../app/packages/core/src/rules/path.ts):** Filesystem-agnostic relative path helpers for multi-file IO.
 - **[entityRef.ts](../app/packages/core/src/lib/entityRef.ts):** Workspace FQN resolution. Hierarchy: child `schema.entityRef` equals parent node `entityRef`.
 
@@ -135,8 +137,10 @@ Shared by designer and CLI. TypeScript + Zod — no Protocol Buffers.
 - `infrastructure/fileSystem/` — browser FS Access adapters.
 - `infrastructure/layout/` — graph layout adapters + `createBrowserLayoutRegistry` (engines lazy-loaded on first use).
 - `infrastructure/db/` — IndexedDB working copy / baseline diffs.
+- `infrastructure/network/` — online/offline status for the offline banner.
 - `application/layout/` — pure layout use-case (`computeClientLayout`) and grid policy.
 - `application/store/` — Zustand composition (`uiState`, `diagramState`, `ioState`).
+- PWA (service worker via `vite-plugin-pwa`) caches the app shell for offline designer use.
 
 ### 4. TypeScript CLI (`app/packages/cli/src/`)
 

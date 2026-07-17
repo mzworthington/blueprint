@@ -108,4 +108,4 @@ We are continuously improving Blueprint. Here are some of the key features and e
 
 ### 4. Local-first Persistence
 
-- **Draft restore on refresh:** Hydrate the canvas from IndexedDB working drafts on startup in sandbox mode (no workspace folder open). Edits are already autosaved to the browser; a page refresh currently resets the visible canvas to bundled YAML until the user re-opens a workspace folder or commits to disk.
+- **Draft restore on refresh:** Improve hydration from IndexedDB working drafts when reopening the sandbox so a refresh does not drop uncommitted canvas edits before the user commits or re-opens a folder.

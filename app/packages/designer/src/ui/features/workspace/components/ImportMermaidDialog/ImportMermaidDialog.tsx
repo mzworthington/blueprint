@@ -43,6 +43,7 @@ export const ImportMermaidDialog: React.FC<ImportMermaidDialogProps> = ({ isOpen
       role="dialog"
       aria-modal="true"
       aria-labelledby="import-mermaid-title"
+      data-testid="import-mermaid-dialog"
     >
       <div
         className={`fixed inset-0 bg-[#020617]/80 backdrop-blur-sm transition-opacity duration-300 ${

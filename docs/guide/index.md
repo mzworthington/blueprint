@@ -6,23 +6,23 @@ Use this guide if you want to understand the product, not just the internals.
 
 ## What you get
 
-| Piece         | Role                                                                                        |
-| ------------- | ------------------------------------------------------------------------------------------- |
-| **Designer**  | Local-first canvas for C4-style diagrams, property editing, and YAML/JSON sync              |
-| **CLI**       | Static analysis that discovers systems/containers/components and writes `blueprints/*.yaml` |
-| **Forensics** | Optional (on by default) git + complexity signals attached onto nodes as `forensics`        |
+| Piece         | Role                                                                                           |
+| ------------- | ---------------------------------------------------------------------------------------------- |
+| **Designer**  | Local-first (PWA) canvas for C4 diagrams, Mermaid import, property editing, and YAML/JSON sync |
+| **CLI**       | Static analysis that discovers systems/containers/components and writes `blueprints/*.yaml`    |
+| **Forensics** | Optional (on by default) git + complexity signals attached onto nodes as `forensics`           |
 
 ## Typical flow
 
 1. Run the CLI against a codebase to generate blueprint YAML.
-2. Open the designer and load the workspace / `blueprints/` folder.
-3. Explore hierarchy (context → container → component), tweak layout, inspect forensics.
-4. Commit the YAML — the schema is the source of truth.
+2. Open the designer — choose sandbox, a local `blueprints/` folder, or Mermaid import.
+3. Explore hierarchy (context → container → component), manage externals / display filters, inspect forensics.
+4. Commit draft YAML via Pending Changes — the schema is the source of truth.
 
 ## Guide chapters
 
 - [Getting started](./getting-started.md) — install the CLI, scan a repo, open the app
-- [Canvas & workspace](./canvas.md) — panels, selection, zoom, sync
+- [Canvas & workspace](./canvas.md) — startup, panels, Mermaid import, externals, display toggles
 - [CLI analysis](./cli.md) — scanners, flags, outputs
 - [Git forensics](./forensics.md) — metrics, coupling overlay, lookback
 - [Design system](./design-system.md) — visual assets & identity sandbox

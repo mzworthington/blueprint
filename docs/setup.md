@@ -52,7 +52,7 @@ Opens the Vite designer. Docs and workspace share the same React app.
 pnpm build
 ```
 
-GitHub Pages deploys the designer `dist/` (docs + app in one SPA).
+GitHub Pages deploys the designer `dist/` (docs + app in one SPA). The production build registers a service worker (PWA) so the designer shell can load offline after the first visit.
 
 ---
 
@@ -66,6 +66,8 @@ pnpm format:write
 pnpm lint
 pnpm knip
 ```
+
+Designer E2E (`app/packages/designer`: `pnpm test:e2e`) also refreshes product screenshots under `docs/screenshots/` used by the guide and [journeys](./journeys.md) pages.
 
 ---
 

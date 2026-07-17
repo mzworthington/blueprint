@@ -38,3 +38,18 @@ export async function expectWorkspaceFolderActionAvailable(page: Page) {
   await continueWithSandbox(page);
   await expect(page.getByRole('button', { name: 'Open menu' })).toBeVisible();
 }
+
+/** Opens Import Mermaid from the toolbar Open menu (after sandbox is loaded). */
+export async function openImportMermaid(page: Page) {
+  await continueWithSandbox(page);
+
+  const menuButton = page.getByRole('button', { name: 'Open menu' });
+  const importItem = page.getByRole('menuitem', { name: 'Import Mermaid' });
+
+  if (!(await importItem.isVisible())) {
+    await menuButton.click();
+  }
+
+  await importItem.click();
+  await expect(page.getByRole('dialog', { name: /Import Mermaid/i })).toBeVisible();
+}

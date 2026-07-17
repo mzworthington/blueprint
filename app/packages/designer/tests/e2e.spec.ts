@@ -1,7 +1,12 @@
 import { test, expect } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
-import { continueWithSandbox } from './helpers/toolbar';
+import { continueWithSandbox, openImportMermaid } from './helpers/toolbar';
+
+const SAMPLE_MERMAID = `flowchart TD
+  Gateway["API Gateway"] --> Orders["Order Service"]
+  Orders --> Db[("Orders DB")]
+`;
 
 test.describe('Blueprint E2E Journeys', () => {
   test.beforeAll(async () => {
@@ -9,6 +14,19 @@ test.describe('Blueprint E2E Journeys', () => {
     if (!fs.existsSync(screenshotDir)) {
       fs.mkdirSync(screenshotDir, { recursive: true });
     }
+  });
+
+  test('Startup workspace chooser', async ({ page }) => {
+    await page.goto('/workspace');
+
+    const dialog = page.getByTestId('startup-workspace-dialog');
+    await expect(dialog).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByTestId('startup-load-sandbox')).toBeVisible();
+    await expect(page.getByTestId('startup-open-directory')).toBeVisible();
+    await expect(page.getByTestId('startup-import-mermaid')).toBeVisible();
+
+    await page.waitForTimeout(500);
+    await page.screenshot({ path: '../../../docs/screenshots/6-startup-chooser.png' });
   });
 
   test('Workspace Selection & Visual Panel Collapse', async ({ page }) => {
@@ -88,5 +106,52 @@ test.describe('Blueprint E2E Journeys', () => {
 
     await page.waitForTimeout(1000);
     await page.screenshot({ path: '../../../docs/screenshots/5-zoomed-back-out.png' });
+  });
+
+  test('Import Mermaid merge preview', async ({ page }) => {
+    await page.goto('/workspace');
+    await page.getByTestId('startup-import-mermaid').click();
+
+    const dialog = page.getByTestId('import-mermaid-dialog');
+    await expect(dialog).toBeVisible({ timeout: 10_000 });
+
+    const textarea = dialog.locator('textarea');
+    await textarea.fill(SAMPLE_MERMAID);
+
+    await expect(dialog.getByText(/Additions/i)).toBeVisible({ timeout: 10_000 });
+    await expect(dialog.getByText(/\+ API Gateway/)).toBeVisible();
+
+    await page.waitForTimeout(800);
+    await page.screenshot({ path: '../../../docs/screenshots/7-import-mermaid.png' });
+  });
+
+  test('Workspace display & external dependencies', async ({ page }) => {
+    await page.goto('/workspace/blueprint');
+    await continueWithSandbox(page);
+
+    // Ensure right panel is open (default) and left is expanded for a fuller shot.
+    const leftPanel = page.getByTestId('left-panel');
+    if (await leftPanel.evaluate(el => el.className.includes('w-0'))) {
+      await page.locator('button[aria-label="Toggle Left Panel"]').click();
+    }
+    await expect(leftPanel).not.toHaveClass(/w-0/);
+
+    const display = page.getByTestId('workspace-display-controls');
+    await expect(display).toBeVisible();
+    await display.scrollIntoViewIfNeeded();
+
+    await expect(page.getByTestId('toggle-show-externals')).toBeVisible();
+    await expect(page.getByTestId('toggle-show-selected-dependencies-only')).toBeVisible();
+    await expect(page.getByText(/External Dependencies/i)).toBeVisible();
+
+    await page.waitForTimeout(500);
+    await page.screenshot({ path: '../../../docs/screenshots/8-workspace-display.png' });
+  });
+
+  test('Import Mermaid from Open menu after sandbox load', async ({ page }) => {
+    await page.goto('/workspace');
+    await continueWithSandbox(page);
+    await openImportMermaid(page);
+    await expect(page.getByTestId('import-mermaid-dialog')).toBeVisible();
   });
 });

@@ -52,7 +52,7 @@ To execute the E2E tests, run from the `/app` directory:
 pnpm --filter @blueprint/designer test:e2e
 ```
 
-When E2E tests are run, they automatically capture and output visual snapshots to the repository root's `screenshots/` folder.
+When E2E tests are run, they automatically capture and output visual snapshots to the repository's `docs/screenshots/` folder (consumed by the product guide and journeys pages).
 
 ---
 

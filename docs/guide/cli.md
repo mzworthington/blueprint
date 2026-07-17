@@ -17,18 +17,20 @@ Install the release binary first: [Getting started](./getting-started.md).
 
 ## Useful flags
 
-| Flag                               | Purpose                        |
-| ---------------------------------- | ------------------------------ |
-| `--headless`                       | No prompts                     |
-| `--parser=ts-morph \| tree-sitter` | AST engine                     |
-| `--glob`                           | Inclusion pattern              |
-| `--output`                         | Output folder                  |
-| `--context`                        | Context / root name            |
-| `--ignore`                         | Extra ignore globs (csv)       |
-| `--systems`                        | Limit discovery to roots       |
-| `--rollup-modules`                 | Collapse `*-module-*` packages |
-| `--git` / `--no-git`               | Forensics on (default) or off  |
-| `--git-since=<days>`               | Lookback window (default 90)   |
+| Flag                               | Purpose                                                              |
+| ---------------------------------- | -------------------------------------------------------------------- |
+| `--headless`                       | No prompts                                                           |
+| `--parser=ts-morph \| tree-sitter` | AST engine (`ts-morph` for TypeScript; `tree-sitter` for multi-lang) |
+| `--glob`                           | Inclusion pattern                                                    |
+| `--output`                         | Output folder                                                        |
+| `--context`                        | Context / root name                                                  |
+| `--ignore`                         | Extra ignore globs (csv)                                             |
+| `--systems`                        | Limit discovery to roots                                             |
+| `--rollup-modules`                 | Collapse `*-module-*` packages                                       |
+| `--git` / `--no-git`               | Forensics on (default) or off                                        |
+| `--git-since=<days>`               | Lookback window (default 90)                                         |
+
+With `--parser=tree-sitter`, language strategies cover TypeScript, C#, and Python (WASM grammars ship with the release binary). Prefer `ts-morph` when scanning TypeScript-only trees.
 
 Full flag table and config: see the [CLI README](https://github.com/mzworthington/blueprint/blob/main/app/packages/cli/README.md).
 
