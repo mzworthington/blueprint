@@ -38,7 +38,7 @@ export const DOCS_SIDEBAR: { title: string; items: DocsNavItem[] }[] = [
       { label: 'Getting started', path: '/guide/getting-started' },
       { label: 'Canvas & workspace', path: '/guide/canvas' },
       { label: 'CLI analysis', path: '/guide/cli' },
-      { label: 'Git forensics', path: '/guide/forensics' },
+      { label: 'Forensics', path: '/guide/forensics' },
     ],
   },
   {
@@ -70,7 +70,7 @@ export const DOCS_PAGES: DocsPageMeta[] = [
   { path: '/guide/cli', title: 'CLI analysis', markdown: guideCliMd, dir: 'guide', group: 'guide' },
   {
     path: '/guide/forensics',
-    title: 'Git forensics',
+    title: 'Forensics',
     markdown: guideForensicsMd,
     dir: 'guide',
     group: 'guide',

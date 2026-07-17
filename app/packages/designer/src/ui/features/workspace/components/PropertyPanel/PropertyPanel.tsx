@@ -14,6 +14,7 @@ import { SelectedDependencySection } from './SelectedDependencySection';
 import { WorkspaceDisplayControls } from './WorkspaceDisplayControls';
 import { ValidationSection } from './ValidationSection';
 import { resolveCouplingEdges } from '../../../../../application/forensics/resolveCouplingEdges';
+import { countSchemaForensicsMetrics } from '../../../../../application/forensics/countForensicsMetrics';
 
 export const PropertyPanel: React.FC = () => {
   const {
@@ -144,6 +145,11 @@ export const PropertyPanel: React.FC = () => {
     e => e.source === selectedNodeId || e.target === selectedNodeId
   );
 
+  const displayCounts = countSchemaForensicsMetrics(
+    schema,
+    isNode ? selectedNode?.entityRef : null
+  );
+
   return (
     <div
       data-testid="right-panel"
@@ -214,6 +220,8 @@ export const PropertyPanel: React.FC = () => {
             onToggleShowSelectedDependenciesOnly={toggleShowSelectedDependenciesOnly}
             showHotspotHeatmap={showHotspotHeatmap}
             onToggleShowHotspotHeatmap={toggleShowHotspotHeatmap}
+            counts={displayCounts}
+            countsScopedToNode={isNode}
           />
 
           {isEdge && selectedEdge ? (

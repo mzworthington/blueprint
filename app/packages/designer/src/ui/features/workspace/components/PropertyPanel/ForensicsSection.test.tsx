@@ -18,7 +18,7 @@ describe('ForensicsSection', () => {
     );
 
     expect(screen.getByTestId('forensics-section')).toBeInTheDocument();
-    expect(screen.getByText('Git forensics')).toBeInTheDocument();
+    expect(screen.getByText('Forensics')).toBeInTheDocument();
     expect(screen.getByTestId('forensics-concern-badge')).toHaveTextContent(/Hotspot/i);
     expect(screen.getByText('22')).toBeInTheDocument();
     expect(screen.getByText('0.90')).toBeInTheDocument();

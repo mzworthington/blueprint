@@ -1,4 +1,5 @@
 import React from 'react';
+import type { ForensicsDisplayMetrics } from '../../../../../application/forensics/countForensicsMetrics';
 
 interface WorkspaceDisplayControlsProps {
   showTests: boolean;
@@ -9,31 +10,46 @@ interface WorkspaceDisplayControlsProps {
   onToggleShowSelectedDependenciesOnly: () => void;
   showHotspotHeatmap: boolean;
   onToggleShowHotspotHeatmap: () => void;
+  /** Topology counts scoped to canvas or selected node. */
+  counts: ForensicsDisplayMetrics;
+  /** Whether counts reflect the selected node (vs whole diagram). */
+  countsScopedToNode: boolean;
 }
 
 function DisplaySwitch({
   label,
+  count,
   checked,
   onToggle,
   testId,
   onClassName,
 }: {
   label: string;
+  count?: number;
   checked: boolean;
   onToggle: () => void;
   testId: string;
   onClassName: string;
 }) {
+  const ariaLabel = count != null ? `${label} (${count})` : label;
   return (
     <div className="flex items-center justify-between gap-2">
       <span className="text-[10px] font-bold font-mono text-slate-400 uppercase tracking-wider">
         {label}
+        {count != null ? (
+          <span
+            className="ml-1.5 text-slate-500 normal-case tracking-normal"
+            data-testid={`${testId}-count`}
+          >
+            ({count})
+          </span>
+        ) : null}
       </span>
       <button
         type="button"
         role="switch"
         aria-checked={checked}
-        aria-label={label}
+        aria-label={ariaLabel}
         data-testid={testId}
         onClick={onToggle}
         className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
@@ -60,16 +76,28 @@ export const WorkspaceDisplayControls: React.FC<WorkspaceDisplayControlsProps> =
   onToggleShowSelectedDependenciesOnly,
   showHotspotHeatmap,
   onToggleShowHotspotHeatmap,
+  counts,
+  countsScopedToNode,
 }) => (
   <div
     className="border-t border-slate-900 pt-4 space-y-3"
     data-testid="workspace-display-controls"
   >
-    <h4 className="text-[10px] font-bold font-mono text-brand-400 uppercase tracking-wider">
-      Workspace display
-    </h4>
+    <div className="flex items-center justify-between gap-2">
+      <h4 className="text-[10px] font-bold font-mono text-brand-400 uppercase tracking-wider">
+        Workspace display
+      </h4>
+      <span
+        className="font-mono text-[10px] text-slate-500 tabular-nums"
+        data-testid="workspace-display-summary"
+      >
+        {counts.externals} ext · {counts.tests} tests · {counts.dependencies} deps
+        {countsScopedToNode ? ' · node' : ''}
+      </span>
+    </div>
     <DisplaySwitch
       label="Show Test Components"
+      count={counts.tests}
       checked={showTests}
       onToggle={onToggleShowTests}
       testId="toggle-show-tests"
@@ -77,6 +105,7 @@ export const WorkspaceDisplayControls: React.FC<WorkspaceDisplayControlsProps> =
     />
     <DisplaySwitch
       label="Show Externals"
+      count={counts.externals}
       checked={showExternals}
       onToggle={onToggleShowExternals}
       testId="toggle-show-externals"
@@ -84,6 +113,7 @@ export const WorkspaceDisplayControls: React.FC<WorkspaceDisplayControlsProps> =
     />
     <DisplaySwitch
       label="Show Selected Dependencies Only"
+      count={counts.dependencies}
       checked={showSelectedDependenciesOnly}
       onToggle={onToggleShowSelectedDependenciesOnly}
       testId="toggle-show-selected-dependencies-only"

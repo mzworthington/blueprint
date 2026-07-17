@@ -16,7 +16,7 @@ describe('ForensicsPage', () => {
             name: 'Designer Components',
             version: '1.0.0',
             level: 'component',
-            dependencies: [],
+            dependencies: [{ from: 'app/designer/db', to: 'app/designer/ok', type: 'direct-call' }],
             nodes: [
               {
                 entityRef: 'app/designer/db',
@@ -57,8 +57,10 @@ describe('ForensicsPage', () => {
     );
 
     expect(screen.getByText('Worst offenders')).toBeInTheDocument();
+    expect(screen.queryByTestId('forensics-workspace-summary')).not.toBeInTheDocument();
     expect(screen.getByText('DB Layer')).toBeInTheDocument();
     expect(screen.getByText('OK')).toBeInTheDocument();
+    expect(screen.getAllByText(/deps 1/).length).toBeGreaterThanOrEqual(1);
 
     fireEvent.click(screen.getByRole('button', { name: /^Hotspots$/i }));
     expect(screen.getByText('DB Layer')).toBeInTheDocument();

@@ -29,6 +29,8 @@ export type RankedOffender = {
   classifications: ForensicClassification[];
   concern: ForensicsConcern;
   sinceDays?: number;
+  /** Incident edge count — structural context only, not a forensics signal. */
+  dependencyCount: number;
 };
 
 function hasUsefulForensics(node: SystemNode): boolean {
@@ -48,6 +50,9 @@ function toOffender(node: SystemNode, system: LoadedSystemRef): RankedOffender {
   const f = node.forensics!;
   const containerHint =
     typeof node.properties?.containerId === 'string' ? node.properties.containerId : undefined;
+  const dependencyCount = system.schema.dependencies.filter(
+    d => d.from === node.entityRef || d.to === node.entityRef
+  ).length;
 
   return {
     entityRef: node.entityRef,
@@ -66,6 +71,7 @@ function toOffender(node: SystemNode, system: LoadedSystemRef): RankedOffender {
     classifications: f.classifications ?? [],
     concern: evaluateForensicsConcern(f),
     sinceDays: f.sinceDays,
+    dependencyCount,
   };
 }
 

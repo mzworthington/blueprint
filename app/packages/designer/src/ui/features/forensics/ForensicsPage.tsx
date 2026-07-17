@@ -129,6 +129,7 @@ function OffenderRow({
         ))}
         <span className="font-mono text-[10px] text-slate-500 truncate">
           {[
+            offender.dependencyCount > 0 ? `deps ${offender.dependencyCount}` : null,
             offender.complexity != null ? `cx ${offender.complexity}` : null,
             offender.churn != null ? `churn ${offender.churn}` : null,
             offender.authorCount != null ? `authors ${offender.authorCount}` : null,

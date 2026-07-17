@@ -106,6 +106,46 @@ describe('rankForensicsOffenders', () => {
     expect(rankForensicsOffenders(systems, 'components', 'silos')[0].entityRef).toBe('a/silo');
   });
 
+  it('includes dependency count as structural context on ranked rows', () => {
+    const systems = [
+      {
+        path: 'c.yaml',
+        name: 'c',
+        schema: componentSchema([
+          {
+            entityRef: 'a/ext',
+            name: 'Ext',
+            type: 'component',
+            external: true,
+            forensics: { hotspotScore: 0.6, classifications: ['hotspot'] },
+          },
+          {
+            entityRef: 'a/test',
+            name: 'Test',
+            type: 'component',
+            isTest: true,
+            forensics: { hotspotScore: 0.2, complexity: 3, classifications: [] },
+          },
+          {
+            entityRef: 'a/plain',
+            name: 'Plain',
+            type: 'component',
+            forensics: { hotspotScore: 0.1, classifications: [] },
+          },
+        ]),
+      },
+    ];
+    systems[0].schema.dependencies = [
+      { from: 'a/ext', to: 'a/test', type: 'direct-call' },
+      { from: 'a/plain', to: 'a/ext', type: 'direct-call' },
+    ];
+
+    const ranked = rankForensicsOffenders(systems, 'components', 'all');
+    expect(ranked.find(r => r.entityRef === 'a/ext')?.dependencyCount).toBe(2);
+    expect(ranked.find(r => r.entityRef === 'a/test')?.dependencyCount).toBe(1);
+    expect(ranked.find(r => r.entityRef === 'a/plain')?.dependencyCount).toBe(1);
+  });
+
   it('ranks container rollups and ignores component diagrams in containers scope', () => {
     const systems = [
       {
