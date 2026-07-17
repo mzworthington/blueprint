@@ -168,6 +168,36 @@ describe('Canvas Component', () => {
     expect(screen.getByTestId('edges-count')).toHaveTextContent('0');
   });
 
+  it('keeps selected node and transitive downstream deps when focus toggle is on', () => {
+    const { initSchema } = useBlueprintStore.getState();
+    initSchema({
+      name: 'Downstream Focus',
+      version: '1.0.0',
+      level: 'component',
+      nodes: [
+        { entityRef: 'a', type: 'component', name: 'A', x: 0, y: 0 },
+        { entityRef: 'b', type: 'component', name: 'B', x: 100, y: 0 },
+        { entityRef: 'c', type: 'component', name: 'C', x: 200, y: 0 },
+        { entityRef: 'orphan', type: 'component', name: 'Orphan', x: 300, y: 0 },
+      ],
+      dependencies: [
+        { from: 'a', to: 'b', type: 'direct-call' },
+        { from: 'b', to: 'c', type: 'direct-call' },
+      ],
+    });
+    useBlueprintStore.setState({
+      selectedNodeId: 'a',
+      showTests: true,
+      showExternals: true,
+      showSelectedDependenciesOnly: true,
+    });
+
+    render(<Canvas />);
+
+    expect(screen.getByTestId('nodes-count')).toHaveTextContent('3');
+    expect(screen.getByTestId('edges-count')).toHaveTextContent('2');
+  });
+
   it('applies hotspot heat to nodes when showHotspotHeatmap is on', () => {
     const { initSchema } = useBlueprintStore.getState();
     initSchema({

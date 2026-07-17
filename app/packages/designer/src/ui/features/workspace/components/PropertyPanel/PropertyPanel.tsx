@@ -33,6 +33,8 @@ export const PropertyPanel: React.FC = () => {
     toggleShowTests,
     showExternals,
     toggleShowExternals,
+    showSelectedDependenciesOnly,
+    toggleShowSelectedDependenciesOnly,
     showCoupling,
     toggleShowCoupling,
     showHotspotHeatmap,
@@ -186,6 +188,8 @@ export const PropertyPanel: React.FC = () => {
             onToggleShowTests={toggleShowTests}
             showExternals={showExternals}
             onToggleShowExternals={toggleShowExternals}
+            showSelectedDependenciesOnly={showSelectedDependenciesOnly}
+            onToggleShowSelectedDependenciesOnly={toggleShowSelectedDependenciesOnly}
             showHotspotHeatmap={showHotspotHeatmap}
             onToggleShowHotspotHeatmap={toggleShowHotspotHeatmap}
           />

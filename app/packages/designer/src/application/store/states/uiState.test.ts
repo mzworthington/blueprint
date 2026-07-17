@@ -6,6 +6,7 @@ describe('uiState Actions & State Management', () => {
     const state = useBlueprintStore.getState();
     expect(state.showTests).toBe(false);
     expect(state.showExternals).toBe(true);
+    expect(state.showSelectedDependenciesOnly).toBe(false);
     expect(state.showCoupling).toBe(false);
     expect(state.showHotspotHeatmap).toBe(false);
     expect(state.leftCollapsed).toBe(true);
@@ -45,6 +46,17 @@ describe('uiState Actions & State Management', () => {
 
     store.toggleShowExternals();
     expect(useBlueprintStore.getState().showExternals).toBe(true);
+  });
+
+  it('should toggle showSelectedDependenciesOnly via toggleShowSelectedDependenciesOnly', () => {
+    const store = useBlueprintStore.getState();
+    expect(store.showSelectedDependenciesOnly).toBe(false);
+
+    store.toggleShowSelectedDependenciesOnly();
+    expect(useBlueprintStore.getState().showSelectedDependenciesOnly).toBe(true);
+
+    store.toggleShowSelectedDependenciesOnly();
+    expect(useBlueprintStore.getState().showSelectedDependenciesOnly).toBe(false);
   });
 
   it('should toggle showCoupling property via toggleShowCoupling action', () => {

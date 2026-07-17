@@ -21,6 +21,7 @@ import {
   buildCouplingOverlayEdges,
   filterCouplingFocusNodes,
 } from '../../../../../application/forensics/buildCouplingOverlayEdges';
+import { filterSelectedDependencyFocusNodes } from '../../../../../application/forensics/filterSelectedDependencyFocus';
 import {
   applyHotspotHeatmap,
   hotspotHeatmapMinimapColor,
@@ -41,6 +42,7 @@ export const Canvas: React.FC = () => {
     clearError,
     showTests,
     showExternals,
+    showSelectedDependenciesOnly,
     showCoupling,
     showHotspotHeatmap,
     focusedCyclePath,
@@ -120,12 +122,20 @@ export const Canvas: React.FC = () => {
   }, [notification, setNotification]);
 
   const filteredNodes = useMemo(() => {
-    return nodes.filter(n => {
+    const base = nodes.filter(n => {
       if (!showTests && n.data.isTest) return false;
       if (!showExternals && n.data.external) return false;
       return true;
     });
-  }, [nodes, showTests, showExternals]);
+    const visibleIds = new Set(base.map(n => n.id));
+    const baseEdges = edges.filter(e => visibleIds.has(e.source) && visibleIds.has(e.target));
+    return filterSelectedDependencyFocusNodes(
+      base,
+      baseEdges,
+      selectedNodeId,
+      showSelectedDependenciesOnly
+    );
+  }, [nodes, edges, showTests, showExternals, selectedNodeId, showSelectedDependenciesOnly]);
 
   const displayNodes = useMemo(() => {
     let baseNodes = filteredNodes;
@@ -139,10 +149,9 @@ export const Canvas: React.FC = () => {
   }, [filteredNodes, selectedNodeId, showCoupling, showHotspotHeatmap, focusedCyclePath]);
 
   const filteredEdges = useMemo(() => {
-    if (showTests && showExternals) return edges;
     const visibleNodeIds = new Set(filteredNodes.map(n => n.id));
     return edges.filter(e => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target));
-  }, [edges, filteredNodes, showTests, showExternals]);
+  }, [edges, filteredNodes]);
 
   const displayEdges = useMemo(() => {
     if (focusedCyclePath) {

@@ -5,6 +5,8 @@ interface WorkspaceDisplayControlsProps {
   onToggleShowTests: () => void;
   showExternals: boolean;
   onToggleShowExternals: () => void;
+  showSelectedDependenciesOnly: boolean;
+  onToggleShowSelectedDependenciesOnly: () => void;
   showHotspotHeatmap: boolean;
   onToggleShowHotspotHeatmap: () => void;
 }
@@ -54,6 +56,8 @@ export const WorkspaceDisplayControls: React.FC<WorkspaceDisplayControlsProps> =
   onToggleShowTests,
   showExternals,
   onToggleShowExternals,
+  showSelectedDependenciesOnly,
+  onToggleShowSelectedDependenciesOnly,
   showHotspotHeatmap,
   onToggleShowHotspotHeatmap,
 }) => (
@@ -76,6 +80,13 @@ export const WorkspaceDisplayControls: React.FC<WorkspaceDisplayControlsProps> =
       checked={showExternals}
       onToggle={onToggleShowExternals}
       testId="toggle-show-externals"
+      onClassName="bg-brand-600"
+    />
+    <DisplaySwitch
+      label="Show Selected Dependencies Only"
+      checked={showSelectedDependenciesOnly}
+      onToggle={onToggleShowSelectedDependenciesOnly}
+      testId="toggle-show-selected-dependencies-only"
       onClassName="bg-brand-600"
     />
     <DisplaySwitch

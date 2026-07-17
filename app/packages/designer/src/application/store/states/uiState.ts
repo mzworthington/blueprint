@@ -10,6 +10,11 @@ export interface UiState {
   showTests: boolean;
   /** When false, hide nodes marked `external` on the canvas (display-only). */
   showExternals: boolean;
+  /**
+   * When true (and a node is selected), hide everything except the selection
+   * and its transitive downstream dependency closure (to leaf nodes).
+   */
+  showSelectedDependenciesOnly: boolean;
   /** When true (and a node is selected), focus the canvas on that node and its coupled peers. */
   showCoupling: boolean;
   /** When true, tint canvas nodes by forensics.hotspotScore (display-only). */
@@ -29,6 +34,7 @@ export interface UiState {
   isLoading: boolean | string;
   toggleShowTests: () => void;
   toggleShowExternals: () => void;
+  toggleShowSelectedDependenciesOnly: () => void;
   toggleShowCoupling: () => void;
   toggleShowHotspotHeatmap: () => void;
   toggleLeftCollapsed: () => void;
@@ -47,6 +53,7 @@ export const createUiState = (
 ): UiState => ({
   showTests: false,
   showExternals: true,
+  showSelectedDependenciesOnly: false,
   showCoupling: false,
   showHotspotHeatmap: false,
   layoutEngine: null,
@@ -60,6 +67,8 @@ export const createUiState = (
   isLoading: false,
   toggleShowTests: () => set(state => ({ showTests: !state.showTests })),
   toggleShowExternals: () => set(state => ({ showExternals: !state.showExternals })),
+  toggleShowSelectedDependenciesOnly: () =>
+    set(state => ({ showSelectedDependenciesOnly: !state.showSelectedDependenciesOnly })),
   toggleShowCoupling: () => set(state => ({ showCoupling: !state.showCoupling })),
   toggleShowHotspotHeatmap: () => set(state => ({ showHotspotHeatmap: !state.showHotspotHeatmap })),
   toggleLeftCollapsed: () => set(state => ({ leftCollapsed: !state.leftCollapsed })),
