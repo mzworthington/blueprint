@@ -35,19 +35,15 @@ const menuItemClass =
 const menuTriggerClass =
   'flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-slate-100 px-3 py-1.5 min-h-11 sm:min-h-0 rounded-lg text-xs font-semibold border border-slate-800 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed';
 
-function useActionHandlers() {
-  const {
-    isWorkspaceOpen,
-    openWorkspaceDirectory,
-    saveSchema,
-    loadSchema,
-    saveActiveDiagram,
-    initSchema,
-    isLoading,
-    setIsLoading,
-  } = useBlueprintStore();
+function useControlsDisabled(): boolean {
+  return Boolean(useBlueprintStore(s => s.isLoading));
+}
 
-  const controlsDisabled = Boolean(isLoading);
+function useSaveAction() {
+  const isWorkspaceOpen = useBlueprintStore(s => s.isWorkspaceOpen);
+  const saveSchema = useBlueprintStore(s => s.saveSchema);
+  const saveActiveDiagram = useBlueprintStore(s => s.saveActiveDiagram);
+  const controlsDisabled = useControlsDisabled();
 
   const handleSave = useCallback(async () => {
     if (isWorkspaceOpen) {
@@ -56,6 +52,14 @@ function useActionHandlers() {
       await saveSchema();
     }
   }, [isWorkspaceOpen, saveActiveDiagram, saveSchema]);
+
+  return { controlsDisabled, handleSave, isWorkspaceOpen };
+}
+
+function useOpenActions() {
+  const openWorkspaceDirectory = useBlueprintStore(s => s.openWorkspaceDirectory);
+  const loadSchema = useBlueprintStore(s => s.loadSchema);
+  const controlsDisabled = useControlsDisabled();
 
   const handleOpenFolder = useCallback(async () => {
     try {
@@ -72,6 +76,14 @@ function useActionHandlers() {
       console.error('Failed to load schema:', err);
     }
   }, [loadSchema]);
+
+  return { controlsDisabled, handleOpenFolder, handleLoad };
+}
+
+function useClearAction() {
+  const initSchema = useBlueprintStore(s => s.initSchema);
+  const setIsLoading = useBlueprintStore(s => s.setIsLoading);
+  const controlsDisabled = useControlsDisabled();
 
   const handleClear = useCallback(async () => {
     if (confirm('Clear the workspace, purge all IndexedDB drafts, and create a blank canvas?')) {
@@ -99,18 +111,11 @@ function useActionHandlers() {
     }
   }, [initSchema, setIsLoading]);
 
-  return {
-    controlsDisabled,
-    handleSave,
-    handleOpenFolder,
-    handleLoad,
-    handleClear,
-    isWorkspaceOpen,
-  };
+  return { controlsDisabled, handleClear };
 }
 
 export const ToolbarSaveButton: React.FC = () => {
-  const { controlsDisabled, handleSave, isWorkspaceOpen } = useActionHandlers();
+  const { controlsDisabled, handleSave, isWorkspaceOpen } = useSaveAction();
 
   return (
     <button
@@ -120,15 +125,16 @@ export const ToolbarSaveButton: React.FC = () => {
       title={isWorkspaceOpen ? 'Save diagram directly in folder' : 'Save YAML to disk'}
     >
       <Download className="w-3.5 h-3.5" />
-      <span className="hidden sm:inline">{isWorkspaceOpen ? 'Save' : 'Save Schema'}</span>
-      <span className="sm:hidden">Save</span>
+      <span>{isWorkspaceOpen ? 'Save' : 'Save Schema'}</span>
     </button>
   );
 };
 
 export const ToolbarOpenMenu: React.FC = () => {
-  const { controlsDisabled, handleOpenFolder, handleLoad } = useActionHandlers();
-  const { isWorkspaceOpen, schema, setIsImportMermaidOpen } = useBlueprintStore();
+  const { controlsDisabled, handleOpenFolder, handleLoad } = useOpenActions();
+  const isWorkspaceOpen = useBlueprintStore(s => s.isWorkspaceOpen);
+  const schema = useBlueprintStore(s => s.schema);
+  const setIsImportMermaidOpen = useBlueprintStore(s => s.setIsImportMermaidOpen);
   const { open, toggle, close, ref } = useToolbarMenu();
 
   const folderTitle = isWorkspaceOpen
@@ -181,6 +187,21 @@ export const ToolbarOpenMenu: React.FC = () => {
             <Upload className="w-3.5 h-3.5 shrink-0" />
             Open File
           </button>
+          <button
+            type="button"
+            role="menuitem"
+            onClick={() => {
+              close();
+              setIsImportMermaidOpen(true);
+            }}
+            disabled={controlsDisabled || !schema}
+            className={menuItemClass}
+            title="Import Mermaid diagram into the active schema"
+            id="import-mermaid-action"
+          >
+            <GitMerge className="w-3.5 h-3.5 text-[#00f0ff] shrink-0" />
+            Import Mermaid
+          </button>
         </div>
       ) : null}
     </div>
@@ -188,8 +209,11 @@ export const ToolbarOpenMenu: React.FC = () => {
 };
 
 export const ToolbarEditActions: React.FC = () => {
-  const { controlsDisabled } = useActionHandlers();
-  const { undo, redo, past, future } = useBlueprintStore();
+  const controlsDisabled = useControlsDisabled();
+  const undo = useBlueprintStore(s => s.undo);
+  const redo = useBlueprintStore(s => s.redo);
+  const past = useBlueprintStore(s => s.past);
+  const future = useBlueprintStore(s => s.future);
 
   return (
     <div className="flex items-center gap-1 shrink-0">
@@ -216,16 +240,14 @@ export const ToolbarEditActions: React.FC = () => {
 };
 
 export const ToolbarOverflowMenu: React.FC = () => {
-  const { controlsDisabled, handleClear } = useActionHandlers();
-  const {
-    isWorkspaceOpen,
-    schema,
-    syncExternalContainers,
-    setIsDiffOpen,
-    hasPendingChanges,
-    layoutEngine,
-    setLayoutEngine,
-  } = useBlueprintStore();
+  const { controlsDisabled, handleClear } = useClearAction();
+  const isWorkspaceOpen = useBlueprintStore(s => s.isWorkspaceOpen);
+  const schema = useBlueprintStore(s => s.schema);
+  const syncExternalContainers = useBlueprintStore(s => s.syncExternalContainers);
+  const setIsDiffOpen = useBlueprintStore(s => s.setIsDiffOpen);
+  const hasPendingChanges = useBlueprintStore(s => s.hasPendingChanges);
+  const layoutEngine = useBlueprintStore(s => s.layoutEngine);
+  const setLayoutEngine = useBlueprintStore(s => s.setLayoutEngine);
   const { open, toggle, close, ref } = useToolbarMenu();
 
   const showSyncExternals = isWorkspaceOpen && schema.level === 'component';
