@@ -7,7 +7,6 @@ import {
   slugify,
 } from '@blueprint/core';
 import type { BlueprintRFNode, BlueprintRFEdge } from '../../layoutUtils';
-import { saveWorkingSchema } from '../../../../infrastructure/db/db';
 import {
   attachClosestHandles,
   resolveWorkspaceName,
@@ -112,13 +111,22 @@ export function applyStateUpdates(
     nodeRefMap: resolved.nodeRefMap,
   });
 
-  saveWorkingSchema(currentFilePath, resolvedSchema, systemId, fileRefMap)
-    .then(() => {
-      get().checkPendingChanges?.();
-    })
-    .catch((err: unknown) => {
-      if (get().logger) {
-        get().logger.error('Failed to sync working schema to IndexedDB', err);
-      }
-    });
+  const workingCopy = get().workingCopyPort;
+  if (workingCopy) {
+    workingCopy
+      .saveWorkingSchema({
+        filePath: currentFilePath,
+        schema: resolvedSchema,
+        systemId,
+        nodeRefMap: fileRefMap,
+      })
+      .then(() => {
+        get().checkPendingChanges?.();
+      })
+      .catch((err: unknown) => {
+        if (get().logger) {
+          get().logger.error('Failed to sync working schema to IndexedDB', err);
+        }
+      });
+  }
 }

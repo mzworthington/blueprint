@@ -117,3 +117,113 @@ export const alwaysOnlineNetworkStatus: NetworkStatusPort = {
   isOnline: () => true,
   subscribe: () => () => {},
 };
+
+/** Persisted draft node row (working / baseline IndexedDB shape). */
+export type WorkingCopyNode = {
+  entityRef: string;
+  id: string;
+  systemId: string;
+  containerId?: string;
+  type: string;
+  name: string;
+  properties: import('@blueprint/core').PropertyMap;
+  x?: number;
+  y?: number;
+  external?: boolean;
+  isTest?: boolean;
+  filePath: string;
+};
+
+export type WorkingCopyDependency = {
+  id: string;
+  fromRef: string;
+  toRef: string;
+  type: string;
+  description?: string;
+  filePath: string;
+};
+
+export type SchemaDiff = {
+  nodes: {
+    added: WorkingCopyNode[];
+    modified: { original: WorkingCopyNode; current: WorkingCopyNode }[];
+    deleted: WorkingCopyNode[];
+  };
+  dependencies: {
+    added: WorkingCopyDependency[];
+    deleted: WorkingCopyDependency[];
+  };
+};
+
+export type SaveWorkingCopyArgs = {
+  filePath: string;
+  schema: import('@blueprint/core').SystemSchema;
+  systemId: string;
+  nodeRefMap: Record<string, string>;
+};
+
+export type LoadWorkingCopyArgs = {
+  filePath: string;
+  systemName?: string;
+  systemVersion?: string;
+  systemLevel?: string;
+  systemEntityRef?: string;
+};
+
+/**
+ * Driven outbound port for IndexedDB working-copy / baseline persistence and diffs.
+ */
+export interface WorkingCopyPort {
+  saveBaselineSchema(args: SaveWorkingCopyArgs): Promise<void>;
+  saveWorkingSchema(args: SaveWorkingCopyArgs): Promise<void>;
+  computeSchemaDiff(filePath: string): Promise<SchemaDiff>;
+  revertWorkingSchema(args: LoadWorkingCopyArgs): Promise<import('@blueprint/core').SystemSchema>;
+  pathHasStoredData(filePath: string): Promise<boolean>;
+  loadWorkingSchema(
+    args: LoadWorkingCopyArgs
+  ): Promise<import('@blueprint/core').SystemSchema | null>;
+}
+
+export const noopWorkingCopy: WorkingCopyPort = {
+  saveBaselineSchema: async () => {},
+  saveWorkingSchema: async () => {},
+  computeSchemaDiff: async () => ({
+    nodes: { added: [], modified: [], deleted: [] },
+    dependencies: { added: [], deleted: [] },
+  }),
+  revertWorkingSchema: async args => ({
+    name: args.systemName || 'Restored Schema',
+    version: args.systemVersion || '1.0.0',
+    level: (args.systemLevel as import('@blueprint/core').C4Level) || 'container',
+    entityRef: args.systemEntityRef,
+    nodes: [],
+    dependencies: [],
+  }),
+  pathHasStoredData: async () => false,
+  loadWorkingSchema: async () => null,
+};
+
+/** Opaque canvas graph change payloads (React Flow NodeChange / EdgeChange at the adapter). */
+export type CanvasNodeChange = { type: string; id?: string; [key: string]: unknown };
+export type CanvasEdgeChange = { type: string; id?: string; [key: string]: unknown };
+
+export type CanvasConnection = {
+  source: string | null;
+  target: string | null;
+  sourceHandle?: string | null;
+  targetHandle?: string | null;
+};
+
+/**
+ * Driven port for applying UI-framework graph change lists to canvas nodes/edges.
+ * Keeps @xyflow/react out of the application store.
+ */
+export interface GraphChangePort {
+  applyNodeChanges<TNode>(changes: CanvasNodeChange[], nodes: TNode[]): TNode[];
+  applyEdgeChanges<TEdge>(changes: CanvasEdgeChange[], edges: TEdge[]): TEdge[];
+}
+
+export const noopGraphChange: GraphChangePort = {
+  applyNodeChanges: (_changes, nodes) => nodes,
+  applyEdgeChanges: (_changes, edges) => edges,
+};

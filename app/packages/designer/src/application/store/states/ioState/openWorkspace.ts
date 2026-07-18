@@ -1,10 +1,6 @@
 import type { SystemSchema } from '@blueprint/core';
 import { parseSchemaFromYaml, resolveWorkspaceEntityRefs } from '@blueprint/core';
-import {
-  saveBaselineSchema,
-  saveWorkingSchema,
-  loadWorkingSchema,
-} from '../../../../infrastructure/db/db';
+import type { WorkingCopyPort } from '../../../../core';
 import { resolveSchemaOnWorkspaceOpen } from '../../../../infrastructure/db/schemaCompare';
 import { cancelDefaultIdbSeed } from '../diagramState/defaultIdbSeed';
 
@@ -16,6 +12,7 @@ type OpenWorkspaceDeps = {
   selectDirectory: () => Promise<boolean>;
   readDirectoryFiles: () => Promise<Array<{ name: string; content: string }>>;
   getDirectoryName: () => string;
+  workingCopy: WorkingCopyPort;
   logger: {
     info: (m: string, meta?: Record<string, unknown>) => void;
     warn: (m: string, meta?: Record<string, unknown>) => void;
@@ -80,6 +77,7 @@ export async function loadWorkspaceFromDirectory(deps: OpenWorkspaceDeps): Promi
   const { systems, discardedDraftCount } = await applyDiskFirstDraftResolution(
     resolvedSystems,
     resolved,
+    deps.workingCopy,
     logger
   );
 
@@ -113,6 +111,7 @@ export async function loadWorkspaceFromDirectory(deps: OpenWorkspaceDeps): Promi
 export async function applyDiskFirstDraftResolution(
   resolvedSystems: LoadedSystem[],
   resolved: ReturnType<typeof resolveWorkspaceEntityRefs>,
+  workingCopy: WorkingCopyPort,
   logger: { warn: (m: string, meta?: Record<string, unknown>) => void }
 ): Promise<{ systems: LoadedSystem[]; discardedDraftCount: number }> {
   let discardedDraftCount = 0;
@@ -125,20 +124,25 @@ export async function applyDiskFirstDraftResolution(
 
     // Sequential Dexie writes avoid fake-indexeddb transaction deadlocks.
     try {
-      await saveBaselineSchema(sys.path, diskSchema, sysId, fileRefMap);
+      await workingCopy.saveBaselineSchema({
+        filePath: sys.path,
+        schema: diskSchema,
+        systemId: sysId,
+        nodeRefMap: fileRefMap,
+      });
     } catch {
       /* ignore persistence failures on open */
     }
 
     let workingSchema: SystemSchema | null = null;
     try {
-      workingSchema = await loadWorkingSchema(
-        sys.path,
-        diskSchema.name,
-        diskSchema.version,
-        diskSchema.level,
-        diskSchema.entityRef
-      );
+      workingSchema = await workingCopy.loadWorkingSchema({
+        filePath: sys.path,
+        systemName: diskSchema.name,
+        systemVersion: diskSchema.version,
+        systemLevel: diskSchema.level,
+        systemEntityRef: diskSchema.entityRef,
+      });
     } catch {
       workingSchema = null;
     }
@@ -152,7 +156,12 @@ export async function applyDiskFirstDraftResolution(
     }
 
     try {
-      await saveWorkingSchema(sys.path, resolution.schema, sysId, fileRefMap);
+      await workingCopy.saveWorkingSchema({
+        filePath: sys.path,
+        schema: resolution.schema,
+        systemId: sysId,
+        nodeRefMap: fileRefMap,
+      });
     } catch {
       /* ignore persistence failures on open */
     }

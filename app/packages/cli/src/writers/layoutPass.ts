@@ -2,10 +2,19 @@ import { parseSchemaFromYaml, serializeSchemaToYaml, type SystemSchema } from '@
 import type { AnalysisFileSystemPort, LayoutPort, LoggerPort } from '../analysis/domain/ports.ts';
 import { resolveLocalSchemaUrl } from './baseWriter.ts';
 import { listBlueprintSchemaPaths } from './externalDependenciesPass.ts';
+import { layoutWithPreservation } from './layoutWithPreservation.ts';
 
 export interface LayoutPassResult {
   schemasScanned: number;
   schemasUpdated: number;
+}
+
+export interface LayoutPassOptions {
+  /**
+   * When true (default), recompute all positions.
+   * Pass `false` (CLI `--no-relayout`) to preserve existing finite x/y.
+   */
+  forceRelayout?: boolean;
 }
 
 function positionsChanged(before: SystemSchema, after: SystemSchema): boolean {
@@ -21,14 +30,17 @@ function positionsChanged(before: SystemSchema, after: SystemSchema): boolean {
 
 /**
  * Final pass: layout every blueprint schema after structure + externals are fixed.
- * Runs dagre (or grid fallback) on the full node/edge set including proxy externals.
+ * By default recomputes all positions. Pass `forceRelayout: false` (CLI `--no-relayout`)
+ * to preserve existing finite x/y and only lay out gap nodes.
  */
 export async function applyLayoutPass(
   rootDir: string,
   layout: LayoutPort,
   fileSystem: AnalysisFileSystemPort,
-  logger: LoggerPort
+  logger: LoggerPort,
+  options: LayoutPassOptions = {}
 ): Promise<LayoutPassResult> {
+  const forceRelayout = options.forceRelayout !== false;
   const paths = listBlueprintSchemaPaths(rootDir, fileSystem);
   let schemasUpdated = 0;
   let schemasScanned = 0;
@@ -47,7 +59,14 @@ export async function applyLayoutPass(
     }
 
     schemasScanned++;
-    const laidOut = await layout.computeLayout(schema.nodes, schema.dependencies);
+    const previous = schema.nodes;
+    const laidOut = await layoutWithPreservation(
+      layout,
+      forceRelayout ? [] : previous,
+      previous,
+      schema.dependencies,
+      { forceRelayout }
+    );
     const next: SystemSchema = { ...schema, nodes: laidOut };
     if (!positionsChanged(schema, next)) continue;
 
@@ -58,7 +77,11 @@ export async function applyLayoutPass(
   }
 
   if (schemasUpdated > 0) {
-    logger.info(`📐 Layout: updated positions on ${schemasUpdated} schema(s).`);
+    logger.info(
+      forceRelayout
+        ? `📐 Layout: updated positions on ${schemasUpdated} schema(s).`
+        : `📐 Layout: preserved existing positions; updated ${schemasUpdated} schema(s).`
+    );
   }
 
   return { schemasScanned, schemasUpdated };

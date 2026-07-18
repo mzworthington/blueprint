@@ -29,6 +29,7 @@ Install the release binary first: [Getting started](./getting-started.md).
 | `--rollup-modules`                 | Collapse `*-module-*` packages                                       |
 | `--git` / `--no-git`               | Forensics on (default) or off                                        |
 | `--git-since=<days>`               | Lookback window (default 90)                                         |
+| `--no-relayout`                    | Preserve existing `x`/`y` on re-scan (default recomputes layout)     |
 
 With `--parser=tree-sitter`, language strategies cover TypeScript, C#, and Python (WASM grammars ship with the release binary). Prefer `ts-morph` when scanning TypeScript-only trees.
 

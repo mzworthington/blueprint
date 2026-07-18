@@ -1,5 +1,4 @@
 import { describe, expect, it } from 'vitest';
-import { MarkerType } from '@xyflow/react';
 import {
   DEPENDENCY_EDGE_STROKE,
   dependencyArrowMarker,
@@ -18,7 +17,7 @@ describe('dependency edge direction visuals', () => {
 
     expect(edge.markerEnd).toEqual(dependencyArrowMarker(DEPENDENCY_EDGE_STROKE));
     expect(edge.animated).toBe(false);
-    expect((edge.markerEnd as { type: MarkerType }).type).toBe(MarkerType.ArrowClosed);
+    expect((edge.markerEnd as { type: string }).type).toBe('arrowclosed');
   });
 
   it('keeps publish-subscribe edges animated by default', () => {

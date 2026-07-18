@@ -1,41 +1,10 @@
 import Dexie, { type Table } from 'dexie';
 import type { SystemSchema } from '@blueprint/core';
+import type { SchemaDiff, WorkingCopyNode, WorkingCopyDependency } from '../../core';
 
-export interface DbNode {
-  entityRef: string;
-  id: string;
-  systemId: string;
-  containerId?: string;
-  type: string;
-  name: string;
-  properties: Record<string, any>;
-  x?: number;
-  y?: number;
-  external?: boolean;
-  isTest?: boolean;
-  filePath: string;
-}
-
-export interface DbDependency {
-  id: string;
-  fromRef: string;
-  toRef: string;
-  type: string;
-  description?: string;
-  filePath: string;
-}
-
-export interface SchemaDiff {
-  nodes: {
-    added: DbNode[];
-    modified: { original: DbNode; current: DbNode }[];
-    deleted: DbNode[];
-  };
-  dependencies: {
-    added: DbDependency[];
-    deleted: DbDependency[];
-  };
-}
+export type { SchemaDiff };
+export type DbNode = WorkingCopyNode;
+export type DbDependency = WorkingCopyDependency;
 
 class BlueprintDatabase extends Dexie {
   originalNodes!: Table<DbNode, string>;

@@ -2,9 +2,16 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { useBlueprintStore } from '../store';
 import type { NodeType } from '@blueprint/core';
 import { createBrowserLayoutRegistry } from '../../../infrastructure/layout/createBrowserLayoutRegistry';
+import { reactFlowGraphChangeAdapter } from '../../../infrastructure/layout/reactFlowGraphChangeAdapter';
+import { dexieWorkingCopyAdapter } from '../../../infrastructure/db/dexieWorkingCopyAdapter';
 
 describe('diagramState Actions & State Management', () => {
   beforeEach(() => {
+    useBlueprintStore.getState().setPorts({
+      layoutRegistry: createBrowserLayoutRegistry(),
+      graphChangePort: reactFlowGraphChangeAdapter,
+      workingCopyPort: dexieWorkingCopyAdapter,
+    });
     useBlueprintStore.setState({
       selectedNodeId: null,
       currentFilePath: 'blueprint.yaml',
@@ -387,10 +394,6 @@ describe('diagramState Actions & State Management', () => {
   });
 
   it('should write layout engine positions into schema and YAML', async () => {
-    useBlueprintStore.getState().setPorts({
-      layoutRegistry: createBrowserLayoutRegistry(),
-    });
-
     const store = useBlueprintStore.getState();
     store.setLayoutEngine('dagre');
     await store.applyClientLayout();

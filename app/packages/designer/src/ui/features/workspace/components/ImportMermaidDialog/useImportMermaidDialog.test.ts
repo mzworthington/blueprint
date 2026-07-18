@@ -3,6 +3,7 @@ import { act, renderHook, waitFor } from '@testing-library/react';
 import { useImportMermaidDialog } from './useImportMermaidDialog';
 import { useBlueprintStore } from '../../../../../application/store/store';
 import { createBrowserLayoutRegistry } from '../../../../../infrastructure/layout/createBrowserLayoutRegistry';
+import { reactFlowGraphChangeAdapter } from '../../../../../infrastructure/layout/reactFlowGraphChangeAdapter';
 
 const SAMPLE = `
 flowchart TD
@@ -14,6 +15,7 @@ describe('useImportMermaidDialog', () => {
   beforeEach(() => {
     useBlueprintStore.getState().setPorts({
       layoutRegistry: createBrowserLayoutRegistry(),
+      graphChangePort: reactFlowGraphChangeAdapter,
     });
     useBlueprintStore.getState().resetToEmptyWorkspace();
     useBlueprintStore.setState({ layoutEngine: null });

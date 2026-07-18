@@ -4,5 +4,6 @@ export * from './lib/entityRef';
 export * from './rules/graph';
 export * from './rules/mermaidImport';
 export * from './rules/schemaMerge';
+export * from './rules/layoutMerge';
 export * from './rules/workspaceExternals';
 export * from './rules/path';

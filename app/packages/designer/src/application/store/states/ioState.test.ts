@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useBlueprintStore } from '../store';
 import { db } from '../../../infrastructure/db/db';
+import { dexieWorkingCopyAdapter } from '../../../infrastructure/db/dexieWorkingCopyAdapter';
 
 describe('ioState Actions & State Management', () => {
   const mockFiles: Record<string, string> = {
@@ -55,6 +56,7 @@ dependencies: []
     await db.workingDependencies.clear();
     useBlueprintStore.setState({
       workspacePort: mockWorkspacePort,
+      workingCopyPort: dexieWorkingCopyAdapter,
       currentFilePath: 'blueprint.yaml',
       isWorkspaceOpen: false,
       workspaceName: '',

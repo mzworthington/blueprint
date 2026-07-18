@@ -1,6 +1,6 @@
 import React from 'react';
 import { Plus, Trash2, Edit } from 'lucide-react';
-import type { SchemaDiff } from '../../../../../infrastructure/db/db';
+import type { SchemaDiff } from '../../../../../core';
 
 interface DiffNodesSectionProps {
   diff: SchemaDiff;

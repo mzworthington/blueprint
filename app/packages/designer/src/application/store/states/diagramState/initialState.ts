@@ -7,12 +7,6 @@ import {
 import { mapDomainNodeToRFNode, mapDomainDepToRFEdge, getClosestHandles } from '../../layoutUtils';
 import type { BlueprintRFNode, BlueprintRFEdge } from '../../layoutUtils';
 import { defaultLoadedSystems, defaultInitialSchema } from '../../defaultData';
-import {
-  saveWorkingSchema,
-  saveBaselineSchema,
-  pathHasStoredData,
-} from '../../../../infrastructure/db/db';
-import { seedDefaultSchemasSafely } from './defaultIdbSeed';
 
 export interface DiagramInitialState {
   schema: SystemSchema;
@@ -68,15 +62,6 @@ export function createDiagramInitialState(): DiagramInitialState {
         targetHandle,
       };
     });
-
-  // Seed demo blueprints only when a path is empty — never overwrite real drafts.
-  setTimeout(() => {
-    seedDefaultSchemasSafely(initialLoadedSystemsResolved, resolvedInitial, {
-      pathHasStoredData,
-      saveBaselineSchema,
-      saveWorkingSchema,
-    }).catch(() => {});
-  }, 100);
 
   return {
     schema: initialSchemaResolved,

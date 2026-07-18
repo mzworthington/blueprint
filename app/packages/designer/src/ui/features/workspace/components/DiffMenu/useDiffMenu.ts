@@ -1,28 +1,31 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useBlueprintStore } from '../../../../../application/store/store';
-import {
-  computeSchemaDiff,
-  revertWorkingSchema,
-  type SchemaDiff,
-} from '../../../../../infrastructure/db/db';
+import type { SchemaDiff } from '../../../../../core';
 
 export function useDiffMenu(isOpen: boolean, onClose: () => void) {
-  const { currentFilePath, initSchema, loadedSystems, logger, saveActiveDiagram, setNotification } =
-    useBlueprintStore();
+  const {
+    currentFilePath,
+    initSchema,
+    loadedSystems,
+    logger,
+    saveActiveDiagram,
+    setNotification,
+    workingCopyPort,
+  } = useBlueprintStore();
   const [diff, setDiff] = useState<SchemaDiff | null>(null);
   const [loading, setLoading] = useState(false);
 
   const fetchDiff = useCallback(async () => {
     setLoading(true);
     try {
-      const result = await computeSchemaDiff(currentFilePath);
+      const result = await workingCopyPort.computeSchemaDiff(currentFilePath);
       setDiff(result);
     } catch (err) {
       logger.error('Failed to compute schema diff', err);
     } finally {
       setLoading(false);
     }
-  }, [currentFilePath, logger]);
+  }, [currentFilePath, logger, workingCopyPort]);
 
   useEffect(() => {
     if (isOpen) {
@@ -37,13 +40,13 @@ export function useDiffMenu(isOpen: boolean, onClose: () => void) {
 
     try {
       const system = loadedSystems.find(s => s.path === currentFilePath);
-      const originalSchema = await revertWorkingSchema(
-        currentFilePath,
-        system?.schema.name,
-        system?.schema.version,
-        system?.schema.level,
-        system?.schema.entityRef
-      );
+      const originalSchema = await workingCopyPort.revertWorkingSchema({
+        filePath: currentFilePath,
+        systemName: system?.schema.name,
+        systemVersion: system?.schema.version,
+        systemLevel: system?.schema.level,
+        systemEntityRef: system?.schema.entityRef,
+      });
 
       initSchema(originalSchema);
       logger.info('Reverted active diagram changes to baseline version');

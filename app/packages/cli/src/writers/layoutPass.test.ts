@@ -21,42 +21,26 @@ class SpyLayout implements LayoutPort {
   }
 }
 
-const writersComponents: SystemSchema = {
-  entityRef: 'blueprint/cli/writers',
-  name: 'Writers Components',
-  version: '1.0.0',
-  level: 'component',
-  nodes: [
-    {
-      entityRef: 'blueprint/cli/writers/context-level-writer',
-      type: 'background-worker',
-      name: 'Context Level Writer',
-      x: 0,
-      y: 0,
-    },
-    {
-      entityRef: 'blueprint/cli/vhs/cli-demo-test',
-      type: 'background-worker',
-      name: 'cli-demo.test Service (External)',
-      external: true,
-      x: 999,
-      y: 999,
-    },
-  ],
-  dependencies: [
-    {
-      from: 'blueprint/cli/writers/context-level-writer',
-      to: 'blueprint/cli/vhs/cli-demo-test',
-      type: 'direct-call',
-    },
-  ],
-};
+function schemaWith(
+  nodes: SystemSchema['nodes'],
+  dependencies: SystemSchema['dependencies'] = []
+): SystemSchema {
+  return {
+    entityRef: 'blueprint/cli/writers',
+    name: 'Writers Components',
+    version: '1.0.0',
+    level: 'component',
+    nodes,
+    dependencies,
+  };
+}
 
 describe('applyLayoutPass', () => {
   let fileSystem: MockFileSystem;
   let logger: MockLogger;
   let layout: SpyLayout;
   const rootDir = '/workspace/blueprints';
+  const path = `${rootDir}/cli/writers-components.yaml`;
 
   beforeEach(() => {
     fileSystem = new MockFileSystem();
@@ -66,13 +50,34 @@ describe('applyLayoutPass', () => {
     const cliDir = `${rootDir}/cli`;
     fileSystem.directories.set(rootDir, ['cli']);
     fileSystem.directories.set(cliDir, ['writers-components.yaml']);
-
-    const path = `${cliDir}/writers-components.yaml`;
-    fileSystem.writtenFiles.set(path, serializeSchemaToYaml(writersComponents));
-    fileSystem.existingFiles.add(path);
   });
 
-  it('layouts each schema including external proxy nodes', async () => {
+  it('layouts nodes that are missing positions', async () => {
+    const writersComponents = schemaWith(
+      [
+        {
+          entityRef: 'blueprint/cli/writers/context-level-writer',
+          type: 'background-worker',
+          name: 'Context Level Writer',
+        },
+        {
+          entityRef: 'blueprint/cli/vhs/cli-demo-test',
+          type: 'background-worker',
+          name: 'cli-demo.test Service (External)',
+          external: true,
+        },
+      ],
+      [
+        {
+          from: 'blueprint/cli/writers/context-level-writer',
+          to: 'blueprint/cli/vhs/cli-demo-test',
+          type: 'direct-call',
+        },
+      ]
+    );
+    fileSystem.writtenFiles.set(path, serializeSchemaToYaml(writersComponents));
+    fileSystem.existingFiles.add(path);
+
     const result = await applyLayoutPass(rootDir, layout, fileSystem, logger);
 
     expect(result.schemasScanned).toBe(1);
@@ -82,24 +87,84 @@ describe('applyLayoutPass', () => {
       'blueprint/cli/writers/context-level-writer',
       'blueprint/cli/vhs/cli-demo-test',
     ]);
-    expect(layout.calls[0]!.dependencies).toHaveLength(1);
 
-    const rewritten = parseSchemaFromYaml(
-      await fileSystem.readSchema(`${rootDir}/cli/writers-components.yaml`)
-    );
+    const rewritten = parseSchemaFromYaml(await fileSystem.readSchema(path));
     expect(
       rewritten.nodes.find(n => n.entityRef === 'blueprint/cli/writers/context-level-writer')
-    ).toMatchObject({
-      x: 100,
-      y: 200,
-    });
+    ).toMatchObject({ x: 100, y: 200 });
     expect(
       rewritten.nodes.find(n => n.entityRef === 'blueprint/cli/vhs/cli-demo-test')
-    ).toMatchObject({
-      x: 200,
-      y: 400,
-      external: true,
+    ).toMatchObject({ x: 200, y: 400, external: true });
+  });
+
+  it('preserves existing positions when forceRelayout is false', async () => {
+    const writersComponents = schemaWith(
+      [
+        {
+          entityRef: 'blueprint/cli/writers/context-level-writer',
+          type: 'background-worker',
+          name: 'Context Level Writer',
+          x: 50,
+          y: 60,
+        },
+        {
+          entityRef: 'blueprint/cli/vhs/cli-demo-test',
+          type: 'background-worker',
+          name: 'cli-demo.test Service (External)',
+          external: true,
+        },
+      ],
+      [
+        {
+          from: 'blueprint/cli/writers/context-level-writer',
+          to: 'blueprint/cli/vhs/cli-demo-test',
+          type: 'direct-call',
+        },
+      ]
+    );
+    fileSystem.writtenFiles.set(path, serializeSchemaToYaml(writersComponents));
+    fileSystem.existingFiles.add(path);
+
+    const result = await applyLayoutPass(rootDir, layout, fileSystem, logger, {
+      forceRelayout: false,
     });
+
+    expect(result.schemasUpdated).toBe(1);
+    expect(layout.calls).toHaveLength(1);
+    expect(layout.calls[0]!.nodes.map(n => n.entityRef)).toEqual([
+      'blueprint/cli/vhs/cli-demo-test',
+    ]);
+
+    const rewritten = parseSchemaFromYaml(await fileSystem.readSchema(path));
+    expect(
+      rewritten.nodes.find(n => n.entityRef === 'blueprint/cli/writers/context-level-writer')
+    ).toMatchObject({ x: 50, y: 60 });
+    expect(
+      rewritten.nodes.find(n => n.entityRef === 'blueprint/cli/vhs/cli-demo-test')?.x
+    ).toBeGreaterThan(50);
+  });
+
+  it('forceRelayout defaults to true and recomputes all positions', async () => {
+    const writersComponents = schemaWith([
+      {
+        entityRef: 'blueprint/cli/writers/context-level-writer',
+        type: 'background-worker',
+        name: 'Context Level Writer',
+        x: 50,
+        y: 60,
+      },
+    ]);
+    fileSystem.writtenFiles.set(path, serializeSchemaToYaml(writersComponents));
+    fileSystem.existingFiles.add(path);
+
+    const result = await applyLayoutPass(rootDir, layout, fileSystem, logger);
+
+    expect(result.schemasUpdated).toBe(1);
+    expect(layout.calls[0]!.nodes).toHaveLength(1);
+    const rewritten = parseSchemaFromYaml(await fileSystem.readSchema(path));
+    expect(
+      rewritten.nodes.find(n => n.entityRef === 'blueprint/cli/writers/context-level-writer')
+    ).toMatchObject({ x: 100, y: 200 });
   });
 
   it('is a no-op when the blueprints tree is empty', async () => {

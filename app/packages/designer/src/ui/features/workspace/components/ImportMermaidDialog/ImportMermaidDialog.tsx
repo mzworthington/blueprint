@@ -208,8 +208,32 @@ export const ImportMermaidDialog: React.FC<ImportMermaidDialogProps> = ({ isOpen
                     </div>
                   )}
 
+                  {preview.mergePlan.skippedEdges.length > 0 && (
+                    <div
+                      className="rounded-lg border border-slate-700/60 bg-slate-900/40 p-3"
+                      data-testid="import-skipped-edges"
+                    >
+                      <p className="text-[10px] font-mono text-slate-400 mb-2">
+                        Skipped edges ({preview.mergePlan.skippedEdges.length})
+                      </p>
+                      <p className="text-[11px] text-slate-500 mb-2">
+                        These edges reference unresolved or conflicted nodes and will not be
+                        imported until conflicts are resolved (overwrite/rename) or endpoints exist.
+                      </p>
+                      <ul className="text-xs text-slate-400 space-y-1 font-mono">
+                        {preview.mergePlan.skippedEdges.map((d, i) => (
+                          <li key={`${d.from}-${d.to}-${i}`}>
+                            {d.from} → {d.to}
+                            {d.type ? ` (${d.type})` : ''}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
                   {preview.mergePlan.additions.nodes.length === 0 &&
-                    preview.mergePlan.conflicts.length === 0 && (
+                    preview.mergePlan.conflicts.length === 0 &&
+                    preview.mergePlan.skippedEdges.length === 0 && (
                       <p className="text-xs text-slate-500 italic">
                         No new nodes or conflicts — diagram content already matches the active
                         schema.
@@ -217,8 +241,9 @@ export const ImportMermaidDialog: React.FC<ImportMermaidDialogProps> = ({ isOpen
                     )}
 
                   <p className="text-[10px] text-slate-600">
-                    Import is lossy: forensics, properties, and styling are not preserved. Changes
-                    stay in your draft until you commit via Pending Changes.
+                    Overwrite keeps canvas position, forensics, and merges properties. Import is
+                    still limited to flowchart/C4 topology. Changes stay in your draft until you
+                    commit via Pending Changes.
                   </p>
                 </div>
               </>

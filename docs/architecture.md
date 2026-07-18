@@ -36,6 +36,8 @@ graph TD
         FSPort[FileSystemPort]
         LoggerPort[LoggerPort]
         LayoutRegistry[LayoutRegistryPort]
+        WorkingCopy[WorkingCopyPort]
+        GraphChange[GraphChangePort]
     end
 
     subgraph Driven [Driven Infrastructure Adapters]
@@ -131,6 +133,8 @@ Shared by designer and CLI. TypeScript + Zod — no Protocol Buffers.
 - `FileSystemPort` / `WorkspacePort`: load and save schemas and directories.
 - `LoggerPort`: structured logging.
 - `LayoutRegistryPort` / `LayoutEnginePort`: client-side graph layout engines (dagre, ELK, d3-hierarchy).
+- `WorkingCopyPort`: IndexedDB working-copy / baseline persistence and schema diffs.
+- `GraphChangePort`: apply canvas node/edge change lists (React Flow adapter).
 
 ### 3. Designer adapters & store (`app/packages/designer/src/`)
 

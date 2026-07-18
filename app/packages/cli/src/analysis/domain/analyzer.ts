@@ -32,6 +32,8 @@ export interface CodebaseAnalyzerDependencies {
 export interface RunAnalysisOptions {
   /** When set, component/container/context nodes are enriched before write. */
   forensicsByPath?: ReadonlyMap<string, FileMetrics>;
+  /** Full layout by default; set false (CLI `--no-relayout`) to preserve x/y. */
+  forceRelayout?: boolean;
 }
 
 export class CodebaseAnalyzer {
@@ -277,7 +279,9 @@ export class CodebaseAnalyzer {
     await applyExternalDependenciesPass(rootDir, this.deps.fileSystem, this.deps.logger);
 
     throwIfAborted(signal);
-    await applyLayoutPass(rootDir, this.deps.layout, this.deps.fileSystem, this.deps.logger);
+    await applyLayoutPass(rootDir, this.deps.layout, this.deps.fileSystem, this.deps.logger, {
+      forceRelayout: options?.forceRelayout !== false,
+    });
 
     throwIfAborted(signal);
     this.deps.logger.info(`✅ Multi-level structural blueprint generation complete.`);

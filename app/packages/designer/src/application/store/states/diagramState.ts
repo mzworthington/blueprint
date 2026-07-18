@@ -1,5 +1,3 @@
-import { applyNodeChanges, applyEdgeChanges } from '@xyflow/react';
-import type { NodeChange, EdgeChange, Connection } from '@xyflow/react';
 import type { UiState } from './uiState';
 import type { IoState } from './ioState';
 import {
@@ -15,6 +13,7 @@ import {
   type ExternalCandidateFilters,
   type WorkspaceEntity,
 } from '@blueprint/core';
+import type { CanvasNodeChange, CanvasEdgeChange, CanvasConnection } from '../../../core';
 import { mapDomainNodeToRFNode, mapDomainDepToRFEdge } from '../layoutUtils';
 import type { BlueprintRFNode, BlueprintRFEdge } from '../layoutUtils';
 import { applyStateUpdates } from './diagramState/applyStateUpdates';
@@ -43,7 +42,6 @@ import {
   deleteDependencyMutation,
 } from './diagramState/edgeMutations';
 import { computeClientLayout } from '../../layout/computeClientLayout';
-import { computeSchemaDiff } from '../../../infrastructure/db/db';
 
 export interface DiagramState {
   schema: SystemSchema;
@@ -78,9 +76,9 @@ export interface DiagramState {
   previewMermaidImport: (mermaid: string) => MermaidImportPreview;
   importMermaid: (mermaid: string, resolutions: ConflictResolutions) => boolean;
   clearError: () => void;
-  onNodesChange: (changes: NodeChange[]) => void;
-  onEdgesChange: (changes: EdgeChange[]) => void;
-  onConnect: (connection: Connection) => void;
+  onNodesChange: (changes: CanvasNodeChange[]) => void;
+  onEdgesChange: (changes: CanvasEdgeChange[]) => void;
+  onConnect: (connection: CanvasConnection) => void;
   addNode: (type: NodeType, position?: { x: number; y: number }) => void;
   updateNode: (id: string, updates: Partial<SystemNode>) => void;
   deleteNode: (id: string) => void;
@@ -123,10 +121,10 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   hasPendingChanges: false,
 
   checkPendingChanges: async () => {
-    const { currentFilePath, hasPendingChanges } = get();
+    const { currentFilePath, hasPendingChanges, workingCopyPort } = get();
     if (!currentFilePath) return;
     try {
-      const diff = await computeSchemaDiff(currentFilePath);
+      const diff = await workingCopyPort.computeSchemaDiff(currentFilePath);
       const hasChanges =
         diff.nodes.added.length > 0 ||
         diff.nodes.modified.length > 0 ||
@@ -301,7 +299,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
     if (hasRemoval) {
       get().recordHistory();
     }
-    const nextNodes = applyNodeChanges(changes, get().nodes) as unknown as BlueprintRFNode[];
+    const nextNodes = get().graphChangePort.applyNodeChanges(changes, get().nodes);
     applyStateUpdates(set, get, nextNodes, get().edges);
   },
 
@@ -315,10 +313,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
     if (hasRemoval) {
       get().recordHistory();
     }
-    const nextEdges = applyEdgeChanges(
-      persistedChanges,
-      get().edges
-    ) as unknown as BlueprintRFEdge[];
+    const nextEdges = get().graphChangePort.applyEdgeChanges(persistedChanges, get().edges);
     applyStateUpdates(set, get, get().nodes, nextEdges);
   },
 

@@ -155,8 +155,20 @@ export function applyImportMergePlan(
     if (resolution === 'overwrite') {
       const idx = resultNodes.findIndex(n => n.entityRef === conflict.entityRef);
       if (idx >= 0) {
-        const preserved = { x: resultNodes[idx].x, y: resultNodes[idx].y };
-        resultNodes[idx] = { ...conflict.imported, ...preserved };
+        const existing = resultNodes[idx]!;
+        // Prefer imported topology fields; keep layout + enrichment from the canvas.
+        resultNodes[idx] = {
+          ...conflict.imported,
+          x: existing.x,
+          y: existing.y,
+          properties: {
+            ...(existing.properties || {}),
+            ...(conflict.imported.properties || {}),
+          },
+          forensics: existing.forensics ?? conflict.imported.forensics,
+          isTest: existing.isTest ?? conflict.imported.isTest,
+          external: conflict.imported.external ?? existing.external,
+        };
       }
     } else if (resolution === 'rename') {
       const newRef = findRenameRef({ ...base, nodes: resultNodes }, conflict.entityRef);

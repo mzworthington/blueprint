@@ -5,12 +5,15 @@ import {
   type WorkspacePort,
   type LoggerPort,
   type LayoutRegistryPort,
+  type WorkingCopyPort,
+  type GraphChangePort,
   noopFileSystem,
   noopWorkspace,
   noopLogger,
   noopLayoutRegistry,
+  noopWorkingCopy,
+  noopGraphChange,
 } from '../../../core';
-import { saveBaselineSchema } from '../../../infrastructure/db/db';
 import { loadWorkspaceFromDirectory } from './ioState/openWorkspace';
 
 export interface IoState {
@@ -18,12 +21,16 @@ export interface IoState {
   workspacePort: WorkspacePort;
   logger: LoggerPort;
   layoutRegistry: LayoutRegistryPort;
+  workingCopyPort: WorkingCopyPort;
+  graphChangePort: GraphChangePort;
   setPorts: (
     ports: Partial<{
       fileSystemPort: FileSystemPort;
       workspacePort: WorkspacePort;
       logger: LoggerPort;
       layoutRegistry: LayoutRegistryPort;
+      workingCopyPort: WorkingCopyPort;
+      graphChangePort: GraphChangePort;
     }>
   ) => void;
 
@@ -40,6 +47,8 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
   workspacePort: noopWorkspace,
   logger: noopLogger,
   layoutRegistry: noopLayoutRegistry,
+  workingCopyPort: noopWorkingCopy,
+  graphChangePort: noopGraphChange,
   setPorts: ports => set((state: IoStateDeps) => ({ ...state, ...ports })),
 
   saveSchema: async () => {
@@ -118,13 +127,15 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
   },
 
   openWorkspaceDirectory: async () => {
-    const { workspacePort, logger, setNotification, initSchema, setIsLoading } = get();
+    const { workspacePort, workingCopyPort, logger, setNotification, initSchema, setIsLoading } =
+      get();
     setIsLoading(true);
     try {
       return await loadWorkspaceFromDirectory({
         selectDirectory: () => workspacePort.selectDirectory(),
         readDirectoryFiles: () => workspacePort.readDirectoryFiles(),
         getDirectoryName: () => workspacePort.getDirectoryName(),
+        workingCopy: workingCopyPort,
         logger,
         setNotification,
         initSchema,
@@ -146,6 +157,7 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
       nodeRefMap,
       currentFilePath,
       workspacePort,
+      workingCopyPort,
       isWorkspaceOpen,
       logger,
       setNotification,
@@ -161,7 +173,12 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
         logger.info('Diagram saved successfully');
         const sysId = schema.entityRef || 'default';
         const fileRefMap = nodeRefMap[currentFilePath] || {};
-        await saveBaselineSchema(currentFilePath, schema, sysId, fileRefMap);
+        await workingCopyPort.saveBaselineSchema({
+          filePath: currentFilePath,
+          schema,
+          systemId: sysId,
+          nodeRefMap: fileRefMap,
+        });
         get().checkPendingChanges?.();
         setNotification?.({
           type: 'success',

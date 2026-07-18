@@ -1,4 +1,4 @@
-import type { Connection } from '@xyflow/react';
+import type { CanvasConnection } from '../../../../core';
 import type { SystemDependency } from '@blueprint/core';
 import type { BlueprintRFEdge, ComponentEdgeData } from '../../layoutUtils';
 import { dependencyArrowMarker } from '../../layoutUtils';
@@ -11,7 +11,7 @@ type GetFn = () => {
   logger: { info: (m: string, meta?: Record<string, unknown>) => void };
 };
 
-export function connectNodesMutation(set: SetFn, get: GetFn, connection: Connection): void {
+export function connectNodesMutation(set: SetFn, get: GetFn, connection: CanvasConnection): void {
   if (!connection.source || !connection.target) return;
 
   const newEdgeId = `edge-${connection.source}-${connection.target}`;

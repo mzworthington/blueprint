@@ -237,6 +237,7 @@ async function runArchitecture(plan: BlueprintCliPlan): Promise<{
     const absoluteOutputDir = path.resolve(process.cwd(), outputDir);
     await analyzer.runAnalysis(contextName, outputDir, globPattern, cancellation.signal, {
       forensicsByPath,
+      forceRelayout: plan.architecture.relayout,
     });
     if (spinner) {
       spinner.stop(

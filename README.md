@@ -94,8 +94,8 @@ We are continuously improving Blueprint. Here are some of the key features and e
 
 ### 1. Interactive Visual Editing
 
-- **Undo / Redo (History):** Integrate a local command history stack (Zustand state store) to easily revert visual canvas actions (e.g., node dragging, edge wiring, renaming) using standard keyboard shortcuts (`Cmd+Z` / `Ctrl+Z`).
-- **Drag-and-Drop Catalog:** Enhance the Component Catalog by allowing users to drag components from the sidebar and place them at specific canvas coordinates.
+- ~~**Undo / Redo (History):**~~ Shipped — Zustand history + `Cmd+Z` / `Cmd+Shift+Z` toolbar shortcuts.
+- ~~**Drag-and-Drop Catalog:**~~ Shipped — drag catalog items onto the canvas (click-to-add still available).
 
 ### 2. Forensic Insights Expansion
 
@@ -108,4 +108,4 @@ We are continuously improving Blueprint. Here are some of the key features and e
 
 ### 4. Local-first Persistence
 
-- **Draft restore on refresh:** Improve hydration from IndexedDB working drafts when reopening the sandbox so a refresh does not drop uncommitted canvas edits before the user commits or re-opens a folder.
+- ~~**Draft restore on refresh:**~~ Shipped — sandbox drafts hydrate from IndexedDB when topology matches; workspace open remains disk-first with draft merge.

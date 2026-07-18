@@ -2,31 +2,21 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { DiffMenu } from './DiffMenu';
 import { useBlueprintStore } from '../../../../../application/store/store';
-import { computeSchemaDiff, revertWorkingSchema } from '../../../../../infrastructure/db/db';
+import type { WorkingCopyPort } from '../../../../../core';
 
-// Mock DB operations
-vi.mock('../../../../../infrastructure/db/db', () => ({
-  db: {
-    originalNodes: { where: () => ({ equals: () => ({ toArray: () => Promise.resolve([]) }) }) },
-    originalDependencies: {
-      where: () => ({ equals: () => ({ toArray: () => Promise.resolve([]) }) }),
-    },
-    workingNodes: {
-      where: () => ({ equals: () => ({ delete: () => Promise.resolve() }) }),
-      bulkPut: () => Promise.resolve(),
-    },
-    workingDependencies: {
-      where: () => ({ equals: () => ({ delete: () => Promise.resolve() }) }),
-      bulkPut: () => Promise.resolve(),
-    },
-    transaction: (_mode: any, _tables: any, fn: any) => fn(),
-  },
-  computeSchemaDiff: vi.fn(),
-  revertWorkingSchema: vi.fn(),
+const computeSchemaDiff = vi.fn();
+const revertWorkingSchema = vi.fn();
+
+const mockWorkingCopy: WorkingCopyPort = {
   saveBaselineSchema: vi.fn().mockResolvedValue(undefined),
   saveWorkingSchema: vi.fn().mockResolvedValue(undefined),
+  computeSchemaDiff: ((...args: unknown[]) =>
+    computeSchemaDiff(...args)) as WorkingCopyPort['computeSchemaDiff'],
+  revertWorkingSchema: ((...args: unknown[]) =>
+    revertWorkingSchema(...args)) as WorkingCopyPort['revertWorkingSchema'],
   pathHasStoredData: vi.fn().mockResolvedValue(false),
-}));
+  loadWorkingSchema: vi.fn().mockResolvedValue(null),
+};
 
 describe('DiffMenu Component', () => {
   const mockOnClose = vi.fn();
@@ -35,6 +25,7 @@ describe('DiffMenu Component', () => {
     vi.clearAllMocks();
     useBlueprintStore.setState({
       currentFilePath: 'blueprints/cli.yaml',
+      workingCopyPort: mockWorkingCopy,
       loadedSystems: [
         {
           path: 'blueprints/cli.yaml',
@@ -65,7 +56,7 @@ describe('DiffMenu Component', () => {
   });
 
   it('renders up to date message when there are no structural differences', async () => {
-    vi.mocked(computeSchemaDiff).mockResolvedValueOnce({
+    computeSchemaDiff.mockResolvedValueOnce({
       nodes: { added: [], modified: [], deleted: [] },
       dependencies: { added: [], deleted: [] },
     });
@@ -78,7 +69,7 @@ describe('DiffMenu Component', () => {
   });
 
   it('displays added, modified, and deleted component nodes and connections', async () => {
-    vi.mocked(computeSchemaDiff).mockResolvedValueOnce({
+    computeSchemaDiff.mockResolvedValueOnce({
       nodes: {
         added: [
           {
@@ -151,7 +142,7 @@ describe('DiffMenu Component', () => {
   });
 
   it('triggers revert schema operations and calls initSchema when Revert is confirmed', async () => {
-    vi.mocked(computeSchemaDiff).mockResolvedValueOnce({
+    computeSchemaDiff.mockResolvedValueOnce({
       nodes: {
         added: [
           {
@@ -181,7 +172,7 @@ describe('DiffMenu Component', () => {
       nodes: [],
       dependencies: [],
     };
-    vi.mocked(revertWorkingSchema).mockResolvedValueOnce(mockRestoredSchema);
+    revertWorkingSchema.mockResolvedValueOnce(mockRestoredSchema);
 
     render(<DiffMenu isOpen={true} onClose={mockOnClose} />);
 
@@ -192,13 +183,13 @@ describe('DiffMenu Component', () => {
     fireEvent.click(screen.getByText('Revert Changes'));
 
     await waitFor(() => {
-      expect(revertWorkingSchema).toHaveBeenCalledWith(
-        'blueprints/cli.yaml',
-        'CLI System',
-        '1.0.0',
-        'container',
-        undefined
-      );
+      expect(revertWorkingSchema).toHaveBeenCalledWith({
+        filePath: 'blueprints/cli.yaml',
+        systemName: 'CLI System',
+        systemVersion: '1.0.0',
+        systemLevel: 'container',
+        systemEntityRef: undefined,
+      });
       expect(mockInitSchema).toHaveBeenCalledWith(mockRestoredSchema);
       expect(mockOnClose).toHaveBeenCalledTimes(1);
     });
@@ -207,7 +198,7 @@ describe('DiffMenu Component', () => {
   });
 
   it('triggers commit schema operations and calls saveActiveDiagram when Commit is clicked', async () => {
-    vi.mocked(computeSchemaDiff).mockResolvedValueOnce({
+    computeSchemaDiff.mockResolvedValueOnce({
       nodes: {
         added: [
           {

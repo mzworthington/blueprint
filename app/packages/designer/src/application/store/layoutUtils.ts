@@ -1,9 +1,3 @@
-import {
-  MarkerType,
-  type Node as RFNode,
-  type Edge as RFEdge,
-  type EdgeMarker,
-} from '@xyflow/react';
 import type {
   SystemSchema,
   SystemNode,
@@ -18,9 +12,17 @@ import type {
 /** Matches canvas edge stroke (see `.react-flow__edge-path` in index.css). */
 export const DEPENDENCY_EDGE_STROKE = '#00d8ff';
 
-export function dependencyArrowMarker(color: string = DEPENDENCY_EDGE_STROKE): EdgeMarker {
+/** Framework-agnostic edge marker (compatible with React Flow EdgeMarker). */
+export type CanvasEdgeMarker = {
+  type: 'arrow' | 'arrowclosed';
+  width?: number;
+  height?: number;
+  color?: string;
+};
+
+export function dependencyArrowMarker(color: string = DEPENDENCY_EDGE_STROKE): CanvasEdgeMarker {
   return {
-    type: MarkerType.ArrowClosed,
+    type: 'arrowclosed',
     width: 18,
     height: 18,
     color,
@@ -57,7 +59,17 @@ export type ComponentNodeData = {
   hotspotHeat?: number;
 };
 
-export type BlueprintRFNode = RFNode<ComponentNodeData, 'blueprintNode'>;
+/** Canvas node DTO — structurally compatible with React Flow Node. */
+export type BlueprintRFNode = {
+  id: string;
+  type?: string;
+  position: { x: number; y: number };
+  data: ComponentNodeData;
+  measured?: { width?: number; height?: number };
+  selected?: boolean;
+  dragging?: boolean;
+  [key: string]: unknown;
+};
 
 export type ComponentEdgeData = {
   [key: string]: unknown;
@@ -65,7 +77,25 @@ export type ComponentEdgeData = {
   description: string;
 };
 
-export type BlueprintRFEdge = RFEdge<ComponentEdgeData>;
+/** Canvas edge DTO — structurally compatible with React Flow Edge. */
+export type BlueprintRFEdge = {
+  id: string;
+  source: string;
+  target: string;
+  type?: string;
+  animated?: boolean;
+  markerEnd?: CanvasEdgeMarker | string;
+  data?: ComponentEdgeData;
+  label?: string;
+  style?: Record<string, unknown>;
+  labelStyle?: Record<string, unknown>;
+  labelBgStyle?: Record<string, unknown>;
+  labelBgPadding?: [number, number];
+  labelBgBorderRadius?: number;
+  sourceHandle?: string | null;
+  targetHandle?: string | null;
+  [key: string]: unknown;
+};
 
 export const mapDomainNodeToRFNode = (n: any): BlueprintRFNode => {
   const ref = n.entityRef || n.id || `node-${Math.random().toString(36).substring(2, 9)}`;

@@ -129,6 +129,52 @@ describe('applyImportMergePlan', () => {
     expect(merged.nodes.find(n => n.entityRef === 'billing/gateway')?.x).toBe(10);
   });
 
+  it('preserves forensics and properties when overwriting', () => {
+    const baseWithEnrichment: SystemSchema = {
+      ...baseSchema,
+      nodes: [
+        {
+          entityRef: 'billing/gateway',
+          type: 'rest-api',
+          name: 'Gateway',
+          x: 10,
+          y: 20,
+          properties: { team: 'payments', region: 'eu' },
+          forensics: { hotspotScore: 0.9, churn: 12 },
+        },
+      ],
+      dependencies: [],
+    };
+    const imported: SystemSchema = {
+      name: 'Import',
+      version: '1.0.0',
+      level: 'container',
+      nodes: [
+        {
+          entityRef: 'billing/gateway',
+          type: 'microservice',
+          name: 'API Gateway',
+          properties: { region: 'us' },
+        },
+      ],
+      dependencies: [],
+    };
+
+    const merged = applyImportMergePlan(baseWithEnrichment, imported, {
+      'billing/gateway': 'overwrite',
+    });
+
+    const node = merged.nodes.find(n => n.entityRef === 'billing/gateway');
+    expect(node).toMatchObject({
+      type: 'microservice',
+      name: 'API Gateway',
+      x: 10,
+      y: 20,
+      properties: { team: 'payments', region: 'us' },
+      forensics: { hotspotScore: 0.9, churn: 12 },
+    });
+  });
+
   it('renames conflicting nodes when resolution is rename', () => {
     const imported: SystemSchema = {
       name: 'Import',
