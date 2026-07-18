@@ -1,5 +1,10 @@
 import type { SystemSchema, SystemNode, SystemDependency, C4Level } from '@blueprint/core';
-import { getClosestHandles, rebuildSchemaFromCanvas } from '../../layoutUtils';
+import {
+  DEPENDENCY_EDGE_STROKE,
+  dependencyArrowMarker,
+  getClosestHandles,
+  rebuildSchemaFromCanvas,
+} from '../../layoutUtils';
 import type { BlueprintRFNode, BlueprintRFEdge } from '../../layoutUtils';
 import type { ValidationResult } from '@blueprint/core';
 
@@ -87,9 +92,15 @@ export function highlightEdgesForValidation(
       fileRefMap[edge.target] ||
       (edge.target.includes('/') ? edge.target : `${systemId}/${edge.target}`);
     const isCycleEdge = cycleNodes.has(sourceRef) && cycleNodes.has(targetRef);
+    const stroke = isCycleEdge
+      ? '#ef4444'
+      : edge.data?.type === 'publish-subscribe'
+        ? '#c084fc'
+        : DEPENDENCY_EDGE_STROKE;
     return {
       ...edge,
       animated: edge.animated || isCycleEdge,
+      markerEnd: dependencyArrowMarker(stroke),
       label: edge.data?.description || undefined,
       labelStyle: { fill: '#94a3b8', fontSize: 10, fontWeight: 500 },
       labelBgStyle: { fill: '#020617', fillOpacity: 0.85 },
@@ -97,11 +108,7 @@ export function highlightEdgesForValidation(
       labelBgBorderRadius: 4,
       style: {
         ...edge.style,
-        stroke: isCycleEdge
-          ? '#ef4444'
-          : edge.data?.type === 'publish-subscribe'
-            ? '#c084fc'
-            : '#8b5cf6',
+        stroke,
         strokeWidth: isCycleEdge ? 3.5 : 2,
       },
     };

@@ -1,5 +1,5 @@
 import type { BlueprintRFEdge, BlueprintRFNode } from '../store/layoutUtils';
-import { getClosestHandles } from '../store/layoutUtils';
+import { dependencyArrowMarker, getClosestHandles } from '../store/layoutUtils';
 import { resolveCouplingEdges } from './resolveCouplingEdges';
 
 export const COUPLING_EDGE_PREFIX = 'coupling-';
@@ -35,6 +35,7 @@ export function buildCouplingOverlayEdges(
         targetHandle: handles.targetHandle,
         type: 'default',
         animated: true,
+        markerEnd: dependencyArrowMarker('#f59e0b'),
         selectable: false,
         focusable: false,
         data: {

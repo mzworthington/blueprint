@@ -168,10 +168,10 @@ describe('Canvas Component', () => {
     expect(screen.getByTestId('edges-count')).toHaveTextContent('0');
   });
 
-  it('keeps selected node and transitive downstream deps when focus toggle is on', () => {
+  it('keeps selected node and transitive upstream + downstream deps when focus toggle is on', () => {
     const { initSchema } = useBlueprintStore.getState();
     initSchema({
-      name: 'Downstream Focus',
+      name: 'Dependency Focus',
       version: '1.0.0',
       level: 'component',
       nodes: [
@@ -186,7 +186,7 @@ describe('Canvas Component', () => {
       ],
     });
     useBlueprintStore.setState({
-      selectedNodeId: 'a',
+      selectedNodeId: 'c',
       showTests: true,
       showExternals: true,
       showSelectedDependenciesOnly: true,

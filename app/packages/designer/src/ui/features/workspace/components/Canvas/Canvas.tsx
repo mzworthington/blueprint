@@ -26,6 +26,11 @@ import {
   applyHotspotHeatmap,
   hotspotHeatmapMinimapColor,
 } from '../../../../../application/forensics/hotspotHeatmap';
+import {
+  DEPENDENCY_EDGE_STROKE,
+  dependencyArrowMarker,
+  shouldAnimateDependencyEdge,
+} from '../../../../../application/store/layoutUtils';
 
 export const Canvas: React.FC = () => {
   const [, setLocation] = useLocation();
@@ -183,12 +188,17 @@ export const Canvas: React.FC = () => {
 
     return next.map(e => {
       const isSelected = e.id === selectedEdgeId;
+      const stroke = isSelected
+        ? '#00f0ff'
+        : ((e.style?.stroke as string | undefined) ?? DEPENDENCY_EDGE_STROKE);
       return {
         ...e,
         selected: isSelected,
+        animated: shouldAnimateDependencyEdge(e, selectedNodeId, showSelectedDependenciesOnly),
+        markerEnd: dependencyArrowMarker(stroke),
         style: {
           ...e.style,
-          stroke: isSelected ? '#00f0ff' : e.style?.stroke,
+          stroke,
           strokeWidth: isSelected ? 3 : ((e.style?.strokeWidth as number | undefined) ?? 2),
         },
       };
@@ -200,6 +210,7 @@ export const Canvas: React.FC = () => {
     selectedNodeId,
     selectedEdgeId,
     showCoupling,
+    showSelectedDependenciesOnly,
     focusedCyclePath,
     edges,
   ]);

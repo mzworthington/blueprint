@@ -12,7 +12,7 @@ export interface UiState {
   showExternals: boolean;
   /**
    * When true (and a node is selected), hide everything except the selection
-   * and its transitive downstream dependency closure (to leaf nodes).
+   * and its transitive upstream + downstream dependency neighborhood.
    */
   showSelectedDependenciesOnly: boolean;
   /** When true (and a node is selected), focus the canvas on that node and its coupled peers. */

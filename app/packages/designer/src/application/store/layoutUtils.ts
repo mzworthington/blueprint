@@ -1,4 +1,9 @@
-import type { Node as RFNode, Edge as RFEdge } from '@xyflow/react';
+import {
+  MarkerType,
+  type Node as RFNode,
+  type Edge as RFEdge,
+  type EdgeMarker,
+} from '@xyflow/react';
 import type {
   SystemSchema,
   SystemNode,
@@ -9,6 +14,32 @@ import type {
   C4Level,
   NodeForensics,
 } from '@blueprint/core';
+
+/** Matches canvas edge stroke (see `.react-flow__edge-path` in index.css). */
+export const DEPENDENCY_EDGE_STROKE = '#00d8ff';
+
+export function dependencyArrowMarker(color: string = DEPENDENCY_EDGE_STROKE): EdgeMarker {
+  return {
+    type: MarkerType.ArrowClosed,
+    width: 18,
+    height: 18,
+    color,
+  };
+}
+
+/** Flow animation: incident to selection, or all edges in focus mode. */
+export function shouldAnimateDependencyEdge(
+  edge: { source: string; target: string; animated?: boolean },
+  selectedNodeId: string | null | undefined,
+  showSelectedDependenciesOnly: boolean
+): boolean {
+  if (edge.animated) return true;
+  if (showSelectedDependenciesOnly && selectedNodeId) return true;
+  if (selectedNodeId && (edge.source === selectedNodeId || edge.target === selectedNodeId)) {
+    return true;
+  }
+  return false;
+}
 
 export type ComponentNodeData = {
   [key: string]: unknown;
@@ -61,6 +92,7 @@ export const mapDomainDepToRFEdge = (d: SystemDependency): BlueprintRFEdge => ({
   target: d.to,
   type: 'default',
   animated: d.type === 'publish-subscribe',
+  markerEnd: dependencyArrowMarker(),
   data: { type: d.type, description: d.description || '' },
   label: d.description || undefined,
   style: {

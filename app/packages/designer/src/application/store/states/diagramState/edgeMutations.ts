@@ -1,6 +1,7 @@
 import type { Connection } from '@xyflow/react';
 import type { SystemDependency } from '@blueprint/core';
 import type { BlueprintRFEdge, ComponentEdgeData } from '../../layoutUtils';
+import { dependencyArrowMarker } from '../../layoutUtils';
 import { applyStateUpdates } from './applyStateUpdates';
 
 type SetFn = (partial: Record<string, unknown>) => void;
@@ -27,6 +28,7 @@ export function connectNodesMutation(set: SetFn, get: GetFn, connection: Connect
     source: connection.source,
     target: connection.target,
     type: 'default',
+    markerEnd: dependencyArrowMarker(),
     data: { type: 'direct-call', description: '' },
     style: { strokeWidth: 2 },
   };

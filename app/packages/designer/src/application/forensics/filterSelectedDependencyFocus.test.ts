@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import type { BlueprintRFEdge, BlueprintRFNode } from '../store/layoutUtils';
 import {
-  collectDownstreamDependencyClosure,
+  collectDependencyNeighborhood,
   filterSelectedDependencyFocusNodes,
 } from './filterSelectedDependencyFocus';
 
@@ -30,19 +30,32 @@ function edge(source: string, target: string): BlueprintRFEdge {
 }
 
 describe('filterSelectedDependencyFocus', () => {
+  // a → b → c ← orphan
+  // a → d
   const nodes = [node('a'), node('b'), node('c'), node('d'), node('orphan')];
   const edges = [edge('a', 'b'), edge('b', 'c'), edge('a', 'd'), edge('orphan', 'c')];
 
-  it('collects selected node and all transitive downstream targets to leaves', () => {
-    const visible = collectDownstreamDependencyClosure('a', nodes, edges);
+  it('collects selected node plus transitive upstream and downstream neighbors', () => {
+    const visible = collectDependencyNeighborhood('a', nodes, edges);
     expect([...visible].sort()).toEqual(['a', 'b', 'c', 'd']);
   });
 
-  it('does not include upstream-only dependents', () => {
-    const visible = collectDownstreamDependencyClosure('b', nodes, edges);
-    expect([...visible].sort()).toEqual(['b', 'c']);
-    expect(visible.has('a')).toBe(false);
+  it('includes upstream dependents when selecting a mid-chain node', () => {
+    const visible = collectDependencyNeighborhood('b', nodes, edges);
+    expect([...visible].sort()).toEqual(['a', 'b', 'c']);
+    expect(visible.has('d')).toBe(false);
     expect(visible.has('orphan')).toBe(false);
+  });
+
+  it('includes all transitive upstream callers when selecting a leaf', () => {
+    const visible = collectDependencyNeighborhood('c', nodes, edges);
+    expect([...visible].sort()).toEqual(['a', 'b', 'c', 'orphan']);
+    expect(visible.has('d')).toBe(false);
+  });
+
+  it('does not include sibling-only branches via a shared upstream', () => {
+    const visible = collectDependencyNeighborhood('b', nodes, edges);
+    expect(visible.has('d')).toBe(false);
   });
 
   it('filters nodes when enabled; passes through when disabled or unselected', () => {
@@ -51,5 +64,10 @@ describe('filterSelectedDependencyFocus', () => {
 
     const focused = filterSelectedDependencyFocusNodes(nodes, edges, 'a', true);
     expect(focused.map(n => n.id).sort()).toEqual(['a', 'b', 'c', 'd']);
+  });
+
+  it('keeps upstream callers when focusing a dependency target', () => {
+    const focused = filterSelectedDependencyFocusNodes(nodes, edges, 'c', true);
+    expect(focused.map(n => n.id).sort()).toEqual(['a', 'b', 'c', 'orphan']);
   });
 });
