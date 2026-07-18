@@ -14,6 +14,11 @@ export interface LayoutPassOptions {
    * Pass `false` (CLI `--no-relayout`) to preserve existing finite x/y.
    */
   forceRelayout?: boolean;
+  /**
+   * Layout engine for `level: context` schemas (e.g. d3-hierarchy).
+   * When omitted, `layout` is used for every level.
+   */
+  contextLayout?: LayoutPort;
 }
 
 function positionsChanged(before: SystemSchema, after: SystemSchema): boolean {
@@ -31,6 +36,7 @@ function positionsChanged(before: SystemSchema, after: SystemSchema): boolean {
  * Final pass: layout every blueprint schema after structure + externals are fixed.
  * By default recomputes all positions. Pass `forceRelayout: false` (CLI `--no-relayout`)
  * to preserve existing finite x/y and only lay out gap nodes.
+ * Context schemas use `contextLayout` when provided (d3-hierarchy); other levels use dagre.
  */
 export async function applyLayoutPass(
   rootDir: string,
@@ -59,8 +65,10 @@ export async function applyLayoutPass(
 
     schemasScanned++;
     const previous = schema.nodes;
+    const engine =
+      schema.level === 'context' && options.contextLayout ? options.contextLayout : layout;
     const laidOut = await layoutWithPreservation(
-      layout,
+      engine,
       forceRelayout ? [] : previous,
       previous,
       schema.dependencies,

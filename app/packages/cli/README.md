@@ -18,29 +18,30 @@ pnpm dev:cli
 
 ### Modes
 
-1. **Interactive (default):** step-by-step prompts for parser, glob, output, and whether to enrich with Git forensics.
+1. **Interactive (default):** step-by-step prompts for context, glob, output, and whether to enrich with Git forensics.
 2. **Headless / CI:** non-TTY, or when flags are supplied:
 
 ```bash
-pnpm dev:cli --headless --parser=ts-morph --glob="**/*.{ts,tsx}" --output="blueprints"
+pnpm dev:cli --headless --glob="**/*.{ts,tsx}" --output="blueprints"
 ```
 
 ### Flags
 
-| Flag                               | Purpose                                                           |
-| ---------------------------------- | ----------------------------------------------------------------- |
-| `--headless`                       | Disable interactive prompts                                       |
-| `--parser=ts-morph \| tree-sitter` | AST engine (`ts-morph` default; `tree-sitter` for multi-language) |
-| `--glob="<pattern>"`               | Files to consider (still subject to filters)                      |
-| `--output="<path>"`                | Output folder (or `BLUEPRINT_OUTPUT_DIR`)                         |
-| `--context="<name>"`               | Context system name / entityRef root                              |
-| `--ignore="<a,b>"`                 | Extra ignore globs (comma-separated)                              |
-| `--systems="<a,b>"`                | Restrict discovery to these system roots                          |
-| `--rollup-modules`                 | Collapse `*-module-*` packages into a prefix system               |
-| `--git`                            | Explicitly enable Git forensics (on by default)                   |
-| `--no-git`                         | Skip Git forensics enrichment                                     |
-| `--git-only`                       | Headless architecture + forensics enrich (same deliverable)       |
-| `--git-since=<days>`               | Forensics lookback window (default 90)                            |
+| Flag                               | Purpose                                                      |
+| ---------------------------------- | ------------------------------------------------------------ |
+| `--headless`                       | Disable interactive prompts                                  |
+| `--parser=tree-sitter \| ts-morph` | AST engine (`tree-sitter` default; `ts-morph` via flag only) |
+| `--glob="<pattern>"`               | Files to consider (still subject to filters)                 |
+| `--output="<path>"`                | Output folder (or `BLUEPRINT_OUTPUT_DIR`)                    |
+| `--context="<name>"`               | Context system name / entityRef root                         |
+| `--ignore="<a,b>"`                 | Extra ignore globs (comma-separated)                         |
+| `--systems="<a,b>"`                | Restrict discovery to these system roots                     |
+| `--rollup-modules`                 | Collapse `*-module-*` packages into a prefix system          |
+| `--git`                            | Explicitly enable Git forensics (on by default)              |
+| `--no-git`                         | Skip Git forensics enrichment                                |
+| `--git-only`                       | Headless architecture + forensics enrich (same deliverable)  |
+| `--git-since=<days>`               | Forensics lookback window (default 90)                       |
+| `--no-relayout`                    | Preserve existing `x`/`y` on re-scan                         |
 
 Interrupt with **Ctrl+C** (or SIGTERM). First signal aborts cooperatively; a second signal force-exits (`130`).
 
@@ -67,6 +68,7 @@ Forensics attach a typed `forensics` object onto component nodes (per-file metri
 | --------------------------------------- | ------------------------------------------------------------------------------ |
 | `blueprints/context.yaml`               | Software systems + hub→spoke “Part of product system” edges (merged on re-run) |
 | `blueprints/<system>/containers.yaml`   | Containers for that system                                                     |
+| `blueprints/<tf-root>/containers.yaml`  | Terraform resources/modules as containers (when `.tf` roots are found)         |
 | `blueprints/<system>/*-components.yaml` | Component graphs per container                                                 |
 
 ### Multi-system discovery
@@ -144,7 +146,7 @@ pnpm --filter @blueprint/cli build
 Produces `dist/blueprint` (or `dist/blueprint.exe`) and copies supported tree-sitter language `.wasm` files next to the binary. Releases ship those parsers in the same archive.
 
 ```bash
-./dist/blueprint --headless --parser=ts-morph
+./dist/blueprint --headless --parser=tree-sitter
 ```
 
 ---

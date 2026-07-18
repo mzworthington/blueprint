@@ -11,8 +11,8 @@ nodes:
       rootPath: ''
       productId: testproject
       role: product-hub
-    x: 1568
-    y: 64
+    x: 3640
+    y: 320
   - entityRef: blueprint/app
     type: software-system
     name: App System
@@ -20,20 +20,20 @@ nodes:
       rootPath: app
       productId: testproject
       role: subsystem
-    x: 1568
-    y: 384
+    x: 3640
+    y: 600
     forensics:
       complexity: 106
       churn: 838
-      hotspotScore: 0.5142857142857142
       authorCount: 1
-      fileCount: 273
-      hotspotCount: 1
-      knowledgeSiloCount: 83
+      hotspotScore: 0.5142857142857142
       classifications:
         - knowledge-silo
         - hotspot
       sinceDays: 90
+      fileCount: 273
+      hotspotCount: 1
+      knowledgeSiloCount: 83
   - entityRef: blueprint/backstage
     type: software-system
     name: Backstage System
@@ -41,8 +41,8 @@ nodes:
       rootPath: ''
       productId: backstage
       role: product-hub
-    x: 48
-    y: 64
+    x: 580
+    y: 320
   - entityRef: blueprint/packages
     type: software-system
     name: Packages System
@@ -50,8 +50,8 @@ nodes:
       rootPath: packages
       productId: backstage
       role: subsystem
-    x: 808
-    y: 384
+    x: 760
+    y: 600
     forensics:
       complexity: 102
       churn: 2058
@@ -70,8 +70,8 @@ nodes:
       rootPath: plugins
       productId: backstage
       role: subsystem
-    x: 1188
-    y: 384
+    x: 1120
+    y: 600
     forensics:
       complexity: 96
       churn: 2852
@@ -90,8 +90,8 @@ nodes:
       rootPath: docs-ui
       productId: backstage
       role: subsystem
-    x: 48
-    y: 384
+    x: 40
+    y: 600
     forensics:
       complexity: 23
       churn: 69
@@ -110,8 +110,8 @@ nodes:
       rootPath: microsite
       productId: backstage
       role: subsystem
-    x: 428
-    y: 384
+    x: 400
+    y: 600
     forensics:
       complexity: 8
       churn: 17
@@ -128,8 +128,8 @@ nodes:
       rootPath: ''
       productId: eshop
       role: product-hub
-    x: 1188
-    y: 64
+    x: 1180
+    y: 320
     forensics:
       complexity: 4
       churn: 0
@@ -139,6 +139,85 @@ nodes:
       fileCount: 1
       hotspotCount: 0
       knowledgeSiloCount: 0
+  - entityRef: blueprint/google_cloud
+    type: software-system
+    name: Google Cloud System
+    properties:
+      rootPath: ''
+      productId: google_cloud
+      role: product-hub
+    x: 1780
+    y: 320
+  - entityRef: blueprint/infrastructure
+    type: software-system
+    name: Infrastructure System
+    properties:
+      rootPath: ''
+      productId: infrastructure
+      role: product-hub
+    x: 2380
+    y: 320
+  - entityRef: blueprint/camunda
+    type: software-system
+    name: Camunda System
+    properties:
+      rootPath: camunda
+      productId: infrastructure
+      role: subsystem
+    x: 1480
+    y: 600
+  - entityRef: blueprint/minecraft
+    type: software-system
+    name: Minecraft System
+    properties:
+      rootPath: minecraft
+      productId: infrastructure
+      role: subsystem
+    x: 2560
+    y: 600
+  - entityRef: blueprint/oathkeeper
+    type: software-system
+    name: Oathkeeper System
+    properties:
+      rootPath: oathkeeper
+      productId: infrastructure
+      role: subsystem
+    x: 2920
+    y: 600
+  - entityRef: blueprint/camunda-secure
+    type: software-system
+    name: Camunda-secure System
+    properties:
+      rootPath: camunda-secure
+      productId: infrastructure
+      role: subsystem
+    x: 1840
+    y: 600
+  - entityRef: blueprint/openresty-beyondcorp
+    type: software-system
+    name: Openresty-beyondcorp System
+    properties:
+      rootPath: openresty-beyondcorp
+      productId: infrastructure
+      role: subsystem
+    x: 3280
+    y: 600
+  - entityRef: blueprint/cqrs-bigquery-memorystore
+    type: software-system
+    name: Cqrs-bigquery-memorystore System
+    properties:
+      rootPath: CQRS_bigquery_memorystore
+      productId: infrastructure
+      role: subsystem
+    x: 2200
+    y: 600
+  - entityRef: blueprint/user
+    type: person
+    name: User
+    properties:
+      role: context-actor
+    x: 2110
+    y: 40
 dependencies:
   - from: blueprint/backstage
     to: blueprint/packages
@@ -176,3 +255,167 @@ dependencies:
     to: blueprint/microsite
     type: direct-call
     description: Part of product system
+  - from: blueprint/testproject
+    to: blueprint/app
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/packages
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/plugins
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/docs-ui
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/microsite
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/testproject
+    to: blueprint/app
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/packages
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/plugins
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/docs-ui
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/microsite
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/testproject
+    to: blueprint/app
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/packages
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/plugins
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/docs-ui
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/microsite
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/testproject
+    to: blueprint/app
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/packages
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/plugins
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/docs-ui
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/microsite
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/testproject
+    to: blueprint/app
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/packages
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/plugins
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/docs-ui
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/microsite
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/testproject
+    to: blueprint/app
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/packages
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/plugins
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/docs-ui
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/microsite
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/camunda
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/minecraft
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/oathkeeper
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/camunda-secure
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/openresty-beyondcorp
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/cqrs-bigquery-memorystore
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/user
+    to: blueprint/testproject
+    type: direct-call
+    description: Uses
+  - from: blueprint/user
+    to: blueprint/backstage
+    type: direct-call
+    description: Uses
+  - from: blueprint/user
+    to: blueprint/eshop
+    type: direct-call
+    description: Uses
+  - from: blueprint/user
+    to: blueprint/google_cloud
+    type: direct-call
+    description: Uses
+  - from: blueprint/user
+    to: blueprint/infrastructure
+    type: direct-call
+    description: Uses

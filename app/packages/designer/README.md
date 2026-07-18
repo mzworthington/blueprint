@@ -52,7 +52,7 @@ To execute the E2E tests, run from the `/app` directory:
 pnpm --filter @blueprint/designer test:e2e
 ```
 
-When E2E tests are run, they automatically capture and output visual snapshots to the repository's `docs/screenshots/` folder (consumed by the product guide and journeys pages).
+When E2E tests are run, they refresh PNGs under `docs/screenshots/` (product guide / journeys). Playwright also attaches a screenshot per test to the HTML report, and records a WebM video on failure (`test-results/`, uploaded in CI).
 
 ---
 

@@ -175,4 +175,45 @@ describe('applyLayoutPass', () => {
     expect(result.schemasScanned).toBe(0);
     expect(layout.calls).toHaveLength(0);
   });
+
+  it('uses contextLayout for context-level schemas and dagre layout for others', async () => {
+    const contextLayout = new SpyLayout();
+    const contextPath = `${rootDir}/context.yaml`;
+    const componentPath = path;
+
+    fileSystem.directories.set(rootDir, ['cli', 'context.yaml']);
+    fileSystem.writtenFiles.set(
+      contextPath,
+      serializeSchemaToYaml({
+        entityRef: 'blueprint',
+        name: 'Blueprint Context',
+        version: '1.0.0',
+        level: 'context',
+        nodes: [
+          { entityRef: 'blueprint/user', type: 'person', name: 'User' },
+          { entityRef: 'blueprint/app', type: 'software-system', name: 'App' },
+        ],
+        dependencies: [{ from: 'blueprint/user', to: 'blueprint/app', type: 'direct-call' }],
+      })
+    );
+    fileSystem.existingFiles.add(contextPath);
+
+    fileSystem.writtenFiles.set(
+      componentPath,
+      serializeSchemaToYaml(
+        schemaWith([{ entityRef: 'blueprint/cli/writers/a', type: 'component', name: 'A' }])
+      )
+    );
+    fileSystem.existingFiles.add(componentPath);
+
+    await applyLayoutPass(rootDir, layout, fileSystem, logger, { contextLayout });
+
+    expect(contextLayout.calls).toHaveLength(1);
+    expect(contextLayout.calls[0]!.nodes.map(n => n.entityRef)).toEqual([
+      'blueprint/user',
+      'blueprint/app',
+    ]);
+    expect(layout.calls).toHaveLength(1);
+    expect(layout.calls[0]!.nodes.map(n => n.entityRef)).toEqual(['blueprint/cli/writers/a']);
+  });
 });

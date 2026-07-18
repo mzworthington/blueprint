@@ -1,0 +1,141 @@
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: container
+metaData:
+  entityRef: blueprint/minecraft
+  name: Minecraft Infrastructure
+nodes:
+  - entityRef: blueprint/minecraft/google-service-account-minecraft
+    type: container
+    name: minecraft
+    external: false
+    properties:
+      iac.address: google_service_account.minecraft
+      iac.provider_type: google_service_account
+      iac.kind: resource
+    x: 1188
+    y: 704
+  - entityRef: blueprint/minecraft/google-compute-disk-minecraft
+    type: container
+    name: minecraft
+    external: false
+    properties:
+      iac.address: google_compute_disk.minecraft
+      iac.provider_type: google_compute_disk
+      iac.kind: resource
+    x: 1948
+    y: 704
+  - entityRef: blueprint/minecraft/google-compute-address-minecraft
+    type: container
+    name: minecraft-ip
+    external: false
+    properties:
+      iac.address: google_compute_address.minecraft
+      iac.provider_type: google_compute_address
+      iac.kind: resource
+    x: 2328
+    y: 704
+  - entityRef: blueprint/minecraft/google-compute-instance-minecraft
+    type: container
+    name: minecraft
+    external: false
+    properties:
+      iac.address: google_compute_instance.minecraft
+      iac.provider_type: google_compute_instance
+      iac.kind: resource
+    x: 1188
+    y: 384
+  - entityRef: blueprint/minecraft/google-compute-network-minecraft
+    type: container
+    name: minecraft
+    external: false
+    properties:
+      iac.address: google_compute_network.minecraft
+      iac.provider_type: google_compute_network
+      iac.kind: resource
+    x: 1568
+    y: 704
+  - entityRef: blueprint/minecraft/google-compute-firewall-minecraft
+    type: container
+    name: minecraft
+    external: false
+    properties:
+      iac.address: google_compute_firewall.minecraft
+      iac.provider_type: google_compute_firewall
+      iac.kind: resource
+    x: 48
+    y: 384
+  - entityRef: blueprint/minecraft/google-project-iam-custom-role-minecraftswitcher
+    type: container
+    name: minecraftSwitcher
+    external: false
+    properties:
+      iac.address: google_project_iam_custom_role.minecraftSwitcher
+      iac.provider_type: google_project_iam_custom_role
+      iac.kind: resource
+    x: 808
+    y: 384
+  - entityRef: blueprint/minecraft/google-project-iam-custom-role-instancelister
+    type: container
+    name: instanceLister
+    external: false
+    properties:
+      iac.address: google_project_iam_custom_role.instanceLister
+      iac.provider_type: google_project_iam_custom_role
+      iac.kind: resource
+    x: 428
+    y: 384
+  - entityRef: blueprint/minecraft/google-compute-instance-iam-member-switcher
+    type: container
+    name: switcher
+    external: false
+    properties:
+      iac.address: google_compute_instance_iam_member.switcher
+      iac.provider_type: google_compute_instance_iam_member
+      iac.kind: resource
+    x: 808
+    y: 64
+  - entityRef: blueprint/minecraft/google-project-iam-member-projectbrowsers
+    type: container
+    name: projectBrowsers
+    external: false
+    properties:
+      iac.address: google_project_iam_member.projectBrowsers
+      iac.provider_type: google_project_iam_member
+      iac.kind: resource
+    x: 1188
+    y: 64
+  - entityRef: blueprint/minecraft/google-project-iam-member-computeviewer
+    type: container
+    name: computeViewer
+    external: false
+    properties:
+      iac.address: google_project_iam_member.computeViewer
+      iac.provider_type: google_project_iam_member
+      iac.kind: resource
+    x: 428
+    y: 64
+dependencies:
+  - from: blueprint/minecraft/google-compute-instance-minecraft
+    to: blueprint/minecraft/google-compute-disk-minecraft
+    type: direct-call
+  - from: blueprint/minecraft/google-compute-instance-minecraft
+    to: blueprint/minecraft/google-compute-network-minecraft
+    type: direct-call
+  - from: blueprint/minecraft/google-compute-instance-minecraft
+    to: blueprint/minecraft/google-compute-address-minecraft
+    type: direct-call
+  - from: blueprint/minecraft/google-compute-instance-minecraft
+    to: blueprint/minecraft/google-service-account-minecraft
+    type: direct-call
+  - from: blueprint/minecraft/google-compute-firewall-minecraft
+    to: blueprint/minecraft/google-compute-network-minecraft
+    type: direct-call
+  - from: blueprint/minecraft/google-compute-instance-iam-member-switcher
+    to: blueprint/minecraft/google-compute-instance-minecraft
+    type: direct-call
+  - from: blueprint/minecraft/google-compute-instance-iam-member-switcher
+    to: blueprint/minecraft/google-project-iam-custom-role-minecraftswitcher
+    type: direct-call
+  - from: blueprint/minecraft/google-project-iam-member-computeviewer
+    to: blueprint/minecraft/google-project-iam-custom-role-instancelister
+    type: direct-call

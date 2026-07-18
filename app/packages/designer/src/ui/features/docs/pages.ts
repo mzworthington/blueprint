@@ -1,6 +1,7 @@
 import setupMd from '@docs/setup.md?raw';
 import architectureMd from '@docs/architecture.md?raw';
 import journeysMd from '@docs/journeys.md?raw';
+import featuresUnitMd from '@docs/features-unit.md?raw';
 import guideIndexMd from '@docs/guide/index.md?raw';
 import guideGettingStartedMd from '@docs/guide/getting-started.md?raw';
 import guideCanvasMd from '@docs/guide/canvas.md?raw';
@@ -19,6 +20,8 @@ export type DocsPageMeta = {
   /** Directory of this page within docs/ — used to resolve relative links/images. */
   dir: string;
   group: 'guide' | 'reference';
+  /** Show a client-side search filter (feature report pages). */
+  filterable?: boolean;
 };
 
 /** Primary header links — product guide chapters (reference lives in the sidebar). */
@@ -47,6 +50,7 @@ export const DOCS_SIDEBAR: { title: string; items: DocsNavItem[] }[] = [
       { label: 'Setup & local development', path: '/setup' },
       { label: 'Architecture & security', path: '/architecture' },
       { label: 'Interface tour & journeys', path: '/journeys' },
+      { label: 'Unit test features', path: '/features-unit' },
     ],
   },
 ];
@@ -95,6 +99,14 @@ export const DOCS_PAGES: DocsPageMeta[] = [
     markdown: journeysMd,
     dir: '',
     group: 'reference',
+  },
+  {
+    path: '/features-unit',
+    title: 'Unit test features',
+    markdown: featuresUnitMd,
+    dir: '',
+    group: 'reference',
+    filterable: true,
   },
 ];
 

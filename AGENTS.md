@@ -18,4 +18,4 @@ Invoke phase work via skills such as `agent-orchestrator`, `agent-spec`, `agent-
 2. **Green:** Minimal implementation to pass tests.
 3. **Refactor:** Only after green; keep parsers and merge logic in core, UI in designer adapters.
 
-Core import modules: `app/packages/core/src/rules/mermaidImport.ts`, `schemaMerge.ts`.
+Core import modules: `app/packages/core/src/rules/mermaidImport.ts`, `schemaMerge.ts`. Terraform parsing: `terraformImport.ts` (CLI only).

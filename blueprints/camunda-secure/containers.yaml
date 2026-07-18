@@ -1,0 +1,126 @@
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: container
+metaData:
+  entityRef: blueprint/camunda-secure
+  name: Camunda-secure Infrastructure
+nodes:
+  - entityRef: blueprint/camunda-secure/google-service-account-camunda
+    type: container
+    name: camunda
+    external: false
+    properties:
+      iac.address: google_service_account.camunda
+      iac.provider_type: google_service_account
+      iac.kind: resource
+    x: 48
+    y: 384
+  - entityRef: blueprint/camunda-secure/google-project-iam-member-project
+    type: container
+    name: project
+    external: false
+    properties:
+      iac.address: google_project_iam_member.project
+      iac.provider_type: google_project_iam_member
+      iac.kind: resource
+    x: 48
+    y: 64
+  - entityRef: blueprint/camunda-secure/google-cloud-run-service-camunda
+    type: container
+    name: camunda-secure
+    external: false
+    properties:
+      iac.address: google_cloud_run_service.camunda
+      iac.provider_type: google_cloud_run_service
+      iac.kind: resource
+    x: 428
+    y: 64
+  - entityRef: blueprint/camunda-secure/google-sql-database-instance-camunda-db
+    type: relational-database
+    name: camunda-db-postgres
+    external: false
+    properties:
+      iac.address: google_sql_database_instance.camunda-db
+      iac.provider_type: google_sql_database_instance
+      iac.kind: resource
+    x: 808
+    y: 64
+  - entityRef: blueprint/camunda-secure/google-sql-user-user
+    type: container
+    name: camundasecure
+    external: false
+    properties:
+      iac.address: google_sql_user.user
+      iac.provider_type: google_sql_user
+      iac.kind: resource
+    x: 868
+    y: 384
+  - entityRef: blueprint/camunda-secure/google-sql-database-database
+    type: relational-database
+    name: camundasecure
+    external: false
+    properties:
+      iac.address: google_sql_database.database
+      iac.provider_type: google_sql_database
+      iac.kind: resource
+    x: 488
+    y: 384
+  - entityRef: blueprint/camunda-secure/local-file-dockerfile
+    type: container
+    name: dockerfile
+    external: false
+    properties:
+      iac.address: local_file.dockerfile
+      iac.provider_type: local_file
+      iac.kind: resource
+    x: 1248
+    y: 704
+  - entityRef: blueprint/camunda-secure/local-file-bpm-platform
+    type: container
+    name: bpm-platform
+    external: false
+    properties:
+      iac.address: local_file.bpm-platform
+      iac.provider_type: local_file
+      iac.kind: resource
+    x: 1188
+    y: 64
+  - entityRef: blueprint/camunda-secure/null-resource-camunda-cloudsql-image
+    type: container
+    name: camunda_cloudsql_image
+    external: false
+    properties:
+      iac.address: null_resource.camunda_cloudsql_image
+      iac.provider_type: null_resource
+      iac.kind: resource
+    x: 1248
+    y: 384
+  - entityRef: blueprint/camunda-secure/module-docker-mirror-camunda-bpm-platform
+    type: container
+    name: docker-mirror-camunda-bpm-platform
+    external: true
+    properties:
+      iac.address: module.docker-mirror-camunda-bpm-platform
+      iac.provider_type: module
+      iac.kind: module
+      iac.source: github.com/neomantra/terraform-docker-mirror
+    x: 1568
+    y: 64
+dependencies:
+  - from: blueprint/camunda-secure/google-project-iam-member-project
+    to: blueprint/camunda-secure/google-service-account-camunda
+    type: direct-call
+  - from: blueprint/camunda-secure/google-cloud-run-service-camunda
+    to: blueprint/camunda-secure/google-service-account-camunda
+    type: direct-call
+  - from: blueprint/camunda-secure/google-cloud-run-service-camunda
+    to: blueprint/camunda-secure/null-resource-camunda-cloudsql-image
+    type: direct-call
+  - from: blueprint/camunda-secure/google-cloud-run-service-camunda
+    to: blueprint/camunda-secure/google-sql-database-database
+    type: direct-call
+  - from: blueprint/camunda-secure/google-cloud-run-service-camunda
+    to: blueprint/camunda-secure/google-sql-user-user
+    type: direct-call
+  - from: blueprint/camunda-secure/null-resource-camunda-cloudsql-image
+    to: blueprint/camunda-secure/local-file-dockerfile
+    type: direct-call

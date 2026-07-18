@@ -33,10 +33,6 @@ Type "blueprint"
 Enter
 Sleep 1.5s
 
-# Parser select — accept ts-morph default
-Enter
-Sleep 900ms
-
 # Context name — accept default
 Enter
 Sleep 900ms

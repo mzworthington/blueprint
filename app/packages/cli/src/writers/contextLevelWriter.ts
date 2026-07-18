@@ -15,6 +15,10 @@ export type ContextSystemInput = {
 };
 
 export const PRODUCT_EDGE_DESCRIPTION = 'Part of product system';
+/** Auto-managed edges from the context Person actor to each top-level system. */
+export const PERSON_EDGE_DESCRIPTION = 'Uses';
+/** Leaf segment for the single context-level person node (`{context}/user`). */
+export const CONTEXT_PERSON_LEAF = 'user';
 
 function systemLabel(displayName: string, systemEntityRef: string): string {
   const raw = displayName || systemEntityRef;
@@ -57,8 +61,67 @@ export function productHubDependenciesForSystems(nodes: SystemNode[]): SystemDep
   return deps;
 }
 
+/** Top-level systems on the context canvas: product hubs (fallback: all software-systems). */
+export function topLevelSystemNodes(nodes: SystemNode[]): SystemNode[] {
+  const hubs = nodes.filter(
+    n => n.type === 'software-system' && n.properties?.role === 'product-hub'
+  );
+  if (hubs.length > 0) return hubs;
+  return nodes.filter(n => n.type === 'software-system');
+}
+
+/** Person → each top-level software system. */
+export function personDependenciesForSystems(
+  personRef: string,
+  nodes: SystemNode[]
+): SystemDependency[] {
+  return topLevelSystemNodes(nodes).map(system => ({
+    from: personRef,
+    to: system.entityRef,
+    type: 'direct-call' as const,
+    description: PERSON_EDGE_DESCRIPTION,
+  }));
+}
+
 function isManagedAutoEdge(dep: SystemDependency): boolean {
-  return dep.description === PRODUCT_EDGE_DESCRIPTION;
+  return (
+    dep.description === PRODUCT_EDGE_DESCRIPTION || dep.description === PERSON_EDGE_DESCRIPTION
+  );
+}
+
+function ensureContextPerson(contextRef: string, nodes: SystemNode[]): SystemNode {
+  const personRef = EntityRef.parse(CONTEXT_PERSON_LEAF, contextRef);
+  const personNode: SystemNode = {
+    entityRef: personRef,
+    type: 'person',
+    name: 'User',
+    properties: {
+      role: 'context-actor',
+    },
+  };
+
+  const existingIdx = nodes.findIndex(
+    n =>
+      n.entityRef === personRef || (n.type === 'person' && n.properties?.role === 'context-actor')
+  );
+  if (existingIdx >= 0) {
+    const existing = nodes[existingIdx]!;
+    // Prefer the canonical user ref; migrate a lone legacy person onto it.
+    nodes[existingIdx] = {
+      ...existing,
+      ...personNode,
+      properties: {
+        ...existing.properties,
+        ...personNode.properties,
+      },
+      x: existing.x,
+      y: existing.y,
+    };
+    return nodes[existingIdx]!;
+  }
+
+  nodes.push(personNode);
+  return personNode;
 }
 
 export class ContextLevelWriter extends BaseWriter {
@@ -82,6 +145,7 @@ export class ContextLevelWriter extends BaseWriter {
 
   /**
    * Upsert software systems and connect non-hub systems to their product hub.
+   * Ensures a single Person actor linked to each top-level (product-hub) system.
    * Different productIds stay isolated (Blueprint does not link to Backstage).
    */
   async writeSystems(
@@ -131,9 +195,16 @@ export class ContextLevelWriter extends BaseWriter {
       }
     }
 
+    const person = ensureContextPerson(contextRef, contextSchema.nodes);
     const hubDeps = productHubDependenciesForSystems(contextSchema.nodes);
+    const personDeps = personDependenciesForSystems(person.entityRef, contextSchema.nodes);
+
     const preserved = (contextSchema.dependencies || []).filter(dep => {
       if (isManagedAutoEdge(dep)) {
+        if (dep.description === PERSON_EDGE_DESCRIPTION) {
+          // Always regenerate person → top-level edges
+          return false;
+        }
         // Drop previous auto edges for products we're rewriting
         const fromNode = contextSchema.nodes.find(n => n.entityRef === dep.from);
         const toNode = contextSchema.nodes.find(n => n.entityRef === dep.to);
@@ -148,7 +219,7 @@ export class ContextLevelWriter extends BaseWriter {
       return true;
     });
 
-    contextSchema.dependencies = [...preserved, ...hubDeps];
+    contextSchema.dependencies = [...preserved, ...hubDeps, ...personDeps];
 
     if (options?.forensicsComponentNodes?.length) {
       contextSchema = attachForensicsToSchema(contextSchema, new Map(), {

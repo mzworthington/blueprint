@@ -60,6 +60,7 @@ GitHub Pages deploys the designer `dist/` (docs + app in one SPA). The productio
 
 ```bash
 pnpm test
+pnpm test:coverage
 pnpm test:e2e
 pnpm format:check
 pnpm format:write
@@ -67,7 +68,7 @@ pnpm lint
 pnpm knip
 ```
 
-Designer E2E (`app/packages/designer`: `pnpm test:e2e`) also refreshes product screenshots under `docs/screenshots/` used by the guide and [journeys](./journeys.md) pages.
+Designer E2E (`app/packages/designer`: `pnpm test:e2e`) refreshes screenshots under `docs/screenshots/` used by [journeys](./journeys.md). `pnpm test:coverage` regenerates [Unit test features](./features-unit.md).
 
 ---
 

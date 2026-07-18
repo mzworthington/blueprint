@@ -6,9 +6,11 @@ import path from 'path';
 import { TsMorphParserAdapter } from '../analysis/adapters/parsing/tsMorphParser.ts';
 import { TreeSitterParserAdapter } from '../analysis/adapters/parsing/treeSitterParser.ts';
 import { DagreLayoutAdapter } from '../analysis/adapters/dagreLayout.ts';
+import { D3HierarchyLayoutAdapter } from '../analysis/adapters/d3HierarchyLayout.ts';
 import { NodeFileSystemAdapter } from '../analysis/adapters/nodeFileSystem.ts';
 import { ConsoleLogger } from '../analysis/adapters/consoleLogger.ts';
 import { CodebaseAnalyzer } from '../analysis/domain/analyzer.ts';
+import { TerraformAnalyzer } from '../analysis/domain/terraformAnalyzer.ts';
 import {
   loadAnalysisConfig,
   mergeAnalysisOptions,
@@ -122,8 +124,8 @@ async function runArchitecture(plan: BlueprintCliPlan): Promise<{
   const fileConfig = loadAnalysisConfig(process.cwd());
   let resolvedPlan = plan;
 
-  let parserType = plan.architecture.parserType || 'ts-morph';
-  let globPattern = plan.architecture.glob || fileConfig.glob || '**/*.{ts,tsx,cs,java,go}';
+  let parserType = plan.architecture.parserType || 'tree-sitter';
+  let globPattern = plan.architecture.glob || fileConfig.glob || '**/*.{ts,tsx,cs,java,go,tf}';
   let outputDir = plan.architecture.outputDir || process.env.BLUEPRINT_OUTPUT_DIR || 'blueprints';
   let contextName = plan.architecture.context || fileConfig.context || 'Blueprint';
   let rollupModules = plan.architecture.rollupModules || fileConfig.rollupModules;
@@ -136,21 +138,6 @@ async function runArchitecture(plan: BlueprintCliPlan): Promise<{
     if (fileConfig.configPath) {
       p.log.info(`Loaded config ${pc.dim(fileConfig.configPath)}`);
     }
-
-    const selectedParser = await p.select({
-      message: 'Select parser adapter:',
-      options: [
-        { value: 'ts-morph', label: 'ts-morph (Fast, static analysis)' },
-        { value: 'tree-sitter', label: 'tree-sitter (High performance, multi-language)' },
-      ],
-      initialValue: parserType,
-    });
-
-    if (p.isCancel(selectedParser)) {
-      p.cancel('Analysis cancelled.');
-      process.exit(0);
-    }
-    parserType = selectedParser as string;
 
     const contextNameInput = await p.text({
       message: 'Enter context name:',
@@ -207,16 +194,18 @@ async function runArchitecture(plan: BlueprintCliPlan): Promise<{
   });
 
   const parser =
-    parserType === 'tree-sitter'
-      ? new TreeSitterParserAdapter(analysisOptions)
-      : new TsMorphParserAdapter(analysisOptions);
+    parserType === 'ts-morph'
+      ? new TsMorphParserAdapter(analysisOptions)
+      : new TreeSitterParserAdapter(analysisOptions);
   const layout = new DagreLayoutAdapter();
+  const contextLayout = new D3HierarchyLayoutAdapter();
   const fileSystem = new NodeFileSystemAdapter();
   const logger = new ConsoleLogger();
 
   const analyzer = new CodebaseAnalyzer({
     parser,
     layout,
+    contextLayout,
     fileSystem,
     logger,
     analysisOptions,
@@ -239,6 +228,23 @@ async function runArchitecture(plan: BlueprintCliPlan): Promise<{
       forensicsByPath,
       forceRelayout: plan.architecture.relayout,
     });
+
+    // Terraform is auto-detected (no flag): no-ops when no .tf / .tf.json roots exist.
+    const tfAnalyzer = new TerraformAnalyzer({
+      fileSystem,
+      logger,
+      layout,
+      contextLayout,
+    });
+    const tfResult = await tfAnalyzer.run(contextName, outputDir, {
+      scanRoot: process.cwd(),
+      forceRelayout: plan.architecture.relayout,
+      signal: cancellation.signal,
+    });
+    if (tfResult.rootsAnalyzed > 0 && !isHeadless) {
+      p.log.info(`Terraform: wrote ${tfResult.rootsAnalyzed} infrastructure diagram(s)`);
+    }
+
     if (spinner) {
       spinner.stop(
         pc.green(`Successfully generated visual layout levels inside: ${absoluteOutputDir}`)

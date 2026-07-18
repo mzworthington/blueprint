@@ -24,6 +24,8 @@ import { applyLayoutPass } from '../../writers/layoutPass.ts';
 export interface CodebaseAnalyzerDependencies {
   parser: CodebaseParserPort;
   layout: LayoutPort;
+  /** Optional layout for context-level schemas (defaults to `layout`). */
+  contextLayout?: LayoutPort;
   fileSystem: AnalysisFileSystemPort;
   logger: LoggerPort;
   analysisOptions?: AnalysisOptions;
@@ -281,6 +283,7 @@ export class CodebaseAnalyzer {
     throwIfAborted(signal);
     await applyLayoutPass(rootDir, this.deps.layout, this.deps.fileSystem, this.deps.logger, {
       forceRelayout: options?.forceRelayout !== false,
+      contextLayout: this.deps.contextLayout,
     });
 
     throwIfAborted(signal);

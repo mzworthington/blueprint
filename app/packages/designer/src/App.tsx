@@ -52,6 +52,7 @@ function App() {
           <Route path="/setup" component={DocsPage} />
           <Route path="/architecture" component={DocsPage} />
           <Route path="/journeys" component={DocsPage} />
+          <Route path="/features-unit" component={DocsPage} />
           <Route path="/" component={DocsHome} />
           <Route component={DocsPage} />
         </Switch>

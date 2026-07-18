@@ -2,6 +2,7 @@ import React, { isValidElement, lazy, Suspense, useEffect, useState } from 'reac
 import type { Components } from 'react-markdown';
 import { Link } from 'wouter';
 import { resolveDocsAssetSrc, resolveDocsHref } from './pages';
+import { stripHtmlComments } from './stripHtmlComments';
 
 type Props = {
   markdown: string;
@@ -24,7 +25,28 @@ function extractCodeText(node: React.ReactNode): string {
 }
 
 function buildComponents(fromDir: string): Components {
+  const headingCounts = new Map<string, number>();
+  const heading =
+    (Tag: 'h2' | 'h3' | 'h4' | 'h5' | 'h6') =>
+    ({ children }: { children?: React.ReactNode }) => {
+      const text = extractCodeText(children);
+      const base = text
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .trim()
+        .replace(/\s+/g, '-');
+      const n = headingCounts.get(base) ?? 0;
+      headingCounts.set(base, n + 1);
+      const id = n === 0 ? base : `${base}-${n}`;
+      return <Tag id={id}>{children}</Tag>;
+    };
+
   return {
+    h2: heading('h2'),
+    h3: heading('h3'),
+    h4: heading('h4'),
+    h5: heading('h5'),
+    h6: heading('h6'),
     a: ({ href, children }) => {
       const resolved = href ? resolveDocsHref(href, fromDir) : null;
       if (resolved) {
@@ -158,7 +180,7 @@ export const MarkdownView: React.FC<Props> = ({ markdown, fromDir }) => {
   return (
     <div className="docs-prose">
       <ReactMarkdown remarkPlugins={[remarkGfm]} components={buildComponents(fromDir)}>
-        {markdown}
+        {stripHtmlComments(markdown)}
       </ReactMarkdown>
     </div>
   );

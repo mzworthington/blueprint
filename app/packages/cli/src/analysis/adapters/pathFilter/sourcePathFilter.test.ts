@@ -13,6 +13,8 @@ describe('sourcePathFilter', () => {
     expect(filter.shouldSkip('packages/app/src/stories/Button.stories.tsx')).toBe(true);
     expect(filter.shouldSkip('dist/index.js')).toBe(true);
     expect(filter.shouldSkip('.github/workflows/ci.yml')).toBe(true);
+    expect(filter.shouldSkip('infra/main.tf')).toBe(true);
+    expect(filter.shouldSkip('infra/main.tf.json')).toBe(true);
     expect(filter.shouldSkip('packages/catalog/src/index.ts')).toBe(false);
   });
 

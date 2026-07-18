@@ -72,7 +72,7 @@ Interactive mode prompts for parser, glob, output directory, and git forensics (
 Headless / CI example:
 
 ```bash
-blueprint --headless --parser=ts-morph --glob="**/*.{ts,tsx}" --output="blueprints"
+blueprint --headless --glob="**/*.{ts,tsx}" --output="blueprints"
 ```
 
 Useful flags: `--no-git` to skip forensics, `--git-since=90` for lookback, `--output` for the YAML folder. More detail: [CLI analysis](./cli.md).

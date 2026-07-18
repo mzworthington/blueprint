@@ -1,0 +1,148 @@
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: container
+metaData:
+  entityRef: blueprint/oathkeeper
+  name: Oathkeeper Infrastructure
+nodes:
+  - entityRef: blueprint/oathkeeper/google-service-account-oathkeeper
+    type: container
+    name: oathkeeper
+    external: false
+    properties:
+      iac.address: google_service_account.oathkeeper
+      iac.provider_type: google_service_account
+      iac.kind: resource
+    x: 428
+    y: 704
+  - entityRef: blueprint/oathkeeper/google-cloud-run-service-iam-policy-noauth
+    type: container
+    name: noauth
+    external: false
+    properties:
+      iac.address: google_cloud_run_service_iam_policy.noauth
+      iac.provider_type: google_cloud_run_service_iam_policy
+      iac.kind: resource
+    x: 48
+    y: 64
+  - entityRef: blueprint/oathkeeper/google-storage-bucket-config
+    type: container
+    name: config
+    external: false
+    properties:
+      iac.address: google_storage_bucket.config
+      iac.provider_type: google_storage_bucket
+      iac.kind: resource
+    x: 868
+    y: 1024
+  - entityRef: blueprint/oathkeeper/google-storage-bucket-object-rules
+    type: container
+    name: rules
+    external: false
+    properties:
+      iac.address: google_storage_bucket_object.rules
+      iac.provider_type: google_storage_bucket_object
+      iac.kind: resource
+    x: 1248
+    y: 704
+  - entityRef: blueprint/oathkeeper/google-storage-bucket-iam-member-oathkeeper-viewer
+    type: container
+    name: oathkeeper-viewer
+    external: false
+    properties:
+      iac.address: google_storage_bucket_iam_member.oathkeeper-viewer
+      iac.provider_type: google_storage_bucket_iam_member
+      iac.kind: resource
+    x: 868
+    y: 704
+  - entityRef: blueprint/oathkeeper/google-cloud-run-service-oathkeeper
+    type: container
+    name: oathkeeper
+    external: false
+    properties:
+      iac.address: google_cloud_run_service.oathkeeper
+      iac.provider_type: google_cloud_run_service
+      iac.kind: resource
+    x: 428
+    y: 384
+  - entityRef: blueprint/oathkeeper/data-google-iam-policy-noauth
+    type: container
+    name: noauth
+    external: true
+    properties:
+      iac.address: data.google_iam_policy.noauth
+      iac.provider_type: google_iam_policy
+      iac.kind: data
+    x: 48
+    y: 384
+  - entityRef: blueprint/oathkeeper/local-file-dockerfile
+    type: container
+    name: dockerfile
+    external: false
+    properties:
+      iac.address: local_file.dockerfile
+      iac.provider_type: local_file
+      iac.kind: resource
+    x: 2008
+    y: 1024
+  - entityRef: blueprint/oathkeeper/local-file-config
+    type: container
+    name: config
+    external: false
+    properties:
+      iac.address: local_file.config
+      iac.provider_type: local_file
+      iac.kind: resource
+    x: 1628
+    y: 1024
+  - entityRef: blueprint/oathkeeper/null-resource-oathkeeper-image
+    type: container
+    name: oathkeeper_image
+    external: false
+    properties:
+      iac.address: null_resource.oathkeeper_image
+      iac.provider_type: null_resource
+      iac.kind: resource
+    x: 1628
+    y: 704
+  - entityRef: blueprint/oathkeeper/module-docker-mirror
+    type: container
+    name: docker-mirror
+    external: true
+    properties:
+      iac.address: module.docker-mirror
+      iac.provider_type: module
+      iac.kind: module
+      iac.source: github.com/neomantra/terraform-docker-mirror
+    x: 428
+    y: 64
+dependencies:
+  - from: blueprint/oathkeeper/google-cloud-run-service-iam-policy-noauth
+    to: blueprint/oathkeeper/google-cloud-run-service-oathkeeper
+    type: direct-call
+  - from: blueprint/oathkeeper/google-cloud-run-service-iam-policy-noauth
+    to: blueprint/oathkeeper/data-google-iam-policy-noauth
+    type: direct-call
+  - from: blueprint/oathkeeper/google-storage-bucket-object-rules
+    to: blueprint/oathkeeper/google-storage-bucket-config
+    type: direct-call
+  - from: blueprint/oathkeeper/google-storage-bucket-iam-member-oathkeeper-viewer
+    to: blueprint/oathkeeper/google-storage-bucket-config
+    type: direct-call
+  - from: blueprint/oathkeeper/google-cloud-run-service-oathkeeper
+    to: blueprint/oathkeeper/google-storage-bucket-object-rules
+    type: direct-call
+  - from: blueprint/oathkeeper/google-cloud-run-service-oathkeeper
+    to: blueprint/oathkeeper/google-service-account-oathkeeper
+    type: direct-call
+  - from: blueprint/oathkeeper/google-cloud-run-service-oathkeeper
+    to: blueprint/oathkeeper/null-resource-oathkeeper-image
+    type: direct-call
+  - from: blueprint/oathkeeper/google-cloud-run-service-oathkeeper
+    to: blueprint/oathkeeper/google-storage-bucket-config
+    type: direct-call
+  - from: blueprint/oathkeeper/null-resource-oathkeeper-image
+    to: blueprint/oathkeeper/local-file-dockerfile
+    type: direct-call
+  - from: blueprint/oathkeeper/null-resource-oathkeeper-image
+    to: blueprint/oathkeeper/local-file-config
+    type: direct-call

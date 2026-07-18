@@ -1,0 +1,226 @@
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: container
+metaData:
+  entityRef: blueprint/openresty-beyondcorp
+  name: Openresty-beyondcorp Infrastructure
+nodes:
+  - entityRef: blueprint/openresty-beyondcorp/google-service-account-openresty
+    type: container
+    name: openresty
+    external: false
+    properties:
+      iac.address: google_service_account.openresty
+      iac.provider_type: google_service_account
+      iac.kind: resource
+    x: 1028
+    y: 1344
+  - entityRef: blueprint/openresty-beyondcorp/google-project-iam-member-openresty-invoker
+    type: container
+    name: openresty_invoker
+    external: false
+    properties:
+      iac.address: google_project_iam_member.openresty_invoker
+      iac.provider_type: google_project_iam_member
+      iac.kind: resource
+    x: 648
+    y: 1024
+  - entityRef: blueprint/openresty-beyondcorp/google-project-iam-member-openresty-publisher
+    type: container
+    name: openresty_publisher
+    external: false
+    properties:
+      iac.address: google_project_iam_member.openresty_publisher
+      iac.provider_type: google_project_iam_member
+      iac.kind: resource
+    x: 1028
+    y: 1024
+  - entityRef: blueprint/openresty-beyondcorp/google-project-iam-member-openresty-subscriber
+    type: container
+    name: openresty_subscriber
+    external: false
+    properties:
+      iac.address: google_project_iam_member.openresty_subscriber
+      iac.provider_type: google_project_iam_member
+      iac.kind: resource
+    x: 1408
+    y: 1024
+  - entityRef: blueprint/openresty-beyondcorp/google-project-iam-member-pubsub-token-creator
+    type: container
+    name: pubsub_token_creator
+    external: false
+    properties:
+      iac.address: google_project_iam_member.pubsub_token_creator
+      iac.provider_type: google_project_iam_member
+      iac.kind: resource
+    x: 428
+    y: 64
+  - entityRef: blueprint/openresty-beyondcorp/google-cloud-run-service-iam-policy-noauth
+    type: container
+    name: noauth
+    external: false
+    properties:
+      iac.address: google_cloud_run_service_iam_policy.noauth
+      iac.provider_type: google_cloud_run_service_iam_policy
+      iac.kind: resource
+    x: 48
+    y: 64
+  - entityRef: blueprint/openresty-beyondcorp/local-file-config
+    type: container
+    name: config
+    external: false
+    properties:
+      iac.address: local_file.config
+      iac.provider_type: local_file
+      iac.kind: resource
+    x: 2168
+    y: 1024
+  - entityRef: blueprint/openresty-beyondcorp/local-file-login
+    type: container
+    name: login
+    external: false
+    properties:
+      iac.address: local_file.login
+      iac.provider_type: local_file
+      iac.kind: resource
+    x: 2548
+    y: 1024
+  - entityRef: blueprint/openresty-beyondcorp/template-dir-swiss
+    type: container
+    name: swiss
+    external: false
+    properties:
+      iac.address: template_dir.swiss
+      iac.provider_type: template_dir
+      iac.kind: resource
+    x: 2928
+    y: 1344
+  - entityRef: blueprint/openresty-beyondcorp/google-cloud-run-service-openresty
+    type: container
+    name: openresty
+    external: false
+    properties:
+      iac.address: google_cloud_run_service.openresty
+      iac.provider_type: google_cloud_run_service
+      iac.kind: resource
+    x: 428
+    y: 384
+  - entityRef: blueprint/openresty-beyondcorp/google-pubsub-topic-httpwal
+    type: event-broker
+    name: openresty_wal
+    external: false
+    properties:
+      iac.address: google_pubsub_topic.httpwal
+      iac.provider_type: google_pubsub_topic
+      iac.kind: resource
+    x: 2548
+    y: 1344
+  - entityRef: blueprint/openresty-beyondcorp/google-pubsub-subscription-httpwal
+    type: event-broker
+    name: httpwal
+    external: false
+    properties:
+      iac.address: google_pubsub_subscription.httpwal
+      iac.provider_type: google_pubsub_subscription
+      iac.kind: resource
+    x: 1788
+    y: 1024
+  - entityRef: blueprint/openresty-beyondcorp/data-google-iam-policy-noauth
+    type: container
+    name: noauth
+    external: true
+    properties:
+      iac.address: data.google_iam_policy.noauth
+      iac.provider_type: google_iam_policy
+      iac.kind: data
+    x: 48
+    y: 384
+  - entityRef: blueprint/openresty-beyondcorp/data-archive-file-swiss
+    type: container
+    name: swiss
+    external: true
+    properties:
+      iac.address: data.archive_file.swiss
+      iac.provider_type: archive_file
+      iac.kind: data
+    x: 208
+    y: 1024
+  - entityRef: blueprint/openresty-beyondcorp/local-file-dockerfile
+    type: container
+    name: dockerfile
+    external: false
+    properties:
+      iac.address: local_file.dockerfile
+      iac.provider_type: local_file
+      iac.kind: resource
+    x: 2928
+    y: 1024
+  - entityRef: blueprint/openresty-beyondcorp/null-resource-openresty-image
+    type: container
+    name: openresty_image
+    external: false
+    properties:
+      iac.address: null_resource.openresty_image
+      iac.provider_type: null_resource
+      iac.kind: resource
+    x: 2168
+    y: 704
+  - entityRef: blueprint/openresty-beyondcorp/module-docker-mirror
+    type: container
+    name: docker-mirror
+    external: true
+    properties:
+      iac.address: module.docker-mirror
+      iac.provider_type: module
+      iac.kind: module
+      iac.source: github.com/neomantra/terraform-docker-mirror
+    x: 808
+    y: 64
+dependencies:
+  - from: blueprint/openresty-beyondcorp/google-project-iam-member-openresty-invoker
+    to: blueprint/openresty-beyondcorp/google-service-account-openresty
+    type: direct-call
+  - from: blueprint/openresty-beyondcorp/google-project-iam-member-openresty-publisher
+    to: blueprint/openresty-beyondcorp/google-service-account-openresty
+    type: direct-call
+  - from: blueprint/openresty-beyondcorp/google-project-iam-member-openresty-subscriber
+    to: blueprint/openresty-beyondcorp/google-service-account-openresty
+    type: direct-call
+  - from: blueprint/openresty-beyondcorp/google-cloud-run-service-iam-policy-noauth
+    to: blueprint/openresty-beyondcorp/google-cloud-run-service-openresty
+    type: direct-call
+  - from: blueprint/openresty-beyondcorp/google-cloud-run-service-iam-policy-noauth
+    to: blueprint/openresty-beyondcorp/data-google-iam-policy-noauth
+    type: direct-call
+  - from: blueprint/openresty-beyondcorp/local-file-config
+    to: blueprint/openresty-beyondcorp/google-pubsub-topic-httpwal
+    type: direct-call
+  - from: blueprint/openresty-beyondcorp/local-file-config
+    to: blueprint/openresty-beyondcorp/google-service-account-openresty
+    type: direct-call
+  - from: blueprint/openresty-beyondcorp/google-cloud-run-service-openresty
+    to: blueprint/openresty-beyondcorp/google-service-account-openresty
+    type: direct-call
+  - from: blueprint/openresty-beyondcorp/google-cloud-run-service-openresty
+    to: blueprint/openresty-beyondcorp/null-resource-openresty-image
+    type: direct-call
+  - from: blueprint/openresty-beyondcorp/google-pubsub-subscription-httpwal
+    to: blueprint/openresty-beyondcorp/google-pubsub-topic-httpwal
+    type: direct-call
+  - from: blueprint/openresty-beyondcorp/google-pubsub-subscription-httpwal
+    to: blueprint/openresty-beyondcorp/google-service-account-openresty
+    type: direct-call
+  - from: blueprint/openresty-beyondcorp/local-file-dockerfile
+    to: blueprint/openresty-beyondcorp/template-dir-swiss
+    type: direct-call
+  - from: blueprint/openresty-beyondcorp/null-resource-openresty-image
+    to: blueprint/openresty-beyondcorp/local-file-dockerfile
+    type: direct-call
+  - from: blueprint/openresty-beyondcorp/null-resource-openresty-image
+    to: blueprint/openresty-beyondcorp/local-file-config
+    type: direct-call
+  - from: blueprint/openresty-beyondcorp/null-resource-openresty-image
+    to: blueprint/openresty-beyondcorp/local-file-login
+    type: direct-call
+  - from: blueprint/openresty-beyondcorp/null-resource-openresty-image
+    to: blueprint/openresty-beyondcorp/data-archive-file-swiss
+    type: direct-call
