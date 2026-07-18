@@ -1,5 +1,5 @@
-import React, { memo } from 'react';
-import { Handle, Position, useStore } from '@xyflow/react';
+import React, { memo, useEffect } from 'react';
+import { Handle, Position, useStore, useUpdateNodeInternals } from '@xyflow/react';
 import { useLocation } from 'wouter';
 import type { NodeProps, Node } from '@xyflow/react';
 import {
@@ -170,8 +170,8 @@ const nodeTypeConfigs: Record<
   },
 };
 
-export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) => {
-  const { id, type, name } = data;
+export const BlueprintNode = memo(({ id, data, selected }: NodeProps<CustomNode>) => {
+  const { type, name } = data;
   const config = nodeTypeConfigs[type as NodeType] || nodeTypeConfigs['rest-api'];
   const Icon = config.icon;
 
@@ -184,6 +184,12 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
   );
   const zoomSimplified = useStore(s => s.transform[2] < CANVAS_SIMPLIFY_ZOOM);
   const simplified = liteCanvas || zoomSimplified;
+  const updateNodeInternals = useUpdateNodeInternals();
+
+  // Keep edge endpoints attached after lite/zoom chrome height changes.
+  useEffect(() => {
+    updateNodeInternals(id);
+  }, [id, simplified, updateNodeInternals]);
 
   const concern = React.useMemo(() => evaluateForensicsConcern(data.forensics), [data.forensics]);
   const classifications = data.forensics?.classifications ?? [];
@@ -239,6 +245,7 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
           : {}),
       }}
     >
+      {/* Always mount every handle — edges keep layout handle ids; unmounting orphans paths. */}
       <Handle
         type="target"
         position={Position.Left}
@@ -251,47 +258,42 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
         id="right-source"
         className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
       />
-
-      {!simplified && (
-        <>
-          <Handle
-            type="target"
-            position={Position.Top}
-            id="top-target"
-            className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
-          />
-          <Handle
-            type="source"
-            position={Position.Top}
-            id="top-source"
-            className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
-          />
-          <Handle
-            type="target"
-            position={Position.Bottom}
-            id="bottom-target"
-            className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
-          />
-          <Handle
-            type="source"
-            position={Position.Bottom}
-            id="bottom-source"
-            className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
-          />
-          <Handle
-            type="source"
-            position={Position.Left}
-            id="left-source"
-            className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
-          />
-          <Handle
-            type="target"
-            position={Position.Right}
-            id="right-target"
-            className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
-          />
-        </>
-      )}
+      <Handle
+        type="target"
+        position={Position.Top}
+        id="top-target"
+        className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
+      />
+      <Handle
+        type="source"
+        position={Position.Top}
+        id="top-source"
+        className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
+      />
+      <Handle
+        type="target"
+        position={Position.Bottom}
+        id="bottom-target"
+        className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
+      />
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        id="bottom-source"
+        className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
+      />
+      <Handle
+        type="source"
+        position={Position.Left}
+        id="left-source"
+        className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
+      />
+      <Handle
+        type="target"
+        position={Position.Right}
+        id="right-target"
+        className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
+      />
 
       {!simplified && (
         <div className="flex items-start justify-between">

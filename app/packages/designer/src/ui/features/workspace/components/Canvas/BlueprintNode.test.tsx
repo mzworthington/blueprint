@@ -21,6 +21,7 @@ vi.mock('@xyflow/react', () => {
     },
     useStore: (selector: (s: { transform: [number, number, number] }) => unknown) =>
       selector({ transform: [0, 0, (globalThis as any).__blueprintZoom ?? 1] }),
+    useUpdateNodeInternals: () => vi.fn(),
   };
 });
 
@@ -70,23 +71,25 @@ describe('BlueprintNode Component', () => {
     expect(screen.getByTestId('blueprint-node')).not.toHaveStyle({ backdropFilter: 'blur(8px)' });
   });
 
-  it('simplifies handles and chrome when liteCanvas is on', () => {
+  it('simplifies chrome when liteCanvas is on but keeps all edge handles mounted', () => {
     useBlueprintStore.setState({ liteCanvas: true });
     render(<BlueprintNode {...defaultProps} />);
 
     expect(screen.getByTestId('blueprint-node-simplified')).toBeInTheDocument();
     expect(screen.getByTestId('handle-target-left')).toBeInTheDocument();
     expect(screen.getByTestId('handle-source-right')).toBeInTheDocument();
-    expect(screen.queryByTestId('handle-target-top')).not.toBeInTheDocument();
+    expect(screen.getByTestId('handle-target-top')).toBeInTheDocument();
+    expect(screen.getByTestId('handle-source-bottom')).toBeInTheDocument();
     expect(screen.queryByText('Microservice')).not.toBeInTheDocument();
   });
 
-  it('simplifies chrome when zoomed out', () => {
+  it('simplifies chrome when zoomed out but keeps edge handles mounted', () => {
     (globalThis as any).__blueprintZoom = 0.25;
     render(<BlueprintNode {...defaultProps} />);
 
     expect(screen.getByTestId('blueprint-node-simplified')).toBeInTheDocument();
-    expect(screen.queryByTestId('handle-target-top')).not.toBeInTheDocument();
+    expect(screen.getByTestId('handle-target-top')).toBeInTheDocument();
+    expect(screen.queryByText('Microservice')).not.toBeInTheDocument();
   });
 
   it('shows HOT and SILO badges for concerning forensics', () => {
