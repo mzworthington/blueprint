@@ -12,11 +12,8 @@ vi.mock('wouter', () => ({
 
 vi.mock('@xyflow/react', () => {
   return {
-    ReactFlow: ({ children, nodes, edges, onNodeDoubleClick, onlyRenderVisibleElements }: any) => (
-      <div
-        data-testid="react-flow"
-        data-only-render-visible={onlyRenderVisibleElements ? 'true' : 'false'}
-      >
+    ReactFlow: ({ children, nodes, edges, onNodeDoubleClick }: any) => (
+      <div data-testid="react-flow">
         <div data-testid="nodes-count">{nodes.length}</div>
         <div data-testid="edges-count">{edges.length}</div>
         <div data-testid="heated-nodes-count">
@@ -87,7 +84,6 @@ describe('Canvas Component', () => {
     render(<Canvas />);
 
     expect(screen.getByTestId('react-flow')).toBeInTheDocument();
-    expect(screen.getByTestId('react-flow')).toHaveAttribute('data-only-render-visible', 'true');
     expect(screen.getByTestId('nodes-count')).toHaveTextContent('2');
     expect(screen.getByTestId('edges-count')).toHaveTextContent('1');
     expect(screen.getByTestId('background')).toBeInTheDocument();

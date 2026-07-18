@@ -324,7 +324,6 @@ export const Canvas: React.FC = () => {
         nodeTypes={nodeTypes}
         edgesFocusable
         elementsSelectable
-        onlyRenderVisibleElements
         minZoom={0.05}
         maxZoom={4}
         fitView
