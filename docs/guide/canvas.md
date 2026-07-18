@@ -111,14 +111,15 @@ Under **Workspace display** in the properties panel (visible with or without a n
 
 ![Workspace display](../screenshots/8-workspace-display.png)
 
-| Toggle                              | Effect                                                            |
-| ----------------------------------- | ----------------------------------------------------------------- |
-| **Show Test Components**            | Reveal nodes marked `isTest` (hidden by default)                  |
-| **Show Externals**                  | Show or hide external proxy nodes                                 |
-| **Show Selected Dependencies Only** | When a node is selected, show only its upstream + downstream deps |
+| Toggle                              | Effect                                                                   |
+| ----------------------------------- | ------------------------------------------------------------------------ |
+| **Show Test Components**            | Reveal nodes marked `isTest` (hidden by default)                         |
+| **Show Externals**                  | Show or hide external proxy nodes                                        |
+| **Show Selected Dependencies Only** | When a node is selected, show only its upstream + downstream deps        |
+| **Risk Heatmap**                    | Tint nodes by `hotspotScore` (see [Git forensics](./forensics.md))       |
+| **Lite Canvas**                     | Faster pan/zoom: hide minimap & grid, simplify nodes, cap edge animation |
 
-Dependency edges draw an arrow toward the target (`from` → `to`). Selecting a node animates edges connected to it (all visible edges when focus mode is on).
-| **Risk Heatmap** | Tint nodes by `hotspotScore` (see [Git forensics](./forensics.md)) |
+Dependency edges draw an arrow toward the target (`from` → `to`). Selecting a node animates edges connected to it (all visible edges when focus mode is on; lite canvas caps animation to the selection neighborhood). `prefers-reduced-motion` disables edge dash animation entirely.
 
 A summary line shows live counts (`ext · tests · deps`), scoped to the whole diagram or the selected node.
 

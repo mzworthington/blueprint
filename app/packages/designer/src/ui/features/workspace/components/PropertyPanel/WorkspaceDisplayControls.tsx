@@ -10,9 +10,9 @@ interface WorkspaceDisplayControlsProps {
   onToggleShowSelectedDependenciesOnly: () => void;
   showHotspotHeatmap: boolean;
   onToggleShowHotspotHeatmap: () => void;
-  /** Topology counts scoped to canvas or selected node. */
+  liteCanvas: boolean;
+  onToggleLiteCanvas: () => void;
   counts: ForensicsDisplayMetrics;
-  /** Whether counts reflect the selected node (vs whole diagram). */
   countsScopedToNode: boolean;
 }
 
@@ -76,6 +76,8 @@ export const WorkspaceDisplayControls: React.FC<WorkspaceDisplayControlsProps> =
   onToggleShowSelectedDependenciesOnly,
   showHotspotHeatmap,
   onToggleShowHotspotHeatmap,
+  liteCanvas,
+  onToggleLiteCanvas,
   counts,
   countsScopedToNode,
 }) => (
@@ -128,6 +130,16 @@ export const WorkspaceDisplayControls: React.FC<WorkspaceDisplayControlsProps> =
     />
     <p className="text-[10px] leading-snug text-slate-500" data-testid="workspace-heatmap-help">
       Tint every node on this diagram by hotspot score. Does not change the YAML.
+    </p>
+    <DisplaySwitch
+      label="Lite Canvas"
+      checked={liteCanvas}
+      onToggle={onToggleLiteCanvas}
+      testId="toggle-lite-canvas"
+      onClassName="bg-brand-600"
+    />
+    <p className="text-[10px] leading-snug text-slate-500" data-testid="workspace-lite-canvas-help">
+      Faster pan and zoom on large diagrams: hide minimap/grid, simplify nodes, cap edge animation.
     </p>
   </div>
 );

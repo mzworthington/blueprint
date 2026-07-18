@@ -19,6 +19,8 @@ export interface UiState {
   showCoupling: boolean;
   /** When true, tint canvas nodes by forensics.hotspotScore (display-only). */
   showHotspotHeatmap: boolean;
+  /** When true, simplify node chrome and cap edge animation for performance. */
+  liteCanvas: boolean;
   /**
    * Selected client layout engine, or `null` until the user picks one.
    * Applying an engine recomputes positions and writes them into schema / YAML.
@@ -39,6 +41,7 @@ export interface UiState {
   toggleShowSelectedDependenciesOnly: () => void;
   toggleShowCoupling: () => void;
   toggleShowHotspotHeatmap: () => void;
+  toggleLiteCanvas: () => void;
   toggleLeftCollapsed: () => void;
   toggleRightCollapsed: () => void;
   setShowDesignSystem: (show: boolean) => void;
@@ -56,9 +59,10 @@ export const createUiState = (
 ): UiState => ({
   showTests: false,
   showExternals: true,
-  showSelectedDependenciesOnly: false,
+  showSelectedDependenciesOnly: true,
   showCoupling: false,
-  showHotspotHeatmap: false,
+  showHotspotHeatmap: true,
+  liteCanvas: false,
   layoutEngine: null,
   leftCollapsed: true,
   rightCollapsed: false,
@@ -75,6 +79,7 @@ export const createUiState = (
     set(state => ({ showSelectedDependenciesOnly: !state.showSelectedDependenciesOnly })),
   toggleShowCoupling: () => set(state => ({ showCoupling: !state.showCoupling })),
   toggleShowHotspotHeatmap: () => set(state => ({ showHotspotHeatmap: !state.showHotspotHeatmap })),
+  toggleLiteCanvas: () => set(state => ({ liteCanvas: !state.liteCanvas })),
   toggleLeftCollapsed: () => set(state => ({ leftCollapsed: !state.leftCollapsed })),
   toggleRightCollapsed: () => set(state => ({ rightCollapsed: !state.rightCollapsed })),
   setShowDesignSystem: show => set({ showDesignSystem: show }),

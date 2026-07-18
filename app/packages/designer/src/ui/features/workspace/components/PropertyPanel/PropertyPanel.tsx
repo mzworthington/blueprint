@@ -43,6 +43,8 @@ export const PropertyPanel: React.FC = () => {
     toggleShowCoupling,
     showHotspotHeatmap,
     toggleShowHotspotHeatmap,
+    liteCanvas,
+    toggleLiteCanvas,
     rightCollapsed,
     toggleRightCollapsed,
     workspaceName,
@@ -220,6 +222,8 @@ export const PropertyPanel: React.FC = () => {
             onToggleShowSelectedDependenciesOnly={toggleShowSelectedDependenciesOnly}
             showHotspotHeatmap={showHotspotHeatmap}
             onToggleShowHotspotHeatmap={toggleShowHotspotHeatmap}
+            liteCanvas={liteCanvas}
+            onToggleLiteCanvas={toggleLiteCanvas}
             counts={displayCounts}
             countsScopedToNode={isNode}
           />

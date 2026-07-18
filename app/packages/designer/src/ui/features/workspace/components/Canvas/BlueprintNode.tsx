@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Handle, Position } from '@xyflow/react';
+import { Handle, Position, useStore } from '@xyflow/react';
 import { useLocation } from 'wouter';
 import type { NodeProps, Node } from '@xyflow/react';
 import {
@@ -19,6 +19,7 @@ import {
 import type { NodeType } from '@blueprint/core';
 import { useBlueprintStore } from '../../../../../application/store/store';
 import type { ComponentNodeData } from '../../../../../application/store/store';
+import { CANVAS_SIMPLIFY_ZOOM } from '../../../../../application/store/layoutUtils';
 import { evaluateForensicsConcern } from '../../../../../application/forensics/concern';
 
 type CustomNode = Node<ComponentNodeData, 'blueprintNode'>;
@@ -176,12 +177,13 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
 
   const [, setLocation] = useLocation();
   const selectNode = useBlueprintStore(state => state.selectNode);
-  const loadedSystems = useBlueprintStore(state => state.loadedSystems);
-
-  const hasSubDiagram = React.useMemo(() => {
-    if (!data.entityRef) return false;
-    return loadedSystems.some(s => s.schema.entityRef === data.entityRef);
-  }, [data.entityRef, loadedSystems]);
+  const liteCanvas = useBlueprintStore(state => state.liteCanvas);
+  const entityRef = data.entityRef;
+  const hasSubDiagram = useBlueprintStore(state =>
+    entityRef ? state.loadedSystems.some(s => s.schema.entityRef === entityRef) : false
+  );
+  const zoomSimplified = useStore(s => s.transform[2] < CANVAS_SIMPLIFY_ZOOM);
+  const simplified = liteCanvas || zoomSimplified;
 
   const concern = React.useMemo(() => evaluateForensicsConcern(data.forensics), [data.forensics]);
   const classifications = data.forensics?.classifications ?? [];
@@ -203,29 +205,33 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
         ? 'border-amber-800/80'
         : null;
 
+  const solidBg = heat > 0 ? 'bg-transparent' : 'bg-slate-950';
   const borderClass = data.external
-    ? 'border-dashed border-cyan-600/70 bg-cyan-950/70 shadow-[0_0_12px_rgba(8,145,178,0.18)] hover:border-cyan-500/80'
+    ? 'border-dashed border-cyan-600/70 bg-cyan-950 hover:border-cyan-500/80'
     : selected
-      ? 'border-brand-500 shadow-[0_0_15px_rgba(139,92,246,0.3)] bg-slate-900/90 scale-102'
+      ? 'border-brand-500 bg-slate-900 scale-102'
       : data.couplingHighlight
-        ? 'border-amber-500/70 shadow-[0_0_14px_rgba(245,158,11,0.25)] bg-slate-900/90'
+        ? 'border-amber-500/70 bg-slate-900'
         : concernBorder
-          ? `${concernBorder} ${heat > 0 ? 'bg-transparent' : 'bg-slate-950/80'} hover:border-slate-700`
-          : `${heat > 0 ? 'bg-transparent' : 'bg-slate-950/80'} border-slate-800 hover:border-slate-700`;
+          ? `${concernBorder} ${solidBg} hover:border-slate-700`
+          : `${solidBg} border-slate-800 hover:border-slate-700`;
 
   return (
     <div
       onClick={handleClick}
       data-coupling-highlight={data.couplingHighlight ? 'true' : undefined}
       data-hotspot-heat={heat > 0 ? heat.toFixed(2) : undefined}
-      data-testid={heat > 0 ? 'hotspot-heat' : undefined}
-      className={`relative w-64 rounded-xl border p-4 transition-all duration-200 cursor-pointer ${borderClass}`}
+      data-testid={
+        simplified ? 'blueprint-node-simplified' : heat > 0 ? 'hotspot-heat' : 'blueprint-node'
+      }
+      className={`relative w-64 rounded-xl border p-4 cursor-pointer ${
+        simplified ? '' : 'transition-colors duration-150'
+      } ${borderClass}`}
       style={{
         boxShadow:
-          selected || data.external || data.couplingHighlight
+          selected || data.external || data.couplingHighlight || simplified
             ? undefined
             : '0 4px 12px rgba(0, 0, 0, 0.25)',
-        backdropFilter: 'blur(8px)',
         ...(heat > 0
           ? {
               backgroundImage: `linear-gradient(90deg, rgba(239, 68, 68, ${0.12 + heat * 0.45}) 0, rgba(239, 68, 68, ${0.12 + heat * 0.45}) 5px, rgba(239, 68, 68, ${0.04 + heat * 0.18}) 5px, rgba(239, 68, 68, ${0.04 + heat * 0.18}) 100%)`,
@@ -235,47 +241,8 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
     >
       <Handle
         type="target"
-        position={Position.Top}
-        id="top-target"
-        className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
-      />
-      <Handle
-        type="source"
-        position={Position.Top}
-        id="top-source"
-        className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
-      />
-
-      <Handle
-        type="target"
-        position={Position.Bottom}
-        id="bottom-target"
-        className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
-      />
-      <Handle
-        type="source"
-        position={Position.Bottom}
-        id="bottom-source"
-        className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
-      />
-
-      <Handle
-        type="target"
         position={Position.Left}
         id="left-target"
-        className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
-      />
-      <Handle
-        type="source"
-        position={Position.Left}
-        id="left-source"
-        className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
-      />
-
-      <Handle
-        type="target"
-        position={Position.Right}
-        id="right-target"
         className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
       />
       <Handle
@@ -285,36 +252,79 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
         className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
       />
 
-      <div className="flex items-start justify-between">
-        <div
-          className="flex items-center justify-center p-2 rounded-lg border"
-          style={{
-            color: config.color,
-            backgroundColor: config.bg,
-            borderColor: config.border,
-          }}
-        >
-          <Icon className="w-5 h-5" />
-        </div>
+      {!simplified && (
+        <>
+          <Handle
+            type="target"
+            position={Position.Top}
+            id="top-target"
+            className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
+          />
+          <Handle
+            type="source"
+            position={Position.Top}
+            id="top-source"
+            className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
+          />
+          <Handle
+            type="target"
+            position={Position.Bottom}
+            id="bottom-target"
+            className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
+          />
+          <Handle
+            type="source"
+            position={Position.Bottom}
+            id="bottom-source"
+            className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
+          />
+          <Handle
+            type="source"
+            position={Position.Left}
+            id="left-source"
+            className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
+          />
+          <Handle
+            type="target"
+            position={Position.Right}
+            id="right-target"
+            className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
+          />
+        </>
+      )}
 
-        {hasSubDiagram && (
-          <button
-            onClick={e => {
-              e.stopPropagation();
-              if (data.entityRef) {
-                setLocation(`/workspace/${data.entityRef}`);
-              }
+      {!simplified && (
+        <div className="flex items-start justify-between">
+          <div
+            className="flex items-center justify-center p-2 rounded-lg border"
+            style={{
+              color: config.color,
+              backgroundColor: config.bg,
+              borderColor: config.border,
             }}
-            className="flex items-center gap-1 bg-brand-500/10 border border-brand-500/30 hover:bg-brand-500/20 active:bg-brand-500/30 text-brand-400 px-1.5 py-0.5 rounded text-[8px] font-bold tracking-wider uppercase transition cursor-pointer z-10"
-            title="Click to zoom inside"
           >
-            <ZoomIn className="w-2.5 h-2.5" />
-            <span>Zoom</span>
-          </button>
-        )}
-      </div>
+            <Icon className="w-5 h-5" />
+          </div>
 
-      <div className="mt-3 min-w-0 overflow-hidden">
+          {hasSubDiagram && (
+            <button
+              onClick={e => {
+                e.stopPropagation();
+                if (data.entityRef) {
+                  setLocation(`/workspace/${data.entityRef}`);
+                }
+              }}
+              className="flex items-center gap-1 bg-brand-500/10 border border-brand-500/30 hover:bg-brand-500/20 active:bg-brand-500/30 text-brand-400 px-1.5 py-0.5 rounded text-[8px] font-bold tracking-wider uppercase transition cursor-pointer z-10"
+              title="Click to zoom inside"
+            >
+              <ZoomIn className="w-2.5 h-2.5" />
+              <span>Zoom</span>
+            </button>
+          )}
+        </div>
+      )}
+
+      <div className={`${simplified ? '' : 'mt-3'} min-w-0 overflow-hidden`}>
         <h4 className="font-semibold text-slate-100 truncate text-base leading-tight">
           {name}
           {data.external && (
@@ -325,47 +335,48 @@ export const BlueprintNode = memo(({ data, selected }: NodeProps<CustomNode>) =>
           className="text-xs text-slate-400 font-mono mt-1 truncate select-all"
           title={data.entityRef || id}
         >
-          {/* rtl + bdi keeps the leaf segment visible when truncating long FQNs */}
           <span dir="rtl" className="block truncate">
             <bdi>{data.entityRef || id}</bdi>
           </span>
         </p>
       </div>
 
-      <div className="mt-4 flex items-center justify-between border-t border-slate-900 pt-2 text-[10px] text-slate-400 uppercase tracking-wider font-semibold gap-2">
-        <span className="truncate">{config.label}</span>
-        <div className="flex items-center gap-1 shrink-0">
-          {showHotBadge && (
-            <span
-              data-testid="forensics-badge-hot"
-              className="bg-red-950/50 text-red-300 px-1.5 py-0.5 rounded text-[9px] font-bold border border-red-900/40 tracking-normal"
-            >
-              HOT
-            </span>
-          )}
-          {showSiloBadge && (
-            <span
-              data-testid="forensics-badge-silo"
-              className="bg-amber-950/50 text-amber-300 px-1.5 py-0.5 rounded text-[9px] font-bold border border-amber-900/40 tracking-normal"
-            >
-              SILO
-            </span>
-          )}
-          {data.couplingHighlight && (
-            <span
-              data-testid="forensics-badge-coupled"
-              className="bg-amber-950/50 text-amber-200 px-1.5 py-0.5 rounded text-[9px] font-bold border border-amber-800/50 tracking-normal"
-            >
-              COUPLED
-            </span>
-          )}
-          {data.isTest && (
-            <span className="bg-red-500/10 text-red-400 px-1.5 py-0.5 rounded text-[9px] font-bold border border-red-500/20 tracking-normal normal-case">
-              TEST
-            </span>
-          )}
+      {!simplified && (
+        <div className="mt-4 flex items-center justify-between border-t border-slate-900 pt-2 text-[10px] text-slate-400 uppercase tracking-wider font-semibold gap-2">
+          <span className="truncate">{config.label}</span>
+          <div className="flex items-center gap-1 shrink-0">
+            {showHotBadge && (
+              <span
+                data-testid="forensics-badge-hot"
+                className="bg-red-950/50 text-red-300 px-1.5 py-0.5 rounded text-[9px] font-bold border border-red-900/40 tracking-normal"
+              >
+                HOT
+              </span>
+            )}
+            {showSiloBadge && (
+              <span
+                data-testid="forensics-badge-silo"
+                className="bg-amber-950/50 text-amber-300 px-1.5 py-0.5 rounded text-[9px] font-bold border border-amber-900/40 tracking-normal"
+              >
+                SILO
+              </span>
+            )}
+            {data.couplingHighlight && (
+              <span
+                data-testid="forensics-badge-coupled"
+                className="bg-amber-950/50 text-amber-200 px-1.5 py-0.5 rounded text-[9px] font-bold border border-amber-800/50 tracking-normal"
+              >
+                COUPLED
+              </span>
+            )}
+            {data.isTest && (
+              <span className="bg-red-500/10 text-red-400 px-1.5 py-0.5 rounded text-[9px] font-bold border border-red-500/20 tracking-normal normal-case">
+                TEST
+              </span>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 });

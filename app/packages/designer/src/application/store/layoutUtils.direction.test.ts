@@ -52,4 +52,30 @@ describe('dependency edge direction visuals', () => {
       shouldAnimateDependencyEdge({ source: 'a', target: 'b', animated: true }, null, false)
     ).toBe(true);
   });
+
+  it('disables all edge animation when preferReducedMotion is set', () => {
+    expect(
+      shouldAnimateDependencyEdge({ source: 'a', target: 'b', animated: true }, 'a', true, {
+        preferReducedMotion: true,
+      })
+    ).toBe(false);
+  });
+
+  it('caps liteCanvas animation to edges incident to the selection', () => {
+    expect(
+      shouldAnimateDependencyEdge({ source: 'a', target: 'b', animated: true }, null, false, {
+        liteCanvas: true,
+      })
+    ).toBe(false);
+    expect(
+      shouldAnimateDependencyEdge({ source: 'a', target: 'b', animated: false }, 'a', true, {
+        liteCanvas: true,
+      })
+    ).toBe(true);
+    expect(
+      shouldAnimateDependencyEdge({ source: 'a', target: 'b', animated: false }, 'c', true, {
+        liteCanvas: true,
+      })
+    ).toBe(false);
+  });
 });

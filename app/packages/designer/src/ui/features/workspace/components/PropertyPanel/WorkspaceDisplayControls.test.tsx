@@ -10,6 +10,7 @@ describe('WorkspaceDisplayControls', () => {
     const onToggleExternals = vi.fn();
     const onToggleSelectedDeps = vi.fn();
     const onToggleHeat = vi.fn();
+    const onToggleLite = vi.fn();
     render(
       <WorkspaceDisplayControls
         showTests={false}
@@ -20,6 +21,8 @@ describe('WorkspaceDisplayControls', () => {
         onToggleShowSelectedDependenciesOnly={onToggleSelectedDeps}
         showHotspotHeatmap={false}
         onToggleShowHotspotHeatmap={onToggleHeat}
+        liteCanvas={false}
+        onToggleLiteCanvas={onToggleLite}
         counts={defaultCounts}
         countsScopedToNode={false}
       />
@@ -38,12 +41,17 @@ describe('WorkspaceDisplayControls', () => {
     fireEvent.click(screen.getByTestId('toggle-show-externals'));
     fireEvent.click(screen.getByTestId('toggle-show-selected-dependencies-only'));
     fireEvent.click(screen.getByTestId('toggle-show-hotspot-heatmap'));
+    fireEvent.click(screen.getByTestId('toggle-lite-canvas'));
     expect(onToggleTests).toHaveBeenCalledTimes(1);
     expect(onToggleExternals).toHaveBeenCalledTimes(1);
     expect(onToggleSelectedDeps).toHaveBeenCalledTimes(1);
     expect(onToggleHeat).toHaveBeenCalledTimes(1);
+    expect(onToggleLite).toHaveBeenCalledTimes(1);
     expect(screen.getByLabelText('Show Selected Dependencies Only (8)')).toBeInTheDocument();
     expect(screen.getByTestId('workspace-heatmap-help')).toHaveTextContent(/Tint every node/i);
+    expect(screen.getByTestId('workspace-lite-canvas-help')).toHaveTextContent(
+      /Faster pan and zoom/i
+    );
   });
 
   it('marks the summary when counts are scoped to the selected node', () => {
@@ -57,6 +65,8 @@ describe('WorkspaceDisplayControls', () => {
         onToggleShowSelectedDependenciesOnly={vi.fn()}
         showHotspotHeatmap={false}
         onToggleShowHotspotHeatmap={vi.fn()}
+        liteCanvas={false}
+        onToggleLiteCanvas={vi.fn()}
         counts={{ externals: 1, tests: 0, dependencies: 3 }}
         countsScopedToNode
       />

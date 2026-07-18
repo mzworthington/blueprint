@@ -286,6 +286,14 @@ describe('PropertyPanel UI Component', () => {
     expect(useBlueprintStore.getState().showHotspotHeatmap).toBe(true);
   });
 
+  it('toggles lite canvas from workspace display controls', () => {
+    useBlueprintStore.setState({ selectedNodeId: null, liteCanvas: false });
+    render(<PropertyPanel />);
+
+    fireEvent.click(screen.getByTestId('toggle-lite-canvas'));
+    expect(useBlueprintStore.getState().liteCanvas).toBe(true);
+  });
+
   it('keeps risk heatmap toggle available while a node is selected', () => {
     const { initSchema } = useBlueprintStore.getState();
     initSchema({

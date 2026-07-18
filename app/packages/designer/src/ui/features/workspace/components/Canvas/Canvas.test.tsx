@@ -12,13 +12,17 @@ vi.mock('wouter', () => ({
 
 vi.mock('@xyflow/react', () => {
   return {
-    ReactFlow: ({ children, nodes, edges, onNodeDoubleClick }: any) => (
-      <div data-testid="react-flow">
+    ReactFlow: ({ children, nodes, edges, onNodeDoubleClick, onlyRenderVisibleElements }: any) => (
+      <div
+        data-testid="react-flow"
+        data-only-render-visible={onlyRenderVisibleElements ? 'true' : 'false'}
+      >
         <div data-testid="nodes-count">{nodes.length}</div>
         <div data-testid="edges-count">{edges.length}</div>
         <div data-testid="heated-nodes-count">
           {nodes.filter((n: any) => (n.data?.hotspotHeat ?? 0) > 0).length}
         </div>
+        <div data-testid="animated-edges-count">{edges.filter((e: any) => e.animated).length}</div>
         <button
           data-testid="double-click-node"
           onClick={() =>
@@ -44,6 +48,8 @@ vi.mock('@xyflow/react', () => {
     useReactFlow: () => ({
       fitView: vi.fn(),
     }),
+    useStore: (selector: (s: { transform: [number, number, number] }) => unknown) =>
+      selector({ transform: [0, 0, 1] }),
   };
 });
 
@@ -73,6 +79,7 @@ describe('Canvas Component', () => {
       isWorkspaceOpen: false,
       validationResult: { isValid: true, issues: [] },
       loadedSystems: [],
+      liteCanvas: false,
     });
   });
 
@@ -80,11 +87,32 @@ describe('Canvas Component', () => {
     render(<Canvas />);
 
     expect(screen.getByTestId('react-flow')).toBeInTheDocument();
+    expect(screen.getByTestId('react-flow')).toHaveAttribute('data-only-render-visible', 'true');
     expect(screen.getByTestId('nodes-count')).toHaveTextContent('2');
     expect(screen.getByTestId('edges-count')).toHaveTextContent('1');
     expect(screen.getByTestId('background')).toBeInTheDocument();
     expect(screen.getByTestId('controls')).toBeInTheDocument();
     expect(screen.getByTestId('minimap')).toBeInTheDocument();
+  });
+
+  it('hides MiniMap and Background when liteCanvas is on', () => {
+    useBlueprintStore.setState({ liteCanvas: true });
+    render(<Canvas />);
+
+    expect(screen.queryByTestId('minimap')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('background')).not.toBeInTheDocument();
+    expect(screen.getByTestId('controls')).toBeInTheDocument();
+  });
+
+  it('caps edge animation to selection neighborhood when liteCanvas is on', () => {
+    useBlueprintStore.setState({
+      liteCanvas: true,
+      selectedNodeId: 'node1',
+      showSelectedDependenciesOnly: true,
+    });
+    render(<Canvas />);
+
+    expect(screen.getByTestId('animated-edges-count')).toHaveTextContent('1');
   });
 
   it('focuses coupling neighbors and hides other nodes and schema links', () => {

@@ -8,6 +8,7 @@ import {
   Panel,
   useReactFlow,
 } from '@xyflow/react';
+import { useShallow } from 'zustand/react/shallow';
 import { useLocation } from 'wouter';
 import { useBlueprintStore } from '../../../../../application/store/store';
 import { BlueprintNode } from './BlueprintNode';
@@ -29,6 +30,7 @@ import {
 import {
   DEPENDENCY_EDGE_STROKE,
   dependencyArrowMarker,
+  prefersReducedMotion,
   shouldAnimateDependencyEdge,
 } from '../../../../../application/store/layoutUtils';
 
@@ -52,6 +54,7 @@ export const Canvas: React.FC = () => {
     showSelectedDependenciesOnly,
     showCoupling,
     showHotspotHeatmap,
+    liteCanvas,
     focusedCyclePath,
     loadedSystems,
     currentFilePath,
@@ -66,7 +69,41 @@ export const Canvas: React.FC = () => {
     recordHistory,
     addNode,
     isLoading,
-  } = useBlueprintStore();
+  } = useBlueprintStore(
+    useShallow(state => ({
+      nodes: state.nodes,
+      edges: state.edges,
+      onNodesChange: state.onNodesChange,
+      onEdgesChange: state.onEdgesChange,
+      onConnect: state.onConnect,
+      selectNode: state.selectNode,
+      selectedNodeId: state.selectedNodeId,
+      selectEdge: state.selectEdge,
+      selectedEdgeId: state.selectedEdgeId,
+      lastError: state.lastError,
+      clearError: state.clearError,
+      showTests: state.showTests,
+      showExternals: state.showExternals,
+      showSelectedDependenciesOnly: state.showSelectedDependenciesOnly,
+      showCoupling: state.showCoupling,
+      showHotspotHeatmap: state.showHotspotHeatmap,
+      liteCanvas: state.liteCanvas,
+      focusedCyclePath: state.focusedCyclePath,
+      loadedSystems: state.loadedSystems,
+      currentFilePath: state.currentFilePath,
+      workspaceName: state.workspaceName,
+      isWorkspaceOpen: state.isWorkspaceOpen,
+      notification: state.notification,
+      setNotification: state.setNotification,
+      layoutEngine: state.layoutEngine,
+      applyClientLayout: state.applyClientLayout,
+      undo: state.undo,
+      redo: state.redo,
+      recordHistory: state.recordHistory,
+      addNode: state.addNode,
+      isLoading: state.isLoading,
+    }))
+  );
 
   const { fitView } = useReactFlow();
   const fitViewRef = useRef(fitView);
@@ -108,7 +145,6 @@ export const Canvas: React.FC = () => {
     return () => clearTimeout(timer);
   }, [currentFilePath]);
 
-  // Apply layout engine after diagram switches or mode changes (session positions).
   useEffect(() => {
     if (!layoutEngine) return;
     const controller = new AbortController();
@@ -160,6 +196,8 @@ export const Canvas: React.FC = () => {
     return edges.filter(e => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target));
   }, [edges, filteredNodes]);
 
+  const reduceMotion = prefersReducedMotion();
+
   const displayEdges = useMemo(() => {
     if (focusedCyclePath) {
       return filteredEdges.filter(e => {
@@ -172,7 +210,6 @@ export const Canvas: React.FC = () => {
       });
     }
     const couplingEdges = buildCouplingOverlayEdges(selectedNodeId, filteredNodes, showCoupling);
-    // Coupling focus: hide schema deps; only show temporal-coupling links.
     if (showCoupling && couplingEdges.length > 0) return couplingEdges;
 
     const visibleNodeIds = new Set(displayNodes.map(n => n.id));
@@ -180,11 +217,12 @@ export const Canvas: React.FC = () => {
       e => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target)
     );
 
-    // Keep a selected edge visible even if an endpoint was filtered away (dangling).
     if (selectedEdgeId && !next.some(e => e.id === selectedEdgeId)) {
       const selected = edges.find(e => e.id === selectedEdgeId);
       if (selected) next = [...next, selected];
     }
+
+    const animationOpts = { liteCanvas, preferReducedMotion: reduceMotion };
 
     return next.map(e => {
       const isSelected = e.id === selectedEdgeId;
@@ -194,7 +232,12 @@ export const Canvas: React.FC = () => {
       return {
         ...e,
         selected: isSelected,
-        animated: shouldAnimateDependencyEdge(e, selectedNodeId, showSelectedDependenciesOnly),
+        animated: shouldAnimateDependencyEdge(
+          e,
+          selectedNodeId,
+          showSelectedDependenciesOnly,
+          animationOpts
+        ),
         markerEnd: dependencyArrowMarker(stroke),
         style: {
           ...e.style,
@@ -213,6 +256,8 @@ export const Canvas: React.FC = () => {
     showSelectedDependenciesOnly,
     focusedCyclePath,
     edges,
+    liteCanvas,
+    reduceMotion,
   ]);
 
   const { screenToFlowPosition } = useReactFlow();
@@ -279,12 +324,15 @@ export const Canvas: React.FC = () => {
         nodeTypes={nodeTypes}
         edgesFocusable
         elementsSelectable
+        onlyRenderVisibleElements
         minZoom={0.05}
         maxZoom={4}
         fitView
         className="h-full"
       >
-        <Background variant={BackgroundVariant.Dots} gap={24} size={1} color="#334155" />
+        {!liteCanvas && (
+          <Background variant={BackgroundVariant.Dots} gap={24} size={1} color="#334155" />
+        )}
         <Controls position="top-right" />
 
         {parentSystem && (
@@ -314,32 +362,34 @@ export const Canvas: React.FC = () => {
           <WorkspaceToolbar />
         </Panel>
 
-        <div className="hidden md:block">
-          <MiniMap
-            position="bottom-left"
-            bgColor="#0f172a"
-            nodeColor={n => {
-              if (showHotspotHeatmap && n.type === 'blueprintNode') {
-                const heatColor = hotspotHeatmapMinimapColor(
-                  typeof n.data?.hotspotHeat === 'number' ? n.data.hotspotHeat : 0
-                );
-                if (heatColor) return heatColor;
-              }
-              if (n.type === 'blueprintNode') {
-                if (n.data?.type === 'relational-database') return '#06b6d4';
-                if (n.data?.type === 'event-broker') return '#a855f7';
-                if (n.data?.type === 'grpc-service') return '#3b82f6';
-                if (n.data?.type === 'serverless-function') return '#eab308';
-                if (n.data?.type === 'rest-api') return '#10b981';
-                if (n.data?.type === 'cache-store') return '#f97316';
-              }
-              return '#1e293b';
-            }}
-            maskColor="rgba(15, 23, 42, 0.6)"
-            className="border border-slate-800 rounded-lg overflow-hidden"
-            style={{ width: 120, height: 90 }}
-          />
-        </div>
+        {!liteCanvas && (
+          <div className="hidden md:block">
+            <MiniMap
+              position="bottom-left"
+              bgColor="#0f172a"
+              nodeColor={n => {
+                if (showHotspotHeatmap && n.type === 'blueprintNode') {
+                  const heatColor = hotspotHeatmapMinimapColor(
+                    typeof n.data?.hotspotHeat === 'number' ? n.data.hotspotHeat : 0
+                  );
+                  if (heatColor) return heatColor;
+                }
+                if (n.type === 'blueprintNode') {
+                  if (n.data?.type === 'relational-database') return '#06b6d4';
+                  if (n.data?.type === 'event-broker') return '#a855f7';
+                  if (n.data?.type === 'grpc-service') return '#3b82f6';
+                  if (n.data?.type === 'serverless-function') return '#eab308';
+                  if (n.data?.type === 'rest-api') return '#10b981';
+                  if (n.data?.type === 'cache-store') return '#f97316';
+                }
+                return '#1e293b';
+              }}
+              maskColor="rgba(15, 23, 42, 0.6)"
+              className="border border-slate-800 rounded-lg overflow-hidden"
+              style={{ width: 120, height: 90 }}
+            />
+          </div>
+        )}
 
         {lastError && (
           <Panel position="top-center" className="m-4 max-w-md w-full animate-bounce-short">

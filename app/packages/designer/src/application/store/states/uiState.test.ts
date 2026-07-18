@@ -6,9 +6,10 @@ describe('uiState Actions & State Management', () => {
     const state = useBlueprintStore.getState();
     expect(state.showTests).toBe(false);
     expect(state.showExternals).toBe(true);
-    expect(state.showSelectedDependenciesOnly).toBe(false);
+    expect(state.showSelectedDependenciesOnly).toBe(true);
     expect(state.showCoupling).toBe(false);
-    expect(state.showHotspotHeatmap).toBe(false);
+    expect(state.showHotspotHeatmap).toBe(true);
+    expect(state.liteCanvas).toBe(false);
     expect(state.leftCollapsed).toBe(true);
     expect(state.rightCollapsed).toBe(false);
     expect(state.showDesignSystem).toBe(false);
@@ -50,13 +51,13 @@ describe('uiState Actions & State Management', () => {
 
   it('should toggle showSelectedDependenciesOnly via toggleShowSelectedDependenciesOnly', () => {
     const store = useBlueprintStore.getState();
-    expect(store.showSelectedDependenciesOnly).toBe(false);
-
-    store.toggleShowSelectedDependenciesOnly();
-    expect(useBlueprintStore.getState().showSelectedDependenciesOnly).toBe(true);
+    expect(store.showSelectedDependenciesOnly).toBe(true);
 
     store.toggleShowSelectedDependenciesOnly();
     expect(useBlueprintStore.getState().showSelectedDependenciesOnly).toBe(false);
+
+    store.toggleShowSelectedDependenciesOnly();
+    expect(useBlueprintStore.getState().showSelectedDependenciesOnly).toBe(true);
   });
 
   it('should toggle showCoupling property via toggleShowCoupling action', () => {
@@ -72,13 +73,24 @@ describe('uiState Actions & State Management', () => {
 
   it('should toggle showHotspotHeatmap via toggleShowHotspotHeatmap action', () => {
     const store = useBlueprintStore.getState();
-    expect(store.showHotspotHeatmap).toBe(false);
-
-    store.toggleShowHotspotHeatmap();
-    expect(useBlueprintStore.getState().showHotspotHeatmap).toBe(true);
+    expect(store.showHotspotHeatmap).toBe(true);
 
     store.toggleShowHotspotHeatmap();
     expect(useBlueprintStore.getState().showHotspotHeatmap).toBe(false);
+
+    store.toggleShowHotspotHeatmap();
+    expect(useBlueprintStore.getState().showHotspotHeatmap).toBe(true);
+  });
+
+  it('should toggle liteCanvas via toggleLiteCanvas action', () => {
+    const store = useBlueprintStore.getState();
+    expect(store.liteCanvas).toBe(false);
+
+    store.toggleLiteCanvas();
+    expect(useBlueprintStore.getState().liteCanvas).toBe(true);
+
+    store.toggleLiteCanvas();
+    expect(useBlueprintStore.getState().liteCanvas).toBe(false);
   });
 
   it('should manage leftCollapsed and rightCollapsed panel states', () => {

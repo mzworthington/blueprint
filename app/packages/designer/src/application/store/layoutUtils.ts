@@ -29,18 +29,39 @@ export function dependencyArrowMarker(color: string = DEPENDENCY_EDGE_STROKE): C
   };
 }
 
+export type EdgeAnimationOptions = {
+  liteCanvas?: boolean;
+  preferReducedMotion?: boolean;
+};
+
 /** Flow animation: incident to selection, or all edges in focus mode. */
 export function shouldAnimateDependencyEdge(
   edge: { source: string; target: string; animated?: boolean },
   selectedNodeId: string | null | undefined,
-  showSelectedDependenciesOnly: boolean
+  showSelectedDependenciesOnly: boolean,
+  options?: EdgeAnimationOptions
 ): boolean {
+  if (options?.preferReducedMotion) return false;
+
+  const incidentToSelection =
+    !!selectedNodeId && (edge.source === selectedNodeId || edge.target === selectedNodeId);
+
+  if (options?.liteCanvas) {
+    return incidentToSelection;
+  }
+
   if (edge.animated) return true;
   if (showSelectedDependenciesOnly && selectedNodeId) return true;
-  if (selectedNodeId && (edge.source === selectedNodeId || edge.target === selectedNodeId)) {
-    return true;
-  }
+  if (incidentToSelection) return true;
   return false;
+}
+
+/** Zoom below this uses simplified node chrome (fewer handles / less detail). */
+export const CANVAS_SIMPLIFY_ZOOM = 0.35;
+
+export function prefersReducedMotion(): boolean {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return false;
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
 export type ComponentNodeData = {

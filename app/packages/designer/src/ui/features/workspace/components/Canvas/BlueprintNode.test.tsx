@@ -16,12 +16,17 @@ vi.mock('@xyflow/react', () => {
     Position: {
       Left: 'left',
       Right: 'right',
+      Top: 'top',
+      Bottom: 'bottom',
     },
+    useStore: (selector: (s: { transform: [number, number, number] }) => unknown) =>
+      selector({ transform: [0, 0, (globalThis as any).__blueprintZoom ?? 1] }),
   };
 });
 
 describe('BlueprintNode Component', () => {
   beforeEach(() => {
+    (globalThis as any).__blueprintZoom = 1;
     const { initSchema } = useBlueprintStore.getState();
     initSchema({
       name: 'Test Schema',
@@ -30,7 +35,7 @@ describe('BlueprintNode Component', () => {
       nodes: [{ entityRef: 'test-node-1', type: 'microservice', name: 'My Service', x: 0, y: 0 }],
       dependencies: [],
     });
-    useBlueprintStore.setState({ selectedNodeId: null });
+    useBlueprintStore.setState({ selectedNodeId: null, liteCanvas: false });
   });
 
   const defaultProps = {
@@ -61,6 +66,27 @@ describe('BlueprintNode Component', () => {
     expect(screen.getByText('Microservice')).toBeInTheDocument();
     expect(screen.getByTestId('handle-target-left')).toBeInTheDocument();
     expect(screen.getByTestId('handle-source-right')).toBeInTheDocument();
+    expect(screen.getByTestId('handle-target-top')).toBeInTheDocument();
+    expect(screen.getByTestId('blueprint-node')).not.toHaveStyle({ backdropFilter: 'blur(8px)' });
+  });
+
+  it('simplifies handles and chrome when liteCanvas is on', () => {
+    useBlueprintStore.setState({ liteCanvas: true });
+    render(<BlueprintNode {...defaultProps} />);
+
+    expect(screen.getByTestId('blueprint-node-simplified')).toBeInTheDocument();
+    expect(screen.getByTestId('handle-target-left')).toBeInTheDocument();
+    expect(screen.getByTestId('handle-source-right')).toBeInTheDocument();
+    expect(screen.queryByTestId('handle-target-top')).not.toBeInTheDocument();
+    expect(screen.queryByText('Microservice')).not.toBeInTheDocument();
+  });
+
+  it('simplifies chrome when zoomed out', () => {
+    (globalThis as any).__blueprintZoom = 0.25;
+    render(<BlueprintNode {...defaultProps} />);
+
+    expect(screen.getByTestId('blueprint-node-simplified')).toBeInTheDocument();
+    expect(screen.queryByTestId('handle-target-top')).not.toBeInTheDocument();
   });
 
   it('shows HOT and SILO badges for concerning forensics', () => {
@@ -161,7 +187,7 @@ describe('BlueprintNode Component', () => {
     const { container } = render(<BlueprintNode {...props} />);
 
     expect(screen.getByText('(External)')).toBeInTheDocument();
-    const card = container.querySelector('.bg-cyan-950\\/70');
+    const card = container.querySelector('.bg-cyan-950');
     expect(card).toBeTruthy();
   });
 
