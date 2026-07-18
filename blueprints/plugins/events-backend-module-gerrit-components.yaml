@@ -1,163 +1,163 @@
-# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
-- entityRef: blueprint/plugins/events-backend-module-gerrit
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: component
+metaData:
+  entityRef: blueprint/plugins/events-backend-module-gerrit
   name: Events-backend-module-gerrit Service Components
-  version: 1.0.0
-  level: component
-  nodes:
-    - entityRef: blueprint/plugins/events-backend-module-gerrit/alpha
-      type: background-worker
-      name: alpha Service
-      isTest: false
-      properties:
-        filepath: plugins/events-backend-module-gerrit/src/alpha.ts
-        containerId: events-backend-module-gerrit
-        technology: TypeScript Domain Service
-        classification: default
-      x: 48
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 24
-        sloc: 4
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/events-backend-module-gerrit/setuptests
-      type: background-worker
-      name: setupTests Service
-      isTest: true
-      properties:
-        filepath: plugins/events-backend-module-gerrit/src/setupTests.ts
-        containerId: events-backend-module-gerrit
-        technology: TypeScript Domain Service
-        classification: default
-      x: 1188
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 18
-        sloc: 1
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/events-backend-module-gerrit/index
-      type: background-worker
-      name: index Service
-      isTest: false
-      properties:
-        filepath: plugins/events-backend-module-gerrit/src/index.ts
-        containerId: events-backend-module-gerrit
-        technology: TypeScript Domain Service
-        classification: default
-      x: 808
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 26
-        sloc: 2
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/events-backend-module-gerrit/eventsmodulegerriteventrouter
-      type: rest-api
-      name: eventsModuleGerritEventRouter Service
-      isTest: false
-      properties:
-        filepath: plugins/events-backend-module-gerrit/src/service/eventsModuleGerritEventRouter.ts
-        containerId: events-backend-module-gerrit
-        technology: REST Controller / Router
-        classification: api-marker
-      x: 48
-      y: 384
-      forensics:
-        complexity: 1
-        loc: 43
-        sloc: 18
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/events-backend-module-gerrit/eventsmodulegerriteventrouter-test
-      type: rest-api
-      name: eventsModuleGerritEventRouter.test Service
-      isTest: true
-      properties:
-        filepath: plugins/events-backend-module-gerrit/src/service/eventsModuleGerritEventRouter.test.ts
-        containerId: events-backend-module-gerrit
-        technology: REST Controller / Router
-        classification: api-marker
-      x: 428
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 42
-        sloc: 22
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/events-backend-module-gerrit/gerriteventrouter
-      type: rest-api
-      name: GerritEventRouter Service
-      isTest: false
-      properties:
-        filepath: plugins/events-backend-module-gerrit/src/router/GerritEventRouter.ts
-        containerId: events-backend-module-gerrit
-        technology: REST Controller / Router
-        classification: api-marker
-      x: 48
-      y: 704
-      forensics:
-        complexity: 2
-        loc: 51
-        sloc: 23
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/events-backend-module-gerrit/gerriteventrouter-test
-      type: rest-api
-      name: GerritEventRouter.test Service
-      isTest: true
-      properties:
-        filepath: plugins/events-backend-module-gerrit/src/router/GerritEventRouter.test.ts
-        containerId: events-backend-module-gerrit
-        technology: REST Controller / Router
-        classification: api-marker
-      x: 428
-      y: 384
-      forensics:
-        complexity: 1
-        loc: 58
-        sloc: 33
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-  dependencies:
-    - from: blueprint/plugins/events-backend-module-gerrit/alpha
-      to: blueprint/plugins/events-backend-module-gerrit/eventsmodulegerriteventrouter
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/events-backend-module-gerrit/eventsmodulegerriteventrouter
-      to: blueprint/plugins/events-backend-module-gerrit/gerriteventrouter
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/events-backend-module-gerrit/eventsmodulegerriteventrouter-test
-      to: blueprint/plugins/events-backend-module-gerrit/eventsmodulegerriteventrouter
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/events-backend-module-gerrit/gerriteventrouter-test
-      to: blueprint/plugins/events-backend-module-gerrit/gerriteventrouter
-      type: direct-call
-      description: Calls module / service
+nodes:
+  - entityRef: blueprint/plugins/events-backend-module-gerrit/alpha
+    type: background-worker
+    name: alpha Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-gerrit/src/alpha.ts
+      containerId: events-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    x: 48
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 24
+      sloc: 4
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/events-backend-module-gerrit/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-gerrit/src/setupTests.ts
+      containerId: events-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1188
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 18
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/events-backend-module-gerrit/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-gerrit/src/index.ts
+      containerId: events-backend-module-gerrit
+      technology: TypeScript Domain Service
+      classification: default
+    x: 808
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 26
+      sloc: 2
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/events-backend-module-gerrit/eventsmodulegerriteventrouter
+    type: rest-api
+    name: eventsModuleGerritEventRouter Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-gerrit/src/service/eventsModuleGerritEventRouter.ts
+      containerId: events-backend-module-gerrit
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 48
+    y: 384
+    forensics:
+      complexity: 1
+      loc: 43
+      sloc: 18
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/events-backend-module-gerrit/eventsmodulegerriteventrouter-test
+    type: rest-api
+    name: eventsModuleGerritEventRouter.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-gerrit/src/service/eventsModuleGerritEventRouter.test.ts
+      containerId: events-backend-module-gerrit
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 428
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 42
+      sloc: 22
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/events-backend-module-gerrit/gerriteventrouter
+    type: rest-api
+    name: GerritEventRouter Service
+    isTest: false
+    properties:
+      filepath: plugins/events-backend-module-gerrit/src/router/GerritEventRouter.ts
+      containerId: events-backend-module-gerrit
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 48
+    y: 704
+    forensics:
+      complexity: 2
+      loc: 51
+      sloc: 23
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/events-backend-module-gerrit/gerriteventrouter-test
+    type: rest-api
+    name: GerritEventRouter.test Service
+    isTest: true
+    properties:
+      filepath: plugins/events-backend-module-gerrit/src/router/GerritEventRouter.test.ts
+      containerId: events-backend-module-gerrit
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 428
+    y: 384
+    forensics:
+      complexity: 1
+      loc: 58
+      sloc: 33
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+dependencies:
+  - from: blueprint/plugins/events-backend-module-gerrit/alpha
+    to: blueprint/plugins/events-backend-module-gerrit/eventsmodulegerriteventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-gerrit/eventsmodulegerriteventrouter
+    to: blueprint/plugins/events-backend-module-gerrit/gerriteventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-gerrit/eventsmodulegerriteventrouter-test
+    to: blueprint/plugins/events-backend-module-gerrit/eventsmodulegerriteventrouter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/events-backend-module-gerrit/gerriteventrouter-test
+    to: blueprint/plugins/events-backend-module-gerrit/gerriteventrouter
+    type: direct-call
+    description: Calls module / service

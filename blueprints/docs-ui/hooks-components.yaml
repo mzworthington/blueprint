@@ -1,57 +1,57 @@
-# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
-- entityRef: blueprint/docs-ui/hooks
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: component
+metaData:
+  entityRef: blueprint/docs-ui/hooks
   name: Hooks Service Components
-  version: 1.0.0
-  level: component
-  nodes:
-    - entityRef: blueprint/docs-ui/hooks/usecurrentpage
-      type: background-worker
-      name: useCurrentPage Service
-      isTest: false
-      properties:
-        filepath: docs-ui/src/hooks/useCurrentPage.ts
-        containerId: hooks
-        technology: TypeScript Domain Service
-        classification: default
-      x: 48
-      y: 64
-      forensics:
-        complexity: 5
-        loc: 32
-        sloc: 23
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/docs-ui/docs-ui/getpagename
-      type: background-worker
-      name: getPageName Service (External)
-      external: true
-      properties:
-        filepath: docs-ui/src/utils/getPageName.ts
-        containerId: docs-ui
-        technology: TypeScript Domain Service
-        classification: default
-      x: 428
-      y: 384
-    - entityRef: blueprint/docs-ui/components/navigation
-      type: gateway-api
-      name: Navigation Service (External)
-      external: true
-      properties:
-        filepath: docs-ui/src/components/Navigation/Navigation.tsx
-        containerId: components
-        technology: React Component
-        classification: ui-import
-      x: 48
-      y: 384
-  dependencies:
-    - from: blueprint/docs-ui/hooks/usecurrentpage
-      to: blueprint/docs-ui/components/navigation
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/docs-ui/hooks/usecurrentpage
-      to: blueprint/docs-ui/docs-ui/getpagename
-      type: direct-call
-      description: Calls module / service
+nodes:
+  - entityRef: blueprint/docs-ui/hooks/usecurrentpage
+    type: background-worker
+    name: useCurrentPage Service
+    isTest: false
+    properties:
+      filepath: docs-ui/src/hooks/useCurrentPage.ts
+      containerId: hooks
+      technology: TypeScript Domain Service
+      classification: default
+    x: 48
+    y: 64
+    forensics:
+      complexity: 5
+      loc: 32
+      sloc: 23
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/docs-ui/docs-ui/getpagename
+    type: background-worker
+    name: getPageName Service (External)
+    external: true
+    properties:
+      filepath: docs-ui/src/utils/getPageName.ts
+      containerId: docs-ui
+      technology: TypeScript Domain Service
+      classification: default
+    x: 428
+    y: 384
+  - entityRef: blueprint/docs-ui/components/navigation
+    type: gateway-api
+    name: Navigation Service (External)
+    external: true
+    properties:
+      filepath: docs-ui/src/components/Navigation/Navigation.tsx
+      containerId: components
+      technology: React Component
+      classification: ui-import
+    x: 48
+    y: 384
+dependencies:
+  - from: blueprint/docs-ui/hooks/usecurrentpage
+    to: blueprint/docs-ui/components/navigation
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/docs-ui/hooks/usecurrentpage
+    to: blueprint/docs-ui/docs-ui/getpagename
+    type: direct-call
+    description: Calls module / service

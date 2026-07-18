@@ -2,7 +2,7 @@
  * Public JSON Schema hosting for blueprint YAML (GitHub Pages / custom domain).
  * Bump {@link SYSTEM_SCHEMA_MAJOR_VERSION} only for breaking contract changes.
  */
-export const SYSTEM_SCHEMA_MAJOR_VERSION = 2;
+export const SYSTEM_SCHEMA_MAJOR_VERSION = 3;
 
 export const SYSTEM_SCHEMA_PUBLIC_ORIGIN = 'https://blueprint.mzworthington.co.uk';
 

@@ -1,123 +1,123 @@
-# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
-- entityRef: blueprint/plugins/catalog-backend-module-backstage-openapi
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: component
+metaData:
+  entityRef: blueprint/plugins/catalog-backend-module-backstage-openapi
   name: Catalog-backend-module-backstage-openapi Service Components
-  version: 1.0.0
-  level: component
-  nodes:
-    - entityRef: blueprint/plugins/catalog-backend-module-backstage-openapi/config-d
-      type: background-worker
-      name: config.d Service
-      isTest: false
-      properties:
-        filepath: plugins/catalog-backend-module-backstage-openapi/config.d.ts
-        containerId: catalog-backend-module-backstage-openapi
-        technology: TypeScript Domain Service
-        classification: default
-      x: 48
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 41
-        sloc: 11
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/catalog-backend-module-backstage-openapi/index
-      type: background-worker
-      name: index Service
-      isTest: false
-      properties:
-        filepath: plugins/catalog-backend-module-backstage-openapi/src/index.ts
-        containerId: catalog-backend-module-backstage-openapi
-        technology: TypeScript Domain Service
-        classification: default
-      x: 428
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 65
-        sloc: 35
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/catalog-backend-module-backstage-openapi/internalopenapidocumentationprovider
-      type: background-worker
-      name: InternalOpenApiDocumentationProvider Service
-      isTest: false
-      properties:
-        filepath: plugins/catalog-backend-module-backstage-openapi/src/InternalOpenApiDocumentationProvider.ts
-        containerId: catalog-backend-module-backstage-openapi
-        technology: TypeScript Domain Service
-        classification: default
-      x: 428
-      y: 384
-      forensics:
-        complexity: 11
-        loc: 319
-        sloc: 279
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        classifications:
-          - knowledge-silo
-        sinceDays: 500
-    - entityRef: blueprint/plugins/catalog-backend-module-backstage-openapi/setuptests
-      type: background-worker
-      name: setupTests Service
-      isTest: true
-      properties:
-        filepath: plugins/catalog-backend-module-backstage-openapi/src/setupTests.ts
-        containerId: catalog-backend-module-backstage-openapi
-        technology: TypeScript Domain Service
-        classification: default
-      x: 808
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 17
-        sloc: 1
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/home/config
-      type: rest-api
-      name: config Service (External)
-      external: true
-      properties:
-        filepath: plugins/home/src/api/config.ts
-        containerId: home
-        technology: REST Controller / Router
-        classification: api-marker
-      x: 808
-      y: 704
-    - entityRef: blueprint/plugins/events-backend/errors
-      type: background-worker
-      name: errors Service (External)
-      external: true
-      properties:
-        filepath: plugins/events-backend/src/service/http/errors.ts
-        containerId: events-backend
-        technology: TypeScript Domain Service
-        classification: default
-      x: 428
-      y: 704
-  dependencies:
-    - from: blueprint/plugins/catalog-backend-module-backstage-openapi/internalopenapidocumentationprovider
-      to: blueprint/plugins/home/config
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/catalog-backend-module-backstage-openapi/internalopenapidocumentationprovider
-      to: blueprint/plugins/events-backend/errors
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/catalog-backend-module-backstage-openapi/index
-      to: blueprint/plugins/catalog-backend-module-backstage-openapi/internalopenapidocumentationprovider
-      type: direct-call
-      description: Calls module / service
+nodes:
+  - entityRef: blueprint/plugins/catalog-backend-module-backstage-openapi/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-backstage-openapi/config.d.ts
+      containerId: catalog-backend-module-backstage-openapi
+      technology: TypeScript Domain Service
+      classification: default
+    x: 48
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 41
+      sloc: 11
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/catalog-backend-module-backstage-openapi/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-backstage-openapi/src/index.ts
+      containerId: catalog-backend-module-backstage-openapi
+      technology: TypeScript Domain Service
+      classification: default
+    x: 428
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 65
+      sloc: 35
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/catalog-backend-module-backstage-openapi/internalopenapidocumentationprovider
+    type: background-worker
+    name: InternalOpenApiDocumentationProvider Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-backstage-openapi/src/InternalOpenApiDocumentationProvider.ts
+      containerId: catalog-backend-module-backstage-openapi
+      technology: TypeScript Domain Service
+      classification: default
+    x: 428
+    y: 384
+    forensics:
+      complexity: 11
+      loc: 319
+      sloc: 279
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      sinceDays: 500
+  - entityRef: blueprint/plugins/catalog-backend-module-backstage-openapi/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-backstage-openapi/src/setupTests.ts
+      containerId: catalog-backend-module-backstage-openapi
+      technology: TypeScript Domain Service
+      classification: default
+    x: 808
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 17
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/home/config
+    type: rest-api
+    name: config Service (External)
+    external: true
+    properties:
+      filepath: plugins/home/src/api/config.ts
+      containerId: home
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 808
+    y: 704
+  - entityRef: blueprint/plugins/events-backend/errors
+    type: background-worker
+    name: errors Service (External)
+    external: true
+    properties:
+      filepath: plugins/events-backend/src/service/http/errors.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 428
+    y: 704
+dependencies:
+  - from: blueprint/plugins/catalog-backend-module-backstage-openapi/internalopenapidocumentationprovider
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-backstage-openapi/internalopenapidocumentationprovider
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-backend-module-backstage-openapi/index
+    to: blueprint/plugins/catalog-backend-module-backstage-openapi/internalopenapidocumentationprovider
+    type: direct-call
+    description: Calls module / service

@@ -1,263 +1,263 @@
-# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
-- entityRef: blueprint/plugins/notifications-common
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: component
+metaData:
+  entityRef: blueprint/plugins/notifications-common
   name: Notifications-common Service Components
-  version: 1.0.0
-  level: component
-  nodes:
-    - entityRef: blueprint/plugins/notifications-common/filters
-      type: background-worker
-      name: filters Service
-      isTest: false
-      properties:
-        filepath: plugins/notifications-common/src/filters.ts
-        containerId: notifications-common
-        technology: TypeScript Domain Service
-        classification: default
-      x: 808
-      y: 384
-      forensics:
-        complexity: 5
-        loc: 51
-        sloc: 33
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/notifications-common/utils
-      type: background-worker
-      name: utils Service
-      isTest: false
-      properties:
-        filepath: plugins/notifications-common/src/utils.ts
-        containerId: notifications-common
-        technology: TypeScript Domain Service
-        classification: default
-      x: 2228
-      y: 704
-      forensics:
-        complexity: 5
-        loc: 49
-        sloc: 24
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/notifications-common/setuptests
-      type: background-worker
-      name: setupTests Service
-      isTest: true
-      properties:
-        filepath: plugins/notifications-common/src/setupTests.ts
-        containerId: notifications-common
-        technology: TypeScript Domain Service
-        classification: default
-      x: 428
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 17
-        sloc: 1
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/notifications-common/types
-      type: background-worker
-      name: types Service
-      isTest: false
-      properties:
-        filepath: plugins/notifications-common/src/types.ts
-        containerId: notifications-common
-        technology: TypeScript Domain Service
-        classification: default
-      x: 1408
-      y: 1024
-      forensics:
-        complexity: 1
-        loc: 197
-        sloc: 58
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/notifications-common/constants
-      type: background-worker
-      name: constants Service
-      isTest: false
-      properties:
-        filepath: plugins/notifications-common/src/constants.ts
-        containerId: notifications-common
-        technology: TypeScript Domain Service
-        classification: default
-      x: 1188
-      y: 704
-      forensics:
-        complexity: 1
-        loc: 27
-        sloc: 7
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/notifications-common/index
-      type: background-worker
-      name: index Service
-      isTest: false
-      properties:
-        filepath: plugins/notifications-common/src/index.ts
-        containerId: notifications-common
-        technology: TypeScript Domain Service
-        classification: default
-      x: 48
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 27
-        sloc: 4
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/catalog/catalogtable
-      type: gateway-api
-      name: CatalogTable Service (External)
-      external: true
-      properties:
-        filepath: plugins/catalog/src/components/CatalogTable/CatalogTable.tsx
-        containerId: catalog
-        technology: React Component
-        classification: ui-import
-      x: 2228
-      y: 384
-    - entityRef: blueprint/plugins/catalog-react/columnfactories
-      type: gateway-api
-      name: columnFactories Service (External)
-      external: true
-      properties:
-        filepath: plugins/catalog-react/src/components/EntityDataTable/columnFactories.tsx
-        containerId: catalog-react
-        technology: React Component
-        classification: ui-import
-      x: 1468
-      y: 384
-    - entityRef: blueprint/plugins/catalog-react/columns
-      type: background-worker
-      name: columns Service (External)
-      external: true
-      properties:
-        filepath: plugins/catalog-react/src/components/EntityTable/columns.tsx
-        containerId: catalog-react
-        technology: TypeScript Domain Service
-        classification: default
-      x: 1848
-      y: 384
-    - entityRef: blueprint/plugins/home/config
-      type: rest-api
-      name: config Service (External)
-      external: true
-      properties:
-        filepath: plugins/home/src/api/config.ts
-        containerId: home
-        technology: REST Controller / Router
-        classification: api-marker
-      x: 808
-      y: 704
-    - entityRef: blueprint/plugins/catalog/entitytabsgroup
-      type: gateway-api
-      name: EntityTabsGroup Service (External)
-      external: true
-      properties:
-        filepath: plugins/catalog/src/alpha/components/EntityTabs/EntityTabsGroup.tsx
-        containerId: catalog
-        technology: React Component
-        classification: ui-import
-      x: 2608
-      y: 384
-    - entityRef: blueprint/plugins/home-react/extensions
-      type: gateway-api
-      name: extensions Service (External)
-      external: true
-      properties:
-        filepath: plugins/home-react/src/extensions.tsx
-        containerId: home-react
-        technology: React Component
-        classification: ui-import
-      x: 2988
-      y: 384
-    - entityRef: blueprint/plugins/scaffolder-node/index
-      type: background-worker
-      name: index Service (External)
-      external: true
-      properties:
-        filepath: plugins/scaffolder-node/src/tasks/index.ts
-        containerId: scaffolder-node
-        technology: TypeScript Domain Service
-        classification: default
-      x: 808
-      y: 64
-    - entityRef: blueprint/plugins/home/types
-      type: gateway-api
-      name: types Service (External)
-      external: true
-      properties:
-        filepath: plugins/home/src/components/CustomHomepage/types.ts
-        containerId: home
-        technology: React Component
-        classification: ui-import
-      x: 3368
-      y: 384
-  dependencies:
-    - from: blueprint/plugins/home/types
-      to: blueprint/plugins/notifications-common/utils
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/notifications-common/filters
-      to: blueprint/plugins/home/config
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/notifications-common/filters
-      to: blueprint/plugins/notifications-common/types
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/notifications-common/filters
-      to: blueprint/plugins/notifications-common/constants
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/notifications-common/utils
-      to: blueprint/plugins/notifications-common/types
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/notifications-common/constants
-      to: blueprint/plugins/notifications-common/types
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/catalog-react/columns
-      to: blueprint/plugins/notifications-common/utils
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/catalog-react/columnfactories
-      to: blueprint/plugins/notifications-common/utils
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/catalog/catalogtable
-      to: blueprint/plugins/notifications-common/utils
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/catalog/entitytabsgroup
-      to: blueprint/plugins/notifications-common/utils
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/scaffolder-node/index
-      to: blueprint/plugins/notifications-common/filters
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/home-react/extensions
-      to: blueprint/plugins/notifications-common/utils
-      type: direct-call
-      description: Calls module / service
+nodes:
+  - entityRef: blueprint/plugins/notifications-common/filters
+    type: background-worker
+    name: filters Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-common/src/filters.ts
+      containerId: notifications-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 808
+    y: 384
+    forensics:
+      complexity: 5
+      loc: 51
+      sloc: 33
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/notifications-common/utils
+    type: background-worker
+    name: utils Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-common/src/utils.ts
+      containerId: notifications-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2228
+    y: 704
+    forensics:
+      complexity: 5
+      loc: 49
+      sloc: 24
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/notifications-common/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/notifications-common/src/setupTests.ts
+      containerId: notifications-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 428
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 17
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/notifications-common/types
+    type: background-worker
+    name: types Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-common/src/types.ts
+      containerId: notifications-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1408
+    y: 1024
+    forensics:
+      complexity: 1
+      loc: 197
+      sloc: 58
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/notifications-common/constants
+    type: background-worker
+    name: constants Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-common/src/constants.ts
+      containerId: notifications-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1188
+    y: 704
+    forensics:
+      complexity: 1
+      loc: 27
+      sloc: 7
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/notifications-common/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/notifications-common/src/index.ts
+      containerId: notifications-common
+      technology: TypeScript Domain Service
+      classification: default
+    x: 48
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 27
+      sloc: 4
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/catalog/catalogtable
+    type: gateway-api
+    name: CatalogTable Service (External)
+    external: true
+    properties:
+      filepath: plugins/catalog/src/components/CatalogTable/CatalogTable.tsx
+      containerId: catalog
+      technology: React Component
+      classification: ui-import
+    x: 2228
+    y: 384
+  - entityRef: blueprint/plugins/catalog-react/columnfactories
+    type: gateway-api
+    name: columnFactories Service (External)
+    external: true
+    properties:
+      filepath: plugins/catalog-react/src/components/EntityDataTable/columnFactories.tsx
+      containerId: catalog-react
+      technology: React Component
+      classification: ui-import
+    x: 1468
+    y: 384
+  - entityRef: blueprint/plugins/catalog-react/columns
+    type: background-worker
+    name: columns Service (External)
+    external: true
+    properties:
+      filepath: plugins/catalog-react/src/components/EntityTable/columns.tsx
+      containerId: catalog-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1848
+    y: 384
+  - entityRef: blueprint/plugins/home/config
+    type: rest-api
+    name: config Service (External)
+    external: true
+    properties:
+      filepath: plugins/home/src/api/config.ts
+      containerId: home
+      technology: REST Controller / Router
+      classification: api-marker
+    x: 808
+    y: 704
+  - entityRef: blueprint/plugins/catalog/entitytabsgroup
+    type: gateway-api
+    name: EntityTabsGroup Service (External)
+    external: true
+    properties:
+      filepath: plugins/catalog/src/alpha/components/EntityTabs/EntityTabsGroup.tsx
+      containerId: catalog
+      technology: React Component
+      classification: ui-import
+    x: 2608
+    y: 384
+  - entityRef: blueprint/plugins/home-react/extensions
+    type: gateway-api
+    name: extensions Service (External)
+    external: true
+    properties:
+      filepath: plugins/home-react/src/extensions.tsx
+      containerId: home-react
+      technology: React Component
+      classification: ui-import
+    x: 2988
+    y: 384
+  - entityRef: blueprint/plugins/scaffolder-node/index
+    type: background-worker
+    name: index Service (External)
+    external: true
+    properties:
+      filepath: plugins/scaffolder-node/src/tasks/index.ts
+      containerId: scaffolder-node
+      technology: TypeScript Domain Service
+      classification: default
+    x: 808
+    y: 64
+  - entityRef: blueprint/plugins/home/types
+    type: gateway-api
+    name: types Service (External)
+    external: true
+    properties:
+      filepath: plugins/home/src/components/CustomHomepage/types.ts
+      containerId: home
+      technology: React Component
+      classification: ui-import
+    x: 3368
+    y: 384
+dependencies:
+  - from: blueprint/plugins/home/types
+    to: blueprint/plugins/notifications-common/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-common/filters
+    to: blueprint/plugins/home/config
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-common/filters
+    to: blueprint/plugins/notifications-common/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-common/filters
+    to: blueprint/plugins/notifications-common/constants
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-common/utils
+    to: blueprint/plugins/notifications-common/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/notifications-common/constants
+    to: blueprint/plugins/notifications-common/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/columns
+    to: blueprint/plugins/notifications-common/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog-react/columnfactories
+    to: blueprint/plugins/notifications-common/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/catalogtable
+    to: blueprint/plugins/notifications-common/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/catalog/entitytabsgroup
+    to: blueprint/plugins/notifications-common/utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/scaffolder-node/index
+    to: blueprint/plugins/notifications-common/filters
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/home-react/extensions
+    to: blueprint/plugins/notifications-common/utils
+    type: direct-call
+    description: Calls module / service

@@ -1,119 +1,119 @@
-# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
-- entityRef: blueprint/packages/codemods
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: component
+metaData:
+  entityRef: blueprint/packages/codemods
   name: Codemods Service Components
-  version: 1.0.0
-  level: component
-  nodes:
-    - entityRef: blueprint/packages/codemods/errors
-      type: background-worker
-      name: errors Service
-      isTest: false
-      properties:
-        filepath: packages/codemods/src/errors.ts
-        containerId: codemods
-        technology: TypeScript Domain Service
-        classification: default
-      x: 1188
-      y: 384
-      forensics:
-        complexity: 2
-        loc: 35
-        sloc: 16
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/packages/codemods/core-imports-test
-      type: background-worker
-      name: core-imports.test Service
-      isTest: true
-      properties:
-        filepath: packages/codemods/src/tests/core-imports.test.ts
-        containerId: codemods
-        technology: TypeScript Domain Service
-        classification: default
-      x: 48
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 70
-        sloc: 41
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/packages/codemods/action
-      type: background-worker
-      name: action Service
-      isTest: false
-      properties:
-        filepath: packages/codemods/src/action.ts
-        containerId: codemods
-        technology: TypeScript Domain Service
-        classification: default
-      x: 428
-      y: 384
-      forensics:
-        complexity: 4
-        loc: 73
-        sloc: 45
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/packages/codemods/codemods
-      type: background-worker
-      name: codemods Service
-      isTest: false
-      properties:
-        filepath: packages/codemods/src/codemods.ts
-        containerId: codemods
-        technology: TypeScript Domain Service
-        classification: default
-      x: 808
-      y: 384
-      forensics:
-        complexity: 1
-        loc: 34
-        sloc: 16
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/packages/codemods/index
-      type: background-worker
-      name: index Service
-      isTest: false
-      properties:
-        filepath: packages/codemods/src/index.ts
-        containerId: codemods
-        technology: TypeScript Domain Service
-        classification: default
-      x: 428
-      y: 64
-      forensics:
-        complexity: 4
-        loc: 78
-        sloc: 47
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-  dependencies:
-    - from: blueprint/packages/codemods/index
-      to: blueprint/packages/codemods/codemods
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/packages/codemods/index
-      to: blueprint/packages/codemods/errors
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/packages/codemods/index
-      to: blueprint/packages/codemods/action
-      type: direct-call
-      description: Calls module / service
+nodes:
+  - entityRef: blueprint/packages/codemods/errors
+    type: background-worker
+    name: errors Service
+    isTest: false
+    properties:
+      filepath: packages/codemods/src/errors.ts
+      containerId: codemods
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1188
+    y: 384
+    forensics:
+      complexity: 2
+      loc: 35
+      sloc: 16
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/packages/codemods/core-imports-test
+    type: background-worker
+    name: core-imports.test Service
+    isTest: true
+    properties:
+      filepath: packages/codemods/src/tests/core-imports.test.ts
+      containerId: codemods
+      technology: TypeScript Domain Service
+      classification: default
+    x: 48
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 70
+      sloc: 41
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/packages/codemods/action
+    type: background-worker
+    name: action Service
+    isTest: false
+    properties:
+      filepath: packages/codemods/src/action.ts
+      containerId: codemods
+      technology: TypeScript Domain Service
+      classification: default
+    x: 428
+    y: 384
+    forensics:
+      complexity: 4
+      loc: 73
+      sloc: 45
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/packages/codemods/codemods
+    type: background-worker
+    name: codemods Service
+    isTest: false
+    properties:
+      filepath: packages/codemods/src/codemods.ts
+      containerId: codemods
+      technology: TypeScript Domain Service
+      classification: default
+    x: 808
+    y: 384
+    forensics:
+      complexity: 1
+      loc: 34
+      sloc: 16
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/packages/codemods/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/codemods/src/index.ts
+      containerId: codemods
+      technology: TypeScript Domain Service
+      classification: default
+    x: 428
+    y: 64
+    forensics:
+      complexity: 4
+      loc: 78
+      sloc: 47
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+dependencies:
+  - from: blueprint/packages/codemods/index
+    to: blueprint/packages/codemods/codemods
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/codemods/index
+    to: blueprint/packages/codemods/errors
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/codemods/index
+    to: blueprint/packages/codemods/action
+    type: direct-call
+    description: Calls module / service

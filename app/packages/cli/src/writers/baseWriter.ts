@@ -11,8 +11,7 @@ export abstract class BaseWriter {
   ) {}
 
   protected async writeYaml(pathName: string, schema: SystemSchema): Promise<void> {
-    const schemaUrl = resolveLocalSchemaUrl(pathName);
-    const output = serializeSchemaToYaml(schema, schemaUrl ? { schemaUrl } : undefined);
+    const output = serializeSchemaToYaml(schema);
 
     // Ensure parent directory exists
     const normalizedPath = pathName.replace(/\\/g, '/');
@@ -29,8 +28,8 @@ export abstract class BaseWriter {
 }
 
 /**
- * Prefer a path-relative schema so the IDE can validate offline (remote Pages may 403
- * until deploy). Falls back to the default language-server URL when not in this repo.
+ * Resolve a path-relative schema file for workspace IDE association.
+ * Prefer {@link systemSchemaPublicUrl} in YAML `version` (written by serialize).
  */
 export function resolveLocalSchemaUrl(yamlFilePath: string): string | undefined {
   const versioned = path.join(

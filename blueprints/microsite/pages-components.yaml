@@ -1,302 +1,302 @@
-# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
-- entityRef: blueprint/microsite/pages
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: component
+metaData:
+  entityRef: blueprint/microsite/pages
   name: Pages Service Components
-  version: 1.0.0
-  level: component
-  nodes:
-    - entityRef: blueprint/microsite/pages/index
-      type: gateway-api
-      name: index Service
-      isTest: false
-      properties:
-        filepath: microsite/src/pages/index.tsx
-        containerId: pages
-        technology: React Component
-        classification: ui-import
-      x: 48
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 4
-        sloc: 2
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/microsite/pages/_home
-      type: gateway-api
-      name: _home Service
-      isTest: false
-      properties:
-        filepath: microsite/src/pages/home/_home.tsx
-        containerId: pages
-        technology: React Component
-        classification: ui-import
-      x: 2928
-      y: 384
-      forensics:
-        complexity: 3
-        loc: 552
-        sloc: 479
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/microsite/pages/_hubspotnewadoptersform
-      type: gateway-api
-      name: _hubSpotNewAdoptersForm Service
-      isTest: false
-      properties:
-        filepath: microsite/src/pages/home/_hubSpotNewAdoptersForm.tsx
-        containerId: pages
-        technology: React Component
-        classification: ui-import
-      x: 3108
-      y: 704
-      forensics:
-        complexity: 3
-        loc: 53
-        sloc: 44
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/microsite/pages/link
-      type: gateway-api
-      name: link Service
-      isTest: false
-      properties:
-        filepath: microsite/src/pages/link.tsx
-        containerId: pages
-        technology: React Component
-        classification: ui-import
-      x: 3928
-      y: 1024
-      forensics:
-        complexity: 3
-        loc: 19
-        sloc: 16
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/microsite/pages/_plugincard
-      type: gateway-api
-      name: _pluginCard Service
-      isTest: false
-      properties:
-        filepath: microsite/src/pages/plugins/_pluginCard.tsx
-        containerId: pages
-        technology: React Component
-        classification: ui-import
-      x: 3548
-      y: 704
-      forensics:
-        complexity: 3
-        loc: 59
-        sloc: 51
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/microsite/components/bannersection
-      type: gateway-api
-      name: bannerSection Service (External)
-      external: true
-      properties:
-        filepath: microsite/src/components/bannerSection/bannerSection.tsx
-        containerId: components
-        technology: React Component
-        classification: ui-import
-      x: 48
-      y: 704
-    - entityRef: blueprint/microsite/components/bannersectiongrid
-      type: gateway-api
-      name: bannerSectionGrid Service (External)
-      external: true
-      properties:
-        filepath: microsite/src/components/bannerSection/bannerSectionGrid.tsx
-        containerId: components
-        technology: React Component
-        classification: ui-import
-      x: 428
-      y: 704
-    - entityRef: blueprint/microsite/microsite/calcisnewplugin
-      type: background-worker
-      name: calcIsNewPlugin Service (External)
-      external: true
-      properties:
-        filepath: microsite/src/util/calcIsNewPlugin.tsx
-        containerId: microsite
-        technology: TypeScript Domain Service
-        classification: default
-      x: 1788
-      y: 384
-    - entityRef: blueprint/microsite/components/contentblock
-      type: gateway-api
-      name: contentBlock Service (External)
-      external: true
-      properties:
-        filepath: microsite/src/components/contentBlock/contentBlock.tsx
-        containerId: components
-        technology: React Component
-        classification: ui-import
-      x: 808
-      y: 704
-    - entityRef: blueprint/microsite/components/pluginsfilter
-      type: gateway-api
-      name: pluginsFilter Service (External)
-      external: true
-      properties:
-        filepath: microsite/src/components/pluginsFilter/pluginsFilter.tsx
-        containerId: components
-        technology: React Component
-        classification: ui-import
-      x: 1028
-      y: 384
-    - entityRef: blueprint/microsite/components/pluginssearch
-      type: gateway-api
-      name: pluginsSearch Service (External)
-      external: true
-      properties:
-        filepath: microsite/src/components/pluginsSearch/pluginsSearch.tsx
-        containerId: components
-        technology: React Component
-        classification: ui-import
-      x: 1408
-      y: 384
-    - entityRef: blueprint/microsite/components/simplecard
-      type: gateway-api
-      name: simpleCard Service (External)
-      external: true
-      properties:
-        filepath: microsite/src/components/simpleCard/simpleCard.tsx
-        containerId: components
-        technology: React Component
-        classification: ui-import
-      x: 3548
-      y: 1024
-    - entityRef: blueprint/microsite/microsite/truncatedescription
-      type: background-worker
-      name: truncateDescription Service (External)
-      external: true
-      properties:
-        filepath: microsite/src/util/truncateDescription.tsx
-        containerId: microsite
-        technology: TypeScript Domain Service
-        classification: default
-      x: 2168
-      y: 384
-    - entityRef: blueprint/microsite/microsite/types
-      type: background-worker
-      name: types Service (External)
-      external: true
-      properties:
-        filepath: microsite/src/util/types.ts
-        containerId: microsite
-        technology: TypeScript Domain Service
-        classification: default
-      x: 2548
-      y: 384
-  dependencies:
-    - from: blueprint/microsite/components/contentblock
-      to: blueprint/microsite/pages/link
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/index
-      to: blueprint/microsite/pages/_home
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/_home
-      to: blueprint/microsite/pages/link
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/_home
-      to: blueprint/microsite/components/bannersection
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/_home
-      to: blueprint/microsite/components/bannersectiongrid
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/_home
-      to: blueprint/microsite/components/contentblock
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/_home
-      to: blueprint/microsite/pages/_hubspotnewadoptersform
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/index
-      to: blueprint/microsite/pages/link
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/index
-      to: blueprint/microsite/components/pluginsfilter
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/index
-      to: blueprint/microsite/microsite/calcisnewplugin
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/index
-      to: blueprint/microsite/microsite/truncatedescription
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/index
-      to: blueprint/microsite/microsite/types
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/index
-      to: blueprint/microsite/pages/_plugincard
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/index
-      to: blueprint/microsite/components/pluginssearch
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/_plugincard
-      to: blueprint/microsite/pages/link
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/_plugincard
-      to: blueprint/microsite/components/simplecard
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/index
-      to: blueprint/microsite/pages/link
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/index
-      to: blueprint/microsite/components/bannersection
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/index
-      to: blueprint/microsite/components/bannersectiongrid
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/index
-      to: blueprint/microsite/components/contentblock
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/index
-      to: blueprint/microsite/pages/link
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/index
-      to: blueprint/microsite/components/bannersection
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/index
-      to: blueprint/microsite/components/bannersectiongrid
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/microsite/pages/index
-      to: blueprint/microsite/components/contentblock
-      type: direct-call
-      description: Calls module / service
+nodes:
+  - entityRef: blueprint/microsite/pages/index
+    type: gateway-api
+    name: index Service
+    isTest: false
+    properties:
+      filepath: microsite/src/pages/index.tsx
+      containerId: pages
+      technology: React Component
+      classification: ui-import
+    x: 48
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 4
+      sloc: 2
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/microsite/pages/_home
+    type: gateway-api
+    name: _home Service
+    isTest: false
+    properties:
+      filepath: microsite/src/pages/home/_home.tsx
+      containerId: pages
+      technology: React Component
+      classification: ui-import
+    x: 2928
+    y: 384
+    forensics:
+      complexity: 3
+      loc: 552
+      sloc: 479
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/microsite/pages/_hubspotnewadoptersform
+    type: gateway-api
+    name: _hubSpotNewAdoptersForm Service
+    isTest: false
+    properties:
+      filepath: microsite/src/pages/home/_hubSpotNewAdoptersForm.tsx
+      containerId: pages
+      technology: React Component
+      classification: ui-import
+    x: 3108
+    y: 704
+    forensics:
+      complexity: 3
+      loc: 53
+      sloc: 44
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/microsite/pages/link
+    type: gateway-api
+    name: link Service
+    isTest: false
+    properties:
+      filepath: microsite/src/pages/link.tsx
+      containerId: pages
+      technology: React Component
+      classification: ui-import
+    x: 3928
+    y: 1024
+    forensics:
+      complexity: 3
+      loc: 19
+      sloc: 16
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/microsite/pages/_plugincard
+    type: gateway-api
+    name: _pluginCard Service
+    isTest: false
+    properties:
+      filepath: microsite/src/pages/plugins/_pluginCard.tsx
+      containerId: pages
+      technology: React Component
+      classification: ui-import
+    x: 3548
+    y: 704
+    forensics:
+      complexity: 3
+      loc: 59
+      sloc: 51
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/microsite/components/bannersection
+    type: gateway-api
+    name: bannerSection Service (External)
+    external: true
+    properties:
+      filepath: microsite/src/components/bannerSection/bannerSection.tsx
+      containerId: components
+      technology: React Component
+      classification: ui-import
+    x: 48
+    y: 704
+  - entityRef: blueprint/microsite/components/bannersectiongrid
+    type: gateway-api
+    name: bannerSectionGrid Service (External)
+    external: true
+    properties:
+      filepath: microsite/src/components/bannerSection/bannerSectionGrid.tsx
+      containerId: components
+      technology: React Component
+      classification: ui-import
+    x: 428
+    y: 704
+  - entityRef: blueprint/microsite/microsite/calcisnewplugin
+    type: background-worker
+    name: calcIsNewPlugin Service (External)
+    external: true
+    properties:
+      filepath: microsite/src/util/calcIsNewPlugin.tsx
+      containerId: microsite
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1788
+    y: 384
+  - entityRef: blueprint/microsite/components/contentblock
+    type: gateway-api
+    name: contentBlock Service (External)
+    external: true
+    properties:
+      filepath: microsite/src/components/contentBlock/contentBlock.tsx
+      containerId: components
+      technology: React Component
+      classification: ui-import
+    x: 808
+    y: 704
+  - entityRef: blueprint/microsite/components/pluginsfilter
+    type: gateway-api
+    name: pluginsFilter Service (External)
+    external: true
+    properties:
+      filepath: microsite/src/components/pluginsFilter/pluginsFilter.tsx
+      containerId: components
+      technology: React Component
+      classification: ui-import
+    x: 1028
+    y: 384
+  - entityRef: blueprint/microsite/components/pluginssearch
+    type: gateway-api
+    name: pluginsSearch Service (External)
+    external: true
+    properties:
+      filepath: microsite/src/components/pluginsSearch/pluginsSearch.tsx
+      containerId: components
+      technology: React Component
+      classification: ui-import
+    x: 1408
+    y: 384
+  - entityRef: blueprint/microsite/components/simplecard
+    type: gateway-api
+    name: simpleCard Service (External)
+    external: true
+    properties:
+      filepath: microsite/src/components/simpleCard/simpleCard.tsx
+      containerId: components
+      technology: React Component
+      classification: ui-import
+    x: 3548
+    y: 1024
+  - entityRef: blueprint/microsite/microsite/truncatedescription
+    type: background-worker
+    name: truncateDescription Service (External)
+    external: true
+    properties:
+      filepath: microsite/src/util/truncateDescription.tsx
+      containerId: microsite
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2168
+    y: 384
+  - entityRef: blueprint/microsite/microsite/types
+    type: background-worker
+    name: types Service (External)
+    external: true
+    properties:
+      filepath: microsite/src/util/types.ts
+      containerId: microsite
+      technology: TypeScript Domain Service
+      classification: default
+    x: 2548
+    y: 384
+dependencies:
+  - from: blueprint/microsite/components/contentblock
+    to: blueprint/microsite/pages/link
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/pages/_home
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/_home
+    to: blueprint/microsite/pages/link
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/_home
+    to: blueprint/microsite/components/bannersection
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/_home
+    to: blueprint/microsite/components/bannersectiongrid
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/_home
+    to: blueprint/microsite/components/contentblock
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/_home
+    to: blueprint/microsite/pages/_hubspotnewadoptersform
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/pages/link
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/components/pluginsfilter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/microsite/calcisnewplugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/microsite/truncatedescription
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/microsite/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/pages/_plugincard
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/components/pluginssearch
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/_plugincard
+    to: blueprint/microsite/pages/link
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/_plugincard
+    to: blueprint/microsite/components/simplecard
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/pages/link
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/components/bannersection
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/components/bannersectiongrid
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/components/contentblock
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/pages/link
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/components/bannersection
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/components/bannersectiongrid
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/microsite/pages/index
+    to: blueprint/microsite/components/contentblock
+    type: direct-call
+    description: Calls module / service

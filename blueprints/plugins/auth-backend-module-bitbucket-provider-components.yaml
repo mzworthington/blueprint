@@ -1,174 +1,174 @@
-# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
-- entityRef: blueprint/plugins/auth-backend-module-bitbucket-provider
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: component
+metaData:
+  entityRef: blueprint/plugins/auth-backend-module-bitbucket-provider
   name: Auth-backend-module-bitbucket-provider Service Components
-  version: 1.0.0
-  level: component
-  nodes:
-    - entityRef: blueprint/plugins/auth-backend-module-bitbucket-provider/config-d
-      type: background-worker
-      name: config.d Service
-      isTest: false
-      properties:
-        filepath: plugins/auth-backend-module-bitbucket-provider/config.d.ts
-        containerId: auth-backend-module-bitbucket-provider
-        technology: TypeScript Domain Service
-        classification: default
-      x: 808
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 58
-        sloc: 36
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth-backend-module-bitbucket-provider/index
-      type: background-worker
-      name: index Service
-      isTest: false
-      properties:
-        filepath: plugins/auth-backend-module-bitbucket-provider/dev/index.ts
-        containerId: auth-backend-module-bitbucket-provider
-        technology: TypeScript Domain Service
-        classification: default
-      x: 428
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 25
-        sloc: 5
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth-backend-module-bitbucket-provider/module
-      type: background-worker
-      name: module Service
-      isTest: false
-      properties:
-        filepath: plugins/auth-backend-module-bitbucket-provider/src/module.ts
-        containerId: auth-backend-module-bitbucket-provider
-        technology: TypeScript Domain Service
-        classification: default
-      x: 48
-      y: 384
-      forensics:
-        complexity: 1
-        loc: 49
-        sloc: 31
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth-backend-module-bitbucket-provider/types-d
-      type: background-worker
-      name: types.d Service
-      isTest: false
-      properties:
-        filepath: plugins/auth-backend-module-bitbucket-provider/src/types.d.ts
-        containerId: auth-backend-module-bitbucket-provider
-        technology: TypeScript Domain Service
-        classification: default
-      x: 1188
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 30
-        sloc: 13
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth-backend-module-bitbucket-provider/module-test
-      type: background-worker
-      name: module.test Service
-      isTest: true
-      properties:
-        filepath: plugins/auth-backend-module-bitbucket-provider/src/module.test.ts
-        containerId: auth-backend-module-bitbucket-provider
-        technology: TypeScript Domain Service
-        classification: default
-      x: 48
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 80
-        sloc: 56
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth-backend-module-bitbucket-provider/resolvers
-      type: background-worker
-      name: resolvers Service
-      isTest: false
-      properties:
-        filepath: plugins/auth-backend-module-bitbucket-provider/src/resolvers.ts
-        containerId: auth-backend-module-bitbucket-provider
-        technology: TypeScript Domain Service
-        classification: default
-      x: 428
-      y: 704
-      forensics:
-        complexity: 5
-        loc: 112
-        sloc: 78
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth-backend-module-bitbucket-provider/authenticator
-      type: background-worker
-      name: authenticator Service
-      isTest: false
-      properties:
-        filepath: plugins/auth-backend-module-bitbucket-provider/src/authenticator.ts
-        containerId: auth-backend-module-bitbucket-provider
-        technology: TypeScript Domain Service
-        classification: default
-      x: 48
-      y: 704
-      forensics:
-        complexity: 1
-        loc: 81
-        sloc: 58
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
-      type: background-worker
-      name: types Service (External)
-      external: true
-      properties:
-        filepath: plugins/auth-backend-module-cloudflare-access-provider/src/types.ts
-        containerId: auth-backend-module-cloudflare-access-provider
-        technology: TypeScript Domain Service
-        classification: default
-      x: 808
-      y: 384
-  dependencies:
-    - from: blueprint/plugins/auth-backend-module-bitbucket-provider/config-d
-      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/auth-backend-module-bitbucket-provider/module
-      to: blueprint/plugins/auth-backend-module-bitbucket-provider/authenticator
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/auth-backend-module-bitbucket-provider/module
-      to: blueprint/plugins/auth-backend-module-bitbucket-provider/resolvers
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/auth-backend-module-bitbucket-provider/module-test
-      to: blueprint/plugins/auth-backend-module-bitbucket-provider/module
-      type: direct-call
-      description: Calls module / service
+nodes:
+  - entityRef: blueprint/plugins/auth-backend-module-bitbucket-provider/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-bitbucket-provider/config.d.ts
+      containerId: auth-backend-module-bitbucket-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 808
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 58
+      sloc: 36
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth-backend-module-bitbucket-provider/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-bitbucket-provider/dev/index.ts
+      containerId: auth-backend-module-bitbucket-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 428
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 25
+      sloc: 5
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth-backend-module-bitbucket-provider/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-bitbucket-provider/src/module.ts
+      containerId: auth-backend-module-bitbucket-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 48
+    y: 384
+    forensics:
+      complexity: 1
+      loc: 49
+      sloc: 31
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth-backend-module-bitbucket-provider/types-d
+    type: background-worker
+    name: types.d Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-bitbucket-provider/src/types.d.ts
+      containerId: auth-backend-module-bitbucket-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1188
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 30
+      sloc: 13
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth-backend-module-bitbucket-provider/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-bitbucket-provider/src/module.test.ts
+      containerId: auth-backend-module-bitbucket-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 48
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 80
+      sloc: 56
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth-backend-module-bitbucket-provider/resolvers
+    type: background-worker
+    name: resolvers Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-bitbucket-provider/src/resolvers.ts
+      containerId: auth-backend-module-bitbucket-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 428
+    y: 704
+    forensics:
+      complexity: 5
+      loc: 112
+      sloc: 78
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth-backend-module-bitbucket-provider/authenticator
+    type: background-worker
+    name: authenticator Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-bitbucket-provider/src/authenticator.ts
+      containerId: auth-backend-module-bitbucket-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 48
+    y: 704
+    forensics:
+      complexity: 1
+      loc: 81
+      sloc: 58
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    type: background-worker
+    name: types Service (External)
+    external: true
+    properties:
+      filepath: plugins/auth-backend-module-cloudflare-access-provider/src/types.ts
+      containerId: auth-backend-module-cloudflare-access-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 808
+    y: 384
+dependencies:
+  - from: blueprint/plugins/auth-backend-module-bitbucket-provider/config-d
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-bitbucket-provider/module
+    to: blueprint/plugins/auth-backend-module-bitbucket-provider/authenticator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-bitbucket-provider/module
+    to: blueprint/plugins/auth-backend-module-bitbucket-provider/resolvers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-bitbucket-provider/module-test
+    to: blueprint/plugins/auth-backend-module-bitbucket-provider/module
+    type: direct-call
+    description: Calls module / service

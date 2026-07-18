@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { blueprintYamlLanguageServerDirective } from '@blueprint/core';
+import { systemSchemaPublicUrl } from '@blueprint/core';
 import { ContextLevelWriter } from './contextLevelWriter.ts';
 import { ContainerLevelWriter } from './containerLevelWriter.ts';
 import { ComponentLevelWriter } from './componentLevelWriter.ts';
@@ -9,20 +9,20 @@ import { resolveLocalSchemaUrl } from './baseWriter.ts';
 import type { SystemNode, SystemDependency } from '@blueprint/core';
 import { MockFileSystem, MockLogger } from '../test/fakes.ts';
 
-function expectSchemaDirective(yamlContent: string, schemaUrl?: string): void {
-  const firstLine = yamlContent.split('\n')[0];
-  expect(firstLine).toBe(blueprintYamlLanguageServerDirective(schemaUrl));
+function expectV3YamlHeader(yamlContent: string): void {
+  expect(yamlContent.split('\n')[0]).toBe(`version: ${systemSchemaPublicUrl()}`);
+  expect(yamlContent).toContain('metaData:');
 }
 
 describe('resolveLocalSchemaUrl', () => {
   it('resolves a path-relative schema from this repo blueprints tree', () => {
     const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../../..');
     const yamlPath = path.join(repoRoot, 'blueprints/cli/containers.yaml');
-    expect(resolveLocalSchemaUrl(yamlPath)).toBe('../../schemas/v2/blueprint.schema.json');
+    expect(resolveLocalSchemaUrl(yamlPath)).toBe('../../schemas/v3/blueprint.schema.json');
   });
 });
 
-describe('BaseWriter YAML schema directive', () => {
+describe('BaseWriter YAML v3 format', () => {
   let fileSystem: MockFileSystem;
   let logger: MockLogger;
 
@@ -31,16 +31,16 @@ describe('BaseWriter YAML schema directive', () => {
     logger = new MockLogger();
   });
 
-  it('prepends the yaml-language-server schema line on context.yaml', async () => {
+  it('writes v3 object YAML on context.yaml', async () => {
     const writer = new ContextLevelWriter(fileSystem, logger);
     await writer.write('/workspace/blueprints', 'my-context', 'my-system');
 
     const yamlContent = fileSystem.writtenFiles.get('/workspace/blueprints/context.yaml')!;
-    expectSchemaDirective(yamlContent);
+    expectV3YamlHeader(yamlContent);
     expect(yamlContent).toContain('entityRef: my-context');
   });
 
-  it('prepends the yaml-language-server schema line on containers.yaml', async () => {
+  it('writes v3 object YAML on containers.yaml', async () => {
     const writer = new ContainerLevelWriter(fileSystem, logger);
     const containerNodesMap = new Map<string, SystemNode>([
       [
@@ -59,11 +59,11 @@ describe('BaseWriter YAML schema directive', () => {
     );
 
     const yamlContent = fileSystem.writtenFiles.get('/workspace/blueprints/containers.yaml')!;
-    expectSchemaDirective(yamlContent);
+    expectV3YamlHeader(yamlContent);
     expect(yamlContent).toContain('level: container');
   });
 
-  it('prepends the yaml-language-server schema line on component YAML files', async () => {
+  it('writes v3 object YAML on component YAML files', async () => {
     const writer = new ComponentLevelWriter(fileSystem, logger);
     const containerNodesMap = new Map<string, SystemNode>([
       [
@@ -98,7 +98,7 @@ describe('BaseWriter YAML schema directive', () => {
     );
     expect(written.length).toBeGreaterThan(0);
     for (const [, yamlContent] of written) {
-      expectSchemaDirective(yamlContent);
+      expectV3YamlHeader(yamlContent);
     }
   });
 });

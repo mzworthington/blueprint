@@ -1,154 +1,154 @@
-# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
-- entityRef: blueprint/plugins/auth-backend-module-oauth2-provider
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: component
+metaData:
+  entityRef: blueprint/plugins/auth-backend-module-oauth2-provider
   name: Auth-backend-module-oauth2-provider Service Components
-  version: 1.0.0
-  level: component
-  nodes:
-    - entityRef: blueprint/plugins/auth-backend-module-oauth2-provider/config-d
-      type: background-worker
-      name: config.d Service
-      isTest: false
-      properties:
-        filepath: plugins/auth-backend-module-oauth2-provider/config.d.ts
-        containerId: auth-backend-module-oauth2-provider
-        technology: TypeScript Domain Service
-        classification: default
-      x: 48
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 60
-        sloc: 37
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth-backend-module-oauth2-provider/index
-      type: background-worker
-      name: index Service
-      isTest: false
-      properties:
-        filepath: plugins/auth-backend-module-oauth2-provider/dev/index.ts
-        containerId: auth-backend-module-oauth2-provider
-        technology: TypeScript Domain Service
-        classification: default
-      x: 428
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 25
-        sloc: 5
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth-backend-module-oauth2-provider/module
-      type: background-worker
-      name: module Service
-      isTest: false
-      properties:
-        filepath: plugins/auth-backend-module-oauth2-provider/src/module.ts
-        containerId: auth-backend-module-oauth2-provider
-        technology: TypeScript Domain Service
-        classification: default
-      x: 808
-      y: 384
-      forensics:
-        complexity: 1
-        loc: 49
-        sloc: 31
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth-backend-module-oauth2-provider/module-test
-      type: background-worker
-      name: module.test Service
-      isTest: true
-      properties:
-        filepath: plugins/auth-backend-module-oauth2-provider/src/module.test.ts
-        containerId: auth-backend-module-oauth2-provider
-        technology: TypeScript Domain Service
-        classification: default
-      x: 808
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 80
-        sloc: 56
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth-backend-module-oauth2-provider/resolvers
-      type: background-worker
-      name: resolvers Service
-      isTest: false
-      properties:
-        filepath: plugins/auth-backend-module-oauth2-provider/src/resolvers.ts
-        containerId: auth-backend-module-oauth2-provider
-        technology: TypeScript Domain Service
-        classification: default
-      x: 1188
-      y: 704
-      forensics:
-        complexity: 3
-        loc: 67
-        sloc: 39
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth-backend-module-oauth2-provider/authenticator
-      type: background-worker
-      name: authenticator Service
-      isTest: false
-      properties:
-        filepath: plugins/auth-backend-module-oauth2-provider/src/authenticator.ts
-        containerId: auth-backend-module-oauth2-provider
-        technology: TypeScript Domain Service
-        classification: default
-      x: 808
-      y: 704
-      forensics:
-        complexity: 3
-        loc: 100
-        sloc: 74
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
-      type: background-worker
-      name: types Service (External)
-      external: true
-      properties:
-        filepath: plugins/auth-backend-module-cloudflare-access-provider/src/types.ts
-        containerId: auth-backend-module-cloudflare-access-provider
-        technology: TypeScript Domain Service
-        classification: default
-      x: 48
-      y: 384
-  dependencies:
-    - from: blueprint/plugins/auth-backend-module-oauth2-provider/config-d
-      to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/auth-backend-module-oauth2-provider/module
-      to: blueprint/plugins/auth-backend-module-oauth2-provider/authenticator
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/auth-backend-module-oauth2-provider/module
-      to: blueprint/plugins/auth-backend-module-oauth2-provider/resolvers
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/auth-backend-module-oauth2-provider/module-test
-      to: blueprint/plugins/auth-backend-module-oauth2-provider/module
-      type: direct-call
-      description: Calls module / service
+nodes:
+  - entityRef: blueprint/plugins/auth-backend-module-oauth2-provider/config-d
+    type: background-worker
+    name: config.d Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-oauth2-provider/config.d.ts
+      containerId: auth-backend-module-oauth2-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 48
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 60
+      sloc: 37
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth-backend-module-oauth2-provider/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-oauth2-provider/dev/index.ts
+      containerId: auth-backend-module-oauth2-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 428
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 25
+      sloc: 5
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth-backend-module-oauth2-provider/module
+    type: background-worker
+    name: module Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-oauth2-provider/src/module.ts
+      containerId: auth-backend-module-oauth2-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 808
+    y: 384
+    forensics:
+      complexity: 1
+      loc: 49
+      sloc: 31
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth-backend-module-oauth2-provider/module-test
+    type: background-worker
+    name: module.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth-backend-module-oauth2-provider/src/module.test.ts
+      containerId: auth-backend-module-oauth2-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 808
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 80
+      sloc: 56
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth-backend-module-oauth2-provider/resolvers
+    type: background-worker
+    name: resolvers Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-oauth2-provider/src/resolvers.ts
+      containerId: auth-backend-module-oauth2-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1188
+    y: 704
+    forensics:
+      complexity: 3
+      loc: 67
+      sloc: 39
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth-backend-module-oauth2-provider/authenticator
+    type: background-worker
+    name: authenticator Service
+    isTest: false
+    properties:
+      filepath: plugins/auth-backend-module-oauth2-provider/src/authenticator.ts
+      containerId: auth-backend-module-oauth2-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 808
+    y: 704
+    forensics:
+      complexity: 3
+      loc: 100
+      sloc: 74
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    type: background-worker
+    name: types Service (External)
+    external: true
+    properties:
+      filepath: plugins/auth-backend-module-cloudflare-access-provider/src/types.ts
+      containerId: auth-backend-module-cloudflare-access-provider
+      technology: TypeScript Domain Service
+      classification: default
+    x: 48
+    y: 384
+dependencies:
+  - from: blueprint/plugins/auth-backend-module-oauth2-provider/config-d
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-oauth2-provider/module
+    to: blueprint/plugins/auth-backend-module-oauth2-provider/authenticator
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-oauth2-provider/module
+    to: blueprint/plugins/auth-backend-module-oauth2-provider/resolvers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth-backend-module-oauth2-provider/module-test
+    to: blueprint/plugins/auth-backend-module-oauth2-provider/module
+    type: direct-call
+    description: Calls module / service

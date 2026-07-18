@@ -9,22 +9,28 @@ import {
 import type { SystemSchema } from '../models/schema';
 
 describe('toSystemSchemaJsonSchema', () => {
-  it('exports Draft-07 JSON Schema as a one-element sequence document', () => {
+  it('exports Draft-07 JSON Schema as a v3 object document with metaData', () => {
     const schema = toSystemSchemaJsonSchema();
     expect(schema.$schema).toBe('http://json-schema.org/draft-07/schema#');
     expect(schema.$id).toBe(
-      'https://blueprint.mzworthington.co.uk/schemas/v2/blueprint.schema.json'
+      'https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json'
     );
     expect(schema.title).toBe('Blueprint System Schema');
-    expect(schema.type).toBe('array');
-    expect(schema.minItems).toBe(1);
-    expect(schema.maxItems).toBe(1);
-    const items = schema.items as {
-      required?: string[];
-      properties?: Record<string, { enum?: string[] }>;
-    };
-    expect(items.required).toEqual(expect.arrayContaining(['name', 'version', 'level', 'nodes']));
-    expect(items.properties?.level.enum).toEqual(['context', 'container', 'component', 'code']);
+    expect(schema.type).toBe('object');
+    expect(schema.required).toEqual(
+      expect.arrayContaining(['version', 'level', 'metaData', 'nodes'])
+    );
+    const props = schema.properties as Record<
+      string,
+      { properties?: Record<string, unknown>; enum?: string[] }
+    >;
+    expect(props.level.enum).toEqual(['context', 'container', 'component', 'code']);
+    expect(props.metaData.properties).toEqual(
+      expect.objectContaining({
+        entityRef: expect.any(Object),
+        name: expect.any(Object),
+      })
+    );
   });
 });
 
@@ -175,7 +181,7 @@ nodes:
     expect(() => parseSchemaFromYaml(invalidYaml)).toThrow();
   });
 
-  it('should serialize SystemSchema model to a one-element YAML sequence', () => {
+  it('should serialize SystemSchema model to a v3 object with metaData', () => {
     const schema: SystemSchema = {
       entityRef: 'demo',
       name: 'Demo System',
@@ -187,13 +193,42 @@ nodes:
 
     const yamlContent = serializeSchemaToYaml(schema);
     expect(yamlContent).toMatch(
-      /^# yaml-language-server: \$schema=https:\/\/raw\.githubusercontent\.com\/mzworthington\/blueprint\/main\/schemas\/v2\/blueprint\.schema\.json\n- entityRef: demo\n/
+      /^version: https:\/\/blueprint\.mzworthington\.co\.uk\/schemas\/v3\/blueprint\.schema\.json\n/
     );
+    expect(yamlContent).toContain('metaData:');
+    expect(yamlContent).toContain('  entityRef: demo');
     expect(yamlContent).toContain('  name: Demo System');
-    expect(yamlContent).toContain('  - entityRef: UserApi');
+    expect(yamlContent).toContain('level: container');
+    expect(yamlContent).toContain('- entityRef: UserApi');
     expect(yamlContent).toContain('type: grpc-service');
     expect(yamlContent).toContain('y: 20');
     expect(yamlContent).not.toContain("'y':");
+    expect(yamlContent).not.toMatch(/^- entityRef:/m);
+    expect(yamlContent).not.toContain('yaml-language-server');
+  });
+
+  it('should parse v3 YAML with metaData into SystemSchema', () => {
+    const yamlContent = `
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: component
+metaData:
+  entityRef: blueprint/app/cli
+  name: Cli Service Components
+nodes:
+  - entityRef: blueprint/app/cli/api
+    type: rest-api
+    name: API
+dependencies: []
+`;
+    const schema = parseSchemaFromYaml(yamlContent);
+    expect(schema.entityRef).toBe('blueprint/app/cli');
+    expect(schema.name).toBe('Cli Service Components');
+    expect(schema.level).toBe('component');
+    expect(schema.version).toBe(
+      'https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json'
+    );
+    expect(schema.nodes).toHaveLength(1);
+    expect(schema.nodes[0].entityRef).toBe('blueprint/app/cli/api');
   });
 
   it('should parse both legacy object-root and sequence-root YAML', () => {

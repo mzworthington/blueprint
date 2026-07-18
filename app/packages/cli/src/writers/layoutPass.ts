@@ -1,6 +1,5 @@
 import { parseSchemaFromYaml, serializeSchemaToYaml, type SystemSchema } from '@blueprint/core';
 import type { AnalysisFileSystemPort, LayoutPort, LoggerPort } from '../analysis/domain/ports.ts';
-import { resolveLocalSchemaUrl } from './baseWriter.ts';
 import { listBlueprintSchemaPaths } from './externalDependenciesPass.ts';
 import { layoutWithPreservation } from './layoutWithPreservation.ts';
 
@@ -70,8 +69,7 @@ export async function applyLayoutPass(
     const next: SystemSchema = { ...schema, nodes: laidOut };
     if (!positionsChanged(schema, next)) continue;
 
-    const schemaUrl = resolveLocalSchemaUrl(path);
-    const yaml = serializeSchemaToYaml(next, schemaUrl ? { schemaUrl } : undefined);
+    const yaml = serializeSchemaToYaml(next);
     await fileSystem.writeSchema(path, yaml);
     schemasUpdated++;
   }

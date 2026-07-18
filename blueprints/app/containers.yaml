@@ -1,82 +1,82 @@
-# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
-- entityRef: blueprint/app
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: container
+metaData:
+  entityRef: blueprint/app
   name: App Containers
-  version: 1.0.0
-  level: container
-  nodes:
-    - entityRef: blueprint/app/core
-      type: container
-      name: Core Service
-      isTest: false
-      x: 428
-      y: 384
-      forensics:
-        complexity: 106
-        churn: 61
-        authorCount: 1
-        hotspotScore: 0.1894736842105263
-        classifications:
-          - knowledge-silo
-        sinceDays: 50
-        fileCount: 21
-        hotspotCount: 0
-        knowledgeSiloCount: 6
-    - entityRef: blueprint/app/cli
-      type: container
-      name: Cli Service
-      isTest: false
-      x: 428
-      y: 64
-      forensics:
-        complexity: 66
-        churn: 182
-        authorCount: 1
-        hotspotScore: 0.19047619047619047
-        classifications:
-          - knowledge-silo
-        sinceDays: 50
-        fileCount: 86
-        hotspotCount: 0
-        knowledgeSiloCount: 25
-    - entityRef: blueprint/app/designer
-      type: container
-      name: Designer Service
-      isTest: false
-      x: 808
-      y: 64
-      forensics:
-        complexity: 55
-        churn: 495
-        authorCount: 1
-        hotspotScore: 0.5142857142857142
-        classifications:
-          - knowledge-silo
-          - hotspot
-        sinceDays: 50
-        fileCount: 149
-        hotspotCount: 1
-        knowledgeSiloCount: 47
-    - entityRef: blueprint/app/app
-      type: container
-      name: App Service
-      isTest: false
-      x: 48
-      y: 64
-      forensics:
-        complexity: 1
-        churn: 1
-        authorCount: 1
-        hotspotScore: 0
-        sinceDays: 50
-        fileCount: 1
-        hotspotCount: 0
-        knowledgeSiloCount: 0
-  dependencies:
-    - from: blueprint/app/cli
-      to: blueprint/app/core
-      type: inter-container
-      description: copyTreeSitterWasms Service → path Service (+18 more)
-    - from: blueprint/app/designer
-      to: blueprint/app/core
-      type: inter-container
-      description: e2e.spec Service → path Service
+nodes:
+  - entityRef: blueprint/app/core
+    type: container
+    name: Core Service
+    isTest: false
+    x: 428
+    y: 384
+    forensics:
+      complexity: 106
+      churn: 66
+      authorCount: 1
+      hotspotScore: 0.1595238095238095
+      classifications:
+        - knowledge-silo
+      sinceDays: 90
+      fileCount: 23
+      hotspotCount: 0
+      knowledgeSiloCount: 7
+  - entityRef: blueprint/app/cli
+    type: container
+    name: Cli Service
+    isTest: false
+    x: 428
+    y: 64
+    forensics:
+      complexity: 66
+      churn: 203
+      authorCount: 1
+      hotspotScore: 0.19904761904761906
+      classifications:
+        - knowledge-silo
+      sinceDays: 90
+      fileCount: 88
+      hotspotCount: 0
+      knowledgeSiloCount: 26
+  - entityRef: blueprint/app/designer
+    type: container
+    name: Designer Service
+    isTest: false
+    x: 808
+    y: 64
+    forensics:
+      complexity: 55
+      churn: 568
+      authorCount: 1
+      hotspotScore: 0.5142857142857142
+      classifications:
+        - knowledge-silo
+        - hotspot
+      sinceDays: 90
+      fileCount: 161
+      hotspotCount: 1
+      knowledgeSiloCount: 50
+  - entityRef: blueprint/app/app
+    type: container
+    name: App Service
+    isTest: false
+    x: 48
+    y: 64
+    forensics:
+      complexity: 1
+      churn: 1
+      authorCount: 1
+      hotspotScore: 0
+      sinceDays: 90
+      fileCount: 1
+      hotspotCount: 0
+      knowledgeSiloCount: 0
+dependencies:
+  - from: blueprint/app/cli
+    to: blueprint/app/core
+    type: inter-container
+    description: copyTreeSitterWasms Service → path Service (+18 more)
+  - from: blueprint/app/designer
+    to: blueprint/app/core
+    type: inter-container
+    description: e2e.spec Service → path Service

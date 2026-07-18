@@ -1,260 +1,260 @@
-# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
-- entityRef: blueprint/plugins/auth
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: component
+metaData:
+  entityRef: blueprint/plugins/auth
   name: Auth Service Components
-  version: 1.0.0
-  level: component
-  nodes:
-    - entityRef: blueprint/plugins/auth/index
-      type: gateway-api
-      name: index Service
-      isTest: false
-      properties:
-        filepath: plugins/auth/dev/index.tsx
-        containerId: auth
-        technology: React Component
-        classification: ui-import
-      x: 428
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 29
-        sloc: 9
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth/routes
-      type: background-worker
-      name: routes Service
-      isTest: false
-      properties:
-        filepath: plugins/auth/src/routes.ts
-        containerId: auth
-        technology: TypeScript Domain Service
-        classification: default
-      x: 48
-      y: 704
-      forensics:
-        complexity: 1
-        loc: 19
-        sloc: 2
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth/setuptests
-      type: background-worker
-      name: setupTests Service
-      isTest: true
-      properties:
-        filepath: plugins/auth/src/setupTests.ts
-        containerId: auth
-        technology: TypeScript Domain Service
-        classification: default
-      x: 1688
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 17
-        sloc: 1
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth/plugin
-      type: background-worker
-      name: plugin Service
-      isTest: false
-      properties:
-        filepath: plugins/auth/src/plugin.tsx
-        containerId: auth
-        technology: TypeScript Domain Service
-        classification: default
-      x: 48
-      y: 384
-      forensics:
-        complexity: 1
-        loc: 37
-        sloc: 19
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth/plugin-test
-      type: background-worker
-      name: plugin.test Service
-      isTest: true
-      properties:
-        filepath: plugins/auth/src/plugin.test.ts
-        containerId: auth
-        technology: TypeScript Domain Service
-        classification: default
-      x: 48
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 23
-        sloc: 6
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth/router
-      type: gateway-api
-      name: Router Service
-      isTest: false
-      properties:
-        filepath: plugins/auth/src/components/Router.tsx
-        containerId: auth
-        technology: React Component
-        classification: ui-import
-      x: 1308
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 30
-        sloc: 9
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth/consentpage
-      type: gateway-api
-      name: ConsentPage Service
-      isTest: false
-      properties:
-        filepath: plugins/auth/src/components/ConsentPage/ConsentPage.tsx
-        containerId: auth
-        technology: React Component
-        classification: ui-import
-      x: 1248
-      y: 384
-      forensics:
-        complexity: 13
-        loc: 239
-        sloc: 209
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        classifications:
-          - knowledge-silo
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth/consentpage-test
-      type: gateway-api
-      name: ConsentPage.test Service
-      isTest: true
-      properties:
-        filepath: plugins/auth/src/components/ConsentPage/ConsentPage.test.tsx
-        containerId: auth
-        technology: React Component
-        classification: ui-import
-      x: 808
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 125
-        sloc: 97
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/auth/useconsentsession
-      type: gateway-api
-      name: useConsentSession Service
-      isTest: false
-      properties:
-        filepath: plugins/auth/src/components/ConsentPage/useConsentSession.ts
-        containerId: auth
-        technology: React Component
-        classification: ui-import
-      x: 1028
-      y: 704
-      forensics:
-        complexity: 12
-        loc: 137
-        sloc: 105
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        classifications:
-          - knowledge-silo
-        sinceDays: 500
-    - entityRef: blueprint/plugins/catalog-backend/client
-      type: background-worker
-      name: client Service (External)
-      external: true
-      properties:
-        filepath: plugins/catalog-backend-module-ldap/src/ldap/client.ts
-        containerId: catalog-backend
-        technology: TypeScript Domain Service
-        classification: default
-      x: 428
-      y: 384
-    - entityRef: blueprint/plugins/events-backend/errors
-      type: background-worker
-      name: errors Service (External)
-      external: true
-      properties:
-        filepath: plugins/events-backend/src/service/http/errors.ts
-        containerId: events-backend
-        technology: TypeScript Domain Service
-        classification: default
-      x: 1028
-      y: 1024
-    - entityRef: blueprint/plugins/kubernetes-react/test-utils
-      type: gateway-api
-      name: test-utils Service (External)
-      external: true
-      properties:
-        filepath: plugins/kubernetes-react/src/hooks/test-utils.tsx
-        containerId: kubernetes-react
-        technology: React Component
-        classification: ui-import
-      x: 808
-      y: 384
-  dependencies:
-    - from: blueprint/plugins/auth/index
-      to: blueprint/plugins/catalog-backend/client
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/auth/plugin
-      to: blueprint/plugins/auth/routes
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/auth/plugin-test
-      to: blueprint/plugins/auth/plugin
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/auth/router
-      to: blueprint/plugins/auth/consentpage
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/auth/consentpage
-      to: blueprint/plugins/auth/useconsentsession
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/auth/consentpage-test
-      to: blueprint/plugins/kubernetes-react/test-utils
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/auth/consentpage-test
-      to: blueprint/plugins/auth/consentpage
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/auth/consentpage-test
-      to: blueprint/plugins/auth/useconsentsession
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/plugins/auth/useconsentsession
-      to: blueprint/plugins/events-backend/errors
-      type: direct-call
-      description: Calls module / service
+nodes:
+  - entityRef: blueprint/plugins/auth/index
+    type: gateway-api
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/auth/dev/index.tsx
+      containerId: auth
+      technology: React Component
+      classification: ui-import
+    x: 428
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 29
+      sloc: 9
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth/routes
+    type: background-worker
+    name: routes Service
+    isTest: false
+    properties:
+      filepath: plugins/auth/src/routes.ts
+      containerId: auth
+      technology: TypeScript Domain Service
+      classification: default
+    x: 48
+    y: 704
+    forensics:
+      complexity: 1
+      loc: 19
+      sloc: 2
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/auth/src/setupTests.ts
+      containerId: auth
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1688
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 17
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth/plugin
+    type: background-worker
+    name: plugin Service
+    isTest: false
+    properties:
+      filepath: plugins/auth/src/plugin.tsx
+      containerId: auth
+      technology: TypeScript Domain Service
+      classification: default
+    x: 48
+    y: 384
+    forensics:
+      complexity: 1
+      loc: 37
+      sloc: 19
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth/plugin-test
+    type: background-worker
+    name: plugin.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth/src/plugin.test.ts
+      containerId: auth
+      technology: TypeScript Domain Service
+      classification: default
+    x: 48
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 23
+      sloc: 6
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth/router
+    type: gateway-api
+    name: Router Service
+    isTest: false
+    properties:
+      filepath: plugins/auth/src/components/Router.tsx
+      containerId: auth
+      technology: React Component
+      classification: ui-import
+    x: 1308
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 30
+      sloc: 9
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth/consentpage
+    type: gateway-api
+    name: ConsentPage Service
+    isTest: false
+    properties:
+      filepath: plugins/auth/src/components/ConsentPage/ConsentPage.tsx
+      containerId: auth
+      technology: React Component
+      classification: ui-import
+    x: 1248
+    y: 384
+    forensics:
+      complexity: 13
+      loc: 239
+      sloc: 209
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth/consentpage-test
+    type: gateway-api
+    name: ConsentPage.test Service
+    isTest: true
+    properties:
+      filepath: plugins/auth/src/components/ConsentPage/ConsentPage.test.tsx
+      containerId: auth
+      technology: React Component
+      classification: ui-import
+    x: 808
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 125
+      sloc: 97
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/auth/useconsentsession
+    type: gateway-api
+    name: useConsentSession Service
+    isTest: false
+    properties:
+      filepath: plugins/auth/src/components/ConsentPage/useConsentSession.ts
+      containerId: auth
+      technology: React Component
+      classification: ui-import
+    x: 1028
+    y: 704
+    forensics:
+      complexity: 12
+      loc: 137
+      sloc: 105
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      classifications:
+        - knowledge-silo
+      sinceDays: 500
+  - entityRef: blueprint/plugins/catalog-backend/client
+    type: background-worker
+    name: client Service (External)
+    external: true
+    properties:
+      filepath: plugins/catalog-backend-module-ldap/src/ldap/client.ts
+      containerId: catalog-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 428
+    y: 384
+  - entityRef: blueprint/plugins/events-backend/errors
+    type: background-worker
+    name: errors Service (External)
+    external: true
+    properties:
+      filepath: plugins/events-backend/src/service/http/errors.ts
+      containerId: events-backend
+      technology: TypeScript Domain Service
+      classification: default
+    x: 1028
+    y: 1024
+  - entityRef: blueprint/plugins/kubernetes-react/test-utils
+    type: gateway-api
+    name: test-utils Service (External)
+    external: true
+    properties:
+      filepath: plugins/kubernetes-react/src/hooks/test-utils.tsx
+      containerId: kubernetes-react
+      technology: React Component
+      classification: ui-import
+    x: 808
+    y: 384
+dependencies:
+  - from: blueprint/plugins/auth/index
+    to: blueprint/plugins/catalog-backend/client
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth/plugin
+    to: blueprint/plugins/auth/routes
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth/plugin-test
+    to: blueprint/plugins/auth/plugin
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth/router
+    to: blueprint/plugins/auth/consentpage
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth/consentpage
+    to: blueprint/plugins/auth/useconsentsession
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth/consentpage-test
+    to: blueprint/plugins/kubernetes-react/test-utils
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth/consentpage-test
+    to: blueprint/plugins/auth/consentpage
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth/consentpage-test
+    to: blueprint/plugins/auth/useconsentsession
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/plugins/auth/useconsentsession
+    to: blueprint/plugins/events-backend/errors
+    type: direct-call
+    description: Calls module / service

@@ -6,7 +6,6 @@ import {
   type SystemSchema,
 } from '@blueprint/core';
 import type { AnalysisFileSystemPort, LoggerPort } from '../analysis/domain/ports.ts';
-import { resolveLocalSchemaUrl } from './baseWriter.ts';
 
 export interface ExternalDependenciesPassResult {
   schemasScanned: number;
@@ -112,8 +111,7 @@ export async function applyExternalDependenciesPass(
     const after = enriched[i]!;
     if (schemasEqualForExternals(before.schema, after.schema)) continue;
 
-    const schemaUrl = resolveLocalSchemaUrl(after.path);
-    const yaml = serializeSchemaToYaml(after.schema, schemaUrl ? { schemaUrl } : undefined);
+    const yaml = serializeSchemaToYaml(after.schema);
     await fileSystem.writeSchema(after.path, yaml);
     schemasUpdated++;
   }

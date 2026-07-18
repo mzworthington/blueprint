@@ -171,6 +171,10 @@ export interface SystemSchema {
    */
   entityRef?: EntityRef;
   name: string;
+  /**
+   * On disk (v3+): public JSON Schema URL for this contract.
+   * In memory: may still be a semver placeholder until serialize rewrites it.
+   */
   version: string;
   level: C4Level;
   nodes: SystemNode[];

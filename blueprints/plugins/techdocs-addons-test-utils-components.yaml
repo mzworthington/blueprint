@@ -1,82 +1,82 @@
-# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
-- entityRef: blueprint/plugins/techdocs-addons-test-utils
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: component
+metaData:
+  entityRef: blueprint/plugins/techdocs-addons-test-utils
   name: Techdocs-addons-test-utils Service Components
-  version: 1.0.0
-  level: component
-  nodes:
-    - entityRef: blueprint/plugins/catalog-react/testutils
-      type: background-worker
-      name: testUtils Service (External)
-      external: true
-      properties:
-        filepath: plugins/catalog-react/src/testUtils.ts
-        containerId: catalog-react
-        technology: TypeScript Domain Service
-        classification: default
-      x: 40
-      y: 40
-    - entityRef: blueprint/plugins/techdocs-addons-test-utils/index
-      type: background-worker
-      name: index Service
-      isTest: false
-      properties:
-        filepath: plugins/techdocs-addons-test-utils/src/index.ts
-        containerId: techdocs-addons-test-utils
-        technology: TypeScript Domain Service
-        classification: default
-      x: 400
-      y: 40
-      forensics:
-        complexity: 1
-        loc: 24
-        sloc: 1
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/techdocs-addons-test-utils/test-utils
-      type: gateway-api
-      name: test-utils Service
-      isTest: false
-      properties:
-        filepath: plugins/techdocs-addons-test-utils/src/test-utils.tsx
-        containerId: techdocs-addons-test-utils
-        technology: React Component
-        classification: ui-import
-      x: 40
-      y: 300
-      forensics:
-        complexity: 9
-        loc: 367
-        sloc: 211
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/techdocs-addons-test-utils/setuptests
-      type: background-worker
-      name: setupTests Service
-      isTest: true
-      properties:
-        filepath: plugins/techdocs-addons-test-utils/src/setupTests.ts
-        containerId: techdocs-addons-test-utils
-        technology: TypeScript Domain Service
-        classification: default
-      x: 400
-      y: 300
-      forensics:
-        complexity: 1
-        loc: 17
-        sloc: 1
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-  dependencies:
-    - from: blueprint/plugins/techdocs-addons-test-utils/test-utils
-      to: blueprint/plugins/catalog-react/testutils
-      type: direct-call
-      description: Calls module / service
+nodes:
+  - entityRef: blueprint/plugins/catalog-react/testutils
+    type: background-worker
+    name: testUtils Service (External)
+    external: true
+    properties:
+      filepath: plugins/catalog-react/src/testUtils.ts
+      containerId: catalog-react
+      technology: TypeScript Domain Service
+      classification: default
+    x: 40
+    y: 40
+  - entityRef: blueprint/plugins/techdocs-addons-test-utils/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-addons-test-utils/src/index.ts
+      containerId: techdocs-addons-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    x: 400
+    y: 40
+    forensics:
+      complexity: 1
+      loc: 24
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    type: gateway-api
+    name: test-utils Service
+    isTest: false
+    properties:
+      filepath: plugins/techdocs-addons-test-utils/src/test-utils.tsx
+      containerId: techdocs-addons-test-utils
+      technology: React Component
+      classification: ui-import
+    x: 40
+    y: 300
+    forensics:
+      complexity: 9
+      loc: 367
+      sloc: 211
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/techdocs-addons-test-utils/setuptests
+    type: background-worker
+    name: setupTests Service
+    isTest: true
+    properties:
+      filepath: plugins/techdocs-addons-test-utils/src/setupTests.ts
+      containerId: techdocs-addons-test-utils
+      technology: TypeScript Domain Service
+      classification: default
+    x: 400
+    y: 300
+    forensics:
+      complexity: 1
+      loc: 17
+      sloc: 1
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+dependencies:
+  - from: blueprint/plugins/techdocs-addons-test-utils/test-utils
+    to: blueprint/plugins/catalog-react/testutils
+    type: direct-call
+    description: Calls module / service

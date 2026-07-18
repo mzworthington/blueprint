@@ -1,86 +1,86 @@
-# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
-- entityRef: blueprint/packages/release-manifests
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: component
+metaData:
+  entityRef: blueprint/packages/release-manifests
   name: Release-manifests Service Components
-  version: 1.0.0
-  level: component
-  nodes:
-    - entityRef: blueprint/packages/release-manifests/manifest-test
-      type: background-worker
-      name: manifest.test Service
-      isTest: true
-      properties:
-        filepath: packages/release-manifests/src/manifest.test.ts
-        containerId: release-manifests
-        technology: TypeScript Domain Service
-        classification: default
-      x: 428
-      y: 64
-      forensics:
-        complexity: 4
-        loc: 351
-        sloc: 292
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/packages/release-manifests/manifest
-      type: background-worker
-      name: manifest Service
-      isTest: false
-      properties:
-        filepath: packages/release-manifests/src/manifest.ts
-        containerId: release-manifests
-        technology: TypeScript Domain Service
-        classification: default
-      x: 808
-      y: 384
-      forensics:
-        complexity: 7
-        loc: 174
-        sloc: 120
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/packages/release-manifests/index
-      type: background-worker
-      name: index Service
-      isTest: false
-      properties:
-        filepath: packages/release-manifests/src/index.ts
-        containerId: release-manifests
-        technology: TypeScript Domain Service
-        classification: default
-      x: 48
-      y: 64
-      forensics:
-        complexity: 1
-        loc: 29
-        sloc: 6
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/packages/core-components/node
-      type: gateway-api
-      name: Node Service (External)
-      external: true
-      properties:
-        filepath: packages/core-components/src/components/DependencyGraph/Node.tsx
-        containerId: core-components
-        technology: React Component
-        classification: ui-import
-      x: 428
-      y: 384
-  dependencies:
-    - from: blueprint/packages/release-manifests/manifest-test
-      to: blueprint/packages/core-components/node
-      type: direct-call
-      description: Calls module / service
-    - from: blueprint/packages/release-manifests/manifest-test
-      to: blueprint/packages/release-manifests/manifest
-      type: direct-call
-      description: Calls module / service
+nodes:
+  - entityRef: blueprint/packages/release-manifests/manifest-test
+    type: background-worker
+    name: manifest.test Service
+    isTest: true
+    properties:
+      filepath: packages/release-manifests/src/manifest.test.ts
+      containerId: release-manifests
+      technology: TypeScript Domain Service
+      classification: default
+    x: 428
+    y: 64
+    forensics:
+      complexity: 4
+      loc: 351
+      sloc: 292
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/packages/release-manifests/manifest
+    type: background-worker
+    name: manifest Service
+    isTest: false
+    properties:
+      filepath: packages/release-manifests/src/manifest.ts
+      containerId: release-manifests
+      technology: TypeScript Domain Service
+      classification: default
+    x: 808
+    y: 384
+    forensics:
+      complexity: 7
+      loc: 174
+      sloc: 120
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/packages/release-manifests/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: packages/release-manifests/src/index.ts
+      containerId: release-manifests
+      technology: TypeScript Domain Service
+      classification: default
+    x: 48
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 29
+      sloc: 6
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/packages/core-components/node
+    type: gateway-api
+    name: Node Service (External)
+    external: true
+    properties:
+      filepath: packages/core-components/src/components/DependencyGraph/Node.tsx
+      containerId: core-components
+      technology: React Component
+      classification: ui-import
+    x: 428
+    y: 384
+dependencies:
+  - from: blueprint/packages/release-manifests/manifest-test
+    to: blueprint/packages/core-components/node
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/packages/release-manifests/manifest-test
+    to: blueprint/packages/release-manifests/manifest
+    type: direct-call
+    description: Calls module / service

@@ -82,17 +82,33 @@ Husky + lint-staged validate commits for changes under `app/` and `docs/`:
 
 Install the recommended **YAML** extension (`redhat.vscode-yaml`). Workspace settings map `blueprints/**/*.yaml` to the local schema for autocomplete and validation.
 
+### YAML format (v3)
+
+Each blueprint file is a single YAML **mapping** (not a sequence). `version` is the public JSON Schema URL for this contract; diagram identity lives under `metaData`:
+
+```yaml
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: component
+metaData:
+  entityRef: blueprint/app/cli
+  name: Cli Service Components
+nodes: []
+dependencies: []
+```
+
+Node and dependency shapes are unchanged from v2. Parsers still accept legacy v2 files (one-element sequence with flat `entityRef` / `name` / `version`); writers always emit v3.
+
 ### Public schema URLs (external repos)
 
 After deploy, the same schema is served from the designer site:
 
-- **Versioned (preferred):** https://blueprint.mzworthington.co.uk/schemas/v2/blueprint.schema.json
+- **Versioned (preferred):** https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
 - **Latest:** https://blueprint.mzworthington.co.uk/schemas/latest/blueprint.schema.json
 
-In any blueprint YAML file outside this repo:
+In any blueprint YAML file outside this repo, either set `version` to one of those URLs (as above) or add an IDE directive:
 
 ```yaml
-# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/v2/blueprint.schema.json
+# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/latest/blueprint.schema.json
 ```
 
 Bump `SYSTEM_SCHEMA_MAJOR_VERSION` in `@blueprint/core` only when the contract breaks; `latest` always tracks main.

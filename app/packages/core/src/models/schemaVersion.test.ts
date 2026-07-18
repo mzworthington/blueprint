@@ -23,8 +23,8 @@ describe('schemaVersion', () => {
     expect(blueprintYamlLanguageServerDirective()).toBe(
       `# yaml-language-server: $schema=${systemSchemaLanguageServerUrl()}`
     );
-    expect(blueprintYamlLanguageServerDirective('../../schemas/v2/blueprint.schema.json')).toBe(
-      '# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json'
+    expect(blueprintYamlLanguageServerDirective('../../schemas/v3/blueprint.schema.json')).toBe(
+      '# yaml-language-server: $schema=../../schemas/v3/blueprint.schema.json'
     );
   });
 });

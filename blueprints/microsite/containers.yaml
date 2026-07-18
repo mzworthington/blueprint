@@ -1,68 +1,68 @@
-# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
-- entityRef: blueprint/microsite
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: container
+metaData:
+  entityRef: blueprint/microsite
   name: Microsite Containers
-  version: 1.0.0
-  level: container
-  nodes:
-    - entityRef: blueprint/microsite/microsite
-      type: container
-      name: Microsite Service
-      isTest: false
-      x: 48
-      y: 704
-      forensics:
-        complexity: 8
-        churn: 6
-        authorCount: 1
-        hotspotScore: 0
-        sinceDays: 500
-        fileCount: 6
-        hotspotCount: 0
-        knowledgeSiloCount: 0
-    - entityRef: blueprint/microsite/components
-      type: container
-      name: Components Service
-      isTest: false
-      x: 48
-      y: 64
-      forensics:
-        complexity: 8
-        churn: 6
-        authorCount: 1
-        hotspotScore: 0
-        sinceDays: 500
-        fileCount: 6
-        hotspotCount: 0
-        knowledgeSiloCount: 0
-    - entityRef: blueprint/microsite/pages
-      type: container
-      name: Pages Service
-      isTest: false
-      x: 268
-      y: 384
-      forensics:
-        complexity: 3
-        churn: 5
-        authorCount: 1
-        hotspotScore: 0
-        sinceDays: 500
-        fileCount: 5
-        hotspotCount: 0
-        knowledgeSiloCount: 0
-  dependencies:
-    - from: blueprint/microsite/components
-      to: blueprint/microsite/pages
-      type: inter-container
-      description: contentBlock Service → link Service
-    - from: blueprint/microsite/components
-      to: blueprint/microsite/microsite
-      type: inter-container
-      description: pluginsFilter Service → types Service
-    - from: blueprint/microsite/pages
-      to: blueprint/microsite/components
-      type: inter-container
-      description: _home Service → bannerSection Service (+8 more)
-    - from: blueprint/microsite/pages
-      to: blueprint/microsite/microsite
-      type: inter-container
-      description: index Service → calcIsNewPlugin Service (+2 more)
+nodes:
+  - entityRef: blueprint/microsite/microsite
+    type: container
+    name: Microsite Service
+    isTest: false
+    x: 48
+    y: 704
+    forensics:
+      complexity: 8
+      churn: 6
+      authorCount: 1
+      hotspotScore: 0
+      sinceDays: 500
+      fileCount: 6
+      hotspotCount: 0
+      knowledgeSiloCount: 0
+  - entityRef: blueprint/microsite/components
+    type: container
+    name: Components Service
+    isTest: false
+    x: 48
+    y: 64
+    forensics:
+      complexity: 8
+      churn: 6
+      authorCount: 1
+      hotspotScore: 0
+      sinceDays: 500
+      fileCount: 6
+      hotspotCount: 0
+      knowledgeSiloCount: 0
+  - entityRef: blueprint/microsite/pages
+    type: container
+    name: Pages Service
+    isTest: false
+    x: 268
+    y: 384
+    forensics:
+      complexity: 3
+      churn: 5
+      authorCount: 1
+      hotspotScore: 0
+      sinceDays: 500
+      fileCount: 5
+      hotspotCount: 0
+      knowledgeSiloCount: 0
+dependencies:
+  - from: blueprint/microsite/components
+    to: blueprint/microsite/pages
+    type: inter-container
+    description: contentBlock Service → link Service
+  - from: blueprint/microsite/components
+    to: blueprint/microsite/microsite
+    type: inter-container
+    description: pluginsFilter Service → types Service
+  - from: blueprint/microsite/pages
+    to: blueprint/microsite/components
+    type: inter-container
+    description: _home Service → bannerSection Service (+8 more)
+  - from: blueprint/microsite/pages
+    to: blueprint/microsite/microsite
+    type: inter-container
+    description: index Service → calcIsNewPlugin Service (+2 more)

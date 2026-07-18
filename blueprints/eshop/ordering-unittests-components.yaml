@@ -1,40 +1,40 @@
-# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
-- entityRef: blueprint/eshop/ordering-unittests
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: component
+metaData:
+  entityRef: blueprint/eshop/ordering-unittests
   name: Ordering.UnitTests Service Components
-  version: 1.0.0
-  level: component
-  nodes:
-    - entityRef: blueprint/eshop/ordering-unittests/application
-      type: rest-api
-      name: Application Layer
-      isTest: true
-      properties:
-        filepath: tests/Ordering.UnitTests/Application/NewOrderCommandHandlerTest.cs
-        containerId: ordering-unittests
-        technology: ASP.NET Core Controller / Minimal API
-        classification: api-marker
-      x: 40
-      y: 40
-    - entityRef: blueprint/eshop/ordering-unittests/builders
-      type: background-worker
-      name: Builders
-      isTest: true
-      properties:
-        filepath: tests/Ordering.UnitTests/Builders.cs
-        containerId: ordering-unittests
-        technology: C# Domain Service
-        classification: default
-      x: 400
-      y: 40
-    - entityRef: blueprint/eshop/ordering-unittests/domain
-      type: background-worker
-      name: Domain Layer
-      isTest: true
-      properties:
-        filepath: tests/Ordering.UnitTests/Domain/BuyerAggregateTest.cs
-        containerId: ordering-unittests
-        technology: C# Domain Service
-        classification: default
-      x: 40
-      y: 300
-  dependencies: []
+nodes:
+  - entityRef: blueprint/eshop/ordering-unittests/application
+    type: rest-api
+    name: Application Layer
+    isTest: true
+    properties:
+      filepath: tests/Ordering.UnitTests/Application/NewOrderCommandHandlerTest.cs
+      containerId: ordering-unittests
+      technology: ASP.NET Core Controller / Minimal API
+      classification: api-marker
+    x: 40
+    y: 40
+  - entityRef: blueprint/eshop/ordering-unittests/builders
+    type: background-worker
+    name: Builders
+    isTest: true
+    properties:
+      filepath: tests/Ordering.UnitTests/Builders.cs
+      containerId: ordering-unittests
+      technology: C# Domain Service
+      classification: default
+    x: 400
+    y: 40
+  - entityRef: blueprint/eshop/ordering-unittests/domain
+    type: background-worker
+    name: Domain Layer
+    isTest: true
+    properties:
+      filepath: tests/Ordering.UnitTests/Domain/BuyerAggregateTest.cs
+      containerId: ordering-unittests
+      technology: C# Domain Service
+      classification: default
+    x: 40
+    y: 300
+dependencies: []

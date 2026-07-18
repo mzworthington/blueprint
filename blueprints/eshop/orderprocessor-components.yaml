@@ -1,62 +1,62 @@
-# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
-- entityRef: blueprint/eshop/orderprocessor
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: component
+metaData:
+  entityRef: blueprint/eshop/orderprocessor
   name: OrderProcessor Service Components
-  version: 1.0.0
-  level: component
-  nodes:
-    - entityRef: blueprint/eshop/orderprocessor/backgroundtaskoptions
-      type: background-worker
-      name: BackgroundTaskOptions
-      isTest: false
-      properties:
-        filepath: src/OrderProcessor/BackgroundTaskOptions.cs
-        containerId: orderprocessor
-        technology: C# Domain Service
-        classification: default
-      x: 40
-      y: 40
-    - entityRef: blueprint/eshop/orderprocessor/events
-      type: background-worker
-      name: Events Layer
-      isTest: false
-      properties:
-        filepath: src/OrderProcessor/Events/GracePeriodConfirmedIntegrationEvent.cs
-        containerId: orderprocessor
-        technology: C# Domain Service
-        classification: default
-      x: 400
-      y: 40
-    - entityRef: blueprint/eshop/orderprocessor/extensions
-      type: background-worker
-      name: Extensions Layer
-      isTest: false
-      properties:
-        filepath: src/OrderProcessor/Extensions/Extensions.cs
-        containerId: orderprocessor
-        technology: C# Domain Service
-        classification: default
-      x: 760
-      y: 40
-    - entityRef: blueprint/eshop/orderprocessor/program
-      type: background-worker
-      name: Program
-      isTest: false
-      properties:
-        filepath: src/OrderProcessor/Program.cs
-        containerId: orderprocessor
-        technology: C# Domain Service
-        classification: default
-      x: 40
-      y: 300
-    - entityRef: blueprint/eshop/orderprocessor/services
-      type: relational-database
-      name: Services Layer
-      isTest: false
-      properties:
-        filepath: src/OrderProcessor/Services/GracePeriodManagerService.cs
-        containerId: orderprocessor
-        technology: Entity Framework / DB Context
-        classification: database-marker
-      x: 400
-      y: 300
-  dependencies: []
+nodes:
+  - entityRef: blueprint/eshop/orderprocessor/backgroundtaskoptions
+    type: background-worker
+    name: BackgroundTaskOptions
+    isTest: false
+    properties:
+      filepath: src/OrderProcessor/BackgroundTaskOptions.cs
+      containerId: orderprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 40
+    y: 40
+  - entityRef: blueprint/eshop/orderprocessor/events
+    type: background-worker
+    name: Events Layer
+    isTest: false
+    properties:
+      filepath: src/OrderProcessor/Events/GracePeriodConfirmedIntegrationEvent.cs
+      containerId: orderprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 400
+    y: 40
+  - entityRef: blueprint/eshop/orderprocessor/extensions
+    type: background-worker
+    name: Extensions Layer
+    isTest: false
+    properties:
+      filepath: src/OrderProcessor/Extensions/Extensions.cs
+      containerId: orderprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 760
+    y: 40
+  - entityRef: blueprint/eshop/orderprocessor/program
+    type: background-worker
+    name: Program
+    isTest: false
+    properties:
+      filepath: src/OrderProcessor/Program.cs
+      containerId: orderprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 40
+    y: 300
+  - entityRef: blueprint/eshop/orderprocessor/services
+    type: relational-database
+    name: Services Layer
+    isTest: false
+    properties:
+      filepath: src/OrderProcessor/Services/GracePeriodManagerService.cs
+      containerId: orderprocessor
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 400
+    y: 300
+dependencies: []

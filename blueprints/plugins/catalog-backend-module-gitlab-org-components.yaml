@@ -1,71 +1,71 @@
-# yaml-language-server: $schema=../../schemas/v2/blueprint.schema.json
-- entityRef: blueprint/plugins/catalog-backend-module-gitlab-org
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: component
+metaData:
+  entityRef: blueprint/plugins/catalog-backend-module-gitlab-org
   name: Catalog-backend-module-gitlab-org Service Components
-  version: 1.0.0
-  level: component
-  nodes:
-    - entityRef: blueprint/plugins/catalog-backend-module-gitlab-org/catalogmodulegitlaborgdiscoveryentityprovider
-      type: background-worker
-      name: catalogModuleGitlabOrgDiscoveryEntityProvider Service
-      isTest: false
-      properties:
-        filepath: plugins/catalog-backend-module-gitlab-org/src/catalogModuleGitlabOrgDiscoveryEntityProvider.ts
-        containerId: catalog-backend-module-gitlab-org
-        technology: TypeScript Domain Service
-        classification: default
-      x: 40
-      y: 40
-      forensics:
-        complexity: 3
-        loc: 112
-        sloc: 66
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/catalog-backend-module-gitlab-org/index
-      type: background-worker
-      name: index Service
-      isTest: false
-      properties:
-        filepath: plugins/catalog-backend-module-gitlab-org/src/index.ts
-        containerId: catalog-backend-module-gitlab-org
-        technology: TypeScript Domain Service
-        classification: default
-      x: 400
-      y: 40
-      forensics:
-        complexity: 1
-        loc: 27
-        sloc: 5
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-    - entityRef: blueprint/plugins/catalog-backend-module-gitlab-org/catalogmodulegitlaborgdiscoveryentityprovider-test
-      type: background-worker
-      name: catalogModuleGitlabOrgDiscoveryEntityProvider.test Service
-      isTest: true
-      properties:
-        filepath: plugins/catalog-backend-module-gitlab-org/src/catalogModuleGitlabOrgDiscoveryEntityProvider.test.ts
-        containerId: catalog-backend-module-gitlab-org
-        technology: TypeScript Domain Service
-        classification: default
-      x: 40
-      y: 300
-      forensics:
-        complexity: 1
-        loc: 111
-        sloc: 88
-        churn: 1
-        authorCount: 1
-        topAuthorPercent: 1
-        hotspotScore: 0
-        sinceDays: 500
-  dependencies:
-    - from: blueprint/plugins/catalog-backend-module-gitlab-org/catalogmodulegitlaborgdiscoveryentityprovider-test
-      to: blueprint/plugins/catalog-backend-module-gitlab-org/catalogmodulegitlaborgdiscoveryentityprovider
-      type: direct-call
-      description: Calls module / service
+nodes:
+  - entityRef: blueprint/plugins/catalog-backend-module-gitlab-org/catalogmodulegitlaborgdiscoveryentityprovider
+    type: background-worker
+    name: catalogModuleGitlabOrgDiscoveryEntityProvider Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitlab-org/src/catalogModuleGitlabOrgDiscoveryEntityProvider.ts
+      containerId: catalog-backend-module-gitlab-org
+      technology: TypeScript Domain Service
+      classification: default
+    x: 40
+    y: 40
+    forensics:
+      complexity: 3
+      loc: 112
+      sloc: 66
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/catalog-backend-module-gitlab-org/index
+    type: background-worker
+    name: index Service
+    isTest: false
+    properties:
+      filepath: plugins/catalog-backend-module-gitlab-org/src/index.ts
+      containerId: catalog-backend-module-gitlab-org
+      technology: TypeScript Domain Service
+      classification: default
+    x: 400
+    y: 40
+    forensics:
+      complexity: 1
+      loc: 27
+      sloc: 5
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+  - entityRef: blueprint/plugins/catalog-backend-module-gitlab-org/catalogmodulegitlaborgdiscoveryentityprovider-test
+    type: background-worker
+    name: catalogModuleGitlabOrgDiscoveryEntityProvider.test Service
+    isTest: true
+    properties:
+      filepath: plugins/catalog-backend-module-gitlab-org/src/catalogModuleGitlabOrgDiscoveryEntityProvider.test.ts
+      containerId: catalog-backend-module-gitlab-org
+      technology: TypeScript Domain Service
+      classification: default
+    x: 40
+    y: 300
+    forensics:
+      complexity: 1
+      loc: 111
+      sloc: 88
+      churn: 1
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 500
+dependencies:
+  - from: blueprint/plugins/catalog-backend-module-gitlab-org/catalogmodulegitlaborgdiscoveryentityprovider-test
+    to: blueprint/plugins/catalog-backend-module-gitlab-org/catalogmodulegitlaborgdiscoveryentityprovider
+    type: direct-call
+    description: Calls module / service

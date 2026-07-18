@@ -41,13 +41,13 @@ YAML under the output directory — **not** a separate forensics report. Archite
 
 ### IDE validation
 
-Install the YAML extension, then point files at the public schema:
+Install the YAML extension. Generated files set `version` to the public schema URL. You can also point the language server at **latest**:
 
 ```yaml
-# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/v2/blueprint.schema.json
+# yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/latest/blueprint.schema.json
 ```
 
-Prefer the versioned URL (`/schemas/v2/…`). `/schemas/latest/…` tracks `main`. Details: [Setup — public schema URLs](../setup.md#public-schema-urls-external-repos).
+Prefer the versioned URL (`/schemas/v3/…`) when pinning a contract. `/schemas/latest/…` tracks `main`. Format details: [Setup — YAML format](../setup.md#yaml-format-v3).
 
 ## Cancellation
 
