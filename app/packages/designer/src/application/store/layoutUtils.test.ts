@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { mapDomainNodeToRFNode, rebuildSchemaFromCanvas } from './layoutUtils.ts';
+import {
+  mapDomainDepToRFEdge,
+  mapDomainDepsToRFEdges,
+  mapDomainNodeToRFNode,
+  rebuildSchemaFromCanvas,
+} from './layoutUtils.ts';
 import type { SystemNode } from '@blueprint/core';
 
 describe('layoutUtils forensics plumbing', () => {
@@ -41,5 +46,20 @@ describe('layoutUtils forensics plumbing', () => {
       authorCount: 1,
       classifications: ['knowledge-silo'],
     });
+  });
+});
+
+describe('mapDomainDepsToRFEdges', () => {
+  it('drops duplicate from→to edges that would share a React key', () => {
+    const dep = {
+      from: 'a',
+      to: 'b',
+      type: 'direct-call' as const,
+      description: 'once',
+    };
+    const edges = mapDomainDepsToRFEdges([dep, { ...dep, description: 'again' }, dep]);
+    expect(edges).toHaveLength(1);
+    expect(edges[0]?.id).toBe(mapDomainDepToRFEdge(dep).id);
+    expect(edges[0]?.data?.description).toBe('once');
   });
 });

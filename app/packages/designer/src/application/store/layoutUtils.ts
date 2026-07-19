@@ -155,6 +155,19 @@ export const mapDomainDepToRFEdge = (d: SystemDependency): BlueprintRFEdge => ({
   labelBgBorderRadius: 4,
 });
 
+/** Map deps to RF edges, dropping duplicate from→to pairs (same React key). */
+export const mapDomainDepsToRFEdges = (deps: SystemDependency[]): BlueprintRFEdge[] => {
+  const seen = new Set<string>();
+  const edges: BlueprintRFEdge[] = [];
+  for (const dep of deps) {
+    const edge = mapDomainDepToRFEdge(dep);
+    if (seen.has(edge.id)) continue;
+    seen.add(edge.id);
+    edges.push(edge);
+  }
+  return edges;
+};
+
 export const getClosestHandles = (
   sourceNode: BlueprintRFNode,
   targetNode: BlueprintRFNode

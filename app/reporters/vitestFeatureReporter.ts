@@ -3,7 +3,9 @@
  * Emits Markdown feature docs from describe/it titles (behavioral tests only),
  * grouped as Package → File → describe tree.
  */
+import fs from 'node:fs';
 import path from 'node:path';
+import prettier from 'prettier';
 import type { Reporter, TestCase, TestModule, TestSuite } from 'vitest/node';
 import { XFeatureReporter } from 'x-feature-reporter';
 import { MarkdownAdapter } from 'x-feature-reporter/adapters/markdown';
@@ -103,6 +105,19 @@ function sortBuckets(bucket: SuiteBucket): void {
   for (const child of bucket.suites) sortBuckets(child);
 }
 
+/** Format report Markdown so it matches project Prettier rules. */
+export async function formatFeatureMarkdownFile(filePath: string): Promise<void> {
+  const source = fs.readFileSync(filePath, 'utf8');
+  const config = await prettier.resolveConfig(filePath);
+  const formatted = await prettier.format(source, {
+    ...config,
+    filepath: filePath,
+  });
+  if (formatted !== source) {
+    fs.writeFileSync(filePath, formatted);
+  }
+}
+
 export class VitestFeatureReporter implements Reporter {
   readonly options: Required<Pick<VitestFeatureReporterOptions, 'outputFile'>> &
     VitestFeatureReporterOptions;
@@ -147,5 +162,6 @@ export class VitestFeatureReporter implements Reporter {
       embeddingPlaceholder: this.options.embeddingPlaceholder,
     });
     new XFeatureReporter(adapter).generateReport(xRoot);
+    await formatFeatureMarkdownFile(outputFile);
   }
 }

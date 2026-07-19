@@ -132,6 +132,10 @@ Generated from Vitest (`pnpm test:coverage`).
 - ✅ should upsert rather than duplicate when rewriting the same system
 - ✅ should log successful write
 
+#### personDependenciesForSystems
+
+- ✅ links the person to product hubs only
+
 #### productHubDependenciesForSystems
 
 - ✅ fans spokes into the product hub and ignores other products
@@ -176,6 +180,13 @@ Generated from Vitest (`pnpm test:coverage`).
 
 - ✅ skips GlobalUsings, Migrations, Designer, and ModelSnapshot files
 - ✅ keeps architectural sources
+
+### d3HierarchyLayout
+
+#### D3HierarchyLayoutAdapter
+
+- ✅ places tree children below the root
+- ✅ roots context layout at the person node when present
 
 ### dagreLayout
 
@@ -264,6 +275,7 @@ Generated from Vitest (`pnpm test:coverage`).
 - ✅ preserves existing positions when forceRelayout is false
 - ✅ forceRelayout defaults to true and recomputes all positions
 - ✅ is a no-op when the blueprints tree is empty
+- ✅ uses contextLayout for context-level schemas and dagre layout for others
 
 ### layoutWithPreservation
 
@@ -367,6 +379,7 @@ Generated from Vitest (`pnpm test:coverage`).
 #### TerraformAnalyzer
 
 - ✅ parses a terraform root and writes containers.yaml + context node
+- ✅ links multiple terraform roots under one Infrastructure hub
 - ✅ no-ops when no terraform roots exist
 
 ### terraformDiscovery
@@ -749,8 +762,8 @@ Generated from Vitest (`pnpm test:coverage`).
 #### BlueprintNode Component
 
 - ✅ renders correctly with basic node details
-- ✅ simplifies handles and chrome when liteCanvas is on
-- ✅ simplifies chrome when zoomed out
+- ✅ simplifies chrome when liteCanvas is on but keeps all edge handles mounted
+- ✅ simplifies chrome when zoomed out but keeps edge handles mounted
 - ✅ shows HOT and SILO badges for concerning forensics
 - ✅ shows COUPLED badge when couplingHighlight is set
 - ✅ exposes hotspot heat intensity for styling when heatmap is active
@@ -958,6 +971,13 @@ Generated from Vitest (`pnpm test:coverage`).
 #### DocsPage feature filter
 
 - ✅ filters the feature report as the user types
+- ✅ filters to a package when a package chip is clicked without filling the search box
+
+### DocsShell
+
+#### DocsShell
+
+- ✅ shows separate mobile scrollers for product guide and reference
 
 ### elkLayoutAdapter
 
@@ -999,6 +1019,7 @@ Generated from Vitest (`pnpm test:coverage`).
 - ✅ keeps all descendants under a matching heading
 - ✅ keeps parent package/file headings when a nested suite matches
 - ✅ counts matching feature list items
+- ✅ package mode keeps only the matching top-level ## section
 
 ### filterSelectedDependencyFocus
 
@@ -1113,6 +1134,10 @@ Generated from Vitest (`pnpm test:coverage`).
 - ✅ maps node forensics onto RF node data
 - ✅ preserves forensics when rebuilding schema from canvas
 
+#### mapDomainDepsToRFEdges
+
+- ✅ drops duplicate from→to edges that would share a React key
+
 ### layoutUtils.direction
 
 #### dependency edge direction visuals
@@ -1165,6 +1190,10 @@ Generated from Vitest (`pnpm test:coverage`).
 - ✅ resolves feature report pages
 - ✅ resolves in-app workspace links
 - ✅ maps screenshot assets under /docs-assets
+
+#### stripHtmlComments
+
+- ✅ removes HTML comments used as reporter placeholders
 
 ### PropertyPanel
 

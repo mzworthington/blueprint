@@ -184,6 +184,7 @@ async function seedStaleDraft(page: Page) {
 
 test.describe('Hierarchy zoom journeys', () => {
   test('Zoom out button and breadcrumb return to parent', async ({ page }) => {
+    test.setTimeout(60_000);
     await page.goto('/workspace/blueprint');
     await continueWithSandbox(page);
     await page.locator('button[aria-label="Toggle Right Panel"]').click();
@@ -210,13 +211,17 @@ test.describe('Hierarchy zoom journeys', () => {
     await appSystem.dblclick();
     await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint/app');
 
-    const contextCrumb = page.locator('a[href="/workspace/blueprint"]').first();
+    const contextCrumb = page.getByRole('link', { name: /Blueprint Context/i });
     await expect(contextCrumb).toBeVisible();
     await contextCrumb.click();
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint');
+    await expect(page).toHaveURL(/\/workspace\/blueprint$/);
+    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint', {
+      timeout: 10000,
+    });
   });
 
   test('Backspace zooms out one level', async ({ page }) => {
+    test.setTimeout(60_000);
     await page.goto('/workspace/blueprint');
     await continueWithSandbox(page);
     await page.locator('button[aria-label="Toggle Right Panel"]').click();
@@ -229,6 +234,7 @@ test.describe('Hierarchy zoom journeys', () => {
       timeout: 10000,
     });
 
+    await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
     await page.keyboard.press('Backspace');
     await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint');
   });

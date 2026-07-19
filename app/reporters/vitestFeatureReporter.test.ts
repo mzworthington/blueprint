@@ -90,6 +90,9 @@ describe('VitestFeatureReporter', () => {
     expect(md).not.toContain('computes layout coordinates');
     // Packages sorted alphabetically: Core before Designer
     expect(md.indexOf('## Core')).toBeLessThan(md.indexOf('## Designer'));
+    // Prettier-compatible list markers and heading spacing
+    expect(md).toMatch(/\n- ✅ collapses the side panels\n/);
+    expect(md).toMatch(/## Designer\n\n### Canvas\n\n#### Canvas\n\n- ✅/);
   });
 
   it('embeds into an existing file between placeholders', async () => {
@@ -112,6 +115,11 @@ describe('VitestFeatureReporter', () => {
     expect(md).toContain('#### Workspace');
     expect(md).toContain('✅ loads the sandbox');
     expect(md).not.toContain('\nold\n');
+    expect(md).toMatch(
+      new RegExp(
+        `<!-- ${embeddingPlaceholder}--start -->\\n\\n## Designer\\n\\n### Canvas\\n\\n#### Workspace\\n\\n- ✅ loads the sandbox\\n\\n<!-- ${embeddingPlaceholder}--end -->`
+      )
+    );
   });
 
   it('marks failed and skipped tests with the correct icons', async () => {

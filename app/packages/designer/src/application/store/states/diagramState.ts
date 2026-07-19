@@ -14,7 +14,7 @@ import {
   type WorkspaceEntity,
 } from '@blueprint/core';
 import type { CanvasNodeChange, CanvasEdgeChange, CanvasConnection } from '../../../core';
-import { mapDomainNodeToRFNode, mapDomainDepToRFEdge } from '../layoutUtils';
+import { mapDomainNodeToRFNode, mapDomainDepsToRFEdges } from '../layoutUtils';
 import type { BlueprintRFNode, BlueprintRFEdge } from '../layoutUtils';
 import { applyStateUpdates } from './diagramState/applyStateUpdates';
 import { syncExternalContainers as syncExternalContainersAction } from './diagramState/syncExternalContainers';
@@ -221,7 +221,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
     get().clearHistory();
     set({ focusedCyclePath: null });
     const rfNodes = schema.nodes.map(mapDomainNodeToRFNode);
-    const rfEdges = schema.dependencies.map(mapDomainDepToRFEdge);
+    const rfEdges = mapDomainDepsToRFEdges(schema.dependencies);
     applyStateUpdates(
       set,
       get,

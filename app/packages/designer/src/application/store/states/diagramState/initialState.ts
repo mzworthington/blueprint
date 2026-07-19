@@ -4,7 +4,11 @@ import {
   resolveWorkspaceEntityRefs,
   type SystemSchema,
 } from '@blueprint/core';
-import { mapDomainNodeToRFNode, mapDomainDepToRFEdge, getClosestHandles } from '../../layoutUtils';
+import {
+  mapDomainNodeToRFNode,
+  mapDomainDepsToRFEdges,
+  getClosestHandles,
+} from '../../layoutUtils';
 import type { BlueprintRFNode, BlueprintRFEdge } from '../../layoutUtils';
 import { defaultLoadedSystems, defaultInitialSchema } from '../../defaultData';
 
@@ -49,9 +53,8 @@ export function createDiagramInitialState(): DiagramInitialState {
         },
       };
     });
-  const initialEdges = initialSchemaResolved.dependencies
-    .map(mapDomainDepToRFEdge)
-    .map((edge: BlueprintRFEdge) => {
+  const initialEdges = mapDomainDepsToRFEdges(initialSchemaResolved.dependencies).map(
+    (edge: BlueprintRFEdge) => {
       const sourceNode = initialNodes.find((n: BlueprintRFNode) => n.id === edge.source);
       const targetNode = initialNodes.find((n: BlueprintRFNode) => n.id === edge.target);
       if (!sourceNode || !targetNode) return edge;
@@ -61,7 +64,8 @@ export function createDiagramInitialState(): DiagramInitialState {
         sourceHandle,
         targetHandle,
       };
-    });
+    }
+  );
 
   return {
     schema: initialSchemaResolved,

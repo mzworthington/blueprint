@@ -10,7 +10,7 @@ import {
   type SystemSchema,
 } from '@blueprint/core';
 import type { BlueprintRFNode } from '../../layoutUtils';
-import { mapDomainDepToRFEdge, mapDomainNodeToRFNode } from '../../layoutUtils';
+import { mapDomainDepsToRFEdges, mapDomainNodeToRFNode } from '../../layoutUtils';
 import { applyStateUpdates } from './applyStateUpdates';
 
 type LoadedSystem = { path: string; name: string; schema: SystemSchema };
@@ -173,7 +173,7 @@ export function executeMermaidImport(
     const merged = applyImportMergePlan(baseSchema, scopedImported, resolutions);
     const finalSchema = resolveScopedSchema(context, merged);
     const mergedRfNodes = buildMergedRfNodes(nodes, finalSchema, previousRefs);
-    const mergedRfEdges = finalSchema.dependencies.map(mapDomainDepToRFEdge);
+    const mergedRfEdges = mapDomainDepsToRFEdges(finalSchema.dependencies);
 
     recordHistory();
     applyStateUpdates(set, get, mergedRfNodes, mergedRfEdges);

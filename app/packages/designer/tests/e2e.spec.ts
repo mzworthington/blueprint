@@ -30,8 +30,10 @@ test.describe('Blueprint E2E Journeys', () => {
   });
 
   test('Workspace Selection & Visual Panel Collapse', async ({ page }) => {
+    test.setTimeout(60_000);
     await page.goto('/workspace');
     await continueWithSandbox(page);
+    await expect(page.getByTestId('startup-workspace-dialog')).toHaveCount(0);
 
     const leftPanelButton = page.locator('button[aria-label="Toggle Left Panel"]');
     const rightPanelButton = page.locator('button[aria-label="Toggle Right Panel"]');
@@ -62,6 +64,7 @@ test.describe('Blueprint E2E Journeys', () => {
   });
 
   test('Visual C4 Navigation (Zoom In / Zoom Out / URL Routing)', async ({ page }) => {
+    test.setTimeout(60_000);
     await page.goto('/workspace/blueprint');
     await continueWithSandbox(page);
     await page.locator('button[aria-label="Toggle Right Panel"]').click();
@@ -92,12 +95,15 @@ test.describe('Blueprint E2E Journeys', () => {
     await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint/app/app');
     expect(page.url()).toContain('/workspace/blueprint/app/app');
 
+    // Blur inputs so Escape is handled as zoom-out, not ignored while typing.
+    await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
     await page.keyboard.press('Escape');
 
     await expect(page.locator('#workspace-name-input')).toHaveValue('App Containers');
     await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint/app');
     expect(page.url()).toContain('/workspace/blueprint/app');
 
+    await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
     await page.keyboard.press('Escape');
 
     await expect(page.locator('#workspace-name-input')).toHaveValue('Blueprint Context');

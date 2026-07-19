@@ -7,13 +7,15 @@ function isBareWorkspaceUrl(page: Page): boolean {
 
 /** Dismiss the startup chooser by continuing with the bundled sandbox. */
 export async function continueWithSandbox(page: Page) {
-  if (!isBareWorkspaceUrl(page)) return;
-
   const dialog = page.getByTestId('startup-workspace-dialog');
-  try {
-    await dialog.waitFor({ state: 'visible', timeout: 5_000 });
-  } catch {
-    return;
+  // Deep links usually skip the chooser, but still dismiss if it is visible.
+  if (!(await dialog.isVisible().catch(() => false))) {
+    if (!isBareWorkspaceUrl(page)) return;
+    try {
+      await dialog.waitFor({ state: 'visible', timeout: 5_000 });
+    } catch {
+      return;
+    }
   }
   await page.getByTestId('startup-load-sandbox').click();
   await expect(dialog).toHaveCount(0);
