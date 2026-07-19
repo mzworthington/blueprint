@@ -1,8 +1,26 @@
 import * as yaml from 'js-yaml';
 import { z } from 'zod';
-import type { SystemSchema, ValidationResult, ValidationIssue } from '../models/schema';
+import type {
+  SystemSchema,
+  SystemDependency,
+  ValidationResult,
+  ValidationIssue,
+} from '../models/schema';
 import { SYSTEM_SCHEMA_MAJOR_VERSION, systemSchemaPublicUrl } from '../models/schemaVersion';
 import { ENTITY_REF_PATTERN } from '../lib/entityRef';
+
+/** Keep first edge per from→to pair (duplicate ids break React Flow / canvas perf). */
+export function dedupeDependencies(deps: SystemDependency[]): SystemDependency[] {
+  const seen = new Set<string>();
+  const out: SystemDependency[] = [];
+  for (const dep of deps) {
+    const key = `${dep.from}\0${dep.to}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(dep);
+  }
+  return out;
+}
 
 /**
  * Validates the node dependency graph for cycles and other logic constraints.

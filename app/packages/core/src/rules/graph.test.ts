@@ -5,8 +5,23 @@ import {
   serializeSchemaToYaml,
   serializeSchemaToMermaid,
   toSystemSchemaJsonSchema,
+  dedupeDependencies,
 } from './graph';
 import type { SystemSchema } from '../models/schema';
+
+describe('dedupeDependencies', () => {
+  it('keeps the first edge for each from→to pair', () => {
+    const deps = dedupeDependencies([
+      { from: 'a', to: 'b', type: 'direct-call', description: 'first' },
+      { from: 'a', to: 'b', type: 'direct-call', description: 'dup' },
+      { from: 'a', to: 'c', type: 'read-write' },
+    ]);
+    expect(deps).toEqual([
+      { from: 'a', to: 'b', type: 'direct-call', description: 'first' },
+      { from: 'a', to: 'c', type: 'read-write' },
+    ]);
+  });
+});
 
 describe('toSystemSchemaJsonSchema', () => {
   it('exports Draft-07 JSON Schema as a v3 object document with metaData', () => {

@@ -3,6 +3,7 @@ import type { IoState } from './ioState';
 import {
   parseSchemaFromYaml,
   parseSchemaFromJson,
+  dedupeDependencies,
   type SystemSchema,
   type SystemNode,
   type SystemDependency,
@@ -220,16 +221,20 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   initSchema: schema => {
     get().clearHistory();
     set({ focusedCyclePath: null });
-    const rfNodes = schema.nodes.map(mapDomainNodeToRFNode);
-    const rfEdges = mapDomainDepsToRFEdges(schema.dependencies);
+    const normalized: SystemSchema = {
+      ...schema,
+      dependencies: dedupeDependencies(schema.dependencies ?? []),
+    };
+    const rfNodes = normalized.nodes.map(mapDomainNodeToRFNode);
+    const rfEdges = mapDomainDepsToRFEdges(normalized.dependencies);
     applyStateUpdates(
       set,
       get,
       rfNodes,
       rfEdges,
-      schema.name,
-      schema.level,
-      schema.entityRef ?? null
+      normalized.name,
+      normalized.level,
+      normalized.entityRef ?? null
     );
   },
 

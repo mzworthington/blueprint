@@ -21,6 +21,7 @@ import { useBlueprintStore } from '../../../../../application/store/store';
 import type { ComponentNodeData } from '../../../../../application/store/store';
 import { CANVAS_SIMPLIFY_ZOOM } from '../../../../../application/store/layoutUtils';
 import { evaluateForensicsConcern } from '../../../../../application/forensics/concern';
+import { useHasSubDiagram } from './SubDiagramRefsContext';
 
 type CustomNode = Node<ComponentNodeData, 'blueprintNode'>;
 
@@ -179,9 +180,7 @@ export const BlueprintNode = memo(({ id, data, selected }: NodeProps<CustomNode>
   const selectNode = useBlueprintStore(state => state.selectNode);
   const liteCanvas = useBlueprintStore(state => state.liteCanvas);
   const entityRef = data.entityRef;
-  const hasSubDiagram = useBlueprintStore(state =>
-    entityRef ? state.loadedSystems.some(s => s.schema.entityRef === entityRef) : false
-  );
+  const hasSubDiagram = useHasSubDiagram(entityRef);
   const zoomSimplified = useStore(s => s.transform[2] < CANVAS_SIMPLIFY_ZOOM);
   const simplified = liteCanvas || zoomSimplified;
   const updateNodeInternals = useUpdateNodeInternals();

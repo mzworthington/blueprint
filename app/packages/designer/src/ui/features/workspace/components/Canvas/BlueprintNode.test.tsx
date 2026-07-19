@@ -2,6 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { BlueprintNode } from './BlueprintNode';
 import { useBlueprintStore } from '../../../../../application/store/store';
+import { SubDiagramRefsContext } from './SubDiagramRefsContext';
 
 const mockSetLocation = vi.fn();
 vi.mock('wouter', () => ({
@@ -195,56 +196,30 @@ describe('BlueprintNode Component', () => {
   });
 
   it('shows Zoom indicator when node has a sub-diagram link in loadedSystems', () => {
-    useBlueprintStore.setState({
-      loadedSystems: [
-        {
-          path: 'child.yaml',
-          name: 'Child Level',
-          schema: {
-            name: 'Child Level',
-            version: '1.0.0',
-            level: 'component',
-            entityRef: 'default/test-node-1',
-            nodes: [],
-            dependencies: [],
-          },
-        },
-      ],
-    });
-
     const props = {
       ...defaultProps,
       data: { ...defaultProps.data, entityRef: 'default/test-node-1' },
     };
-    render(<BlueprintNode {...props} />);
+    render(
+      <SubDiagramRefsContext.Provider value={new Set(['default/test-node-1'])}>
+        <BlueprintNode {...props} />
+      </SubDiagramRefsContext.Provider>
+    );
 
     expect(screen.getByText('Zoom')).toBeInTheDocument();
   });
 
   it('triggers navigation to node entityRef when Zoom button is clicked', () => {
-    useBlueprintStore.setState({
-      loadedSystems: [
-        {
-          path: 'child.yaml',
-          name: 'Child Level',
-          schema: {
-            name: 'Child Level',
-            version: '1.0.0',
-            level: 'component',
-            entityRef: 'default/test-node-1',
-            nodes: [],
-            dependencies: [],
-          },
-        },
-      ],
-    });
-
     const props = {
       ...defaultProps,
       data: { ...defaultProps.data, entityRef: 'default/test-node-1' },
     };
 
-    render(<BlueprintNode {...props} />);
+    render(
+      <SubDiagramRefsContext.Provider value={new Set(['default/test-node-1'])}>
+        <BlueprintNode {...props} />
+      </SubDiagramRefsContext.Provider>
+    );
 
     fireEvent.click(screen.getByRole('button', { name: /zoom/i }));
 
