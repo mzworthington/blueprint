@@ -5,11 +5,12 @@ export interface UseKeyboardNavigationOptions {
   onZoomOut?: () => void;
   onUndo?: () => void;
   onRedo?: () => void;
+  onShortcutsOpen?: () => void;
   disabled?: boolean;
 }
 
 export function useKeyboardNavigation(options: UseKeyboardNavigationOptions = {}) {
-  const { onSearchOpen, onZoomOut, onUndo, onRedo, disabled = false } = options;
+  const { onSearchOpen, onZoomOut, onUndo, onRedo, onShortcutsOpen, disabled = false } = options;
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -37,6 +38,9 @@ export function useKeyboardNavigation(options: UseKeyboardNavigationOptions = {}
       } else if ((e.metaKey || e.ctrlKey) && isZ && !e.shiftKey && onUndo) {
         e.preventDefault();
         onUndo();
+      } else if (e.key === '?' && onShortcutsOpen) {
+        e.preventDefault();
+        onShortcutsOpen();
       } else if (
         ((e.metaKey || e.ctrlKey) && isZ && e.shiftKey && onRedo) ||
         ((e.metaKey || e.ctrlKey) && isY && !e.shiftKey && onRedo)
@@ -45,7 +49,7 @@ export function useKeyboardNavigation(options: UseKeyboardNavigationOptions = {}
         onRedo();
       }
     },
-    [disabled, onSearchOpen, onZoomOut, onUndo, onRedo]
+    [disabled, onSearchOpen, onZoomOut, onUndo, onRedo, onShortcutsOpen]
   );
 
   useEffect(() => {

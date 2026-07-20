@@ -12,6 +12,8 @@ import {
   MoreHorizontal,
   FolderOpen,
   LayoutTemplate,
+  Map,
+  HelpCircle,
 } from 'lucide-react';
 import { useBlueprintStore } from '../../../../../application/store/store';
 import type { LayoutEngineId } from '../../../../../core';
@@ -113,6 +115,52 @@ function useClearAction() {
 
   return { controlsDisabled, handleClear };
 }
+
+export const ToolbarNavActions: React.FC = () => {
+  const controlsDisabled = useControlsDisabled();
+  const setIsSystemMapOpen = useBlueprintStore(s => s.setIsSystemMapOpen);
+  const setIsCompareOpen = useBlueprintStore(s => s.setIsCompareOpen);
+  const setIsShortcutsOpen = useBlueprintStore(s => s.setIsShortcutsOpen);
+  const loadedSystems = useBlueprintStore(s => s.loadedSystems);
+
+  return (
+    <div className="hidden md:flex items-center gap-1 shrink-0">
+      <button
+        type="button"
+        onClick={() => setIsSystemMapOpen(true)}
+        disabled={controlsDisabled || loadedSystems.length === 0}
+        className={iconBtnClass}
+        title="System map overview"
+        aria-label="Open system map"
+        data-testid="toolbar-system-map"
+      >
+        <Map className="w-3.5 h-3.5" />
+      </button>
+      <button
+        type="button"
+        onClick={() => setIsCompareOpen(true)}
+        disabled={controlsDisabled || loadedSystems.length < 2}
+        className={iconBtnClass}
+        title="Compare two systems"
+        aria-label="Compare systems"
+        data-testid="toolbar-compare"
+      >
+        <GitCompare className="w-3.5 h-3.5" />
+      </button>
+      <button
+        type="button"
+        onClick={() => setIsShortcutsOpen(true)}
+        disabled={controlsDisabled}
+        className={iconBtnClass}
+        title="Keyboard shortcuts (?)"
+        aria-label="Keyboard shortcuts"
+        data-testid="toolbar-shortcuts"
+      >
+        <HelpCircle className="w-3.5 h-3.5" />
+      </button>
+    </div>
+  );
+};
 
 export const ToolbarSaveButton: React.FC = () => {
   const { controlsDisabled, handleSave, isWorkspaceOpen } = useSaveAction();
@@ -258,7 +306,11 @@ export const ToolbarEditActions: React.FC = () => {
 export const ToolbarOverflowMenu: React.FC = () => {
   const { controlsDisabled, handleClear } = useClearAction();
   const setIsDiffOpen = useBlueprintStore(s => s.setIsDiffOpen);
+  const setIsSystemMapOpen = useBlueprintStore(s => s.setIsSystemMapOpen);
+  const setIsCompareOpen = useBlueprintStore(s => s.setIsCompareOpen);
+  const setIsShortcutsOpen = useBlueprintStore(s => s.setIsShortcutsOpen);
   const hasPendingChanges = useBlueprintStore(s => s.hasPendingChanges);
+  const loadedSystems = useBlueprintStore(s => s.loadedSystems);
   const layoutEngine = useBlueprintStore(s => s.layoutEngine);
   const setLayoutEngine = useBlueprintStore(s => s.setLayoutEngine);
   const { open, toggle, close, ref } = useToolbarMenu();
@@ -306,6 +358,51 @@ export const ToolbarOverflowMenu: React.FC = () => {
               ))}
             </select>
           </div>
+
+          <button
+            type="button"
+            role="menuitem"
+            onClick={() => {
+              close();
+              setIsSystemMapOpen(true);
+            }}
+            disabled={controlsDisabled || loadedSystems.length === 0}
+            className={menuItemClass}
+            title="Context-level system map"
+          >
+            <Map className="w-3.5 h-3.5 shrink-0" />
+            System Map
+          </button>
+
+          <button
+            type="button"
+            role="menuitem"
+            onClick={() => {
+              close();
+              setIsCompareOpen(true);
+            }}
+            disabled={controlsDisabled || loadedSystems.length < 2}
+            className={menuItemClass}
+            title="Compare two loaded systems"
+          >
+            <GitCompare className="w-3.5 h-3.5 shrink-0" />
+            Compare Systems
+          </button>
+
+          <button
+            type="button"
+            role="menuitem"
+            onClick={() => {
+              close();
+              setIsShortcutsOpen(true);
+            }}
+            disabled={controlsDisabled}
+            className={menuItemClass}
+            title="Keyboard shortcuts (?)"
+          >
+            <HelpCircle className="w-3.5 h-3.5 shrink-0" />
+            Shortcuts
+          </button>
 
           {hasPendingChanges ? (
             <button

@@ -194,6 +194,17 @@ describe('useKeyboardNavigation Hook', () => {
     expect(onRedo).toHaveBeenCalledTimes(4);
   });
 
+  it('should call onShortcutsOpen when ? is pressed (not typing)', () => {
+    const onShortcutsOpen = vi.fn();
+    renderHook(() => useKeyboardNavigation({ onShortcutsOpen }));
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: '?' }));
+    });
+
+    expect(onShortcutsOpen).toHaveBeenCalled();
+  });
+
   it('should cleanup event listener on unmount', () => {
     const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
     const { unmount } = renderHook(() => useKeyboardNavigation({}));

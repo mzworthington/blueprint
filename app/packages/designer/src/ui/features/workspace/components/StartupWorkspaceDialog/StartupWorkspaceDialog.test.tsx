@@ -23,6 +23,11 @@ describe('StartupWorkspaceDialog', () => {
       /Import Mermaid diagram/i
     );
     expect(screen.getByTestId('startup-import-iac')).toHaveTextContent(/Import infrastructure/i);
+    expect(screen.getByTestId('startup-cli-scan')).toHaveTextContent(/Scan with CLI/i);
+    expect(screen.getByTestId('startup-cli-download')).toHaveAttribute(
+      'href',
+      'https://github.com/mzworthington/blueprint/releases/latest'
+    );
   });
 
   it('does not expose the dialog when closed', () => {

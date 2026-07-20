@@ -6,6 +6,7 @@ import {
   ToolbarOpenMenu,
   ToolbarEditActions,
   ToolbarOverflowMenu,
+  ToolbarNavActions,
 } from '../ActionControls/ActionControls';
 
 export const WorkspaceToolbar: React.FC = () => {
@@ -17,6 +18,7 @@ export const WorkspaceToolbar: React.FC = () => {
       <div className="flex items-center gap-2 min-w-0 flex-1">
         <Searchbar collapsibleOnMobile />
         <SystemSelector />
+        <ToolbarNavActions />
         <ToolbarSaveButton />
       </div>
 

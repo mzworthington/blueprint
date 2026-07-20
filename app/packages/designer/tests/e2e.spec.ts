@@ -160,4 +160,29 @@ test.describe('Blueprint E2E Journeys', () => {
     await openImportMermaid(page);
     await expect(page.getByTestId('import-mermaid-dialog')).toBeVisible();
   });
+
+  test('Tablet viewport: compact breadcrumbs and mobile panel toggles', async ({ page }) => {
+    test.setTimeout(60_000);
+    await page.setViewportSize({ width: 768, height: 1024 });
+    await page.goto('/workspace/blueprint');
+    await continueWithSandbox(page);
+
+    await expect(page.getByLabel('Open diagram location menu')).toBeVisible();
+    await expect(page.locator('button[aria-label="Toggle Left Panel"]')).toHaveCount(0);
+
+    const schemaChip = page.getByRole('button', { name: 'Open Schema Explorer' });
+    const propsChip = page.getByRole('button', { name: 'Open Properties Panel' });
+    await expect(schemaChip).toBeVisible();
+    await expect(propsChip).toBeVisible();
+
+    await schemaChip.click();
+    await expect(page.getByTestId('left-panel')).not.toHaveClass(/w-0/);
+    await expect(schemaChip).toHaveCount(0);
+
+    await page.getByLabel('Close Schema Explorer').click();
+    await expect(page.getByTestId('left-panel')).toHaveClass(/w-0/);
+
+    await propsChip.click();
+    await expect(page.getByTestId('right-panel')).not.toHaveClass(/w-0/);
+  });
 });
