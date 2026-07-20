@@ -61,6 +61,7 @@ GitHub Pages deploys the designer `dist/` (docs + app in one SPA). The productio
 ```bash
 pnpm test
 pnpm test:coverage
+pnpm test:ci
 pnpm test:e2e
 pnpm format:check
 pnpm format:write
@@ -68,7 +69,7 @@ pnpm lint
 pnpm knip
 ```
 
-Designer E2E (`app/packages/designer`: `pnpm test:e2e`) refreshes screenshots under `docs/screenshots/` used by [journeys](./journeys.md). `pnpm generate:features-unit` regenerates [Unit test features](./features-unit.md).
+Designer E2E (`app/packages/designer`: `pnpm test:e2e`) refreshes screenshots under `docs/screenshots/` used by [journeys](./journeys.md). `pnpm generate:features-unit` regenerates [Unit test features](./features-unit.md); CI runs `pnpm test:ci` (coverage + doc generation in one pass) and fails if `docs/features-unit.md` is stale. Locally, `pnpm generate:features-unit:check` verifies the doc without overwriting it.
 
 ---
 

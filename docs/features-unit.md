@@ -961,6 +961,13 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ should open mermaid import dialog from the mermaid tab
 - ✅ should filter test components from YAML, JSON, and Mermaid views based on showTests state
 
+### compareSystemSchemas
+
+#### compareSystemSchemas
+
+- ✅ returns empty diff for identical schemas
+- ✅ detects added, modified, and deleted nodes
+
 ### computeClientLayout
 
 #### computeClientLayout
@@ -1463,6 +1470,7 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ should not trigger shortcuts when typing in contenteditable element
 - ✅ should call onUndo when ⌘Z or Ctrl+Z is pressed (not typing)
 - ✅ should call onRedo when ⌘Shift+Z, Ctrl+Shift+Z, ⌘Y, or Ctrl+Y is pressed (not typing)
+- ✅ should call onShortcutsOpen when ? is pressed (not typing)
 - ✅ should cleanup event listener on unmount
 
 ### WorkspaceDisplayControls

@@ -6,6 +6,9 @@ import { VitestFeatureReporter } from './reporters/vitestFeatureReporter.ts';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const docsUnitFeatures = path.resolve(__dirname, '../docs/features-unit.md');
 const generateFeaturesUnit = process.env.GENERATE_FEATURES_UNIT === '1';
+const featuresUnitOutputFile = process.env.FEATURES_UNIT_OUTPUT
+  ? path.resolve(process.env.FEATURES_UNIT_OUTPUT)
+  : docsUnitFeatures;
 
 export default defineConfig({
   test: {
@@ -29,7 +32,7 @@ export default defineConfig({
       },
     ],
     reporters: generateFeaturesUnit
-      ? ['default', new VitestFeatureReporter({ outputFile: docsUnitFeatures })]
+      ? ['default', new VitestFeatureReporter({ outputFile: featuresUnitOutputFile })]
       : ['default'],
     coverage: {
       provider: 'v8',
