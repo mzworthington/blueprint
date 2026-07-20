@@ -1,0 +1,75 @@
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: container
+metaData:
+  entityRef: blueprint/pulumi
+  name: Pulumi Pulumi
+nodes:
+  - entityRef: blueprint/pulumi/aws-ecs-cluster-cluster
+    type: container
+    name: cluster
+    external: false
+    properties:
+      iac.address: aws:ecs:Cluster.cluster
+      iac.provider_type: aws_ecs_cluster
+      iac.kind: resource
+    x: 48
+    y: 384
+  - entityRef: blueprint/pulumi/awsx-lb-applicationloadbalancer-loadbalancer
+    type: container
+    name: loadbalancer
+    external: false
+    properties:
+      iac.address: awsx:lb:ApplicationLoadBalancer.loadbalancer
+      iac.provider_type: awsx_lb_applicationloadbalancer
+      iac.kind: resource
+    x: 488
+    y: 384
+  - entityRef: blueprint/pulumi/awsx-ecr-repository-repo
+    type: container
+    name: repo
+    external: false
+    properties:
+      iac.address: awsx:ecr:Repository.repo
+      iac.provider_type: awsx_ecr_repository
+      iac.kind: resource
+    x: 268
+    y: 1024
+  - entityRef: blueprint/pulumi/awsx-ecr-image-image
+    type: container
+    name: image
+    external: false
+    properties:
+      iac.address: awsx:ecr:Image.image
+      iac.provider_type: awsx_ecr_image
+      iac.kind: resource
+    x: 268
+    y: 704
+  - entityRef: blueprint/pulumi/awsx-ecs-fargateservice-service
+    type: container
+    name: service
+    external: false
+    properties:
+      iac.address: awsx:ecs:FargateService.service
+      iac.provider_type: awsx_ecs_fargateservice
+      iac.kind: resource
+    x: 48
+    y: 64
+dependencies:
+  - from: blueprint/pulumi/awsx-lb-applicationloadbalancer-loadbalancer
+    to: blueprint/pulumi/awsx-ecr-image-image
+    type: direct-call
+  - from: blueprint/pulumi/awsx-ecr-repository-repo
+    to: blueprint/pulumi/awsx-ecr-image-image
+    type: direct-call
+  - from: blueprint/pulumi/awsx-ecr-image-image
+    to: blueprint/pulumi/awsx-ecr-repository-repo
+    type: direct-call
+  - from: blueprint/pulumi/awsx-ecs-fargateservice-service
+    to: blueprint/pulumi/aws-ecs-cluster-cluster
+    type: direct-call
+  - from: blueprint/pulumi/awsx-ecs-fargateservice-service
+    to: blueprint/pulumi/awsx-lb-applicationloadbalancer-loadbalancer
+    type: direct-call
+  - from: blueprint/pulumi/awsx-ecs-fargateservice-service
+    to: blueprint/pulumi/awsx-ecr-image-image
+    type: direct-call

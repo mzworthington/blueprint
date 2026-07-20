@@ -334,6 +334,23 @@ Generated from Vitest (`pnpm test:coverage`).
 
 - ✅ returns a typed plan object
 
+### pulumiAnalyzer
+
+#### PulumiAnalyzer
+
+- ✅ parses a pulumi project and writes containers.yaml + context node
+- ✅ links multiple pulumi projects under one Infrastructure hub
+- ✅ no-ops when no pulumi projects exist
+
+### pulumiDiscovery
+
+#### discoverPulumiRoots
+
+- ✅ finds a project with Pulumi.yaml and yaml resources
+- ✅ collects TypeScript sources for nodejs runtime
+- ✅ skips nested projects under an outer root
+- ✅ returns empty when no Pulumi projects exist
+
 ### pythonAnalyzer
 
 #### PythonAnalyzer Strategy
@@ -473,6 +490,10 @@ Generated from Vitest (`pnpm test:coverage`).
 
 ### graph
 
+#### dedupeDependencies
+
+- ✅ keeps the first edge for each from→to pair
+
 #### Graph Validation & Cycle Detection
 
 - ✅ should validate a clean, acyclic graph
@@ -594,6 +615,28 @@ Generated from Vitest (`pnpm test:coverage`).
 - ✅ should resolve subfolders correctly
 - ✅ should traverse up directories using ..
 - ✅ should return absolute path if input is absolute or web url
+
+### pulumiImport
+
+#### parsePulumiBatchToSchema
+
+- ✅ merges resources across files and resolves cross-file refs
+- ✅ fails on duplicate addresses across files
+
+#### parsePulumiToSchema — TypeScript
+
+- ✅ maps new aws resources from TypeScript source
+
+#### parsePulumiToSchema — YAML
+
+- ✅ maps a single lambda resource to a scoped node
+- ✅ creates an edge from a property reference
+- ✅ creates an edge from dependsOn in options
+- ✅ marks get resources as external data sources
+- ✅ warns and defaults unknown resource types
+- ✅ warns on unresolved refs without failing
+- ✅ returns empty schema for project metadata only
+- ✅ throws on invalid YAML
 
 ### schema
 

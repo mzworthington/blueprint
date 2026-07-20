@@ -11,7 +11,7 @@ nodes:
       rootPath: ''
       productId: testproject
       role: product-hub
-    x: 3640
+    x: 4000
     y: 320
   - entityRef: blueprint/app
     type: software-system
@@ -20,7 +20,7 @@ nodes:
       rootPath: app
       productId: testproject
       role: subsystem
-    x: 3640
+    x: 4000
     y: 600
     forensics:
       complexity: 106
@@ -128,7 +128,7 @@ nodes:
       rootPath: ''
       productId: eshop
       role: product-hub
-    x: 1180
+    x: 1240
     y: 320
     forensics:
       complexity: 4
@@ -146,7 +146,7 @@ nodes:
       rootPath: ''
       productId: google_cloud
       role: product-hub
-    x: 1780
+    x: 1900
     y: 320
   - entityRef: blueprint/infrastructure
     type: software-system
@@ -155,7 +155,7 @@ nodes:
       rootPath: ''
       productId: infrastructure
       role: product-hub
-    x: 2380
+    x: 2560
     y: 320
   - entityRef: blueprint/camunda
     type: software-system
@@ -218,6 +218,33 @@ nodes:
       role: context-actor
     x: 2110
     y: 40
+  - entityRef: blueprint/aws-ts-containers
+    type: software-system
+    name: Aws Ts Containers System
+    properties:
+      rootPath: ''
+      productId: aws-ts-containers
+      role: product-hub
+    x: 220
+    y: 320
+    forensics:
+      complexity: 1
+      churn: 0
+      authorCount: 0
+      hotspotScore: 0
+      sinceDays: 90
+      fileCount: 1
+      hotspotCount: 0
+      knowledgeSiloCount: 0
+  - entityRef: blueprint/pulumi
+    type: software-system
+    name: Pulumi System
+    properties:
+      rootPath: pulumi
+      productId: infrastructure
+      role: subsystem
+    x: 3640
+    y: 600
 dependencies:
   - from: blueprint/backstage
     to: blueprint/packages
@@ -237,6 +264,46 @@ dependencies:
     description: Part of product system
   - from: blueprint/testproject
     to: blueprint/app
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/testproject
+    to: blueprint/app
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/packages
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/plugins
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/docs-ui
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/microsite
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/testproject
+    to: blueprint/app
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/packages
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/plugins
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/docs-ui
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/microsite
     type: direct-call
     description: Part of product system
   - from: blueprint/infrastructure
@@ -263,6 +330,10 @@ dependencies:
     to: blueprint/cqrs-bigquery-memorystore
     type: direct-call
     description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/pulumi
+    type: direct-call
+    description: Part of product system
   - from: blueprint/user
     to: blueprint/testproject
     type: direct-call
@@ -281,5 +352,9 @@ dependencies:
     description: Uses
   - from: blueprint/user
     to: blueprint/infrastructure
+    type: direct-call
+    description: Uses
+  - from: blueprint/user
+    to: blueprint/aws-ts-containers
     type: direct-call
     description: Uses

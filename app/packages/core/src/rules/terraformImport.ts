@@ -1,20 +1,16 @@
 import { parse as parseHcl } from '@cruglobal/js-hcl2';
-import type {
-  C4Level,
-  NodeType,
-  PropertyMap,
-  SystemDependency,
-  SystemNode,
-  SystemSchema,
-} from '../models/schema';
-import { mapProviderTypeToNodeType } from './iacResourceMap';
+import type { SystemSchema } from '../models/schema';
+import {
+  addressToEntityRefSlug,
+  infraIrToSchema,
+  mintEntityRef,
+  type InfraImportOptions,
+} from './infraSchemaMap';
 import type { InfraEdge, InfraIR, InfraNode } from './infraIr';
 
 export type TerraformFormat = 'hcl' | 'json';
 
-export interface TerraformImportOptions {
-  targetLevel: C4Level;
-  parentEntityRef?: string;
+export interface TerraformImportOptions extends InfraImportOptions {
   /** Force format; default auto-detects JSON vs HCL. */
   sourceFormat?: TerraformFormat | 'auto';
 }
@@ -61,26 +57,7 @@ function parseDocument(source: string, format: TerraformFormat): Record<string, 
   return parseHcl(source) as Record<string, unknown>;
 }
 
-/** Slugify a Terraform address into entityRef path segments (underscores → hyphens). */
-export function addressToEntityRefSlug(address: string): string {
-  return address
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .replace(/--+/g, '-');
-}
-
-export function mintEntityRef(address: string, parentEntityRef?: string): string {
-  const slug = addressToEntityRefSlug(address);
-  if (!parentEntityRef) return slug;
-  return `${parentEntityRef}/${slug}`;
-}
-
-function isRemoteModuleSource(source: string): boolean {
-  if (source.startsWith('./') || source.startsWith('../')) return false;
-  if (source.startsWith('/')) return false;
-  return true;
-}
+export { addressToEntityRefSlug, mintEntityRef };
 
 function collectExpressionSources(value: unknown, out: string[]): void {
   if (isExpression(value)) {
@@ -106,7 +83,6 @@ const META_ROOTS = new Set(['var', 'local', 'path', 'terraform', 'each', 'count'
  */
 export function extractAddressesFromExpression(source: string): string[] {
   const addresses = new Set<string>();
-  // Longest forms first so attribute suffixes are consumed with the address.
   const re =
     /\b(?:data\.([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)|module\.([A-Za-z0-9_]+)|([A-Za-z][A-Za-z0-9_]*)\.([A-Za-z0-9_]+))(?:\.[A-Za-z0-9_]+)*\b/g;
 
@@ -277,89 +253,6 @@ export function documentToInfraIR(
 
   const edges = buildEdges(nodes, warnings);
   return { nodes, edges, warnings };
-}
-
-function resolveNodeType(node: InfraNode, warnings: string[]): NodeType {
-  if (node.kind === 'module') return 'container';
-  const mapped = mapProviderTypeToNodeType(node.providerType);
-  if (!mapped.known) {
-    warnings.push(`unknown-resource-type:${node.providerType}`);
-  }
-  return mapped.nodeType;
-}
-
-function isExternal(node: InfraNode): boolean {
-  if (node.kind === 'data') return true;
-  if (node.kind === 'module') {
-    return node.source ? isRemoteModuleSource(node.source) : false;
-  }
-  return false;
-}
-
-function displayName(node: InfraNode): string {
-  const bodyName = node.body.name;
-  if (typeof bodyName === 'string' && bodyName.length > 0) return bodyName;
-  const functionName = node.body.function_name;
-  if (typeof functionName === 'string' && functionName.length > 0) return functionName;
-  const bucket = node.body.bucket;
-  if (typeof bucket === 'string' && bucket.length > 0) return bucket;
-  return node.name;
-}
-
-function toProperties(node: InfraNode): PropertyMap {
-  const props: PropertyMap = {
-    'iac.address': node.address,
-    'iac.provider_type': node.providerType,
-    'iac.kind': node.kind,
-  };
-  if (node.source) props['iac.source'] = node.source;
-  return props;
-}
-
-export function infraIrToSchema(
-  ir: InfraIR,
-  options: TerraformImportOptions
-): { schema: SystemSchema; warnings: string[] } {
-  const warnings = [...ir.warnings];
-  const nodes: SystemNode[] = ir.nodes.map(node => ({
-    entityRef: mintEntityRef(node.address, options.parentEntityRef),
-    type: resolveNodeType(node, warnings),
-    name: displayName(node),
-    external: isExternal(node),
-    properties: toProperties(node),
-  }));
-
-  const addressToRef = new Map(
-    ir.nodes.map(n => [n.address, mintEntityRef(n.address, options.parentEntityRef)] as const)
-  );
-
-  const dependencies: SystemDependency[] = [];
-  const depKeys = new Set<string>();
-  for (const edge of ir.edges) {
-    const from = addressToRef.get(edge.from);
-    const to = addressToRef.get(edge.to);
-    if (!from || !to) continue;
-    const key = `${from}->${to}`;
-    if (depKeys.has(key)) continue;
-    depKeys.add(key);
-    dependencies.push({ from, to, type: 'direct-call' });
-  }
-
-  const schema: SystemSchema = {
-    name: options.parentEntityRef
-      ? options.parentEntityRef.split('/').pop() || 'infrastructure'
-      : 'infrastructure',
-    version: '0.1.0',
-    level: options.targetLevel,
-    nodes,
-    dependencies,
-  };
-
-  if (options.parentEntityRef) {
-    schema.entityRef = options.parentEntityRef;
-  }
-
-  return { schema, warnings };
 }
 
 function parseSourcesToIr(

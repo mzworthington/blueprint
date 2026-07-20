@@ -11,6 +11,7 @@ import { NodeFileSystemAdapter } from '../analysis/adapters/nodeFileSystem.ts';
 import { ConsoleLogger } from '../analysis/adapters/consoleLogger.ts';
 import { CodebaseAnalyzer } from '../analysis/domain/analyzer.ts';
 import { TerraformAnalyzer } from '../analysis/domain/terraformAnalyzer.ts';
+import { PulumiAnalyzer } from '../analysis/domain/pulumiAnalyzer.ts';
 import {
   loadAnalysisConfig,
   mergeAnalysisOptions,
@@ -243,6 +244,21 @@ async function runArchitecture(plan: BlueprintCliPlan): Promise<{
     });
     if (tfResult.rootsAnalyzed > 0 && !isHeadless) {
       p.log.info(`Terraform: wrote ${tfResult.rootsAnalyzed} infrastructure diagram(s)`);
+    }
+
+    const pulumiAnalyzer = new PulumiAnalyzer({
+      fileSystem,
+      logger,
+      layout,
+      contextLayout,
+    });
+    const pulumiResult = await pulumiAnalyzer.run(contextName, outputDir, {
+      scanRoot: process.cwd(),
+      forceRelayout: plan.architecture.relayout,
+      signal: cancellation.signal,
+    });
+    if (pulumiResult.rootsAnalyzed > 0 && !isHeadless) {
+      p.log.info(`Pulumi: wrote ${pulumiResult.rootsAnalyzed} infrastructure diagram(s)`);
     }
 
     if (spinner) {

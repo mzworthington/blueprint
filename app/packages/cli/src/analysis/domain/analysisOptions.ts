@@ -52,9 +52,13 @@ export const DEFAULT_STRUCTURAL_IGNORE_GLOBS: readonly string[] = [
   '.idea/**',
   '**/generated/**',
   '**/__snapshots__/**',
-  // IaC is handled by TerraformAnalyzer — keep out of AST parsers even if glob includes *.tf
+  // IaC is handled by TerraformAnalyzer / PulumiAnalyzer — keep out of AST parsers
   '**/*.tf',
   '**/*.tf.json',
+  '**/Pulumi.yaml',
+  '**/Pulumi.yml',
+  '**/Pulumi.*.yaml',
+  '**/Pulumi.*.yml',
 ];
 
 /** Path/folder names that must not become a container identity on their own. */
