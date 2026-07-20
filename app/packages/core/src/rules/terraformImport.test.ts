@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { parseTerraformToSchema, parseTerraformBatchToSchema } from './terraformImport';
+import {
+  parseTerraformToSchema,
+  parseTerraformBatchToSchema,
+  extractTerraformFromMarkdown,
+} from './terraformImport';
 
 describe('parseTerraformToSchema — HCL resources', () => {
   it('maps a single lambda resource to a scoped node', () => {
@@ -265,5 +269,36 @@ resource "aws_subnet" "private" {
         { targetLevel: 'container' }
       )
     ).toThrow(/duplicate-address/i);
+  });
+});
+
+describe('extractTerraformFromMarkdown', () => {
+  it('extracts the first hcl/tf/terraform fenced block', () => {
+    const md = `# Title
+
+Some text.
+
+\`\`\`hcl
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+}
+\`\`\`
+
+More text.`;
+
+    expect(extractTerraformFromMarkdown(md)).toContain('aws_vpc');
+    expect(extractTerraformFromMarkdown(md)).toContain('cidr_block');
+  });
+
+  it('accepts bare fences and tf/terraform language tags', () => {
+    expect(extractTerraformFromMarkdown('```\nfoo = "bar"\n```')).toBe('foo = "bar"');
+    expect(extractTerraformFromMarkdown('```tf\nfoo = "bar"\n```')).toBe('foo = "bar"');
+    expect(extractTerraformFromMarkdown('```terraform\nfoo = "bar"\n```')).toBe('foo = "bar"');
+  });
+
+  it('returns trimmed input when no fence is found', () => {
+    expect(extractTerraformFromMarkdown('  resource "aws_vpc" "main" {}\n')).toBe(
+      'resource "aws_vpc" "main" {}'
+    );
   });
 });

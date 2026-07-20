@@ -34,7 +34,10 @@ interface ParsedEdge {
 function stripComments(source: string): string {
   return source
     .split('\n')
-    .map(line => line.replace(/%%.*$/, '').trim())
+    .map(line => {
+      const commentIdx = line.indexOf('%%');
+      return (commentIdx === -1 ? line : line.slice(0, commentIdx)).trim();
+    })
     .filter(line => line.length > 0)
     .join('\n');
 }
@@ -111,13 +114,14 @@ function parseC4Element(line: string): ParsedNode | null {
 }
 
 function parseC4Rel(line: string): ParsedEdge | null {
+  // [^\s,)] — exclude whitespace so \s* cannot overlap (CodeQL js/polynomial-redos).
   const match = line.match(
-    /^Rel(?:_U|_D|_L|_R)?\s*\(\s*([^,)]+)\s*,\s*([^,)]+)\s*(?:,\s*"([^"]*)")?\s*\)/i
+    /^Rel(?:_U|_D|_L|_R)?\s*\(\s*([^\s,)]+)\s*,\s*([^\s,)]+)(?:\s*,\s*"([^"]*)")?\s*\)/i
   );
   if (!match) return null;
   return {
-    from: slugify(match[1].trim()),
-    to: slugify(match[2].trim()),
+    from: slugify(match[1]),
+    to: slugify(match[2]),
     type: 'direct-call',
     description: match[3]?.trim() || undefined,
   };
@@ -199,6 +203,20 @@ function inferTypeFromShape(shape: string, fallback: NodeType): NodeType {
   return fallback;
 }
 
+/** Strip export decorations without regex (avoids CodeQL js/polynomial-redos). */
+function stripFlowchartLabelDecorations(rawName: string): { name: string; external: boolean } {
+  const externalSuffix = '(External)';
+  const external = rawName.includes(externalSuffix);
+  let name = rawName;
+  if (name.startsWith('👤')) {
+    name = name.slice('👤'.length).trimStart();
+  }
+  if (name.endsWith(externalSuffix)) {
+    name = name.slice(0, -externalSuffix.length).trimEnd();
+  }
+  return { name, external };
+}
+
 function parseFlowchartNode(line: string, defaultType: NodeType): ParsedNode | null {
   const patterns: Array<{ regex: RegExp; shape: string }> = [
     { regex: /^(\w+)\[\["([^"]*)"\]\]/, shape: 'subroutine' },
@@ -212,7 +230,8 @@ function parseFlowchartNode(line: string, defaultType: NodeType): ParsedNode | n
   ];
 
   const trimmed = line.trim();
-  if (!trimmed || /-->|-.->/.test(trimmed)) return null;
+  // String includes — avoid /-->/ regex (CodeQL js/bad-tag-filter false positive).
+  if (!trimmed || trimmed.includes('-->') || trimmed.includes('-.->')) return null;
   if (/^(graph|flowchart|subgraph|end)\b/i.test(trimmed)) return null;
 
   for (const { regex, shape } of patterns) {
@@ -220,8 +239,7 @@ function parseFlowchartNode(line: string, defaultType: NodeType): ParsedNode | n
     if (match) {
       const id = slugify(match[1]);
       const rawName = match[2]?.trim() || match[1];
-      const name = rawName.replace(/^👤\s*/, '').replace(/\s*\(External\)$/, '');
-      const external = /\(External\)/.test(rawName);
+      const { name, external } = stripFlowchartLabelDecorations(rawName);
       const type = inferTypeFromShape(shape, defaultType);
       return { id, name, type, external: external || undefined };
     }
@@ -367,11 +385,48 @@ export function parseMermaidToSchema(
 
 /**
  * Extracts Mermaid source from a markdown fenced block, or returns trimmed input.
+ * Uses indexOf/scan instead of a regex to avoid ReDoS (CodeQL js/polynomial-redos).
  */
 export function extractMermaidFromMarkdown(content: string): string {
-  const fenceMatch = content.match(/```mermaid\s*\n([\s\S]*?)```/i);
-  if (fenceMatch) {
-    return fenceMatch[1].trim();
+  const open = '```mermaid';
+  const lower = content.toLowerCase();
+  let searchFrom = 0;
+
+  while (searchFrom < content.length) {
+    const start = lower.indexOf(open, searchFrom);
+    if (start === -1) {
+      break;
+    }
+
+    let i = start + open.length;
+    // Allow horizontal whitespace after the language tag, then require a newline.
+    let validOpen = false;
+    while (i < content.length) {
+      const c = content[i];
+      if (c === ' ' || c === '\t' || c === '\r') {
+        i++;
+        continue;
+      }
+      if (c === '\n') {
+        i++;
+        validOpen = true;
+        break;
+      }
+      break;
+    }
+
+    if (!validOpen) {
+      searchFrom = start + open.length;
+      continue;
+    }
+
+    const closeIdx = content.indexOf('```', i);
+    if (closeIdx === -1) {
+      break;
+    }
+
+    return content.slice(i, closeIdx).trim();
   }
+
   return content.trim();
 }

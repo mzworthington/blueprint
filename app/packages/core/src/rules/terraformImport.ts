@@ -273,7 +273,8 @@ function parseSourcesToIr(
 
 /** Pull HCL/Terraform out of a markdown fenced block when present. */
 export function extractTerraformFromMarkdown(text: string): string {
-  const fence = /```(?:hcl|tf|terraform)?\s*\n([\s\S]*?)```/i.exec(text);
+  // [ \t]* (not \s*) avoids newline backtracking / ReDoS.
+  const fence = /```(?:hcl|tf|terraform)?[ \t]*\n([\s\S]*?)```/i.exec(text);
   if (fence?.[1]) return fence[1].trim();
   return text.trim();
 }

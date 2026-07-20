@@ -87,6 +87,22 @@ describe('parseMermaidToSchema — flowchart', () => {
     expect(result.schema.nodes[0].type).toBe('component');
   });
 
+  it('strips person emoji and (External) suffix from flowchart labels', () => {
+    const mermaid = `graph TD
+    User["👤 Alice"]
+    Ext["Payment API (External)"]`;
+
+    const result = parseMermaidToSchema(mermaid, { targetLevel: 'context' });
+
+    expect(result.schema.nodes.find(n => n.entityRef === 'user')).toMatchObject({
+      name: 'Alice',
+    });
+    expect(result.schema.nodes.find(n => n.entityRef === 'ext')).toMatchObject({
+      name: 'Payment API',
+      external: true,
+    });
+  });
+
   it('throws on unrecognised diagram type', () => {
     expect(() =>
       parseMermaidToSchema('sequenceDiagram\n  A->>B: hello', { targetLevel: 'container' })
@@ -158,6 +174,22 @@ describe('parseMermaidToSchema — C4', () => {
       type: 'component',
     });
   });
+
+  it('parses directed Rel variants and ignores malformed Rel lines', () => {
+    const spaces = ' '.repeat(5000);
+    const mermaid = `C4Context
+    Person(user, "User")
+    System(api, "API")
+    Rel_U(user, api, "Calls")
+    Rel(${spaces}
+    Rel((,${spaces}`;
+
+    const result = parseMermaidToSchema(mermaid, { targetLevel: 'context' });
+
+    expect(result.schema.dependencies).toEqual([
+      expect.objectContaining({ from: 'user', to: 'api', description: 'Calls' }),
+    ]);
+  });
 });
 
 describe('extractMermaidFromMarkdown', () => {
@@ -177,7 +209,29 @@ More text.`;
     expect(extractMermaidFromMarkdown(md)).toContain('A --> B');
   });
 
+  it('is case-insensitive on the fence language tag', () => {
+    const md = '```Mermaid\ngraph TD\n  A --> B\n```';
+    expect(extractMermaidFromMarkdown(md)).toContain('graph TD');
+  });
+
   it('returns trimmed input when no fence is found', () => {
     expect(extractMermaidFromMarkdown('graph TD\n  A --> B')).toContain('graph TD');
+  });
+
+  it('returns trimmed input when fence opener has non-whitespace junk', () => {
+    const md = '```mermaidx\ngraph TD\n  A --> B\n```';
+    expect(extractMermaidFromMarkdown(md)).toBe(md.trim());
+  });
+
+  it('skips an invalid mermaid-prefixed fence and uses a later valid one', () => {
+    const md = `\`\`\`mermaidx
+ignored
+\`\`\`
+
+\`\`\`mermaid
+graph TD
+  A --> B
+\`\`\``;
+    expect(extractMermaidFromMarkdown(md)).toContain('graph TD');
   });
 });
