@@ -12,6 +12,8 @@ import {
   type ValidationResult,
   type ConflictResolutions,
   type ExternalCandidateFilters,
+  type IacSourceFile,
+  type IacSourceKind,
   type WorkspaceEntity,
 } from '@blueprint/core';
 import type { CanvasNodeChange, CanvasEdgeChange, CanvasConnection } from '../../../core';
@@ -30,6 +32,11 @@ import {
   previewMermaidImport,
   type MermaidImportPreview,
 } from './diagramState/importMermaid';
+import {
+  executeIacImport,
+  previewIacImport,
+  type IacImportPreview,
+} from './diagramState/importIac';
 import { createDiagramInitialState } from './diagramState/initialState';
 import { resetToEmptyWorkspace as resetToEmptyWorkspaceAction } from './diagramState/resetToEmptyWorkspace';
 import {
@@ -76,6 +83,12 @@ export interface DiagramState {
   importJson: (jsonContent: string) => boolean;
   previewMermaidImport: (mermaid: string) => MermaidImportPreview;
   importMermaid: (mermaid: string, resolutions: ConflictResolutions) => boolean;
+  previewIacImport: (files: IacSourceFile[], kind?: IacSourceKind) => IacImportPreview;
+  importIac: (
+    files: IacSourceFile[],
+    resolutions: ConflictResolutions,
+    kind?: IacSourceKind
+  ) => boolean;
   clearError: () => void;
   onNodesChange: (changes: CanvasNodeChange[]) => void;
   onEdgesChange: (changes: CanvasEdgeChange[]) => void;
@@ -294,6 +307,24 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   },
 
   importMermaid: (mermaid, resolutions) => executeMermaidImport(set, get, mermaid, resolutions),
+
+  previewIacImport: (files, kind = 'auto') => {
+    const { schema, loadedSystems, currentFilePath, workspaceName, isWorkspaceOpen } = get();
+    return previewIacImport(
+      files,
+      {
+        baseSchema: schema,
+        loadedSystems,
+        currentFilePath,
+        workspaceName,
+        isWorkspaceOpen,
+      },
+      kind
+    );
+  },
+
+  importIac: (files, resolutions, kind = 'auto') =>
+    executeIacImport(set, get, files, resolutions, kind),
 
   clearError: () => {
     set({ lastError: null });

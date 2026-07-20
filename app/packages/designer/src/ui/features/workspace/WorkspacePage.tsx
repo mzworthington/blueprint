@@ -10,6 +10,7 @@ import { MobilePanelToggles } from './components/MobilePanelToggles/MobilePanelT
 import { useBlueprintStore } from '../../../application/store/store';
 import { DiffMenu } from './components/DiffMenu/DiffMenu';
 import { ImportMermaidDialog } from './components/ImportMermaidDialog/ImportMermaidDialog';
+import { ImportIacDialog } from './components/ImportIacDialog/ImportIacDialog';
 import { StartupWorkspaceDialog } from './components/StartupWorkspaceDialog/StartupWorkspaceDialog';
 import { useUrlSync } from './hooks/useUrlSync';
 
@@ -28,6 +29,8 @@ export const WorkspacePage: React.FC = () => {
     setIsDiffOpen,
     isImportMermaidOpen,
     setIsImportMermaidOpen,
+    isImportIacOpen,
+    setIsImportIacOpen,
     isStartupOpen,
     setIsStartupOpen,
     openWorkspaceDirectory,
@@ -61,6 +64,12 @@ export const WorkspacePage: React.FC = () => {
     setIsStartupOpen(false);
     setIsImportMermaidOpen(true);
   }, [resetToEmptyWorkspace, setIsStartupOpen, setIsImportMermaidOpen]);
+
+  const handleImportIac = useCallback(() => {
+    resetToEmptyWorkspace();
+    setIsStartupOpen(false);
+    setIsImportIacOpen(true);
+  }, [resetToEmptyWorkspace, setIsStartupOpen, setIsImportIacOpen]);
 
   const showStartup = isStartupOpen && isWorkspaceRootPath(location);
 
@@ -110,11 +119,13 @@ export const WorkspacePage: React.FC = () => {
         isOpen={isImportMermaidOpen}
         onClose={() => setIsImportMermaidOpen(false)}
       />
+      <ImportIacDialog isOpen={isImportIacOpen} onClose={() => setIsImportIacOpen(false)} />
       <StartupWorkspaceDialog
         isOpen={showStartup}
         onLoadSandbox={handleLoadSandbox}
         onOpenDirectory={() => void handleOpenDirectory()}
         onImportMermaid={handleImportMermaid}
+        onImportIac={handleImportIac}
       />
     </ReactFlowProvider>
   );

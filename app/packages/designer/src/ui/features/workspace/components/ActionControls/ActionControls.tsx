@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import {
+  Cloud,
   Folder,
   Upload,
   Download,
@@ -134,6 +135,7 @@ export const ToolbarOpenMenu: React.FC = () => {
   const isWorkspaceOpen = useBlueprintStore(s => s.isWorkspaceOpen);
   const schema = useBlueprintStore(s => s.schema);
   const setIsImportMermaidOpen = useBlueprintStore(s => s.setIsImportMermaidOpen);
+  const setIsImportIacOpen = useBlueprintStore(s => s.setIsImportIacOpen);
   const { open, toggle, close, ref } = useToolbarMenu();
 
   const folderTitle = isWorkspaceOpen
@@ -200,6 +202,21 @@ export const ToolbarOpenMenu: React.FC = () => {
           >
             <GitMerge className="w-3.5 h-3.5 text-[#00f0ff] shrink-0" />
             Import Mermaid
+          </button>
+          <button
+            type="button"
+            role="menuitem"
+            onClick={() => {
+              close();
+              setIsImportIacOpen(true);
+            }}
+            disabled={controlsDisabled || !schema}
+            className={menuItemClass}
+            title="Import Terraform or Pulumi into the active schema"
+            id="import-iac-action"
+          >
+            <Cloud className="w-3.5 h-3.5 text-[#00f0ff] shrink-0" />
+            Import Infrastructure
           </button>
         </div>
       ) : null}

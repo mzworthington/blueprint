@@ -10,11 +10,12 @@ On bare `/workspace`, a startup chooser asks how to begin:
 
 ![Startup chooser](../screenshots/6-startup-chooser.png)
 
-| Option                            | What it does                                                  |
-| --------------------------------- | ------------------------------------------------------------- |
-| **Load sandbox**                  | Bundled demo diagrams shipped with the app                    |
-| **Open workspace from directory** | File System Access — pick a local `blueprints/` folder        |
-| **Import Mermaid diagram**        | Reset to an empty canvas, then open the Mermaid import wizard |
+| Option                            | What it does                                                             |
+| --------------------------------- | ------------------------------------------------------------------------ |
+| **Load sandbox**                  | Bundled demo diagrams shipped with the app                               |
+| **Open workspace from directory** | File System Access — pick a local `blueprints/` folder                   |
+| **Import Mermaid diagram**        | Reset to an empty canvas, then open the Mermaid import wizard            |
+| **Import infrastructure**         | Reset to an empty canvas, then open the Terraform / Pulumi import wizard |
 
 Deep links (`/workspace/…`) skip the chooser. You can open a folder, a single YAML file, or Mermaid again anytime from the toolbar **Open** menu.
 
@@ -62,6 +63,18 @@ Bring an external flowchart or C4 Mermaid diagram into the **active** schema —
 4. **Merge into diagram** — draft-only until you commit via Pending Changes. ELK layout runs after a successful merge.
 
 Import is lossy: forensics, rich properties, and styling from Mermaid are not preserved. Do not edit the Code Viewer Mermaid tab expecting round-trip edits.
+
+## Import infrastructure
+
+Bring Terraform or Pulumi definitions into the **active** schema — Blueprint parses them statically to `SystemSchema`, previews the merge, and applies only what you approve.
+
+1. Open **Import Infrastructure** (startup chooser or toolbar **Open** menu).
+2. Paste IaC source or upload one or more files (`.tf`, `.tf.json`, `Pulumi.yaml`, `.ts`).
+3. Choose a format or leave **Auto-detect** (Terraform HCL/JSON or Pulumi YAML/TypeScript).
+4. Review resource preview, additions, and any conflicts (keep existing / rename import / overwrite).
+5. **Merge into diagram** — draft-only until you commit via Pending Changes. ELK layout runs after a successful merge.
+
+No `terraform init` or `pulumi preview` is required — parsing is static, like the CLI IaC passes. Unknown provider types warn and map to a default infra node type. Import Terraform and Pulumi sources in separate sessions (mixed-vendor batches are rejected).
 
 ## External dependencies
 

@@ -526,6 +526,28 @@ Generated from Vitest (`pnpm test:coverage`).
 - ✅ should parse and round-trip node forensics
 - ✅ should reject invalid forensics classifications
 
+### iacImport
+
+#### detectIacSourceKind
+
+- ✅ detects terraform hcl from path and content
+- ✅ detects pulumi yaml from project file name
+- ✅ detects pulumi typescript from imports
+
+#### parseIacBatchToSchema
+
+- ✅ merges multiple terraform files
+- ✅ rejects mixed terraform and pulumi vendors
+
+#### parseIacToSchema
+
+- ✅ parses terraform hcl through the unified entrypoint
+- ✅ parses pulumi yaml through the unified entrypoint
+
+#### vendorForKind
+
+- ✅ maps kinds to vendors
+
 ### iacResourceMap
 
 #### mapProviderTypeToNodeType
@@ -1127,6 +1149,12 @@ Generated from Vitest (`pnpm test:coverage`).
 - ✅ restores draft positions when topology matches
 - ✅ keeps memory schema when no draft exists
 
+### importIac
+
+#### previewIacImport
+
+- ✅ returns parse result and merge plan for terraform resources
+
 ### importMermaid
 
 #### previewMermaidImport
@@ -1318,7 +1346,7 @@ Generated from Vitest (`pnpm test:coverage`).
 
 #### StartupWorkspaceDialog
 
-- ✅ renders the three startup choices when open
+- ✅ renders the startup choices when open
 - ✅ does not expose the dialog when closed
 - ✅ invokes the matching handler for each choice
 
@@ -1355,6 +1383,12 @@ Generated from Vitest (`pnpm test:coverage`).
 - ✅ should set showDesignSystem value via setShowDesignSystem action
 - ✅ should automatically expand right panel when a node is selected
 - ✅ should initialize focusedCyclePath to null and set it via setFocusedCyclePath
+
+### useImportIacDialog
+
+#### useImportIacDialog
+
+- ✅ applies ELK layout after a successful IaC import
 
 ### useImportMermaidDialog
 

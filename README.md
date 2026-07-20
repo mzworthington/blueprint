@@ -106,6 +106,11 @@ We are continuously improving Blueprint. Here are some of the key features and e
 
 - **Direct Git Branch Integration:** View active git branch states within the web app and directly commit/push schema changes to new branches.
 
+### 3b. Infrastructure as Code
+
+- ~~**Pulumi CLI pass:**~~ Shipped — auto-detects `Pulumi.yaml` projects alongside Terraform; maps to Infrastructure hub + `containers.yaml`.
+- ~~**Designer IaC import wizard:**~~ Shipped — paste or upload Terraform / Pulumi into the active diagram with merge preview (toolbar **Open** → Import Infrastructure).
+
 ### 4. Local-first Persistence
 
 - ~~**Draft restore on refresh:**~~ Shipped — sandbox drafts hydrate from IndexedDB when topology matches; workspace open remains disk-first with draft merge.

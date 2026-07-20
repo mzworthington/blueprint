@@ -31,6 +31,7 @@ export interface UiState {
   showDesignSystem: boolean;
   isDiffOpen: boolean;
   isImportMermaidOpen: boolean;
+  isImportIacOpen: boolean;
   /** Startup chooser on `/workspace` until the user picks sandbox / folder / Mermaid. */
   isStartupOpen: boolean;
   notification: ToastNotification | null;
@@ -47,6 +48,7 @@ export interface UiState {
   setShowDesignSystem: (show: boolean) => void;
   setIsDiffOpen: (open: boolean) => void;
   setIsImportMermaidOpen: (open: boolean) => void;
+  setIsImportIacOpen: (open: boolean) => void;
   setIsStartupOpen: (open: boolean) => void;
   setNotification: (notification: ToastNotification | null) => void;
   setLayoutEngine: (engine: LayoutEngineId | null) => void;
@@ -69,6 +71,7 @@ export const createUiState = (
   showDesignSystem: false,
   isDiffOpen: false,
   isImportMermaidOpen: false,
+  isImportIacOpen: false,
   isStartupOpen: true,
   notification: null,
   focusedCyclePath: null,
@@ -85,6 +88,7 @@ export const createUiState = (
   setShowDesignSystem: show => set({ showDesignSystem: show }),
   setIsDiffOpen: open => set({ isDiffOpen: open }),
   setIsImportMermaidOpen: open => set({ isImportMermaidOpen: open }),
+  setIsImportIacOpen: open => set({ isImportIacOpen: open }),
   setIsStartupOpen: open => set({ isStartupOpen: open }),
   setNotification: notification => set({ notification }),
   setLayoutEngine: engine => set({ layoutEngine: engine }),

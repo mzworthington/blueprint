@@ -1,11 +1,12 @@
 import React from 'react';
-import { Box, FolderOpen, GitMerge } from 'lucide-react';
+import { Box, Cloud, FolderOpen, GitMerge } from 'lucide-react';
 
 interface StartupWorkspaceDialogProps {
   isOpen: boolean;
   onLoadSandbox: () => void;
   onOpenDirectory: () => void;
   onImportMermaid: () => void;
+  onImportIac: () => void;
 }
 
 const optionClass =
@@ -19,6 +20,7 @@ export const StartupWorkspaceDialog: React.FC<StartupWorkspaceDialogProps> = ({
   onLoadSandbox,
   onOpenDirectory,
   onImportMermaid,
+  onImportIac,
 }) => {
   if (!isOpen) return null;
 
@@ -45,8 +47,8 @@ export const StartupWorkspaceDialog: React.FC<StartupWorkspaceDialogProps> = ({
               Open workspace
             </h2>
             <p className="mt-2 text-sm text-slate-400 leading-relaxed">
-              Start with the bundled sandbox, open a local blueprint folder, or import a Mermaid
-              diagram into the active canvas.
+              Start with the bundled sandbox, open a local blueprint folder, or import Mermaid or
+              infrastructure (Terraform / Pulumi) into the active canvas.
             </p>
           </div>
 
@@ -96,6 +98,23 @@ export const StartupWorkspaceDialog: React.FC<StartupWorkspaceDialogProps> = ({
                 </span>
                 <span className="block text-xs text-slate-500 mt-0.5">
                   Start from a blank canvas, then paste or upload Mermaid
+                </span>
+              </span>
+            </button>
+
+            <button
+              type="button"
+              data-testid="startup-import-iac"
+              onClick={onImportIac}
+              className={optionClass}
+            >
+              <Cloud className="w-5 h-5 text-[#00f0ff] shrink-0 mt-0.5" />
+              <span>
+                <span className="block text-sm font-semibold text-slate-100">
+                  Import infrastructure
+                </span>
+                <span className="block text-xs text-slate-500 mt-0.5">
+                  Terraform or Pulumi — paste or upload IaC files
                 </span>
               </span>
             </button>

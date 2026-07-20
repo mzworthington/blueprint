@@ -1,31 +1,37 @@
-import { parseMermaidToSchema, type MermaidParseResult } from '@blueprint/core';
+import {
+  parseIacBatchToSchema,
+  type IacParseResult,
+  type IacSourceFile,
+  type IacSourceKind,
+} from '@blueprint/core';
 import type { ConflictResolutions } from '@blueprint/core';
 import {
   buildDiagramImportContext,
   executeDiagramImport,
   parentEntityRefForImport,
   previewDiagramImport,
-  resolveScopedSchema,
   type DiagramImportContext,
   type DiagramImportPreview,
 } from './diagramImportShared';
 
-export type MermaidImportContext = DiagramImportContext;
-export type MermaidImportPreview = DiagramImportPreview<MermaidParseResult>;
+export type IacImportContext = DiagramImportContext;
+export type IacImportPreview = DiagramImportPreview<IacParseResult>;
 
-export function previewMermaidImport(
-  mermaid: string,
-  context: DiagramImportContext
-): MermaidImportPreview {
-  const parseResult = parseMermaidToSchema(mermaid, {
+export function previewIacImport(
+  files: IacSourceFile[],
+  context: DiagramImportContext,
+  kind: IacSourceKind = 'auto'
+): IacImportPreview {
+  const parseResult = parseIacBatchToSchema(files, {
     targetLevel: context.baseSchema.level,
     parentEntityRef: parentEntityRefForImport(context),
+    kind,
   });
 
   return previewDiagramImport(context, parseResult);
 }
 
-export function executeMermaidImport(
+export function executeIacImport(
   set: (partial: Record<string, unknown>) => void,
   get: () => {
     schema: import('@blueprint/core').SystemSchema;
@@ -42,19 +48,18 @@ export function executeMermaidImport(
     checkPendingChanges: () => Promise<void>;
     logger: { error: (message: string, err: unknown) => void };
   },
-  mermaid: string,
-  resolutions: ConflictResolutions
+  files: IacSourceFile[],
+  resolutions: ConflictResolutions,
+  kind: IacSourceKind = 'auto'
 ): boolean {
   const context = buildDiagramImportContext(get);
-  const { scopedImported } = previewMermaidImport(mermaid, context);
+  const { scopedImported } = previewIacImport(files, context, kind);
   return executeDiagramImport(
     set,
     get,
     context,
     scopedImported,
     resolutions,
-    'Failed to import Mermaid diagram'
+    'Failed to import infrastructure diagram'
   );
 }
-
-export { resolveScopedSchema };
