@@ -115,6 +115,82 @@ namespace TestProject.Controllers
     expect(file.namespaces).toContain('TestProject.Controllers');
   });
 
+  it('should parse imports, package, and calls from Java files', async () => {
+    const javaContent = `
+package com.acme.orders;
+
+import com.acme.catalog.CatalogClient;
+import javax.persistence.EntityManager;
+
+public class OrderService {
+    private final CatalogClient client;
+
+    public OrderService() {
+        this.client = new CatalogClient();
+    }
+
+    public void place() {
+        client.getItem(1);
+    }
+}
+`;
+    const javaFile = path.join(tempDir, 'OrderService.java');
+    fs.writeFileSync(javaFile, javaContent, 'utf8');
+
+    const results = await parser.parseSourceFiles(`${relativePattern}/**/*.java`);
+    expect(results).toHaveLength(1);
+
+    const file = results[0];
+    expect(file.baseName).toBe('OrderService');
+
+    const importSpecs = file.imports.map(i => i.moduleSpecifier);
+    expect(importSpecs).toContain('com.acme.catalog.CatalogClient');
+    expect(importSpecs).toContain('javax.persistence.EntityManager');
+
+    const classNames = file.newExpressions.map(n => n.className);
+    expect(classNames).toContain('CatalogClient');
+
+    expect(file.namespaces).toContain('com.acme.orders');
+  });
+
+  it('should parse imports, package clause, and calls from Go files', async () => {
+    const goContent = `
+package orders
+
+import (
+	"net/http"
+	"database/sql"
+)
+
+type OrderHandler struct {
+	db *sql.DB
+}
+
+func NewOrderHandler(db *sql.DB) *OrderHandler {
+	return &OrderHandler{db: db}
+}
+
+func (h *OrderHandler) Handle(w http.ResponseWriter, r *http.Request) {
+	rows, _ := h.db.Query("SELECT 1")
+	_ = rows
+}
+`;
+    const goFile = path.join(tempDir, 'orders.go');
+    fs.writeFileSync(goFile, goContent, 'utf8');
+
+    const results = await parser.parseSourceFiles(`${relativePattern}/**/*.go`);
+    expect(results).toHaveLength(1);
+
+    const file = results[0];
+    expect(file.baseName).toBe('orders');
+
+    const importSpecs = file.imports.map(i => i.moduleSpecifier);
+    expect(importSpecs).toContain('net/http');
+    expect(importSpecs).toContain('database/sql');
+
+    expect(file.namespaces).toContain('orders');
+  });
+
   it('records C# object creation and base types, not parameter or field type annotations', async () => {
     const csContent = `
 using Microsoft.EntityFrameworkCore;

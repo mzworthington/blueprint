@@ -24,6 +24,18 @@ const DATABASE_IMPORT_MARKERS = [
   'microsoft.entityframeworkcore',
   'npgsql',
   'mysql',
+  // Java / JVM
+  'javax.persistence',
+  'jakarta.persistence',
+  'org.springframework.data',
+  'org.hibernate',
+  'java.sql',
+  'javax.sql',
+  // Go
+  'database/sql',
+  'github.com/jackc/pgx',
+  'gorm.io/gorm',
+  'github.com/go-gorm',
 ];
 
 const DATABASE_CLASS_MARKERS = [
@@ -45,6 +57,14 @@ const EVENT_IMPORT_MARKERS = [
   'stackexchange.redis',
   'nats',
   '@nestjs/microservices',
+  // Java / JVM
+  'org.springframework.kafka',
+  'org.springframework.amqp',
+  'io.nats',
+  // Go
+  'github.com/segmentio/kafka-go',
+  'github.com/nats-io/nats.go',
+  'github.com/redis/go-redis',
 ];
 
 const API_IMPORT_MARKERS = [
@@ -58,6 +78,16 @@ const API_IMPORT_MARKERS = [
   'django.urls',
   'microsoft.aspnetcore',
   'aspnetcore',
+  // Java / JVM
+  'org.springframework.web',
+  'javax.ws.rs',
+  'jakarta.ws.rs',
+  'io.ktor',
+  // Go
+  'net/http',
+  'github.com/gin-gonic/gin',
+  'github.com/gorilla/mux',
+  'github.com/labstack/echo',
 ];
 
 export type NodeHydration = {
@@ -127,12 +157,16 @@ function technologyFor(type: NodeType, file: ParsedSourceFile): string {
     case 'relational-database':
       if (ext === 'cs') return 'Entity Framework / DB Context';
       if (ext === 'py') return 'SQLAlchemy / DB Client';
+      if (ext === 'java' || ext === 'kt') return 'JPA / Hibernate';
+      if (ext === 'go') return 'database/sql / GORM';
       return 'Prisma / SQL Database Client';
     case 'event-broker':
       return `${lang} Event Client`;
     case 'rest-api':
       if (ext === 'cs') return 'ASP.NET Core Controller / Minimal API';
       if (ext === 'py') return 'FastAPI / Flask Router';
+      if (ext === 'java' || ext === 'kt') return 'Spring MVC / JAX-RS Controller';
+      if (ext === 'go') return 'net/http Handler';
       return 'REST Controller / Router';
     case 'cache-store':
       return `${lang} Cache Client`;

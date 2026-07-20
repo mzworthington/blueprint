@@ -2,8 +2,97 @@
  * Source-path heuristics that mark test code for `isTest` on extracted nodes.
  * Test sources stay in the scan; they are tagged so the designer can hide them.
  *
- * Home for future test-classification helpers (kinds, frameworks, coverage cues, …).
+ * Framework detection uses import signals parsed from source files, giving more
+ * precision than path heuristics for files outside conventional directories.
  */
+
+/** Known test framework identifiers returned by `detectTestFramework`. */
+export type TestFramework =
+  | 'jest'
+  | 'vitest'
+  | 'mocha'
+  | 'jasmine'
+  | 'pytest'
+  | 'unittest'
+  | 'xunit'
+  | 'nunit'
+  | 'mstest'
+  | 'junit'
+  | 'testify'
+  | 'go-testing'
+  | 'unknown-test';
+
+interface FrameworkRule {
+  framework: TestFramework;
+  /** Match any element of importModules (case-insensitive substring). */
+  importModules?: string[];
+  /** Match if baseName or relativePath contains all of these strings (case-insensitive). */
+  pathTokens?: string[];
+}
+
+const FRAMEWORK_RULES: FrameworkRule[] = [
+  // JavaScript / TypeScript
+  { framework: 'vitest', importModules: ['vitest'] },
+  {
+    framework: 'jest',
+    importModules: ['@jest/globals', 'jest-circus', '@testing-library/jest-dom'],
+  },
+  { framework: 'jest', pathTokens: ['jest.config'] },
+  { framework: 'mocha', importModules: ['mocha', 'chai'] },
+  { framework: 'jasmine', importModules: ['jasmine'] },
+  // Python
+  { framework: 'pytest', importModules: ['pytest', '_pytest'] },
+  { framework: 'unittest', importModules: ['unittest'] },
+  // .NET
+  { framework: 'xunit', importModules: ['xunit', 'Xunit'] },
+  { framework: 'nunit', importModules: ['nunit', 'NUnit'] },
+  // mstest before unittest to avoid 'unittest' substring matching 'unittesting'
+  { framework: 'mstest', importModules: ['microsoft.visualstudio.testtools', 'mstest'] },
+  // Java / Kotlin
+  { framework: 'junit', importModules: ['org.junit', 'junit.framework', 'io.kotest'] },
+  // Go — path-based: *_test.go uses the "testing" stdlib package
+  { framework: 'go-testing', importModules: ['testing'] },
+  { framework: 'testify', importModules: ['github.com/stretchr/testify'] },
+];
+
+/**
+ * Detect the test framework in use from import specifiers (and optionally file path).
+ * Returns `null` when no known framework is found.
+ *
+ * @param importModules - module specifiers from the parsed file (e.g. `file.imports.map(i => i.moduleSpecifier)`)
+ * @param relativePath  - optional relative path for path-based rules
+ */
+export function detectTestFramework(
+  importModules: string[],
+  relativePath?: string
+): TestFramework | null {
+  const lowerImports = importModules.map(m => m.toLowerCase());
+  const haystack = relativePath ? relativePath.toLowerCase() : '';
+
+  for (const rule of FRAMEWORK_RULES) {
+    if (rule.importModules) {
+      if (
+        rule.importModules.some(m => {
+          const needle = m.toLowerCase();
+          return lowerImports.some(imp => {
+            // Require that the needle matches at a module-boundary:
+            // the import must equal needle exactly or start with needle followed by '.' or '/'.
+            return imp === needle || imp.startsWith(`${needle}.`) || imp.startsWith(`${needle}/`);
+          });
+        })
+      ) {
+        return rule.framework;
+      }
+    }
+    if (rule.pathTokens && relativePath) {
+      if (rule.pathTokens.every(tok => haystack.includes(tok.toLowerCase()))) {
+        return rule.framework;
+      }
+    }
+  }
+
+  return null;
+}
 
 /**
  * True for dedicated test-project folder names (e.g. Ordering.UnitTests, IntegrationTests).

@@ -276,6 +276,73 @@ export class TreeSitterParserAdapter implements CodebaseParserPort {
           }
         }
 
+        // --- Java parser logic ---
+        if (ext === '.java' || ext === '.kt') {
+          // import com.acme.service.OrderService;
+          if (node.type === 'import_declaration') {
+            const nameNode = node.descendantsOfType(['scoped_identifier', 'identifier'])[0];
+            if (nameNode) {
+              imports.push({ moduleSpecifier: nameNode.text });
+            }
+          }
+          // new OrderRepository()
+          if (node.type === 'object_creation_expression') {
+            const typeNode =
+              node.childForFieldName('type') ?? node.descendantsOfType('type_identifier')[0];
+            if (typeNode) {
+              newExpressions.push({ className: typeNode.text });
+            }
+          }
+          // method calls: service.doSomething()
+          if (node.type === 'method_invocation') {
+            const nameNode = node.childForFieldName('name');
+            const obj = node.childForFieldName('object');
+            const fnText = obj ? `${obj.text}.${nameNode?.text ?? ''}` : (nameNode?.text ?? '');
+            if (fnText) callExpressions.push(fnText);
+          }
+          // package com.acme.orders;
+          if (node.type === 'package_declaration') {
+            const nameNode = node.descendantsOfType(['scoped_identifier', 'identifier'])[0];
+            if (nameNode) {
+              namespaces.push(nameNode.text);
+            }
+          }
+        }
+
+        // --- Go parser logic ---
+        if (ext === '.go') {
+          // import "fmt" / import ( "net/http" )
+          if (node.type === 'import_spec') {
+            const pathNode =
+              node.childForFieldName('path') ??
+              node.descendantsOfType('interpreted_string_literal')[0];
+            if (pathNode) {
+              imports.push({ moduleSpecifier: pathNode.text.replace(/"/g, '') });
+            }
+          }
+          // Uppercase call expressions as pseudo-constructors: http.NewServeMux(), sql.Open()
+          if (node.type === 'call_expression') {
+            const fnNode = node.childForFieldName('function');
+            if (fnNode) {
+              callExpressions.push(fnNode.text);
+              // Treat pkg.TypeName() as construction
+              const parts = fnNode.text.split('.');
+              const leaf = parts[parts.length - 1];
+              if (leaf && leaf[0] >= 'A' && leaf[0] <= 'Z') {
+                newExpressions.push({ className: fnNode.text });
+              }
+            }
+          }
+          // package orders
+          if (node.type === 'package_clause') {
+            const nameNode =
+              node.childForFieldName('name') ?? node.descendantsOfType('package_identifier')[0];
+            if (nameNode) {
+              namespaces.push(nameNode.text);
+            }
+          }
+        }
+
         // Recursively walk children
         for (let i = 0; i < node.childCount; i++) {
           walk(node.child(i)!);

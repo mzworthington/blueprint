@@ -15,7 +15,7 @@ Generated from Vitest (`pnpm test:coverage`).
 
 #### computeChurnByWeek
 
-- ❌ buckets commits into weekly counts oldest-first
+- ✅ buckets commits into weekly counts oldest-first
 
 ### analyzer
 
@@ -244,6 +244,18 @@ Generated from Vitest (`pnpm test:coverage`).
 
 - ✅ maps git-root paths onto a nested scan root
 
+### goAnalyzer
+
+#### GoAnalyzer Strategy
+
+- ✅ supports go
+- ✅ creates a node with Go technology
+- ✅ marks test files
+- ✅ derives container from last meaningful directory segment
+- ✅ classifies http handler directories as rest-api
+- ✅ skips generic top-level dirs (cmd, internal, pkg) and takes next segment
+- ✅ returns null for files at root with only generic dirs
+
 ### hotspotScoring
 
 #### computeHotspotScores
@@ -271,6 +283,18 @@ Generated from Vitest (`pnpm test:coverage`).
 - ✅ does not prompt when headless
 - ✅ does not prompt when --git already set
 - ✅ does not prompt when --no-git already set
+
+### javaAnalyzer
+
+#### JavaAnalyzer Strategy
+
+- ✅ supports java, kt, and kts
+- ✅ creates a Java node with correct technology
+- ✅ creates a Kotlin node with correct technology
+- ✅ marks test files
+- ✅ derives container from package declaration (3rd segment onward)
+- ✅ classifies controller packages as rest-api
+- ✅ falls back to path when no namespace is present
 
 ### layoutPass
 
@@ -414,6 +438,16 @@ Generated from Vitest (`pnpm test:coverage`).
 
 ### testPath
 
+#### detectTestFramework
+
+- ✅ detects JS/TS frameworks from imports
+- ✅ detects Python frameworks
+- ✅ detects .NET frameworks
+- ✅ detects Java/Kotlin frameworks
+- ✅ detects Go testing stdlib and testify
+- ✅ detects jest from path token when no imports
+- ✅ returns null for production code with no test imports
+
 #### testPath
 
 - ✅ marks unit test files and test directories
@@ -427,6 +461,8 @@ Generated from Vitest (`pnpm test:coverage`).
 - ✅ should parse imports, instantiations, and calls from TypeScript files
 - ✅ should parse imports, instantiations, and calls from Python files
 - ✅ should parse imports, instantiations, and calls from C# files
+- ✅ should parse imports, package, and calls from Java files
+- ✅ should parse imports, package clause, and calls from Go files
 - ✅ records C# object creation and base types, not parameter or field type annotations
 
 ### treeSitterWasmPaths
@@ -1107,6 +1143,7 @@ Generated from Vitest (`pnpm test:coverage`).
 #### ForensicsPage
 
 - ✅ renders ranked offenders and filters to hotspots
+- ✅ filters refactor candidates by heuristic score
 - ✅ filters the ranking list from the page search
 
 ### ForensicsSection
@@ -1117,6 +1154,7 @@ Generated from Vitest (`pnpm test:coverage`).
 - ✅ shows knowledge silo badge
 - ✅ toggles canvas coupling overlay when peers are linked
 - ✅ disables coupling toggle when no peers are on the diagram
+- ✅ renders churn sparkline and coupling mini graph
 - ✅ shows helper text for the section and each metric
 
 ### Header
@@ -1299,8 +1337,16 @@ Generated from Vitest (`pnpm test:coverage`).
 
 - ✅ ranks component hotspots by score and classification
 - ✅ filters hotspots and silos
+- ✅ ranks refactor candidates by complexity × churn × (1 - ownership)
 - ✅ includes dependency count as structural context on ranked rows
 - ✅ ranks container rollups and ignores component diagrams in containers scope
+
+### refactorScore
+
+#### computeRefactorScore
+
+- ✅ ranks complexity × churn × (1 - topAuthorPercent)
+- ✅ treats missing ownership as zero concentration
 
 ### resetToEmptyWorkspace
 
