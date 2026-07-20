@@ -16,11 +16,12 @@ export interface InfraImportOptions {
 
 /** Slugify an IaC address into entityRef path segments. */
 export function addressToEntityRefSlug(address: string): string {
-  return address
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .replace(/--+/g, '-');
+  return (
+    address
+      .toLowerCase()
+      .match(/[a-z0-9]+/g)
+      ?.join('-') ?? ''
+  );
 }
 
 export function mintEntityRef(address: string, parentEntityRef?: string): string {

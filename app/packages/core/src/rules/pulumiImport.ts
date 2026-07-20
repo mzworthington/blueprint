@@ -280,7 +280,8 @@ function mergeInfraIR(parts: InfraIR[]): InfraIR {
 
 /** Pull Pulumi YAML out of a markdown fenced block when present. */
 export function extractPulumiFromMarkdown(text: string): string {
-  const fence = /```(?:yaml|yml|pulumi)?\s*\n([\s\S]*?)```/i.exec(text);
+  // [ \t]* (not \s*) avoids newline backtracking / ReDoS.
+  const fence = /```(?:yaml|yml|pulumi)?[ \t]*\n([\s\S]*?)```/i.exec(text);
   if (fence?.[1]) return fence[1].trim();
   return text.trim();
 }

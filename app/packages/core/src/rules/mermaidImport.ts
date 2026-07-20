@@ -259,7 +259,11 @@ function parseFlowchartEdge(line: string): ParsedEdge | null {
 
 function extractNodesFromEdgeLine(line: string, defaultType: NodeType): ParsedNode[] {
   const nodes: ParsedNode[] = [];
-  const fragments = line.split(/\s*(?:-->|-.->)\s*/);
+  // String split — avoid /-->/ regex (CodeQL js/bad-tag-filter false positive).
+  const fragments = line
+    .split('-->')
+    .flatMap(part => part.split('-.->'))
+    .map(part => part.trim());
   for (const fragment of fragments) {
     const trimmed = fragment.replace(/\|"?[^"|]*"?\|/g, '').trim();
     const node = parseFlowchartNode(trimmed, defaultType);

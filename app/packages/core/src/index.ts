@@ -2,7 +2,6 @@ export * from './models/schema';
 export * from './models/schemaVersion';
 export * from './lib/entityRef';
 export * from './lib/workspaceCatalog';
-export * from './lib/workspaceCatalog';
 export * from './rules/graph';
 export * from './rules/mermaidImport';
 export * from './rules/iacResourceMap';

@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { parsePulumiToSchema, parsePulumiBatchToSchema } from './pulumiImport';
+import {
+  parsePulumiToSchema,
+  parsePulumiBatchToSchema,
+  extractPulumiFromMarkdown,
+} from './pulumiImport';
 
 describe('parsePulumiToSchema — YAML', () => {
   it('maps a single lambda resource to a scoped node', () => {
@@ -282,5 +286,33 @@ resources:
         { targetLevel: 'container' }
       )
     ).toThrow(/duplicate-address/i);
+  });
+});
+
+describe('extractPulumiFromMarkdown', () => {
+  it('extracts the first yaml/yml/pulumi fenced block', () => {
+    const md = `# Title
+
+Some text.
+
+\`\`\`yaml
+name: api-stack
+runtime: yaml
+\`\`\`
+
+More text.`;
+
+    expect(extractPulumiFromMarkdown(md)).toContain('name: api-stack');
+    expect(extractPulumiFromMarkdown(md)).toContain('runtime: yaml');
+  });
+
+  it('accepts bare fences and yml/pulumi language tags', () => {
+    expect(extractPulumiFromMarkdown('```\nfoo: bar\n```')).toBe('foo: bar');
+    expect(extractPulumiFromMarkdown('```yml\nfoo: bar\n```')).toBe('foo: bar');
+    expect(extractPulumiFromMarkdown('```pulumi\nfoo: bar\n```')).toBe('foo: bar');
+  });
+
+  it('returns trimmed input when no fence is found', () => {
+    expect(extractPulumiFromMarkdown('  name: stack\n')).toBe('name: stack');
   });
 });
