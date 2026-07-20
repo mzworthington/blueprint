@@ -39,6 +39,7 @@ export async function openWorkspaceFolder(page: Page) {
     await menuButton.click();
   }
 
+  await expect(folderItem).toBeVisible();
   await folderItem.click();
 }
 
@@ -53,6 +54,7 @@ export async function openImportMermaid(page: Page) {
     await menuButton.click();
   }
 
+  await expect(importItem).toBeVisible();
   await importItem.click();
   await expect(page.getByRole('dialog', { name: /Import Mermaid/i })).toBeVisible();
 }
