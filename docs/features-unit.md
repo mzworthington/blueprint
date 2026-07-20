@@ -784,6 +784,12 @@ Generated from Vitest (`pnpm generate:features-unit`).
 
 - ✅ maps .tf.json resources like HCL
 
+### workspaceCatalog
+
+#### workspaceCatalog
+
+- ✅ derives entityRef from schema name when missing
+
 ### workspaceExternals
 
 #### workspaceExternals
@@ -869,7 +875,7 @@ Generated from Vitest (`pnpm generate:features-unit`).
 
 - ✅ renders correctly with basic node details
 - ✅ simplifies chrome when liteCanvas is on but keeps all edge handles mounted
-- ✅ simplifies chrome when zoomed out but keeps edge handles mounted
+- ✅ keeps full chrome when zoomed out unless liteCanvas is on
 - ✅ shows HOT and SILO badges for concerning forensics
 - ✅ shows COUPLED badge when couplingHighlight is set
 - ✅ exposes hotspot heat intensity for styling when heatmap is active
@@ -1216,7 +1222,7 @@ Generated from Vitest (`pnpm generate:features-unit`).
 #### ioState Actions & State Management
 
 - ✅ should open workspace, read blueprint.yaml, and mark workspace as open
-- ✅ should load multiple top-level systems and support selecting between them
+- ✅ should catalog all systems on open and lazy-load when selecting another
 
 ##### loadSchema error handling
 
@@ -1278,6 +1284,14 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ does not call the loader until computeLayout runs
 - ✅ reuses the loaded adapter on subsequent calls
 
+### LiveSchemaPreview
+
+#### LiveSchemaPreview
+
+- ✅ fetches latest schema and renders pretty JSON
+- ✅ shows an error when the channel is invalid
+- ✅ shows an error when fetch fails
+
 ### MermaidPreview
 
 #### MermaidPreview Component
@@ -1307,6 +1321,7 @@ Generated from Vitest (`pnpm generate:features-unit`).
 #### docs link resolution
 
 - ✅ resolves relative markdown links within the guide
+- ✅ registers the Blueprint Schema guide page
 - ✅ resolves absolute docs paths
 - ✅ resolves feature report pages
 - ✅ resolves in-app workspace links
@@ -1370,6 +1385,15 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ normalizes path separators and leading ./ when matching
 - ✅ returns empty when selected node is missing
 - ✅ skips self-coupling if filepath matches the selected node
+
+### resolveLiveSchemaUrl
+
+#### resolveLiveSchemaUrl
+
+- ✅ defaults empty channel to latest under /
+- ✅ accepts latest and versioned channels
+- ✅ joins with Vite BASE_URL when not root
+- ✅ rejects path traversal and unknown channels
 
 ### schemaCompare
 
