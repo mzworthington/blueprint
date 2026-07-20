@@ -15,3 +15,4 @@ export * from './rules/schemaMerge';
 export * from './rules/layoutMerge';
 export * from './rules/workspaceExternals';
 export * from './rules/path';
+export * from './forensics/trends';

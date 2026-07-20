@@ -77,6 +77,9 @@ dependencies: []
     expect(updatedState.schema.name).toBe('Root Context');
     expect(updatedState.schema.level).toBe('context');
     expect(updatedState.nodes).toHaveLength(1);
+    expect(updatedState.schemaVersionWarning?.status).toBe('legacy');
+    expect(useBlueprintStore.getState().notification?.type).toBe('warning');
+    expect(useBlueprintStore.getState().notification?.title).toBe('Legacy schema format');
   });
 
   it('should catalog all systems on open and lazy-load when selecting another', async () => {

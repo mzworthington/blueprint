@@ -366,7 +366,7 @@ export const Canvas: React.FC = () => {
 
           <Panel
             position="bottom-center"
-            className="mb-[max(0.75rem,env(safe-area-inset-bottom,0px))] sm:mb-[max(1rem,env(safe-area-inset-bottom,0px))] w-[calc(100vw-1.5rem)] sm:w-auto sm:max-w-[min(calc(100vw-2rem),56rem)] bg-slate-950/90 border border-slate-900 px-3.5 py-2 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md"
+            className="mb-[max(0.75rem,env(safe-area-inset-bottom,0px))] sm:mb-[max(1rem,env(safe-area-inset-bottom,0px))] !w-[calc(100%-1.5rem)] sm:!w-auto sm:!max-w-[min(56rem,calc(100%-1.5rem))] bg-slate-950/90 border border-slate-900 px-3.5 py-2 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md"
           >
             <WorkspaceToolbar />
           </Panel>
@@ -426,7 +426,9 @@ export const Canvas: React.FC = () => {
                     ? 'bg-emerald-950/90 border-emerald-500/30 text-emerald-200'
                     : notification.type === 'info'
                       ? 'bg-cyan-950/90 border-cyan-900/50 text-cyan-200'
-                      : 'bg-red-950/90 border-red-900/50 text-red-200'
+                      : notification.type === 'warning'
+                        ? 'bg-amber-950/90 border-amber-900/50 text-amber-200'
+                        : 'bg-red-950/90 border-red-900/50 text-red-200'
                 }`}
               >
                 {notification.type === 'success' && (
@@ -434,6 +436,9 @@ export const Canvas: React.FC = () => {
                 )}
                 {notification.type === 'info' && (
                   <Info className="w-5 h-5 text-cyan-450 shrink-0 mt-0.5" />
+                )}
+                {notification.type === 'warning' && (
+                  <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
                 )}
                 {notification.type === 'error' && (
                   <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
@@ -446,7 +451,9 @@ export const Canvas: React.FC = () => {
                           ? 'text-emerald-300'
                           : notification.type === 'info'
                             ? 'text-cyan-300'
-                            : 'text-red-300'
+                            : notification.type === 'warning'
+                              ? 'text-amber-300'
+                              : 'text-red-300'
                       }`}
                     >
                       {notification.title}

@@ -1,5 +1,5 @@
 import type { NodeForensics, SystemNode, SystemSchema } from '@blueprint/core';
-import { EntityRef } from '@blueprint/core';
+import { EntityRef, rollupChurnByWeek } from '@blueprint/core';
 import type { FileMetrics } from './types.ts';
 
 export function normalizeFilePath(path: string): string {
@@ -37,7 +37,10 @@ export function aggregateNodeForensics(nodes: readonly SystemNode[]): NodeForens
   let hotspotCount = 0;
   let knowledgeSiloCount = 0;
   let sinceDays: number | undefined;
+  let ownershipWeight = 0;
+  let weightedOwnership = 0;
   const classificationSet = new Set<'hotspot' | 'knowledge-silo'>();
+  const churnByWeekSeries: (number[] | undefined)[] = [];
 
   for (const node of withForensics) {
     const f = node.forensics!;
@@ -46,12 +49,21 @@ export function aggregateNodeForensics(nodes: readonly SystemNode[]): NodeForens
     if ((f.hotspotScore ?? 0) > hotspotScore) hotspotScore = f.hotspotScore ?? 0;
     if ((f.authorCount ?? 0) > authorCount) authorCount = f.authorCount ?? 0;
     if (sinceDays === undefined && f.sinceDays !== undefined) sinceDays = f.sinceDays;
+    churnByWeekSeries.push(f.churnByWeek);
+    const childChurn = f.churn ?? 0;
+    if (childChurn > 0 && f.topAuthorPercent != null) {
+      ownershipWeight += childChurn;
+      weightedOwnership += f.topAuthorPercent * childChurn;
+    }
     for (const c of f.classifications ?? []) {
       classificationSet.add(c);
       if (c === 'hotspot') hotspotCount++;
       if (c === 'knowledge-silo') knowledgeSiloCount++;
     }
   }
+
+  const churnByWeek = rollupChurnByWeek(churnByWeekSeries);
+  const topAuthorPercent = ownershipWeight > 0 ? weightedOwnership / ownershipWeight : undefined;
 
   return {
     complexity,
@@ -62,6 +74,8 @@ export function aggregateNodeForensics(nodes: readonly SystemNode[]): NodeForens
     hotspotCount,
     knowledgeSiloCount,
     classifications: [...classificationSet],
+    ...(churnByWeek ? { churnByWeek } : {}),
+    ...(topAuthorPercent !== undefined ? { topAuthorPercent } : {}),
     ...(sinceDays !== undefined ? { sinceDays } : {}),
   };
 }

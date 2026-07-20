@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Trash2 } from 'lucide-react';
 import { useBlueprintStore } from '../../../../../application/store/store';
 import type { NodeType, PropertyMap, C4Level } from '@blueprint/core';
@@ -15,6 +15,10 @@ import { WorkspaceDisplayControls } from './WorkspaceDisplayControls';
 import { ValidationSection } from './ValidationSection';
 import { resolveCouplingEdges } from '../../../../../application/forensics/resolveCouplingEdges';
 import { countSchemaForensicsMetrics } from '../../../../../application/forensics/countForensicsMetrics';
+import {
+  buildForensicsTrendDashboard,
+  collectDescendantForensics,
+} from '../../../../../application/forensics/buildForensicsTrendDashboard';
 
 export const PropertyPanel: React.FC = () => {
   const {
@@ -152,6 +156,16 @@ export const PropertyPanel: React.FC = () => {
     isNode ? selectedNode?.entityRef : null
   );
 
+  const forensicsTrendDashboard = useMemo(() => {
+    if (!selectedNode?.forensics) return undefined;
+    const descendants = collectDescendantForensics(
+      loadedSystems,
+      selectedNode.entityRef,
+      schema.level
+    );
+    return buildForensicsTrendDashboard(selectedNode.forensics, descendants, schema.level);
+  }, [loadedSystems, selectedNode, schema.level]);
+
   return (
     <div
       data-testid="right-panel"
@@ -242,6 +256,7 @@ export const PropertyPanel: React.FC = () => {
               {selectedNode.forensics ? (
                 <ForensicsSection
                   forensics={selectedNode.forensics}
+                  trendDashboard={forensicsTrendDashboard}
                   centerLabel={selectedNode.name}
                   linkedCouplingPaths={
                     new Set(resolveCouplingEdges(selectedNodeId, nodes).map(edge => edge.path))

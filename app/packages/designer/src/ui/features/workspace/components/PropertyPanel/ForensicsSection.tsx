@@ -1,14 +1,16 @@
 import React from 'react';
 import type { NodeForensics } from '@blueprint/core';
+import type { ForensicsTrendDashboard } from '../../../../../application/forensics/buildForensicsTrendDashboard';
 import {
   evaluateForensicsConcern,
   type ConcernLevel,
 } from '../../../../../application/forensics/concern';
-import { ChurnSparkline } from '../../../../components/ChurnSparkline/ChurnSparkline';
 import { CouplingMiniGraph } from './CouplingMiniGraph';
+import { ForensicsTrendPanel } from './ForensicsTrendPanel';
 
 interface ForensicsSectionProps {
   forensics: NodeForensics;
+  trendDashboard?: ForensicsTrendDashboard;
   centerLabel?: string;
   linkedCouplingPaths?: ReadonlySet<string>;
   showCoupling?: boolean;
@@ -95,6 +97,7 @@ function MetricRow({
 
 export const ForensicsSection: React.FC<ForensicsSectionProps> = ({
   forensics,
+  trendDashboard,
   centerLabel = 'this',
   linkedCouplingPaths,
   showCoupling = false,
@@ -235,19 +238,17 @@ export const ForensicsSection: React.FC<ForensicsSectionProps> = ({
         <p className="text-[10px] font-mono text-slate-400 mb-2">{concern.reasons.join(' · ')}</p>
       )}
 
+      {trendDashboard ? <ForensicsTrendPanel dashboard={trendDashboard} /> : null}
+
       <div className="space-y-2 mb-3">
         {rows.map(row => (
-          <div key={row.label}>
-            <MetricRow label={row.label} value={row.value} help={row.help} tone={row.tone} />
-            {row.label === 'churnTrend' && forensics.churnByWeek && (
-              <div
-                className="mt-1 flex items-center justify-end text-[#00f0ff]/80"
-                data-testid="forensics-churn-sparkline"
-              >
-                <ChurnSparkline data={forensics.churnByWeek} />
-              </div>
-            )}
-          </div>
+          <MetricRow
+            key={row.label}
+            label={row.label}
+            value={row.value}
+            help={row.help}
+            tone={row.tone}
+          />
         ))}
       </div>
 
