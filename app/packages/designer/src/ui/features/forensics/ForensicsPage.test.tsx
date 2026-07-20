@@ -67,6 +67,61 @@ describe('ForensicsPage', () => {
     expect(screen.queryByText('OK')).not.toBeInTheDocument();
   });
 
+  it('filters refactor candidates by heuristic score', () => {
+    useBlueprintStore.setState({
+      loadedSystems: [
+        {
+          path: 'designer-components.yaml',
+          name: 'designer',
+          schema: {
+            name: 'Designer Components',
+            version: '1.0.0',
+            level: 'component',
+            dependencies: [],
+            nodes: [
+              {
+                entityRef: 'app/designer/db',
+                name: 'DB Layer',
+                type: 'component',
+                forensics: {
+                  hotspotScore: 0.2,
+                  complexity: 20,
+                  churn: 10,
+                  topAuthorPercent: 0.5,
+                  classifications: [],
+                  sinceDays: 90,
+                },
+              },
+              {
+                entityRef: 'app/designer/ok',
+                name: 'OK',
+                type: 'component',
+                forensics: {
+                  hotspotScore: 0.9,
+                  complexity: 2,
+                  churn: 0,
+                  classifications: ['hotspot'],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    });
+
+    const { hook } = memoryLocation({ path: '/forensics' });
+    render(
+      <Router hook={hook}>
+        <ForensicsPage />
+      </Router>
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /^Refactor$/i }));
+    expect(screen.getByText('DB Layer')).toBeInTheDocument();
+    expect(screen.queryByText('OK')).not.toBeInTheDocument();
+    expect(screen.getByText('100')).toBeInTheDocument();
+  });
+
   it('filters the ranking list from the page search', () => {
     const { hook } = memoryLocation({ path: '/forensics' });
     render(

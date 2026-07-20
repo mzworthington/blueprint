@@ -1,8 +1,9 @@
 import type { C4Level, ForensicClassification, SystemNode, SystemSchema } from '@blueprint/core';
 import { evaluateForensicsConcern, type ForensicsConcern } from './concern';
+import { computeRefactorScore } from './refactorScore';
 
 export type OffenderScope = 'components' | 'containers';
-export type OffenderSignalFilter = 'all' | 'hotspots' | 'silos';
+export type OffenderSignalFilter = 'all' | 'hotspots' | 'silos' | 'refactor';
 
 export type LoadedSystemRef = {
   path: string;
@@ -21,8 +22,10 @@ export type RankedOffender = {
   /** Diagram identity used for `/workspace/{ref}` navigation. */
   diagramEntityRef: string;
   hotspotScore: number;
+  refactorScore: number;
   complexity?: number;
   churn?: number;
+  topAuthorPercent?: number;
   authorCount?: number;
   hotspotCount?: number;
   knowledgeSiloCount?: number;
@@ -63,8 +66,10 @@ function toOffender(node: SystemNode, system: LoadedSystemRef): RankedOffender {
     schemaLevel: system.schema.level,
     diagramEntityRef: system.schema.entityRef || system.schema.name || system.path,
     hotspotScore: f.hotspotScore ?? 0,
+    refactorScore: computeRefactorScore(f),
     complexity: f.complexity,
     churn: f.churn,
+    topAuthorPercent: f.topAuthorPercent,
     authorCount: f.authorCount,
     hotspotCount: f.hotspotCount,
     knowledgeSiloCount: f.knowledgeSiloCount,
@@ -89,12 +94,25 @@ function matchesFilter(offender: RankedOffender, filter: OffenderSignalFilter): 
       (offender.hotspotCount ?? 0) > 0
     );
   }
+  if (filter === 'refactor') {
+    return offender.refactorScore > 0;
+  }
   return (
     offender.classifications.includes('knowledge-silo') || (offender.knowledgeSiloCount ?? 0) > 0
   );
 }
 
-function compareOffenders(a: RankedOffender, b: RankedOffender): number {
+function compareOffenders(
+  a: RankedOffender,
+  b: RankedOffender,
+  filter: OffenderSignalFilter
+): number {
+  if (filter === 'refactor') {
+    if (a.refactorScore !== b.refactorScore) return b.refactorScore - a.refactorScore;
+    if (a.hotspotScore !== b.hotspotScore) return b.hotspotScore - a.hotspotScore;
+    return (b.complexity ?? 0) - (a.complexity ?? 0);
+  }
+
   const aHot = a.classifications.includes('hotspot') || (a.hotspotCount ?? 0) > 0 ? 1 : 0;
   const bHot = b.classifications.includes('hotspot') || (b.hotspotCount ?? 0) > 0 ? 1 : 0;
   if (aHot !== bHot) return bHot - aHot;
@@ -132,7 +150,9 @@ export function rankForensicsOffenders(
     }
   }
 
-  return collected.filter(o => matchesFilter(o, filter)).sort(compareOffenders);
+  return collected
+    .filter(o => matchesFilter(o, filter))
+    .sort((a, b) => compareOffenders(a, b, filter));
 }
 
 /** Lookback window shown in the forensics chrome (max across ranked rows). */

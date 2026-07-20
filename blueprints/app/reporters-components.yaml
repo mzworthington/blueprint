@@ -1,0 +1,96 @@
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: component
+metaData:
+  entityRef: blueprint/app/reporters
+  name: Reporters Service Components
+nodes:
+  - entityRef: blueprint/app/reporters/vitestfeaturereporter
+    type: background-worker
+    name: vitestFeatureReporter Service
+    isTest: false
+    properties:
+      filepath: app/reporters/vitestFeatureReporter.ts
+      containerId: reporters
+      technology: TypeScript Domain Service
+      classification: default
+    x: 48
+    y: 384
+    forensics:
+      complexity: 13
+      loc: 168
+      sloc: 133
+      churn: 2
+      churnByWeek:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0.009523809523809523
+      classifications:
+        - knowledge-silo
+      sinceDays: 90
+  - entityRef: blueprint/app/reporters/vitestfeaturereporter-test
+    type: background-worker
+    name: vitestFeatureReporter.test Service
+    isTest: true
+    properties:
+      filepath: app/reporters/vitestFeatureReporter.test.ts
+      containerId: reporters
+      technology: TypeScript Domain Service
+      classification: default
+    x: 428
+    y: 64
+    forensics:
+      complexity: 1
+      loc: 143
+      sloc: 125
+      churn: 2
+      churnByWeek:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 2
+      authorCount: 1
+      topAuthorPercent: 1
+      hotspotScore: 0
+      sinceDays: 90
+  - entityRef: blueprint/app/app/vitest-config
+    type: background-worker
+    name: vitest.config Service (External)
+    external: true
+    properties:
+      filepath: app/vitest.config.ts
+      containerId: app
+      technology: TypeScript Domain Service
+      classification: default
+    x: 48
+    y: 64
+dependencies:
+  - from: blueprint/app/app/vitest-config
+    to: blueprint/app/reporters/vitestfeaturereporter
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/app/reporters/vitestfeaturereporter-test
+    to: blueprint/app/reporters/vitestfeaturereporter
+    type: direct-call
+    description: Calls module / service

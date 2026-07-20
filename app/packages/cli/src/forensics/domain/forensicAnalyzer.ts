@@ -39,7 +39,7 @@ export class ForensicAnalyzer {
     );
     throwIfAborted(signal);
 
-    const history = aggregateFileHistory(commits, paths);
+    const history = aggregateFileHistory(commits, paths, { sinceDays: options.sinceDays });
     const historyByPath = new Map(history.map(h => [h.path, h]));
 
     const pathsForComplexity =
@@ -102,6 +102,7 @@ export class ForensicAnalyzer {
         loc: s.loc,
         sloc: s.sloc,
         churn: h.churn,
+        churnByWeek: h.churnByWeek,
         authorCount: h.authorCount,
         topAuthorPercent: h.topAuthorPercent,
         coupledFiles: couplingByPath.get(path) ?? [],

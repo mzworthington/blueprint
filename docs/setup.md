@@ -76,7 +76,7 @@ Designer E2E (`app/packages/designer`: `pnpm test:e2e`) refreshes screenshots un
 
 Husky + lint-staged validate commits for changes under `app/` and `docs/`:
 
-- Prettier formatting (`--check`, matching CI `format:check`)
+- Prettier auto-formats staged files (`--write` via lint-staged); the hook then runs full-repo `format:check` (matching CI)
 - Oxlint on TypeScript (`--deny-warnings`)
 - TypeScript typecheck (`tsc -b`, matching the build step)
 - When `app/packages/core/` is staged, checks that `schemas/blueprint.schema.json` (and `v*` / `latest` copies) match the Zod contract — commit fails if stale; run `pnpm generate:schema` to refresh

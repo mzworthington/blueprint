@@ -22,7 +22,7 @@ describe('ForensicsSection', () => {
     expect(screen.getByTestId('forensics-concern-badge')).toHaveTextContent(/Hotspot/i);
     expect(screen.getByText('22')).toBeInTheDocument();
     expect(screen.getByText('0.90')).toBeInTheDocument();
-    expect(screen.getByText(/src\/other\.ts/)).toBeInTheDocument();
+    expect(screen.getAllByText(/src\/other\.ts/).length).toBeGreaterThan(0);
     expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
   });
 
@@ -72,6 +72,30 @@ describe('ForensicsSection', () => {
     );
 
     expect(screen.getByTestId('toggle-show-coupling')).toBeDisabled();
+  });
+
+  it('renders churn sparkline and coupling mini graph', () => {
+    render(
+      <ForensicsSection
+        forensics={{
+          churn: 4,
+          churnByWeek: [1, 0, 2, 1],
+          coupledFiles: [
+            { path: 'src/a.ts', score: 0.9, sharedCommits: 4 },
+            { path: 'src/b.ts', score: 0.5, sharedCommits: 2 },
+          ],
+        }}
+        centerLabel="Analyzer"
+        linkedCouplingPaths={new Set(['src/a.ts'])}
+      />
+    );
+
+    expect(screen.getByTestId('forensics-churn-sparkline')).toBeInTheDocument();
+    expect(screen.getByTestId('churn-sparkline')).toBeInTheDocument();
+    expect(screen.getByTestId('coupling-mini-graph')).toBeInTheDocument();
+    expect(screen.getByTestId('forensics-help-churnTrend')).toHaveTextContent(
+      /Weekly commit count/i
+    );
   });
 
   it('shows helper text for the section and each metric', () => {

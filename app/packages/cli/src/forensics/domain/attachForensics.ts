@@ -12,6 +12,7 @@ export function fileMetricsToNodeForensics(metrics: FileMetrics): NodeForensics 
     loc: metrics.loc,
     sloc: metrics.sloc,
     churn: metrics.churn,
+    churnByWeek: metrics.churnByWeek,
     authorCount: metrics.authorCount,
     topAuthorPercent: metrics.topAuthorPercent,
     hotspotScore: metrics.hotspotScore,

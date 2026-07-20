@@ -13,15 +13,44 @@ nodes:
       containerId: app
       technology: TypeScript Domain Service
       classification: default
-    x: 40
-    y: 40
+    x: 48
+    y: 64
     forensics:
       complexity: 1
-      loc: 13
-      sloc: 11
-      churn: 1
+      loc: 38
+      sloc: 35
+      churn: 2
+      churnByWeek:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 1
+        - 1
       authorCount: 1
       topAuthorPercent: 1
       hotspotScore: 0
       sinceDays: 90
-dependencies: []
+  - entityRef: blueprint/app/reporters/vitestfeaturereporter
+    type: background-worker
+    name: vitestFeatureReporter Service (External)
+    external: true
+    properties:
+      filepath: app/reporters/vitestFeatureReporter.ts
+      containerId: reporters
+      technology: TypeScript Domain Service
+      classification: default
+    x: 48
+    y: 384
+dependencies:
+  - from: blueprint/app/app/vitest-config
+    to: blueprint/app/reporters/vitestfeaturereporter
+    type: direct-call
+    description: Calls module / service

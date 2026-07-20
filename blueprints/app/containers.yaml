@@ -12,15 +12,15 @@ nodes:
     y: 384
     forensics:
       complexity: 106
-      churn: 66
+      churn: 88
       authorCount: 1
-      hotspotScore: 0.1595238095238095
+      hotspotScore: 0.21904761904761905
       classifications:
         - knowledge-silo
       sinceDays: 90
-      fileCount: 23
+      fileCount: 34
       hotspotCount: 0
-      knowledgeSiloCount: 7
+      knowledgeSiloCount: 12
   - entityRef: blueprint/app/cli
     type: container
     name: Cli Service
@@ -29,15 +29,15 @@ nodes:
     y: 64
     forensics:
       complexity: 66
-      churn: 203
+      churn: 227
       authorCount: 1
-      hotspotScore: 0.19904761904761906
+      hotspotScore: 0.196031746031746
       classifications:
         - knowledge-silo
       sinceDays: 90
-      fileCount: 88
+      fileCount: 98
       hotspotCount: 0
-      knowledgeSiloCount: 26
+      knowledgeSiloCount: 32
   - entityRef: blueprint/app/designer
     type: container
     name: Designer Service
@@ -45,17 +45,17 @@ nodes:
     x: 808
     y: 64
     forensics:
-      complexity: 55
-      churn: 568
+      complexity: 59
+      churn: 623
       authorCount: 1
-      hotspotScore: 0.5142857142857142
+      hotspotScore: 0.5523809523809524
       classifications:
         - knowledge-silo
         - hotspot
       sinceDays: 90
-      fileCount: 161
+      fileCount: 178
       hotspotCount: 1
-      knowledgeSiloCount: 50
+      knowledgeSiloCount: 54
   - entityRef: blueprint/app/app
     type: container
     name: App Service
@@ -64,13 +64,30 @@ nodes:
     y: 64
     forensics:
       complexity: 1
-      churn: 1
+      churn: 2
       authorCount: 1
       hotspotScore: 0
       sinceDays: 90
       fileCount: 1
       hotspotCount: 0
       knowledgeSiloCount: 0
+  - entityRef: blueprint/app/reporters
+    type: container
+    name: Reporters Service
+    isTest: false
+    x: 48
+    y: 384
+    forensics:
+      complexity: 13
+      churn: 4
+      authorCount: 1
+      hotspotScore: 0.009523809523809523
+      classifications:
+        - knowledge-silo
+      sinceDays: 90
+      fileCount: 2
+      hotspotCount: 0
+      knowledgeSiloCount: 1
 dependencies:
   - from: blueprint/app/cli
     to: blueprint/app/core
@@ -80,3 +97,7 @@ dependencies:
     to: blueprint/app/core
     type: inter-container
     description: e2e.spec Service → path Service
+  - from: blueprint/app/app
+    to: blueprint/app/reporters
+    type: inter-container
+    description: vitest.config Service → vitestFeatureReporter Service

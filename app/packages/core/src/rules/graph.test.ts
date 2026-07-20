@@ -434,6 +434,11 @@ nodes:
       loc: 100
       sloc: 80
       churn: 12
+      churnByWeek:
+        - 2
+        - 4
+        - 3
+        - 3
       authorCount: 2
       topAuthorPercent: 0.75
       hotspotScore: 0.9
@@ -452,6 +457,7 @@ nodes:
       expect(schema.nodes[0].forensics).toMatchObject({
         complexity: 20,
         churn: 12,
+        churnByWeek: [2, 4, 3, 3],
         hotspotScore: 0.9,
         sinceDays: 90,
         classifications: ['hotspot'],

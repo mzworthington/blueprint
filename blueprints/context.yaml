@@ -24,16 +24,16 @@ nodes:
     y: 600
     forensics:
       complexity: 106
-      churn: 838
+      churn: 944
+      hotspotScore: 0.5523809523809524
       authorCount: 1
-      hotspotScore: 0.5142857142857142
+      fileCount: 313
+      hotspotCount: 1
+      knowledgeSiloCount: 99
       classifications:
         - knowledge-silo
         - hotspot
       sinceDays: 90
-      fileCount: 273
-      hotspotCount: 1
-      knowledgeSiloCount: 83
   - entityRef: blueprint/backstage
     type: software-system
     name: Backstage System
@@ -262,12 +262,20 @@ dependencies:
     to: blueprint/microsite
     type: direct-call
     description: Part of product system
-  - from: blueprint/testproject
-    to: blueprint/app
+  - from: blueprint/backstage
+    to: blueprint/packages
     type: direct-call
     description: Part of product system
-  - from: blueprint/testproject
-    to: blueprint/app
+  - from: blueprint/backstage
+    to: blueprint/plugins
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/docs-ui
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/microsite
     type: direct-call
     description: Part of product system
   - from: blueprint/backstage
@@ -284,6 +292,78 @@ dependencies:
     description: Part of product system
   - from: blueprint/backstage
     to: blueprint/microsite
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/camunda
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/minecraft
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/oathkeeper
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/camunda-secure
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/openresty-beyondcorp
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/cqrs-bigquery-memorystore
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/pulumi
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/packages
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/plugins
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/docs-ui
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/backstage
+    to: blueprint/microsite
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/camunda
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/minecraft
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/oathkeeper
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/camunda-secure
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/openresty-beyondcorp
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/cqrs-bigquery-memorystore
+    type: direct-call
+    description: Part of product system
+  - from: blueprint/infrastructure
+    to: blueprint/pulumi
     type: direct-call
     description: Part of product system
   - from: blueprint/testproject

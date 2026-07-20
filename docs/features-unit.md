@@ -11,6 +11,11 @@ Generated from Vitest (`pnpm test:coverage`).
 #### aggregateFileHistory
 
 - ✅ computes churn, authorCount, and topAuthorPercent
+- ✅ includes churnByWeek when sinceDays is provided
+
+#### computeChurnByWeek
+
+- ❌ buckets commits into weekly counts oldest-first
 
 ### analyzer
 

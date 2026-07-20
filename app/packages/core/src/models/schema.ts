@@ -130,6 +130,7 @@ export interface NodeForensics {
   loc?: number;
   sloc?: number;
   churn?: number;
+  churnByWeek?: number[];
   authorCount?: number;
   topAuthorPercent?: number;
   hotspotScore?: number;

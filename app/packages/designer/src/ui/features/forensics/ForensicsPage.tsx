@@ -75,14 +75,22 @@ function Segmented<T extends string>({
 function OffenderRow({
   offender,
   rank,
+  filter,
+  maxRefactorScore,
   onOpen,
 }: {
   offender: RankedOffender;
   rank: number;
+  filter: OffenderSignalFilter;
+  maxRefactorScore: number;
   onOpen: (offender: RankedOffender) => void;
 }) {
-  const scorePct = Math.max(0, Math.min(100, Math.round(offender.hotspotScore * 100)));
+  const displayScore = filter === 'refactor' ? offender.refactorScore : offender.hotspotScore;
+  const scoreLabel = filter === 'refactor' ? 'refactor' : 'score';
+  const scoreMax = filter === 'refactor' ? Math.max(maxRefactorScore, 1) : 1;
+  const scorePct = Math.max(0, Math.min(100, Math.round((displayScore / scoreMax) * 100)));
   const signals = [
+    filter === 'refactor' ? 'REFACTOR' : null,
     offender.classifications.includes('hotspot') ? 'HOT' : null,
     offender.classifications.includes('knowledge-silo') ? 'SILO' : null,
   ].filter(Boolean) as string[];
@@ -102,9 +110,9 @@ function OffenderRow({
       <p className="min-w-0 truncate text-xs text-slate-400">{offender.parentLabel}</p>
       <div className="space-y-1">
         <div className="flex items-center justify-between gap-2">
-          <span className="font-mono text-[10px] text-slate-500">score</span>
+          <span className="font-mono text-[10px] text-slate-500">{scoreLabel}</span>
           <span className="font-mono text-[10px] text-slate-300">
-            {formatScore(offender.hotspotScore)}
+            {filter === 'refactor' ? Math.round(displayScore) : formatScore(displayScore)}
           </span>
         </div>
         <div className="h-1.5 rounded-full bg-slate-900 overflow-hidden">
@@ -121,7 +129,9 @@ function OffenderRow({
             className={`rounded px-1.5 py-0.5 text-[9px] font-mono font-bold tracking-wider border ${
               signal === 'HOT'
                 ? 'bg-red-950/50 text-red-300 border-red-900/50'
-                : 'bg-amber-950/50 text-amber-300 border-amber-900/50'
+                : signal === 'REFACTOR'
+                  ? 'bg-violet-950/50 text-violet-300 border-violet-900/50'
+                  : 'bg-amber-950/50 text-amber-300 border-amber-900/50'
             }`}
           >
             {signal}
@@ -171,6 +181,10 @@ export const ForensicsPage: React.FC = () => {
   }, [ranked, searchQuery]);
 
   const lookback = useMemo(() => resolveLookbackDays(ranked), [ranked]);
+  const maxRefactorScore = useMemo(
+    () => Math.max(...ranked.map(o => o.refactorScore), 0),
+    [ranked]
+  );
 
   const openOffender = (offender: RankedOffender) => {
     selectSystem(offender.schemaPath);
@@ -202,8 +216,8 @@ export const ForensicsPage: React.FC = () => {
                 Worst offenders
               </h1>
               <p className="mt-3 max-w-2xl text-slate-400 text-sm sm:text-base leading-relaxed">
-                Components and containers ranked by hotspot score, knowledge silos, and complexity —
-                open any row on the canvas.
+                Components and containers ranked by hotspot score, refactor candidates, knowledge
+                silos, and complexity — open any row on the canvas.
               </p>
             </div>
           </section>
@@ -224,6 +238,7 @@ export const ForensicsPage: React.FC = () => {
                 { id: 'all', label: 'All' },
                 { id: 'hotspots', label: 'Hotspots' },
                 { id: 'silos', label: 'Silos' },
+                { id: 'refactor', label: 'Refactor' },
               ]}
             />
             <div className="w-full sm:w-auto sm:ml-auto flex items-center gap-3">
@@ -269,6 +284,8 @@ export const ForensicsPage: React.FC = () => {
                   key={offender.entityRef}
                   offender={offender}
                   rank={index + 1}
+                  filter={filter}
+                  maxRefactorScore={maxRefactorScore}
                   onOpen={openOffender}
                 />
               ))}

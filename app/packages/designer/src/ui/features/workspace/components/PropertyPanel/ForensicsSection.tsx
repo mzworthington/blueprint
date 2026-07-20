@@ -4,9 +4,13 @@ import {
   evaluateForensicsConcern,
   type ConcernLevel,
 } from '../../../../../application/forensics/concern';
+import { ChurnSparkline } from '../../../../components/ChurnSparkline/ChurnSparkline';
+import { CouplingMiniGraph } from './CouplingMiniGraph';
 
 interface ForensicsSectionProps {
   forensics: NodeForensics;
+  centerLabel?: string;
+  linkedCouplingPaths?: ReadonlySet<string>;
   showCoupling?: boolean;
   onToggleShowCoupling?: () => void;
   /** How many coupled files resolve to nodes on the current canvas. */
@@ -19,6 +23,7 @@ const FORENSICS_METRIC_HELP: Record<string, string> = {
   loc: 'Total lines of code in the file, including blanks and comments.',
   sloc: 'Source lines of code — non-blank, non-comment lines.',
   churn: 'How many times this file changed in the git lookback window.',
+  churnTrend: 'Weekly commit count over the lookback window (oldest week on the left).',
   authors: 'Distinct git authors who edited this file in the lookback window.',
   ownership: 'Share of recent commits by the top author — high means concentrated ownership.',
   hotspotScore:
@@ -90,6 +95,8 @@ function MetricRow({
 
 export const ForensicsSection: React.FC<ForensicsSectionProps> = ({
   forensics,
+  centerLabel = 'this',
+  linkedCouplingPaths,
   showCoupling = false,
   onToggleShowCoupling,
   linkedCouplingCount = 0,
@@ -145,6 +152,13 @@ export const ForensicsSection: React.FC<ForensicsSectionProps> = ({
       label: 'churn',
       value: String(forensics.churn),
       help: FORENSICS_METRIC_HELP.churn,
+    });
+  }
+  if (forensics.churnByWeek && forensics.churnByWeek.length > 0) {
+    rows.push({
+      label: 'churnTrend',
+      value: `${forensics.churnByWeek.reduce((sum, n) => sum + n, 0)} commits`,
+      help: FORENSICS_METRIC_HELP.churnTrend,
     });
   }
   if (forensics.authorCount !== undefined) {
@@ -223,15 +237,32 @@ export const ForensicsSection: React.FC<ForensicsSectionProps> = ({
 
       <div className="space-y-2 mb-3">
         {rows.map(row => (
-          <MetricRow
-            key={row.label}
-            label={row.label}
-            value={row.value}
-            help={row.help}
-            tone={row.tone}
-          />
+          <div key={row.label}>
+            <MetricRow label={row.label} value={row.value} help={row.help} tone={row.tone} />
+            {row.label === 'churnTrend' && forensics.churnByWeek && (
+              <div
+                className="mt-1 flex items-center justify-end text-[#00f0ff]/80"
+                data-testid="forensics-churn-sparkline"
+              >
+                <ChurnSparkline data={forensics.churnByWeek} />
+              </div>
+            )}
+          </div>
         ))}
       </div>
+
+      {coupled.length > 0 && (
+        <div className="mb-3">
+          <p className="text-[10px] font-mono text-slate-500 uppercase tracking-wider mb-1.5">
+            Coupling graph
+          </p>
+          <CouplingMiniGraph
+            centerLabel={centerLabel}
+            coupled={forensics.coupledFiles ?? []}
+            linkedPaths={linkedCouplingPaths}
+          />
+        </div>
+      )}
 
       {coupled.length > 0 && (
         <div className="space-y-1.5">

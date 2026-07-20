@@ -106,6 +106,44 @@ describe('rankForensicsOffenders', () => {
     expect(rankForensicsOffenders(systems, 'components', 'silos')[0].entityRef).toBe('a/silo');
   });
 
+  it('ranks refactor candidates by complexity × churn × (1 - ownership)', () => {
+    const systems = [
+      {
+        path: 'c.yaml',
+        name: 'c',
+        schema: componentSchema([
+          {
+            entityRef: 'a/low',
+            name: 'Low',
+            type: 'component',
+            forensics: {
+              hotspotScore: 0.1,
+              complexity: 5,
+              churn: 2,
+              topAuthorPercent: 0.9,
+            },
+          },
+          {
+            entityRef: 'a/high',
+            name: 'High',
+            type: 'component',
+            forensics: {
+              hotspotScore: 0.2,
+              complexity: 20,
+              churn: 10,
+              topAuthorPercent: 0.5,
+            },
+          },
+        ]),
+      },
+    ];
+
+    const ranked = rankForensicsOffenders(systems, 'components', 'refactor');
+    expect(ranked.map(r => r.entityRef)).toEqual(['a/high', 'a/low']);
+    expect(ranked[0].refactorScore).toBe(100);
+    expect(ranked[1].refactorScore).toBeCloseTo(1);
+  });
+
   it('includes dependency count as structural context on ranked rows', () => {
     const systems = [
       {

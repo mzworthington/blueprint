@@ -242,6 +242,10 @@ export const PropertyPanel: React.FC = () => {
               {selectedNode.forensics ? (
                 <ForensicsSection
                   forensics={selectedNode.forensics}
+                  centerLabel={selectedNode.name}
+                  linkedCouplingPaths={
+                    new Set(resolveCouplingEdges(selectedNodeId, nodes).map(edge => edge.path))
+                  }
                   showCoupling={showCoupling}
                   onToggleShowCoupling={toggleShowCoupling}
                   linkedCouplingCount={resolveCouplingEdges(selectedNodeId, nodes).length}

@@ -12,12 +12,12 @@ export interface FileMetrics {
   loc: number;
   sloc: number;
   churn: number;
+  churnByWeek?: number[];
   authorCount: number;
   topAuthorPercent: number;
   coupledFiles: CoupledFileRef[];
   hotspotScore: number;
   classifications: ForensicClassification[];
-  /** Git lookback window (days) used for this analysis run. */
   sinceDays?: number;
 }
 
@@ -45,6 +45,7 @@ export interface StructuralMetrics {
 export interface FileHistoryTraits {
   path: string;
   churn: number;
+  churnByWeek?: number[];
   authorCount: number;
   topAuthorPercent: number;
   /** Commit hashes that touched this file (within the analysis window). */
