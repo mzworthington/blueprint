@@ -4,6 +4,17 @@ metaData:
   entityRef: blueprint/eshop/orderprocessor
   name: OrderProcessor Service Components
 nodes:
+  - entityRef: blueprint/eshop/orderprocessor/extensions
+    type: background-worker
+    name: Extensions Layer
+    isTest: false
+    properties:
+      filepath: src/OrderProcessor/Extensions/Extensions.cs
+      containerId: orderprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 760
+    y: 40
   - entityRef: blueprint/eshop/orderprocessor/backgroundtaskoptions
     type: background-worker
     name: BackgroundTaskOptions
@@ -26,28 +37,6 @@ nodes:
       classification: default
     x: 400
     y: 40
-  - entityRef: blueprint/eshop/orderprocessor/extensions
-    type: background-worker
-    name: Extensions Layer
-    isTest: false
-    properties:
-      filepath: src/OrderProcessor/Extensions/Extensions.cs
-      containerId: orderprocessor
-      technology: C# Domain Service
-      classification: default
-    x: 760
-    y: 40
-  - entityRef: blueprint/eshop/orderprocessor/program
-    type: background-worker
-    name: Program
-    isTest: false
-    properties:
-      filepath: src/OrderProcessor/Program.cs
-      containerId: orderprocessor
-      technology: C# Domain Service
-      classification: default
-    x: 40
-    y: 300
   - entityRef: blueprint/eshop/orderprocessor/services
     type: relational-database
     name: Services Layer
@@ -58,5 +47,16 @@ nodes:
       technology: Entity Framework / DB Context
       classification: database-marker
     x: 400
+    y: 300
+  - entityRef: blueprint/eshop/orderprocessor/program
+    type: background-worker
+    name: Program
+    isTest: false
+    properties:
+      filepath: src/OrderProcessor/Program.cs
+      containerId: orderprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 40
     y: 300
 dependencies: []

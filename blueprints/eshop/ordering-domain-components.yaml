@@ -4,6 +4,17 @@ metaData:
   entityRef: blueprint/eshop/ordering-domain
   name: Ordering.Domain Service Components
 nodes:
+  - entityRef: blueprint/eshop/ordering-domain/seedwork
+    type: relational-database
+    name: SeedWork Layer
+    isTest: false
+    properties:
+      filepath: src/Ordering.Domain/SeedWork/IAggregateRoot.cs
+      containerId: ordering-domain
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 400
+    y: 300
   - entityRef: blueprint/eshop/ordering-domain/aggregatesmodel
     type: relational-database
     name: AggregatesModel Layer
@@ -14,17 +25,6 @@ nodes:
       technology: Entity Framework / DB Context
       classification: database-marker
     x: 40
-    y: 40
-  - entityRef: blueprint/eshop/ordering-domain/events
-    type: background-worker
-    name: Events Layer
-    isTest: false
-    properties:
-      filepath: src/Ordering.Domain/Events/OrderShippedDomainEvent.cs
-      containerId: ordering-domain
-      technology: C# Domain Service
-      classification: default
-    x: 400
     y: 40
   - entityRef: blueprint/eshop/ordering-domain/exceptions
     type: background-worker
@@ -37,15 +37,15 @@ nodes:
       classification: default
     x: 40
     y: 300
-  - entityRef: blueprint/eshop/ordering-domain/seedwork
-    type: relational-database
-    name: SeedWork Layer
+  - entityRef: blueprint/eshop/ordering-domain/events
+    type: background-worker
+    name: Events Layer
     isTest: false
     properties:
-      filepath: src/Ordering.Domain/SeedWork/IAggregateRoot.cs
+      filepath: src/Ordering.Domain/Events/OrderShippedDomainEvent.cs
       containerId: ordering-domain
-      technology: Entity Framework / DB Context
-      classification: database-marker
+      technology: C# Domain Service
+      classification: default
     x: 400
-    y: 300
+    y: 40
 dependencies: []

@@ -4,17 +4,6 @@ metaData:
   entityRef: blueprint/eshop/webapp
   name: WebApp Service Components
 nodes:
-  - entityRef: blueprint/eshop/webapp/components
-    type: rest-api
-    name: Components Layer
-    isTest: false
-    properties:
-      filepath: src/WebApp/Components/Chatbot/MessageProcessor.cs
-      containerId: webapp
-      technology: ASP.NET Core Controller / Minimal API
-      classification: api-marker
-    x: 40
-    y: 40
   - entityRef: blueprint/eshop/webapp/extensions
     type: rest-api
     name: Extensions Layer
@@ -26,17 +15,17 @@ nodes:
       classification: api-marker
     x: 400
     y: 40
-  - entityRef: blueprint/eshop/webapp/program
-    type: background-worker
-    name: Program
+  - entityRef: blueprint/eshop/webapp/components
+    type: rest-api
+    name: Components Layer
     isTest: false
     properties:
-      filepath: src/WebApp/Program.cs
+      filepath: src/WebApp/Components/Chatbot/MessageProcessor.cs
       containerId: webapp
-      technology: C# Domain Service
-      classification: default
+      technology: ASP.NET Core Controller / Minimal API
+      classification: api-marker
     x: 40
-    y: 300
+    y: 40
   - entityRef: blueprint/eshop/webapp/services
     type: rest-api
     name: Services Layer
@@ -47,5 +36,16 @@ nodes:
       technology: ASP.NET Core Controller / Minimal API
       classification: api-marker
     x: 400
+    y: 300
+  - entityRef: blueprint/eshop/webapp/program
+    type: background-worker
+    name: Program
+    isTest: false
+    properties:
+      filepath: src/WebApp/Program.cs
+      containerId: webapp
+      technology: C# Domain Service
+      classification: default
+    x: 40
     y: 300
 dependencies: []

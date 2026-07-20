@@ -1,0 +1,147 @@
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: container
+metaData:
+  entityRef: blueprint/static-website-ssl-cloudfront-private-s3
+  name: Static-website-ssl-cloudfront-private-s3 Infrastructure
+nodes:
+  - entityRef: blueprint/static-website-ssl-cloudfront-private-s3/aws-s3-bucket-this
+    type: container
+    name: this
+    external: false
+    properties:
+      iac.address: aws_s3_bucket.this
+      iac.provider_type: aws_s3_bucket
+      iac.kind: resource
+    x: 268
+    y: 704
+  - entityRef: blueprint/static-website-ssl-cloudfront-private-s3/aws-s3-bucket-public-access-block-website-bucket
+    type: container
+    name: website_bucket
+    external: false
+    properties:
+      iac.address: aws_s3_bucket_public_access_block.website_bucket
+      iac.provider_type: aws_s3_bucket_public_access_block
+      iac.kind: resource
+    x: 268
+    y: 384
+  - entityRef: blueprint/static-website-ssl-cloudfront-private-s3/aws-s3-bucket-policy-s3-policy
+    type: container
+    name: s3_policy
+    external: false
+    properties:
+      iac.address: aws_s3_bucket_policy.s3_policy
+      iac.provider_type: aws_s3_bucket_policy
+      iac.kind: resource
+    x: 48
+    y: 64
+  - entityRef: blueprint/static-website-ssl-cloudfront-private-s3/aws-cloudfront-origin-access-identity-this
+    type: gateway-api
+    name: this
+    external: false
+    properties:
+      iac.address: aws_cloudfront_origin_access_identity.this
+      iac.provider_type: aws_cloudfront_origin_access_identity
+      iac.kind: resource
+    x: 648
+    y: 704
+  - entityRef: blueprint/static-website-ssl-cloudfront-private-s3/aws-cloudfront-distribution-this
+    type: gateway-api
+    name: this
+    external: false
+    properties:
+      iac.address: aws_cloudfront_distribution.this
+      iac.provider_type: aws_cloudfront_distribution
+      iac.kind: resource
+    x: 1028
+    y: 384
+  - entityRef: blueprint/static-website-ssl-cloudfront-private-s3/aws-route53-record-ipv4
+    type: container
+    name: ipv4
+    external: false
+    properties:
+      iac.address: aws_route53_record.ipv4
+      iac.provider_type: aws_route53_record
+      iac.kind: resource
+    x: 1028
+    y: 64
+  - entityRef: blueprint/static-website-ssl-cloudfront-private-s3/aws-route53-record-ipv6
+    type: container
+    name: ipv6
+    external: false
+    properties:
+      iac.address: aws_route53_record.ipv6
+      iac.provider_type: aws_route53_record
+      iac.kind: resource
+    x: 1428
+    y: 64
+  - entityRef: blueprint/static-website-ssl-cloudfront-private-s3/data-aws-route53-zone-this
+    type: container
+    name: this
+    external: true
+    properties:
+      iac.address: data.aws_route53_zone.this
+      iac.provider_type: aws_route53_zone
+      iac.kind: data
+    x: 1368
+    y: 1024
+  - entityRef: blueprint/static-website-ssl-cloudfront-private-s3/data-aws-iam-policy-document-s3-policy-document
+    type: container
+    name: s3_policy_document
+    external: true
+    properties:
+      iac.address: data.aws_iam_policy_document.s3_policy_document
+      iac.provider_type: aws_iam_policy_document
+      iac.kind: data
+    x: 648
+    y: 384
+  - entityRef: blueprint/static-website-ssl-cloudfront-private-s3/module-acm
+    type: container
+    name: acm
+    external: true
+    properties:
+      iac.address: module.acm
+      iac.provider_type: module
+      iac.kind: module
+      iac.source: terraform-aws-modules/acm/aws
+    x: 1148
+    y: 704
+dependencies:
+  - from: blueprint/static-website-ssl-cloudfront-private-s3/aws-s3-bucket-public-access-block-website-bucket
+    to: blueprint/static-website-ssl-cloudfront-private-s3/aws-s3-bucket-this
+    type: direct-call
+  - from: blueprint/static-website-ssl-cloudfront-private-s3/aws-s3-bucket-policy-s3-policy
+    to: blueprint/static-website-ssl-cloudfront-private-s3/aws-s3-bucket-this
+    type: direct-call
+  - from: blueprint/static-website-ssl-cloudfront-private-s3/aws-s3-bucket-policy-s3-policy
+    to: blueprint/static-website-ssl-cloudfront-private-s3/data-aws-iam-policy-document-s3-policy-document
+    type: direct-call
+  - from: blueprint/static-website-ssl-cloudfront-private-s3/aws-cloudfront-distribution-this
+    to: blueprint/static-website-ssl-cloudfront-private-s3/aws-s3-bucket-this
+    type: direct-call
+  - from: blueprint/static-website-ssl-cloudfront-private-s3/aws-cloudfront-distribution-this
+    to: blueprint/static-website-ssl-cloudfront-private-s3/aws-cloudfront-origin-access-identity-this
+    type: direct-call
+  - from: blueprint/static-website-ssl-cloudfront-private-s3/aws-cloudfront-distribution-this
+    to: blueprint/static-website-ssl-cloudfront-private-s3/module-acm
+    type: direct-call
+  - from: blueprint/static-website-ssl-cloudfront-private-s3/aws-route53-record-ipv4
+    to: blueprint/static-website-ssl-cloudfront-private-s3/data-aws-route53-zone-this
+    type: direct-call
+  - from: blueprint/static-website-ssl-cloudfront-private-s3/aws-route53-record-ipv4
+    to: blueprint/static-website-ssl-cloudfront-private-s3/aws-cloudfront-distribution-this
+    type: direct-call
+  - from: blueprint/static-website-ssl-cloudfront-private-s3/aws-route53-record-ipv6
+    to: blueprint/static-website-ssl-cloudfront-private-s3/data-aws-route53-zone-this
+    type: direct-call
+  - from: blueprint/static-website-ssl-cloudfront-private-s3/aws-route53-record-ipv6
+    to: blueprint/static-website-ssl-cloudfront-private-s3/aws-cloudfront-distribution-this
+    type: direct-call
+  - from: blueprint/static-website-ssl-cloudfront-private-s3/data-aws-iam-policy-document-s3-policy-document
+    to: blueprint/static-website-ssl-cloudfront-private-s3/aws-s3-bucket-this
+    type: direct-call
+  - from: blueprint/static-website-ssl-cloudfront-private-s3/data-aws-iam-policy-document-s3-policy-document
+    to: blueprint/static-website-ssl-cloudfront-private-s3/aws-cloudfront-origin-access-identity-this
+    type: direct-call
+  - from: blueprint/static-website-ssl-cloudfront-private-s3/module-acm
+    to: blueprint/static-website-ssl-cloudfront-private-s3/data-aws-route53-zone-this
+    type: direct-call

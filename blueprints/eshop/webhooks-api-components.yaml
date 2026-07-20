@@ -37,16 +37,16 @@ nodes:
       classification: default
     x: 760
     y: 40
-  - entityRef: blueprint/eshop/webhooks-api/infrastructure
-    type: relational-database
-    name: Infrastructure Layer
+  - entityRef: blueprint/eshop/webhooks-api/model
+    type: background-worker
+    name: Model Layer
     isTest: false
     properties:
-      filepath: src/Webhooks.API/Infrastructure/WebhooksContext.cs
+      filepath: src/Webhooks.API/Model/WebhookData.cs
       containerId: webhooks-api
-      technology: Entity Framework / DB Context
-      classification: database-marker
-    x: 40
+      technology: C# Domain Service
+      classification: default
+    x: 760
     y: 300
   - entityRef: blueprint/eshop/webhooks-api/integrationevents
     type: event-broker
@@ -59,28 +59,17 @@ nodes:
       classification: event-marker
     x: 400
     y: 300
-  - entityRef: blueprint/eshop/webhooks-api/model
-    type: background-worker
-    name: Model Layer
+  - entityRef: blueprint/eshop/webhooks-api/infrastructure
+    type: relational-database
+    name: Infrastructure Layer
     isTest: false
     properties:
-      filepath: src/Webhooks.API/Model/WebhookData.cs
+      filepath: src/Webhooks.API/Infrastructure/WebhooksContext.cs
       containerId: webhooks-api
-      technology: C# Domain Service
-      classification: default
-    x: 760
-    y: 300
-  - entityRef: blueprint/eshop/webhooks-api/program
-    type: background-worker
-    name: Program
-    isTest: false
-    properties:
-      filepath: src/Webhooks.API/Program.cs
-      containerId: webhooks-api
-      technology: C# Domain Service
-      classification: default
+      technology: Entity Framework / DB Context
+      classification: database-marker
     x: 40
-    y: 560
+    y: 300
   - entityRef: blueprint/eshop/webhooks-api/services
     type: background-worker
     name: Services Layer
@@ -91,5 +80,16 @@ nodes:
       technology: C# Domain Service
       classification: default
     x: 400
+    y: 560
+  - entityRef: blueprint/eshop/webhooks-api/program
+    type: background-worker
+    name: Program
+    isTest: false
+    properties:
+      filepath: src/Webhooks.API/Program.cs
+      containerId: webhooks-api
+      technology: C# Domain Service
+      classification: default
+    x: 40
     y: 560
 dependencies: []

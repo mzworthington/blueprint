@@ -1,0 +1,403 @@
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: container
+metaData:
+  entityRef: blueprint/aws-vpc-msk
+  name: Aws-vpc-msk Infrastructure
+nodes:
+  - entityRef: blueprint/aws-vpc-msk/aws-cloudwatch-log-group-cloudwatch-log-group
+    type: container
+    name: cloudwatch_log_group
+    external: false
+    properties:
+      iac.address: aws_cloudwatch_log_group.cloudwatch_log_group
+      iac.provider_type: aws_cloudwatch_log_group
+      iac.kind: resource
+    x: 3968
+    y: 384
+  - entityRef: blueprint/aws-vpc-msk/aws-msk-configuration-msk-cluster-config
+    type: event-broker
+    name: msk_cluster_config
+    external: false
+    properties:
+      iac.address: aws_msk_configuration.msk_cluster_config
+      iac.provider_type: aws_msk_configuration
+      iac.kind: resource
+    x: 4348
+    y: 384
+  - entityRef: blueprint/aws-vpc-msk/aws-msk-cluster-msk-cluster
+    type: event-broker
+    name: msk_cluster
+    external: false
+    properties:
+      iac.address: aws_msk_cluster.msk_cluster
+      iac.provider_type: aws_msk_cluster
+      iac.kind: resource
+    x: 3968
+    y: 64
+  - entityRef: blueprint/aws-vpc-msk/aws-security-group-kafkaclustersg
+    type: container
+    name: KafkaClusterSG
+    external: false
+    properties:
+      iac.address: aws_security_group.KafkaClusterSG
+      iac.provider_type: aws_security_group
+      iac.kind: resource
+    x: 4728
+    y: 384
+  - entityRef: blueprint/aws-vpc-msk/aws-security-group-kafkaclientinstancesg
+    type: container
+    name: KafkaClientInstanceSG
+    external: false
+    properties:
+      iac.address: aws_security_group.KafkaClientInstanceSG
+      iac.provider_type: aws_security_group
+      iac.kind: resource
+    x: 428
+    y: 384
+  - entityRef: blueprint/aws-vpc-msk/aws-kms-key-pca-kms
+    type: container
+    name: pca-kms
+    external: false
+    properties:
+      iac.address: aws_kms_key.pca-kms
+      iac.provider_type: aws_kms_key
+      iac.kind: resource
+    x: 5548
+    y: 64
+  - entityRef: blueprint/aws-vpc-msk/aws-kms-key-msk-kms-key
+    type: container
+    name: msk-kms-key
+    external: false
+    properties:
+      iac.address: aws_kms_key.msk-kms-key
+      iac.provider_type: aws_kms_key
+      iac.kind: resource
+    x: 5168
+    y: 64
+  - entityRef: blueprint/aws-vpc-msk/aws-kms-alias-pca-kims-alias
+    type: container
+    name: alias/pca-kims-alias
+    external: false
+    properties:
+      iac.address: aws_kms_alias.pca-kims-alias
+      iac.provider_type: aws_kms_alias
+      iac.kind: resource
+    x: 1948
+    y: 64
+  - entityRef: blueprint/aws-vpc-msk/aws-kms-alias-msk-kms-alias
+    type: container
+    name: msk-kms-alias
+    external: false
+    properties:
+      iac.address: aws_kms_alias.msk-kms-alias
+      iac.provider_type: aws_kms_alias
+      iac.kind: resource
+    x: 5928
+    y: 64
+  - entityRef: blueprint/aws-vpc-msk/random-id-kms
+    type: container
+    name: kms
+    external: false
+    properties:
+      iac.address: random_id.kms
+      iac.provider_type: random_id
+      iac.kind: resource
+    x: 5928
+    y: 384
+  - entityRef: blueprint/aws-vpc-msk/random-uuid-randuuid
+    type: container
+    name: randuuid
+    external: false
+    properties:
+      iac.address: random_uuid.randuuid
+      iac.provider_type: random_uuid
+      iac.kind: resource
+    x: 4348
+    y: 704
+  - entityRef: blueprint/aws-vpc-msk/data-aws-caller-identity-current
+    type: container
+    name: current
+    external: true
+    properties:
+      iac.address: data.aws_caller_identity.current
+      iac.provider_type: aws_caller_identity
+      iac.kind: data
+    x: 5168
+    y: 384
+  - entityRef: blueprint/aws-vpc-msk/aws-iam-instance-profile-kafkaclientiam-profile
+    type: container
+    name: KafkaClientIAM_profile
+    external: false
+    properties:
+      iac.address: aws_iam_instance_profile.KafkaClientIAM_Profile
+      iac.provider_type: aws_iam_instance_profile
+      iac.kind: resource
+    x: 48
+    y: 384
+  - entityRef: blueprint/aws-vpc-msk/aws-iam-role-kafkaclientiam-role
+    type: container
+    name: KafkaClientIAM_Role
+    external: false
+    properties:
+      iac.address: aws_iam_role.KafkaClientIAM_Role
+      iac.provider_type: aws_iam_role
+      iac.kind: resource
+    x: 1188
+    y: 704
+  - entityRef: blueprint/aws-vpc-msk/aws-iam-role-policy-attachment-kafka-client-iam-role-att1
+    type: container
+    name: Kafka-Client-IAM-role-att1
+    external: false
+    properties:
+      iac.address: aws_iam_role_policy_attachment.Kafka-Client-IAM-role-att1
+      iac.provider_type: aws_iam_role_policy_attachment
+      iac.kind: resource
+    x: 1188
+    y: 384
+  - entityRef: blueprint/aws-vpc-msk/aws-iam-role-policy-attachment-kafka-client-iam-role-att2
+    type: container
+    name: Kafka-Client-IAM-role-att2
+    external: false
+    properties:
+      iac.address: aws_iam_role_policy_attachment.Kafka-Client-IAM-role-att2
+      iac.provider_type: aws_iam_role_policy_attachment
+      iac.kind: resource
+    x: 1568
+    y: 384
+  - entityRef: blueprint/aws-vpc-msk/aws-instance-kafka-client-ec2-instance
+    type: container
+    name: Kafka-Client-EC2-Instance
+    external: false
+    properties:
+      iac.address: aws_instance.Kafka-Client-EC2-Instance
+      iac.provider_type: aws_instance
+      iac.kind: resource
+    x: 48
+    y: 64
+  - entityRef: blueprint/aws-vpc-msk/aws-key-pair-msk-keypair-ec2-keypair
+    type: container
+    name: MSK-Keypair-ec2-keypair
+    external: false
+    properties:
+      iac.address: aws_key_pair.MSK-Keypair-ec2-keypair
+      iac.provider_type: aws_key_pair
+      iac.kind: resource
+    x: 428
+    y: 64
+  - entityRef: blueprint/aws-vpc-msk/data-local-file-msk-keypair-public
+    type: container
+    name: msk-keypair-public
+    external: true
+    properties:
+      iac.address: data.local_file.msk-keypair-public
+      iac.provider_type: local_file
+      iac.kind: data
+    x: 6308
+    y: 64
+  - entityRef: blueprint/aws-vpc-msk/aws-subnet-private-subnet
+    type: container
+    name: private_subnet
+    external: false
+    properties:
+      iac.address: aws_subnet.private_subnet
+      iac.provider_type: aws_subnet
+      iac.kind: resource
+    x: 3208
+    y: 384
+  - entityRef: blueprint/aws-vpc-msk/aws-subnet-public-subnet
+    type: container
+    name: public_subnet
+    external: false
+    properties:
+      iac.address: aws_subnet.public_subnet
+      iac.provider_type: aws_subnet
+      iac.kind: resource
+    x: 2768
+    y: 384
+  - entityRef: blueprint/aws-vpc-msk/data-aws-availability-zones-available
+    type: container
+    name: available
+    external: true
+    properties:
+      iac.address: data.aws_availability_zones.available
+      iac.provider_type: aws_availability_zones
+      iac.kind: data
+    x: 3148
+    y: 704
+  - entityRef: blueprint/aws-vpc-msk/aws-internet-gateway-main-igw
+    type: container
+    name: main-igw
+    external: false
+    properties:
+      iac.address: aws_internet_gateway.main-igw
+      iac.provider_type: aws_internet_gateway
+      iac.kind: resource
+    x: 1948
+    y: 384
+  - entityRef: blueprint/aws-vpc-msk/aws-eip-nat
+    type: container
+    name: nat
+    external: false
+    properties:
+      iac.address: aws_eip.nat
+      iac.provider_type: aws_eip
+      iac.kind: resource
+    x: 808
+    y: 384
+  - entityRef: blueprint/aws-vpc-msk/aws-nat-gateway-main-natgw
+    type: container
+    name: main-natgw
+    external: false
+    properties:
+      iac.address: aws_nat_gateway.main-natgw
+      iac.provider_type: aws_nat_gateway
+      iac.kind: resource
+    x: 808
+    y: 64
+  - entityRef: blueprint/aws-vpc-msk/aws-route-table-publicroutetable
+    type: container
+    name: PublicRouteTable
+    external: false
+    properties:
+      iac.address: aws_route_table.PublicRouteTable
+      iac.provider_type: aws_route_table
+      iac.kind: resource
+    x: 3588
+    y: 384
+  - entityRef: blueprint/aws-vpc-msk/aws-route-table-privateroutetable
+    type: container
+    name: PrivateRouteTable
+    external: false
+    properties:
+      iac.address: aws_route_table.PrivateRouteTable
+      iac.provider_type: aws_route_table
+      iac.kind: resource
+    x: 2328
+    y: 384
+  - entityRef: blueprint/aws-vpc-msk/aws-route-table-association-route-publicsubnet
+    type: container
+    name: route_Publicsubnet
+    external: false
+    properties:
+      iac.address: aws_route_table_association.route_Publicsubnet
+      iac.provider_type: aws_route_table_association
+      iac.kind: resource
+    x: 2708
+    y: 64
+  - entityRef: blueprint/aws-vpc-msk/aws-route-table-association-route-privatesubnet
+    type: container
+    name: route_Privatesubnet
+    external: false
+    properties:
+      iac.address: aws_route_table_association.route_Privatesubnet
+      iac.provider_type: aws_route_table_association
+      iac.kind: resource
+    x: 2328
+    y: 64
+  - entityRef: blueprint/aws-vpc-msk/aws-vpc-msk-vpc
+    type: container
+    name: msk_vpc
+    external: false
+    properties:
+      iac.address: aws_vpc.msk_vpc
+      iac.provider_type: aws_vpc
+      iac.kind: resource
+    x: 2768
+    y: 704
+dependencies:
+  - from: blueprint/aws-vpc-msk/aws-cloudwatch-log-group-cloudwatch-log-group
+    to: blueprint/aws-vpc-msk/random-uuid-randuuid
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-msk-configuration-msk-cluster-config
+    to: blueprint/aws-vpc-msk/random-uuid-randuuid
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-msk-cluster-msk-cluster
+    to: blueprint/aws-vpc-msk/random-uuid-randuuid
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-msk-cluster-msk-cluster
+    to: blueprint/aws-vpc-msk/aws-subnet-private-subnet
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-msk-cluster-msk-cluster
+    to: blueprint/aws-vpc-msk/aws-security-group-kafkaclustersg
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-msk-cluster-msk-cluster
+    to: blueprint/aws-vpc-msk/aws-msk-configuration-msk-cluster-config
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-msk-cluster-msk-cluster
+    to: blueprint/aws-vpc-msk/aws-cloudwatch-log-group-cloudwatch-log-group
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-security-group-kafkaclustersg
+    to: blueprint/aws-vpc-msk/random-uuid-randuuid
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-security-group-kafkaclustersg
+    to: blueprint/aws-vpc-msk/aws-vpc-msk-vpc
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-security-group-kafkaclientinstancesg
+    to: blueprint/aws-vpc-msk/aws-vpc-msk-vpc
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-kms-key-pca-kms
+    to: blueprint/aws-vpc-msk/data-aws-caller-identity-current
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-kms-key-msk-kms-key
+    to: blueprint/aws-vpc-msk/data-aws-caller-identity-current
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-kms-alias-msk-kms-alias
+    to: blueprint/aws-vpc-msk/random-id-kms
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-iam-instance-profile-kafkaclientiam-profile
+    to: blueprint/aws-vpc-msk/aws-iam-role-kafkaclientiam-role
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-iam-role-policy-attachment-kafka-client-iam-role-att1
+    to: blueprint/aws-vpc-msk/aws-iam-role-kafkaclientiam-role
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-iam-role-policy-attachment-kafka-client-iam-role-att2
+    to: blueprint/aws-vpc-msk/aws-iam-role-kafkaclientiam-role
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-instance-kafka-client-ec2-instance
+    to: blueprint/aws-vpc-msk/aws-security-group-kafkaclientinstancesg
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-instance-kafka-client-ec2-instance
+    to: blueprint/aws-vpc-msk/aws-subnet-private-subnet
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-instance-kafka-client-ec2-instance
+    to: blueprint/aws-vpc-msk/aws-iam-instance-profile-kafkaclientiam-profile
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-subnet-private-subnet
+    to: blueprint/aws-vpc-msk/aws-vpc-msk-vpc
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-subnet-private-subnet
+    to: blueprint/aws-vpc-msk/data-aws-availability-zones-available
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-subnet-public-subnet
+    to: blueprint/aws-vpc-msk/aws-vpc-msk-vpc
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-subnet-public-subnet
+    to: blueprint/aws-vpc-msk/data-aws-availability-zones-available
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-internet-gateway-main-igw
+    to: blueprint/aws-vpc-msk/aws-vpc-msk-vpc
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-nat-gateway-main-natgw
+    to: blueprint/aws-vpc-msk/aws-eip-nat
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-nat-gateway-main-natgw
+    to: blueprint/aws-vpc-msk/aws-subnet-public-subnet
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-route-table-publicroutetable
+    to: blueprint/aws-vpc-msk/aws-vpc-msk-vpc
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-route-table-privateroutetable
+    to: blueprint/aws-vpc-msk/aws-vpc-msk-vpc
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-route-table-association-route-publicsubnet
+    to: blueprint/aws-vpc-msk/aws-subnet-public-subnet
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-route-table-association-route-publicsubnet
+    to: blueprint/aws-vpc-msk/aws-route-table-publicroutetable
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-route-table-association-route-privatesubnet
+    to: blueprint/aws-vpc-msk/aws-subnet-private-subnet
+    type: direct-call
+  - from: blueprint/aws-vpc-msk/aws-route-table-association-route-privatesubnet
+    to: blueprint/aws-vpc-msk/aws-route-table-privateroutetable
+    type: direct-call

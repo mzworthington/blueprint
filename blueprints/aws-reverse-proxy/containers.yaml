@@ -1,0 +1,201 @@
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: container
+metaData:
+  entityRef: blueprint/aws-reverse-proxy
+  name: Aws-reverse-proxy Infrastructure
+nodes:
+  - entityRef: blueprint/aws-reverse-proxy/data-aws-route53-zone-this
+    type: container
+    name: this
+    external: true
+    properties:
+      iac.address: data.aws_route53_zone.this
+      iac.provider_type: aws_route53_zone
+      iac.kind: data
+    x: 1788
+    y: 1344
+  - entityRef: blueprint/aws-reverse-proxy/aws-route53-record-ipv4
+    type: container
+    name: ipv4
+    external: false
+    properties:
+      iac.address: aws_route53_record.ipv4
+      iac.provider_type: aws_route53_record
+      iac.kind: resource
+    x: 48
+    y: 64
+  - entityRef: blueprint/aws-reverse-proxy/aws-route53-record-ipv6
+    type: container
+    name: ipv6
+    external: false
+    properties:
+      iac.address: aws_route53_record.ipv6
+      iac.provider_type: aws_route53_record
+      iac.kind: resource
+    x: 1848
+    y: 64
+  - entityRef: blueprint/aws-reverse-proxy/aws-cloudfront-distribution-this
+    type: gateway-api
+    name: this
+    external: false
+    properties:
+      iac.address: aws_cloudfront_distribution.this
+      iac.provider_type: aws_cloudfront_distribution
+      iac.kind: resource
+    x: 48
+    y: 384
+  - entityRef: blueprint/aws-reverse-proxy/aws-lambda-function-viewer-request
+    type: serverless-function
+    name: viewer_request
+    external: false
+    properties:
+      iac.address: aws_lambda_function.viewer_request
+      iac.provider_type: aws_lambda_function
+      iac.kind: resource
+    x: 1028
+    y: 704
+  - entityRef: blueprint/aws-reverse-proxy/aws-lambda-function-viewer-response
+    type: serverless-function
+    name: viewer_response
+    external: false
+    properties:
+      iac.address: aws_lambda_function.viewer_response
+      iac.provider_type: aws_lambda_function
+      iac.kind: resource
+    x: 1568
+    y: 704
+  - entityRef: blueprint/aws-reverse-proxy/aws-iam-role-this
+    type: container
+    name: this
+    external: false
+    properties:
+      iac.address: aws_iam_role.this
+      iac.provider_type: aws_iam_role
+      iac.kind: resource
+    x: 1028
+    y: 1024
+  - entityRef: blueprint/aws-reverse-proxy/aws-iam-policy-this
+    type: container
+    name: this
+    external: false
+    properties:
+      iac.address: aws_iam_policy.this
+      iac.provider_type: aws_iam_policy
+      iac.kind: resource
+    x: 648
+    y: 1024
+  - entityRef: blueprint/aws-reverse-proxy/aws-iam-role-policy-attachment-this
+    type: container
+    name: this
+    external: false
+    properties:
+      iac.address: aws_iam_role_policy_attachment.this
+      iac.provider_type: aws_iam_role_policy_attachment
+      iac.kind: resource
+    x: 648
+    y: 704
+  - entityRef: blueprint/aws-reverse-proxy/data-template-file-lambda
+    type: container
+    name: lambda
+    external: true
+    properties:
+      iac.address: data.template_file.lambda
+      iac.provider_type: template_file
+      iac.kind: data
+    x: 1408
+    y: 1344
+  - entityRef: blueprint/aws-reverse-proxy/data-archive-file-lambda-zip
+    type: container
+    name: lambda_zip
+    external: true
+    properties:
+      iac.address: data.archive_file.lambda_zip
+      iac.provider_type: archive_file
+      iac.kind: data
+    x: 1408
+    y: 1024
+  - entityRef: blueprint/aws-reverse-proxy/aws-acm-certificate-this
+    type: container
+    name: this
+    external: false
+    properties:
+      iac.address: aws_acm_certificate.this
+      iac.provider_type: aws_acm_certificate
+      iac.kind: resource
+    x: 48
+    y: 1344
+  - entityRef: blueprint/aws-reverse-proxy/aws-route53-record-cert-validation
+    type: container
+    name: cert_validation
+    external: false
+    properties:
+      iac.address: aws_route53_record.cert_validation
+      iac.provider_type: aws_route53_record
+      iac.kind: resource
+    x: 268
+    y: 1024
+  - entityRef: blueprint/aws-reverse-proxy/aws-acm-certificate-validation-this
+    type: container
+    name: this
+    external: false
+    properties:
+      iac.address: aws_acm_certificate_validation.this
+      iac.provider_type: aws_acm_certificate_validation
+      iac.kind: resource
+    x: 48
+    y: 704
+dependencies:
+  - from: blueprint/aws-reverse-proxy/aws-route53-record-ipv4
+    to: blueprint/aws-reverse-proxy/data-aws-route53-zone-this
+    type: direct-call
+  - from: blueprint/aws-reverse-proxy/aws-route53-record-ipv4
+    to: blueprint/aws-reverse-proxy/aws-cloudfront-distribution-this
+    type: direct-call
+  - from: blueprint/aws-reverse-proxy/aws-route53-record-ipv6
+    to: blueprint/aws-reverse-proxy/data-aws-route53-zone-this
+    type: direct-call
+  - from: blueprint/aws-reverse-proxy/aws-route53-record-ipv6
+    to: blueprint/aws-reverse-proxy/aws-cloudfront-distribution-this
+    type: direct-call
+  - from: blueprint/aws-reverse-proxy/aws-cloudfront-distribution-this
+    to: blueprint/aws-reverse-proxy/aws-lambda-function-viewer-request
+    type: direct-call
+  - from: blueprint/aws-reverse-proxy/aws-cloudfront-distribution-this
+    to: blueprint/aws-reverse-proxy/aws-lambda-function-viewer-response
+    type: direct-call
+  - from: blueprint/aws-reverse-proxy/aws-cloudfront-distribution-this
+    to: blueprint/aws-reverse-proxy/aws-acm-certificate-validation-this
+    type: direct-call
+  - from: blueprint/aws-reverse-proxy/aws-lambda-function-viewer-request
+    to: blueprint/aws-reverse-proxy/data-archive-file-lambda-zip
+    type: direct-call
+  - from: blueprint/aws-reverse-proxy/aws-lambda-function-viewer-request
+    to: blueprint/aws-reverse-proxy/aws-iam-role-this
+    type: direct-call
+  - from: blueprint/aws-reverse-proxy/aws-lambda-function-viewer-response
+    to: blueprint/aws-reverse-proxy/data-archive-file-lambda-zip
+    type: direct-call
+  - from: blueprint/aws-reverse-proxy/aws-lambda-function-viewer-response
+    to: blueprint/aws-reverse-proxy/aws-iam-role-this
+    type: direct-call
+  - from: blueprint/aws-reverse-proxy/aws-iam-role-policy-attachment-this
+    to: blueprint/aws-reverse-proxy/aws-iam-role-this
+    type: direct-call
+  - from: blueprint/aws-reverse-proxy/aws-iam-role-policy-attachment-this
+    to: blueprint/aws-reverse-proxy/aws-iam-policy-this
+    type: direct-call
+  - from: blueprint/aws-reverse-proxy/data-archive-file-lambda-zip
+    to: blueprint/aws-reverse-proxy/data-template-file-lambda
+    type: direct-call
+  - from: blueprint/aws-reverse-proxy/aws-route53-record-cert-validation
+    to: blueprint/aws-reverse-proxy/aws-acm-certificate-this
+    type: direct-call
+  - from: blueprint/aws-reverse-proxy/aws-route53-record-cert-validation
+    to: blueprint/aws-reverse-proxy/data-aws-route53-zone-this
+    type: direct-call
+  - from: blueprint/aws-reverse-proxy/aws-acm-certificate-validation-this
+    to: blueprint/aws-reverse-proxy/aws-acm-certificate-this
+    type: direct-call
+  - from: blueprint/aws-reverse-proxy/aws-acm-certificate-validation-this
+    to: blueprint/aws-reverse-proxy/aws-route53-record-cert-validation
+    type: direct-call

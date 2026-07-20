@@ -4,17 +4,6 @@ metaData:
   entityRef: blueprint/eshop/paymentprocessor
   name: PaymentProcessor Service Components
 nodes:
-  - entityRef: blueprint/eshop/paymentprocessor/integrationevents
-    type: event-broker
-    name: IntegrationEvents Layer
-    isTest: false
-    properties:
-      filepath: src/PaymentProcessor/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs
-      containerId: paymentprocessor
-      technology: C# Event Client
-      classification: event-marker
-    x: 40
-    y: 40
   - entityRef: blueprint/eshop/paymentprocessor/paymentoptions
     type: background-worker
     name: PaymentOptions
@@ -25,6 +14,17 @@ nodes:
       technology: C# Domain Service
       classification: default
     x: 400
+    y: 40
+  - entityRef: blueprint/eshop/paymentprocessor/integrationevents
+    type: event-broker
+    name: IntegrationEvents Layer
+    isTest: false
+    properties:
+      filepath: src/PaymentProcessor/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs
+      containerId: paymentprocessor
+      technology: C# Event Client
+      classification: event-marker
+    x: 40
     y: 40
   - entityRef: blueprint/eshop/paymentprocessor/program
     type: background-worker

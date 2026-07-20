@@ -4,6 +4,17 @@ metaData:
   entityRef: blueprint/eshop/ordering-api
   name: Ordering.API Service Components
 nodes:
+  - entityRef: blueprint/eshop/ordering-api/program-testing
+    type: background-worker
+    name: Program.Testing
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Program.Testing.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 760
+    y: 300
   - entityRef: blueprint/eshop/ordering-api/apis
     type: rest-api
     name: Apis Layer
@@ -15,17 +26,6 @@ nodes:
       classification: api-marker
     x: 40
     y: 40
-  - entityRef: blueprint/eshop/ordering-api/application
-    type: event-broker
-    name: Application Layer
-    isTest: false
-    properties:
-      filepath: src/Ordering.API/Application/Queries/OrderQueries.cs
-      containerId: ordering-api
-      technology: C# Event Client
-      classification: event-marker
-    x: 400
-    y: 40
   - entityRef: blueprint/eshop/ordering-api/extensions
     type: background-worker
     name: Extensions Layer
@@ -36,6 +36,17 @@ nodes:
       technology: C# Domain Service
       classification: default
     x: 760
+    y: 40
+  - entityRef: blueprint/eshop/ordering-api/application
+    type: event-broker
+    name: Application Layer
+    isTest: false
+    properties:
+      filepath: src/Ordering.API/Application/Queries/OrderQueries.cs
+      containerId: ordering-api
+      technology: C# Event Client
+      classification: event-marker
+    x: 400
     y: 40
   - entityRef: blueprint/eshop/ordering-api/infrastructure
     type: background-worker
@@ -58,16 +69,5 @@ nodes:
       technology: C# Domain Service
       classification: default
     x: 400
-    y: 300
-  - entityRef: blueprint/eshop/ordering-api/program-testing
-    type: background-worker
-    name: Program.Testing
-    isTest: false
-    properties:
-      filepath: src/Ordering.API/Program.Testing.cs
-      containerId: ordering-api
-      technology: C# Domain Service
-      classification: default
-    x: 760
     y: 300
 dependencies: []
