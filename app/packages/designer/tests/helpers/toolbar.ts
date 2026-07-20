@@ -42,18 +42,6 @@ export async function openWorkspaceFolder(page: Page) {
   await folderItem.click();
 }
 
-/** Asserts the workspace folder action is reachable (startup chooser or toolbar). */
-export async function expectWorkspaceFolderActionAvailable(page: Page) {
-  const startupOpen = page.getByTestId('startup-open-directory');
-  if (await startupOpen.isVisible().catch(() => false)) {
-    await expect(startupOpen).toBeVisible();
-    return;
-  }
-
-  await continueWithSandbox(page);
-  await expect(page.getByRole('button', { name: 'Open menu' })).toBeVisible();
-}
-
 /** Opens Import Mermaid from the toolbar Open menu (after sandbox is loaded). */
 export async function openImportMermaid(page: Page) {
   await continueWithSandbox(page);
