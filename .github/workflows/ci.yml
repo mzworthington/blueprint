@@ -85,8 +85,11 @@ jobs:
         run: pnpm test:ci
         working-directory: app
 
-      - name: Check unit test features doc is up to date
-        run: git diff --exit-code docs/features-unit.md
+      - name: Upload generated features doc
+        uses: actions/upload-artifact@v7
+        with:
+          name: features-unit
+          path: docs/features-unit.md
 
       - name: Report Vitest Coverage
         uses: davelosert/vitest-coverage-report-action@v2
@@ -174,6 +177,12 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
         working-directory: app
+
+      - name: Download generated features doc
+        uses: actions/download-artifact@v7
+        with:
+          name: features-unit
+          path: docs
 
       - name: Compile Production Build
         run: pnpm build
