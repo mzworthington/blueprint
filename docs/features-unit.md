@@ -646,13 +646,17 @@ Generated from Vitest (`pnpm generate:features-unit`).
 #### extractMermaidFromMarkdown
 
 - ✅ extracts the first mermaid fenced block
+- ✅ is case-insensitive on the fence language tag
 - ✅ returns trimmed input when no fence is found
+- ✅ returns trimmed input when fence opener has non-whitespace junk
+- ✅ skips an invalid mermaid-prefixed fence and uses a later valid one
 
 #### parseMermaidToSchema — C4
 
 - ✅ parses C4Context with Person, System, and Rel
 - ✅ parses C4Container with ContainerDb and external systems
 - ✅ parses C4Component diagram
+- ✅ parses directed Rel variants and ignores malformed Rel lines
 
 #### parseMermaidToSchema — flowchart
 
@@ -662,6 +666,7 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ infers event-broker from diamond shape
 - ✅ warns when subgraph blocks are flattened
 - ✅ defaults component type at component level
+- ✅ strips person emoji and (External) suffix from flowchart labels
 - ✅ throws on unrecognised diagram type
 
 ### path
@@ -680,6 +685,12 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ should return absolute path if input is absolute or web url
 
 ### pulumiImport
+
+#### extractPulumiFromMarkdown
+
+- ✅ extracts the first yaml/yml/pulumi fenced block
+- ✅ accepts bare fences and yml/pulumi language tags
+- ✅ returns trimmed input when no fence is found
 
 #### parsePulumiBatchToSchema
 
@@ -760,6 +771,12 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ should treat dots as separators for namespaces and package-like ids
 
 ### terraformImport
+
+#### extractTerraformFromMarkdown
+
+- ✅ extracts the first hcl/tf/terraform fenced block
+- ✅ accepts bare fences and tf/terraform language tags
+- ✅ returns trimmed input when no fence is found
 
 #### parseTerraformBatchToSchema
 
