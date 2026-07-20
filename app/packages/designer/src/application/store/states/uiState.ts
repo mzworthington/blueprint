@@ -2,7 +2,7 @@ import type { LayoutEngineId } from '../../../core';
 
 export interface ToastNotification {
   message: string;
-  type: 'success' | 'info' | 'error';
+  type: 'success' | 'info' | 'warning' | 'error';
   title?: string;
 }
 

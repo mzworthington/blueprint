@@ -3,6 +3,7 @@ import {
   parseSchemaFromYaml,
   resolveWorkspaceEntityRefs,
   buildWorkspaceCatalog,
+  assessSchemaVersion,
 } from '@blueprint/core';
 import type { WorkingCopyPort } from '../../../../core';
 import { resolveSchemaOnWorkspaceOpen } from '../../../../infrastructure/db/schemaCompare';
@@ -126,6 +127,15 @@ export async function loadWorkspaceFromDirectory(deps: OpenWorkspaceDeps): Promi
         discardedDraftCount === 1 ? '' : 's'
       } that differed from YAML on disk (e.g. after a CLI rescan).`,
     });
+  } else {
+    const versionWarning = assessSchemaVersion(entry.schema.version);
+    if (versionWarning) {
+      setNotification?.({
+        type: 'warning',
+        title: versionWarning.title,
+        message: `${versionWarning.message} ${versionWarning.migrationHint}`,
+      });
+    }
   }
 
   return true;

@@ -74,24 +74,38 @@ describe('ForensicsSection', () => {
     expect(screen.getByTestId('toggle-show-coupling')).toBeDisabled();
   });
 
-  it('renders churn sparkline and coupling mini graph', () => {
+  it('renders trend dashboard with churn sparkline and coupling mini graph', () => {
     render(
       <ForensicsSection
         forensics={{
           churn: 4,
           churnByWeek: [1, 0, 2, 1],
+          complexity: 12,
+          authorCount: 1,
           coupledFiles: [
             { path: 'src/a.ts', score: 0.9, sharedCommits: 4 },
             { path: 'src/b.ts', score: 0.5, sharedCommits: 2 },
           ],
+        }}
+        trendDashboard={{
+          scope: 'component',
+          churnByWeek: [1, 0, 2, 1],
+          authorBuckets: [1, 0, 0],
+          authorBucketLabels: ['1 author', '2–3', '4+'],
+          complexityBuckets: [0, 0, 1, 0],
+          complexityBucketLabels: ['1–5', '6–10', '11–20', '21+'],
+          fileCount: 1,
         }}
         centerLabel="Analyzer"
         linkedCouplingPaths={new Set(['src/a.ts'])}
       />
     );
 
-    expect(screen.getByTestId('forensics-churn-sparkline')).toBeInTheDocument();
+    expect(screen.getByTestId('forensics-trend-panel')).toBeInTheDocument();
+    expect(screen.getByTestId('forensics-trend-churn')).toBeInTheDocument();
     expect(screen.getByTestId('churn-sparkline')).toBeInTheDocument();
+    expect(screen.getByTestId('forensics-trend-authors')).toBeInTheDocument();
+    expect(screen.getByTestId('forensics-trend-complexity')).toBeInTheDocument();
     expect(screen.getByTestId('coupling-mini-graph')).toBeInTheDocument();
     expect(screen.getByTestId('forensics-help-churnTrend')).toHaveTextContent(
       /Weekly commit count/i

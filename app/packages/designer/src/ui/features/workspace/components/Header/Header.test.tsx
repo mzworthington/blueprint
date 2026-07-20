@@ -66,4 +66,23 @@ describe('Header Component', () => {
     renderHeader();
     expect(screen.getByText('Cycle Detected')).toBeInTheDocument();
   });
+
+  it('displays schema version warning badge when loaded version mismatches app expectation', () => {
+    useBlueprintStore.setState({
+      schemaVersionWarning: {
+        status: 'legacy',
+        loadedMajor: null,
+        expectedMajor: 3,
+        loadedVersion: '1.0.0',
+        expectedVersionUrl:
+          'https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json',
+        title: 'Legacy schema format',
+        message: 'This diagram uses a legacy schema version (1.0.0). Blueprint expects v3.',
+        migrationHint: 'Commit pending changes from the designer or re-run the CLI.',
+      },
+    });
+
+    renderHeader();
+    expect(screen.getByTestId('schema-version-warning')).toHaveTextContent('Legacy schema format');
+  });
 });

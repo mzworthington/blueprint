@@ -4,6 +4,8 @@ import {
   parseSchemaFromYaml,
   parseSchemaFromJson,
   dedupeDependencies,
+  assessSchemaVersion,
+  type SchemaVersionAssessment,
   type SystemSchema,
   type SystemNode,
   type SystemDependency,
@@ -62,6 +64,7 @@ export interface DiagramState {
   validationResult: ValidationResult;
   yamlCode: string;
   lastError: string | null;
+  schemaVersionWarning: SchemaVersionAssessment | null;
   currentFilePath: string;
   isWorkspaceOpen: boolean;
   workspaceName: string;
@@ -129,6 +132,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   validationResult: initial.validationResult,
   yamlCode: initial.yamlCode,
   lastError: null,
+  schemaVersionWarning: assessSchemaVersion(initial.schema.version),
   currentFilePath: initial.currentFilePath,
   isWorkspaceOpen: false,
   workspaceName: '',
@@ -260,6 +264,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
     };
     const rfNodes = normalized.nodes.map(mapDomainNodeToRFNode);
     const rfEdges = mapDomainDepsToRFEdges(normalized.dependencies);
+    set({ schemaVersionWarning: assessSchemaVersion(normalized.version) });
     applyStateUpdates(
       set,
       get,

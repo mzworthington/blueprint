@@ -6,7 +6,7 @@ import { Breadcrumbs } from '../Breadcrumbs/Breadcrumbs';
 import { BreadcrumbsCompact } from '../Breadcrumbs/BreadcrumbsCompact';
 
 export const Header: React.FC = () => {
-  const { schema, validationResult } = useBlueprintStore();
+  const { schema, validationResult, schemaVersionWarning } = useBlueprintStore();
 
   return (
     <AppHeader badge="WORKSPACE">
@@ -20,6 +20,16 @@ export const Header: React.FC = () => {
         <span className="px-2 py-0.5 rounded bg-blue-950/80 border border-blue-900/40 text-blue-400 text-[10px] font-semibold uppercase tracking-wider font-mono">
           {schema.level || 'Container'}
         </span>
+        {schemaVersionWarning && (
+          <span
+            className="flex items-center gap-1 text-[10px] text-amber-300 font-semibold bg-amber-950/30 px-2 py-0.5 rounded border border-amber-900/40 max-w-[12rem]"
+            title={`${schemaVersionWarning.message} ${schemaVersionWarning.migrationHint}`}
+            data-testid="schema-version-warning"
+          >
+            <AlertTriangle className="w-3 h-3 shrink-0 text-amber-400" />
+            <span className="truncate">{schemaVersionWarning.title}</span>
+          </span>
+        )}
         {validationResult.isValid ? (
           <span className="flex items-center gap-1 text-[10px] text-emerald-400 font-semibold bg-emerald-955/20 px-2 py-0.5 rounded border border-emerald-900/30">
             <CheckCircle className="w-3 h-3 shrink-0" />

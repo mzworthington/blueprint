@@ -61,6 +61,41 @@ describe('aggregateNodeForensics', () => {
       classifications: ['hotspot', 'knowledge-silo'],
     });
   });
+
+  it('rolls up churnByWeek and churn-weighted ownership from children', () => {
+    const children: SystemNode[] = [
+      {
+        entityRef: 'a/b/c1',
+        type: 'component',
+        name: 'c1',
+        forensics: {
+          churn: 4,
+          churnByWeek: [1, 0, 2, 1],
+          topAuthorPercent: 0.5,
+          sinceDays: 90,
+        },
+      },
+      {
+        entityRef: 'a/b/c2',
+        type: 'component',
+        name: 'c2',
+        forensics: {
+          churn: 2,
+          churnByWeek: [0, 1, 0, 1],
+          topAuthorPercent: 1,
+          sinceDays: 90,
+        },
+      },
+    ];
+
+    expect(aggregateNodeForensics(children)).toMatchObject({
+      churn: 6,
+      churnByWeek: [1, 1, 2, 2],
+      topAuthorPercent: 2 / 3,
+      sinceDays: 90,
+      fileCount: 2,
+    });
+  });
 });
 
 describe('attachForensicsToSchema', () => {

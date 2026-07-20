@@ -173,7 +173,7 @@ export const ToolbarSaveButton: React.FC = () => {
       title={isWorkspaceOpen ? 'Save diagram directly in folder' : 'Save YAML to disk'}
     >
       <Download className="w-3.5 h-3.5" />
-      <span>{isWorkspaceOpen ? 'Save' : 'Save Schema'}</span>
+      <span>{isWorkspaceOpen ? 'Save' : 'Save'}</span>
     </button>
   );
 };
