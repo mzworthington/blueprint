@@ -29,6 +29,7 @@ export function resetToEmptyWorkspace(
 
   set({
     currentFilePath: EMPTY_WORKSPACE_PATH,
+    workspaceCatalog: [],
     loadedSystems: [{ path: EMPTY_WORKSPACE_PATH, name: empty.name, schema: empty }],
     isWorkspaceOpen: false,
     selectedNodeId: null,

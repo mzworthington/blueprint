@@ -56,9 +56,6 @@ export function shouldAnimateDependencyEdge(
   return false;
 }
 
-/** Zoom below this uses simplified node chrome (fewer handles / less detail). */
-export const CANVAS_SIMPLIFY_ZOOM = 0.35;
-
 export function prefersReducedMotion(): boolean {
   if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return false;
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;

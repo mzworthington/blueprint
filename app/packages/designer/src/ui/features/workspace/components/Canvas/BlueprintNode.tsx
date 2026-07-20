@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { Handle, Position, useStore, useUpdateNodeInternals } from '@xyflow/react';
+import { Handle, Position, useUpdateNodeInternals } from '@xyflow/react';
 import { useLocation } from 'wouter';
 import type { NodeProps, Node } from '@xyflow/react';
 import {
@@ -19,7 +19,6 @@ import {
 import type { NodeType } from '@blueprint/core';
 import { useBlueprintStore } from '../../../../../application/store/store';
 import type { ComponentNodeData } from '../../../../../application/store/store';
-import { CANVAS_SIMPLIFY_ZOOM } from '../../../../../application/store/layoutUtils';
 import { evaluateForensicsConcern } from '../../../../../application/forensics/concern';
 import { useHasSubDiagram } from './SubDiagramRefsContext';
 
@@ -181,14 +180,12 @@ export const BlueprintNode = memo(({ id, data, selected }: NodeProps<CustomNode>
   const liteCanvas = useBlueprintStore(state => state.liteCanvas);
   const entityRef = data.entityRef;
   const hasSubDiagram = useHasSubDiagram(entityRef);
-  const zoomSimplified = useStore(s => s.transform[2] < CANVAS_SIMPLIFY_ZOOM);
-  const simplified = liteCanvas || zoomSimplified;
   const updateNodeInternals = useUpdateNodeInternals();
 
-  // Keep edge endpoints attached after lite/zoom chrome height changes.
+  // Keep edge endpoints attached after lite-canvas chrome height changes.
   useEffect(() => {
     updateNodeInternals(id);
-  }, [id, simplified, updateNodeInternals]);
+  }, [id, liteCanvas, updateNodeInternals]);
 
   const concern = React.useMemo(() => evaluateForensicsConcern(data.forensics), [data.forensics]);
   const classifications = data.forensics?.classifications ?? [];
@@ -227,14 +224,14 @@ export const BlueprintNode = memo(({ id, data, selected }: NodeProps<CustomNode>
       data-coupling-highlight={data.couplingHighlight ? 'true' : undefined}
       data-hotspot-heat={heat > 0 ? heat.toFixed(2) : undefined}
       data-testid={
-        simplified ? 'blueprint-node-simplified' : heat > 0 ? 'hotspot-heat' : 'blueprint-node'
+        liteCanvas ? 'blueprint-node-simplified' : heat > 0 ? 'hotspot-heat' : 'blueprint-node'
       }
       className={`relative w-64 rounded-xl border p-4 cursor-pointer ${
-        simplified ? '' : 'transition-colors duration-150'
+        liteCanvas ? '' : 'transition-colors duration-150'
       } ${borderClass}`}
       style={{
         boxShadow:
-          selected || data.external || data.couplingHighlight || simplified
+          selected || data.external || data.couplingHighlight || liteCanvas
             ? undefined
             : '0 4px 12px rgba(0, 0, 0, 0.25)',
         ...(heat > 0
@@ -294,7 +291,7 @@ export const BlueprintNode = memo(({ id, data, selected }: NodeProps<CustomNode>
         className="!w-2.5 !h-2.5 !bg-brand-500 !border-slate-950"
       />
 
-      {!simplified && (
+      {!liteCanvas && (
         <div className="flex items-start justify-between">
           <div
             className="flex items-center justify-center p-2 rounded-lg border"
@@ -325,7 +322,7 @@ export const BlueprintNode = memo(({ id, data, selected }: NodeProps<CustomNode>
         </div>
       )}
 
-      <div className={`${simplified ? '' : 'mt-3'} min-w-0 overflow-hidden`}>
+      <div className={`${liteCanvas ? '' : 'mt-3'} min-w-0 overflow-hidden`}>
         <h4 className="font-semibold text-slate-100 truncate text-base leading-tight">
           {name}
           {data.external && (
@@ -342,7 +339,7 @@ export const BlueprintNode = memo(({ id, data, selected }: NodeProps<CustomNode>
         </p>
       </div>
 
-      {!simplified && (
+      {!liteCanvas && (
         <div className="mt-4 flex items-center justify-between border-t border-slate-900 pt-2 text-[10px] text-slate-400 uppercase tracking-wider font-semibold gap-2">
           <span className="truncate">{config.label}</span>
           <div className="flex items-center gap-1 shrink-0">

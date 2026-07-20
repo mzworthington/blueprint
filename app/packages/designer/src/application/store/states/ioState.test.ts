@@ -79,7 +79,7 @@ dependencies: []
     expect(updatedState.nodes).toHaveLength(1);
   });
 
-  it('should load multiple top-level systems and support selecting between them', async () => {
+  it('should catalog all systems on open and lazy-load when selecting another', async () => {
     mockFiles['another-system.yaml'] = `
 name: Another System
 version: 1.0.0
@@ -92,16 +92,23 @@ dependencies: []
     expect(success).toBe(true);
 
     const state = useBlueprintStore.getState();
-    expect(state.loadedSystems).toHaveLength(3);
+    expect(state.loadedSystems).toHaveLength(1);
     expect(state.loadedSystems[0].path).toBe('blueprint.yaml');
-    expect(state.loadedSystems[1].path).toBe('web/container.yaml');
-    expect(state.loadedSystems[2].path).toBe('another-system.yaml');
+    expect(state.workspaceCatalog).toHaveLength(3);
+    expect(state.workspaceCatalog.map(e => e.path).sort()).toEqual([
+      'another-system.yaml',
+      'blueprint.yaml',
+      'web/container.yaml',
+    ]);
     expect(state.currentFilePath).toBe('blueprint.yaml');
 
-    store.selectSystem('another-system.yaml');
+    await store.selectSystem('another-system.yaml');
     const state2 = useBlueprintStore.getState();
     expect(state2.currentFilePath).toBe('another-system.yaml');
     expect(state2.schema.name).toBe('Another System');
+    expect(state2.loadedSystems.map(s => s.path)).toEqual(
+      expect.arrayContaining(['blueprint.yaml', 'another-system.yaml'])
+    );
   });
 
   // Workspace directory selection tests cover multi-file loading.

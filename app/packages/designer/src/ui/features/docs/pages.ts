@@ -7,6 +7,7 @@ import guideGettingStartedMd from '@docs/guide/getting-started.md?raw';
 import guideCanvasMd from '@docs/guide/canvas.md?raw';
 import guideCliMd from '@docs/guide/cli.md?raw';
 import guideForensicsMd from '@docs/guide/forensics.md?raw';
+import guideSchemaMd from '@docs/guide/schema.md?raw';
 
 export type DocsNavItem = {
   label: string;
@@ -31,6 +32,7 @@ export const DOCS_NAV: DocsNavItem[] = [
   { label: 'Canvas', path: '/guide/canvas' },
   { label: 'CLI', path: '/guide/cli' },
   { label: 'Forensics', path: '/guide/forensics' },
+  { label: 'Schema', path: '/guide/schema' },
 ];
 
 export const DOCS_SIDEBAR: { title: string; items: DocsNavItem[] }[] = [
@@ -42,6 +44,7 @@ export const DOCS_SIDEBAR: { title: string; items: DocsNavItem[] }[] = [
       { label: 'Canvas & workspace', path: '/guide/canvas' },
       { label: 'CLI analysis', path: '/guide/cli' },
       { label: 'Forensics', path: '/guide/forensics' },
+      { label: 'Blueprint Schema', path: '/guide/schema' },
     ],
   },
   {
@@ -76,6 +79,13 @@ export const DOCS_PAGES: DocsPageMeta[] = [
     path: '/guide/forensics',
     title: 'Forensics',
     markdown: guideForensicsMd,
+    dir: 'guide',
+    group: 'guide',
+  },
+  {
+    path: '/guide/schema',
+    title: 'Blueprint Schema',
+    markdown: guideSchemaMd,
     dir: 'guide',
     group: 'guide',
   },

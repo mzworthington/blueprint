@@ -27,7 +27,7 @@ export interface UseeBreadcrumbsReturn {
   // Store passthrough
   isWorkspaceOpen: boolean;
   workspaceName: string | undefined;
-  selectSystem: (path: string) => void;
+  selectSystem: (path: string) => Promise<void>;
 }
 
 function getNextLevel(current: C4Level): C4Level {

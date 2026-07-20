@@ -1,5 +1,9 @@
-import type { SystemSchema } from '@blueprint/core';
-import { parseSchemaFromYaml, resolveWorkspaceEntityRefs } from '@blueprint/core';
+import type { SystemSchema, WorkspaceCatalogEntry } from '@blueprint/core';
+import {
+  parseSchemaFromYaml,
+  resolveWorkspaceEntityRefs,
+  buildWorkspaceCatalog,
+} from '@blueprint/core';
 import type { WorkingCopyPort } from '../../../../core';
 import { resolveSchemaOnWorkspaceOpen } from '../../../../infrastructure/db/schemaCompare';
 import { cancelDefaultIdbSeed } from '../diagramState/defaultIdbSeed';
@@ -24,7 +28,9 @@ type OpenWorkspaceDeps = {
 };
 
 /**
- * Parses YAML files from a workspace folder and applies disk-first draft resolution.
+ * Parses YAML files from a workspace folder, builds a lightweight navigation catalog,
+ * and fully loads only the entry diagram (context → container → first file).
+ * Other systems are loaded on demand via ensureSystemLoaded.
  */
 export async function loadWorkspaceFromDirectory(deps: OpenWorkspaceDeps): Promise<boolean> {
   const { logger, setNotification, initSchema, set } = deps;
@@ -68,32 +74,49 @@ export async function loadWorkspaceFromDirectory(deps: OpenWorkspaceDeps): Promi
     throw new Error('No valid blueprint schemas found in selected directory');
   }
 
-  const resolved = resolveWorkspaceEntityRefs(nextLoadedSystems);
+  const workspaceName = deps.getDirectoryName();
+  const resolved = resolveWorkspaceEntityRefs(nextLoadedSystems, workspaceName);
   const resolvedSystems = nextLoadedSystems.map(sys => ({
     ...sys,
     schema: resolved.schemas[sys.path] || sys.schema,
   }));
 
+  const workspaceCatalog: WorkspaceCatalogEntry[] = buildWorkspaceCatalog(
+    resolvedSystems.map(s => ({ path: s.path, schema: s.schema })),
+    workspaceName
+  );
+
+  const firstSystem =
+    resolvedSystems.find(s => s.schema.level === 'context') ||
+    resolvedSystems.find(s => s.schema.level === 'container') ||
+    resolvedSystems[0];
+
+  // Only draft-reconcile the entry diagram — other files load on navigation.
   const { systems, discardedDraftCount } = await applyDiskFirstDraftResolution(
-    resolvedSystems,
+    [firstSystem],
     resolved,
     deps.workingCopy,
     logger
   );
 
-  const firstSystem =
-    systems.find(s => s.schema.level === 'context') ||
-    systems.find(s => s.schema.level === 'container') ||
-    systems[0];
+  const entry = systems[0] ?? firstSystem;
 
   set({
     isWorkspaceOpen: true,
-    workspaceName: deps.getDirectoryName(),
-    loadedSystems: systems,
-    nodeRefMap: resolved.nodeRefMap,
-    currentFilePath: firstSystem.path,
+    workspaceName,
+    workspaceCatalog,
+    loadedSystems: [entry],
+    nodeRefMap: {
+      [entry.path]: resolved.nodeRefMap[entry.path] || {},
+    },
+    currentFilePath: entry.path,
   });
-  initSchema(firstSystem.schema);
+  initSchema(entry.schema);
+
+  logger.info('Workspace opened with lazy system load', {
+    catalogSize: workspaceCatalog.length,
+    entryPath: entry.path,
+  });
 
   if (discardedDraftCount > 0) {
     setNotification?.({

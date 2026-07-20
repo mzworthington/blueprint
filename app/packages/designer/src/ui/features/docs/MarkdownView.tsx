@@ -15,6 +15,12 @@ const MermaidPreview = lazy(() =>
   }))
 );
 
+const LiveSchemaPreview = lazy(() =>
+  import('./LiveSchemaPreview').then(m => ({
+    default: m.LiveSchemaPreview,
+  }))
+);
+
 function extractCodeText(node: React.ReactNode): string {
   if (typeof node === 'string' || typeof node === 'number') return String(node);
   if (Array.isArray(node)) return node.map(extractCodeText).join('');
@@ -115,6 +121,20 @@ function buildComponents(fromDir: string): Components {
               <MermaidPreview code={code} />
             </Suspense>
           </div>
+        );
+      }
+      if (/\blanguage-live-schema\b/.test(className)) {
+        const channel = extractCodeText(codeEl).replace(/\n$/, '').trim() || 'latest';
+        return (
+          <Suspense
+            fallback={
+              <div className="my-6 text-xs font-mono text-slate-500 py-6 text-center">
+                Loading schema…
+              </div>
+            }
+          >
+            <LiveSchemaPreview channel={channel} />
+          </Suspense>
         );
       }
       return (

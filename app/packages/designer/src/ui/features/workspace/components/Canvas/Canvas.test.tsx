@@ -45,8 +45,6 @@ vi.mock('@xyflow/react', () => {
     useReactFlow: () => ({
       fitView: vi.fn(),
     }),
-    useStore: (selector: (s: { transform: [number, number, number] }) => unknown) =>
-      selector({ transform: [0, 0, 1] }),
   };
 });
 

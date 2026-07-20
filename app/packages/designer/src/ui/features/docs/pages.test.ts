@@ -6,7 +6,12 @@ describe('docs link resolution', () => {
   it('resolves relative markdown links within the guide', () => {
     expect(resolveDocsHref('./getting-started.md', 'guide')).toBe('/guide/getting-started');
     expect(resolveDocsHref('./canvas.md', 'guide')).toBe('/guide/canvas');
+    expect(resolveDocsHref('./schema.md', 'guide')).toBe('/guide/schema');
     expect(resolveDocsHref('../setup.md', 'guide')).toBe('/setup');
+  });
+
+  it('registers the Blueprint Schema guide page', () => {
+    expect(DOCS_PAGES.some(p => p.path === '/guide/schema')).toBe(true);
   });
 
   it('resolves absolute docs paths', () => {

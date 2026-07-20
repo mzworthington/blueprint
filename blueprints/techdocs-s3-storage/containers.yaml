@@ -1,0 +1,69 @@
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: container
+metaData:
+  entityRef: blueprint/techdocs-s3-storage
+  name: Techdocs-s3-storage Infrastructure
+nodes:
+  - entityRef: blueprint/techdocs-s3-storage/aws-s3-bucket-backstage
+    type: container
+    name: backstage
+    external: false
+    properties:
+      iac.address: aws_s3_bucket.backstage
+      iac.provider_type: aws_s3_bucket
+      iac.kind: resource
+    x: 428
+    y: 704
+  - entityRef: blueprint/techdocs-s3-storage/aws-s3-bucket-public-access-block-backstage
+    type: container
+    name: backstage
+    external: false
+    properties:
+      iac.address: aws_s3_bucket_public_access_block.backstage
+      iac.provider_type: aws_s3_bucket_public_access_block
+      iac.kind: resource
+    x: 428
+    y: 384
+  - entityRef: blueprint/techdocs-s3-storage/aws-iam-user-backstage
+    type: container
+    name: backstage
+    external: false
+    properties:
+      iac.address: aws_iam_user.backstage
+      iac.provider_type: aws_iam_user
+      iac.kind: resource
+    x: 48
+    y: 384
+  - entityRef: blueprint/techdocs-s3-storage/aws-iam-user-policy-backstage
+    type: container
+    name: backstage
+    external: false
+    properties:
+      iac.address: aws_iam_user_policy.backstage
+      iac.provider_type: aws_iam_user_policy
+      iac.kind: resource
+    x: 48
+    y: 64
+  - entityRef: blueprint/techdocs-s3-storage/data-aws-iam-policy-document-backstage-policy
+    type: container
+    name: backstage_policy
+    external: true
+    properties:
+      iac.address: data.aws_iam_policy_document.backstage_policy
+      iac.provider_type: aws_iam_policy_document
+      iac.kind: data
+    x: 808
+    y: 384
+dependencies:
+  - from: blueprint/techdocs-s3-storage/aws-s3-bucket-public-access-block-backstage
+    to: blueprint/techdocs-s3-storage/aws-s3-bucket-backstage
+    type: direct-call
+  - from: blueprint/techdocs-s3-storage/aws-iam-user-policy-backstage
+    to: blueprint/techdocs-s3-storage/aws-iam-user-backstage
+    type: direct-call
+  - from: blueprint/techdocs-s3-storage/aws-iam-user-policy-backstage
+    to: blueprint/techdocs-s3-storage/data-aws-iam-policy-document-backstage-policy
+    type: direct-call
+  - from: blueprint/techdocs-s3-storage/data-aws-iam-policy-document-backstage-policy
+    to: blueprint/techdocs-s3-storage/aws-s3-bucket-backstage
+    type: direct-call

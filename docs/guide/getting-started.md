@@ -79,7 +79,7 @@ Useful flags: `--no-git` to skip forensics, `--git-since=90` for lookback, `--ou
 
 The CLI writes diagrams under `blueprints/` (or your `--output` path): context, containers, and components.
 
-Each file uses the [v3 YAML format](../setup.md#yaml-format-v3) — `version` is the schema URL, identity lives under `metaData`. For IDE autocomplete in other repos, prefer the **latest** schema:
+Each file uses the [v3 YAML format](../setup.md#yaml-format-v3) — `version` is the schema URL, identity lives under `metaData`. For IDE autocomplete in other repos, prefer the **latest** schema (see [JSON Schema](./schema.md)):
 
 ```yaml
 # yaml-language-server: $schema=https://blueprint.mzworthington.co.uk/schemas/latest/blueprint.schema.json

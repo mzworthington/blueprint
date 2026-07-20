@@ -6,6 +6,7 @@ Product docs are Markdown in this folder. The designer app renders them at:
 | -------------------------------------- | ---------------------------------- |
 | `/`                                    | Product homepage                   |
 | `/guide` …                             | Product guide                      |
+| `/guide/schema`                        | Blueprint Schema                   |
 | `/setup`, `/architecture`, `/journeys` | Reference                          |
 | `/features-unit`                       | Generated unit test feature report |
 

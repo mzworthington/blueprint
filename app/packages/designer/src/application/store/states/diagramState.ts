@@ -15,7 +15,9 @@ import {
   type IacSourceFile,
   type IacSourceKind,
   type WorkspaceEntity,
+  type WorkspaceCatalogEntry,
 } from '@blueprint/core';
+import { ensureSystemLoaded } from './ioState/ensureSystemLoaded';
 import type { CanvasNodeChange, CanvasEdgeChange, CanvasConnection } from '../../../core';
 import { mapDomainNodeToRFNode, mapDomainDepsToRFEdges } from '../layoutUtils';
 import type { BlueprintRFNode, BlueprintRFEdge } from '../layoutUtils';
@@ -63,6 +65,8 @@ export interface DiagramState {
   currentFilePath: string;
   isWorkspaceOpen: boolean;
   workspaceName: string;
+  /** Lightweight workspace index (all diagrams). Full schemas live in loadedSystems. */
+  workspaceCatalog: WorkspaceCatalogEntry[];
   loadedSystems: Array<{ path: string; name: string; schema: SystemSchema }>;
   nodeRefMap: Record<string, Record<string, string>>;
   past: Array<{ nodes: BlueprintRFNode[]; edges: BlueprintRFEdge[]; schema: SystemSchema }>;
@@ -100,7 +104,7 @@ export interface DiagramState {
   selectEdge: (id: string | null) => void;
   updateDependency: (from: string, to: string, updates: Partial<SystemDependency>) => void;
   deleteDependency: (from: string, to: string) => void;
-  selectSystem: (path: string) => void;
+  selectSystem: (path: string) => Promise<void>;
   listWorkspaceExternalCandidates: (filters?: ExternalCandidateFilters) => WorkspaceEntity[];
   addExternalDependencies: (entityRefs: string[]) => void;
   syncSuggestedExternals: () => void;
@@ -128,6 +132,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   currentFilePath: initial.currentFilePath,
   isWorkspaceOpen: false,
   workspaceName: '',
+  workspaceCatalog: [],
   loadedSystems: initial.loadedSystems,
   nodeRefMap: initial.nodeRefMap,
   past: [],
@@ -213,9 +218,24 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
     });
   },
 
-  selectSystem: (path: string) => {
-    const { loadedSystems, logger } = get();
-    const system = loadedSystems.find(s => s.path === path);
+  selectSystem: async (path: string) => {
+    const { logger, isWorkspaceOpen, workspacePort, workingCopyPort } = get();
+
+    if (!get().loadedSystems.some(s => s.path === path) && isWorkspaceOpen) {
+      const ok = await ensureSystemLoaded(path, {
+        workspacePort,
+        workingCopyPort,
+        logger,
+        get,
+        set,
+      });
+      if (!ok) {
+        logger.warn('System path not found in workspace', { path });
+        return;
+      }
+    }
+
+    const system = get().loadedSystems.find(s => s.path === path);
     if (!system) {
       logger.warn('System path not found in loaded systems', { path });
       return;

@@ -20,15 +20,12 @@ vi.mock('@xyflow/react', () => {
       Top: 'top',
       Bottom: 'bottom',
     },
-    useStore: (selector: (s: { transform: [number, number, number] }) => unknown) =>
-      selector({ transform: [0, 0, (globalThis as any).__blueprintZoom ?? 1] }),
     useUpdateNodeInternals: () => vi.fn(),
   };
 });
 
 describe('BlueprintNode Component', () => {
   beforeEach(() => {
-    (globalThis as any).__blueprintZoom = 1;
     const { initSchema } = useBlueprintStore.getState();
     initSchema({
       name: 'Test Schema',
@@ -84,13 +81,12 @@ describe('BlueprintNode Component', () => {
     expect(screen.queryByText('Microservice')).not.toBeInTheDocument();
   });
 
-  it('simplifies chrome when zoomed out but keeps edge handles mounted', () => {
-    (globalThis as any).__blueprintZoom = 0.25;
+  it('keeps full chrome when zoomed out unless liteCanvas is on', () => {
     render(<BlueprintNode {...defaultProps} />);
 
-    expect(screen.getByTestId('blueprint-node-simplified')).toBeInTheDocument();
-    expect(screen.getByTestId('handle-target-top')).toBeInTheDocument();
-    expect(screen.queryByText('Microservice')).not.toBeInTheDocument();
+    expect(screen.getByTestId('blueprint-node')).toBeInTheDocument();
+    expect(screen.queryByTestId('blueprint-node-simplified')).not.toBeInTheDocument();
+    expect(screen.getByText('Microservice')).toBeInTheDocument();
   });
 
   it('shows HOT and SILO badges for concerning forensics', () => {
