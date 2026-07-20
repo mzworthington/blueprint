@@ -6,7 +6,6 @@ import { CodeViewer } from './components/CodeViewer/CodeViewer';
 import { Canvas } from './components/Canvas/Canvas';
 import { PropertyPanel } from './components/PropertyPanel/PropertyPanel';
 import { Header } from './components/Header/Header';
-import { MobilePanelToggles } from './components/MobilePanelToggles/MobilePanelToggles';
 import { useBlueprintStore } from '../../../application/store/store';
 import { DiffMenu } from './components/DiffMenu/DiffMenu';
 import { ImportMermaidDialog } from './components/ImportMermaidDialog/ImportMermaidDialog';
@@ -96,7 +95,7 @@ export const WorkspacePage: React.FC = () => {
           <Canvas />
           <PropertyPanel />
 
-          {/* Desktop: thin edge rails. Mobile: labelled chips (MobilePanelToggles). */}
+          {/* Desktop: thin edge rails. Mobile panel chips live in WorkspaceToolbar. */}
           <button
             onClick={toggleLeftCollapsed}
             className="hidden sm:flex absolute top-1/2 -translate-y-1/2 z-50 bg-slate-900 border border-slate-850 hover:border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-850 p-2 rounded-r-xl shadow-2xl transition-all duration-300 ease-in-out focus:outline-none cursor-pointer items-center justify-center border-l-0"
@@ -124,8 +123,6 @@ export const WorkspacePage: React.FC = () => {
               <ChevronRight className="w-4 h-4" />
             )}
           </button>
-
-          <MobilePanelToggles />
         </div>
       </div>
       <DiffMenu isOpen={isDiffOpen} onClose={() => setIsDiffOpen(false)} />

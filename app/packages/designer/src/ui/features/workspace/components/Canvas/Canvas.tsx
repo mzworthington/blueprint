@@ -365,8 +365,8 @@ export const Canvas: React.FC = () => {
           )}
 
           <Panel
-            position="bottom-right"
-            className="m-4 mb-[max(1rem,env(safe-area-inset-bottom,0px))] bg-slate-950/90 border border-slate-900 px-3.5 py-2 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md"
+            position="bottom-center"
+            className="mb-[max(0.75rem,env(safe-area-inset-bottom,0px))] sm:mb-[max(1rem,env(safe-area-inset-bottom,0px))] w-[calc(100vw-1.5rem)] sm:w-auto sm:max-w-[min(calc(100vw-2rem),56rem)] bg-slate-950/90 border border-slate-900 px-3.5 py-2 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md"
           >
             <WorkspaceToolbar />
           </Panel>

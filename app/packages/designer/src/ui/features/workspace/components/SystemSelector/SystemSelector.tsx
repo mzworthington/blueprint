@@ -13,8 +13,8 @@ export const SystemSelector: React.FC = () => {
   if (!loadedSystems?.length) return null;
 
   return (
-    <div className="flex items-center gap-2 bg-slate-900/40 border border-slate-850 px-2.5 py-1.5 rounded-lg text-xs shrink-0 select-none">
-      <span className="text-[10px] uppercase font-bold tracking-wider text-slate-300 hidden sm:inline">
+    <div className="flex items-center gap-1.5 bg-slate-900/40 border border-slate-850 px-2.5 py-1.5 rounded-lg text-xs min-w-0 flex-1 sm:flex-none sm:max-w-[220px] select-none">
+      <span className="text-[10px] uppercase font-bold tracking-wider text-slate-300 hidden sm:inline shrink-0">
         System:
       </span>
       <select
@@ -30,7 +30,7 @@ export const SystemSelector: React.FC = () => {
           }
         }}
         aria-label="Active system"
-        className="bg-slate-950 border border-slate-850 text-slate-200 hover:text-slate-100 hover:border-slate-700 px-2 py-0.5 rounded-md text-xs font-semibold focus:outline-none focus:border-brand-500 cursor-pointer transition duration-200 max-w-[130px] truncate"
+        className="bg-transparent border-none outline-none text-slate-200 hover:text-slate-100 px-1 py-0.5 rounded text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand-500/40 cursor-pointer transition duration-200 min-w-0 w-full truncate"
       >
         {loadedSystems.map(sys => (
           <option key={sys.path} value={sys.path}>

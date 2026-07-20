@@ -169,7 +169,7 @@ export const ToolbarSaveButton: React.FC = () => {
     <button
       onClick={handleSave}
       disabled={controlsDisabled}
-      className="flex items-center gap-1.5 bg-brand-700 hover:bg-brand-800 text-white px-3 py-1.5 min-h-11 sm:min-h-0 rounded-lg text-xs font-semibold shadow-lg shadow-brand-600/20 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shrink-0 ml-auto sm:ml-0"
+      className="flex items-center gap-1.5 bg-brand-700 hover:bg-brand-800 text-white px-3 py-1.5 min-h-11 sm:min-h-0 rounded-lg text-xs font-semibold shadow-lg shadow-brand-600/20 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
       title={isWorkspaceOpen ? 'Save diagram directly in folder' : 'Save YAML to disk'}
     >
       <Download className="w-3.5 h-3.5" />
