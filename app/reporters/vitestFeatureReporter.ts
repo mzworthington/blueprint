@@ -5,6 +5,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import prettier from 'prettier';
 import type { Reporter, TestCase, TestModule, TestSuite } from 'vitest/node';
 import { XFeatureReporter } from 'x-feature-reporter';
@@ -12,6 +13,11 @@ import { MarkdownAdapter } from 'x-feature-reporter/adapters/markdown';
 import type { XTestResult, XTestSuite } from 'x-feature-reporter';
 
 export const embeddingPlaceholder = 'vitest-feature-reporter';
+
+export const DEFAULT_FEATURES_UNIT_FILE = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  '../../docs/features-unit.md'
+);
 
 export type VitestFeatureReporterOptions = {
   /** Absolute or cwd-relative path for the Markdown output. */
@@ -118,6 +124,48 @@ export async function formatFeatureMarkdownFile(filePath: string): Promise<void>
   }
 }
 
+/** Build and write the unit-test features Markdown report from Vitest results. */
+export async function generateFeaturesUnitReport(
+  testModules: ReadonlyArray<TestModule>,
+  options: VitestFeatureReporterOptions = {}
+): Promise<void> {
+  const resolved: Required<Pick<VitestFeatureReporterOptions, 'outputFile'>> &
+    VitestFeatureReporterOptions = {
+    outputFile: options.outputFile ?? DEFAULT_FEATURES_UNIT_FILE,
+    fullReportLink: options.fullReportLink,
+    embeddingPlaceholder: options.embeddingPlaceholder ?? embeddingPlaceholder,
+  };
+
+  const root: SuiteBucket = { title: 'Root', suites: [], tests: [] };
+
+  for (const mod of testModules) {
+    const pkg = findOrCreate(root, packageLabel(mod.project?.name ?? ''));
+    const file = findOrCreate(pkg, fileLabel(mod.moduleId, mod.relativeModuleId));
+    collectFromChildren(mod.children, file);
+  }
+
+  sortBuckets(root);
+
+  const xRoot: XTestSuite = {
+    title: 'Root',
+    transparent: true,
+    suites: root.suites.map(convertSuite),
+    tests: [],
+  };
+
+  const outputFile = path.isAbsolute(resolved.outputFile)
+    ? resolved.outputFile
+    : path.resolve(process.cwd(), resolved.outputFile);
+
+  const adapter = new MarkdownAdapter({
+    outputFile,
+    fullReportLink: resolved.fullReportLink,
+    embeddingPlaceholder: resolved.embeddingPlaceholder,
+  });
+  new XFeatureReporter(adapter).generateReport(xRoot);
+  await formatFeatureMarkdownFile(outputFile);
+}
+
 export class VitestFeatureReporter implements Reporter {
   readonly options: Required<Pick<VitestFeatureReporterOptions, 'outputFile'>> &
     VitestFeatureReporterOptions;
@@ -135,33 +183,6 @@ export class VitestFeatureReporter implements Reporter {
   }
 
   async onTestRunEnd(testModules: ReadonlyArray<TestModule> = []): Promise<void> {
-    const root: SuiteBucket = { title: 'Root', suites: [], tests: [] };
-
-    for (const mod of testModules) {
-      const pkg = findOrCreate(root, packageLabel(mod.project?.name ?? ''));
-      const file = findOrCreate(pkg, fileLabel(mod.moduleId, mod.relativeModuleId));
-      collectFromChildren(mod.children, file);
-    }
-
-    sortBuckets(root);
-
-    const xRoot: XTestSuite = {
-      title: 'Root',
-      transparent: true,
-      suites: root.suites.map(convertSuite),
-      tests: [],
-    };
-
-    const outputFile = path.isAbsolute(this.options.outputFile)
-      ? this.options.outputFile
-      : path.resolve(process.cwd(), this.options.outputFile);
-
-    const adapter = new MarkdownAdapter({
-      outputFile,
-      fullReportLink: this.options.fullReportLink,
-      embeddingPlaceholder: this.options.embeddingPlaceholder,
-    });
-    new XFeatureReporter(adapter).generateReport(xRoot);
-    await formatFeatureMarkdownFile(outputFile);
+    await generateFeaturesUnitReport(testModules, this.options);
   }
 }

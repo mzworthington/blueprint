@@ -1,6 +1,6 @@
 # Unit test features
 
-Generated from Vitest (`pnpm test:coverage`).
+Generated from Vitest (`pnpm generate:features-unit`).
 
 <!-- vitest-feature-reporter--start -->
 

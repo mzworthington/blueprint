@@ -68,7 +68,7 @@ pnpm lint
 pnpm knip
 ```
 
-Designer E2E (`app/packages/designer`: `pnpm test:e2e`) refreshes screenshots under `docs/screenshots/` used by [journeys](./journeys.md). `pnpm test:coverage` regenerates [Unit test features](./features-unit.md).
+Designer E2E (`app/packages/designer`: `pnpm test:e2e`) refreshes screenshots under `docs/screenshots/` used by [journeys](./journeys.md). `pnpm generate:features-unit` regenerates [Unit test features](./features-unit.md).
 
 ---
 
