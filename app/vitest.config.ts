@@ -12,6 +12,10 @@ const featuresUnitOutputFile = process.env.FEATURES_UNIT_OUTPUT
 
 export default defineConfig({
   test: {
+    fileParallelism: true,
+    ...(process.env.CI ? { maxWorkers: '100%' as const } : {}),
+    pool: 'threads',
+    maxConcurrency: 10,
     projects: [
       'packages/designer/vite.config.ts',
       'packages/cli/vitest.config.ts',
