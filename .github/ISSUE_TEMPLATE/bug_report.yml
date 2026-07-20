@@ -1,0 +1,84 @@
+name: Bug report
+description: Report something that isn't working as expected
+title: '[Bug]: '
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Steps to reproduce, expected vs actual behavior, and environment details help us fix it faster.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of Blueprint is affected?
+      options:
+        - Designer (visual canvas / docs UI)
+        - CLI (codebase scanner)
+        - Core (schema, validation, import/merge)
+        - Import wizards (Mermaid, Terraform, Pulumi, etc.)
+        - Documentation
+        - Other / not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: A clear description of the bug.
+      placeholder: |
+        Example: Importing a Mermaid diagram drops edges between nodes inside the same subgraph.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Minimal steps to trigger the issue. Include sample input (YAML, Mermaid, file paths, CLI flags) where relevant.
+      placeholder: |
+        1. Open Designer at `/workspace`
+        2. Import the following Mermaid diagram: ...
+        3. Apply merge
+        4. Observe missing edges between A and B
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should have happened instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happened instead? Include error messages or console output if any.
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Blueprint version or commit, OS, browser (for Designer), Node/Bun version (for CLI), etc.
+      placeholder: |
+        - Blueprint: main @ abc1234 / release v0.1.5
+        - OS: macOS 15.5
+        - Browser: Chrome 138 (Designer) or Node 24 / Bun 1.2 (CLI)
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Screenshots, logs, stack traces, or links to related issues/PRs.
+    validations:
+      required: false

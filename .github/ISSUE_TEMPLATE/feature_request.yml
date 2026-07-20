@@ -1,0 +1,61 @@
+name: Feature request
+description: Suggest a new capability or improvement for Blueprint
+title: '[Feature]: '
+labels:
+  - feature
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to suggest a feature. A clear problem statement and expected outcome help us evaluate it quickly.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of Blueprint does this relate to?
+      options:
+        - Designer (visual canvas / docs UI)
+        - CLI (codebase scanner)
+        - Core (schema, validation, import/merge)
+        - Import wizards (Mermaid, Terraform, Pulumi, etc.)
+        - Documentation
+        - Other / not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or motivation
+      description: What pain point or gap are you trying to address? What are you doing today without this feature?
+      placeholder: |
+        Example: When importing a Mermaid diagram with nested subgraphs, I lose boundary hierarchy and have to rebuild it manually in the canvas.
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: What would you like Blueprint to do? Describe the ideal behavior from a user perspective.
+      placeholder: |
+        Example: Preserve subgraph structure as nested boundaries during Mermaid import, with a preview of the merge plan before applying.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any workarounds, other tools, or simpler approaches you've thought about?
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Screenshots, sample YAML/Mermaid, links, or anything else that helps illustrate the request.
+    validations:
+      required: false
