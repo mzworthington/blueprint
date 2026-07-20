@@ -161,14 +161,33 @@ test.describe('Blueprint E2E Journeys', () => {
     await expect(page.getByTestId('import-mermaid-dialog')).toBeVisible();
   });
 
-  test('Tablet viewport: compact breadcrumbs and mobile panel toggles', async ({ page }) => {
+  test('Tablet viewport: compact breadcrumbs', async ({ page }) => {
     test.setTimeout(60_000);
     await page.setViewportSize({ width: 768, height: 1024 });
     await page.goto('/workspace/blueprint');
     await continueWithSandbox(page);
 
     await expect(page.getByLabel('Open diagram location menu')).toBeVisible();
-    await expect(page.locator('button[aria-label="Toggle Left Panel"]')).toHaveCount(0);
+    // Below lg (1024px): compact breadcrumbs; desktop edge rails from sm (640px) up.
+    await expect(page.locator('button[aria-label="Toggle Left Panel"]')).toBeVisible();
+
+    await page.locator('button[aria-label="Toggle Left Panel"]').click();
+    await expect(page.getByTestId('left-panel')).not.toHaveClass(/w-0/);
+  });
+
+  test('Phone viewport: mobile panel toggles', async ({ page }) => {
+    test.setTimeout(60_000);
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/workspace/blueprint');
+    await continueWithSandbox(page);
+
+    await expect(page.getByLabel('Open diagram location menu')).toBeVisible();
+    // Edge rails stay in the DOM but are hidden below the sm (640px) breakpoint.
+    await expect(page.locator('button[aria-label="Toggle Left Panel"]')).toBeHidden();
+
+    // Mobile chips only render when both panels are collapsed; close the open props sheet first.
+    await page.getByLabel('Close Properties Panel').click();
+    await expect(page.getByTestId('right-panel')).toHaveClass(/w-0/);
 
     const schemaChip = page.getByRole('button', { name: 'Open Schema Explorer' });
     const propsChip = page.getByRole('button', { name: 'Open Properties Panel' });
@@ -177,12 +196,12 @@ test.describe('Blueprint E2E Journeys', () => {
 
     await schemaChip.click();
     await expect(page.getByTestId('left-panel')).not.toHaveClass(/w-0/);
-    await expect(schemaChip).toHaveCount(0);
+    await expect(schemaChip).toBeHidden();
 
     await page.getByLabel('Close Schema Explorer').click();
     await expect(page.getByTestId('left-panel')).toHaveClass(/w-0/);
 
-    await propsChip.click();
+    await page.getByRole('button', { name: 'Open Properties Panel' }).click();
     await expect(page.getByTestId('right-panel')).not.toHaveClass(/w-0/);
   });
 });
