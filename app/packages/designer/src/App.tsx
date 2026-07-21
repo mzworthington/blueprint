@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect } from 'react';
 import { Route, Router, Switch, useLocation } from 'wouter';
 import { WorkspacePage } from './ui/features/workspace';
 import { OfflineBanner } from './ui/components/OfflineBanner/OfflineBanner';
+import { UpdateBanner } from './ui/components/UpdateBanner/UpdateBanner';
 import { useApp } from './application/context/AppContext';
 
 const DesignSystemPage = lazy(() =>
@@ -37,6 +38,7 @@ function App() {
 
   return (
     <Router base={routerBase}>
+      <UpdateBanner />
       <OfflineBanner networkStatus={networkStatus} />
       <Suspense fallback={<RouteFallback />}>
         <Switch>

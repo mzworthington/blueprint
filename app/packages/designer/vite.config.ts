@@ -11,6 +11,31 @@ const repoDocs = path.resolve(__dirname, '../../../docs');
 const repoSchemas = path.resolve(__dirname, '../../../schemas');
 const base = process.env.VITE_BASE || '/';
 
+function resolveBuildId(): string {
+  const fromCi = process.env.GITHUB_SHA?.slice(0, 12);
+  if (fromCi) return fromCi;
+  if (process.env.VITE_APP_BUILD_ID) return process.env.VITE_APP_BUILD_ID;
+  return `local-${Date.now().toString(36)}`;
+}
+
+const appBuildId = resolveBuildId();
+const appPackageVersion = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'utf8'))
+  .version as string;
+
+/** Inject `<meta name="app-build-id">` for deploy-time version checks (index.html fetch). */
+function injectBuildIdMeta(): Plugin {
+  return {
+    name: 'inject-build-id-meta',
+    transformIndexHtml(html) {
+      if (html.includes('name="app-build-id"')) return html;
+      return html.replace(
+        '<head>',
+        `<head>\n    <meta name="app-build-id" content="${appBuildId}" />`
+      );
+    },
+  };
+}
+
 /** Copy docs screenshots (and other static assets) into public for production & dev. */
 function syncDocsAssets(): Plugin {
   const dest = path.resolve(__dirname, 'public/docs-assets');
@@ -71,13 +96,18 @@ function syncJsonSchemas(): Plugin {
 // https://vite.dev/config/
 export default defineConfig({
   base,
+  define: {
+    __APP_BUILD_ID__: JSON.stringify(appBuildId),
+    __APP_PACKAGE_VERSION__: JSON.stringify(appPackageVersion),
+  },
   plugins: [
     react(),
     tailwindcss(),
     syncDocsAssets(),
     syncJsonSchemas(),
+    injectBuildIdMeta(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt',
       includeAssets: ['favicon.svg', 'favicon.png', 'icons/apple-touch-icon-dark.png'],
       manifest: {
         name: 'Blueprint',

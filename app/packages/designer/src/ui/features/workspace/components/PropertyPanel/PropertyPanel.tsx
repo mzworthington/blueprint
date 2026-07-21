@@ -18,6 +18,7 @@ import {
   findNodeIdByFilepath,
 } from '../../../../../application/forensics/resolveCouplingEdges';
 import { countSchemaForensicsMetrics } from '../../../../../application/forensics/countForensicsMetrics';
+import { formatAppVersionLabel } from '../../../../../infrastructure/pwa/buildId';
 import {
   buildForensicsTrendDashboard,
   collectDescendantForensics,
@@ -324,8 +325,12 @@ export const PropertyPanel: React.FC = () => {
       </div>
 
       <div className="p-4 border-t border-slate-900 text-center">
-        <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider">
-          Blueprint Engine v0.1.0
+        <span
+          className="text-[10px] font-mono text-slate-500 uppercase tracking-wider"
+          data-testid="app-version-label"
+          title={`Build ${formatAppVersionLabel()}`}
+        >
+          Blueprint Engine {formatAppVersionLabel()}
         </span>
       </div>
     </div>
