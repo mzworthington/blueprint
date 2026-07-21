@@ -138,7 +138,7 @@ A summary line shows live counts (`ext · tests · deps`), scoped to the whole d
 
 ## Offline / PWA
 
-The designer installs as a Progressive Web App. After the first visit, the app shell can load offline so you can keep editing a local workspace; an offline banner appears when the network drops. Docs screenshots and public schema URLs are not required for offline canvas use.
+The designer installs as a Progressive Web App. After the first visit, the app shell can load offline so you can keep editing a local workspace; an offline banner appears when the network drops. When a newer build is deployed, an update banner at the top offers **Refresh** (recommended) so you load the latest hashed assets and service worker. Docs screenshots and public schema URLs are not required for offline canvas use.
 
 ## Next
 
