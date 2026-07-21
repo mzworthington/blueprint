@@ -25,7 +25,7 @@ Use this guide if you want to understand the product, not just the internals.
 - [Canvas & workspace](./canvas.md) — startup, panels, Mermaid import, externals, display toggles
 - [CLI analysis](./cli.md) — scanners, flags, outputs
 - [Git forensics](./forensics.md) — metrics, coupling overlay, lookback
-- [Blueprint Schema](./schema.md) — public contract URLs and live latest schema
+- [Blueprint schema contract](./schema.md) — public contract URLs, entity references, live latest schema
 - [Design system](./design-system.md) — visual assets & identity sandbox
 
 ## Deeper reference

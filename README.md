@@ -88,36 +88,20 @@ On GitHub Pages: documentation at `/`, canvas at `/workspace`.
 
 ---
 
-## 🚀 Roadmap & Future Enhancements
+## Roadmap
 
-We are continuously improving Blueprint. Here are some of the key features and enhancements planned for the roadmap:
+Outstanding enhancements planned for Blueprint:
 
-### 1. Interactive Visual Editing
+### Forensics & refactoring
 
-- ~~**Undo / Redo (History):**~~ Shipped — Zustand history + `Cmd+Z` / `Cmd+Shift+Z` toolbar shortcuts.
-- ~~**Drag-and-Drop Catalog:**~~ Shipped — drag catalog items onto the canvas (click-to-add still available).
+- **Guided refactor workflow:** Turn forensics rankings into actionable refactor boundaries, ownership breakdown, and one-click canvas navigation.
 
-### 2. Forensic Insights Expansion
+### Strategic differentiators
 
-- ~~**Code Churn Trend Charts:**~~ Shipped — micro sparklines in the Git forensics property panel; trend charts on `/forensics`.
-- ~~**Suggested Refactoring Paths:**~~ Shipped — complexity × churn × ownership ranking on the `/forensics` Refactor tab.
-- **Guided Refactor Workflow:** Turn forensics rankings into actionable refactor boundaries, ownership breakdown, and one-click canvas navigation.
+- **Code ↔ infrastructure linking:** Cross-diagram dependencies between product and infrastructure hubs (inferred from naming, tags, or annotations).
+- **CI architecture drift gate:** `blueprint --headless` in CI diffs generated YAML against committed `blueprints/` and fails on unreviewed structural changes.
+- **Architecture governance rules engine:** Configurable policy checks (e.g. no person→database at context level) surfaced as designer warnings.
 
-### 3. Strategic Differentiators (Tier 1)
+### Integrations
 
-- **Code ↔ Infrastructure Linking:** Cross-diagram dependencies between product and infrastructure hubs (inferred from naming, tags, or annotations).
-- **CI Architecture Drift Gate:** `blueprint --headless` in CI diffs generated YAML against committed `blueprints/` and fails on unreviewed structural changes.
-- **Architecture Governance Rules Engine:** Configurable policy checks (e.g. no person→database at context level) surfaced as designer warnings.
-
-### 4. Integrations & Version Control
-
-- **Direct Git Branch Integration:** View active git branch states within the web app and directly commit/push schema changes to new branches.
-
-### 4b. Infrastructure as Code
-
-- ~~**Pulumi CLI pass:**~~ Shipped — auto-detects `Pulumi.yaml` projects alongside Terraform; maps to Infrastructure hub + `containers.yaml`.
-- ~~**Designer IaC import wizard:**~~ Shipped — paste or upload Terraform / Pulumi into the active diagram with merge preview (toolbar **Open** → Import Infrastructure).
-
-### 5. Local-first Persistence
-
-- ~~**Draft restore on refresh:**~~ Shipped — sandbox drafts hydrate from IndexedDB when topology matches; workspace open remains disk-first with draft merge.
+- **Direct Git branch integration:** View active git branch states within the web app and commit/push schema changes to new branches.
