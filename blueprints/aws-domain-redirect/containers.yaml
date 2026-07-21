@@ -1,0 +1,21 @@
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: container
+metaData:
+  entityRef: blueprint/aws-domain-redirect
+  name: Aws-domain-redirect Infrastructure
+  source:
+    scannedAtCommit: c191f7bcb0fa786b68c7b3904b6f3bbb90881fc6
+    scanRoot: .
+    remoteUrl: https://github.com/futurice/terraform-examples
+    defaultBranch: master
+nodes:
+  - entityRef: blueprint/aws-domain-redirect/module-aws-reverse-proxy
+    type: container
+    name: aws_reverse_proxy
+    external: true
+    properties:
+      iac.address: module.aws_reverse_proxy
+      iac.provider_type: module
+      iac.kind: module
+      iac.source: git::ssh://git@github.com/futurice/terraform-utils.git//aws_reverse_proxy?ref=v11.0
+dependencies: []

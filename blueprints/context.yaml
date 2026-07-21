@@ -4,10 +4,10 @@ metaData:
   entityRef: blueprint
   name: Blueprint Context
   source:
-    scannedAtCommit: 4f7c6f66eeafb699d5146ecb97b33fed3e9de8dd
+    scannedAtCommit: c191f7bcb0fa786b68c7b3904b6f3bbb90881fc6
     scanRoot: .
-    remoteUrl: https://github.com/mzworthington/blueprint
-    defaultBranch: main
+    remoteUrl: https://github.com/futurice/terraform-examples
+    defaultBranch: master
 nodes:
   - entityRef: blueprint/backstage
     type: group
@@ -166,6 +166,18 @@ nodes:
       rootPath: ''
       productId: infrastructure
     children:
+      - entityRef: blueprint/aws-domain-redirect
+        type: software-system
+        name: Aws-domain-redirect System
+        properties:
+          rootPath: aws/aws_domain_redirect
+          productId: infrastructure
+      - entityRef: blueprint/aws-lambda-api
+        type: software-system
+        name: Aws-lambda-api System
+        properties:
+          rootPath: aws/aws_lambda_api
+          productId: infrastructure
       - entityRef: blueprint/techdocs-s3-storage
         type: software-system
         name: Techdocs-s3-storage System
@@ -217,16 +229,6 @@ nodes:
         forensics:
           complexity: 106
           churn: 1150
-          hotspotScore: 0.4597701149425287
-          authorCount: 1
-          fileCount: 366
-          hotspotCount: 0
-          knowledgeSiloCount: 110
-          classifications:
-            - knowledge-silo
-          authors:
-            - email: matt@siliconpanda.com
-              commits: 1150
           churnByWeek:
             - 0
             - 0
@@ -241,8 +243,47 @@ nodes:
             - 0
             - 390
             - 760
+          authorCount: 1
           topAuthorPercent: 1
+          authors:
+            - email: matt@siliconpanda.com
+              commits: 1150
+          hotspotScore: 0.4597701149425287
+          classifications:
+            - knowledge-silo
           sinceDays: 90
+          fileCount: 366
+          hotspotCount: 0
+          knowledgeSiloCount: 110
+  - entityRef: blueprint/terraform-examples
+    type: software-system
+    name: Terraform Examples System
+    properties:
+      rootPath: ''
+      productId: terraform-examples
+    forensics:
+      complexity: 1
+      churn: 0
+      churnByWeek:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+      authorCount: 0
+      hotspotScore: 0
+      sinceDays: 90
+      fileCount: 2
+      hotspotCount: 0
+      knowledgeSiloCount: 0
 dependencies:
   - from: blueprint/user
     to: blueprint/backstage
@@ -258,5 +299,9 @@ dependencies:
     description: Uses
   - from: blueprint/user
     to: blueprint/testproject
+    type: direct-call
+    description: Uses
+  - from: blueprint/user
+    to: blueprint/terraform-examples
     type: direct-call
     description: Uses
