@@ -1,4 +1,10 @@
 import { test, expect } from '@playwright/test';
+import {
+  expectCanvasNode,
+  SANDBOX_CONTAINER_SLUG,
+  SANDBOX_CONTEXT_SLUG,
+  SANDBOX_CONTEXT_SYSTEM,
+} from './helpers/canvas';
 import { continueWithSandbox } from './helpers/toolbar';
 
 test.describe('Hierarchy zoom journeys', () => {
@@ -7,34 +13,34 @@ test.describe('Hierarchy zoom journeys', () => {
     await page.goto('/workspace/blueprint');
     await continueWithSandbox(page);
     await page.locator('button[aria-label="Toggle Right Panel"]').click();
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint');
+    await expect(page.locator('#workspace-slug-input')).toHaveValue(SANDBOX_CONTEXT_SLUG);
 
-    // Match the proven Visual C4 locator style; App System can sit far on the canvas.
-    const appSystem = page.locator('.react-flow__node', { hasText: 'App System' }).first();
-    await expect(appSystem).toBeVisible({ timeout: 15000 });
-    await appSystem.scrollIntoViewIfNeeded();
-    await appSystem.dblclick();
+    const eshopSystem = await expectCanvasNode(page, SANDBOX_CONTEXT_SYSTEM);
+    await eshopSystem.scrollIntoViewIfNeeded();
+    await eshopSystem.dblclick();
 
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint/app', {
+    await expect(page.locator('#workspace-slug-input')).toHaveValue(SANDBOX_CONTAINER_SLUG, {
       timeout: 10000,
     });
-    await expect(page).toHaveURL(/\/workspace\/blueprint\/app/);
+    await expect(page).toHaveURL(
+      new RegExp(`/workspace/${SANDBOX_CONTAINER_SLUG.replace('/', '\\/')}$`)
+    );
 
     await expect(page.getByTitle('Zoom out to parent diagram (Esc)')).toBeVisible();
     await page.getByTitle('Zoom out to parent diagram (Esc)').click();
 
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint');
-    await expect(page).toHaveURL(/\/workspace\/blueprint$/);
+    await expect(page.locator('#workspace-slug-input')).toHaveValue(SANDBOX_CONTEXT_SLUG);
+    await expect(page).toHaveURL(new RegExp(`/workspace/${SANDBOX_CONTEXT_SLUG}$`));
 
-    await appSystem.scrollIntoViewIfNeeded();
-    await appSystem.dblclick();
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint/app');
+    await eshopSystem.scrollIntoViewIfNeeded();
+    await eshopSystem.dblclick();
+    await expect(page.locator('#workspace-slug-input')).toHaveValue(SANDBOX_CONTAINER_SLUG);
 
     const contextCrumb = page.getByRole('link', { name: /Blueprint Context/i });
     await expect(contextCrumb).toBeVisible();
     await contextCrumb.click();
-    await expect(page).toHaveURL(/\/workspace\/blueprint$/);
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint', {
+    await expect(page).toHaveURL(new RegExp(`/workspace/${SANDBOX_CONTEXT_SLUG}$`));
+    await expect(page.locator('#workspace-slug-input')).toHaveValue(SANDBOX_CONTEXT_SLUG, {
       timeout: 10000,
     });
   });
@@ -45,16 +51,15 @@ test.describe('Hierarchy zoom journeys', () => {
     await continueWithSandbox(page);
     await page.locator('button[aria-label="Toggle Right Panel"]').click();
 
-    const appSystem = page.locator('.react-flow__node', { hasText: 'App System' }).first();
-    await expect(appSystem).toBeVisible({ timeout: 15000 });
-    await appSystem.scrollIntoViewIfNeeded();
-    await appSystem.dblclick();
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint/app', {
+    const eshopSystem = await expectCanvasNode(page, SANDBOX_CONTEXT_SYSTEM);
+    await eshopSystem.scrollIntoViewIfNeeded();
+    await eshopSystem.dblclick();
+    await expect(page.locator('#workspace-slug-input')).toHaveValue(SANDBOX_CONTAINER_SLUG, {
       timeout: 10000,
     });
 
     await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
     await page.keyboard.press('Backspace');
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint');
+    await expect(page.locator('#workspace-slug-input')).toHaveValue(SANDBOX_CONTEXT_SLUG);
   });
 });

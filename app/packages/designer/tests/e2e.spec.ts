@@ -1,6 +1,16 @@
 import { test, expect } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
+import {
+  expectCanvasNode,
+  SANDBOX_COMPONENT_NAME,
+  SANDBOX_COMPONENT_SLUG,
+  SANDBOX_CONTAINER_NAME,
+  SANDBOX_CONTAINER_NODE,
+  SANDBOX_CONTAINER_SLUG,
+  SANDBOX_CONTEXT_SLUG,
+  SANDBOX_CONTEXT_SYSTEM,
+} from './helpers/canvas';
 import { continueWithSandbox, openImportMermaid } from './helpers/toolbar';
 
 const SAMPLE_MERMAID = `flowchart TD
@@ -76,39 +86,37 @@ test.describe('Blueprint E2E Journeys', () => {
     await page.waitForTimeout(1000);
     await page.screenshot({ path: '../../../docs/screenshots/3-container-level.png' });
 
-    const appSystem = page.locator('.react-flow__node', { hasText: 'App System' }).first();
-    await expect(appSystem).toBeVisible();
-    await appSystem.dblclick();
+    const eshopSystem = await expectCanvasNode(page, SANDBOX_CONTEXT_SYSTEM);
+    await eshopSystem.dblclick();
 
-    await expect(page.locator('#workspace-name-input')).toHaveValue('App Containers');
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint/app');
-    expect(page.url()).toContain('/workspace/blueprint/app');
+    await expect(page.locator('#workspace-name-input')).toHaveValue(SANDBOX_CONTAINER_NAME);
+    await expect(page.locator('#workspace-slug-input')).toHaveValue(SANDBOX_CONTAINER_SLUG);
+    expect(page.url()).toContain(`/workspace/${SANDBOX_CONTAINER_SLUG}`);
 
     await page.waitForTimeout(1000);
     await page.screenshot({ path: '../../../docs/screenshots/4-zoomed-in-components.png' });
 
-    const appService = page.locator('.react-flow__node', { hasText: 'App Service' }).first();
-    await expect(appService).toBeVisible();
-    await appService.dblclick();
+    const webappService = await expectCanvasNode(page, SANDBOX_CONTAINER_NODE);
+    await webappService.dblclick();
 
-    await expect(page.locator('#workspace-name-input')).toHaveValue('App Service Components');
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint/app/app');
-    expect(page.url()).toContain('/workspace/blueprint/app/app');
+    await expect(page.locator('#workspace-name-input')).toHaveValue(SANDBOX_COMPONENT_NAME);
+    await expect(page.locator('#workspace-slug-input')).toHaveValue(SANDBOX_COMPONENT_SLUG);
+    expect(page.url()).toContain(`/workspace/${SANDBOX_COMPONENT_SLUG}`);
 
     // Blur inputs so Escape is handled as zoom-out, not ignored while typing.
     await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
     await page.keyboard.press('Escape');
 
-    await expect(page.locator('#workspace-name-input')).toHaveValue('App Containers');
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint/app');
-    expect(page.url()).toContain('/workspace/blueprint/app');
+    await expect(page.locator('#workspace-name-input')).toHaveValue(SANDBOX_CONTAINER_NAME);
+    await expect(page.locator('#workspace-slug-input')).toHaveValue(SANDBOX_CONTAINER_SLUG);
+    expect(page.url()).toContain(`/workspace/${SANDBOX_CONTAINER_SLUG}`);
 
     await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
     await page.keyboard.press('Escape');
 
     await expect(page.locator('#workspace-name-input')).toHaveValue('Blueprint Context');
-    await expect(page.locator('#workspace-slug-input')).toHaveValue('blueprint');
-    expect(page.url()).toContain('/workspace/blueprint');
+    await expect(page.locator('#workspace-slug-input')).toHaveValue(SANDBOX_CONTEXT_SLUG);
+    expect(page.url()).toContain(`/workspace/${SANDBOX_CONTEXT_SLUG}`);
 
     await page.waitForTimeout(1000);
     await page.screenshot({ path: '../../../docs/screenshots/5-zoomed-back-out.png' });
