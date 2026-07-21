@@ -56,6 +56,9 @@ describe('WorkspacePage Component', () => {
       leftCollapsed: true,
       rightCollapsed: true,
       isStartupOpen: false,
+      systemSelectInFlight: null,
+      isLoading: false,
+      diagramLoadCount: 0,
       workspaceName: 'Initial Name',
       currentFilePath: 'initial.yaml',
       schema: {

@@ -108,10 +108,10 @@ Outstanding enhancements planned for Blueprint:
 
 ### Designer canvas performance
 
-Planned:
+Shipped:
 
-- **Diagram loading overlay:** Full-canvas loading state when lazy-loading blueprints, switching diagrams, and running autolayout (parse YAML → `initSchema` → dagre). Needs reliable session-scoped clear semantics (React Strict Mode / fast navigation safe).
-- **Off-main-thread layout:** Move dagre (or equivalent) to a Web Worker, or chunk layout for very large diagrams, so the UI stays responsive during sandbox drill-down and component-level views with 100+ nodes.
+- **Diagram loading overlay:** Full-canvas loading state when lazy-loading blueprints, switching diagrams, and running autolayout. Uses monotonic session tokens so only the active navigation clears the overlay (safe under React Strict Mode and fast drill-down).
+- **Off-main-thread layout:** Dagre runs in a dedicated Web Worker for diagrams with 24+ nodes; graphs with 80+ nodes are laid out by connected component with UI yields between chunks.
 
 ### C# and .NET analysis
 

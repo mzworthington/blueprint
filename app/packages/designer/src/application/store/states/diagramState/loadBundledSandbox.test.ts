@@ -48,6 +48,9 @@ describe('loadBundledSandbox', () => {
       isWorkspaceOpen: false,
       loadedSystems: [],
       workspaceName: '',
+      diagramLoadCount: 0,
+      isLoading: false,
+      systemSelectInFlight: null as string | null,
       clearHistory: () => {},
       initSchema: (schema: SystemSchema) => {
         store = { ...store, schema };
@@ -63,6 +66,9 @@ describe('loadBundledSandbox', () => {
           isWorkspaceOpen: boolean;
           initSchema: (schema: SystemSchema) => void;
           clearHistory: () => void;
+          diagramLoadCount: number;
+          isLoading: boolean | string;
+          systemSelectInFlight: string | null;
           loadedSystems: typeof systems;
           workspaceName: string;
         },
@@ -95,6 +101,9 @@ describe('loadBundledSandbox', () => {
       ],
       currentFilePath: 'blueprint.yaml',
       workspaceName: '',
+      diagramLoadCount: 0,
+      isLoading: false,
+      systemSelectInFlight: null as string | null,
       clearHistory: () => {},
       initSchema: (schema: SystemSchema) => {
         store = { ...store, schema };
@@ -110,6 +119,9 @@ describe('loadBundledSandbox', () => {
           isWorkspaceOpen: boolean;
           initSchema: (schema: SystemSchema) => void;
           clearHistory: () => void;
+          diagramLoadCount: number;
+          isLoading: boolean | string;
+          systemSelectInFlight: string | null;
           loadedSystems: Array<{ path: string; name: string; schema: SystemSchema }>;
           workspaceName: string;
         },

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useLocation, useRoute } from 'wouter';
 import { useBlueprintStore } from '../../../../application/store/store';
 import { guessBundledPathForEntityRef } from '../../../../application/store/states/diagramState/bundledBlueprintLoader';
+import { SANDBOX_RELOAD_IN_FLIGHT } from '../../../../application/store/diagramLoadSession';
 import { getSchemaEntityRef } from '@blueprint/core';
 
 /**
@@ -29,11 +30,15 @@ export function useUrlSync(): void {
   const [match, params] = useRoute('/workspace/*');
 
   const lastSyncedLocationRef = useRef<string | null>(null);
+  const systemSelectInFlight = useBlueprintStore(s => s.systemSelectInFlight);
+  const diagramLoadCount = useBlueprintStore(s => s.diagramLoadCount);
 
   useEffect(() => {
     const isWorkspaceRoute =
       location.startsWith('/workspace') || location === '/' || location === '';
     if (!isWorkspaceRoute) return;
+
+    if (diagramLoadCount > 0 || systemSelectInFlight === SANDBOX_RELOAD_IN_FLIGHT) return;
 
     const entityRef = params?.['*']?.replace(/\/$/, '');
     const isWorkspaceRoot = location === '/workspace' || location === '/workspace/';
@@ -55,7 +60,9 @@ export function useUrlSync(): void {
         const catalogEntry = workspaceCatalog.find(entry => entry.entityRef === entityRef);
         const path = catalogEntry?.path ?? guessBundledPathForEntityRef(entityRef);
         if (path) {
-          void selectSystem(path);
+          if (systemSelectInFlight !== path) {
+            void selectSystem(path);
+          }
           lastSyncedLocationRef.current = location;
           return;
         }
@@ -64,7 +71,9 @@ export function useUrlSync(): void {
 
     if (foundSystem) {
       if (foundSystem.path !== currentFilePath) {
-        selectSystem(foundSystem.path);
+        if (systemSelectInFlight !== foundSystem.path) {
+          void selectSystem(foundSystem.path);
+        }
         lastSyncedLocationRef.current = location;
         return;
       }
@@ -94,5 +103,7 @@ export function useUrlSync(): void {
     params,
     isWorkspaceOpen,
     isStartupOpen,
+    systemSelectInFlight,
+    diagramLoadCount,
   ]);
 }

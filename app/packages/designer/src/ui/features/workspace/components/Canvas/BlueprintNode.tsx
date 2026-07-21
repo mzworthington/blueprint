@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import type { NodeType } from '@blueprint/core';
 import { useBlueprintStore } from '../../../../../application/store/store';
+import { guessBundledPathForEntityRef } from '../../../../../application/store/states/diagramState/bundledBlueprintLoader';
 import type { ComponentNodeData } from '../../../../../application/store/store';
 import { evaluateForensicsConcern } from '../../../../../application/forensics/concern';
 import { useHasSubDiagram } from './SubDiagramRefsContext';
@@ -184,6 +185,8 @@ export const BlueprintNode = memo(({ id, data, selected }: NodeProps<CustomNode>
 
   const [, setLocation] = useLocation();
   const selectNode = useBlueprintStore(state => state.selectNode);
+  const selectSystem = useBlueprintStore(state => state.selectSystem);
+  const workspaceCatalog = useBlueprintStore(state => state.workspaceCatalog);
   const openSourceCodeDialog = useBlueprintStore(state => state.openSourceCodeDialog);
   const liteCanvas = useBlueprintStore(state => state.liteCanvas);
   const entityRef = data.entityRef;
@@ -339,9 +342,12 @@ export const BlueprintNode = memo(({ id, data, selected }: NodeProps<CustomNode>
                 type="button"
                 onClick={e => {
                   e.stopPropagation();
-                  if (data.entityRef) {
-                    setLocation(`/workspace/${data.entityRef}`);
-                  }
+                  if (!data.entityRef) return;
+                  setLocation(`/workspace/${data.entityRef}`);
+                  const path =
+                    workspaceCatalog.find(entry => entry.entityRef === data.entityRef)?.path ??
+                    guessBundledPathForEntityRef(data.entityRef);
+                  if (path) void selectSystem(path);
                 }}
                 className="flex items-center gap-1 bg-brand-500/10 border border-brand-500/30 hover:bg-brand-500/20 active:bg-brand-500/30 text-brand-400 px-1.5 py-0.5 rounded text-[8px] font-bold tracking-wider uppercase transition cursor-pointer z-10"
                 title="Click to zoom inside"

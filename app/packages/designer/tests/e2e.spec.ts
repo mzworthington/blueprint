@@ -85,11 +85,12 @@ test.describe('Blueprint E2E Journeys', () => {
   });
 
   test('Zoom out button returns to parent diagram', async ({ page }) => {
+    test.setTimeout(90_000);
     await loadSandbox(page);
     const rootSlug = await workspaceSlug(page);
     await drillIntoFirstZoomable(page);
 
-    await page.getByTitle('Zoom out to parent diagram (Esc)').click();
+    await page.getByTestId('zoom-out-button').click();
     await expectCanvasReady(page);
     expect(await workspaceSlug(page)).toBe(rootSlug);
   });

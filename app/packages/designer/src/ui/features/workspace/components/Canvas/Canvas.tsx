@@ -40,6 +40,13 @@ import {
   hasSessionLayout,
   schemaLayoutFingerprint,
 } from '../../../../../application/store/sessionLayoutCache';
+import {
+  beginDiagramLoad,
+  DIAGRAM_LAYOUT_MESSAGE,
+  endDiagramLoad,
+} from '../../../../../application/store/diagramLoadSession';
+import { yieldToUi } from '../../../../../application/store/yieldToUi';
+import { DiagramLoadingOverlay } from './DiagramLoadingOverlay';
 import { SubDiagramRefsContext } from './SubDiagramRefsContext';
 
 export const Canvas: React.FC = () => {
@@ -78,6 +85,7 @@ export const Canvas: React.FC = () => {
     redo,
     recordHistory,
     addNode,
+    selectSystem,
   } = useBlueprintStore(
     useShallow(state => ({
       nodes: state.nodes,
@@ -112,6 +120,7 @@ export const Canvas: React.FC = () => {
       redo: state.redo,
       recordHistory: state.recordHistory,
       addNode: state.addNode,
+      selectSystem: state.selectSystem,
     }))
   );
 
@@ -153,7 +162,8 @@ export const Canvas: React.FC = () => {
       isWorkspaceOpen ? workspaceName : undefined
     );
     setLocation(`/workspace/${parentRef}`);
-  }, [parentSystem, isWorkspaceOpen, workspaceName, setLocation]);
+    void selectSystem(parentSystem.path);
+  }, [parentSystem, isWorkspaceOpen, workspaceName, setLocation, selectSystem]);
 
   useKeyboardNavigation({
     onZoomOut: parentSystem ? zoomOutToParent : undefined,
@@ -163,26 +173,49 @@ export const Canvas: React.FC = () => {
 
   useEffect(() => {
     const controller = new AbortController();
+    const layoutSessionAtStart = layoutSessionId;
+    const filePathAtStart = currentFilePath;
+
     const run = async () => {
-      const { schema, layoutEngine: currentEngine } = useBlueprintStore.getState();
+      const { schema, currentFilePath: activePath } = useBlueprintStore.getState();
       const fingerprint = schemaLayoutFingerprint(schema);
       const needsLayout =
-        shouldAutoLayoutOnLoad(schema) &&
-        !hasSessionLayout(useBlueprintStore.getState().currentFilePath, fingerprint);
+        shouldAutoLayoutOnLoad(schema) && !hasSessionLayout(activePath, fingerprint);
 
-      if (needsLayout) {
-        if (currentEngine !== 'dagre') {
-          useBlueprintStore.setState({ layoutEngine: 'dagre' });
+      let layoutStarted = false;
+      try {
+        if (needsLayout) {
+          beginDiagramLoad(
+            () => useBlueprintStore.getState(),
+            partial => useBlueprintStore.setState(partial),
+            DIAGRAM_LAYOUT_MESSAGE
+          );
+          layoutStarted = true;
+          await yieldToUi();
+          const { layoutEngine: currentEngine } = useBlueprintStore.getState();
+          if (currentEngine !== 'dagre') {
+            useBlueprintStore.setState({ layoutEngine: 'dagre' });
+          }
+          await applyClientLayout({
+            signal: controller.signal,
+            engine: 'dagre',
+            recordHistory: false,
+          });
         }
-        await applyClientLayout({
-          signal: controller.signal,
-          engine: 'dagre',
-          recordHistory: false,
-        });
+      } finally {
+        if (layoutStarted) {
+          endDiagramLoad(
+            () => useBlueprintStore.getState(),
+            partial => useBlueprintStore.setState(partial)
+          );
+        }
       }
 
-      if (controller.signal.aborted) return;
-      // Wait for React Flow to commit node measurements after layout state updates.
+      const stillCurrent =
+        useBlueprintStore.getState().layoutSessionId === layoutSessionAtStart &&
+        useBlueprintStore.getState().currentFilePath === filePathAtStart;
+      if (!stillCurrent || controller.signal.aborted) return;
+
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           fitViewRef.current({ padding: 0.12 });
@@ -360,11 +393,18 @@ export const Canvas: React.FC = () => {
           }}
           onNodeDragStart={() => recordHistory()}
           onNodeDoubleClick={(_, node) => {
-            const hasSub =
-              node.data?.entityRef && subDiagramRefs.has(node.data.entityRef as string);
-            if (hasSub && node.data?.entityRef) {
-              setLocation(`/workspace/${node.data.entityRef}`);
-            }
+            const entityRef = node.data?.entityRef as string | undefined;
+            const hasSub = entityRef && subDiagramRefs.has(entityRef);
+            if (!hasSub || !entityRef) return;
+            setLocation(`/workspace/${entityRef}`);
+            const path =
+              workspaceCatalog.find(entry => entry.entityRef === entityRef)?.path ??
+              loadedSystems.find(
+                sys =>
+                  getSchemaEntityRef(sys.schema, isWorkspaceOpen ? workspaceName : undefined) ===
+                  entityRef
+              )?.path;
+            if (path) void selectSystem(path);
           }}
           onDragOver={onDragOver}
           onDrop={onDrop}
@@ -392,6 +432,7 @@ export const Canvas: React.FC = () => {
                 }}
                 className="flex items-center gap-1.5 bg-slate-950/90 border border-slate-800 hover:border-brand-500/40 hover:bg-slate-900 text-slate-200 hover:text-brand-300 px-3 py-1.5 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md text-xs font-semibold transition cursor-pointer"
                 title="Zoom out to parent diagram (Esc)"
+                data-testid="zoom-out-button"
               >
                 <ZoomOut className="w-3.5 h-3.5" />
                 <span>Zoom out</span>
@@ -509,6 +550,7 @@ export const Canvas: React.FC = () => {
               </div>
             </Panel>
           )}
+          <DiagramLoadingOverlay />
         </ReactFlow>
       </SubDiagramRefsContext.Provider>
     </div>

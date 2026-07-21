@@ -43,6 +43,8 @@ export interface UiState {
   notification: ToastNotification | null;
   focusedCyclePath: string[] | null;
   isLoading: boolean | string;
+  /** Nested diagram load/layout operations (overlay stays until zero). */
+  diagramLoadCount: number;
   toggleShowTests: () => void;
   toggleShowExternals: () => void;
   toggleShowSelectedDependenciesOnly: () => void;
@@ -93,6 +95,7 @@ export const createUiState = (
   notification: null,
   focusedCyclePath: null,
   isLoading: false,
+  diagramLoadCount: 0,
   toggleShowTests: () => set(state => ({ showTests: !state.showTests })),
   toggleShowExternals: () => set(state => ({ showExternals: !state.showExternals })),
   toggleShowSelectedDependenciesOnly: () =>

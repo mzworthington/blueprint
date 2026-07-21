@@ -2,6 +2,13 @@ import { resolveWorkspaceEntityRefs, type SystemSchema } from '@blueprint/core';
 import { buildBundledPathCatalog, startBundledBlueprintPrefetch } from './bundledBlueprintLoader';
 import { blueprintPaths, defaultLoadedSystems } from '../../defaultData';
 import { clearSandboxCaches } from '../../clearSandboxCaches';
+import {
+  beginDiagramLoad,
+  endDiagramLoad,
+  SANDBOX_LOADING_MESSAGE,
+  SANDBOX_RELOAD_IN_FLIGHT,
+} from '../../diagramLoadSession';
+import { yieldToUi } from '../../yieldToUi';
 import type { HydrateSystem } from './hydrateSandboxDrafts';
 
 export function resolveBundledSandboxSystems(): HydrateSystem[] {
@@ -20,6 +27,9 @@ type ActivateBundledSandboxGet = () => {
   isWorkspaceOpen: boolean;
   initSchema: (schema: SystemSchema) => void;
   clearHistory: () => void;
+  diagramLoadCount: number;
+  isLoading: boolean | string;
+  systemSelectInFlight: string | null;
   loadedSystems: HydrateSystem[];
   workspaceName: string;
   workingCopyPort?: {
@@ -90,8 +100,20 @@ export async function reloadBundledSandbox(
 ): Promise<void> {
   if (get().isWorkspaceOpen) return;
 
-  await clearSandboxCaches();
-  get().clearHistory();
-  activateBundledSandbox(set, get, resolveBundledSandboxSystems());
-  startBundledBlueprintPrefetch({ get, set });
+  set({ systemSelectInFlight: SANDBOX_RELOAD_IN_FLIGHT });
+  beginDiagramLoad(get, set, SANDBOX_LOADING_MESSAGE);
+  await yieldToUi();
+
+  try {
+    await clearSandboxCaches();
+    get().clearHistory();
+    await yieldToUi();
+    activateBundledSandbox(set, get, resolveBundledSandboxSystems());
+    startBundledBlueprintPrefetch({ get, set });
+  } finally {
+    endDiagramLoad(get, set);
+    if (get().systemSelectInFlight === SANDBOX_RELOAD_IN_FLIGHT) {
+      set({ systemSelectInFlight: null });
+    }
+  }
 }

@@ -31,6 +31,8 @@ import {
   getSessionLayout,
   schemaLayoutFingerprint,
 } from '../sessionLayoutCache';
+import { beginDiagramLoad, DIAGRAM_LOADING_MESSAGE, endDiagramLoad } from '../diagramLoadSession';
+import { yieldToUi } from '../yieldToUi';
 import type { CanvasNodeChange, CanvasEdgeChange, CanvasConnection } from '../../../core';
 import {
   mapDomainNodesToRFNodes,
@@ -99,6 +101,8 @@ export interface DiagramState {
   layoutCustomized: boolean;
   /** Bumped on each initSchema so Canvas can run load layout + fitView. */
   layoutSessionId: number;
+  /** Path currently being loaded by selectSystem (prevents URL-sync loops). */
+  systemSelectInFlight: string | null;
 
   recordHistory: () => void;
   undo: () => void;
@@ -175,6 +179,7 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   hasPendingChanges: false,
   layoutCustomized: false,
   layoutSessionId: 0,
+  systemSelectInFlight: null,
 
   checkPendingChanges: async () => {
     const { currentFilePath, hasPendingChanges, workingCopyPort } = get();
@@ -256,38 +261,51 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   },
 
   selectSystem: async (path: string) => {
-    const { logger, isWorkspaceOpen, workspacePort, workingCopyPort } = get();
+    if (get().systemSelectInFlight === path) return;
 
-    if (!get().loadedSystems.some(s => s.path === path)) {
-      const ok = isWorkspaceOpen
-        ? await ensureSystemLoaded(path, {
-            workspacePort,
-            workingCopyPort,
-            logger,
-            get,
-            set,
-          })
-        : await ensureBundledSystemLoaded(path, { get, set, logger });
-      if (!ok) {
-        logger.warn('System path not found in workspace', { path });
+    set({ systemSelectInFlight: path });
+    const { logger, isWorkspaceOpen, workspacePort, workingCopyPort } = get();
+    beginDiagramLoad(get, set, DIAGRAM_LOADING_MESSAGE);
+    await yieldToUi();
+
+    try {
+      if (!get().loadedSystems.some(s => s.path === path)) {
+        const ok = isWorkspaceOpen
+          ? await ensureSystemLoaded(path, {
+              workspacePort,
+              workingCopyPort,
+              logger,
+              get,
+              set,
+            })
+          : await ensureBundledSystemLoaded(path, { get, set, logger });
+        if (!ok) {
+          logger.warn('System path not found in workspace', { path });
+          return;
+        }
+      }
+
+      const system = get().loadedSystems.find(s => s.path === path);
+      if (!system) {
+        logger.warn('System path not found in loaded systems', { path });
         return;
       }
+      logger.info('Switching active system', { name: system.name, path });
+      set({
+        currentFilePath: path,
+        selectedNodeId: null,
+        selectedEdgeId: null,
+        focusedCyclePath: null,
+      });
+      get().clearHistory();
+      await yieldToUi();
+      get().initSchema(system.schema);
+    } finally {
+      endDiagramLoad(get, set);
+      if (get().systemSelectInFlight === path) {
+        set({ systemSelectInFlight: null });
+      }
     }
-
-    const system = get().loadedSystems.find(s => s.path === path);
-    if (!system) {
-      logger.warn('System path not found in loaded systems', { path });
-      return;
-    }
-    logger.info('Switching active system', { name: system.name, path });
-    set({
-      currentFilePath: path,
-      selectedNodeId: null,
-      selectedEdgeId: null,
-      focusedCyclePath: null,
-    });
-    get().clearHistory();
-    get().initSchema(system.schema);
   },
 
   initSchema: schema => {

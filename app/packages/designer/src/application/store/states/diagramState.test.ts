@@ -22,6 +22,8 @@ describe('diagramState Actions & State Management', () => {
       currentFilePath: 'blueprint.yaml',
       workspaceName: undefined,
       loadedSystems: [],
+      systemSelectInFlight: null,
+      diagramLoadCount: 0,
       past: [],
       future: [],
     });
