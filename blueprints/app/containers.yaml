@@ -1,0 +1,187 @@
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: container
+metaData:
+  entityRef: blueprint/app
+  name: App Containers
+  source:
+    remoteUrl: https://github.com/mzworthington/blueprint
+    defaultBranch: main
+    scannedAtCommit: 4f7c6f66eeafb699d5146ecb97b33fed3e9de8dd
+    scanRoot: .
+nodes:
+  - entityRef: blueprint/app/core
+    type: container
+    name: Core Service
+    isTest: false
+    forensics:
+      complexity: 106
+      churn: 135
+      churnByWeek:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 36
+        - 99
+      authorCount: 1
+      topAuthorPercent: 1
+      authors:
+        - email: matt@siliconpanda.com
+          commits: 135
+      hotspotScore: 0.30344827586206896
+      classifications:
+        - knowledge-silo
+      sinceDays: 90
+      fileCount: 52
+      hotspotCount: 0
+      knowledgeSiloCount: 18
+  - entityRef: blueprint/app/cli
+    type: container
+    name: Cli Service
+    isTest: false
+    forensics:
+      complexity: 87
+      churn: 256
+      churnByWeek:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 106
+        - 150
+      authorCount: 1
+      topAuthorPercent: 1
+      authors:
+        - email: matt@siliconpanda.com
+          commits: 256
+      hotspotScore: 0.2019704433497537
+      classifications:
+        - knowledge-silo
+      sinceDays: 90
+      fileCount: 99
+      hotspotCount: 0
+      knowledgeSiloCount: 31
+  - entityRef: blueprint/app/designer
+    type: container
+    name: Designer Service
+    isTest: false
+    forensics:
+      complexity: 61
+      churn: 749
+      churnByWeek:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 247
+        - 502
+      authorCount: 1
+      topAuthorPercent: 1
+      authors:
+        - email: matt@siliconpanda.com
+          commits: 749
+      hotspotScore: 0.4597701149425287
+      classifications:
+        - knowledge-silo
+      sinceDays: 90
+      fileCount: 212
+      hotspotCount: 0
+      knowledgeSiloCount: 60
+  - entityRef: blueprint/app/app
+    type: container
+    name: App Service
+    isTest: false
+    forensics:
+      complexity: 4
+      churn: 5
+      churnByWeek:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 1
+        - 4
+      authorCount: 1
+      topAuthorPercent: 1
+      authors:
+        - email: matt@siliconpanda.com
+          commits: 5
+      hotspotScore: 0.0049261083743842365
+      sinceDays: 90
+      fileCount: 1
+      hotspotCount: 0
+      knowledgeSiloCount: 0
+  - entityRef: blueprint/app/reporters
+    type: container
+    name: Reporters Service
+    isTest: false
+    forensics:
+      complexity: 13
+      churn: 5
+      churnByWeek:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 5
+      authorCount: 1
+      topAuthorPercent: 1
+      authors:
+        - email: matt@siliconpanda.com
+          commits: 5
+      hotspotScore: 0.011822660098522167
+      classifications:
+        - knowledge-silo
+      sinceDays: 90
+      fileCount: 2
+      hotspotCount: 0
+      knowledgeSiloCount: 1
+dependencies:
+  - from: blueprint/app/cli
+    to: blueprint/app/core
+    type: inter-container
+    description: copyTreeSitterWasms Service → path Service (+20 more)
+  - from: blueprint/app/designer
+    to: blueprint/app/core
+    type: inter-container
+    description: e2e.spec Service → path Service
+  - from: blueprint/app/app
+    to: blueprint/app/reporters
+    type: inter-container
+    description: vitest.config Service → vitestFeatureReporter Service

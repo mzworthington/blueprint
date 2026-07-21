@@ -4,9 +4,9 @@ metaData:
   entityRef: blueprint
   name: Blueprint Context
   source:
-    scannedAtCommit: 9b4f9434f46fdc5c1a6e9e936af2868340cdbc48
+    scannedAtCommit: 4f7c6f66eeafb699d5146ecb97b33fed3e9de8dd
     scanRoot: .
-    remoteUrl: https://github.com/dotnet/eShop
+    remoteUrl: https://github.com/mzworthington/blueprint
     defaultBranch: main
 nodes:
   - entityRef: blueprint/backstage
@@ -181,11 +181,6 @@ nodes:
     forensics:
       complexity: 4
       churn: 0
-      hotspotScore: 0
-      authorCount: 0
-      fileCount: 1
-      hotspotCount: 0
-      knowledgeSiloCount: 0
       churnByWeek:
         - 0
         - 0
@@ -200,7 +195,54 @@ nodes:
         - 0
         - 0
         - 0
+      authorCount: 0
+      hotspotScore: 0
       sinceDays: 90
+      fileCount: 1
+      hotspotCount: 0
+      knowledgeSiloCount: 0
+  - entityRef: blueprint/testproject
+    type: group
+    name: TestProject System
+    properties:
+      rootPath: ''
+      productId: testproject
+    children:
+      - entityRef: blueprint/app
+        type: software-system
+        name: App System
+        properties:
+          rootPath: app
+          productId: testproject
+        forensics:
+          complexity: 106
+          churn: 1150
+          hotspotScore: 0.4597701149425287
+          authorCount: 1
+          fileCount: 366
+          hotspotCount: 0
+          knowledgeSiloCount: 110
+          classifications:
+            - knowledge-silo
+          authors:
+            - email: matt@siliconpanda.com
+              commits: 1150
+          churnByWeek:
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 390
+            - 760
+          topAuthorPercent: 1
+          sinceDays: 90
 dependencies:
   - from: blueprint/user
     to: blueprint/backstage
@@ -212,5 +254,9 @@ dependencies:
     description: Uses
   - from: blueprint/user
     to: blueprint/eshop
+    type: direct-call
+    description: Uses
+  - from: blueprint/user
+    to: blueprint/testproject
     type: direct-call
     description: Uses

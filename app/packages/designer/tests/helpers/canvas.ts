@@ -1,16 +1,22 @@
-import { expect, type Page } from '@playwright/test';
+import { expect, type Locator, type Page } from '@playwright/test';
 
-/** Bundled sandbox context diagram: top-level system with a container drill-down. */
-export const SANDBOX_CONTEXT_SYSTEM = 'EShop System';
-export const SANDBOX_CONTEXT_SLUG = 'blueprint';
-export const SANDBOX_CONTAINER_SLUG = 'blueprint/eshop';
-export const SANDBOX_CONTAINER_NAME = 'Eshop Containers';
-export const SANDBOX_COMPONENT_SLUG = 'blueprint/eshop/webapp';
-export const SANDBOX_COMPONENT_NAME = 'WebApp Service Components';
-export const SANDBOX_CONTAINER_NODE = 'WebApp Service';
+const CANVAS_NODE = '.react-flow__node';
 
-export async function expectCanvasNode(page: Page, label: string, timeout = 15_000) {
-  const node = page.locator('.react-flow__node', { hasText: label }).first();
-  await expect(node).toBeVisible({ timeout });
-  return node;
+/** Wait until the React Flow canvas has at least one node on screen. */
+export async function expectCanvasReady(page: Page, timeout = 30_000): Promise<Locator> {
+  const nodes = page.locator(CANVAS_NODE);
+  await expect(nodes.first()).toBeVisible({ timeout });
+  await expect.poll(async () => nodes.count(), { timeout }).toBeGreaterThan(0);
+  return nodes;
+}
+
+export function zoomableNodes(page: Page): Locator {
+  return page.locator(CANVAS_NODE).filter({ hasText: 'Zoom' });
+}
+
+export async function drillIntoFirstZoomable(page: Page): Promise<void> {
+  const node = zoomableNodes(page).first();
+  await expect(node).toBeVisible({ timeout: 30_000 });
+  await node.dblclick();
+  await expectCanvasReady(page);
 }
