@@ -1,5 +1,6 @@
 import React from 'react';
 import type { NodeForensics } from '@blueprint/core';
+import { buildOwnershipBreakdown } from '@blueprint/core';
 import type { ForensicsTrendDashboard } from '../../../../../application/forensics/buildForensicsTrendDashboard';
 import {
   evaluateForensicsConcern,
@@ -17,6 +18,8 @@ interface ForensicsSectionProps {
   onToggleShowCoupling?: () => void;
   /** How many coupled files resolve to nodes on the current canvas. */
   linkedCouplingCount?: number;
+  /** Select a coupled peer on the canvas by filepath. */
+  onSelectCoupledPeer?: (path: string) => void;
 }
 
 /** User-facing explanations for each forensics metric key. */
@@ -103,8 +106,10 @@ export const ForensicsSection: React.FC<ForensicsSectionProps> = ({
   showCoupling = false,
   onToggleShowCoupling,
   linkedCouplingCount = 0,
+  onSelectCoupledPeer,
 }) => {
   const concern = evaluateForensicsConcern(forensics);
+  const ownership = buildOwnershipBreakdown(forensics);
   const badgeLabel =
     concern.reasons[0] ??
     (concern.level === 'none' ? 'Healthy' : concern.level === 'info' ? 'Mild' : 'Concern');
@@ -240,6 +245,35 @@ export const ForensicsSection: React.FC<ForensicsSectionProps> = ({
 
       {trendDashboard ? <ForensicsTrendPanel dashboard={trendDashboard} /> : null}
 
+      {ownership ? (
+        <div
+          className="mb-3 rounded-xl border border-slate-900 bg-slate-950/40 p-3"
+          data-testid="forensics-ownership-breakdown"
+        >
+          <p className="text-[10px] font-mono text-slate-500 uppercase tracking-wider mb-2">
+            Ownership breakdown
+          </p>
+          <div className="space-y-2">
+            {ownership.authors.map(author => (
+              <div key={author.email} className="space-y-1">
+                <div className="flex items-center justify-between gap-2 text-[10px] font-mono">
+                  <span className="text-slate-300 truncate">{author.email}</span>
+                  <span className="text-slate-500 tabular-nums">
+                    {Math.round(author.percent * 100)}%
+                  </span>
+                </div>
+                <div className="h-1.5 rounded-full bg-slate-900 overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-[#00f0ff]/70"
+                    style={{ width: `${Math.round(author.percent * 100)}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
       <div className="space-y-2 mb-3">
         {rows.map(row => (
           <MetricRow
@@ -261,6 +295,7 @@ export const ForensicsSection: React.FC<ForensicsSectionProps> = ({
             centerLabel={centerLabel}
             coupled={forensics.coupledFiles ?? []}
             linkedPaths={linkedCouplingPaths}
+            onPeerClick={onSelectCoupledPeer}
           />
         </div>
       )}

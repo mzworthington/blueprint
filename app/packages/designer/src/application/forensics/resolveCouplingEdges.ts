@@ -48,3 +48,17 @@ export function resolveCouplingEdges(
   }
   return edges;
 }
+
+/** Resolve a coupled filepath to a canvas node id on the current diagram. */
+export function findNodeIdByFilepath(
+  filepath: string,
+  nodes: BlueprintRFNode[]
+): string | undefined {
+  const normalized = normalizeFilepath(filepath);
+  for (const node of nodes) {
+    const nodePath = node.data.properties?.filepath;
+    if (typeof nodePath !== 'string' || !nodePath) continue;
+    if (normalizeFilepath(nodePath) === normalized) return node.id;
+  }
+  return undefined;
+}

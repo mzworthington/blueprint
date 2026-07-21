@@ -147,6 +147,11 @@ const coupledFileForensicsSchema = z.object({
   sharedCommits: z.number(),
 });
 
+const forensicAuthorSchema = z.object({
+  email: z.string().min(1),
+  commits: z.number().nonnegative(),
+});
+
 const nodeForensicsSchema = z.object({
   complexity: z.number().optional(),
   loc: z.number().optional(),
@@ -155,6 +160,7 @@ const nodeForensicsSchema = z.object({
   churnByWeek: z.array(z.number().nonnegative()).optional(),
   authorCount: z.number().optional(),
   topAuthorPercent: z.number().optional(),
+  authors: z.array(forensicAuthorSchema).optional(),
   hotspotScore: z.number().optional(),
   classifications: z.array(forensicClassificationSchema).optional(),
   coupledFiles: z.array(coupledFileForensicsSchema).optional(),
@@ -419,6 +425,9 @@ function cleanForensics(forensics: NonNullable<SystemSchema['nodes'][number]['fo
   }
   if (Array.isArray(cleaned.coupledFiles) && cleaned.coupledFiles.length === 0) {
     delete cleaned.coupledFiles;
+  }
+  if (Array.isArray(cleaned.authors) && cleaned.authors.length === 0) {
+    delete cleaned.authors;
   }
   return cleaned;
 }

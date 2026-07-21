@@ -1,5 +1,5 @@
 import type { NodeForensics, SystemNode, SystemSchema } from '@blueprint/core';
-import { EntityRef, rollupChurnByWeek } from '@blueprint/core';
+import { EntityRef, rollupChurnByWeek, rollupForensicAuthors } from '@blueprint/core';
 import type { FileMetrics } from './types.ts';
 
 export function normalizeFilePath(path: string): string {
@@ -15,6 +15,7 @@ export function fileMetricsToNodeForensics(metrics: FileMetrics): NodeForensics 
     churnByWeek: metrics.churnByWeek,
     authorCount: metrics.authorCount,
     topAuthorPercent: metrics.topAuthorPercent,
+    ...(metrics.authors && metrics.authors.length > 0 ? { authors: metrics.authors } : {}),
     hotspotScore: metrics.hotspotScore,
     classifications: [...metrics.classifications],
     coupledFiles: metrics.coupledFiles.map(c => ({
@@ -64,6 +65,7 @@ export function aggregateNodeForensics(nodes: readonly SystemNode[]): NodeForens
 
   const churnByWeek = rollupChurnByWeek(churnByWeekSeries);
   const topAuthorPercent = ownershipWeight > 0 ? weightedOwnership / ownershipWeight : undefined;
+  const authors = rollupForensicAuthors(withForensics.map(n => n.forensics!));
 
   return {
     complexity,
@@ -74,6 +76,7 @@ export function aggregateNodeForensics(nodes: readonly SystemNode[]): NodeForens
     hotspotCount,
     knowledgeSiloCount,
     classifications: [...classificationSet],
+    ...(authors.length > 0 ? { authors } : {}),
     ...(churnByWeek ? { churnByWeek } : {}),
     ...(topAuthorPercent !== undefined ? { topAuthorPercent } : {}),
     ...(sinceDays !== undefined ? { sinceDays } : {}),

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { BlueprintRFNode } from '../store/layoutUtils';
-import { resolveCouplingEdges } from './resolveCouplingEdges';
+import { resolveCouplingEdges, findNodeIdByFilepath } from './resolveCouplingEdges';
 
 function node(
   id: string,
@@ -73,5 +73,14 @@ describe('resolveCouplingEdges', () => {
   it('skips self-coupling if filepath matches the selected node', () => {
     const nodes = [node('a', 'src/a.ts', [{ path: 'src/a.ts', score: 1, sharedCommits: 10 }])];
     expect(resolveCouplingEdges('a', nodes)).toEqual([]);
+  });
+});
+
+describe('findNodeIdByFilepath', () => {
+  it('resolves normalized filepaths to canvas node ids', () => {
+    const nodes = [node('peer', 'src/b.ts'), node('a', './src/a.ts')];
+    expect(findNodeIdByFilepath('src/b.ts', nodes)).toBe('peer');
+    expect(findNodeIdByFilepath('./src/b.ts', nodes)).toBe('peer');
+    expect(findNodeIdByFilepath('src/missing.ts', nodes)).toBeUndefined();
   });
 });

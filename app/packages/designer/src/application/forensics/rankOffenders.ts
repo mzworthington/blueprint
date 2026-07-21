@@ -1,6 +1,6 @@
 import type { C4Level, ForensicClassification, SystemNode, SystemSchema } from '@blueprint/core';
 import { evaluateForensicsConcern, type ForensicsConcern } from './concern';
-import { computeRefactorScore } from './refactorScore';
+import { computeRefactorScore } from '@blueprint/core';
 
 export type OffenderScope = 'components' | 'containers';
 export type OffenderSignalFilter = 'all' | 'hotspots' | 'silos' | 'refactor';

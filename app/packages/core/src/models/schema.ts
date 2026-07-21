@@ -125,6 +125,11 @@ export interface CoupledFileForensics {
   sharedCommits: number;
 }
 
+export interface ForensicAuthor {
+  email: string;
+  commits: number;
+}
+
 export interface NodeForensics {
   complexity?: number;
   loc?: number;
@@ -133,6 +138,7 @@ export interface NodeForensics {
   churnByWeek?: number[];
   authorCount?: number;
   topAuthorPercent?: number;
+  authors?: ForensicAuthor[];
   hotspotScore?: number;
   classifications?: ForensicClassification[];
   coupledFiles?: CoupledFileForensics[];
@@ -166,16 +172,8 @@ export interface SystemDependency {
 }
 
 export interface SystemSchema {
-  /**
-   * Identity of this diagram in the hierarchy.
-   * Child diagrams link to parents by setting this equal to a parent node's entityRef.
-   */
   entityRef?: EntityRef;
   name: string;
-  /**
-   * On disk (v3+): public JSON Schema URL for this contract.
-   * In memory: may still be a semver placeholder until serialize rewrites it.
-   */
   version: string;
   level: C4Level;
   nodes: SystemNode[];

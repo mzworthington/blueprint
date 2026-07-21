@@ -19,6 +19,7 @@ import type { NodeType } from '@blueprint/core';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 import {
   applyCouplingHighlights,
+  applyRefactorBoundaryHighlights,
   buildCouplingOverlayEdges,
   filterCouplingFocusNodes,
 } from '../../../../../application/forensics/buildCouplingOverlayEdges';
@@ -54,6 +55,7 @@ export const Canvas: React.FC = () => {
     showExternals,
     showSelectedDependenciesOnly,
     showCoupling,
+    guidedRefactorEntityRefs,
     showHotspotHeatmap,
     liteCanvas,
     focusedCyclePath,
@@ -87,6 +89,7 @@ export const Canvas: React.FC = () => {
       showExternals: state.showExternals,
       showSelectedDependenciesOnly: state.showSelectedDependenciesOnly,
       showCoupling: state.showCoupling,
+      guidedRefactorEntityRefs: state.guidedRefactorEntityRefs,
       showHotspotHeatmap: state.showHotspotHeatmap,
       liteCanvas: state.liteCanvas,
       focusedCyclePath: state.focusedCyclePath,
@@ -197,8 +200,16 @@ export const Canvas: React.FC = () => {
     }
     const focused = filterCouplingFocusNodes(baseNodes, selectedNodeId, showCoupling);
     const withCoupling = applyCouplingHighlights(focused, selectedNodeId, showCoupling);
-    return applyHotspotHeatmap(withCoupling, showHotspotHeatmap);
-  }, [filteredNodes, selectedNodeId, showCoupling, showHotspotHeatmap, focusedCyclePath]);
+    const withBoundary = applyRefactorBoundaryHighlights(withCoupling, guidedRefactorEntityRefs);
+    return applyHotspotHeatmap(withBoundary, showHotspotHeatmap);
+  }, [
+    filteredNodes,
+    selectedNodeId,
+    showCoupling,
+    guidedRefactorEntityRefs,
+    showHotspotHeatmap,
+    focusedCyclePath,
+  ]);
 
   const filteredEdges = useMemo(() => {
     const visibleNodeIds = new Set(filteredNodes.map(n => n.id));

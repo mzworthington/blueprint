@@ -11,6 +11,7 @@ function metrics(partial: Partial<FileMetrics> & { path: string }): FileMetrics 
     churn: 0,
     authorCount: 0,
     topAuthorPercent: 0,
+    authors: [],
     coupledFiles: [],
     hotspotScore: 0,
     classifications: [],
@@ -60,6 +61,41 @@ describe('aggregateNodeForensics', () => {
       sinceDays: 90,
       classifications: ['hotspot', 'knowledge-silo'],
     });
+  });
+
+  it('rolls up author commits from children', () => {
+    const children: SystemNode[] = [
+      {
+        entityRef: 'a/b/c1',
+        type: 'component',
+        name: 'c1',
+        forensics: {
+          churn: 3,
+          authors: [
+            { email: 'alice@ex.com', commits: 2 },
+            { email: 'bob@ex.com', commits: 1 },
+          ],
+        },
+      },
+      {
+        entityRef: 'a/b/c2',
+        type: 'component',
+        name: 'c2',
+        forensics: {
+          churn: 2,
+          authors: [
+            { email: 'alice@ex.com', commits: 1 },
+            { email: 'carol@ex.com', commits: 1 },
+          ],
+        },
+      },
+    ];
+
+    expect(aggregateNodeForensics(children)?.authors).toEqual([
+      { email: 'alice@ex.com', commits: 3 },
+      { email: 'bob@ex.com', commits: 1 },
+      { email: 'carol@ex.com', commits: 1 },
+    ]);
   });
 
   it('rolls up churnByWeek and churn-weighted ownership from children', () => {

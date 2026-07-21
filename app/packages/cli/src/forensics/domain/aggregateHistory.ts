@@ -80,12 +80,16 @@ export function aggregateFileHistory(
       options.sinceDays != null
         ? computeChurnByWeek(commits, path, options.sinceDays, referenceDate)
         : undefined;
+    const authors = [...entry.authors.entries()]
+      .map(([email, commits]) => ({ email, commits }))
+      .sort((a, b) => b.commits - a.commits);
     return {
       path,
       churn,
       churnByWeek,
       authorCount,
       topAuthorPercent,
+      authors,
       commitHashes: [...entry.hashes],
     };
   });

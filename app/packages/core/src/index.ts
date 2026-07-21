@@ -16,3 +16,6 @@ export * from './rules/layoutMerge';
 export * from './rules/workspaceExternals';
 export * from './rules/path';
 export * from './forensics/trends';
+export * from './forensics/refactorScore';
+export * from './forensics/refactorBoundary';
+export * from './forensics/ownership';

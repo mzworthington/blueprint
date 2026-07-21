@@ -14,6 +14,7 @@ On component nodes (joined by `properties.filepath`):
 | `loc` / `sloc`                     | Lines / source lines of code                       |
 | `churn`                            | Edits in the lookback window                       |
 | `authorCount` / `topAuthorPercent` | Ownership concentration                            |
+| `authors`                          | Per-author commit counts in the lookback window    |
 | `hotspotScore`                     | Relative risk from complexity × churn              |
 | `classifications`                  | e.g. `hotspot`, `knowledge-silo`                   |
 | `coupledFiles`                     | Temporally coupled peers (scores + shared commits) |
@@ -39,9 +40,9 @@ forensics:
 
 ## In the designer
 
-Open **`/forensics`** (header: Forensics) for a ranked “worst offenders” list across loaded blueprints — components or containers, filterable by hotspots/silos. Click a row to open that node on the canvas.
+Open **`/forensics`** (header: Forensics) for a ranked “worst offenders” list across loaded blueprints — components or containers, filterable by hotspots/silos/refactor. Click a row to open a **refactor plan** slide-over with boundary members, ownership breakdown, and rationale. Use **Open on canvas** for guided navigation (coupling focus + boundary highlights).
 
-Select an enriched node → **Git forensics** in the property panel shows metrics with helper text and a **lookback** value (e.g. `90d`).
+Select an enriched node → **Git forensics** in the property panel shows metrics with helper text and a **lookback** value (e.g. `90d`). When the CLI runs with `--git`, per-author commit counts are stored on `forensics.authors` and rolled up to containers.
 
 Concern badges on the canvas:
 

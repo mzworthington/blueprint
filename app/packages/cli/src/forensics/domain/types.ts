@@ -15,6 +15,7 @@ export interface FileMetrics {
   churnByWeek?: number[];
   authorCount: number;
   topAuthorPercent: number;
+  authors: { email: string; commits: number }[];
   coupledFiles: CoupledFileRef[];
   hotspotScore: number;
   classifications: ForensicClassification[];
@@ -48,6 +49,7 @@ export interface FileHistoryTraits {
   churnByWeek?: number[];
   authorCount: number;
   topAuthorPercent: number;
+  authors: { email: string; commits: number }[];
   /** Commit hashes that touched this file (within the analysis window). */
   commitHashes: string[];
 }

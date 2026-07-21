@@ -71,9 +71,8 @@ export type ComponentNodeData = {
   properties: PropertyMap;
   entityRef?: string;
   forensics?: NodeForensics;
-  /** Transient canvas highlight for temporal-coupling peers (not persisted). */
   couplingHighlight?: boolean;
-  /** Transient hotspot heatmap intensity 0–1 (not persisted). */
+  refactorBoundaryHighlight?: boolean;
   hotspotHeat?: number;
 };
 

@@ -17,6 +17,8 @@ export interface UiState {
   showSelectedDependenciesOnly: boolean;
   /** When true (and a node is selected), focus the canvas on that node and its coupled peers. */
   showCoupling: boolean;
+  /** Entity refs to highlight when arriving from a guided refactor plan. */
+  guidedRefactorEntityRefs: string[] | null;
   /** When true, tint canvas nodes by forensics.hotspotScore (display-only). */
   showHotspotHeatmap: boolean;
   /** When true, simplify node chrome and cap edge animation for performance. */
@@ -43,6 +45,8 @@ export interface UiState {
   toggleShowExternals: () => void;
   toggleShowSelectedDependenciesOnly: () => void;
   toggleShowCoupling: () => void;
+  setShowCoupling: (show: boolean) => void;
+  setGuidedRefactorEntityRefs: (entityRefs: string[] | null) => void;
   toggleShowHotspotHeatmap: () => void;
   toggleLiteCanvas: () => void;
   toggleLeftCollapsed: () => void;
@@ -67,6 +71,7 @@ export const createUiState = (
   showExternals: true,
   showSelectedDependenciesOnly: true,
   showCoupling: false,
+  guidedRefactorEntityRefs: null,
   showHotspotHeatmap: true,
   liteCanvas: false,
   layoutEngine: null,
@@ -87,6 +92,8 @@ export const createUiState = (
   toggleShowSelectedDependenciesOnly: () =>
     set(state => ({ showSelectedDependenciesOnly: !state.showSelectedDependenciesOnly })),
   toggleShowCoupling: () => set(state => ({ showCoupling: !state.showCoupling })),
+  setShowCoupling: show => set({ showCoupling: show }),
+  setGuidedRefactorEntityRefs: entityRefs => set({ guidedRefactorEntityRefs: entityRefs }),
   toggleShowHotspotHeatmap: () => set(state => ({ showHotspotHeatmap: !state.showHotspotHeatmap })),
   toggleLiteCanvas: () => set(state => ({ liteCanvas: !state.liteCanvas })),
   toggleLeftCollapsed: () => set(state => ({ leftCollapsed: !state.leftCollapsed })),

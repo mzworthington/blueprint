@@ -32,6 +32,8 @@ Generated from Vitest (`pnpm generate:features-unit`).
 #### aggregateNodeForensics
 
 - ✅ rolls up max/sum/counts from child forensics
+- ✅ rolls up author commits from children
+- ✅ rolls up churnByWeek and churn-weighted ownership from children
 
 #### attachForensicsToSchema
 
@@ -669,6 +671,17 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ strips person emoji and (External) suffix from flowchart labels
 - ✅ throws on unrecognised diagram type
 
+### ownership
+
+#### buildOwnershipBreakdown
+
+- ✅ derives concentration from authors list
+- ✅ classifies solo ownership
+
+#### rollupForensicAuthors
+
+- ✅ sums commits per email across children
+
 ### path
 
 #### Domain Path Utilities
@@ -711,6 +724,22 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ warns on unresolved refs without failing
 - ✅ returns empty schema for project metadata only
 - ✅ throws on invalid YAML
+
+### refactorBoundary
+
+#### buildRefactorBoundary
+
+- ✅ expands a component seed via temporal coupling
+- ✅ builds container rollup from high-refactor children
+- ✅ flags cross-container members
+- ✅ returns undefined when seed is missing
+
+### refactorScore
+
+#### computeRefactorScore
+
+- ✅ weights complexity, churn, and distributed ownership
+- ✅ treats missing ownership as zero concentration
 
 ### schema
 
@@ -761,6 +790,11 @@ Generated from Vitest (`pnpm generate:features-unit`).
 #### schemaVersion
 
 - ✅ builds versioned and latest public URLs
+- ✅ parses schema contract majors from URLs and legacy semver
+- ✅ assessSchemaVersion returns null when compatible
+- ✅ assessSchemaVersion flags legacy semver and older majors
+- ✅ assessSchemaVersion flags newer majors
+- ✅ assessSchemaVersion flags unrecognized version strings
 - ✅ builds a fetchable language-server URL and directive
 
 ### slug
@@ -800,6 +834,22 @@ Generated from Vitest (`pnpm generate:features-unit`).
 #### parseTerraformToSchema — JSON
 
 - ✅ maps .tf.json resources like HCL
+
+### trends
+
+#### bucketAuthorActivity
+
+- ✅ groups author counts into solo, pair, and team bands
+
+#### bucketComplexityCounts
+
+- ✅ groups complexities into display bands
+
+#### rollupChurnByWeek
+
+- ✅ sums aligned weekly buckets across series
+- ✅ pads shorter series with implicit zeros
+- ✅ returns undefined when no series have data
 
 ### workspaceCatalog
 
@@ -948,6 +998,18 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ returns all nodes when disabled
 - ✅ returns all nodes when there are no resolvable peers
 
+### buildForensicsTrendDashboard
+
+#### buildForensicsTrendDashboard
+
+- ✅ builds component-level trends from direct forensics
+- ✅ rolls up descendant trends for containers
+- ✅ returns undefined when there is no chartable data
+
+#### collectDescendantForensics
+
+- ✅ collects components under a container by entityRef prefix and containerId
+
 ### Canvas
 
 #### Canvas Component
@@ -1021,6 +1083,12 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ counts diagram-wide externals, tests, and dependencies when nothing is selected
 - ✅ counts partners and incident edges for a selected node
 - ✅ returns zeros for an unknown selection
+
+### CouplingMiniGraph
+
+#### CouplingMiniGraph
+
+- ✅ calls onPeerClick for linked peers only
 
 ### d3HierarchyLayoutAdapter
 
@@ -1175,6 +1243,7 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ renders ranked offenders and filters to hotspots
 - ✅ filters refactor candidates by heuristic score
 - ✅ filters the ranking list from the page search
+- ✅ opens refactor plan slide-over when an offender row is clicked
 
 ### ForensicsSection
 
@@ -1184,8 +1253,16 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ shows knowledge silo badge
 - ✅ toggles canvas coupling overlay when peers are linked
 - ✅ disables coupling toggle when no peers are on the diagram
-- ✅ renders churn sparkline and coupling mini graph
+- ✅ renders trend dashboard with churn sparkline and coupling mini graph
+- ✅ renders ownership breakdown when authors are present
+- ✅ selects coupled peer from mini graph when linked
 - ✅ shows helper text for the section and each metric
+
+### ForensicsTrendPanel
+
+#### ForensicsTrendPanel
+
+- ✅ renders churn, author, and complexity micro charts for rollups
 
 ### Header
 
@@ -1195,6 +1272,7 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ displays the C4 level badge
 - ✅ displays valid status badge when validation is successful
 - ✅ displays cycle warning validation status badge when cycle is present
+- ✅ displays schema version warning badge when loaded version mismatches app expectation
 
 ### hotspotHeatmap
 
@@ -1394,6 +1472,10 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ clears sandbox systems and leaves a blank diagram
 
 ### resolveCouplingEdges
+
+#### findNodeIdByFilepath
+
+- ✅ resolves normalized filepaths to canvas node ids
 
 #### resolveCouplingEdges
 

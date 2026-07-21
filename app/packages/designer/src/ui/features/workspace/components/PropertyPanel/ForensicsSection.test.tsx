@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, within } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { ForensicsSection } from './ForensicsSection';
 
@@ -110,6 +110,46 @@ describe('ForensicsSection', () => {
     expect(screen.getByTestId('forensics-help-churnTrend')).toHaveTextContent(
       /Weekly commit count/i
     );
+  });
+
+  it('renders ownership breakdown when authors are present', () => {
+    render(
+      <ForensicsSection
+        forensics={{
+          complexity: 22,
+          churn: 8,
+          authorCount: 2,
+          topAuthorPercent: 0.75,
+          authors: [
+            { email: 'alice@ex.com', commits: 6 },
+            { email: 'bob@ex.com', commits: 2 },
+          ],
+        }}
+      />
+    );
+
+    const breakdown = screen.getByTestId('forensics-ownership-breakdown');
+    expect(within(breakdown).getByText('alice@ex.com')).toBeInTheDocument();
+    expect(within(breakdown).getByText('bob@ex.com')).toBeInTheDocument();
+    expect(within(breakdown).getByText('75%')).toBeInTheDocument();
+    expect(within(breakdown).getByText('25%')).toBeInTheDocument();
+  });
+
+  it('selects coupled peer from mini graph when linked', () => {
+    const onSelectCoupledPeer = vi.fn();
+    render(
+      <ForensicsSection
+        forensics={{
+          coupledFiles: [{ path: 'src/other.ts', score: 0.8, sharedCommits: 6 }],
+        }}
+        centerLabel="Analyzer"
+        linkedCouplingPaths={new Set(['src/other.ts'])}
+        onSelectCoupledPeer={onSelectCoupledPeer}
+      />
+    );
+
+    fireEvent.click(screen.getByTestId('coupling-peer-other.ts'));
+    expect(onSelectCoupledPeer).toHaveBeenCalledWith('src/other.ts');
   });
 
   it('shows helper text for the section and each metric', () => {

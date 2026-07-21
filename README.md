@@ -94,7 +94,7 @@ Outstanding enhancements planned for Blueprint:
 
 ### Forensics & refactoring
 
-- **Guided refactor workflow:** Turn forensics rankings into actionable refactor boundaries, ownership breakdown, and one-click canvas navigation.
+- **Guided refactor workflow:** Turn forensics rankings into actionable refactor boundaries, ownership breakdown, and one-click canvas navigation. _(shipped — `/forensics` refactor plan slide-over, `forensics.authors` from CLI)_
 
 ### Strategic differentiators
 

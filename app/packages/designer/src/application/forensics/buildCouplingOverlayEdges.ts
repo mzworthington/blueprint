@@ -60,6 +60,26 @@ export function buildCouplingOverlayEdges(
   });
 }
 
+export function applyRefactorBoundaryHighlights(
+  nodes: BlueprintRFNode[],
+  entityRefs: readonly string[] | null | undefined
+): BlueprintRFNode[] {
+  const highlightIds = new Set(entityRefs ?? []);
+  if (highlightIds.size === 0) {
+    return nodes.map(n =>
+      n.data.refactorBoundaryHighlight
+        ? { ...n, data: { ...n.data, refactorBoundaryHighlight: false } }
+        : n
+    );
+  }
+
+  return nodes.map(n => {
+    const highlight = highlightIds.has(n.id);
+    if (Boolean(n.data.refactorBoundaryHighlight) === highlight) return n;
+    return { ...n, data: { ...n.data, refactorBoundaryHighlight: highlight } };
+  });
+}
+
 export function applyCouplingHighlights(
   nodes: BlueprintRFNode[],
   selectedNodeId: string | null | undefined,

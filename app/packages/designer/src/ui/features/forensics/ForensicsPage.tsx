@@ -9,8 +9,11 @@ import {
   type OffenderSignalFilter,
   type RankedOffender,
 } from '../../../application/forensics/rankOffenders';
+import { buildRefactorPlanForOffender } from '../../../application/forensics/buildRefactorPlan';
+import { openRefactorOnCanvas } from '../../../application/forensics/openRefactorOnCanvas';
 import type { ConcernLevel } from '../../../application/forensics/concern';
 import { ForensicsSearchbar } from './ForensicsSearchbar';
+import { RefactorPlanSlideOver } from './RefactorPlanSlideOver';
 
 function scoreBarColor(level: ConcernLevel): string {
   switch (level) {
@@ -158,10 +161,18 @@ export const ForensicsPage: React.FC = () => {
   const loadedSystems = useBlueprintStore(s => s.loadedSystems);
   const selectSystem = useBlueprintStore(s => s.selectSystem);
   const selectNode = useBlueprintStore(s => s.selectNode);
+  const setShowCoupling = useBlueprintStore(s => s.setShowCoupling);
+  const setGuidedRefactorEntityRefs = useBlueprintStore(s => s.setGuidedRefactorEntityRefs);
   const [, setLocation] = useLocation();
   const [scope, setScope] = useState<OffenderScope>('components');
   const [filter, setFilter] = useState<OffenderSignalFilter>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [activePlan, setActivePlan] = useState<
+    | (ReturnType<typeof buildRefactorPlanForOffender> & {
+        offender: RankedOffender;
+      })
+    | null
+  >(null);
 
   const ranked = useMemo(
     () => rankForensicsOffenders(loadedSystems, scope, filter),
@@ -187,9 +198,21 @@ export const ForensicsPage: React.FC = () => {
   );
 
   const openOffender = (offender: RankedOffender) => {
-    selectSystem(offender.schemaPath);
-    selectNode(offender.entityRef);
-    setLocation(`/workspace/${offender.diagramEntityRef}`);
+    const plan = buildRefactorPlanForOffender(offender, loadedSystems);
+    if (!plan.boundary) return;
+    setActivePlan({ offender, ...plan });
+  };
+
+  const openPlanOnCanvas = () => {
+    if (!activePlan?.boundary) return;
+    openRefactorOnCanvas(activePlan.boundary, activePlan.offender, {
+      selectSystem,
+      selectNode,
+      setShowCoupling,
+      setGuidedRefactorEntityRefs,
+      setLocation,
+    });
+    setActivePlan(null);
   };
 
   return (
@@ -217,7 +240,7 @@ export const ForensicsPage: React.FC = () => {
               </h1>
               <p className="mt-3 max-w-2xl text-slate-400 text-sm sm:text-base leading-relaxed">
                 Components and containers ranked by hotspot score, refactor candidates, knowledge
-                silos, and complexity — open any row on the canvas.
+                silos, and complexity — open any row for a guided refactor plan.
               </p>
             </div>
           </section>
@@ -293,6 +316,16 @@ export const ForensicsPage: React.FC = () => {
           )}
         </div>
       </div>
+
+      {activePlan?.boundary ? (
+        <RefactorPlanSlideOver
+          offender={activePlan.offender}
+          boundary={activePlan.boundary}
+          ownership={activePlan.ownership}
+          onClose={() => setActivePlan(null)}
+          onOpenCanvas={openPlanOnCanvas}
+        />
+      ) : null}
     </div>
   );
 };

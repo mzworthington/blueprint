@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Trash2 } from 'lucide-react';
 import { useBlueprintStore } from '../../../../../application/store/store';
 import type { NodeType, PropertyMap, C4Level } from '@blueprint/core';
@@ -13,7 +13,10 @@ import { ExternalDependenciesSection } from './ExternalDependenciesSection';
 import { SelectedDependencySection } from './SelectedDependencySection';
 import { WorkspaceDisplayControls } from './WorkspaceDisplayControls';
 import { ValidationSection } from './ValidationSection';
-import { resolveCouplingEdges } from '../../../../../application/forensics/resolveCouplingEdges';
+import {
+  resolveCouplingEdges,
+  findNodeIdByFilepath,
+} from '../../../../../application/forensics/resolveCouplingEdges';
 import { countSchemaForensicsMetrics } from '../../../../../application/forensics/countForensicsMetrics';
 import {
   buildForensicsTrendDashboard,
@@ -77,6 +80,14 @@ export const PropertyPanel: React.FC = () => {
 
   const isNode = !!selectedNode;
   const isEdge = !!selectedEdge;
+
+  const handleSelectCoupledPeer = useCallback(
+    (path: string) => {
+      const nodeId = findNodeIdByFilepath(path, nodes);
+      if (nodeId) selectNode(nodeId);
+    },
+    [nodes, selectNode]
+  );
 
   const titleType = isEdge
     ? 'Dependency'
@@ -264,6 +275,7 @@ export const PropertyPanel: React.FC = () => {
                   showCoupling={showCoupling}
                   onToggleShowCoupling={toggleShowCoupling}
                   linkedCouplingCount={resolveCouplingEdges(selectedNodeId, nodes).length}
+                  onSelectCoupledPeer={handleSelectCoupledPeer}
                 />
               ) : null}
 

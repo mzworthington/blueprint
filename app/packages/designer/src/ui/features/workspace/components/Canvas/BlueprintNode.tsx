@@ -214,9 +214,11 @@ export const BlueprintNode = memo(({ id, data, selected }: NodeProps<CustomNode>
       ? 'border-brand-500 bg-slate-900 scale-102'
       : data.couplingHighlight
         ? 'border-amber-500/70 bg-slate-900'
-        : concernBorder
-          ? `${concernBorder} ${solidBg} hover:border-slate-700`
-          : `${solidBg} border-slate-800 hover:border-slate-700`;
+        : data.refactorBoundaryHighlight
+          ? 'border-violet-500/70 bg-slate-900'
+          : concernBorder
+            ? `${concernBorder} ${solidBg} hover:border-slate-700`
+            : `${solidBg} border-slate-800 hover:border-slate-700`;
 
   return (
     <div
@@ -365,6 +367,14 @@ export const BlueprintNode = memo(({ id, data, selected }: NodeProps<CustomNode>
                 className="bg-amber-950/50 text-amber-200 px-1.5 py-0.5 rounded text-[9px] font-bold border border-amber-800/50 tracking-normal"
               >
                 COUPLED
+              </span>
+            )}
+            {data.refactorBoundaryHighlight && (
+              <span
+                data-testid="forensics-badge-boundary"
+                className="bg-violet-950/50 text-violet-200 px-1.5 py-0.5 rounded text-[9px] font-bold border border-violet-800/50 tracking-normal"
+              >
+                BOUNDARY
               </span>
             )}
             {data.isTest && (

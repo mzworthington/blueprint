@@ -64,6 +64,10 @@ describe('aggregateFileHistory', () => {
     expect(a.churn).toBe(3);
     expect(a.authorCount).toBe(2);
     expect(a.topAuthorPercent).toBeCloseTo(2 / 3, 5);
+    expect(a.authors).toEqual([
+      { email: 'alice@ex.com', commits: 2 },
+      { email: 'bob@ex.com', commits: 1 },
+    ]);
 
     expect(b.churn).toBe(1);
     expect(b.authorCount).toBe(1);

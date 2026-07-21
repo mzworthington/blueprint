@@ -6,6 +6,8 @@ export interface CouplingMiniGraphProps {
   coupled: CoupledFileForensics[];
   /** Paths that resolve to nodes on the current diagram (highlighted). */
   linkedPaths?: ReadonlySet<string>;
+  /** Called when a linked peer node is clicked. */
+  onPeerClick?: (path: string) => void;
 }
 
 const SIZE = 140;
@@ -25,6 +27,7 @@ export const CouplingMiniGraph: React.FC<CouplingMiniGraphProps> = ({
   centerLabel,
   coupled,
   linkedPaths,
+  onPeerClick,
 }) => {
   const peers = coupled.slice(0, 5);
 
@@ -77,8 +80,33 @@ export const CouplingMiniGraph: React.FC<CouplingMiniGraphProps> = ({
         </text>
         {layout.map(({ peer, x, y }) => {
           const linked = linkedPaths?.has(peer.path);
+          const clickable = linked && onPeerClick;
           return (
-            <g key={peer.path}>
+            <g
+              key={peer.path}
+              role={clickable ? 'button' : undefined}
+              tabIndex={clickable ? 0 : undefined}
+              className={clickable ? 'cursor-pointer' : undefined}
+              data-testid={linked ? `coupling-peer-${basename(peer.path)}` : undefined}
+              onClick={
+                clickable
+                  ? event => {
+                      event.stopPropagation();
+                      onPeerClick(peer.path);
+                    }
+                  : undefined
+              }
+              onKeyDown={
+                clickable
+                  ? event => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        onPeerClick(peer.path);
+                      }
+                    }
+                  : undefined
+              }
+            >
               <circle
                 cx={x}
                 cy={y}

@@ -136,4 +136,54 @@ describe('ForensicsPage', () => {
     expect(screen.getByText('DB Layer')).toBeInTheDocument();
     expect(screen.queryByText('OK')).not.toBeInTheDocument();
   });
+
+  it('opens refactor plan slide-over when an offender row is clicked', () => {
+    useBlueprintStore.setState({
+      loadedSystems: [
+        {
+          path: 'designer-components.yaml',
+          name: 'designer',
+          schema: {
+            name: 'Designer Components',
+            version: '1.0.0',
+            level: 'component',
+            dependencies: [],
+            nodes: [
+              {
+                entityRef: 'app/designer/db',
+                name: 'DB Layer',
+                type: 'component',
+                properties: { filepath: 'src/db.ts' },
+                forensics: {
+                  hotspotScore: 0.85,
+                  complexity: 40,
+                  churn: 6,
+                  authorCount: 2,
+                  topAuthorPercent: 0.5,
+                  authors: [
+                    { email: 'alice@ex.com', commits: 3 },
+                    { email: 'bob@ex.com', commits: 3 },
+                  ],
+                  classifications: ['hotspot'],
+                  sinceDays: 90,
+                },
+              },
+            ],
+          },
+        },
+      ],
+    });
+
+    const { hook } = memoryLocation({ path: '/forensics' });
+    render(
+      <Router hook={hook}>
+        <ForensicsPage />
+      </Router>
+    );
+
+    fireEvent.click(screen.getByTestId('offender-row-app/designer/db'));
+    expect(screen.getByTestId('refactor-plan-slide-over')).toBeInTheDocument();
+    expect(screen.getByText('Refactor plan')).toBeInTheDocument();
+    expect(screen.getByTestId('ownership-breakdown')).toBeInTheDocument();
+  });
 });
