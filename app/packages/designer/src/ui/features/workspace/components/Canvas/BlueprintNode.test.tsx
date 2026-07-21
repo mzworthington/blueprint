@@ -221,4 +221,22 @@ describe('BlueprintNode Component', () => {
 
     expect(mockSetLocation).toHaveBeenCalledWith('/workspace/default/test-node-1');
   });
+
+  it('shows a Code button when the node has a filepath and opens the source modal', () => {
+    const openSourceCodeDialog = vi.fn();
+    useBlueprintStore.setState({ openSourceCodeDialog });
+
+    const props = {
+      ...defaultProps,
+      data: {
+        ...defaultProps.data,
+        properties: { filepath: 'src/service.ts' },
+      },
+    };
+
+    render(<BlueprintNode {...props} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /view source code/i }));
+    expect(openSourceCodeDialog).toHaveBeenCalledWith('src/service.ts');
+  });
 });

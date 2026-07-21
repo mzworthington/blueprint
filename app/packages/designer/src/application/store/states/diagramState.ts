@@ -272,7 +272,8 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
       rfEdges,
       normalized.name,
       normalized.level,
-      normalized.entityRef ?? null
+      normalized.entityRef ?? null,
+      normalized.source
     );
   },
 

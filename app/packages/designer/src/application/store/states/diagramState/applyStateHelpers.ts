@@ -141,7 +141,16 @@ export function buildNextSchemaFromCanvas(
   level: C4Level,
   nextNodes: BlueprintRFNode[],
   edgesWithHandles: BlueprintRFEdge[],
-  entityRef: string | undefined
+  entityRef: string | undefined,
+  source?: SystemSchema['source']
 ): SystemSchema {
-  return rebuildSchemaFromCanvas(name, version, level, nextNodes, edgesWithHandles, entityRef);
+  return rebuildSchemaFromCanvas(
+    name,
+    version,
+    level,
+    nextNodes,
+    edgesWithHandles,
+    entityRef,
+    source
+  );
 }

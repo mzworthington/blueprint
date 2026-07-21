@@ -177,9 +177,12 @@ export const BlueprintNode = memo(({ id, data, selected }: NodeProps<CustomNode>
 
   const [, setLocation] = useLocation();
   const selectNode = useBlueprintStore(state => state.selectNode);
+  const openSourceCodeDialog = useBlueprintStore(state => state.openSourceCodeDialog);
   const liteCanvas = useBlueprintStore(state => state.liteCanvas);
   const entityRef = data.entityRef;
   const hasSubDiagram = useHasSubDiagram(entityRef);
+  const sourceFilepath =
+    typeof data.properties?.filepath === 'string' ? data.properties.filepath : undefined;
   const updateNodeInternals = useUpdateNodeInternals();
 
   // Keep edge endpoints attached after lite-canvas chrome height changes.
@@ -306,21 +309,41 @@ export const BlueprintNode = memo(({ id, data, selected }: NodeProps<CustomNode>
             <Icon className="w-5 h-5" />
           </div>
 
-          {hasSubDiagram && (
-            <button
-              onClick={e => {
-                e.stopPropagation();
-                if (data.entityRef) {
-                  setLocation(`/workspace/${data.entityRef}`);
-                }
-              }}
-              className="flex items-center gap-1 bg-brand-500/10 border border-brand-500/30 hover:bg-brand-500/20 active:bg-brand-500/30 text-brand-400 px-1.5 py-0.5 rounded text-[8px] font-bold tracking-wider uppercase transition cursor-pointer z-10"
-              title="Click to zoom inside"
-            >
-              <ZoomIn className="w-2.5 h-2.5" />
-              <span>Zoom</span>
-            </button>
-          )}
+          <div className="flex items-center gap-1">
+            {sourceFilepath ? (
+              <button
+                type="button"
+                onClick={e => {
+                  e.stopPropagation();
+                  openSourceCodeDialog(sourceFilepath);
+                }}
+                className="flex items-center gap-1 bg-[#00f0ff]/10 border border-[#00f0ff]/30 hover:bg-[#00f0ff]/20 active:bg-[#00f0ff]/30 text-[#00f0ff] px-1.5 py-0.5 rounded text-[8px] font-bold tracking-wider uppercase transition cursor-pointer z-10"
+                title="View source code"
+                aria-label="View source code"
+                data-testid="view-source-button"
+              >
+                <Code className="w-2.5 h-2.5" />
+                <span>Code</span>
+              </button>
+            ) : null}
+
+            {hasSubDiagram ? (
+              <button
+                type="button"
+                onClick={e => {
+                  e.stopPropagation();
+                  if (data.entityRef) {
+                    setLocation(`/workspace/${data.entityRef}`);
+                  }
+                }}
+                className="flex items-center gap-1 bg-brand-500/10 border border-brand-500/30 hover:bg-brand-500/20 active:bg-brand-500/30 text-brand-400 px-1.5 py-0.5 rounded text-[8px] font-bold tracking-wider uppercase transition cursor-pointer z-10"
+                title="Click to zoom inside"
+              >
+                <ZoomIn className="w-2.5 h-2.5" />
+                <span>Zoom</span>
+              </button>
+            ) : null}
+          </div>
         </div>
       )}
 

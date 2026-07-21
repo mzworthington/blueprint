@@ -47,6 +47,23 @@ describe('layoutUtils forensics plumbing', () => {
       classifications: ['knowledge-silo'],
     });
   });
+
+  it('preserves git source provenance when rebuilding schema from canvas', () => {
+    const rf = mapDomainNodeToRFNode({
+      entityRef: 'sys/svc/comp',
+      type: 'component',
+      name: 'Comp',
+    });
+
+    const schema = rebuildSchemaFromCanvas('S', '1.0.0', 'component', [rf], [], 'sys/svc', {
+      remoteUrl: 'https://github.com/org/repo',
+      scannedAtCommit: 'abc123',
+    });
+    expect(schema.source).toEqual({
+      remoteUrl: 'https://github.com/org/repo',
+      scannedAtCommit: 'abc123',
+    });
+  });
 });
 
 describe('mapDomainDepsToRFEdges', () => {

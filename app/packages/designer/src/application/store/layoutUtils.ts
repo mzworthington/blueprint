@@ -7,6 +7,7 @@ import type {
   PropertyMap,
   C4Level,
   NodeForensics,
+  SourceProvenance,
 } from '@blueprint/core';
 
 /** Matches canvas edge stroke (see `.react-flow__edge-path` in index.css). */
@@ -207,7 +208,8 @@ export const rebuildSchemaFromCanvas = (
   level: C4Level,
   rfNodes: BlueprintRFNode[],
   rfEdges: BlueprintRFEdge[],
-  entityRef?: string
+  entityRef?: string,
+  source?: SourceProvenance
 ): SystemSchema => {
   const nodes: SystemNode[] = rfNodes.map(rn => ({
     type: rn.data.type,
@@ -228,5 +230,13 @@ export const rebuildSchemaFromCanvas = (
     description: re.data?.description || '',
   }));
 
-  return { name, version, level, nodes, dependencies, entityRef };
+  return {
+    name,
+    version,
+    level,
+    nodes,
+    dependencies,
+    entityRef,
+    ...(source ? { source } : {}),
+  };
 };

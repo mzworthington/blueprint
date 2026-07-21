@@ -38,6 +38,8 @@ export interface UiState {
   isStartupOpen: boolean;
   isCompareOpen: boolean;
   isShortcutsOpen: boolean;
+  isSourceCodeOpen: boolean;
+  sourceCodeFilepath: string | null;
   notification: ToastNotification | null;
   focusedCyclePath: string[] | null;
   isLoading: boolean | string;
@@ -58,6 +60,8 @@ export interface UiState {
   setIsStartupOpen: (open: boolean) => void;
   setIsCompareOpen: (open: boolean) => void;
   setIsShortcutsOpen: (open: boolean) => void;
+  openSourceCodeDialog: (filepath: string) => void;
+  closeSourceCodeDialog: () => void;
   setNotification: (notification: ToastNotification | null) => void;
   setLayoutEngine: (engine: LayoutEngineId | null) => void;
   setFocusedCyclePath: (path: string[] | null) => void;
@@ -84,6 +88,8 @@ export const createUiState = (
   isStartupOpen: true,
   isCompareOpen: false,
   isShortcutsOpen: false,
+  isSourceCodeOpen: false,
+  sourceCodeFilepath: null,
   notification: null,
   focusedCyclePath: null,
   isLoading: false,
@@ -105,6 +111,8 @@ export const createUiState = (
   setIsStartupOpen: open => set({ isStartupOpen: open }),
   setIsCompareOpen: open => set({ isCompareOpen: open }),
   setIsShortcutsOpen: open => set({ isShortcutsOpen: open }),
+  openSourceCodeDialog: filepath => set({ isSourceCodeOpen: true, sourceCodeFilepath: filepath }),
+  closeSourceCodeDialog: () => set({ isSourceCodeOpen: false, sourceCodeFilepath: null }),
   setNotification: notification => set({ notification }),
   setLayoutEngine: engine => set({ layoutEngine: engine }),
   setFocusedCyclePath: path => set({ focusedCyclePath: path }),

@@ -44,6 +44,38 @@ describe('diagramState Actions & State Management', () => {
     expect(state.validationResult.isValid).toBe(true);
   });
 
+  it('preserves metaData.source through initSchema and canvas rebuild', () => {
+    const { initSchema } = useBlueprintStore.getState();
+    initSchema({
+      name: 'Reporters',
+      version: 'https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json',
+      level: 'component',
+      entityRef: 'blueprint/app/reporters',
+      source: {
+        remoteUrl: 'https://github.com/mzworthington/blueprint',
+        scannedAtCommit: 'abc123',
+        scanRoot: '.',
+      },
+      nodes: [
+        {
+          entityRef: 'comp',
+          type: 'component',
+          name: 'Comp',
+          properties: { filepath: 'app/reporters/foo.ts' },
+        },
+      ],
+      dependencies: [],
+    });
+
+    const state = useBlueprintStore.getState();
+    expect(state.schema.source).toEqual({
+      remoteUrl: 'https://github.com/mzworthington/blueprint',
+      scannedAtCommit: 'abc123',
+      scanRoot: '.',
+    });
+    expect(state.yamlCode).toContain('remoteUrl: https://github.com/mzworthington/blueprint');
+  });
+
   it('should successfully add a new node and serialize to YAML', () => {
     const store = useBlueprintStore.getState();
     store.addNode('relational-database' as NodeType);

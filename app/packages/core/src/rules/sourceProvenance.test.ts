@@ -3,6 +3,7 @@ import {
   normalizeGitRemoteUrl,
   resolveRepoRelativeFilePath,
   buildSourceFileUrl,
+  buildSourceFileRawUrl,
 } from './sourceProvenance';
 import type { SourceProvenance } from '../models/schema';
 
@@ -65,5 +66,30 @@ describe('buildSourceFileUrl', () => {
 
   it('returns undefined when remoteUrl is missing', () => {
     expect(buildSourceFileUrl({ scannedAtCommit: 'abc' }, 'src/a.ts')).toBeUndefined();
+  });
+});
+
+describe('buildSourceFileRawUrl', () => {
+  const githubSource: SourceProvenance = {
+    remoteUrl: 'https://github.com/org/repo',
+    scannedAtCommit: 'abc123def',
+    scanRoot: 'app',
+  };
+
+  it('builds a GitHub raw URL with scanRoot offset', () => {
+    expect(buildSourceFileRawUrl(githubSource, 'packages/cli/foo.ts')).toBe(
+      'https://raw.githubusercontent.com/org/repo/abc123def/app/packages/cli/foo.ts'
+    );
+  });
+
+  it('builds a GitLab raw URL', () => {
+    const gitlab: SourceProvenance = {
+      remoteUrl: 'https://gitlab.com/org/repo',
+      defaultBranch: 'main',
+      scanRoot: '.',
+    };
+    expect(buildSourceFileRawUrl(gitlab, 'src/index.ts')).toBe(
+      'https://gitlab.com/org/repo/-/raw/main/src/index.ts'
+    );
   });
 });

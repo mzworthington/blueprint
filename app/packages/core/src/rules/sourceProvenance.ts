@@ -69,3 +69,43 @@ export function buildSourceFileUrl(
 
   return `${base}/blob/${commit}/${repoPath}`;
 }
+
+/** Build a host-specific raw content URL for fetching file text (GitHub raw, GitLab raw, etc.). */
+export function buildSourceFileRawUrl(
+  source: SourceProvenance,
+  filepath: string,
+  ref?: string
+): string | undefined {
+  const remoteUrl = source.remoteUrl;
+  if (!remoteUrl) return undefined;
+
+  const commit = resolveRef(source, ref);
+  if (!commit) return undefined;
+
+  const repoPath = resolveRepoRelativeFilePath(source, filepath);
+  const base = remoteUrl.replace(/\.git$/, '').replace(/\/$/, '');
+
+  let hostname: string;
+  let pathname: string;
+  try {
+    const parsed = new URL(base);
+    hostname = parsed.hostname;
+    pathname = parsed.pathname.replace(/^\//, '').replace(/\/$/, '');
+  } catch {
+    return `${base}/raw/${commit}/${repoPath}`;
+  }
+
+  if (hostname === 'github.com') {
+    return `https://raw.githubusercontent.com/${pathname}/${commit}/${repoPath}`;
+  }
+
+  if (hostname.includes('gitlab')) {
+    return `${base}/-/raw/${commit}/${repoPath}`;
+  }
+
+  if (hostname === 'bitbucket.org') {
+    return `${base}/raw/${commit}/${repoPath}`;
+  }
+
+  return `${base}/raw/${commit}/${repoPath}`;
+}

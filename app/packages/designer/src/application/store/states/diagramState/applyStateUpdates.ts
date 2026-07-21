@@ -3,6 +3,7 @@ import {
   serializeSchemaToYaml,
   type SystemSchema,
   type C4Level,
+  type SourceProvenance,
   resolveWorkspaceEntityRefs,
   slugify,
 } from '@blueprint/core';
@@ -27,7 +28,8 @@ export function applyStateUpdates(
   nextEdges: BlueprintRFEdge[],
   customSchemaName?: string,
   customSchemaLevel?: C4Level,
-  customEntityRef?: string | null
+  customEntityRef?: string | null,
+  preservedSource?: SourceProvenance
 ) {
   const currentSchema = get().schema as SystemSchema;
   const name = customSchemaName ?? currentSchema.name;
@@ -41,13 +43,15 @@ export function applyStateUpdates(
       : currentSchema.entityRef;
 
   const edgesWithHandles = attachClosestHandles(nextNodes, nextEdges);
+  const source = preservedSource !== undefined ? preservedSource : currentSchema.source;
   const nextSchema = buildNextSchemaFromCanvas(
     name,
     version,
     level,
     nextNodes,
     edgesWithHandles,
-    entityRef
+    entityRef,
+    source
   );
 
   const nextLoadedSystems =
