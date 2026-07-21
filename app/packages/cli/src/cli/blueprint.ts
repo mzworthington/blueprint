@@ -19,6 +19,7 @@ import {
 import { createCliCancellation, isCancellationError } from '../analysis/domain/cancellation.ts';
 import { parseBlueprintArgv, type BlueprintCliPlan } from './parseBlueprintArgv.ts';
 import { collectFileMetrics } from '../forensics/collectFileMetrics.ts';
+import { collectGitProvenance } from '../analysis/adapters/gitProvenance.ts';
 import {
   applyInteractiveGitChoice,
   shouldPromptForGit,
@@ -187,6 +188,8 @@ async function runArchitecture(plan: BlueprintCliPlan): Promise<{
     }
   }
 
+  const sourceProvenance = await collectGitProvenance(process.cwd());
+
   const analysisOptions = mergeAnalysisOptions(fileConfig, {
     ignore: cliIgnores,
     include: fileConfig.include,
@@ -228,6 +231,7 @@ async function runArchitecture(plan: BlueprintCliPlan): Promise<{
     await analyzer.runAnalysis(contextName, outputDir, globPattern, cancellation.signal, {
       forensicsByPath,
       forceRelayout: plan.architecture.relayout,
+      source: sourceProvenance,
     });
 
     // Terraform is auto-detected (no flag): no-ops when no .tf / .tf.json roots exist.
@@ -241,6 +245,7 @@ async function runArchitecture(plan: BlueprintCliPlan): Promise<{
       scanRoot: process.cwd(),
       forceRelayout: plan.architecture.relayout,
       signal: cancellation.signal,
+      source: sourceProvenance,
     });
     if (tfResult.rootsAnalyzed > 0 && !isHeadless) {
       p.log.info(`Terraform: wrote ${tfResult.rootsAnalyzed} infrastructure diagram(s)`);
@@ -256,6 +261,7 @@ async function runArchitecture(plan: BlueprintCliPlan): Promise<{
       scanRoot: process.cwd(),
       forceRelayout: plan.architecture.relayout,
       signal: cancellation.signal,
+      source: sourceProvenance,
     });
     if (pulumiResult.rootsAnalyzed > 0 && !isHeadless) {
       p.log.info(`Pulumi: wrote ${pulumiResult.rootsAnalyzed} infrastructure diagram(s)`);

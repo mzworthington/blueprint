@@ -5,6 +5,7 @@ import {
   serializeSchemaToYaml,
   type SystemSchema,
   type PulumiSourceFile,
+  type SourceProvenance,
 } from '@blueprint/core';
 import { ContextLevelWriter } from '../../writers/contextLevelWriter.ts';
 import { BaseWriter } from '../../writers/baseWriter.ts';
@@ -26,6 +27,7 @@ export type RunPulumiAnalysisOptions = {
   scanRoot?: string;
   forceRelayout?: boolean;
   signal?: AbortSignal;
+  source?: SourceProvenance;
 };
 
 class PulumiSchemaWriter extends BaseWriter {
@@ -120,6 +122,7 @@ export class PulumiAnalyzer {
         name: `${root.systemId.charAt(0).toUpperCase() + root.systemId.slice(1)} Pulumi`,
         version: result.schema.version || '1.0.0',
         level: 'container',
+        ...(options.source ? { source: options.source } : {}),
       };
 
       const blueprintsDir = fileSystem.getAbsolutePath(rootDir, root.systemId);
@@ -162,16 +165,21 @@ export class PulumiAnalyzer {
     }
 
     if (pulumiSubsystems.length > 0) {
-      await contextWriter.writeSystems(rootDir, contextName, [
-        {
-          entityRef: infrastructureProductId,
-          displayName: 'Infrastructure',
-          rootPath: '',
-          productId: infrastructureProductId,
-          isProductHub: true,
-        },
-        ...pulumiSubsystems,
-      ]);
+      await contextWriter.writeSystems(
+        rootDir,
+        contextName,
+        [
+          {
+            entityRef: infrastructureProductId,
+            displayName: 'Infrastructure',
+            rootPath: '',
+            productId: infrastructureProductId,
+            isProductHub: true,
+          },
+          ...pulumiSubsystems,
+        ],
+        options.source ? { source: options.source } : undefined
+      );
       await this.layoutContextDiagram(rootDir, forceRelayout);
     }
 

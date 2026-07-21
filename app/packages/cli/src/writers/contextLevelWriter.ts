@@ -1,5 +1,5 @@
 import { BaseWriter } from './baseWriter.ts';
-import type { SystemDependency, SystemNode, SystemSchema } from '@blueprint/core';
+import type { SystemDependency, SystemNode, SystemSchema, SourceProvenance } from '@blueprint/core';
 import { EntityRef, parseSchemaFromYaml } from '@blueprint/core';
 import { attachForensicsToSchema } from '../forensics/domain/attachForensics.ts';
 
@@ -152,7 +152,10 @@ export class ContextLevelWriter extends BaseWriter {
     rootDir: string,
     contextName: string,
     systems: ContextSystemInput[],
-    options?: { forensicsComponentNodes?: SystemNode[] }
+    options?: {
+      forensicsComponentNodes?: SystemNode[];
+      source?: SourceProvenance;
+    }
   ): Promise<void> {
     if (systems.length === 0) return;
 
@@ -225,6 +228,10 @@ export class ContextLevelWriter extends BaseWriter {
       contextSchema = attachForensicsToSchema(contextSchema, new Map(), {
         componentNodes: options.forensicsComponentNodes,
       });
+    }
+
+    if (options?.source) {
+      contextSchema = { ...contextSchema, source: options.source };
     }
 
     await this.writeYaml(targetPath, contextSchema);

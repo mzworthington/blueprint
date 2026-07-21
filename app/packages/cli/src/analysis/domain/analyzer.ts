@@ -8,7 +8,7 @@ import { ModelExtractor } from './modelExtractor.ts';
 import { ContextLevelWriter } from '../../writers/contextLevelWriter.ts';
 import { ContainerLevelWriter } from '../../writers/containerLevelWriter.ts';
 import { ComponentLevelWriter } from '../../writers/componentLevelWriter.ts';
-import type { SystemNode } from '@blueprint/core';
+import type { SystemNode, SourceProvenance } from '@blueprint/core';
 import { EntityRef } from '@blueprint/core';
 import { DEFAULT_ANALYSIS_OPTIONS, type AnalysisOptions } from './analysisOptions.ts';
 import { discoverSystems, partitionFilesBySystem } from './systemDiscovery.ts';
@@ -36,6 +36,8 @@ export interface RunAnalysisOptions {
   forensicsByPath?: ReadonlyMap<string, FileMetrics>;
   /** Full layout by default; set false (CLI `--no-relayout`) to preserve x/y. */
   forceRelayout?: boolean;
+  /** Git provenance stamped onto every emitted schema (`metaData.source`). */
+  source?: SourceProvenance;
 }
 
 export class CodebaseAnalyzer {
@@ -246,7 +248,8 @@ export class CodebaseAnalyzer {
         contextName,
         system.id,
         containerNodesMap,
-        containerDependencies
+        containerDependencies,
+        options.source
       );
 
       throwIfAborted(signal);
@@ -257,11 +260,18 @@ export class CodebaseAnalyzer {
         system.id,
         componentNodesMap,
         componentDependencies,
-        containerNodesMap
+        containerNodesMap,
+        options.source
       );
     }
 
     throwIfAborted(signal);
+    const contextWriteOptions = {
+      ...(forensicsByPath && forensicsByPath.size > 0
+        ? { forensicsComponentNodes: allComponentNodes }
+        : {}),
+      ...(options.source ? { source: options.source } : {}),
+    };
     await contextWriter.writeSystems(
       rootDir,
       contextName,
@@ -272,9 +282,7 @@ export class CodebaseAnalyzer {
         productId: s.productId,
         isProductHub: s.kind === 'product' || s.kind === 'fallback',
       })),
-      forensicsByPath && forensicsByPath.size > 0
-        ? { forensicsComponentNodes: allComponentNodes }
-        : undefined
+      Object.keys(contextWriteOptions).length > 0 ? contextWriteOptions : undefined
     );
 
     throwIfAborted(signal);

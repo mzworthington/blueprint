@@ -171,6 +171,18 @@ export interface SystemDependency {
   description?: string;
 }
 
+/** Git provenance captured at CLI scan time (stored under YAML `metaData.source`). */
+export interface SourceProvenance {
+  /** Normalized HTTPS remote URL (no `.git` suffix). */
+  remoteUrl?: string;
+  /** Default branch on the remote when known (e.g. `main`). */
+  defaultBranch?: string;
+  /** Commit SHA at scan time — preferred ref for source links. */
+  scannedAtCommit?: string;
+  /** Scan root relative to the git repository root (`.` when cwd is the repo root). */
+  scanRoot?: string;
+}
+
 export interface SystemSchema {
   entityRef?: EntityRef;
   name: string;
@@ -178,6 +190,8 @@ export interface SystemSchema {
   level: C4Level;
   nodes: SystemNode[];
   dependencies: SystemDependency[];
+  /** Git provenance for linking node `properties.filepath` to remote source. */
+  source?: SourceProvenance;
 }
 
 export interface ValidationIssue {

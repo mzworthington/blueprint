@@ -40,6 +40,27 @@ describe('BaseWriter YAML v3 format', () => {
     expect(yamlContent).toContain('entityRef: my-context');
   });
 
+  it('writes metaData.source when git provenance is provided', async () => {
+    const writer = new ContainerLevelWriter(fileSystem, logger);
+    const containerNodesMap = new Map<string, SystemNode>([
+      [
+        'frontend-ui',
+        { entityRef: 'my-context/my-system/frontend-ui', name: 'Frontend UI', type: 'web-app' },
+      ],
+    ]);
+
+    await writer.write('/workspace/blueprints', 'my-context', 'my-system', containerNodesMap, [], {
+      remoteUrl: 'https://github.com/org/repo',
+      scannedAtCommit: 'abc123',
+      scanRoot: '.',
+    });
+
+    const yamlContent = fileSystem.writtenFiles.get('/workspace/blueprints/containers.yaml')!;
+    expect(yamlContent).toContain('source:');
+    expect(yamlContent).toContain('remoteUrl: https://github.com/org/repo');
+    expect(yamlContent).toContain('scannedAtCommit: abc123');
+  });
+
   it('writes v3 object YAML on containers.yaml', async () => {
     const writer = new ContainerLevelWriter(fileSystem, logger);
     const containerNodesMap = new Map<string, SystemNode>([

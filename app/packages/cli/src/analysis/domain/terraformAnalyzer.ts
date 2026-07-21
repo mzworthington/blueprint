@@ -5,6 +5,7 @@ import {
   serializeSchemaToYaml,
   type SystemSchema,
   type TerraformSourceFile,
+  type SourceProvenance,
 } from '@blueprint/core';
 import { ContextLevelWriter } from '../../writers/contextLevelWriter.ts';
 import { BaseWriter } from '../../writers/baseWriter.ts';
@@ -26,6 +27,7 @@ export type RunTerraformAnalysisOptions = {
   scanRoot?: string;
   forceRelayout?: boolean;
   signal?: AbortSignal;
+  source?: SourceProvenance;
 };
 
 class TerraformSchemaWriter extends BaseWriter {
@@ -122,6 +124,7 @@ export class TerraformAnalyzer {
         name: `${root.systemId.charAt(0).toUpperCase() + root.systemId.slice(1)} Infrastructure`,
         version: result.schema.version || '1.0.0',
         level: 'container',
+        ...(options.source ? { source: options.source } : {}),
       };
 
       const blueprintsDir = fileSystem.getAbsolutePath(rootDir, root.systemId);
@@ -164,16 +167,21 @@ export class TerraformAnalyzer {
     }
 
     if (tfSubsystems.length > 0) {
-      await contextWriter.writeSystems(rootDir, contextName, [
-        {
-          entityRef: infrastructureProductId,
-          displayName: 'Infrastructure',
-          rootPath: '',
-          productId: infrastructureProductId,
-          isProductHub: true,
-        },
-        ...tfSubsystems,
-      ]);
+      await contextWriter.writeSystems(
+        rootDir,
+        contextName,
+        [
+          {
+            entityRef: infrastructureProductId,
+            displayName: 'Infrastructure',
+            rootPath: '',
+            productId: infrastructureProductId,
+            isProductHub: true,
+          },
+          ...tfSubsystems,
+        ],
+        options.source ? { source: options.source } : undefined
+      );
       await this.layoutContextDiagram(rootDir, forceRelayout);
     }
 

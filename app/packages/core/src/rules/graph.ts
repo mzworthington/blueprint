@@ -190,9 +190,17 @@ const systemDependencySchema = z.object({
 });
 
 /** Zod contract for blueprint YAML/JSON wire format (v3). Prefer this over hand-written JSON Schema. */
+const sourceProvenanceSchema = z.object({
+  remoteUrl: z.string().min(1).optional(),
+  defaultBranch: z.string().min(1).optional(),
+  scannedAtCommit: z.string().min(1).optional(),
+  scanRoot: z.string().optional(),
+});
+
 const metaDataSchema = z.object({
   entityRef: entityRefStringSchema.optional(),
   name: z.string().min(1),
+  source: sourceProvenanceSchema.optional(),
 });
 
 export const systemSchemaValidator = z.object({
@@ -271,12 +279,14 @@ function mapValidatedSchema(validated: {
   level: SystemSchema['level'];
   nodes: z.infer<typeof systemNodeSchema>[];
   dependencies?: z.infer<typeof systemDependencySchema>[];
+  source?: z.infer<typeof sourceProvenanceSchema>;
 }): SystemSchema {
   return {
     entityRef: validated.entityRef || validated.id || '',
     name: validated.name,
     version: validated.version,
     level: validated.level,
+    source: validated.source,
     nodes: validated.nodes.map(n => ({
       entityRef: n.entityRef,
       type: n.type,
@@ -305,6 +315,7 @@ function parseWireDocument(doc: unknown): SystemSchema {
     return mapValidatedSchema({
       entityRef: validated.metaData.entityRef,
       name: validated.metaData.name,
+      source: validated.metaData.source,
       version: validated.version,
       level: validated.level,
       nodes: validated.nodes,
@@ -377,6 +388,7 @@ export function serializeSchemaToYaml(
     metaData: {
       ...(schema.entityRef ? { entityRef: schema.entityRef } : {}),
       name: schema.name,
+      ...(schema.source && Object.keys(schema.source).length > 0 ? { source: schema.source } : {}),
     },
   };
 

@@ -1,5 +1,5 @@
 import { BaseWriter } from './baseWriter.ts';
-import type { SystemNode, SystemDependency, SystemSchema } from '@blueprint/core';
+import type { SystemNode, SystemDependency, SystemSchema, SourceProvenance } from '@blueprint/core';
 import { EntityRef, parseSchemaFromYaml, seedPreservedPositions } from '@blueprint/core';
 
 export class ComponentLevelWriter extends BaseWriter {
@@ -9,7 +9,8 @@ export class ComponentLevelWriter extends BaseWriter {
     systemId: string,
     componentNodesMap: Map<string, SystemNode>,
     componentDependencies: SystemDependency[],
-    containerNodesMap: Map<string, SystemNode>
+    containerNodesMap: Map<string, SystemNode>,
+    source?: SourceProvenance
   ): Promise<void> {
     const systemRef = EntityRef.parse(systemId, EntityRef.parse(contextName));
 
@@ -40,6 +41,7 @@ export class ComponentLevelWriter extends BaseWriter {
         level: 'component',
         nodes,
         dependencies: internalEdges,
+        ...(source ? { source } : {}),
       };
 
       await this.writeYaml(componentPath, componentSchema);

@@ -15,6 +15,7 @@ export * from './rules/schemaMerge';
 export * from './rules/layoutMerge';
 export * from './rules/workspaceExternals';
 export * from './rules/path';
+export * from './rules/sourceProvenance';
 export * from './forensics/trends';
 export * from './forensics/refactorScore';
 export * from './forensics/refactorBoundary';

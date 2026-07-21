@@ -222,6 +222,31 @@ nodes:
     expect(yamlContent).not.toContain('yaml-language-server');
   });
 
+  it('should round-trip metaData.source provenance in YAML', () => {
+    const schema: SystemSchema = {
+      entityRef: 'blueprint/app/cli',
+      name: 'Cli Service Components',
+      version: '1.0.0',
+      level: 'component',
+      nodes: [],
+      dependencies: [],
+      source: {
+        remoteUrl: 'https://github.com/org/repo',
+        defaultBranch: 'main',
+        scannedAtCommit: 'abc123',
+        scanRoot: 'app',
+      },
+    };
+
+    const yamlContent = serializeSchemaToYaml(schema);
+    expect(yamlContent).toContain('source:');
+    expect(yamlContent).toContain('remoteUrl: https://github.com/org/repo');
+    expect(yamlContent).toContain('scannedAtCommit: abc123');
+
+    const parsed = parseSchemaFromYaml(yamlContent);
+    expect(parsed.source).toEqual(schema.source);
+  });
+
   it('should parse v3 YAML with metaData into SystemSchema', () => {
     const yamlContent = `
 version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
