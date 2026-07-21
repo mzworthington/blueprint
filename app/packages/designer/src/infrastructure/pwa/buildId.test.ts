@@ -25,6 +25,7 @@ describe('formatAppVersionLabel', () => {
   });
 
   it('formats major.minor from package version plus build id', () => {
-    expect(formatAppVersionLabel()).toBe('v0.1.abc123def456');
+    expect(formatAppVersionLabel()).toBe('v0.1 · abc123d');
+    expect(formatAppVersionLabel({ fullBuildId: true })).toBe('v0.1.abc123def456');
   });
 });

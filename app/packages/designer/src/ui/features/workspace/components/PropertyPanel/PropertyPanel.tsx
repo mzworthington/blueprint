@@ -326,9 +326,9 @@ export const PropertyPanel: React.FC = () => {
 
       <div className="p-4 border-t border-slate-900 text-center">
         <span
-          className="text-[10px] font-mono text-slate-500 uppercase tracking-wider"
+          className="block text-[10px] font-mono text-slate-500 uppercase tracking-wider break-all leading-relaxed"
           data-testid="app-version-label"
-          title={`Build ${formatAppVersionLabel()}`}
+          title={`Build ${formatAppVersionLabel({ fullBuildId: true })}`}
         >
           Blueprint Engine {formatAppVersionLabel()}
         </span>

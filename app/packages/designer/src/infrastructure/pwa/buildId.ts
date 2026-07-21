@@ -41,12 +41,19 @@ function packageMajorMinor(version: string): string {
   return `${major}.${minor}`;
 }
 
-/** Display label for the running app, e.g. `v0.1.abc123def456`. */
-export function formatAppVersionLabel(): string {
+/** Shorten git sha / local ids for compact UI labels. */
+export function shortBuildId(buildId: string, length = 7): string {
+  if (buildId.length <= length) return buildId;
+  return buildId.slice(0, length);
+}
+
+/** Display label for the running app, e.g. `v0.1 · d1cb996` (short) or `v0.1.d1cb9969926c` (full). */
+export function formatAppVersionLabel(options?: { fullBuildId?: boolean }): string {
   const majorMinor =
     typeof __APP_PACKAGE_VERSION__ !== 'undefined'
       ? packageMajorMinor(__APP_PACKAGE_VERSION__)
       : '0.1';
   const buildId = getLocalBuildId() || 'dev';
-  return `v${majorMinor}.${buildId}`;
+  const id = options?.fullBuildId ? buildId : shortBuildId(buildId);
+  return options?.fullBuildId ? `v${majorMinor}.${id}` : `v${majorMinor} · ${id}`;
 }
