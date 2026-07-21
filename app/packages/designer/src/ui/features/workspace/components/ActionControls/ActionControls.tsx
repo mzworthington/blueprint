@@ -12,7 +12,6 @@ import {
   MoreHorizontal,
   FolderOpen,
   LayoutTemplate,
-  Map,
   HelpCircle,
 } from 'lucide-react';
 import { useBlueprintStore } from '../../../../../application/store/store';
@@ -119,24 +118,12 @@ function useClearAction() {
 
 export const ToolbarNavActions: React.FC = () => {
   const controlsDisabled = useControlsDisabled();
-  const setIsSystemMapOpen = useBlueprintStore(s => s.setIsSystemMapOpen);
   const setIsCompareOpen = useBlueprintStore(s => s.setIsCompareOpen);
   const setIsShortcutsOpen = useBlueprintStore(s => s.setIsShortcutsOpen);
   const loadedSystems = useBlueprintStore(s => s.loadedSystems);
 
   return (
     <div className="hidden md:flex items-center gap-1 shrink-0">
-      <button
-        type="button"
-        onClick={() => setIsSystemMapOpen(true)}
-        disabled={controlsDisabled || loadedSystems.length === 0}
-        className={iconBtnClass}
-        title="System map overview"
-        aria-label="Open system map"
-        data-testid="toolbar-system-map"
-      >
-        <Map className="w-3.5 h-3.5" />
-      </button>
       <button
         type="button"
         onClick={() => setIsCompareOpen(true)}
@@ -310,7 +297,6 @@ export const ToolbarEditActions: React.FC = () => {
 export const ToolbarOverflowMenu: React.FC = () => {
   const { controlsDisabled, handleClear } = useClearAction();
   const setIsDiffOpen = useBlueprintStore(s => s.setIsDiffOpen);
-  const setIsSystemMapOpen = useBlueprintStore(s => s.setIsSystemMapOpen);
   const setIsCompareOpen = useBlueprintStore(s => s.setIsCompareOpen);
   const setIsShortcutsOpen = useBlueprintStore(s => s.setIsShortcutsOpen);
   const hasPendingChanges = useBlueprintStore(s => s.hasPendingChanges);
@@ -366,21 +352,6 @@ export const ToolbarOverflowMenu: React.FC = () => {
             ))}
           </select>
         </div>
-
-        <button
-          type="button"
-          role="menuitem"
-          onClick={() => {
-            close();
-            setIsSystemMapOpen(true);
-          }}
-          disabled={controlsDisabled || loadedSystems.length === 0}
-          className={menuItemClass}
-          title="Context-level system map"
-        >
-          <Map className="w-3.5 h-3.5 shrink-0" />
-          System Map
-        </button>
 
         <button
           type="button"

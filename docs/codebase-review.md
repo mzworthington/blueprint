@@ -164,13 +164,13 @@ Mermaid import is shipped; export exists but is one-way by design. Useful enhanc
 
 ### 10. Designer UX polish
 
-| Area                         | Idea                                                                                                              |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| **Startup chooser**          | Add "Scan with CLI" instructions + deep link to download; or a future "watch folder" mode                         |
-| **Multi-system navigation**  | Breadcrumbs are strong; a **system map** mini-overview (context-level thumbnail grid) would help large workspaces |
-| **Comparison mode**          | Diff two systems or two versions of the same `entityRef` side-by-side                                             |
-| **Keyboard shortcuts panel** | Cmd+K search exists; document Esc, undo, panel toggles in a `?` overlay                                           |
-| **Mobile**                   | `BreadcrumbsCompact` and `MobilePanelToggles` exist — worth an E2E pass on tablet viewports                       |
+| Area                         | Idea                                                                                        |
+| ---------------------------- | ------------------------------------------------------------------------------------------- |
+| **Startup chooser**          | Add "Scan with CLI" instructions + deep link to download; or a future "watch folder" mode   |
+| **Multi-system navigation**  | Breadcrumbs and the system picker cover switching between loaded diagrams                   |
+| **Comparison mode**          | Diff two systems or two versions of the same `entityRef` side-by-side                       |
+| **Keyboard shortcuts panel** | Cmd+K search exists; document Esc, undo, panel toggles in a `?` overlay                     |
+| **Mobile**                   | `BreadcrumbsCompact` and `MobilePanelToggles` exist — worth an E2E pass on tablet viewports |
 
 ---
 

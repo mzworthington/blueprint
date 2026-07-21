@@ -11,7 +11,6 @@ import { DiffMenu } from './components/DiffMenu/DiffMenu';
 import { ImportMermaidDialog } from './components/ImportMermaidDialog/ImportMermaidDialog';
 import { ImportIacDialog } from './components/ImportIacDialog/ImportIacDialog';
 import { StartupWorkspaceDialog } from './components/StartupWorkspaceDialog/StartupWorkspaceDialog';
-import { SystemMapDialog } from './components/SystemMapDialog/SystemMapDialog';
 import { CompareDialog } from './components/CompareDialog/CompareDialog';
 import { KeyboardShortcutsDialog } from './components/KeyboardShortcutsDialog/KeyboardShortcutsDialog';
 import { useUrlSync } from './hooks/useUrlSync';
@@ -36,8 +35,6 @@ export const WorkspacePage: React.FC = () => {
     setIsImportIacOpen,
     isStartupOpen,
     setIsStartupOpen,
-    isSystemMapOpen,
-    setIsSystemMapOpen,
     isCompareOpen,
     setIsCompareOpen,
     isShortcutsOpen,
@@ -138,7 +135,6 @@ export const WorkspacePage: React.FC = () => {
         onImportMermaid={handleImportMermaid}
         onImportIac={handleImportIac}
       />
-      <SystemMapDialog isOpen={isSystemMapOpen} onClose={() => setIsSystemMapOpen(false)} />
       <CompareDialog isOpen={isCompareOpen} onClose={() => setIsCompareOpen(false)} />
       <KeyboardShortcutsDialog isOpen={isShortcutsOpen} onClose={() => setIsShortcutsOpen(false)} />
     </ReactFlowProvider>

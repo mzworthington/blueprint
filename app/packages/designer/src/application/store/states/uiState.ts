@@ -34,7 +34,6 @@ export interface UiState {
   isImportIacOpen: boolean;
   /** Startup chooser on `/workspace` until the user picks sandbox / folder / Mermaid. */
   isStartupOpen: boolean;
-  isSystemMapOpen: boolean;
   isCompareOpen: boolean;
   isShortcutsOpen: boolean;
   notification: ToastNotification | null;
@@ -53,7 +52,6 @@ export interface UiState {
   setIsImportMermaidOpen: (open: boolean) => void;
   setIsImportIacOpen: (open: boolean) => void;
   setIsStartupOpen: (open: boolean) => void;
-  setIsSystemMapOpen: (open: boolean) => void;
   setIsCompareOpen: (open: boolean) => void;
   setIsShortcutsOpen: (open: boolean) => void;
   setNotification: (notification: ToastNotification | null) => void;
@@ -79,7 +77,6 @@ export const createUiState = (
   isImportMermaidOpen: false,
   isImportIacOpen: false,
   isStartupOpen: true,
-  isSystemMapOpen: false,
   isCompareOpen: false,
   isShortcutsOpen: false,
   notification: null,
@@ -99,7 +96,6 @@ export const createUiState = (
   setIsImportMermaidOpen: open => set({ isImportMermaidOpen: open }),
   setIsImportIacOpen: open => set({ isImportIacOpen: open }),
   setIsStartupOpen: open => set({ isStartupOpen: open }),
-  setIsSystemMapOpen: open => set({ isSystemMapOpen: open }),
   setIsCompareOpen: open => set({ isCompareOpen: open }),
   setIsShortcutsOpen: open => set({ isShortcutsOpen: open }),
   setNotification: notification => set({ notification }),
