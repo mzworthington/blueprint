@@ -14,7 +14,7 @@ import { useBlueprintStore } from '../../../../../application/store/store';
 import { BlueprintNode } from './BlueprintNode';
 import { BlueprintGroupNode } from './BlueprintGroupNode';
 import { WorkspaceToolbar } from '../WorkspaceToolbar/WorkspaceToolbar';
-import { AlertTriangle, CheckCircle2, Info, AlertCircle, X, ZoomOut, Loader2 } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, Info, AlertCircle, X, ZoomOut } from 'lucide-react';
 import { getSchemaEntityRef } from '@blueprint/core';
 import type { NodeType } from '@blueprint/core';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
@@ -36,6 +36,10 @@ import {
   shouldAnimateDependencyEdge,
   shouldAutoLayoutOnLoad,
 } from '../../../../../application/store/layoutUtils';
+import {
+  hasSessionLayout,
+  schemaLayoutFingerprint,
+} from '../../../../../application/store/sessionLayoutCache';
 import { SubDiagramRefsContext } from './SubDiagramRefsContext';
 
 export const Canvas: React.FC = () => {
@@ -62,6 +66,7 @@ export const Canvas: React.FC = () => {
     liteCanvas,
     focusedCyclePath,
     loadedSystems,
+    workspaceCatalog,
     currentFilePath,
     workspaceName,
     isWorkspaceOpen,
@@ -73,7 +78,6 @@ export const Canvas: React.FC = () => {
     redo,
     recordHistory,
     addNode,
-    isLoading,
   } = useBlueprintStore(
     useShallow(state => ({
       nodes: state.nodes,
@@ -96,6 +100,7 @@ export const Canvas: React.FC = () => {
       liteCanvas: state.liteCanvas,
       focusedCyclePath: state.focusedCyclePath,
       loadedSystems: state.loadedSystems,
+      workspaceCatalog: state.workspaceCatalog,
       currentFilePath: state.currentFilePath,
       workspaceName: state.workspaceName,
       isWorkspaceOpen: state.isWorkspaceOpen,
@@ -107,7 +112,6 @@ export const Canvas: React.FC = () => {
       redo: state.redo,
       recordHistory: state.recordHistory,
       addNode: state.addNode,
-      isLoading: state.isLoading,
     }))
   );
 
@@ -125,18 +129,22 @@ export const Canvas: React.FC = () => {
 
   const subDiagramRefs = useMemo(() => {
     const refs = new Set<string>();
-    for (const system of loadedSystems) {
-      if (system.schema.entityRef) refs.add(system.schema.entityRef);
+    for (const entry of workspaceCatalog) {
+      refs.add(entry.entityRef);
     }
     return refs;
-  }, [loadedSystems]);
+  }, [workspaceCatalog]);
 
   const parentSystem = useMemo(() => {
-    const active = loadedSystems.find(s => s.path === currentFilePath);
-    const childRef = active?.schema.entityRef;
-    if (!childRef) return null;
-    return loadedSystems.find(s => s.schema.nodes.some(n => n.entityRef === childRef)) ?? null;
-  }, [loadedSystems, currentFilePath]);
+    const parentEntityRef = workspaceCatalog.find(e => e.path === currentFilePath)?.parentEntityRef;
+    if (!parentEntityRef) return null;
+    return (
+      loadedSystems.find(s => {
+        const ref = getSchemaEntityRef(s.schema, isWorkspaceOpen ? workspaceName : undefined);
+        return ref === parentEntityRef;
+      }) ?? null
+    );
+  }, [workspaceCatalog, loadedSystems, currentFilePath, isWorkspaceOpen, workspaceName]);
 
   const zoomOutToParent = useCallback(() => {
     if (!parentSystem) return;
@@ -157,7 +165,10 @@ export const Canvas: React.FC = () => {
     const controller = new AbortController();
     const run = async () => {
       const { schema, layoutEngine: currentEngine } = useBlueprintStore.getState();
-      const needsLayout = shouldAutoLayoutOnLoad(schema);
+      const fingerprint = schemaLayoutFingerprint(schema);
+      const needsLayout =
+        shouldAutoLayoutOnLoad(schema) &&
+        !hasSessionLayout(useBlueprintStore.getState().currentFilePath, fingerprint);
 
       if (needsLayout) {
         if (currentEngine !== 'dagre') {
@@ -174,7 +185,7 @@ export const Canvas: React.FC = () => {
       // Wait for React Flow to commit node measurements after layout state updates.
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          fitViewRef.current({ duration: 400, padding: 0.12 });
+          fitViewRef.current({ padding: 0.12 });
         });
       });
     };
@@ -497,17 +508,6 @@ export const Canvas: React.FC = () => {
                 </button>
               </div>
             </Panel>
-          )}
-
-          {isLoading && (
-            <div className="absolute inset-0 bg-[#040914]/65 backdrop-blur-[4px] z-50 flex flex-col items-center justify-center gap-3 animate-fade-in pointer-events-auto">
-              <div className="p-4 rounded-2xl bg-[#061125]/85 border border-[#00f0ff]/20 shadow-[0_0_30px_rgba(0,240,255,0.15)] flex flex-col items-center gap-3 min-w-[180px] max-w-[240px] text-center">
-                <Loader2 className="w-8 h-8 animate-spin text-[#00f0ff]" />
-                <span className="text-xs font-mono tracking-wider text-slate-350 uppercase">
-                  {typeof isLoading === 'string' ? isLoading : 'LOADING SCHEMA...'}
-                </span>
-              </div>
-            </div>
           )}
         </ReactFlow>
       </SubDiagramRefsContext.Provider>

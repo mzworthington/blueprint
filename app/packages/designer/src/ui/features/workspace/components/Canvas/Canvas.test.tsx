@@ -370,6 +370,23 @@ describe('Canvas Component', () => {
 
     useBlueprintStore.setState({
       workspaceName: 'default',
+      workspaceCatalog: [
+        {
+          path: 'blueprint.yaml',
+          name: 'Root Context',
+          level: 'context',
+          entityRef: 'root',
+          nodeEntityRefs: ['default/test-node-1'],
+        },
+        {
+          path: 'child.yaml',
+          name: 'Child Level',
+          level: 'component',
+          entityRef: 'default/test-node-1',
+          nodeEntityRefs: [],
+          parentEntityRef: 'root',
+        },
+      ],
       loadedSystems: [
         { path: 'blueprint.yaml', name: 'Root Context', schema: parentSchema },
         { path: 'child.yaml', name: 'Child Level', schema: childSchema },
@@ -416,6 +433,23 @@ describe('Canvas Component', () => {
 
     useBlueprintStore.setState({
       workspaceName: 'default',
+      workspaceCatalog: [
+        {
+          path: 'context.yaml',
+          name: 'Root Context',
+          level: 'context',
+          entityRef: 'root',
+          nodeEntityRefs: ['root/web-app'],
+        },
+        {
+          path: 'containers.yaml',
+          name: 'Web Containers',
+          level: 'container',
+          entityRef: 'root/web-app',
+          nodeEntityRefs: [],
+          parentEntityRef: 'root',
+        },
+      ],
       loadedSystems: [
         { path: 'context.yaml', name: 'Root Context', schema: parentSchema },
         { path: 'containers.yaml', name: 'Web Containers', schema: childSchema },

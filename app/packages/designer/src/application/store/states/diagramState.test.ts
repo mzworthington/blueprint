@@ -4,6 +4,11 @@ import type { NodeType } from '@blueprint/core';
 import { createBrowserLayoutRegistry } from '../../../infrastructure/layout/createBrowserLayoutRegistry';
 import { reactFlowGraphChangeAdapter } from '../../../infrastructure/layout/reactFlowGraphChangeAdapter';
 import { dexieWorkingCopyAdapter } from '../../../infrastructure/db/dexieWorkingCopyAdapter';
+import {
+  clearSessionLayout,
+  hasSessionLayout,
+  schemaLayoutFingerprint,
+} from '../sessionLayoutCache';
 
 describe('diagramState Actions & State Management', () => {
   beforeEach(() => {
@@ -549,6 +554,44 @@ describe('diagramState Actions & State Management', () => {
     });
 
     expect(useBlueprintStore.getState().focusedCyclePath).toBeNull();
+  });
+
+  it('does not seed session layout cache before autolayout on load', () => {
+    clearSessionLayout();
+    useBlueprintStore.setState({
+      currentFilePath: 'context.yaml',
+      layoutCustomized: false,
+    });
+
+    const schema = {
+      name: 'Blueprint Context',
+      version: '1.0.0',
+      level: 'context' as const,
+      entityRef: 'blueprint',
+      nodes: [
+        { entityRef: 'blueprint/user', type: 'person' as const, name: 'User' },
+        {
+          entityRef: 'blueprint/backstage',
+          type: 'group' as const,
+          name: 'Backstage',
+          children: [
+            {
+              entityRef: 'blueprint/docs-ui',
+              type: 'software-system' as const,
+              name: 'Docs Ui',
+            },
+          ],
+        },
+      ],
+      dependencies: [
+        { from: 'blueprint/user', to: 'blueprint/backstage', type: 'direct-call' as const },
+      ],
+    };
+
+    useBlueprintStore.getState().initSchema(schema);
+    const fingerprint = schemaLayoutFingerprint(useBlueprintStore.getState().schema);
+
+    expect(hasSessionLayout('context.yaml', fingerprint)).toBe(false);
   });
 
   it('should merge mermaid import into active diagram without removing existing nodes', () => {

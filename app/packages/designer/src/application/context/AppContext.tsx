@@ -21,6 +21,7 @@ import {
   activateBundledSandbox,
   resolveBundledSandboxSystems,
 } from '../store/states/diagramState/loadBundledSandbox';
+import { startBundledBlueprintPrefetch } from '../store/states/diagramState/bundledBlueprintLoader';
 
 interface AppContextProps {
   fileSystemPort: typeof BrowserFileSystemAdapter;
@@ -70,6 +71,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
       const { systems: hydrated } = await hydrateSandboxDrafts(systems, workingCopy);
       bootSandbox(hydrated);
+      startBundledBlueprintPrefetch({
+        get: () => useBlueprintStore.getState(),
+        set: partial => useBlueprintStore.setState(partial),
+      });
     })();
   }, []);
 

@@ -8,7 +8,8 @@ import {
   normalizeGroupedNodePositions,
   hasGroupedLayout,
   prepareGroupedNodesForLayout,
-  hasFinitePosition,
+  stripLayoutCoordinates,
+  hasCompleteSavedLayout,
   type SchemaVersionAssessment,
   type SystemSchema,
   type SystemNode,
@@ -24,6 +25,12 @@ import {
   type WorkspaceCatalogEntry,
 } from '@blueprint/core';
 import { ensureSystemLoaded } from './ioState/ensureSystemLoaded';
+import { ensureBundledSystemLoaded } from './diagramState/bundledBlueprintLoader';
+import {
+  clearSessionLayout,
+  getSessionLayout,
+  schemaLayoutFingerprint,
+} from '../sessionLayoutCache';
 import type { CanvasNodeChange, CanvasEdgeChange, CanvasConnection } from '../../../core';
 import {
   mapDomainNodesToRFNodes,
@@ -54,7 +61,7 @@ import {
   type IacImportPreview,
 } from './diagramState/importIac';
 import { createDiagramInitialState } from './diagramState/initialState';
-import { activateBundledSandbox } from './diagramState/loadBundledSandbox';
+import { reloadBundledSandbox } from './diagramState/loadBundledSandbox';
 import { resetToEmptyWorkspace as resetToEmptyWorkspaceAction } from './diagramState/resetToEmptyWorkspace';
 import {
   addNodeMutation,
@@ -251,14 +258,16 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   selectSystem: async (path: string) => {
     const { logger, isWorkspaceOpen, workspacePort, workingCopyPort } = get();
 
-    if (!get().loadedSystems.some(s => s.path === path) && isWorkspaceOpen) {
-      const ok = await ensureSystemLoaded(path, {
-        workspacePort,
-        workingCopyPort,
-        logger,
-        get,
-        set,
-      });
+    if (!get().loadedSystems.some(s => s.path === path)) {
+      const ok = isWorkspaceOpen
+        ? await ensureSystemLoaded(path, {
+            workspacePort,
+            workingCopyPort,
+            logger,
+            get,
+            set,
+          })
+        : await ensureBundledSystemLoaded(path, { get, set, logger });
       if (!ok) {
         logger.warn('System path not found in workspace', { path });
         return;
@@ -284,16 +293,51 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   initSchema: schema => {
     get().clearHistory();
     set({ focusedCyclePath: null });
+    const filePath = get().currentFilePath;
+    const fingerprint = schemaLayoutFingerprint(schema);
+    const cachedLayout =
+      filePath && hasCompleteSavedLayout(schema.nodes)
+        ? getSessionLayout(filePath, fingerprint)
+        : undefined;
+
+    if (cachedLayout) {
+      set({ schemaVersionWarning: assessSchemaVersion(schema.version) });
+      applyStateUpdates(
+        set,
+        get,
+        cachedLayout.nodes,
+        cachedLayout.edges,
+        schema.name,
+        schema.level,
+        schema.entityRef ?? null,
+        schema.source,
+        { syncWorkingCopy: false, updateSessionLayout: false }
+      );
+      set({ layoutSessionId: get().layoutSessionId + 1 });
+      return;
+    }
+
     const grouped = hasGroupedLayout(schema.nodes);
-    const layoutCustomized = schema.nodes.some(hasFinitePosition);
+    const layoutCustomized = hasCompleteSavedLayout(schema.nodes);
+    const needsAutoLayout = !layoutCustomized && shouldAutoLayoutOnLoad(schema);
+
+    if (needsAutoLayout && filePath) {
+      clearSessionLayout(filePath);
+    }
+
+    const normalizedNodes =
+      needsAutoLayout && grouped
+        ? stripLayoutCoordinates(schema.nodes)
+        : grouped
+          ? prepareGroupedNodesForLayout(schema.nodes)
+          : normalizeGroupedNodePositions(schema.nodes);
+
     const normalized: SystemSchema = {
       ...schema,
-      nodes: grouped
-        ? prepareGroupedNodesForLayout(schema.nodes)
-        : normalizeGroupedNodePositions(schema.nodes),
+      nodes: normalizedNodes,
       dependencies: dedupeDependencies(schema.dependencies ?? []),
     };
-    const needsAutoLayout = shouldAutoLayoutOnLoad(normalized);
+
     set({
       layoutCustomized,
       ...(needsAutoLayout && get().layoutEngine === null ? { layoutEngine: 'dagre' } : {}),
@@ -311,13 +355,14 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
       normalized.name,
       normalized.level,
       normalized.entityRef ?? null,
-      normalized.source
+      normalized.source,
+      needsAutoLayout ? { syncWorkingCopy: false, updateSessionLayout: false } : undefined
     );
     set({ layoutSessionId: get().layoutSessionId + 1 });
   },
 
   loadBundledSandbox: () => {
-    activateBundledSandbox(set, get);
+    void reloadBundledSandbox(set, get);
   },
 
   markLayoutCustomized: () => {
@@ -535,7 +580,9 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
       if (recordHistory) {
         get().recordHistory();
       }
-      applyStateUpdates(set, get, nextNodes, edges);
+      applyStateUpdates(set, get, nextNodes, edges, undefined, undefined, undefined, undefined, {
+        syncWorkingCopy: persistToSchema,
+      });
       return;
     }
 
@@ -583,6 +630,8 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
     if (recordHistory) {
       get().recordHistory();
     }
-    applyStateUpdates(set, get, nextNodes, edges);
+    applyStateUpdates(set, get, nextNodes, edges, undefined, undefined, undefined, undefined, {
+      syncWorkingCopy: persistToSchema,
+    });
   },
 });

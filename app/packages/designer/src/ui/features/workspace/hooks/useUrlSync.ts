@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useLocation, useRoute } from 'wouter';
 import { useBlueprintStore } from '../../../../application/store/store';
+import { guessBundledPathForEntityRef } from '../../../../application/store/states/diagramState/bundledBlueprintLoader';
 import { getSchemaEntityRef } from '@blueprint/core';
 
 /**
@@ -19,6 +20,7 @@ export function useUrlSync(): void {
     selectSystem,
     currentFilePath,
     workspaceName,
+    workspaceCatalog,
     isWorkspaceOpen,
     isStartupOpen,
   } = useBlueprintStore();
@@ -48,6 +50,16 @@ export function useUrlSync(): void {
         const dRef = getSchemaEntityRef(sys.schema, isWorkspaceOpen ? workspaceName : undefined);
         return dRef === entityRef;
       });
+
+      if (!foundSystem) {
+        const catalogEntry = workspaceCatalog.find(entry => entry.entityRef === entityRef);
+        const path = catalogEntry?.path ?? guessBundledPathForEntityRef(entityRef);
+        if (path) {
+          void selectSystem(path);
+          lastSyncedLocationRef.current = location;
+          return;
+        }
+      }
     }
 
     if (foundSystem) {
@@ -75,6 +87,7 @@ export function useUrlSync(): void {
     currentFilePath,
     workspaceName,
     loadedSystems,
+    workspaceCatalog,
     selectSystem,
     setLocation,
     match,

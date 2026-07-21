@@ -306,3 +306,17 @@ export async function loadWorkingSchema(
     })),
   };
 }
+
+/** Wipe all sandbox/working-copy IndexedDB rows (used when reloading the bundled demo). */
+export async function clearAllStoredSchemas(): Promise<void> {
+  await db.transaction(
+    'rw',
+    [db.originalNodes, db.workingNodes, db.originalDependencies, db.workingDependencies],
+    async () => {
+      await db.originalNodes.clear();
+      await db.workingNodes.clear();
+      await db.originalDependencies.clear();
+      await db.workingDependencies.clear();
+    }
+  );
+}

@@ -15,6 +15,7 @@ import {
   prepareGroupedNodesForLayout,
   groupLayoutDimensions,
   DEFAULT_NODE_SIZE,
+  hasCompleteSavedLayout,
 } from '@blueprint/core';
 import type { LayoutEngineId, LayoutRegistryPort } from '../../core';
 import { computeClientLayout } from '../layout/computeClientLayout';
@@ -189,10 +190,10 @@ export function sortNodesForReactFlow(nodes: BlueprintRFNode[]): BlueprintRFNode
   return [...nodes].sort((a, b) => depth(a) - depth(b) || a.id.localeCompare(b.id));
 }
 
-/** Run automatic layout on load when no node has saved coordinates. */
+/** Run automatic layout on load unless every node already has saved coordinates. */
 export function shouldAutoLayoutOnLoad(schema: SystemSchema): boolean {
   if (schema.nodes.length === 0) return false;
-  return !schema.nodes.some(n => Number.isFinite(n.x) && Number.isFinite(n.y));
+  return !hasCompleteSavedLayout(schema.nodes);
 }
 
 export async function layoutGroupedDomainNodes(

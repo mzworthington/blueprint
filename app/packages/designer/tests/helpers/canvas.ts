@@ -17,6 +17,6 @@ export function zoomableNodes(page: Page): Locator {
 export async function drillIntoFirstZoomable(page: Page): Promise<void> {
   const node = zoomableNodes(page).first();
   await expect(node).toBeVisible({ timeout: 30_000 });
-  await node.dblclick();
+  await node.dblclick({ force: true });
   await expectCanvasReady(page);
 }

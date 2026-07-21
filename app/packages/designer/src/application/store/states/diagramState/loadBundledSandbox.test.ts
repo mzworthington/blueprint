@@ -46,6 +46,9 @@ describe('loadBundledSandbox', () => {
 
     let store: Record<string, unknown> = {
       isWorkspaceOpen: false,
+      loadedSystems: [],
+      workspaceName: '',
+      clearHistory: () => {},
       initSchema: (schema: SystemSchema) => {
         store = { ...store, schema };
       },
@@ -55,7 +58,14 @@ describe('loadBundledSandbox', () => {
       partial => {
         store = { ...store, ...partial };
       },
-      () => store as { isWorkspaceOpen: boolean; initSchema: (schema: SystemSchema) => void },
+      () =>
+        store as {
+          isWorkspaceOpen: boolean;
+          initSchema: (schema: SystemSchema) => void;
+          clearHistory: () => void;
+          loadedSystems: typeof systems;
+          workspaceName: string;
+        },
       systems
     );
 
@@ -84,6 +94,8 @@ describe('loadBundledSandbox', () => {
         },
       ],
       currentFilePath: 'blueprint.yaml',
+      workspaceName: '',
+      clearHistory: () => {},
       initSchema: (schema: SystemSchema) => {
         store = { ...store, schema };
       },
@@ -93,7 +105,14 @@ describe('loadBundledSandbox', () => {
       partial => {
         store = { ...store, ...partial };
       },
-      () => store as { isWorkspaceOpen: boolean; initSchema: (schema: SystemSchema) => void },
+      () =>
+        store as {
+          isWorkspaceOpen: boolean;
+          initSchema: (schema: SystemSchema) => void;
+          clearHistory: () => void;
+          loadedSystems: Array<{ path: string; name: string; schema: SystemSchema }>;
+          workspaceName: string;
+        },
       [{ path: 'context.yaml', name: 'Context', schema: contextSchema }]
     );
 

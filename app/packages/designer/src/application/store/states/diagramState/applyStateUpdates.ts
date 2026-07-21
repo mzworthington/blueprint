@@ -17,6 +17,14 @@ import {
   buildNextSchemaFromCanvas,
 } from './applyStateHelpers';
 import { sortNodesForReactFlow } from '../../layoutUtils';
+import { setSessionLayout, schemaLayoutFingerprint } from '../../sessionLayoutCache';
+
+export type ApplyStateUpdateOptions = {
+  /** When false, skip IndexedDB working-copy sync (e.g. autolayout without persisting coords). */
+  syncWorkingCopy?: boolean;
+  /** When false, do not update the in-memory session layout cache. */
+  updateSessionLayout?: boolean;
+};
 
 /**
  * Rebuild schema from canvas nodes/edges, resolve entityRefs across the
@@ -30,8 +38,11 @@ export function applyStateUpdates(
   customSchemaName?: string,
   customSchemaLevel?: C4Level,
   customEntityRef?: string | null,
-  preservedSource?: SourceProvenance
+  preservedSource?: SourceProvenance,
+  options: ApplyStateUpdateOptions = {}
 ) {
+  const syncWorkingCopy = options.syncWorkingCopy !== false;
+  const updateSessionLayout = options.updateSessionLayout !== false;
   const currentSchema = get().schema as SystemSchema;
   const name = customSchemaName ?? currentSchema.name;
   const version = currentSchema.version;
@@ -120,8 +131,17 @@ export function applyStateUpdates(
     nodeRefMap: resolved.nodeRefMap,
   });
 
+  if (updateSessionLayout && currentFilePath && resolvedNextNodes.length > 0) {
+    setSessionLayout(
+      currentFilePath,
+      schemaLayoutFingerprint(resolvedSchema),
+      resolvedNextNodes,
+      highlightedEdges
+    );
+  }
+
   const workingCopy = get().workingCopyPort;
-  if (workingCopy) {
+  if (workingCopy && syncWorkingCopy) {
     workingCopy
       .saveWorkingSchema({
         filePath: currentFilePath,

@@ -96,8 +96,8 @@ describe('Searchbar Component', () => {
     const dropdownItem = screen.getByText('Auth Controller');
     fireEvent.click(dropdownItem);
 
-    expect(selectNodeSpy).toHaveBeenCalledWith('cli/node-1');
-    expect(mockGetNode).toHaveBeenCalledWith('cli/node-1');
+    expect(selectNodeSpy).toHaveBeenCalledWith('search-test-app/node-1');
+    expect(mockGetNode).toHaveBeenCalledWith('search-test-app/node-1');
     expect(mockSetCenter).toHaveBeenCalledWith(150, 225, { zoom: 1.15, duration: 800 });
     expect(screen.queryByText('Auth Controller')).not.toBeInTheDocument();
   });
@@ -113,8 +113,8 @@ describe('Searchbar Component', () => {
     fireEvent.keyDown(input, { key: 'ArrowDown' });
     fireEvent.keyDown(input, { key: 'Enter' });
 
-    expect(selectNodeSpy).toHaveBeenCalledWith('cli/node-2');
-    expect(mockGetNode).toHaveBeenCalledWith('cli/node-2');
+    expect(selectNodeSpy).toHaveBeenCalledWith('search-test-app/node-2');
+    expect(mockGetNode).toHaveBeenCalledWith('search-test-app/node-2');
   });
 
   it('closes dropdown when Escape key is pressed', () => {

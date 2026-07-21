@@ -24,6 +24,11 @@ export function nodesNeedingLayout(nodes: SystemNode[]): SystemNode[] {
   return nodes.filter(n => !hasFinitePosition(n));
 }
 
+/** True when every node has saved coordinates (intentional persisted layout). */
+export function hasCompleteSavedLayout(nodes: SystemNode[]): boolean {
+  return nodes.length > 0 && nodesNeedingLayout(nodes).length === 0;
+}
+
 export function preservedBoundingBox(nodes: SystemNode[]): BoundingBox | null {
   const positioned = nodes.filter(hasFinitePosition);
   if (positioned.length === 0) return null;

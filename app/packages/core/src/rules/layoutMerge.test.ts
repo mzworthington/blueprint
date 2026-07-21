@@ -3,6 +3,7 @@ import type { SystemNode } from '../models/schema';
 import {
   hasFinitePosition,
   nodesNeedingLayout,
+  hasCompleteSavedLayout,
   preservedBoundingBox,
   seedPreservedPositions,
   mergeLaidOutGapNodes,
@@ -30,6 +31,17 @@ describe('nodesNeedingLayout', () => {
   it('returns nodes missing a finite position', () => {
     const nodes = [node('a', 1, 2), node('b'), node('c', 3, Number.NaN)];
     expect(nodesNeedingLayout(nodes).map(n => n.entityRef)).toEqual(['b', 'c']);
+  });
+});
+
+describe('hasCompleteSavedLayout', () => {
+  it('is false when any node lacks coordinates', () => {
+    expect(hasCompleteSavedLayout([node('a', 1, 2), node('b')])).toBe(false);
+  });
+
+  it('is true only when every node is positioned', () => {
+    expect(hasCompleteSavedLayout([node('a', 1, 2), node('b', 3, 4)])).toBe(true);
+    expect(hasCompleteSavedLayout([])).toBe(false);
   });
 });
 

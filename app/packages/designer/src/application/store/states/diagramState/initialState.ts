@@ -1,16 +1,6 @@
-import {
-  validateGraph,
-  serializeSchemaToYaml,
-  resolveWorkspaceEntityRefs,
-  type SystemSchema,
-} from '@blueprint/core';
-import {
-  mapDomainNodesToRFNodes,
-  mapDomainDepsToRFEdges,
-  getClosestHandles,
-} from '../../layoutUtils';
+import { validateGraph, serializeSchemaToYaml, type SystemSchema } from '@blueprint/core';
 import type { BlueprintRFNode, BlueprintRFEdge } from '../../layoutUtils';
-import { defaultLoadedSystems, defaultInitialSchema } from '../../defaultData';
+import { CONTEXT_BLUEPRINT_PATH } from '../../defaultData';
 
 export interface DiagramInitialState {
   schema: SystemSchema;
@@ -23,63 +13,24 @@ export interface DiagramInitialState {
   nodeRefMap: Record<string, Record<string, string>>;
 }
 
+const emptySchema: SystemSchema = {
+  name: 'Loading',
+  version: '1.0.0',
+  level: 'context',
+  nodes: [],
+  dependencies: [],
+};
+
+/** Minimal store boot state — bundled sandbox activation replaces this at runtime. */
 export function createDiagramInitialState(): DiagramInitialState {
-  const resolvedInitial = resolveWorkspaceEntityRefs(
-    defaultLoadedSystems.length > 0
-      ? defaultLoadedSystems
-      : [{ path: 'blueprint.yaml', schema: defaultInitialSchema }]
-  );
-  const initialLoadedSystemsResolved = defaultLoadedSystems.map(sys => ({
-    ...sys,
-    schema: resolvedInitial.schemas[sys.path] || sys.schema,
-  }));
-  const initialSchemaResolved =
-    initialLoadedSystemsResolved.length > 0
-      ? initialLoadedSystemsResolved[0].schema
-      : defaultInitialSchema;
-
-  const initialNodes = mapDomainNodesToRFNodes(initialSchemaResolved.nodes).map(
-    (node: BlueprintRFNode) => {
-      const defaultPath = defaultLoadedSystems[0]?.path || 'blueprint.yaml';
-      const fileRefMap = resolvedInitial.nodeRefMap[defaultPath] || {};
-      const sysId = resolvedInitial.schemas[defaultPath]?.entityRef || 'default';
-      const entityRef = fileRefMap[node.id] || `${sysId}/${node.id}`;
-      return {
-        ...node,
-        data: {
-          ...node.data,
-          entityRef,
-        },
-      };
-    }
-  );
-  const initialEdges = mapDomainDepsToRFEdges(initialSchemaResolved.dependencies).map(
-    (edge: BlueprintRFEdge) => {
-      const sourceNode = initialNodes.find((n: BlueprintRFNode) => n.id === edge.source);
-      const targetNode = initialNodes.find((n: BlueprintRFNode) => n.id === edge.target);
-      if (!sourceNode || !targetNode) return edge;
-      const { sourceHandle, targetHandle } = getClosestHandles(
-        sourceNode,
-        targetNode,
-        initialNodes
-      );
-      return {
-        ...edge,
-        sourceHandle,
-        targetHandle,
-      };
-    }
-  );
-
   return {
-    schema: initialSchemaResolved,
-    nodes: initialNodes,
-    edges: initialEdges,
-    validationResult: validateGraph(initialSchemaResolved),
-    yamlCode: serializeSchemaToYaml(initialSchemaResolved),
-    currentFilePath:
-      defaultLoadedSystems.length > 0 ? defaultLoadedSystems[0].path : 'blueprint.yaml',
-    loadedSystems: initialLoadedSystemsResolved,
-    nodeRefMap: resolvedInitial.nodeRefMap,
+    schema: emptySchema,
+    nodes: [],
+    edges: [],
+    validationResult: validateGraph(emptySchema),
+    yamlCode: serializeSchemaToYaml(emptySchema),
+    currentFilePath: CONTEXT_BLUEPRINT_PATH,
+    loadedSystems: [],
+    nodeRefMap: {},
   };
 }

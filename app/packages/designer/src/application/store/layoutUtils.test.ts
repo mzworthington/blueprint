@@ -131,7 +131,7 @@ describe('getAbsoluteNodePosition', () => {
 });
 
 describe('shouldAutoLayoutOnLoad', () => {
-  it('skips auto layout when any node has saved coordinates', () => {
+  it('skips auto layout only when every node has saved coordinates', () => {
     expect(
       shouldAutoLayoutOnLoad({
         name: 'Context',
@@ -151,6 +151,21 @@ describe('shouldAutoLayoutOnLoad', () => {
         dependencies: [],
       })
     ).toBe(false);
+  });
+
+  it('runs auto layout when only some nodes have coordinates', () => {
+    expect(
+      shouldAutoLayoutOnLoad({
+        name: 'Cli',
+        version: '1.0.0',
+        level: 'component',
+        nodes: [
+          { entityRef: 'cli/a', type: 'background-worker', name: 'A' },
+          { entityRef: 'cli/b', type: 'background-worker', name: 'B', x: 280, y: 100 },
+        ],
+        dependencies: [],
+      })
+    ).toBe(true);
   });
 
   it('runs auto layout for grouped context when coordinates are absent', () => {

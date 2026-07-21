@@ -106,6 +106,13 @@ Outstanding enhancements planned for Blueprint:
 
 - **Direct Git branch integration:** View active git branch states within the web app and commit/push schema changes to new branches.
 
+### Designer canvas performance
+
+Planned:
+
+- **Diagram loading overlay:** Full-canvas loading state when lazy-loading blueprints, switching diagrams, and running autolayout (parse YAML → `initSchema` → dagre). Needs reliable session-scoped clear semantics (React Strict Mode / fast navigation safe).
+- **Off-main-thread layout:** Move dagre (or equivalent) to a Web Worker, or chunk layout for very large diagrams, so the UI stays responsive during sandbox drill-down and component-level views with 100+ nodes.
+
 ### C# and .NET analysis
 
 Shipped:
