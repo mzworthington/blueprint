@@ -6,8 +6,6 @@ export interface ArchitectureCliFlags {
   rollupModules: boolean;
   ignore: string[];
   systems: string[] | undefined;
-  /** Full layout pass by default; pass `--no-relayout` to preserve existing x/y. */
-  relayout: boolean;
 }
 
 export interface GitForensicsCliFlags {
@@ -88,7 +86,6 @@ export function parseBlueprintArgv(argv: string[]): BlueprintCliPlan {
       const raw = flagValue(argv, '--systems');
       return raw ? parseCsv(raw) : undefined;
     })(),
-    relayout: !argv.includes('--no-relayout'),
   };
 
   const git: GitForensicsCliFlags = {
@@ -110,8 +107,6 @@ export function parseBlueprintArgv(argv: string[]): BlueprintCliPlan {
     architecture.rollupModules ||
     architecture.ignore.length > 0 ||
     !!architecture.systems ||
-    argv.includes('--relayout') ||
-    argv.includes('--no-relayout') ||
     !process.stdout.isTTY ||
     !!process.env.CI;
 

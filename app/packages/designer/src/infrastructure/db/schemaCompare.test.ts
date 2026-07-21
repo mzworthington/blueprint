@@ -72,4 +72,33 @@ describe('schemaCompare', () => {
     const result = resolveSchemaOnWorkspaceOpen(base, null);
     expect(result).toEqual({ schema: base, discardedStaleDraft: false });
   });
+
+  it('detects parentEntityRef changes as topology drift', () => {
+    const disk: SystemSchema = {
+      name: 'Context',
+      version: '1.0.0',
+      level: 'context',
+      entityRef: 'blueprint',
+      nodes: [
+        { entityRef: 'blueprint/hub', type: 'group', name: 'Hub' },
+        {
+          entityRef: 'blueprint/child',
+          type: 'software-system',
+          name: 'Child',
+          parentEntityRef: 'blueprint/hub',
+        },
+      ],
+      dependencies: [],
+    };
+    const staleDraft: SystemSchema = {
+      ...disk,
+      nodes: [
+        { entityRef: 'blueprint/hub', type: 'group', name: 'Hub', x: 10, y: 20 },
+        { entityRef: 'blueprint/child', type: 'software-system', name: 'Child', x: 30, y: 40 },
+      ],
+    };
+    const result = resolveSchemaOnWorkspaceOpen(disk, staleDraft);
+    expect(result.discardedStaleDraft).toBe(true);
+    expect(result.schema).toBe(disk);
+  });
 });

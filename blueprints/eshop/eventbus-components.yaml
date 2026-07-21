@@ -3,6 +3,11 @@ level: component
 metaData:
   entityRef: blueprint/eshop/eventbus
   name: EventBus Service Components
+  source:
+    remoteUrl: https://github.com/dotnet/eShop
+    defaultBranch: main
+    scannedAtCommit: 9b4f9434f46fdc5c1a6e9e936af2868340cdbc48
+    scanRoot: .
 nodes:
   - entityRef: blueprint/eshop/eventbus/extensions
     type: background-worker
@@ -13,8 +18,6 @@ nodes:
       containerId: eventbus
       technology: C# Domain Service
       classification: default
-    x: 40
-    y: 300
   - entityRef: blueprint/eshop/eventbus/abstractions
     type: event-broker
     name: Abstractions Layer
@@ -24,8 +27,6 @@ nodes:
       containerId: eventbus
       technology: C# Event Client
       classification: event-marker
-    x: 40
-    y: 40
   - entityRef: blueprint/eshop/eventbus/events
     type: background-worker
     name: Events Layer
@@ -35,6 +36,57 @@ nodes:
       containerId: eventbus
       technology: C# Domain Service
       classification: default
-    x: 400
-    y: 40
-dependencies: []
+  - entityRef: blueprint/eshop/orderprocessor/events
+    type: background-worker
+    name: Events Layer (External)
+    external: true
+    properties:
+      filepath: src/OrderProcessor/Events/GracePeriodConfirmedIntegrationEvent.cs
+      containerId: orderprocessor
+      technology: C# Domain Service
+      classification: default
+    x: 280
+    y: 100
+  - entityRef: blueprint/eshop/webapp/services
+    type: rest-api
+    name: Services Layer (External)
+    external: true
+    properties:
+      filepath: src/WebApp/Services/OrderingService.cs
+      containerId: webapp
+      technology: ASP.NET Core Controller / Minimal API
+      classification: api-marker
+    x: 460
+    y: 100
+  - entityRef: blueprint/eshop/orderprocessor/services
+    type: relational-database
+    name: Services Layer (External)
+    external: true
+    properties:
+      filepath: src/OrderProcessor/Services/GracePeriodManagerService.cs
+      containerId: orderprocessor
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 100
+    y: 220
+dependencies:
+  - from: blueprint/eshop/eventbus/extensions
+    to: blueprint/eshop/eventbus/abstractions
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/eshop/webapp/services
+    to: blueprint/eshop/eventbus/events
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/webapp/services
+    to: blueprint/eshop/eventbus/abstractions
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/eshop/orderprocessor/events
+    to: blueprint/eshop/eventbus/events
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/orderprocessor/services
+    to: blueprint/eshop/eventbus/abstractions
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics

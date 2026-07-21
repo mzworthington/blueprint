@@ -74,7 +74,7 @@ export function useImportMermaidDialog(isOpen: boolean, onClose: () => void) {
       const success = importMermaid(source, conflictResolutions);
       if (success) {
         setLayoutEngine('elk');
-        await applyClientLayout();
+        await applyClientLayout({ persistToSchema: true });
         setNotification({
           type: 'success',
           title: 'Import complete',

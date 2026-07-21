@@ -42,6 +42,7 @@ export const WorkspacePage: React.FC = () => {
     setIsShortcutsOpen,
     openWorkspaceDirectory,
     resetToEmptyWorkspace,
+    loadBundledSandbox,
   } = useBlueprintStore();
 
   useUrlSync();
@@ -58,8 +59,9 @@ export const WorkspacePage: React.FC = () => {
   }, [location, isStartupOpen, setIsStartupOpen]);
 
   const handleLoadSandbox = useCallback(() => {
+    loadBundledSandbox();
     setIsStartupOpen(false);
-  }, [setIsStartupOpen]);
+  }, [loadBundledSandbox, setIsStartupOpen]);
 
   const handleOpenDirectory = useCallback(async () => {
     try {

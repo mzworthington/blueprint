@@ -18,8 +18,6 @@ nodes:
       containerId: proxy-backend
       technology: TypeScript Domain Service
       classification: default
-    x: 48
-    y: 64
     forensics:
       complexity: 1
       loc: 181
@@ -55,8 +53,6 @@ nodes:
       containerId: proxy-backend
       technology: TypeScript Domain Service
       classification: default
-    x: 208
-    y: 384
     forensics:
       complexity: 1
       loc: 50
@@ -92,8 +88,6 @@ nodes:
       containerId: proxy-backend
       technology: TypeScript Domain Service
       classification: default
-    x: 428
-    y: 64
     forensics:
       complexity: 1
       loc: 58
@@ -129,8 +123,6 @@ nodes:
       containerId: proxy-backend
       technology: TypeScript Domain Service
       classification: default
-    x: 1568
-    y: 64
     forensics:
       complexity: 1
       loc: 18
@@ -166,8 +158,6 @@ nodes:
       containerId: proxy-backend
       technology: REST Controller / Router
       classification: api-marker
-    x: 748
-    y: 384
     forensics:
       complexity: 29
       loc: 369
@@ -205,8 +195,6 @@ nodes:
       containerId: proxy-backend
       technology: REST Controller / Router
       classification: api-marker
-    x: 808
-    y: 64
     forensics:
       complexity: 1
       loc: 111
@@ -242,8 +230,6 @@ nodes:
       containerId: proxy-backend
       technology: REST Controller / Router
       classification: api-marker
-    x: 1188
-    y: 64
     forensics:
       complexity: 2
       loc: 654
@@ -279,8 +265,6 @@ nodes:
       containerId: proxy-backend
       technology: REST Controller / Router
       classification: api-marker
-    x: 1128
-    y: 384
     forensics:
       complexity: 3
       loc: 299
@@ -316,8 +300,8 @@ nodes:
       containerId: permission-node
       technology: TypeScript Domain Service
       classification: default
-    x: 428
-    y: 704
+    x: 280
+    y: 100
   - entityRef: blueprint/plugins/kubernetes-react/auth
     type: background-worker
     name: auth Service (External)
@@ -327,8 +311,8 @@ nodes:
       containerId: kubernetes-react
       technology: TypeScript Domain Service
       classification: default
-    x: 1568
-    y: 704
+    x: 460
+    y: 100
   - entityRef: blueprint/plugins/events-backend/errors
     type: background-worker
     name: errors Service (External)
@@ -338,19 +322,19 @@ nodes:
       containerId: events-backend
       technology: TypeScript Domain Service
       classification: default
-    x: 1188
-    y: 704
-  - entityRef: blueprint/plugins/auth-backend/types
+    x: 100
+    y: 220
+  - entityRef: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: background-worker
     name: types Service (External)
     external: true
     properties:
       filepath: plugins/auth-backend-module-cloudflare-access-provider/src/types.ts
-      containerId: auth-backend
+      containerId: auth-backend-module-cloudflare-access-provider
       technology: TypeScript Domain Service
       classification: default
-    x: 808
-    y: 704
+    x: 280
+    y: 220
 dependencies:
   - from: blueprint/plugins/proxy-backend/index
     to: blueprint/plugins/permission-node/alpha
@@ -365,7 +349,7 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/proxy-backend/router
-    to: blueprint/plugins/auth-backend/types
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/proxy-backend/router
@@ -385,6 +369,6 @@ dependencies:
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/proxy-backend/router-credentials-test
-    to: blueprint/plugins/auth-backend/types
+    to: blueprint/plugins/auth-backend-module-cloudflare-access-provider/types
     type: direct-call
     description: Calls module / service

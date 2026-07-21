@@ -16,8 +16,11 @@ import {
   isDefaultIdbSeedCancelled,
 } from '../store/states/diagramState/defaultIdbSeed';
 import { hydrateSandboxDrafts } from '../store/states/diagramState/hydrateSandboxDrafts';
-import { defaultLoadedSystems, defaultInitialSchema } from '../store/defaultData';
 import { resolveWorkspaceEntityRefs } from '@blueprint/core';
+import {
+  activateBundledSandbox,
+  resolveBundledSandboxSystems,
+} from '../store/states/diagramState/loadBundledSandbox';
 
 interface AppContextProps {
   fileSystemPort: typeof BrowserFileSystemAdapter;
@@ -42,19 +45,19 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       graphChangePort: reactFlowGraphChangeAdapter,
     });
 
+    const bootSandbox = (systems: ReturnType<typeof resolveBundledSandboxSystems>) => {
+      activateBundledSandbox(
+        partial => useBlueprintStore.setState(partial),
+        () => useBlueprintStore.getState(),
+        systems
+      );
+    };
+
     // Seed demo blueprints only when a path is empty — never overwrite real drafts.
-    const resolvedInitial = resolveWorkspaceEntityRefs(
-      defaultLoadedSystems.length > 0
-        ? defaultLoadedSystems
-        : [{ path: 'blueprint.yaml', schema: defaultInitialSchema }]
-    );
-    const systems = defaultLoadedSystems.map(sys => ({
-      ...sys,
-      schema: resolvedInitial.schemas[sys.path] || sys.schema,
-    }));
+    const systems = resolveBundledSandboxSystems();
     const workingCopy = dexieWorkingCopyAdapter;
     void (async () => {
-      await seedDefaultSchemasSafely(systems, resolvedInitial, {
+      await seedDefaultSchemasSafely(systems, resolveWorkspaceEntityRefs(systems), {
         pathHasStoredData: path => workingCopy.pathHasStoredData(path),
         saveBaselineSchema: (filePath, schema, systemId, nodeRefMap) =>
           workingCopy.saveBaselineSchema({ filePath, schema, systemId, nodeRefMap }),
@@ -65,21 +68,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       // Workspace open cancels default seed — never clobber a real folder with sandbox drafts.
       if (isDefaultIdbSeedCancelled() || useBlueprintStore.getState().isWorkspaceOpen) return;
 
-      const { systems: hydrated, restoredCount } = await hydrateSandboxDrafts(systems, workingCopy);
-      if (restoredCount === 0) return;
-      if (isDefaultIdbSeedCancelled() || useBlueprintStore.getState().isWorkspaceOpen) return;
-
-      const first =
-        hydrated.find(s => s.schema.level === 'context') ||
-        hydrated.find(s => s.schema.level === 'container') ||
-        hydrated[0];
-      if (!first) return;
-
-      useBlueprintStore.setState({
-        loadedSystems: hydrated,
-        currentFilePath: first.path,
-      });
-      useBlueprintStore.getState().initSchema(first.schema);
+      const { systems: hydrated } = await hydrateSandboxDrafts(systems, workingCopy);
+      bootSandbox(hydrated);
     })();
   }, []);
 

@@ -4,249 +4,188 @@ metaData:
   entityRef: blueprint
   name: Blueprint Context
   source:
-    remoteUrl: https://github.com/backstage/backstage
-    defaultBranch: master
-    scannedAtCommit: 88690199d13ee94c3285f1ee219ae4339056c133
+    scannedAtCommit: 9b4f9434f46fdc5c1a6e9e936af2868340cdbc48
     scanRoot: .
+    remoteUrl: https://github.com/dotnet/eShop
+    defaultBranch: main
 nodes:
-  - entityRef: blueprint/testproject
-    type: software-system
-    name: TestProject System
+  - entityRef: blueprint/backstage
+    type: group
+    name: Backstage System
     properties:
       rootPath: ''
-      productId: testproject
-      role: product-hub
-    x: 5980
-    y: 320
-  - entityRef: blueprint/app
-    type: software-system
-    name: App System
-    properties:
-      rootPath: app
-      productId: testproject
-      role: subsystem
-    x: 5980
-    y: 600
-    forensics:
-      complexity: 106
-      churn: 1126
-      churnByWeek:
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 246
-        - 880
-      authorCount: 1
-      topAuthorPercent: 1
-      authors:
-        - email: matt@siliconpanda.com
-          commits: 1126
-      hotspotScore: 0.580952380952381
-      classifications:
-        - knowledge-silo
-        - hotspot
-      sinceDays: 90
-      fileCount: 361
-      hotspotCount: 1
-      knowledgeSiloCount: 110
+      productId: backstage
+    children:
+      - entityRef: blueprint/docs-ui
+        type: software-system
+        name: Docs Ui System
+        properties:
+          rootPath: docs-ui
+          productId: backstage
+        forensics:
+          complexity: 23
+          churn: 69
+          churnByWeek:
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 69
+            - 0
+          authorCount: 1
+          topAuthorPercent: 1
+          authors:
+            - email: poldsberg@gmail.com
+              commits: 69
+          hotspotScore: 0
+          classifications:
+            - knowledge-silo
+          sinceDays: 90
+          fileCount: 69
+          hotspotCount: 0
+          knowledgeSiloCount: 6
+      - entityRef: blueprint/microsite
+        type: software-system
+        name: Microsite System
+        properties:
+          rootPath: microsite
+          productId: backstage
+        forensics:
+          complexity: 8
+          churn: 17
+          churnByWeek:
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 17
+            - 0
+          authorCount: 1
+          topAuthorPercent: 1
+          authors:
+            - email: poldsberg@gmail.com
+              commits: 17
+          hotspotScore: 0
+          sinceDays: 90
+          fileCount: 17
+          hotspotCount: 0
+          knowledgeSiloCount: 0
+      - entityRef: blueprint/packages
+        type: software-system
+        name: Packages System
+        properties:
+          rootPath: packages
+          productId: backstage
+        forensics:
+          complexity: 102
+          churn: 2077
+          churnByWeek:
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 2077
+            - 0
+          authorCount: 1
+          topAuthorPercent: 1
+          authors:
+            - email: poldsberg@gmail.com
+              commits: 2077
+          hotspotScore: 0
+          classifications:
+            - knowledge-silo
+          sinceDays: 90
+          fileCount: 2077
+          hotspotCount: 0
+          knowledgeSiloCount: 321
+      - entityRef: blueprint/plugins
+        type: software-system
+        name: Plugins System
+        properties:
+          rootPath: plugins
+          productId: backstage
+        forensics:
+          complexity: 96
+          churn: 3231
+          churnByWeek:
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 3231
+            - 0
+          authorCount: 1
+          topAuthorPercent: 1
+          authors:
+            - email: poldsberg@gmail.com
+              commits: 3231
+          hotspotScore: 0
+          classifications:
+            - knowledge-silo
+          sinceDays: 90
+          fileCount: 3231
+          hotspotCount: 0
+          knowledgeSiloCount: 387
   - entityRef: blueprint/user
     type: person
     name: User
     properties:
       role: context-actor
-    x: 3010
-    y: 40
+  - entityRef: blueprint/infrastructure
+    type: group
+    name: Infrastructure System
+    properties:
+      rootPath: ''
+      productId: infrastructure
+    children:
+      - entityRef: blueprint/techdocs-s3-storage
+        type: software-system
+        name: Techdocs-s3-storage System
+        properties:
+          rootPath: contrib/terraform/techdocs-s3-storage
+          productId: infrastructure
   - entityRef: blueprint/eshop
     type: software-system
     name: EShop System
     properties:
       rootPath: ''
       productId: eshop
-      role: product-hub
-    x: 2200
-    y: 320
     forensics:
       complexity: 4
       churn: 0
-      authorCount: 0
       hotspotScore: 0
-      sinceDays: 500
+      authorCount: 0
       fileCount: 1
       hotspotCount: 0
       knowledgeSiloCount: 0
-  - entityRef: blueprint/aws-ts-containers
-    type: software-system
-    name: Aws Ts Containers System
-    properties:
-      rootPath: ''
-      productId: aws-ts-containers
-      role: product-hub
-    x: 400
-    y: 320
-    forensics:
-      complexity: 1
-      churn: 0
-      authorCount: 0
-      hotspotScore: 0
-      sinceDays: 90
-      fileCount: 1
-      hotspotCount: 0
-      knowledgeSiloCount: 0
-  - entityRef: blueprint/infrastructure
-    type: software-system
-    name: Infrastructure System
-    properties:
-      rootPath: ''
-      productId: infrastructure
-      role: product-hub
-    x: 3640
-    y: 320
-  - entityRef: blueprint/pulumi
-    type: software-system
-    name: Pulumi System
-    properties:
-      rootPath: pulumi
-      productId: infrastructure
-      role: subsystem
-    x: 4540
-    y: 600
-  - entityRef: blueprint/aws
-    type: software-system
-    name: Aws System
-    properties:
-      rootPath: ''
-      productId: aws
-      role: product-hub
-    x: 40
-    y: 320
-    forensics:
-      complexity: 1
-      churn: 0
-      authorCount: 0
-      hotspotScore: 0
-      sinceDays: 90
-      fileCount: 2
-      hotspotCount: 0
-      knowledgeSiloCount: 0
-  - entityRef: blueprint/aws-vpc-msk
-    type: software-system
-    name: Aws-vpc-msk System
-    properties:
-      rootPath: aws_vpc_msk
-      productId: infrastructure
-      role: subsystem
-    x: 4180
-    y: 600
-  - entityRef: blueprint/aws-lambda-api
-    type: software-system
-    name: Aws-lambda-api System
-    properties:
-      rootPath: aws_lambda_api
-      productId: infrastructure
-      role: subsystem
-    x: 2380
-    y: 600
-  - entityRef: blueprint/aws-static-site
-    type: software-system
-    name: Aws-static-site System
-    properties:
-      rootPath: aws_static_site
-      productId: infrastructure
-      role: subsystem
-    x: 3820
-    y: 600
-  - entityRef: blueprint/aws-reverse-proxy
-    type: software-system
-    name: Aws-reverse-proxy System
-    properties:
-      rootPath: aws_reverse_proxy
-      productId: infrastructure
-      role: subsystem
-    x: 3460
-    y: 600
-  - entityRef: blueprint/wordpress-fargate
-    type: software-system
-    name: Wordpress-fargate System
-    properties:
-      rootPath: wordpress_fargate
-      productId: infrastructure
-      role: subsystem
-    x: 5620
-    y: 600
-  - entityRef: blueprint/aws-lambda-cronjob
-    type: software-system
-    name: Aws-lambda-cronjob System
-    properties:
-      rootPath: aws_lambda_cronjob
-      productId: infrastructure
-      role: subsystem
-    x: 2740
-    y: 600
-  - entityRef: blueprint/aws-mailgun-domain
-    type: software-system
-    name: Aws-mailgun-domain System
-    properties:
-      rootPath: aws_mailgun_domain
-      productId: infrastructure
-      role: subsystem
-    x: 3100
-    y: 600
-  - entityRef: blueprint/aws-domain-redirect
-    type: software-system
-    name: Aws-domain-redirect System
-    properties:
-      rootPath: aws_domain_redirect
-      productId: infrastructure
-      role: subsystem
-    x: 1660
-    y: 600
-  - entityRef: blueprint/aws-ec2-ebs-docker-host
-    type: software-system
-    name: Aws-ec2-ebs-docker-host System
-    properties:
-      rootPath: aws_ec2_ebs_docker_host
-      productId: infrastructure
-      role: subsystem
-    x: 2020
-    y: 600
-  - entityRef: blueprint/static-website-ssl-cloudfront-private-s3
-    type: software-system
-    name: Static-website-ssl-cloudfront-private-s3 System
-    properties:
-      rootPath: static_website_ssl_cloudfront_private_s3
-      productId: infrastructure
-      role: subsystem
-    x: 4900
-    y: 600
-  - entityRef: blueprint/backstage
-    type: software-system
-    name: Backstage System
-    properties:
-      rootPath: ''
-      productId: backstage
-      role: product-hub
-    x: 760
-    y: 320
-  - entityRef: blueprint/packages
-    type: software-system
-    name: Packages System
-    properties:
-      rootPath: packages
-      productId: backstage
-      role: subsystem
-    x: 940
-    y: 600
-    forensics:
-      complexity: 102
-      churn: 2058
       churnByWeek:
         - 0
         - 0
@@ -259,244 +198,12 @@ nodes:
         - 0
         - 0
         - 0
-        - 2058
         - 0
-      authorCount: 1
-      topAuthorPercent: 1
-      authors:
-        - email: poldsberg@gmail.com
-          commits: 2058
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
+        - 0
       sinceDays: 90
-      fileCount: 2058
-      hotspotCount: 0
-      knowledgeSiloCount: 320
-  - entityRef: blueprint/plugins
-    type: software-system
-    name: Plugins System
-    properties:
-      rootPath: plugins
-      productId: backstage
-      role: subsystem
-    x: 1300
-    y: 600
-    forensics:
-      complexity: 96
-      churn: 2852
-      churnByWeek:
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 2852
-        - 0
-      authorCount: 1
-      topAuthorPercent: 1
-      authors:
-        - email: poldsberg@gmail.com
-          commits: 2852
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      sinceDays: 90
-      fileCount: 2852
-      hotspotCount: 0
-      knowledgeSiloCount: 363
-  - entityRef: blueprint/docs-ui
-    type: software-system
-    name: Docs Ui System
-    properties:
-      rootPath: docs-ui
-      productId: backstage
-      role: subsystem
-    x: 220
-    y: 600
-    forensics:
-      complexity: 23
-      churn: 69
-      churnByWeek:
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 69
-        - 0
-      authorCount: 1
-      topAuthorPercent: 1
-      authors:
-        - email: poldsberg@gmail.com
-          commits: 69
-      hotspotScore: 0
-      classifications:
-        - knowledge-silo
-      sinceDays: 90
-      fileCount: 69
-      hotspotCount: 0
-      knowledgeSiloCount: 6
-  - entityRef: blueprint/microsite
-    type: software-system
-    name: Microsite System
-    properties:
-      rootPath: microsite
-      productId: backstage
-      role: subsystem
-    x: 580
-    y: 600
-    forensics:
-      complexity: 8
-      churn: 17
-      churnByWeek:
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 17
-        - 0
-      authorCount: 1
-      topAuthorPercent: 1
-      authors:
-        - email: poldsberg@gmail.com
-          commits: 17
-      hotspotScore: 0
-      sinceDays: 90
-      fileCount: 17
-      hotspotCount: 0
-      knowledgeSiloCount: 0
-  - entityRef: blueprint/techdocs-s3-storage
-    type: software-system
-    name: Techdocs-s3-storage System
-    properties:
-      rootPath: contrib/terraform/techdocs-s3-storage
-      productId: infrastructure
-      role: subsystem
-    x: 5260
-    y: 600
 dependencies:
-  - from: blueprint/testproject
-    to: blueprint/app
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/testproject
-    to: blueprint/app
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/packages
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/plugins
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/docs-ui
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/microsite
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/testproject
-    to: blueprint/app
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/infrastructure
-    to: blueprint/pulumi
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/infrastructure
-    to: blueprint/aws-vpc-msk
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/infrastructure
-    to: blueprint/aws-lambda-api
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/infrastructure
-    to: blueprint/aws-static-site
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/infrastructure
-    to: blueprint/aws-reverse-proxy
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/infrastructure
-    to: blueprint/wordpress-fargate
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/infrastructure
-    to: blueprint/aws-lambda-cronjob
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/infrastructure
-    to: blueprint/aws-mailgun-domain
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/infrastructure
-    to: blueprint/aws-domain-redirect
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/infrastructure
-    to: blueprint/aws-ec2-ebs-docker-host
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/infrastructure
-    to: blueprint/static-website-ssl-cloudfront-private-s3
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/infrastructure
-    to: blueprint/techdocs-s3-storage
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/packages
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/plugins
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/docs-ui
-    type: direct-call
-    description: Part of product system
-  - from: blueprint/backstage
-    to: blueprint/microsite
-    type: direct-call
-    description: Part of product system
   - from: blueprint/user
-    to: blueprint/testproject
-    type: direct-call
-    description: Uses
-  - from: blueprint/user
-    to: blueprint/eshop
-    type: direct-call
-    description: Uses
-  - from: blueprint/user
-    to: blueprint/aws-ts-containers
+    to: blueprint/backstage
     type: direct-call
     description: Uses
   - from: blueprint/user
@@ -504,10 +211,6 @@ dependencies:
     type: direct-call
     description: Uses
   - from: blueprint/user
-    to: blueprint/aws
-    type: direct-call
-    description: Uses
-  - from: blueprint/user
-    to: blueprint/backstage
+    to: blueprint/eshop
     type: direct-call
     description: Uses

@@ -21,7 +21,12 @@ export async function continueWithSandbox(page: Page) {
   await expect(dialog).toHaveCount(0);
 }
 
-/** Opens a workspace folder via the startup chooser when present, else the toolbar. */
+async function openOverflowMenu(page: Page) {
+  const menuButton = page.getByRole('button', { name: 'More actions' });
+  await menuButton.click();
+}
+
+/** Opens a workspace folder via the startup chooser when present, else the toolbar overflow. */
 export async function openWorkspaceFolder(page: Page) {
   const startupOpen = page.getByTestId('startup-open-directory');
   // Prefer a quick visibility check — do not burn 5s waiting when the chooser is gone.
@@ -32,26 +37,24 @@ export async function openWorkspaceFolder(page: Page) {
 
   await continueWithSandbox(page);
 
-  const menuButton = page.getByRole('button', { name: 'Open menu' });
   const folderItem = page.getByRole('menuitem', { name: 'Open Folder' });
 
   if (!(await folderItem.isVisible())) {
-    await menuButton.click();
+    await openOverflowMenu(page);
   }
 
   await expect(folderItem).toBeVisible();
   await folderItem.click();
 }
 
-/** Opens Import Mermaid from the toolbar Open menu (after sandbox is loaded). */
+/** Opens Import Mermaid from the toolbar overflow menu (after sandbox is loaded). */
 export async function openImportMermaid(page: Page) {
   await continueWithSandbox(page);
 
-  const menuButton = page.getByRole('button', { name: 'Open menu' });
   const importItem = page.getByRole('menuitem', { name: 'Import Mermaid' });
 
   if (!(await importItem.isVisible())) {
-    await menuButton.click();
+    await openOverflowMenu(page);
   }
 
   await expect(importItem).toBeVisible();

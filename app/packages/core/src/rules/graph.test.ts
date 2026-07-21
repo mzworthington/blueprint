@@ -509,4 +509,64 @@ nodes:
       expect(() => parseSchemaFromYaml(invalidYaml)).toThrow();
     });
   });
+
+  describe('nested context children wire format', () => {
+    it('parses nested children and serializes context diagrams without parentEntityRef', () => {
+      const yamlContent = `
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: context
+metaData:
+  entityRef: demo
+  name: Demo Context
+nodes:
+  - entityRef: demo/user
+    type: person
+    name: User
+  - entityRef: demo/hub
+    type: group
+    name: Product Hub
+    children:
+      - entityRef: demo/api
+        type: software-system
+        name: API
+dependencies:
+  - from: demo/user
+    to: demo/hub
+    type: direct-call
+`;
+      const schema = parseSchemaFromYaml(yamlContent);
+      expect(schema.nodes.find(n => n.entityRef === 'demo/api')?.parentEntityRef).toBe('demo/hub');
+
+      const serialized = serializeSchemaToYaml(schema);
+      expect(serialized).toContain('children:');
+      expect(serialized).not.toContain('parentEntityRef:');
+
+      const roundTrip = parseSchemaFromYaml(serialized);
+      expect(roundTrip.nodes.find(n => n.entityRef === 'demo/api')?.parentEntityRef).toBe(
+        'demo/hub'
+      );
+    });
+
+    it('still accepts flat parentEntityRef on context diagrams', () => {
+      const yamlContent = `
+version: https://blueprint.mzworthington.co.uk/schemas/v3/blueprint.schema.json
+level: context
+metaData:
+  entityRef: demo
+  name: Demo Context
+nodes:
+  - entityRef: demo/hub
+    type: group
+    name: Hub
+  - entityRef: demo/api
+    type: software-system
+    name: API
+    parentEntityRef: demo/hub
+dependencies: []
+`;
+      const schema = parseSchemaFromYaml(yamlContent);
+      expect(schema.nodes).toHaveLength(2);
+      expect(schema.nodes[1]?.parentEntityRef).toBe('demo/hub');
+    });
+  });
 });

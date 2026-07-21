@@ -3,6 +3,11 @@ level: component
 metaData:
   entityRef: blueprint/eshop/clientapp-unittests
   name: ClientApp.UnitTests Service Components
+  source:
+    remoteUrl: https://github.com/dotnet/eShop
+    defaultBranch: main
+    scannedAtCommit: 9b4f9434f46fdc5c1a6e9e936af2868340cdbc48
+    scanRoot: .
 nodes:
   - entityRef: blueprint/eshop/clientapp-unittests/mocks
     type: background-worker
@@ -13,8 +18,6 @@ nodes:
       containerId: clientapp-unittests
       technology: C# Domain Service
       classification: default
-    x: 40
-    y: 40
   - entityRef: blueprint/eshop/clientapp-unittests/viewmodels
     type: background-worker
     name: ViewModels Layer
@@ -24,8 +27,6 @@ nodes:
       containerId: clientapp-unittests
       technology: C# Domain Service
       classification: default
-    x: 400
-    y: 300
   - entityRef: blueprint/eshop/clientapp-unittests/testingextensions
     type: background-worker
     name: TestingExtensions
@@ -35,8 +36,6 @@ nodes:
       containerId: clientapp-unittests
       technology: C# Domain Service
       classification: default
-    x: 40
-    y: 300
   - entityRef: blueprint/eshop/clientapp-unittests/services
     type: background-worker
     name: Services Layer
@@ -46,6 +45,91 @@ nodes:
       containerId: clientapp-unittests
       technology: C# Domain Service
       classification: default
-    x: 400
-    y: 40
-dependencies: []
+  - entityRef: blueprint/eshop/clientapp/messages
+    type: background-worker
+    name: Messages Layer (External)
+    external: true
+    properties:
+      filepath: src/ClientApp/Messages/ProductCountChangedMessage.cs
+      containerId: clientapp
+      technology: C# Domain Service
+      classification: default
+    x: 280
+    y: 100
+  - entityRef: blueprint/eshop/clientapp/models
+    type: background-worker
+    name: Models Layer (External)
+    external: true
+    properties:
+      filepath: src/ClientApp/Models/Token/UserToken.cs
+      containerId: clientapp
+      technology: C# Domain Service
+      classification: default
+    x: 460
+    y: 100
+  - entityRef: blueprint/eshop/clientapp/services
+    type: rest-api
+    name: Services Layer (External)
+    external: true
+    properties:
+      filepath: src/ClientApp/Services/Order/OrderMockService.cs
+      containerId: clientapp
+      technology: ASP.NET Core Controller / Minimal API
+      classification: api-marker
+    x: 100
+    y: 220
+  - entityRef: blueprint/eshop/clientapp/validations
+    type: background-worker
+    name: Validations Layer (External)
+    external: true
+    properties:
+      filepath: src/ClientApp/Validations/IValidity.cs
+      containerId: clientapp
+      technology: C# Domain Service
+      classification: default
+    x: 280
+    y: 220
+  - entityRef: blueprint/eshop/clientapp/viewmodels
+    type: background-worker
+    name: ViewModels Layer (External)
+    external: true
+    properties:
+      filepath: src/ClientApp/ViewModels/BasketViewModel.cs
+      containerId: clientapp
+      technology: C# Domain Service
+      classification: default
+    x: 460
+    y: 220
+dependencies:
+  - from: blueprint/eshop/clientapp-unittests/mocks
+    to: blueprint/eshop/clientapp/models
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp-unittests/mocks
+    to: blueprint/eshop/clientapp/validations
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp-unittests/mocks
+    to: blueprint/eshop/clientapp/viewmodels
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp-unittests/viewmodels
+    to: blueprint/eshop/clientapp-unittests/mocks
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp-unittests/viewmodels
+    to: blueprint/eshop/clientapp/messages
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp-unittests/viewmodels
+    to: blueprint/eshop/clientapp/models
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp-unittests/viewmodels
+    to: blueprint/eshop/clientapp/services
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp-unittests/services
+    to: blueprint/eshop/clientapp-unittests/mocks
+    type: direct-call
+    description: Calls module / service

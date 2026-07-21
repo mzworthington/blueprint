@@ -3,6 +3,11 @@ level: component
 metaData:
   entityRef: blueprint/eshop/webhooks-api
   name: Webhooks.API Service Components
+  source:
+    scannedAtCommit: 9b4f9434f46fdc5c1a6e9e936af2868340cdbc48
+    scanRoot: .
+    remoteUrl: https://github.com/dotnet/eShop
+    defaultBranch: main
 nodes:
   - entityRef: blueprint/eshop/webhooks-api/apis
     type: rest-api
@@ -13,8 +18,6 @@ nodes:
       containerId: webhooks-api
       technology: ASP.NET Core Controller / Minimal API
       classification: api-marker
-    x: 40
-    y: 40
   - entityRef: blueprint/eshop/webhooks-api/exceptions
     type: background-worker
     name: Exceptions Layer
@@ -24,8 +27,6 @@ nodes:
       containerId: webhooks-api
       technology: C# Domain Service
       classification: default
-    x: 400
-    y: 40
   - entityRef: blueprint/eshop/webhooks-api/extensions
     type: background-worker
     name: Extensions Layer
@@ -35,8 +36,6 @@ nodes:
       containerId: webhooks-api
       technology: C# Domain Service
       classification: default
-    x: 760
-    y: 40
   - entityRef: blueprint/eshop/webhooks-api/model
     type: background-worker
     name: Model Layer
@@ -46,8 +45,6 @@ nodes:
       containerId: webhooks-api
       technology: C# Domain Service
       classification: default
-    x: 760
-    y: 300
   - entityRef: blueprint/eshop/webhooks-api/integrationevents
     type: event-broker
     name: IntegrationEvents Layer
@@ -57,8 +54,6 @@ nodes:
       containerId: webhooks-api
       technology: C# Event Client
       classification: event-marker
-    x: 400
-    y: 300
   - entityRef: blueprint/eshop/webhooks-api/infrastructure
     type: relational-database
     name: Infrastructure Layer
@@ -68,8 +63,6 @@ nodes:
       containerId: webhooks-api
       technology: Entity Framework / DB Context
       classification: database-marker
-    x: 40
-    y: 300
   - entityRef: blueprint/eshop/webhooks-api/services
     type: background-worker
     name: Services Layer
@@ -79,8 +72,6 @@ nodes:
       containerId: webhooks-api
       technology: C# Domain Service
       classification: default
-    x: 400
-    y: 560
   - entityRef: blueprint/eshop/webhooks-api/program
     type: background-worker
     name: Program
@@ -90,6 +81,8 @@ nodes:
       containerId: webhooks-api
       technology: C# Domain Service
       classification: default
-    x: 40
-    y: 560
-dependencies: []
+dependencies:
+  - from: blueprint/eshop/webhooks-api/apis
+    to: blueprint/eshop/webhooks-api/extensions
+    type: direct-call
+    description: Calls module / service

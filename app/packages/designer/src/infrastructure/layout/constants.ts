@@ -2,11 +2,11 @@
 export const LAYOUT_ORIGIN = { x: 40, y: 40 } as const;
 
 export const DAGRE_SPACING = {
-  nodesep: 100,
-  edgesep: 60,
-  ranksep: 200,
-  marginx: 48,
-  marginy: 64,
+  nodesep: 120,
+  edgesep: 80,
+  ranksep: 260,
+  marginx: 64,
+  marginy: 80,
 } as const;
 
 export const D3_FOREST_GAP = 260;

@@ -1,17 +1,17 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import {
-  ToolbarOpenMenu,
-  ToolbarSaveButton,
   ToolbarEditActions,
   ToolbarOverflowMenu,
+  ToolbarPendingChangesButton,
+  ToolbarShortcutsButton,
 } from './ActionControls';
 import { useBlueprintStore } from '../../../../../application/store/store';
 
 const toolbarActions = (
   <div className="flex items-center gap-1.5">
-    <ToolbarOpenMenu />
-    <ToolbarSaveButton />
+    <ToolbarShortcutsButton />
+    <ToolbarPendingChangesButton />
     <ToolbarEditActions />
     <ToolbarOverflowMenu />
   </div>
@@ -19,10 +19,6 @@ const toolbarActions = (
 
 function renderToolbarActions() {
   return render(toolbarActions);
-}
-
-function openOpenMenu() {
-  fireEvent.click(screen.getByLabelText('Open menu'));
 }
 
 function openMoreMenu() {
@@ -56,6 +52,7 @@ describe('ActionControls Component', () => {
       setIsLoading: vi.fn(),
       layoutEngine: null,
       setLayoutEngine: vi.fn(),
+      loadedSystems: [],
     });
   });
 
@@ -65,20 +62,16 @@ describe('ActionControls Component', () => {
 
     useBlueprintStore.setState({ hasPendingChanges: true });
     rerender(toolbarActions);
-    openMoreMenu();
     expect(screen.getByTitle('View pending local changes / diff')).toBeInTheDocument();
   });
 
   it('renders correctly when workspace is closed', () => {
     renderToolbarActions();
 
-    openOpenMenu();
+    openMoreMenu();
     expect(screen.getByTitle('Open a local directory workspace')).toBeInTheDocument();
     expect(screen.getByTitle('Open single YAML from disk')).toBeInTheDocument();
-
     expect(screen.getByTitle('Save YAML to disk')).toBeInTheDocument();
-
-    openMoreMenu();
     expect(screen.getByTitle('Clear canvas')).toBeInTheDocument();
   });
 
@@ -86,10 +79,10 @@ describe('ActionControls Component', () => {
     useBlueprintStore.setState({ isWorkspaceOpen: true });
     renderToolbarActions();
 
-    openOpenMenu();
+    openMoreMenu();
     expect(screen.getByTitle('Open another folder workspace')).toBeInTheDocument();
     expect(screen.getByTitle('Save diagram directly in folder')).toBeInTheDocument();
-    expect(screen.getAllByText('Save').length).toBeGreaterThan(0);
+    expect(screen.getByText('Save')).toBeInTheDocument();
   });
 
   it('triggers openWorkspaceDirectory on clicking Open Folder', () => {
@@ -97,7 +90,7 @@ describe('ActionControls Component', () => {
     useBlueprintStore.setState({ openWorkspaceDirectory: openWorkspaceDirectoryMock });
 
     renderToolbarActions();
-    openOpenMenu();
+    openMoreMenu();
     fireEvent.click(screen.getByTitle('Open a local directory workspace'));
 
     expect(openWorkspaceDirectoryMock).toHaveBeenCalledTimes(1);
@@ -108,17 +101,18 @@ describe('ActionControls Component', () => {
     useBlueprintStore.setState({ loadSchema: loadSchemaMock });
 
     renderToolbarActions();
-    openOpenMenu();
+    openMoreMenu();
     fireEvent.click(screen.getByTitle('Open single YAML from disk'));
 
     expect(loadSchemaMock).toHaveBeenCalledTimes(1);
   });
 
-  it('triggers saveSchema on clicking Save Schema when workspace is closed', () => {
+  it('triggers saveSchema on clicking Save when workspace is closed', () => {
     const saveSchemaMock = vi.fn();
     useBlueprintStore.setState({ saveSchema: saveSchemaMock });
 
     renderToolbarActions();
+    openMoreMenu();
     fireEvent.click(screen.getByTitle('Save YAML to disk'));
 
     expect(saveSchemaMock).toHaveBeenCalledTimes(1);
@@ -132,6 +126,7 @@ describe('ActionControls Component', () => {
     });
 
     renderToolbarActions();
+    openMoreMenu();
     fireEvent.click(screen.getByTitle('Save diagram directly in folder'));
 
     expect(saveActiveDiagramMock).toHaveBeenCalledTimes(1);
@@ -192,9 +187,8 @@ describe('ActionControls Component', () => {
     useBlueprintStore.setState({ isLoading: true });
     renderToolbarActions();
 
-    expect(screen.getByLabelText('Open menu')).toBeDisabled();
-    expect(screen.getByTitle('Save YAML to disk')).toBeDisabled();
     expect(screen.getByLabelText('More actions')).toBeDisabled();
+    expect(screen.getByLabelText('Keyboard shortcuts')).toBeDisabled();
   });
 
   it('disables undo button when past history is empty, enables and triggers action when filled', () => {

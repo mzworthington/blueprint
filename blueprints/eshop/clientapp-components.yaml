@@ -3,6 +3,11 @@ level: component
 metaData:
   entityRef: blueprint/eshop/clientapp
   name: ClientApp Service Components
+  source:
+    remoteUrl: https://github.com/dotnet/eShop
+    defaultBranch: main
+    scannedAtCommit: 9b4f9434f46fdc5c1a6e9e936af2868340cdbc48
+    scanRoot: .
 nodes:
   - entityRef: blueprint/eshop/clientapp/appactions
     type: background-worker
@@ -13,8 +18,6 @@ nodes:
       containerId: clientapp
       technology: C# Domain Service
       classification: default
-    x: 760
-    y: 40
   - entityRef: blueprint/eshop/clientapp/viewmodels
     type: background-worker
     name: ViewModels Layer
@@ -24,8 +27,6 @@ nodes:
       containerId: clientapp
       technology: C# Domain Service
       classification: default
-    x: 1120
-    y: 820
   - entityRef: blueprint/eshop/clientapp/app-xaml
     type: background-worker
     name: App.xaml
@@ -35,8 +36,6 @@ nodes:
       containerId: clientapp
       technology: C# Domain Service
       classification: default
-    x: 400
-    y: 40
   - entityRef: blueprint/eshop/clientapp/mauiprogram
     type: background-worker
     name: MauiProgram
@@ -46,8 +45,6 @@ nodes:
       containerId: clientapp
       technology: C# Domain Service
       classification: default
-    x: 400
-    y: 560
   - entityRef: blueprint/eshop/clientapp/platforms
     type: background-worker
     name: Platforms Layer
@@ -57,8 +54,6 @@ nodes:
       containerId: clientapp
       technology: C# Domain Service
       classification: default
-    x: 1480
-    y: 560
   - entityRef: blueprint/eshop/clientapp/messages
     type: background-worker
     name: Messages Layer
@@ -68,8 +63,6 @@ nodes:
       containerId: clientapp
       technology: C# Domain Service
       classification: default
-    x: 760
-    y: 560
   - entityRef: blueprint/eshop/clientapp/triggers
     type: background-worker
     name: Triggers Layer
@@ -79,8 +72,6 @@ nodes:
       containerId: clientapp
       technology: C# Domain Service
       classification: default
-    x: 400
-    y: 820
   - entityRef: blueprint/eshop/clientapp/appshell-xaml
     type: background-worker
     name: AppShell.xaml
@@ -90,8 +81,6 @@ nodes:
       containerId: clientapp
       technology: C# Domain Service
       classification: default
-    x: 1120
-    y: 40
   - entityRef: blueprint/eshop/clientapp/converters
     type: background-worker
     name: Converters Layer
@@ -101,8 +90,6 @@ nodes:
       containerId: clientapp
       technology: C# Domain Service
       classification: default
-    x: 40
-    y: 300
   - entityRef: blueprint/eshop/clientapp/models
     type: background-worker
     name: Models Layer
@@ -112,8 +99,6 @@ nodes:
       containerId: clientapp
       technology: C# Domain Service
       classification: default
-    x: 1120
-    y: 560
   - entityRef: blueprint/eshop/clientapp/exceptions
     type: background-worker
     name: Exceptions Layer
@@ -123,8 +108,6 @@ nodes:
       containerId: clientapp
       technology: C# Domain Service
       classification: default
-    x: 760
-    y: 300
   - entityRef: blueprint/eshop/clientapp/validations
     type: background-worker
     name: Validations Layer
@@ -134,8 +117,6 @@ nodes:
       containerId: clientapp
       technology: C# Domain Service
       classification: default
-    x: 760
-    y: 820
   - entityRef: blueprint/eshop/clientapp/extensions
     type: rest-api
     name: Extensions Layer
@@ -145,8 +126,6 @@ nodes:
       containerId: clientapp
       technology: ASP.NET Core Controller / Minimal API
       classification: api-marker
-    x: 1120
-    y: 300
   - entityRef: blueprint/eshop/clientapp/controls
     type: background-worker
     name: Controls Layer
@@ -156,8 +135,6 @@ nodes:
       containerId: clientapp
       technology: C# Domain Service
       classification: default
-    x: 1480
-    y: 40
   - entityRef: blueprint/eshop/clientapp/effects
     type: background-worker
     name: Effects Layer
@@ -167,8 +144,6 @@ nodes:
       containerId: clientapp
       technology: C# Domain Service
       classification: default
-    x: 400
-    y: 300
   - entityRef: blueprint/eshop/clientapp/views
     type: background-worker
     name: Views Layer
@@ -178,8 +153,6 @@ nodes:
       containerId: clientapp
       technology: C# Domain Service
       classification: default
-    x: 1480
-    y: 820
   - entityRef: blueprint/eshop/clientapp/globalsuppressions
     type: background-worker
     name: GlobalSuppressions
@@ -189,8 +162,6 @@ nodes:
       containerId: clientapp
       technology: C# Domain Service
       classification: default
-    x: 1480
-    y: 300
   - entityRef: blueprint/eshop/clientapp/helpers
     type: background-worker
     name: Helpers Layer
@@ -200,8 +171,6 @@ nodes:
       containerId: clientapp
       technology: C# Domain Service
       classification: default
-    x: 40
-    y: 560
   - entityRef: blueprint/eshop/clientapp/services
     type: rest-api
     name: Services Layer
@@ -211,8 +180,6 @@ nodes:
       containerId: clientapp
       technology: ASP.NET Core Controller / Minimal API
       classification: api-marker
-    x: 40
-    y: 820
   - entityRef: blueprint/eshop/clientapp/animations
     type: background-worker
     name: Animations Layer
@@ -222,6 +189,118 @@ nodes:
       containerId: clientapp
       technology: C# Domain Service
       classification: default
-    x: 40
-    y: 40
-dependencies: []
+  - entityRef: blueprint/eshop/clientapp-unittests/mocks
+    type: background-worker
+    name: Mocks Layer (External)
+    external: true
+    properties:
+      filepath: tests/ClientApp.UnitTests/Mocks/MockSettingsService.cs
+      containerId: clientapp-unittests
+      technology: C# Domain Service
+      classification: default
+    x: 280
+    y: 100
+  - entityRef: blueprint/eshop/clientapp-unittests/viewmodels
+    type: background-worker
+    name: ViewModels Layer (External)
+    external: true
+    properties:
+      filepath: tests/ClientApp.UnitTests/ViewModels/MockViewModelTests.cs
+      containerId: clientapp-unittests
+      technology: C# Domain Service
+      classification: default
+    x: 460
+    y: 100
+dependencies:
+  - from: blueprint/eshop/clientapp-unittests/mocks
+    to: blueprint/eshop/clientapp/models
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp-unittests/mocks
+    to: blueprint/eshop/clientapp/validations
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp-unittests/mocks
+    to: blueprint/eshop/clientapp/viewmodels
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp-unittests/viewmodels
+    to: blueprint/eshop/clientapp/messages
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp-unittests/viewmodels
+    to: blueprint/eshop/clientapp/models
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp-unittests/viewmodels
+    to: blueprint/eshop/clientapp/services
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp/viewmodels
+    to: blueprint/eshop/clientapp/models
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp/viewmodels
+    to: blueprint/eshop/clientapp/services
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp/viewmodels
+    to: blueprint/eshop/clientapp/messages
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp/viewmodels
+    to: blueprint/eshop/clientapp/validations
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp/app-xaml
+    to: blueprint/eshop/clientapp/services
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp/mauiprogram
+    to: blueprint/eshop/clientapp/services
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp/mauiprogram
+    to: blueprint/eshop/clientapp/views
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp/triggers
+    to: blueprint/eshop/clientapp/animations
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp/appshell-xaml
+    to: blueprint/eshop/clientapp/services
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp/appshell-xaml
+    to: blueprint/eshop/clientapp/views
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp/views
+    to: blueprint/eshop/clientapp/viewmodels
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp/views
+    to: blueprint/eshop/clientapp/messages
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp/helpers
+    to: blueprint/eshop/clientapp/animations
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp/services
+    to: blueprint/eshop/clientapp/models
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp/services
+    to: blueprint/eshop/clientapp/helpers
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp/services
+    to: blueprint/eshop/clientapp/exceptions
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/clientapp/animations
+    to: blueprint/eshop/clientapp/helpers
+    type: direct-call
+    description: Calls module / service

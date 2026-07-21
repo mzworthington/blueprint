@@ -5,6 +5,10 @@ import {
   parseSchemaFromJson,
   dedupeDependencies,
   assessSchemaVersion,
+  normalizeGroupedNodePositions,
+  hasGroupedLayout,
+  prepareGroupedNodesForLayout,
+  hasFinitePosition,
   type SchemaVersionAssessment,
   type SystemSchema,
   type SystemNode,
@@ -21,7 +25,15 @@ import {
 } from '@blueprint/core';
 import { ensureSystemLoaded } from './ioState/ensureSystemLoaded';
 import type { CanvasNodeChange, CanvasEdgeChange, CanvasConnection } from '../../../core';
-import { mapDomainNodeToRFNode, mapDomainDepsToRFEdges } from '../layoutUtils';
+import {
+  mapDomainNodesToRFNodes,
+  mapDomainDepsToRFEdges,
+  refreshGroupBoundsFromChildren,
+  getNodeDimensions,
+  sortNodesForReactFlow,
+  layoutGroupedDomainNodes,
+  shouldAutoLayoutOnLoad,
+} from '../layoutUtils';
 import type { BlueprintRFNode, BlueprintRFEdge } from '../layoutUtils';
 import { applyStateUpdates } from './diagramState/applyStateUpdates';
 import { syncExternalContainers as syncExternalContainersAction } from './diagramState/syncExternalContainers';
@@ -42,6 +54,7 @@ import {
   type IacImportPreview,
 } from './diagramState/importIac';
 import { createDiagramInitialState } from './diagramState/initialState';
+import { activateBundledSandbox } from './diagramState/loadBundledSandbox';
 import { resetToEmptyWorkspace as resetToEmptyWorkspaceAction } from './diagramState/resetToEmptyWorkspace';
 import {
   addNodeMutation,
@@ -75,6 +88,10 @@ export interface DiagramState {
   past: Array<{ nodes: BlueprintRFNode[]; edges: BlueprintRFEdge[]; schema: SystemSchema }>;
   future: Array<{ nodes: BlueprintRFNode[]; edges: BlueprintRFEdge[]; schema: SystemSchema }>;
   hasPendingChanges: boolean;
+  /** When true, canvas positions are written into schema/YAML on save. */
+  layoutCustomized: boolean;
+  /** Bumped on each initSchema so Canvas can run load layout + fitView. */
+  layoutSessionId: number;
 
   recordHistory: () => void;
   undo: () => void;
@@ -114,9 +131,16 @@ export interface DiagramState {
   syncExternalContainers: () => void;
   /**
    * Apply the selected layout engine and sync positions into schema / YAML.
-   * No-ops when no engine is selected.
+   * Pass `persistToSchema: true` when the user explicitly requested layout.
    */
-  applyClientLayout: (signal?: AbortSignal) => Promise<void>;
+  applyClientLayout: (options?: {
+    signal?: AbortSignal;
+    persistToSchema?: boolean;
+    recordHistory?: boolean;
+    engine?: import('../../../core').LayoutEngineId;
+  }) => Promise<void>;
+  markLayoutCustomized: () => void;
+  loadBundledSandbox: () => void;
 }
 
 const initial = createDiagramInitialState();
@@ -142,6 +166,8 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   past: [],
   future: [],
   hasPendingChanges: false,
+  layoutCustomized: false,
+  layoutSessionId: 0,
 
   checkPendingChanges: async () => {
     const { currentFilePath, hasPendingChanges, workingCopyPort } = get();
@@ -258,11 +284,23 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
   initSchema: schema => {
     get().clearHistory();
     set({ focusedCyclePath: null });
+    const grouped = hasGroupedLayout(schema.nodes);
+    const layoutCustomized = schema.nodes.some(hasFinitePosition);
     const normalized: SystemSchema = {
       ...schema,
+      nodes: grouped
+        ? prepareGroupedNodesForLayout(schema.nodes)
+        : normalizeGroupedNodePositions(schema.nodes),
       dependencies: dedupeDependencies(schema.dependencies ?? []),
     };
-    const rfNodes = normalized.nodes.map(mapDomainNodeToRFNode);
+    const needsAutoLayout = shouldAutoLayoutOnLoad(normalized);
+    set({
+      layoutCustomized,
+      ...(needsAutoLayout && get().layoutEngine === null ? { layoutEngine: 'dagre' } : {}),
+    });
+    const rfNodes = sortNodesForReactFlow(
+      refreshGroupBoundsFromChildren(mapDomainNodesToRFNodes(normalized.nodes))
+    );
     const rfEdges = mapDomainDepsToRFEdges(normalized.dependencies);
     set({ schemaVersionWarning: assessSchemaVersion(normalized.version) });
     applyStateUpdates(
@@ -275,6 +313,17 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
       normalized.entityRef ?? null,
       normalized.source
     );
+    set({ layoutSessionId: get().layoutSessionId + 1 });
+  },
+
+  loadBundledSandbox: () => {
+    activateBundledSandbox(set, get);
+  },
+
+  markLayoutCustomized: () => {
+    if (!get().layoutCustomized) {
+      set({ layoutCustomized: true });
+    }
   },
 
   resetToEmptyWorkspace: () => {
@@ -360,6 +409,12 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
     const hasRemoval = changes.some(c => c.type === 'remove');
     if (hasRemoval) {
       get().recordHistory();
+    }
+    const finishedDrag = changes.some(
+      c => c.type === 'position' && 'dragging' in c && c.dragging === false
+    );
+    if (finishedDrag) {
+      get().markLayoutCustomized();
     }
     const nextNodes = get().graphChangePort.applyNodeChanges(changes, get().nodes);
     applyStateUpdates(set, get, nextNodes, get().edges);
@@ -448,22 +503,86 @@ export const createDiagramState = (set: any, get: () => DiagramStateDeps): Diagr
     syncSuggestedExternalsAction(set, get);
   },
 
-  applyClientLayout: async (signal?: AbortSignal) => {
+  applyClientLayout: async (options = {}) => {
+    const {
+      signal,
+      persistToSchema = false,
+      recordHistory = true,
+      engine: engineOverride,
+    } = options;
     const { layoutEngine, layoutRegistry, nodes, edges, schema } = get();
-    if (!layoutEngine || !schema?.nodes || !nodes) return;
+    if (!schema?.nodes || !nodes) return;
     if (signal?.aborted) return;
 
-    const positions = await computeClientLayout(layoutEngine, nodes, edges, layoutRegistry);
-    if (signal?.aborted) return;
-    const nextNodes = nodes.map(n => {
-      const pos = positions.get(n.id);
-      return pos ? { ...n, position: pos } : n;
+    const grouped = hasGroupedLayout(schema.nodes);
+    const engine = engineOverride ?? layoutEngine ?? 'dagre';
+
+    if (grouped) {
+      const laidOut = await layoutGroupedDomainNodes(
+        schema.nodes,
+        schema.dependencies ?? [],
+        engine,
+        layoutRegistry
+      );
+      if (signal?.aborted) return;
+
+      const nextNodes = sortNodesForReactFlow(
+        refreshGroupBoundsFromChildren(mapDomainNodesToRFNodes(laidOut))
+      );
+      if (persistToSchema) {
+        get().markLayoutCustomized();
+      }
+      if (recordHistory) {
+        get().recordHistory();
+      }
+      applyStateUpdates(set, get, nextNodes, edges);
+      return;
+    }
+
+    const packedNodes = refreshGroupBoundsFromChildren(nodes);
+    const topLevelNodes = packedNodes.filter(n => !n.parentId);
+    const layoutInput = topLevelNodes.map(n => {
+      const dims = getNodeDimensions(n);
+      return {
+        id: n.id,
+        measured: n.measured,
+        width: dims.width,
+        height: dims.height,
+      };
     });
+
+    const topLevelEdges = edges.filter(
+      e => topLevelNodes.some(n => n.id === e.source) && topLevelNodes.some(n => n.id === e.target)
+    );
+
+    const positions = await computeClientLayout(engine, layoutInput, topLevelEdges, layoutRegistry);
+    if (signal?.aborted) return;
+
+    const nextNodes = sortNodesForReactFlow(
+      refreshGroupBoundsFromChildren(
+        packedNodes.map(n => {
+          if (n.parentId) return n;
+          const pos = positions.get(n.id);
+          return pos ? { ...n, position: pos } : n;
+        })
+      )
+    );
+
     const changed = nextNodes.some(
-      (n, i) => n.position.x !== nodes[i]?.position.x || n.position.y !== nodes[i]?.position.y
+      (n, i) =>
+        n.position.x !== nodes[i]?.position.x ||
+        n.position.y !== nodes[i]?.position.y ||
+        (n.style as { width?: number })?.width !== (nodes[i]?.style as { width?: number })?.width ||
+        (n.style as { height?: number })?.height !==
+          (nodes[i]?.style as { height?: number })?.height
     );
     if (!changed) return;
-    get().recordHistory();
+    if (persistToSchema) {
+      get().markLayoutCustomized();
+    }
+    if (recordHistory) {
+      get().recordHistory();
+    }
     applyStateUpdates(set, get, nextNodes, edges);
   },
 });

@@ -67,16 +67,6 @@ describe('parseBlueprintArgv (git options)', () => {
     expect(plan.architecture.parserType).toBe('tree-sitter');
     expect(plan.architecture.glob).toBe('**/*.ts');
     expect(plan.architecture.ignore).toEqual(['dist', 'build']);
-    expect(plan.architecture.relayout).toBe(true);
-  });
-
-  it('defaults to relayout and disables with --no-relayout', () => {
-    expect(parseBlueprintArgv(['--headless', '--output=blueprints']).architecture.relayout).toBe(
-      true
-    );
-    const plan = parseBlueprintArgv(['--headless', '--no-relayout', '--output=blueprints']);
-    expect(plan.architecture.relayout).toBe(false);
-    expect(plan.isHeadless).toBe(true);
   });
 });
 

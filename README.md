@@ -105,3 +105,17 @@ Outstanding enhancements planned for Blueprint:
 ### Integrations
 
 - **Direct Git branch integration:** View active git branch states within the web app and commit/push schema changes to new branches.
+
+### C# and .NET analysis
+
+Shipped:
+
+- **`.csproj` project references:** Inter-container edges from `<ProjectReference>` (e.g. `Ordering.API` → `Ordering.Domain`).
+- **Namespace `using` resolution:** Cross-container and layer edges from `using` directives, with framework namespaces filtered (`System.*`, `Microsoft.*`, etc.).
+- **Container discovery from `.csproj`:** Referenced projects appear even when no `.cs` files are in the scan glob (e.g. AppHost-only references).
+
+Planned:
+
+- **Aspire AppHost parsing:** Extract runtime topology from `builder.AddProject<...>()` and related Aspire hosting APIs.
+- **Integration event wiring:** Detect `IIntegrationEventHandler<T>`, event bus registration (`AddRabbitMqEventBus`, etc.), and `IntegrationEvents/` folders to surface publish–subscribe edges between services.
+- **HTTP / gRPC client edges:** Infer service-to-API calls from `HttpClient`, Refit clients, and gRPC stubs (namespace and naming conventions).

@@ -11,6 +11,7 @@ export function schemaTopologyKey(schema: SystemSchema): string {
         entityRef: n.entityRef,
         type: n.type,
         name: n.name,
+        parentEntityRef: n.parentEntityRef,
         external: !!n.external,
         isTest: !!n.isTest,
         properties: n.properties || {},

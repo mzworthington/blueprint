@@ -48,6 +48,13 @@ const nodeTypeConfigs: Record<
     bg: 'rgba(59, 130, 246, 0.08)',
     border: 'rgba(59, 130, 246, 0.3)',
   },
+  group: {
+    label: 'Group',
+    icon: Layers,
+    color: '#64748b',
+    bg: 'rgba(100, 116, 139, 0.08)',
+    border: 'rgba(100, 116, 139, 0.3)',
+  },
   'web-app': {
     label: 'Web App',
     icon: Monitor,

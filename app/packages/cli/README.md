@@ -2,7 +2,7 @@
 
 ![Blueprint CLI Interactive Prompts](../../docs/screenshots/cli.gif)
 
-Scans a local codebase, extracts modules and dependencies via static analysis, lays them out with Dagre, and writes C4-style YAML under `blueprints/`.
+Scans a local codebase, extracts modules and dependencies via static analysis, and writes C4-style YAML under `blueprints/`. Diagram layout is handled by the designer (autolayout on open; optional `x`/`y` when you customize positions in the UI).
 
 Supports **multi-system** / monorepo discovery, **product hubs** on the context diagram, **type hydration**, **gitignore + structural filters**, **optional Git forensics**, and **cancelable** runs (Ctrl+C).
 
@@ -41,7 +41,6 @@ pnpm dev:cli --headless --glob="**/*.{ts,tsx}" --output="blueprints"
 | `--no-git`                         | Skip Git forensics enrichment                                |
 | `--git-only`                       | Headless architecture + forensics enrich (same deliverable)  |
 | `--git-since=<days>`               | Forensics lookback window (default 90)                       |
-| `--no-relayout`                    | Preserve existing `x`/`y` on re-scan                         |
 
 Interrupt with **Ctrl+C** (or SIGTERM). First signal aborts cooperatively; a second signal force-exits (`130`).
 
@@ -99,6 +98,8 @@ conventions. Pure test projects are also tagged at the **container** level so th
 ### Type hydration
 
 After extraction, nodes/edges are classified from imports, constructors, and path cues (e.g. gateway, relational DB, event broker, REST) and connected with suitable dependency types (`read-write`, `publish-subscribe`, …).
+
+For **C# / .NET**, the analyzer also resolves `.csproj` `<ProjectReference>` edges and cross-namespace `using` dependencies. See the [project roadmap](../../README.md#c-and-net-analysis) for planned Aspire, integration-event, and HTTP/gRPC client detection.
 
 ---
 

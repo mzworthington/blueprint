@@ -425,10 +425,31 @@ describe('diagramState Actions & State Management', () => {
     );
   });
 
-  it('should write layout engine positions into schema and YAML', async () => {
+  it('should not write autolayout positions into YAML until layout is customized', async () => {
     const store = useBlueprintStore.getState();
+    store.initSchema({
+      name: 'Fresh',
+      version: '1.0.0',
+      level: 'container',
+      nodes: [
+        { entityRef: 'alpha', type: 'rest-api', name: 'Alpha' },
+        { entityRef: 'beta', type: 'grpc-service', name: 'Beta' },
+      ],
+      dependencies: [{ from: 'alpha', to: 'beta', type: 'direct-call' }],
+    });
     store.setLayoutEngine('dagre');
     await store.applyClientLayout();
+
+    const updated = useBlueprintStore.getState();
+    expect(updated.layoutCustomized).toBe(false);
+    expect(updated.yamlCode).not.toMatch(/^\s*x:/m);
+    expect(updated.yamlCode).not.toMatch(/^\s*y:/m);
+  });
+
+  it('should write layout engine positions into schema and YAML when persisted', async () => {
+    const store = useBlueprintStore.getState();
+    store.setLayoutEngine('dagre');
+    await store.applyClientLayout({ persistToSchema: true });
 
     const updated = useBlueprintStore.getState();
     const nodeA = updated.schema.nodes.find(

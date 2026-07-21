@@ -1,76 +1,54 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import {
   ContextLevelWriter,
-  productHubDependenciesForSystems,
   personDependenciesForSystems,
-  PRODUCT_EDGE_DESCRIPTION,
   PERSON_EDGE_DESCRIPTION,
+  topLevelSystemNodes,
 } from './contextLevelWriter.ts';
 import { MockFileSystem, MockLogger } from '../test/fakes.ts';
 import { parseSchemaFromYaml } from '@blueprint/core';
 
-describe('productHubDependenciesForSystems', () => {
-  it('fans spokes into the product hub and ignores other products', () => {
-    const deps = productHubDependenciesForSystems([
+describe('topLevelSystemNodes', () => {
+  it('returns nodes without a visual parent, excluding the person', () => {
+    const nodes = topLevelSystemNodes([
       {
         entityRef: 'ctx/backstage',
-        type: 'software-system',
+        type: 'group',
         name: 'Backstage',
-        properties: { productId: 'backstage', role: 'product-hub' },
+        properties: { productId: 'backstage' },
       },
       {
         entityRef: 'ctx/packages',
         type: 'software-system',
         name: 'Packages',
-        properties: { productId: 'backstage', role: 'subsystem' },
+        parentEntityRef: 'ctx/backstage',
       },
-      {
-        entityRef: 'ctx/plugins',
-        type: 'software-system',
-        name: 'Plugins',
-        properties: { productId: 'backstage', role: 'subsystem' },
-      },
-      {
-        entityRef: 'ctx/microsite',
-        type: 'software-system',
-        name: 'Microsite',
-        properties: { productId: 'backstage', role: 'subsystem' },
-      },
-      {
-        entityRef: 'ctx/blueprint',
-        type: 'software-system',
-        name: 'Blueprint',
-        properties: { productId: 'blueprint', role: 'product-hub' },
-      },
+      { entityRef: 'ctx/user', type: 'person', name: 'User' },
     ]);
-
-    expect(deps).toHaveLength(3);
-    expect(deps.every(d => d.from === 'ctx/backstage')).toBe(true);
-    expect(deps.every(d => d.description === PRODUCT_EDGE_DESCRIPTION)).toBe(true);
-    expect(deps.some(d => d.to === 'ctx/blueprint' || d.from === 'ctx/blueprint')).toBe(false);
+    expect(nodes.map(n => n.entityRef)).toEqual(['ctx/backstage']);
   });
 });
 
 describe('personDependenciesForSystems', () => {
-  it('links the person to product hubs only', () => {
+  it('links the person to top-level groups only', () => {
     const deps = personDependenciesForSystems('ctx/user', [
       {
         entityRef: 'ctx/backstage',
-        type: 'software-system',
+        type: 'group',
         name: 'Backstage',
-        properties: { productId: 'backstage', role: 'product-hub' },
+        properties: { productId: 'backstage' },
       },
       {
         entityRef: 'ctx/packages',
         type: 'software-system',
         name: 'Packages',
-        properties: { productId: 'backstage', role: 'subsystem' },
+        parentEntityRef: 'ctx/backstage',
       },
       {
         entityRef: 'ctx/blueprint',
         type: 'software-system',
         name: 'Blueprint',
-        properties: { productId: 'blueprint', role: 'product-hub' },
+        properties: { productId: 'blueprint' },
       },
     ]);
 
@@ -130,7 +108,7 @@ describe('ContextLevelWriter', () => {
     expect(yamlContent).toContain('entityRef: blueprint/backstage');
   });
 
-  it('joins subsystems to the product hub and leaves other products disconnected', async () => {
+  it('nests subsystems under the product group and leaves other products disconnected', async () => {
     await writer.writeSystems('/workspace/blueprints', 'ctx', [
       {
         entityRef: 'blueprint',
@@ -170,15 +148,13 @@ describe('ContextLevelWriter', () => {
     ]);
 
     const yamlContent = fileSystem.writtenFiles.get('/workspace/blueprints/context.yaml')!;
-    expect(yamlContent).toContain(PRODUCT_EDGE_DESCRIPTION);
-    expect(yamlContent).toContain('from: ctx/backstage');
-    expect(yamlContent).toContain('to: ctx/packages');
-    expect(yamlContent).toContain('to: ctx/plugins');
-    expect(yamlContent).toContain('to: ctx/microsite');
-    // Blueprint remains on the canvas but is not linked into the Backstage product
+    expect(yamlContent).toContain('type: group');
+    expect(yamlContent).toContain('entityRef: ctx/backstage');
+    expect(yamlContent).toContain('children:');
+    expect(yamlContent).toContain('entityRef: ctx/packages');
+    expect(yamlContent).not.toContain('Part of product system');
     expect(yamlContent).toContain('entityRef: ctx/blueprint');
     expect(yamlContent).not.toMatch(/from: ctx\/blueprint[\s\S]*to: ctx\/(packages|backstage)/);
-    expect(yamlContent).not.toContain('Sibling systems in the same directory');
 
     const schema = parseSchemaFromYaml(yamlContent);
     const person = schema.nodes.find(n => n.type === 'person');
@@ -186,8 +162,10 @@ describe('ContextLevelWriter', () => {
     const personEdges = schema.dependencies.filter(d => d.from === 'ctx/user');
     expect(personEdges.map(d => d.to).sort()).toEqual(['ctx/backstage', 'ctx/blueprint']);
     expect(personEdges.every(d => d.description === PERSON_EDGE_DESCRIPTION)).toBe(true);
-    // Person does not link directly to subsystems
     expect(personEdges.some(d => d.to === 'ctx/packages')).toBe(false);
+
+    const packages = schema.nodes.find(n => n.entityRef === 'ctx/packages');
+    expect(packages?.parentEntityRef).toBe('ctx/backstage');
   });
 
   it('should upsert rather than duplicate when rewriting the same system', async () => {

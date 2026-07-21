@@ -1,4 +1,5 @@
 import * as yaml from 'js-yaml';
+import { flattenWireNodes, nestContextWireNodes, shouldNestContextNodes } from './nodeWireFormat';
 import { z } from 'zod';
 import type {
   SystemSchema,
@@ -121,6 +122,7 @@ const nodeTypeSchema = z.enum([
   'rest-api',
   'gateway-api',
   'background-worker',
+  'group',
 ]);
 
 const dependencyTypeSchema = z.enum([
@@ -177,10 +179,28 @@ const systemNodeSchema = z.object({
   external: z.boolean().optional(),
   properties: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).optional(),
   isTest: z.boolean().optional(),
+  parentEntityRef: entityRefStringSchema.optional(),
   x: z.number().optional(),
   y: z.number().optional(),
   forensics: nodeForensicsSchema.optional(),
 });
+
+const wireChildNodeSchema = systemNodeSchema
+  .omit({ parentEntityRef: true })
+  .refine(n => n.type !== 'group', {
+    message: 'Nested group nodes are not supported under children',
+  });
+
+const wireSystemNodeSchema = systemNodeSchema
+  .extend({
+    children: z.array(wireChildNodeSchema).optional(),
+  })
+  .refine(n => n.type === 'group' || !n.children?.length, {
+    message: 'children is only allowed on group nodes',
+  })
+  .refine(n => !n.parentEntityRef || !n.children?.length, {
+    message: 'use children or parentEntityRef, not both on the same node',
+  });
 
 const systemDependencySchema = z.object({
   from: z.string().min(1),
@@ -207,7 +227,7 @@ export const systemSchemaValidator = z.object({
   version: z.string().min(1),
   level: z.enum(['context', 'container', 'component', 'code']),
   metaData: metaDataSchema,
-  nodes: z.array(systemNodeSchema),
+  nodes: z.array(wireSystemNodeSchema),
   dependencies: z.array(systemDependencySchema).optional(),
 });
 
@@ -219,7 +239,7 @@ const legacySystemSchemaValidator = z.object({
   level: z.enum(['context', 'container', 'component', 'code']),
   /** @deprecated Prefer `entityRef`. Kept for legacy YAML/CLI output. */
   id: entityRefStringSchema.optional(),
-  nodes: z.array(systemNodeSchema),
+  nodes: z.array(wireSystemNodeSchema),
   dependencies: z.array(systemDependencySchema).optional(),
 });
 
@@ -277,23 +297,25 @@ function mapValidatedSchema(validated: {
   name: string;
   version: string;
   level: SystemSchema['level'];
-  nodes: z.infer<typeof systemNodeSchema>[];
+  nodes: z.infer<typeof wireSystemNodeSchema>[];
   dependencies?: z.infer<typeof systemDependencySchema>[];
   source?: z.infer<typeof sourceProvenanceSchema>;
 }): SystemSchema {
+  const flatNodes = flattenWireNodes(validated.nodes);
   return {
     entityRef: validated.entityRef || validated.id || '',
     name: validated.name,
     version: validated.version,
     level: validated.level,
     source: validated.source,
-    nodes: validated.nodes.map(n => ({
+    nodes: flatNodes.map(n => ({
       entityRef: n.entityRef,
       type: n.type,
       name: n.name,
       external: n.external,
       properties: n.properties || {},
       isTest: n.isTest,
+      parentEntityRef: n.parentEntityRef,
       x: n.x,
       y: n.y,
       forensics: n.forensics,
@@ -392,22 +414,25 @@ export function serializeSchemaToYaml(
     },
   };
 
-  cleanSchema.nodes = schema.nodes.map(n => {
-    const cleaned: Record<string, unknown> = {
-      entityRef: n.entityRef,
-      type: n.type,
-      name: n.name,
-    };
-    if (n.external !== undefined) cleaned.external = n.external;
-    if (n.isTest !== undefined) cleaned.isTest = n.isTest;
-    if (n.properties && Object.keys(n.properties).length > 0) {
-      cleaned.properties = n.properties;
-    }
-    if (typeof n.x === 'number') cleaned.x = Math.round(n.x);
-    if (typeof n.y === 'number') cleaned.y = Math.round(n.y);
-    if (n.forensics) cleaned.forensics = cleanForensics(n.forensics);
-    return cleaned;
-  });
+  cleanSchema.nodes = shouldNestContextNodes(schema.level)
+    ? nestContextWireNodes(schema.nodes, cleanForensics)
+    : schema.nodes.map(n => {
+        const cleaned: Record<string, unknown> = {
+          entityRef: n.entityRef,
+          type: n.type,
+          name: n.name,
+        };
+        if (n.external !== undefined) cleaned.external = n.external;
+        if (n.isTest !== undefined) cleaned.isTest = n.isTest;
+        if (n.parentEntityRef) cleaned.parentEntityRef = n.parentEntityRef;
+        if (n.properties && Object.keys(n.properties).length > 0) {
+          cleaned.properties = n.properties;
+        }
+        if (typeof n.x === 'number') cleaned.x = Math.round(n.x);
+        if (typeof n.y === 'number') cleaned.y = Math.round(n.y);
+        if (n.forensics) cleaned.forensics = cleanForensics(n.forensics);
+        return cleaned;
+      });
 
   cleanSchema.dependencies = schema.dependencies.map(d => {
     const cleaned: Record<string, unknown> = {

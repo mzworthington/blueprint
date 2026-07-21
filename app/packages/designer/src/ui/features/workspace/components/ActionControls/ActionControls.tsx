@@ -11,19 +11,12 @@ import {
   GitMerge,
   MoreHorizontal,
   FolderOpen,
-  LayoutTemplate,
   HelpCircle,
 } from 'lucide-react';
 import { useBlueprintStore } from '../../../../../application/store/store';
-import type { LayoutEngineId } from '../../../../../core';
 import { useToolbarMenu } from '../WorkspaceToolbar/useToolbarMenu';
 import { ToolbarMenuPortal } from '../WorkspaceToolbar/ToolbarMenuPortal';
-
-const LAYOUT_OPTIONS: Array<{ id: LayoutEngineId; label: string }> = [
-  { id: 'dagre', label: 'Dagre' },
-  { id: 'elk', label: 'ELK' },
-  { id: 'd3-hierarchy', label: 'd3-hierarchy' },
-];
+import { SystemSelector } from '../SystemSelector/SystemSelector';
 
 const iconBtnClass =
   'min-h-11 min-w-11 sm:min-h-0 sm:min-w-0 p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 disabled:opacity-30 disabled:hover:bg-slate-900 disabled:hover:text-slate-400 transition cursor-pointer disabled:cursor-not-allowed flex items-center justify-center';
@@ -116,38 +109,51 @@ function useClearAction() {
   return { controlsDisabled, handleClear };
 }
 
-export const ToolbarNavActions: React.FC = () => {
+export const ToolbarShortcutsButton: React.FC = () => {
   const controlsDisabled = useControlsDisabled();
-  const setIsCompareOpen = useBlueprintStore(s => s.setIsCompareOpen);
   const setIsShortcutsOpen = useBlueprintStore(s => s.setIsShortcutsOpen);
-  const loadedSystems = useBlueprintStore(s => s.loadedSystems);
 
   return (
-    <div className="hidden md:flex items-center gap-1 shrink-0">
-      <button
-        type="button"
-        onClick={() => setIsCompareOpen(true)}
-        disabled={controlsDisabled || loadedSystems.length < 2}
-        className={iconBtnClass}
-        title="Compare two systems"
-        aria-label="Compare systems"
-        data-testid="toolbar-compare"
-      >
-        <GitCompare className="w-3.5 h-3.5" />
-      </button>
-      <button
-        type="button"
-        onClick={() => setIsShortcutsOpen(true)}
-        disabled={controlsDisabled}
-        className={iconBtnClass}
-        title="Keyboard shortcuts (?)"
-        aria-label="Keyboard shortcuts"
-        data-testid="toolbar-shortcuts"
-      >
-        <HelpCircle className="w-3.5 h-3.5" />
-      </button>
-    </div>
+    <button
+      type="button"
+      onClick={() => setIsShortcutsOpen(true)}
+      disabled={controlsDisabled}
+      className={iconBtnClass}
+      title="Keyboard shortcuts (?)"
+      aria-label="Keyboard shortcuts"
+      data-testid="toolbar-shortcuts"
+    >
+      <HelpCircle className="w-3.5 h-3.5" />
+    </button>
   );
+};
+
+export const ToolbarPendingChangesButton: React.FC = () => {
+  const controlsDisabled = useControlsDisabled();
+  const setIsDiffOpen = useBlueprintStore(s => s.setIsDiffOpen);
+  const hasPendingChanges = useBlueprintStore(s => s.hasPendingChanges);
+
+  if (!hasPendingChanges) return null;
+
+  return (
+    <button
+      type="button"
+      onClick={() => setIsDiffOpen(true)}
+      disabled={controlsDisabled}
+      className={`${iconBtnClass} text-amber-400 hover:text-amber-300 border-amber-900/40`}
+      title="View pending local changes / diff"
+      aria-label="Pending changes"
+      id="view-pending-changes"
+      data-testid="toolbar-pending-changes"
+    >
+      <GitCompare className="w-3.5 h-3.5" />
+    </button>
+  );
+};
+
+/** @deprecated Use ToolbarShortcutsButton — compare moved to overflow menu only. */
+export const ToolbarNavActions: React.FC = () => {
+  return <ToolbarShortcutsButton />;
 };
 
 export const ToolbarSaveButton: React.FC = () => {
@@ -296,14 +302,19 @@ export const ToolbarEditActions: React.FC = () => {
 
 export const ToolbarOverflowMenu: React.FC = () => {
   const { controlsDisabled, handleClear } = useClearAction();
-  const setIsDiffOpen = useBlueprintStore(s => s.setIsDiffOpen);
+  const { controlsDisabled: saveDisabled, handleSave, isWorkspaceOpen } = useSaveAction();
+  const { controlsDisabled: openDisabled, handleOpenFolder, handleLoad } = useOpenActions();
   const setIsCompareOpen = useBlueprintStore(s => s.setIsCompareOpen);
-  const setIsShortcutsOpen = useBlueprintStore(s => s.setIsShortcutsOpen);
-  const hasPendingChanges = useBlueprintStore(s => s.hasPendingChanges);
+  const isWorkspaceOpenState = useBlueprintStore(s => s.isWorkspaceOpen);
+  const schema = useBlueprintStore(s => s.schema);
+  const setIsImportMermaidOpen = useBlueprintStore(s => s.setIsImportMermaidOpen);
+  const setIsImportIacOpen = useBlueprintStore(s => s.setIsImportIacOpen);
   const loadedSystems = useBlueprintStore(s => s.loadedSystems);
-  const layoutEngine = useBlueprintStore(s => s.layoutEngine);
-  const setLayoutEngine = useBlueprintStore(s => s.setLayoutEngine);
   const { open, toggle, close, anchorRef, menuRef } = useToolbarMenu();
+
+  const folderTitle = isWorkspaceOpenState
+    ? 'Open another folder workspace'
+    : 'Open a local directory workspace';
 
   return (
     <div ref={anchorRef} className="relative shrink-0">
@@ -326,32 +337,81 @@ export const ToolbarOverflowMenu: React.FC = () => {
         menuRef={menuRef}
         menuClassName={menuPanelClass}
       >
-        <div className="px-3 py-2 border-b border-slate-900/60 mb-1">
-          <div className="flex items-center gap-2 text-[10px] uppercase font-bold tracking-wider text-slate-500 mb-1.5">
-            <LayoutTemplate className="w-3 h-3" aria-hidden />
-            Layout engine
-          </div>
-          <select
-            value={layoutEngine ?? ''}
-            onChange={e => {
-              const value = e.target.value;
-              setLayoutEngine(value === '' ? null : (value as LayoutEngineId));
-            }}
-            disabled={controlsDisabled}
-            className="w-full bg-slate-950 border border-slate-850 text-slate-200 px-2 py-1.5 rounded-md text-xs font-semibold focus:outline-none focus:border-brand-500 cursor-pointer"
-            aria-label="Layout engine"
-            onClick={e => e.stopPropagation()}
-          >
-            <option value="" disabled>
-              Select…
-            </option>
-            {LAYOUT_OPTIONS.map(opt => (
-              <option key={opt.id} value={opt.id}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-        </div>
+        <SystemSelector variant="menu" />
+
+        <button
+          type="button"
+          role="menuitem"
+          onClick={() => {
+            close();
+            void handleSave();
+          }}
+          disabled={saveDisabled}
+          className={menuItemClass}
+          title={isWorkspaceOpen ? 'Save diagram directly in folder' : 'Save YAML to disk'}
+        >
+          <Download className="w-3.5 h-3.5 shrink-0" />
+          Save
+        </button>
+
+        <button
+          type="button"
+          role="menuitem"
+          onClick={() => {
+            close();
+            void handleOpenFolder();
+          }}
+          disabled={openDisabled}
+          className={menuItemClass}
+          title={folderTitle}
+        >
+          <Folder className="w-3.5 h-3.5 text-brand-500 shrink-0" />
+          Open Folder
+        </button>
+        <button
+          type="button"
+          role="menuitem"
+          onClick={() => {
+            close();
+            void handleLoad();
+          }}
+          disabled={openDisabled}
+          className={menuItemClass}
+          title="Open single YAML from disk"
+        >
+          <Upload className="w-3.5 h-3.5 shrink-0" />
+          Open File
+        </button>
+        <button
+          type="button"
+          role="menuitem"
+          onClick={() => {
+            close();
+            setIsImportMermaidOpen(true);
+          }}
+          disabled={openDisabled || !schema}
+          className={menuItemClass}
+          title="Import Mermaid diagram into the active schema"
+          id="import-mermaid-action"
+        >
+          <GitMerge className="w-3.5 h-3.5 text-[#00f0ff] shrink-0" />
+          Import Mermaid
+        </button>
+        <button
+          type="button"
+          role="menuitem"
+          onClick={() => {
+            close();
+            setIsImportIacOpen(true);
+          }}
+          disabled={openDisabled || !schema}
+          className={menuItemClass}
+          title="Import Terraform or Pulumi into the active schema"
+          id="import-iac-action"
+        >
+          <Cloud className="w-3.5 h-3.5 text-[#00f0ff] shrink-0" />
+          Import Infrastructure
+        </button>
 
         <button
           type="button"
@@ -363,43 +423,11 @@ export const ToolbarOverflowMenu: React.FC = () => {
           disabled={controlsDisabled || loadedSystems.length < 2}
           className={menuItemClass}
           title="Compare two loaded systems"
+          data-testid="toolbar-compare"
         >
           <GitCompare className="w-3.5 h-3.5 shrink-0" />
           Compare Systems
         </button>
-
-        <button
-          type="button"
-          role="menuitem"
-          onClick={() => {
-            close();
-            setIsShortcutsOpen(true);
-          }}
-          disabled={controlsDisabled}
-          className={menuItemClass}
-          title="Keyboard shortcuts (?)"
-        >
-          <HelpCircle className="w-3.5 h-3.5 shrink-0" />
-          Shortcuts
-        </button>
-
-        {hasPendingChanges ? (
-          <button
-            type="button"
-            role="menuitem"
-            onClick={() => {
-              close();
-              setIsDiffOpen(true);
-            }}
-            disabled={controlsDisabled}
-            className={`${menuItemClass} text-amber-400 hover:text-amber-300`}
-            title="View pending local changes / diff"
-            id="view-pending-changes"
-          >
-            <GitCompare className="w-3.5 h-3.5 shrink-0" />
-            Pending Changes
-          </button>
-        ) : null}
 
         <button
           type="button"

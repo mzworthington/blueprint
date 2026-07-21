@@ -3,6 +3,11 @@ level: component
 metaData:
   entityRef: blueprint/eshop/webapp
   name: WebApp Service Components
+  source:
+    remoteUrl: https://github.com/dotnet/eShop
+    defaultBranch: main
+    scannedAtCommit: 9b4f9434f46fdc5c1a6e9e936af2868340cdbc48
+    scanRoot: .
 nodes:
   - entityRef: blueprint/eshop/webapp/extensions
     type: rest-api
@@ -13,8 +18,6 @@ nodes:
       containerId: webapp
       technology: ASP.NET Core Controller / Minimal API
       classification: api-marker
-    x: 400
-    y: 40
   - entityRef: blueprint/eshop/webapp/components
     type: rest-api
     name: Components Layer
@@ -24,8 +27,6 @@ nodes:
       containerId: webapp
       technology: ASP.NET Core Controller / Minimal API
       classification: api-marker
-    x: 40
-    y: 40
   - entityRef: blueprint/eshop/webapp/services
     type: rest-api
     name: Services Layer
@@ -35,8 +36,6 @@ nodes:
       containerId: webapp
       technology: ASP.NET Core Controller / Minimal API
       classification: api-marker
-    x: 400
-    y: 300
   - entityRef: blueprint/eshop/webapp/program
     type: background-worker
     name: Program
@@ -46,6 +45,114 @@ nodes:
       containerId: webapp
       technology: C# Domain Service
       classification: default
-    x: 40
-    y: 300
-dependencies: []
+  - entityRef: blueprint/eshop/eventbus/abstractions
+    type: event-broker
+    name: Abstractions Layer (External)
+    external: true
+    properties:
+      filepath: src/EventBus/Abstractions/IEventBusBuilder.cs
+      containerId: eventbus
+      technology: C# Event Client
+      classification: event-marker
+    x: 280
+    y: 100
+  - entityRef: blueprint/eshop/webappcomponents/catalog
+    type: background-worker
+    name: Catalog Layer (External)
+    external: true
+    properties:
+      filepath: src/WebAppComponents/Catalog/CatalogItem.cs
+      containerId: webappcomponents
+      technology: C# Domain Service
+      classification: default
+    x: 460
+    y: 100
+  - entityRef: blueprint/eshop/eshop-servicedefaults/claimsprincipalextensions
+    type: background-worker
+    name: ClaimsPrincipalExtensions (External)
+    external: true
+    properties:
+      filepath: src/eShop.ServiceDefaults/ClaimsPrincipalExtensions.cs
+      containerId: eshop-servicedefaults
+      technology: C# Domain Service
+      classification: default
+    x: 100
+    y: 220
+  - entityRef: blueprint/eshop/eventbus/events
+    type: background-worker
+    name: Events Layer (External)
+    external: true
+    properties:
+      filepath: src/EventBus/Events/IntegrationEvent.cs
+      containerId: eventbus
+      technology: C# Domain Service
+      classification: default
+    x: 280
+    y: 220
+  - entityRef: blueprint/eshop/basket-api/grpc
+    type: background-worker
+    name: Grpc Layer (External)
+    external: true
+    properties:
+      filepath: src/Basket.API/Grpc/BasketService.cs
+      containerId: basket-api
+      technology: C# Domain Service
+      classification: default
+    x: 460
+    y: 220
+  - entityRef: blueprint/eshop/webappcomponents/services
+    type: background-worker
+    name: Services Layer (External)
+    external: true
+    properties:
+      filepath: src/WebAppComponents/Services/IProductImageUrlProvider.cs
+      containerId: webappcomponents
+      technology: C# Domain Service
+      classification: default
+    x: 100
+    y: 340
+dependencies:
+  - from: blueprint/eshop/webapp/extensions
+    to: blueprint/eshop/basket-api/grpc
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/webapp/extensions
+    to: blueprint/eshop/webapp/services
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/webapp/extensions
+    to: blueprint/eshop/webappcomponents/services
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/webapp/components
+    to: blueprint/eshop/webappcomponents/services
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/webapp/services
+    to: blueprint/eshop/webappcomponents/catalog
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/webapp/services
+    to: blueprint/eshop/webappcomponents/services
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/webapp/services
+    to: blueprint/eshop/eventbus/events
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/webapp/services
+    to: blueprint/eshop/eventbus/abstractions
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/eshop/webapp/services
+    to: blueprint/eshop/basket-api/grpc
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/webapp/program
+    to: blueprint/eshop/webapp/components
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/webapp/program
+    to: blueprint/eshop/eshop-servicedefaults/claimsprincipalextensions
+    type: direct-call
+    description: Calls module / service

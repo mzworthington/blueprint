@@ -1,5 +1,10 @@
 import type { SystemNode, SystemDependency } from '@blueprint/core';
-import { EntityRef, slugify } from '@blueprint/core';
+import {
+  EntityRef,
+  slugify,
+  parseCsprojProjectReferences,
+  resolveCsprojReferencePath,
+} from '@blueprint/core';
 import {
   resolveContainerFromPath,
   componentMapKey,
@@ -13,6 +18,12 @@ import {
   nodeTypePriority,
   resolveCSharpComponent,
 } from './csharpGrouping.ts';
+import {
+  extractCSharpDependencies,
+  extractCsprojContainerDependencies,
+  mergeContainerDependencies,
+  type CsprojFile,
+} from './csharpDependencies.ts';
 
 export class ModelExtractor {
   public parentRef: string;
@@ -23,7 +34,7 @@ export class ModelExtractor {
     this.resolveOptions = resolveOptions;
   }
 
-  public extractGraph(sourceFiles: ParsedSourceFile[]) {
+  public extractGraph(sourceFiles: ParsedSourceFile[], csprojFiles: CsprojFile[] = []) {
     const componentNodesMap = new Map<string, SystemNode>();
     const componentDependencies: SystemDependency[] = [];
     const containerNodesMap = new Map<string, SystemNode>();
@@ -89,6 +100,8 @@ export class ModelExtractor {
       }
     }
 
+    this.ensureCsprojContainers(csprojFiles, containerNodesMap);
+
     const findComponent = (containerHint: string | undefined, componentId: string) => {
       if (containerHint) {
         const keyed = componentNodesMap.get(componentMapKey(containerHint, componentId));
@@ -103,7 +116,9 @@ export class ModelExtractor {
     };
 
     for (const file of sourceFiles) {
-      if (isCSharpSourcePath(file.relativePath)) continue;
+      if (isCSharpSourcePath(file.relativePath)) {
+        continue;
+      }
 
       const componentIdentity = this.resolveComponentIdentity(file);
       if (!componentIdentity) continue;
@@ -155,7 +170,53 @@ export class ModelExtractor {
       });
     }
 
+    const csharpDeps = extractCSharpDependencies(
+      this.parentRef,
+      sourceFiles,
+      componentNodesMap,
+      containerNodesMap,
+      this.resolveOptions
+    );
+    componentDependencies.push(...csharpDeps.componentDependencies);
+    mergeContainerDependencies(containerDependencies, csharpDeps.containerDependencies);
+
+    const csprojDeps = extractCsprojContainerDependencies(
+      this.parentRef,
+      csprojFiles,
+      containerNodesMap,
+      this.resolveOptions
+    );
+    mergeContainerDependencies(containerDependencies, csprojDeps);
+
     return { componentNodesMap, componentDependencies, containerNodesMap, containerDependencies };
+  }
+
+  private ensureCsprojContainers(
+    csprojFiles: CsprojFile[],
+    containerNodesMap: Map<string, SystemNode>
+  ) {
+    const register = (relativePath: string) => {
+      const { containerId, displayName } = resolveContainerFromPath(
+        relativePath,
+        this.resolveOptions
+      );
+      if (containerNodesMap.has(containerId)) return;
+
+      containerNodesMap.set(containerId, {
+        entityRef: EntityRef.child(this.parentRef, containerId),
+        type: classifyCSharpContainer(displayName, containerId),
+        name: `${displayName.charAt(0).toUpperCase()}${displayName.slice(1)} Service`,
+        isTest: false,
+      });
+    };
+
+    for (const csproj of csprojFiles) {
+      const fromPath = csproj.relativePath.replace(/\\/g, '/');
+      register(fromPath);
+      for (const refPath of parseCsprojProjectReferences(csproj.content)) {
+        register(resolveCsprojReferencePath(fromPath, refPath));
+      }
+    }
   }
 
   private resolveComponentIdentity(

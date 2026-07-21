@@ -5,8 +5,6 @@ import fs from 'fs';
 import path from 'path';
 import { TsMorphParserAdapter } from '../analysis/adapters/parsing/tsMorphParser.ts';
 import { TreeSitterParserAdapter } from '../analysis/adapters/parsing/treeSitterParser.ts';
-import { DagreLayoutAdapter } from '../analysis/adapters/dagreLayout.ts';
-import { D3HierarchyLayoutAdapter } from '../analysis/adapters/d3HierarchyLayout.ts';
 import { NodeFileSystemAdapter } from '../analysis/adapters/nodeFileSystem.ts';
 import { ConsoleLogger } from '../analysis/adapters/consoleLogger.ts';
 import { CodebaseAnalyzer } from '../analysis/domain/analyzer.ts';
@@ -201,15 +199,11 @@ async function runArchitecture(plan: BlueprintCliPlan): Promise<{
     parserType === 'ts-morph'
       ? new TsMorphParserAdapter(analysisOptions)
       : new TreeSitterParserAdapter(analysisOptions);
-  const layout = new DagreLayoutAdapter();
-  const contextLayout = new D3HierarchyLayoutAdapter();
   const fileSystem = new NodeFileSystemAdapter();
   const logger = new ConsoleLogger();
 
   const analyzer = new CodebaseAnalyzer({
     parser,
-    layout,
-    contextLayout,
     fileSystem,
     logger,
     analysisOptions,
@@ -230,7 +224,6 @@ async function runArchitecture(plan: BlueprintCliPlan): Promise<{
     const absoluteOutputDir = path.resolve(process.cwd(), outputDir);
     await analyzer.runAnalysis(contextName, outputDir, globPattern, cancellation.signal, {
       forensicsByPath,
-      forceRelayout: plan.architecture.relayout,
       source: sourceProvenance,
     });
 
@@ -238,12 +231,9 @@ async function runArchitecture(plan: BlueprintCliPlan): Promise<{
     const tfAnalyzer = new TerraformAnalyzer({
       fileSystem,
       logger,
-      layout,
-      contextLayout,
     });
     const tfResult = await tfAnalyzer.run(contextName, outputDir, {
       scanRoot: process.cwd(),
-      forceRelayout: plan.architecture.relayout,
       signal: cancellation.signal,
       source: sourceProvenance,
     });
@@ -254,12 +244,9 @@ async function runArchitecture(plan: BlueprintCliPlan): Promise<{
     const pulumiAnalyzer = new PulumiAnalyzer({
       fileSystem,
       logger,
-      layout,
-      contextLayout,
     });
     const pulumiResult = await pulumiAnalyzer.run(contextName, outputDir, {
       scanRoot: process.cwd(),
-      forceRelayout: plan.architecture.relayout,
       signal: cancellation.signal,
       source: sourceProvenance,
     });

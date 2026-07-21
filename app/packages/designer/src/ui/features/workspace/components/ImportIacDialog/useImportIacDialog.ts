@@ -100,7 +100,7 @@ export function useImportIacDialog(isOpen: boolean, onClose: () => void) {
       const success = importIac(sourceFiles, conflictResolutions, sourceKind);
       if (success) {
         setLayoutEngine('elk');
-        await applyClientLayout();
+        await applyClientLayout({ persistToSchema: true });
         setNotification({
           type: 'success',
           title: 'Import complete',

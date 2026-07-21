@@ -5,7 +5,7 @@ import {
   type SystemSchema,
 } from '@blueprint/core';
 import {
-  mapDomainNodeToRFNode,
+  mapDomainNodesToRFNodes,
   mapDomainDepsToRFEdges,
   getClosestHandles,
 } from '../../layoutUtils';
@@ -38,9 +38,8 @@ export function createDiagramInitialState(): DiagramInitialState {
       ? initialLoadedSystemsResolved[0].schema
       : defaultInitialSchema;
 
-  const initialNodes = initialSchemaResolved.nodes
-    .map(mapDomainNodeToRFNode)
-    .map((node: BlueprintRFNode) => {
+  const initialNodes = mapDomainNodesToRFNodes(initialSchemaResolved.nodes).map(
+    (node: BlueprintRFNode) => {
       const defaultPath = defaultLoadedSystems[0]?.path || 'blueprint.yaml';
       const fileRefMap = resolvedInitial.nodeRefMap[defaultPath] || {};
       const sysId = resolvedInitial.schemas[defaultPath]?.entityRef || 'default';
@@ -52,13 +51,18 @@ export function createDiagramInitialState(): DiagramInitialState {
           entityRef,
         },
       };
-    });
+    }
+  );
   const initialEdges = mapDomainDepsToRFEdges(initialSchemaResolved.dependencies).map(
     (edge: BlueprintRFEdge) => {
       const sourceNode = initialNodes.find((n: BlueprintRFNode) => n.id === edge.source);
       const targetNode = initialNodes.find((n: BlueprintRFNode) => n.id === edge.target);
       if (!sourceNode || !targetNode) return edge;
-      const { sourceHandle, targetHandle } = getClosestHandles(sourceNode, targetNode);
+      const { sourceHandle, targetHandle } = getClosestHandles(
+        sourceNode,
+        targetNode,
+        initialNodes
+      );
       return {
         ...edge,
         sourceHandle,

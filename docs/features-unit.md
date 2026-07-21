@@ -47,6 +47,7 @@ Generated from Vitest (`pnpm generate:features-unit`).
 #### BaseWriter YAML v3 format
 
 - ✅ writes v3 object YAML on context.yaml
+- ✅ writes metaData.source when git provenance is provided
 - ✅ writes v3 object YAML on containers.yaml
 - ✅ writes v3 object YAML on component YAML files
 
@@ -245,6 +246,14 @@ Generated from Vitest (`pnpm generate:features-unit`).
 #### relativizeCommitPaths
 
 - ✅ maps git-root paths onto a nested scan root
+
+### gitProvenance
+
+#### collectGitProvenance
+
+- ✅ collects remote, branch, commit, and scanRoot offset
+- ✅ returns undefined when not inside a git repository
+- ✅ omits remoteUrl when origin is not configured
 
 ### goAnalyzer
 
@@ -554,6 +563,7 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ should throw validation errors for YAML with invalid node types
 - ✅ should throw validation errors for YAML with malformed node IDs
 - ✅ should serialize SystemSchema model to a v3 object with metaData
+- ✅ should round-trip metaData.source provenance in YAML
 - ✅ should parse v3 YAML with metaData into SystemSchema
 - ✅ should parse both legacy object-root and sequence-root YAML
 - ✅ should parse and serialize isTest flag
@@ -804,6 +814,30 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ should convert workspace names to clean URL slugs
 - ✅ should treat dots as separators for namespaces and package-like ids
 
+### sourceProvenance
+
+#### buildSourceFileRawUrl
+
+- ✅ builds a GitHub raw URL with scanRoot offset
+- ✅ builds a GitLab raw URL
+
+#### buildSourceFileUrl
+
+- ✅ builds a GitHub blob URL pinned to scannedAtCommit
+- ✅ builds a GitLab blob URL
+- ✅ returns undefined when remoteUrl is missing
+
+#### normalizeGitRemoteUrl
+
+- ✅ converts SCP-style git@ URLs to HTTPS
+- ✅ strips .git suffix from HTTPS remotes
+- ✅ returns undefined for empty input
+
+#### resolveRepoRelativeFilePath
+
+- ✅ joins scanRoot with node filepath when scan root is a subdirectory
+- ✅ returns filepath unchanged when scanRoot is root
+
 ### terraformImport
 
 #### extractTerraformFromMarkdown
@@ -953,6 +987,7 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ renders (External) indicator and styling when external is true
 - ✅ shows Zoom indicator when node has a sub-diagram link in loadedSystems
 - ✅ triggers navigation to node entityRef when Zoom button is clicked
+- ✅ shows a Code button when the node has a filepath and opens the source modal
 
 ### Breadcrumbs
 
@@ -1009,6 +1044,17 @@ Generated from Vitest (`pnpm generate:features-unit`).
 #### collectDescendantForensics
 
 - ✅ collects components under a container by entityRef prefix and containerId
+
+### buildId
+
+#### formatAppVersionLabel
+
+- ✅ formats major.minor from package version plus build id
+
+#### parseBuildIdFromHtml
+
+- ✅ reads app-build-id meta tag from html
+- ✅ returns null when meta tag is missing
 
 ### Canvas
 
@@ -1140,6 +1186,7 @@ Generated from Vitest (`pnpm generate:features-unit`).
 #### diagramState Actions & State Management
 
 - ✅ should initialize with correct default nodes, edges, and schemas
+- ✅ preserves metaData.source through initSchema and canvas rebuild
 - ✅ should successfully add a new node and serialize to YAML
 - ✅ should delete a node and clean up referencing edges
 - ✅ should update a node name and metadata properties
@@ -1188,6 +1235,14 @@ Generated from Vitest (`pnpm generate:features-unit`).
 #### ElkLayoutAdapter
 
 - ✅ places a chain top-to-bottom
+
+### fetchSourceFileContent
+
+#### fetchSourceFileContent
+
+- ✅ prefers local workspace content when available
+- ✅ falls back to raw URL when local read fails
+- ✅ returns a helpful error when no source metadata exists
 
 ### fileSync
 
@@ -1355,6 +1410,7 @@ Generated from Vitest (`pnpm generate:features-unit`).
 
 - ✅ maps node forensics onto RF node data
 - ✅ preserves forensics when rebuilding schema from canvas
+- ✅ preserves git source provenance when rebuilding schema from canvas
 
 #### mapDomainDepsToRFEdges
 
@@ -1523,6 +1579,13 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ shows from/to refs, description, and dangling warning when endpoints missing
 - ✅ lets the user edit dependency type
 
+### SourceCodeDialog
+
+#### SourceCodeDialog
+
+- ✅ renders nothing when closed
+- ✅ shows loaded source content when open
+
 ### StartupWorkspaceDialog
 
 #### StartupWorkspaceDialog
@@ -1564,6 +1627,14 @@ Generated from Vitest (`pnpm generate:features-unit`).
 - ✅ should set showDesignSystem value via setShowDesignSystem action
 - ✅ should automatically expand right panel when a node is selected
 - ✅ should initialize focusedCyclePath to null and set it via setFocusedCyclePath
+
+### UpdateBanner
+
+#### UpdateBanner
+
+- ✅ is hidden when no update is pending
+- ✅ shows refresh prompt when the service worker reports an update
+- ✅ dismisses the banner when Later is clicked
 
 ### useImportIacDialog
 

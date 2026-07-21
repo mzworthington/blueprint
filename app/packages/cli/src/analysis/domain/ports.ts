@@ -1,12 +1,7 @@
 import type { ParsedSourceFile } from './types.ts';
-import type { SystemNode, SystemDependency } from '@blueprint/core';
 
 export interface CodebaseParserPort {
   parseSourceFiles(globPattern: string, signal?: AbortSignal): Promise<ParsedSourceFile[]>;
-}
-
-export interface LayoutPort {
-  computeLayout(nodes: SystemNode[], dependencies: SystemDependency[]): Promise<SystemNode[]>;
 }
 
 export interface AnalysisFileSystemPort {

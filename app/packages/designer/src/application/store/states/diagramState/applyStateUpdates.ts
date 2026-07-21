@@ -16,6 +16,7 @@ import {
   resolveCanvasNodeEntityRefs,
   buildNextSchemaFromCanvas,
 } from './applyStateHelpers';
+import { sortNodesForReactFlow } from '../../layoutUtils';
 
 /**
  * Rebuild schema from canvas nodes/edges, resolve entityRefs across the
@@ -42,16 +43,18 @@ export function applyStateUpdates(
         : customEntityRef
       : currentSchema.entityRef;
 
-  const edgesWithHandles = attachClosestHandles(nextNodes, nextEdges);
+  const orderedNodes = sortNodesForReactFlow(nextNodes);
+  const edgesWithHandles = attachClosestHandles(orderedNodes, nextEdges);
   const source = preservedSource !== undefined ? preservedSource : currentSchema.source;
   const nextSchema = buildNextSchemaFromCanvas(
     name,
     version,
     level,
-    nextNodes,
+    orderedNodes,
     edgesWithHandles,
     entityRef,
-    source
+    source,
+    get().layoutCustomized === true
   );
 
   const nextLoadedSystems =
@@ -93,7 +96,9 @@ export function applyStateUpdates(
     fileRefMap,
     systemId
   );
-  const resolvedNextNodes = resolveCanvasNodeEntityRefs(nextNodes, fileRefMap, systemId);
+  const resolvedNextNodes = sortNodesForReactFlow(
+    resolveCanvasNodeEntityRefs(orderedNodes, fileRefMap, systemId)
+  );
 
   const resolvedSchema = resolved.schemas[currentFilePath]
     ? resolved.schemas[currentFilePath]

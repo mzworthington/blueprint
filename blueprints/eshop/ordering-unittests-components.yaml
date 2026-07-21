@@ -3,6 +3,11 @@ level: component
 metaData:
   entityRef: blueprint/eshop/ordering-unittests
   name: Ordering.UnitTests Service Components
+  source:
+    remoteUrl: https://github.com/dotnet/eShop
+    defaultBranch: main
+    scannedAtCommit: 9b4f9434f46fdc5c1a6e9e936af2868340cdbc48
+    scanRoot: .
 nodes:
   - entityRef: blueprint/eshop/ordering-unittests/builders
     type: background-worker
@@ -13,8 +18,6 @@ nodes:
       containerId: ordering-unittests
       technology: C# Domain Service
       classification: default
-    x: 400
-    y: 40
   - entityRef: blueprint/eshop/ordering-unittests/application
     type: rest-api
     name: Application Layer
@@ -24,8 +27,6 @@ nodes:
       containerId: ordering-unittests
       technology: ASP.NET Core Controller / Minimal API
       classification: api-marker
-    x: 40
-    y: 40
   - entityRef: blueprint/eshop/ordering-unittests/domain
     type: background-worker
     name: Domain Layer
@@ -35,6 +36,46 @@ nodes:
       containerId: ordering-unittests
       technology: C# Domain Service
       classification: default
-    x: 40
-    y: 300
-dependencies: []
+  - entityRef: blueprint/eshop/ordering-domain/aggregatesmodel
+    type: relational-database
+    name: AggregatesModel Layer (External)
+    external: true
+    properties:
+      filepath: src/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs
+      containerId: ordering-domain
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 280
+    y: 100
+  - entityRef: blueprint/eshop/ordering-api/application
+    type: event-broker
+    name: Application Layer (External)
+    external: true
+    properties:
+      filepath: src/Ordering.API/Application/Queries/OrderQueries.cs
+      containerId: ordering-api
+      technology: C# Event Client
+      classification: event-marker
+    x: 460
+    y: 100
+dependencies:
+  - from: blueprint/eshop/ordering-unittests/builders
+    to: blueprint/eshop/ordering-domain/aggregatesmodel
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/eshop/ordering-unittests/application
+    to: blueprint/eshop/ordering-api/application
+    type: publish-subscribe
+    description: Publishes / consumes messaging topics
+  - from: blueprint/eshop/ordering-unittests/application
+    to: blueprint/eshop/ordering-domain/aggregatesmodel
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/eshop/ordering-unittests/domain
+    to: blueprint/eshop/ordering-domain/aggregatesmodel
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/eshop/ordering-unittests/domain
+    to: blueprint/eshop/ordering-unittests/builders
+    type: direct-call
+    description: Calls module / service

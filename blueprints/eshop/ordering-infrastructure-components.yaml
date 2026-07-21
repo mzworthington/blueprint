@@ -3,6 +3,11 @@ level: component
 metaData:
   entityRef: blueprint/eshop/ordering-infrastructure
   name: Ordering.Infrastructure Service Components
+  source:
+    remoteUrl: https://github.com/dotnet/eShop
+    defaultBranch: main
+    scannedAtCommit: 9b4f9434f46fdc5c1a6e9e936af2868340cdbc48
+    scanRoot: .
 nodes:
   - entityRef: blueprint/eshop/ordering-infrastructure/idempotency
     type: background-worker
@@ -13,8 +18,6 @@ nodes:
       containerId: ordering-infrastructure
       technology: C# Domain Service
       classification: default
-    x: 400
-    y: 40
   - entityRef: blueprint/eshop/ordering-infrastructure/repositories
     type: relational-database
     name: Repositories Layer
@@ -24,8 +27,6 @@ nodes:
       containerId: ordering-infrastructure
       technology: Entity Framework / DB Context
       classification: database-marker
-    x: 400
-    y: 300
   - entityRef: blueprint/eshop/ordering-infrastructure/mediatorextension
     type: background-worker
     name: MediatorExtension
@@ -35,8 +36,6 @@ nodes:
       containerId: ordering-infrastructure
       technology: C# Domain Service
       classification: default
-    x: 760
-    y: 40
   - entityRef: blueprint/eshop/ordering-infrastructure/orderingcontext
     type: relational-database
     name: OrderingContext
@@ -46,8 +45,6 @@ nodes:
       containerId: ordering-infrastructure
       technology: Entity Framework / DB Context
       classification: database-marker
-    x: 40
-    y: 300
   - entityRef: blueprint/eshop/ordering-infrastructure/entityconfigurations
     type: background-worker
     name: EntityConfigurations Layer
@@ -57,6 +54,19 @@ nodes:
       containerId: ordering-infrastructure
       technology: C# Domain Service
       classification: default
-    x: 40
-    y: 40
-dependencies: []
+  - entityRef: blueprint/eshop/integrationeventlogef/eventstateenum
+    type: background-worker
+    name: EventStateEnum (External)
+    external: true
+    properties:
+      filepath: src/IntegrationEventLogEF/EventStateEnum.cs
+      containerId: integrationeventlogef
+      technology: C# Domain Service
+      classification: default
+    x: 280
+    y: 100
+dependencies:
+  - from: blueprint/eshop/ordering-infrastructure/orderingcontext
+    to: blueprint/eshop/integrationeventlogef/eventstateenum
+    type: direct-call
+    description: Calls module / service

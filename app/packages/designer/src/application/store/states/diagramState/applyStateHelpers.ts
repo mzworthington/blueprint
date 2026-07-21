@@ -16,7 +16,7 @@ export function attachClosestHandles(
     const sourceNode = nextNodes.find(n => n.id === edge.source);
     const targetNode = nextNodes.find(n => n.id === edge.target);
     if (!sourceNode || !targetNode) return edge;
-    const { sourceHandle, targetHandle } = getClosestHandles(sourceNode, targetNode);
+    const { sourceHandle, targetHandle } = getClosestHandles(sourceNode, targetNode, nextNodes);
     return {
       ...edge,
       sourceHandle,
@@ -142,7 +142,8 @@ export function buildNextSchemaFromCanvas(
   nextNodes: BlueprintRFNode[],
   edgesWithHandles: BlueprintRFEdge[],
   entityRef: string | undefined,
-  source?: SystemSchema['source']
+  source?: SystemSchema['source'],
+  persistLayoutCoordinates = true
 ): SystemSchema {
   return rebuildSchemaFromCanvas(
     name,
@@ -151,6 +152,7 @@ export function buildNextSchemaFromCanvas(
     nextNodes,
     edgesWithHandles,
     entityRef,
-    source
+    source,
+    persistLayoutCoordinates
   );
 }

@@ -1,9 +1,4 @@
-import type {
-  CodebaseParserPort,
-  LayoutPort,
-  AnalysisFileSystemPort,
-  LoggerPort,
-} from './ports.ts';
+import type { CodebaseParserPort, AnalysisFileSystemPort, LoggerPort } from './ports.ts';
 import { ModelExtractor } from './modelExtractor.ts';
 import { ContextLevelWriter } from '../../writers/contextLevelWriter.ts';
 import { ContainerLevelWriter } from '../../writers/containerLevelWriter.ts';
@@ -20,12 +15,9 @@ import {
 } from '../../forensics/domain/attachForensics.ts';
 import type { FileMetrics } from '../../forensics/domain/types.ts';
 import { applyExternalDependenciesPass } from '../../writers/externalDependenciesPass.ts';
-import { applyLayoutPass } from '../../writers/layoutPass.ts';
+import { discoverCsprojFiles } from './discoverCsprojFiles.ts';
 export interface CodebaseAnalyzerDependencies {
   parser: CodebaseParserPort;
-  layout: LayoutPort;
-  /** Optional layout for context-level schemas (defaults to `layout`). */
-  contextLayout?: LayoutPort;
   fileSystem: AnalysisFileSystemPort;
   logger: LoggerPort;
   analysisOptions?: AnalysisOptions;
@@ -34,8 +26,6 @@ export interface CodebaseAnalyzerDependencies {
 export interface RunAnalysisOptions {
   /** When set, component/container/context nodes are enriched before write. */
   forensicsByPath?: ReadonlyMap<string, FileMetrics>;
-  /** Full layout by default; set false (CLI `--no-relayout`) to preserve x/y. */
-  forceRelayout?: boolean;
   /** Git provenance stamped onto every emitted schema (`metaData.source`). */
   source?: SourceProvenance;
 }
@@ -190,6 +180,12 @@ export class CodebaseAnalyzer {
     ].filter(Boolean);
 
     const partitioned = partitionFilesBySystem(sourceFiles, systems);
+    const csprojFiles = discoverCsprojFiles(
+      globPattern,
+      this.deps.fileSystem,
+      this.analysisOptions
+    );
+    const partitionedCsproj = partitionFilesBySystem(csprojFiles, systems);
     const rootDir = this.deps.fileSystem.getAbsolutePath(outputDir || 'blueprints');
     if (!this.deps.fileSystem.exists(rootDir)) this.deps.fileSystem.mkdir(rootDir);
 
@@ -215,6 +211,7 @@ export class CodebaseAnalyzer {
       }
 
       const files = partitioned.get(system.id) || [];
+      const systemCsprojFiles = partitionedCsproj.get(system.id) || [];
 
       this.deps.logger.info(
         `📦 System [${system.id}] (${system.kind}) — ${files.length} source file(s)`
@@ -230,7 +227,7 @@ export class CodebaseAnalyzer {
           ),
       });
       const { componentNodesMap, componentDependencies, containerNodesMap, containerDependencies } =
-        extractor.extractGraph(files);
+        extractor.extractGraph(files, systemCsprojFiles);
 
       if (forensicsByPath && forensicsByPath.size > 0) {
         allComponentNodes.push(
@@ -287,12 +284,6 @@ export class CodebaseAnalyzer {
 
     throwIfAborted(signal);
     await applyExternalDependenciesPass(rootDir, this.deps.fileSystem, this.deps.logger);
-
-    throwIfAborted(signal);
-    await applyLayoutPass(rootDir, this.deps.layout, this.deps.fileSystem, this.deps.logger, {
-      forceRelayout: options?.forceRelayout !== false,
-      contextLayout: this.deps.contextLayout,
-    });
 
     throwIfAborted(signal);
     this.deps.logger.info(`✅ Multi-level structural blueprint generation complete.`);

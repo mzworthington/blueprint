@@ -12,6 +12,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { useLocation } from 'wouter';
 import { useBlueprintStore } from '../../../../../application/store/store';
 import { BlueprintNode } from './BlueprintNode';
+import { BlueprintGroupNode } from './BlueprintGroupNode';
 import { WorkspaceToolbar } from '../WorkspaceToolbar/WorkspaceToolbar';
 import { AlertTriangle, CheckCircle2, Info, AlertCircle, X, ZoomOut, Loader2 } from 'lucide-react';
 import { getSchemaEntityRef } from '@blueprint/core';
@@ -33,6 +34,7 @@ import {
   dependencyArrowMarker,
   prefersReducedMotion,
   shouldAnimateDependencyEdge,
+  shouldAutoLayoutOnLoad,
 } from '../../../../../application/store/layoutUtils';
 import { SubDiagramRefsContext } from './SubDiagramRefsContext';
 
@@ -65,8 +67,8 @@ export const Canvas: React.FC = () => {
     isWorkspaceOpen,
     notification,
     setNotification,
-    layoutEngine,
     applyClientLayout,
+    layoutSessionId,
     undo,
     redo,
     recordHistory,
@@ -99,8 +101,8 @@ export const Canvas: React.FC = () => {
       isWorkspaceOpen: state.isWorkspaceOpen,
       notification: state.notification,
       setNotification: state.setNotification,
-      layoutEngine: state.layoutEngine,
       applyClientLayout: state.applyClientLayout,
+      layoutSessionId: state.layoutSessionId,
       undo: state.undo,
       redo: state.redo,
       recordHistory: state.recordHistory,
@@ -116,6 +118,7 @@ export const Canvas: React.FC = () => {
   const nodeTypes = useMemo(
     () => ({
       blueprintNode: BlueprintNode as any,
+      blueprintGroup: BlueprintGroupNode as any,
     }),
     []
   );
@@ -151,21 +154,34 @@ export const Canvas: React.FC = () => {
   });
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      fitViewRef.current({ duration: 400 });
-    }, 50);
-    return () => clearTimeout(timer);
-  }, [currentFilePath]);
-
-  useEffect(() => {
-    if (!layoutEngine) return;
     const controller = new AbortController();
-    void applyClientLayout(controller.signal).then(() => {
+    const run = async () => {
+      const { schema, layoutEngine: currentEngine } = useBlueprintStore.getState();
+      const needsLayout = shouldAutoLayoutOnLoad(schema);
+
+      if (needsLayout) {
+        if (currentEngine !== 'dagre') {
+          useBlueprintStore.setState({ layoutEngine: 'dagre' });
+        }
+        await applyClientLayout({
+          signal: controller.signal,
+          engine: 'dagre',
+          recordHistory: false,
+        });
+      }
+
       if (controller.signal.aborted) return;
-      fitViewRef.current({ duration: 400 });
-    });
+      // Wait for React Flow to commit node measurements after layout state updates.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          fitViewRef.current({ duration: 400, padding: 0.12 });
+        });
+      });
+    };
+
+    void run();
     return () => controller.abort();
-  }, [currentFilePath, layoutEngine, applyClientLayout]);
+  }, [currentFilePath, layoutSessionId, applyClientLayout]);
 
   useEffect(() => {
     if (notification) {

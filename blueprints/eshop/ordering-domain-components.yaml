@@ -3,6 +3,11 @@ level: component
 metaData:
   entityRef: blueprint/eshop/ordering-domain
   name: Ordering.Domain Service Components
+  source:
+    remoteUrl: https://github.com/dotnet/eShop
+    defaultBranch: main
+    scannedAtCommit: 9b4f9434f46fdc5c1a6e9e936af2868340cdbc48
+    scanRoot: .
 nodes:
   - entityRef: blueprint/eshop/ordering-domain/seedwork
     type: relational-database
@@ -13,8 +18,6 @@ nodes:
       containerId: ordering-domain
       technology: Entity Framework / DB Context
       classification: database-marker
-    x: 400
-    y: 300
   - entityRef: blueprint/eshop/ordering-domain/aggregatesmodel
     type: relational-database
     name: AggregatesModel Layer
@@ -24,8 +27,6 @@ nodes:
       containerId: ordering-domain
       technology: Entity Framework / DB Context
       classification: database-marker
-    x: 40
-    y: 40
   - entityRef: blueprint/eshop/ordering-domain/exceptions
     type: background-worker
     name: Exceptions Layer
@@ -35,8 +36,6 @@ nodes:
       containerId: ordering-domain
       technology: C# Domain Service
       classification: default
-    x: 40
-    y: 300
   - entityRef: blueprint/eshop/ordering-domain/events
     type: background-worker
     name: Events Layer
@@ -46,6 +45,83 @@ nodes:
       containerId: ordering-domain
       technology: C# Domain Service
       classification: default
-    x: 400
-    y: 40
-dependencies: []
+  - entityRef: blueprint/eshop/ordering-unittests/application
+    type: rest-api
+    name: Application Layer (External)
+    external: true
+    properties:
+      filepath: tests/Ordering.UnitTests/Application/NewOrderCommandHandlerTest.cs
+      containerId: ordering-unittests
+      technology: ASP.NET Core Controller / Minimal API
+      classification: api-marker
+    x: 280
+    y: 100
+  - entityRef: blueprint/eshop/ordering-api/application
+    type: event-broker
+    name: Application Layer (External)
+    external: true
+    properties:
+      filepath: src/Ordering.API/Application/Queries/OrderQueries.cs
+      containerId: ordering-api
+      technology: C# Event Client
+      classification: event-marker
+    x: 460
+    y: 100
+  - entityRef: blueprint/eshop/ordering-unittests/builders
+    type: background-worker
+    name: Builders (External)
+    external: true
+    properties:
+      filepath: tests/Ordering.UnitTests/Builders.cs
+      containerId: ordering-unittests
+      technology: C# Domain Service
+      classification: default
+    x: 100
+    y: 220
+  - entityRef: blueprint/eshop/ordering-unittests/domain
+    type: background-worker
+    name: Domain Layer (External)
+    external: true
+    properties:
+      filepath: tests/Ordering.UnitTests/Domain/BuyerAggregateTest.cs
+      containerId: ordering-unittests
+      technology: C# Domain Service
+      classification: default
+    x: 280
+    y: 220
+  - entityRef: blueprint/eshop/ordering-api/infrastructure
+    type: background-worker
+    name: Infrastructure Layer (External)
+    external: true
+    properties:
+      filepath: src/Ordering.API/Infrastructure/OrderingContextSeed.cs
+      containerId: ordering-api
+      technology: C# Domain Service
+      classification: default
+    x: 460
+    y: 220
+dependencies:
+  - from: blueprint/eshop/ordering-unittests/builders
+    to: blueprint/eshop/ordering-domain/aggregatesmodel
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/eshop/ordering-unittests/application
+    to: blueprint/eshop/ordering-domain/aggregatesmodel
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/eshop/ordering-unittests/domain
+    to: blueprint/eshop/ordering-domain/aggregatesmodel
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/eshop/ordering-api/application
+    to: blueprint/eshop/ordering-domain/aggregatesmodel
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/eshop/ordering-api/infrastructure
+    to: blueprint/eshop/ordering-domain/aggregatesmodel
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/eshop/ordering-domain/aggregatesmodel
+    to: blueprint/eshop/ordering-domain/seedwork
+    type: read-write
+    description: Queries datastore records

@@ -111,7 +111,8 @@ export type NodeType =
   | 'serverless-function'
   | 'rest-api'
   | 'gateway-api'
-  | 'background-worker';
+  | 'background-worker'
+  | 'group';
 
 export interface PropertyMap {
   [key: string]: string | number | boolean;
@@ -157,6 +158,7 @@ export interface SystemNode {
   external?: boolean;
   properties?: PropertyMap;
   isTest?: boolean;
+  parentEntityRef?: EntityRef;
   x?: number;
   y?: number;
   forensics?: NodeForensics;

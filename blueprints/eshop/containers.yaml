@@ -3,49 +3,56 @@ level: container
 metaData:
   entityRef: blueprint/eshop
   name: Eshop Containers
+  source:
+    remoteUrl: https://github.com/dotnet/eShop
+    defaultBranch: main
+    scannedAtCommit: 9b4f9434f46fdc5c1a6e9e936af2868340cdbc48
+    scanRoot: .
 nodes:
   - entityRef: blueprint/eshop/ordering-unittests
     type: container
     name: Ordering.UnitTests Service
     isTest: true
-    x: 1480
-    y: 1080
   - entityRef: blueprint/eshop/catalog-functionaltests
     type: container
     name: Catalog.FunctionalTests Service
     isTest: true
-    x: 400
-    y: 1080
   - entityRef: blueprint/eshop/ordering-functionaltests
     type: container
     name: Ordering.FunctionalTests Service
     isTest: true
-    x: 1120
-    y: 1080
   - entityRef: blueprint/eshop/clientapp-unittests
     type: web-app
     name: ClientApp.UnitTests Service
     isTest: true
-    x: 760
-    y: 1080
   - entityRef: blueprint/eshop/basket-unittests
     type: container
     name: Basket.UnitTests Service
     isTest: true
-    x: 40
-    y: 1080
   - entityRef: blueprint/eshop/core
     type: container
     name: Core Service
     isTest: false
-    x: 1120
-    y: 40
     forensics:
       complexity: 4
       churn: 0
+      churnByWeek:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
       authorCount: 0
       hotspotScore: 0
-      sinceDays: 500
+      sinceDays: 90
       fileCount: 1
       hotspotCount: 0
       knowledgeSiloCount: 0
@@ -53,114 +60,272 @@ nodes:
     type: container
     name: IntegrationEventLogEF Service
     isTest: false
-    x: 40
-    y: 560
   - entityRef: blueprint/eshop/hybridapp
     type: web-app
     name: HybridApp Service
     isTest: false
-    x: 1120
-    y: 300
   - entityRef: blueprint/eshop/clientapp
     type: web-app
     name: ClientApp Service
     isTest: false
-    x: 760
-    y: 40
   - entityRef: blueprint/eshop/webappcomponents
     type: web-app
     name: WebAppComponents Service
     isTest: false
-    x: 760
-    y: 820
   - entityRef: blueprint/eshop/eventbus
     type: event-broker
     name: EventBus Service
     isTest: false
-    x: 400
-    y: 300
   - entityRef: blueprint/eshop/basket-api
     type: rest-api
     name: Basket.API Service
     isTest: false
-    x: 40
-    y: 40
   - entityRef: blueprint/eshop/eshop-apphost
     type: container
     name: EShop.AppHost Service
     isTest: false
-    x: 1480
-    y: 40
   - entityRef: blueprint/eshop/webapp
     type: web-app
     name: WebApp Service
     isTest: false
-    x: 400
-    y: 820
   - entityRef: blueprint/eshop/ordering-api
     type: rest-api
     name: Ordering.API Service
     isTest: false
-    x: 400
-    y: 560
   - entityRef: blueprint/eshop/ordering-infrastructure
     type: container
     name: Ordering.Infrastructure Service
     isTest: false
-    x: 1120
-    y: 560
   - entityRef: blueprint/eshop/paymentprocessor
     type: background-worker
     name: PaymentProcessor Service
     isTest: false
-    x: 40
-    y: 820
   - entityRef: blueprint/eshop/identity-api
     type: rest-api
     name: Identity.API Service
     isTest: false
-    x: 1480
-    y: 300
   - entityRef: blueprint/eshop/eventbusrabbitmq
     type: event-broker
     name: EventBusRabbitMQ Service
     isTest: false
-    x: 760
-    y: 300
   - entityRef: blueprint/eshop/webhookclient
     type: container
     name: WebhookClient Service
     isTest: false
-    x: 1120
-    y: 820
   - entityRef: blueprint/eshop/eshop-servicedefaults
     type: container
     name: EShop.ServiceDefaults Service
     isTest: false
-    x: 40
-    y: 300
   - entityRef: blueprint/eshop/orderprocessor
     type: background-worker
     name: OrderProcessor Service
     isTest: false
-    x: 1480
-    y: 560
   - entityRef: blueprint/eshop/ordering-domain
     type: container
     name: Ordering.Domain Service
     isTest: false
-    x: 760
-    y: 560
   - entityRef: blueprint/eshop/catalog-api
     type: rest-api
     name: Catalog.API Service
     isTest: false
-    x: 400
-    y: 40
   - entityRef: blueprint/eshop/webhooks-api
     type: rest-api
     name: Webhooks.API Service
     isTest: false
-    x: 1480
-    y: 820
-dependencies: []
+dependencies:
+  - from: blueprint/eshop/ordering-unittests
+    to: blueprint/eshop/ordering-domain
+    type: inter-container
+    description: Builders → AggregatesModel Layer (+2 more)
+  - from: blueprint/eshop/ordering-unittests
+    to: blueprint/eshop/ordering-api
+    type: inter-container
+    description: Application Layer → Application Layer
+  - from: blueprint/eshop/catalog-functionaltests
+    to: blueprint/eshop/catalog-api
+    type: inter-container
+    description: CatalogApiTests → Model Layer
+  - from: blueprint/eshop/ordering-functionaltests
+    to: blueprint/eshop/ordering-api
+    type: inter-container
+    description: OrderingApiTests → Application Layer
+  - from: blueprint/eshop/clientapp-unittests
+    to: blueprint/eshop/clientapp
+    type: inter-container
+    description: Mocks Layer → Models Layer (+5 more)
+  - from: blueprint/eshop/basket-unittests
+    to: blueprint/eshop/basket-api
+    type: inter-container
+    description: BasketServiceTests → Repositories Layer (+2 more)
+  - from: blueprint/eshop/hybridapp
+    to: blueprint/eshop/webappcomponents
+    type: inter-container
+    description: Services Layer → Catalog Layer (+1 more)
+  - from: blueprint/eshop/webapp
+    to: blueprint/eshop/basket-api
+    type: inter-container
+    description: Extensions Layer → Grpc Layer (+1 more)
+  - from: blueprint/eshop/webapp
+    to: blueprint/eshop/webappcomponents
+    type: inter-container
+    description: Extensions Layer → Services Layer (+3 more)
+  - from: blueprint/eshop/webapp
+    to: blueprint/eshop/eventbus
+    type: inter-container
+    description: Services Layer → Events Layer (+1 more)
+  - from: blueprint/eshop/webapp
+    to: blueprint/eshop/eshop-servicedefaults
+    type: inter-container
+    description: Program → ClaimsPrincipalExtensions
+  - from: blueprint/eshop/ordering-api
+    to: blueprint/eshop/ordering-domain
+    type: inter-container
+    description: Application Layer → AggregatesModel Layer (+1 more)
+  - from: blueprint/eshop/ordering-infrastructure
+    to: blueprint/eshop/integrationeventlogef
+    type: inter-container
+    description: OrderingContext → EventStateEnum
+  - from: blueprint/eshop/orderprocessor
+    to: blueprint/eshop/eventbus
+    type: inter-container
+    description: Events Layer → Events Layer (+1 more)
+  - from: blueprint/eshop/ordering-unittests
+    to: blueprint/eshop/ordering-infrastructure
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/ordering-functionaltests
+    to: blueprint/eshop/identity-api
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/ordering-functionaltests
+    to: blueprint/eshop/ordering-domain
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/ordering-functionaltests
+    to: blueprint/eshop/ordering-infrastructure
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/integrationeventlogef
+    to: blueprint/eshop/eventbus
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/basket-api
+    to: blueprint/eshop/eshop-servicedefaults
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/basket-api
+    to: blueprint/eshop/eventbusrabbitmq
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/eshop-apphost
+    to: blueprint/eshop/basket-api
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/eshop-apphost
+    to: blueprint/eshop/catalog-api
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/eshop-apphost
+    to: blueprint/eshop/identity-api
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/eshop-apphost
+    to: blueprint/eshop/ordering-api
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/eshop-apphost
+    to: blueprint/eshop/orderprocessor
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/eshop-apphost
+    to: blueprint/eshop/paymentprocessor
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/eshop-apphost
+    to: blueprint/eshop/webhooks-api
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/eshop-apphost
+    to: blueprint/eshop/webapp
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/eshop-apphost
+    to: blueprint/eshop/webhookclient
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/webapp
+    to: blueprint/eshop/eventbusrabbitmq
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/ordering-api
+    to: blueprint/eshop/eventbusrabbitmq
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/ordering-api
+    to: blueprint/eshop/integrationeventlogef
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/ordering-api
+    to: blueprint/eshop/eshop-servicedefaults
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/ordering-api
+    to: blueprint/eshop/ordering-infrastructure
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/ordering-infrastructure
+    to: blueprint/eshop/ordering-domain
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/paymentprocessor
+    to: blueprint/eshop/eshop-servicedefaults
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/paymentprocessor
+    to: blueprint/eshop/eventbusrabbitmq
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/identity-api
+    to: blueprint/eshop/eshop-servicedefaults
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/eventbusrabbitmq
+    to: blueprint/eshop/eventbus
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/webhookclient
+    to: blueprint/eshop/eshop-servicedefaults
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/orderprocessor
+    to: blueprint/eshop/eshop-servicedefaults
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/orderprocessor
+    to: blueprint/eshop/eventbusrabbitmq
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/catalog-api
+    to: blueprint/eshop/eventbusrabbitmq
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/catalog-api
+    to: blueprint/eshop/integrationeventlogef
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/catalog-api
+    to: blueprint/eshop/eshop-servicedefaults
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/webhooks-api
+    to: blueprint/eshop/eventbusrabbitmq
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/webhooks-api
+    to: blueprint/eshop/integrationeventlogef
+    type: inter-container
+    description: Project reference
+  - from: blueprint/eshop/webhooks-api
+    to: blueprint/eshop/eshop-servicedefaults
+    type: inter-container
+    description: Project reference

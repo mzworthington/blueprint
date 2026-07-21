@@ -1,6 +1,6 @@
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { CodebaseAnalyzer } from './analyzer.ts';
-import { MockParser, MockLayout, MockFileSystem, MockLogger } from '../../test/fakes.ts';
+import { MockParser, MockFileSystem, MockLogger } from '../../test/fakes.ts';
 
 const mockContextWrite = vi.fn();
 const mockContextWriteSystems = vi.fn();
@@ -34,7 +34,6 @@ vi.mock('../../writers/componentLevelWriter.ts', () => {
 
 describe('CodebaseAnalyzer Domain Service', () => {
   let parser: MockParser;
-  let layout: MockLayout;
   let fileSystem: MockFileSystem;
   let logger: MockLogger;
   let analyzer: CodebaseAnalyzer;
@@ -42,11 +41,10 @@ describe('CodebaseAnalyzer Domain Service', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     parser = new MockParser();
-    layout = new MockLayout();
     fileSystem = new MockFileSystem();
     logger = new MockLogger();
     fileSystem.existingFiles.add('/workspace/package.json');
-    analyzer = new CodebaseAnalyzer({ parser, layout, fileSystem, logger });
+    analyzer = new CodebaseAnalyzer({ parser, fileSystem, logger });
   });
 
   it('should correctly run analysis and delegate to writers', async () => {

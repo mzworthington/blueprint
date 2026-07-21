@@ -2,37 +2,31 @@ import {
   EntityRef,
   parseSchemaFromYaml,
   parseTerraformBatchToSchema,
-  serializeSchemaToYaml,
+  seedPreservedPositions,
   type SystemSchema,
   type TerraformSourceFile,
   type SourceProvenance,
 } from '@blueprint/core';
 import { ContextLevelWriter } from '../../writers/contextLevelWriter.ts';
 import { BaseWriter } from '../../writers/baseWriter.ts';
-import { layoutWithPreservation } from '../../writers/layoutWithPreservation.ts';
-import type { AnalysisFileSystemPort, LayoutPort, LoggerPort } from './ports.ts';
+import type { AnalysisFileSystemPort, LoggerPort } from './ports.ts';
 import { discoverTerraformRoots } from './terraformDiscovery.ts';
 import { throwIfAborted } from './cancellation.ts';
 
 export type TerraformAnalyzerDependencies = {
   fileSystem: AnalysisFileSystemPort;
   logger: LoggerPort;
-  layout: LayoutPort;
-  /** Layout for context.yaml (defaults to `layout`). */
-  contextLayout?: LayoutPort;
 };
 
 export type RunTerraformAnalysisOptions = {
   /** Scan root (default cwd). */
   scanRoot?: string;
-  forceRelayout?: boolean;
   signal?: AbortSignal;
   source?: SourceProvenance;
 };
 
 class TerraformSchemaWriter extends BaseWriter {
   async writeContainerSchema(targetPath: string, schema: SystemSchema): Promise<void> {
-    // Trust positions already on the schema (caller laid them out).
     await this.writeYaml(targetPath, schema);
   }
 }
@@ -52,9 +46,8 @@ export class TerraformAnalyzer {
     outputDir: string,
     options: RunTerraformAnalysisOptions = {}
   ): Promise<{ rootsAnalyzed: number; warnings: string[] }> {
-    const { fileSystem, logger, layout } = this.deps;
+    const { fileSystem, logger } = this.deps;
     const scanRoot = options.scanRoot ?? fileSystem.getCurrentWorkingDirectory();
-    const forceRelayout = options.forceRelayout !== false;
     throwIfAborted(options.signal);
 
     const roots = discoverTerraformRoots(scanRoot, fileSystem);
@@ -143,13 +136,7 @@ export class TerraformAnalyzer {
       if (schema.nodes.length > 0) {
         schema = {
           ...schema,
-          nodes: await layoutWithPreservation(
-            layout,
-            previousNodes,
-            schema.nodes,
-            schema.dependencies,
-            { forceRelayout }
-          ),
+          nodes: seedPreservedPositions(previousNodes, schema.nodes),
         };
       }
 
@@ -182,34 +169,8 @@ export class TerraformAnalyzer {
         ],
         options.source ? { source: options.source } : undefined
       );
-      await this.layoutContextDiagram(rootDir, forceRelayout);
     }
 
     return { rootsAnalyzed: tfSubsystems.length, warnings: allWarnings };
-  }
-
-  private async layoutContextDiagram(rootDir: string, forceRelayout: boolean): Promise<void> {
-    const { fileSystem, logger, layout, contextLayout } = this.deps;
-    const engine = contextLayout ?? layout;
-    const targetPath = fileSystem.getAbsolutePath(rootDir, 'context.yaml');
-    if (!fileSystem.exists(targetPath)) return;
-
-    try {
-      const previous = parseSchemaFromYaml(await fileSystem.readSchema(targetPath));
-      const laidOut = await layoutWithPreservation(
-        engine,
-        previous.nodes,
-        previous.nodes,
-        previous.dependencies,
-        { forceRelayout }
-      );
-      const next: SystemSchema = { ...previous, nodes: laidOut };
-      await fileSystem.writeSchema(targetPath, serializeSchemaToYaml(next));
-      logger.info('📐 Laid out context diagram after Terraform systems');
-    } catch (error) {
-      logger.warn('Failed to layout context diagram after Terraform pass', {
-        error: String(error),
-      });
-    }
   }
 }

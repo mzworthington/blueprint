@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import path from 'node:path';
 import { parseSchemaFromYaml } from '@blueprint/core';
 import { TerraformAnalyzer } from './terraformAnalyzer.ts';
-import { MockFileSystem, MockLayout } from '../../test/fakes.ts';
+import { MockFileSystem } from '../../test/fakes.ts';
 
 class SilentLogger {
   infos: string[] = [];
@@ -43,7 +43,6 @@ resource "aws_iam_role" "lambda" {
     const analyzer = new TerraformAnalyzer({
       fileSystem: fs,
       logger: new SilentLogger(),
-      layout: new MockLayout(),
     });
 
     const result = await analyzer.run('Acme', out, { scanRoot: scan });
@@ -65,30 +64,26 @@ resource "aws_iam_role" "lambda" {
 
     const hub = context.nodes.find(n => n.entityRef === 'acme/infrastructure');
     expect(hub).toMatchObject({
-      type: 'software-system',
+      type: 'group',
       name: 'Infrastructure System',
       properties: expect.objectContaining({
         productId: 'infrastructure',
-        role: 'product-hub',
       }),
     });
-    expect(Number.isFinite(hub?.x)).toBe(true);
+    expect(hub?.x).toBeUndefined();
+    expect(hub?.y).toBeUndefined();
 
     const spoke = context.nodes.find(n => n.entityRef === 'acme/infra');
     expect(spoke).toMatchObject({
+      parentEntityRef: 'acme/infrastructure',
       properties: expect.objectContaining({
         productId: 'infrastructure',
-        role: 'subsystem',
       }),
     });
 
-    expect(context.dependencies).toContainEqual(
-      expect.objectContaining({
-        from: 'acme/infrastructure',
-        to: 'acme/infra',
-        description: 'Part of product system',
-      })
-    );
+    expect(
+      context.dependencies.some(d => d.from === 'acme/infrastructure' && d.to === 'acme/infra')
+    ).toBe(false);
   });
 
   it('links multiple terraform roots under one Infrastructure hub', async () => {
@@ -110,7 +105,6 @@ resource "aws_iam_role" "lambda" {
     const analyzer = new TerraformAnalyzer({
       fileSystem: fs,
       logger: new SilentLogger(),
-      layout: new MockLayout(),
     });
 
     const result = await analyzer.run('Acme', out, { scanRoot: scan });
@@ -120,11 +114,7 @@ resource "aws_iam_role" "lambda" {
       fs.writtenFiles.get(path.resolve('/repo/blueprints/context.yaml'))!
     );
     expect(context.nodes.filter(n => n.properties?.productId === 'infrastructure')).toHaveLength(3);
-    expect(
-      context.dependencies.filter(
-        d => d.from === 'acme/infrastructure' && d.description === 'Part of product system'
-      )
-    ).toHaveLength(2);
+    expect(context.nodes.filter(n => n.parentEntityRef === 'acme/infrastructure')).toHaveLength(2);
   });
 
   it('no-ops when no terraform roots exist', async () => {
@@ -138,7 +128,6 @@ resource "aws_iam_role" "lambda" {
     const analyzer = new TerraformAnalyzer({
       fileSystem: fs,
       logger,
-      layout: new MockLayout(),
     });
 
     const result = await analyzer.run('Acme', path.resolve('/repo/blueprints'), {

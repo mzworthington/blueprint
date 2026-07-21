@@ -10,11 +10,13 @@ import {
   noopFileSystem,
   noopWorkspace,
   noopLogger,
-  noopLayoutRegistry,
   noopWorkingCopy,
   noopGraphChange,
 } from '../../../core';
+import { createBrowserLayoutRegistry } from '../../../infrastructure/layout/createBrowserLayoutRegistry';
 import { loadWorkspaceFromDirectory } from './ioState/openWorkspace';
+
+const browserLayoutRegistry = createBrowserLayoutRegistry();
 
 export interface IoState {
   fileSystemPort: FileSystemPort;
@@ -46,7 +48,7 @@ export const createIoState = (set: any, get: () => IoStateDeps): IoState => ({
   fileSystemPort: noopFileSystem,
   workspacePort: noopWorkspace,
   logger: noopLogger,
-  layoutRegistry: noopLayoutRegistry,
+  layoutRegistry: browserLayoutRegistry,
   workingCopyPort: noopWorkingCopy,
   graphChangePort: noopGraphChange,
   setPorts: ports => set((state: IoStateDeps) => ({ ...state, ...ports })),

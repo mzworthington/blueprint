@@ -1,11 +1,9 @@
 import type {
   CodebaseParserPort,
-  LayoutPort,
   AnalysisFileSystemPort,
   LoggerPort,
 } from '../analysis/domain/ports.ts';
 import type { ParsedSourceFile } from '../analysis/domain/types.ts';
-import type { SystemNode, SystemDependency } from '@blueprint/core';
 
 export class MockParser implements CodebaseParserPort {
   files: ParsedSourceFile[] = [];
@@ -16,19 +14,6 @@ export class MockParser implements CodebaseParserPort {
       throw err;
     }
     return this.files;
-  }
-}
-
-export class MockLayout implements LayoutPort {
-  async computeLayout(
-    nodes: SystemNode[],
-    _dependencies: SystemDependency[]
-  ): Promise<SystemNode[]> {
-    return nodes.map((n, idx) => ({
-      ...n,
-      x: (idx + 1) * 10,
-      y: (idx + 1) * 20,
-    }));
   }
 }
 

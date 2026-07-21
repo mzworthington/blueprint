@@ -3,6 +3,11 @@ level: component
 metaData:
   entityRef: blueprint/eshop/basket-unittests
   name: Basket.UnitTests Service Components
+  source:
+    remoteUrl: https://github.com/dotnet/eShop
+    defaultBranch: main
+    scannedAtCommit: 9b4f9434f46fdc5c1a6e9e936af2868340cdbc48
+    scanRoot: .
 nodes:
   - entityRef: blueprint/eshop/basket-unittests/basketservicetests
     type: background-worker
@@ -13,8 +18,6 @@ nodes:
       containerId: basket-unittests
       technology: C# Domain Service
       classification: default
-    x: 40
-    y: 40
   - entityRef: blueprint/eshop/basket-unittests/helpers
     type: background-worker
     name: Helpers Layer
@@ -24,6 +27,53 @@ nodes:
       containerId: basket-unittests
       technology: C# Domain Service
       classification: default
-    x: 400
-    y: 40
-dependencies: []
+  - entityRef: blueprint/eshop/basket-api/grpc
+    type: background-worker
+    name: Grpc Layer (External)
+    external: true
+    properties:
+      filepath: src/Basket.API/Grpc/BasketService.cs
+      containerId: basket-api
+      technology: C# Domain Service
+      classification: default
+    x: 280
+    y: 100
+  - entityRef: blueprint/eshop/basket-api/model
+    type: background-worker
+    name: Model Layer (External)
+    external: true
+    properties:
+      filepath: src/Basket.API/Model/CustomerBasket.cs
+      containerId: basket-api
+      technology: C# Domain Service
+      classification: default
+    x: 460
+    y: 100
+  - entityRef: blueprint/eshop/basket-api/repositories
+    type: relational-database
+    name: Repositories Layer (External)
+    external: true
+    properties:
+      filepath: src/Basket.API/Repositories/RedisBasketRepository.cs
+      containerId: basket-api
+      technology: Entity Framework / DB Context
+      classification: database-marker
+    x: 100
+    y: 220
+dependencies:
+  - from: blueprint/eshop/basket-unittests/basketservicetests
+    to: blueprint/eshop/basket-api/repositories
+    type: read-write
+    description: Queries datastore records
+  - from: blueprint/eshop/basket-unittests/basketservicetests
+    to: blueprint/eshop/basket-api/grpc
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/basket-unittests/basketservicetests
+    to: blueprint/eshop/basket-api/model
+    type: direct-call
+    description: Calls module / service
+  - from: blueprint/eshop/basket-unittests/basketservicetests
+    to: blueprint/eshop/basket-unittests/helpers
+    type: direct-call
+    description: Calls module / service

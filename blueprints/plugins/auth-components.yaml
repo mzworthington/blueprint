@@ -18,8 +18,6 @@ nodes:
       containerId: auth
       technology: React Component
       classification: ui-import
-    x: 428
-    y: 64
     forensics:
       complexity: 1
       loc: 29
@@ -55,8 +53,6 @@ nodes:
       containerId: auth
       technology: TypeScript Domain Service
       classification: default
-    x: 48
-    y: 704
     forensics:
       complexity: 1
       loc: 19
@@ -92,8 +88,6 @@ nodes:
       containerId: auth
       technology: TypeScript Domain Service
       classification: default
-    x: 1688
-    y: 64
     forensics:
       complexity: 1
       loc: 17
@@ -129,8 +123,6 @@ nodes:
       containerId: auth
       technology: TypeScript Domain Service
       classification: default
-    x: 48
-    y: 384
     forensics:
       complexity: 1
       loc: 37
@@ -166,8 +158,6 @@ nodes:
       containerId: auth
       technology: TypeScript Domain Service
       classification: default
-    x: 48
-    y: 64
     forensics:
       complexity: 1
       loc: 23
@@ -203,8 +193,6 @@ nodes:
       containerId: auth
       technology: React Component
       classification: ui-import
-    x: 1308
-    y: 64
     forensics:
       complexity: 1
       loc: 30
@@ -240,8 +228,6 @@ nodes:
       containerId: auth
       technology: React Component
       classification: ui-import
-    x: 1248
-    y: 384
     forensics:
       complexity: 13
       loc: 239
@@ -279,8 +265,6 @@ nodes:
       containerId: auth
       technology: React Component
       classification: ui-import
-    x: 808
-    y: 64
     forensics:
       complexity: 1
       loc: 125
@@ -316,8 +300,6 @@ nodes:
       containerId: auth
       technology: React Component
       classification: ui-import
-    x: 1028
-    y: 704
     forensics:
       complexity: 12
       loc: 137
@@ -346,17 +328,17 @@ nodes:
       classifications:
         - knowledge-silo
       sinceDays: 90
-  - entityRef: blueprint/plugins/catalog-backend/client
+  - entityRef: blueprint/plugins/catalog-backend-module-ldap/client
     type: background-worker
     name: client Service (External)
     external: true
     properties:
       filepath: plugins/catalog-backend-module-ldap/src/ldap/client.ts
-      containerId: catalog-backend
+      containerId: catalog-backend-module-ldap
       technology: TypeScript Domain Service
       classification: default
-    x: 428
-    y: 384
+    x: 280
+    y: 100
   - entityRef: blueprint/plugins/events-backend/errors
     type: background-worker
     name: errors Service (External)
@@ -366,8 +348,8 @@ nodes:
       containerId: events-backend
       technology: TypeScript Domain Service
       classification: default
-    x: 1028
-    y: 1024
+    x: 460
+    y: 100
   - entityRef: blueprint/plugins/kubernetes-react/test-utils
     type: gateway-api
     name: test-utils Service (External)
@@ -377,11 +359,11 @@ nodes:
       containerId: kubernetes-react
       technology: React Component
       classification: ui-import
-    x: 808
-    y: 384
+    x: 100
+    y: 220
 dependencies:
   - from: blueprint/plugins/auth/index
-    to: blueprint/plugins/catalog-backend/client
+    to: blueprint/plugins/catalog-backend-module-ldap/client
     type: direct-call
     description: Calls module / service
   - from: blueprint/plugins/auth/plugin

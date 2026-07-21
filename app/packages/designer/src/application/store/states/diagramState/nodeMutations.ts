@@ -10,6 +10,7 @@ type GetFn = () => {
   selectedNodeId: string | null;
   currentFilePath: string;
   nodeRefMap: Record<string, Record<string, string>>;
+  markLayoutCustomized: () => void;
   logger: { info: (m: string, meta?: Record<string, unknown>) => void };
 };
 
@@ -62,6 +63,8 @@ export function addNodeMutation(
   };
 
   get().logger.info('Instantiating new visual node component', { entityRef, type, name });
+
+  get().markLayoutCustomized();
 
   const newRFNode = mapDomainNodeToRFNode(newDomainNode);
   applyStateUpdates(set, get, [...get().nodes, newRFNode], get().edges);

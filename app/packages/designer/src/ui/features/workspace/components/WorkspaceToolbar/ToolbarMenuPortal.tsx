@@ -43,7 +43,7 @@ export function ToolbarMenuPortal({
         top: coords.top,
         left: coords.left,
         transform: 'translate(-100%, -100%)',
-        zIndex: 200,
+        zIndex: 1000,
       }}
     >
       {children}

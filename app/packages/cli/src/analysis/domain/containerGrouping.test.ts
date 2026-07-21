@@ -187,55 +187,81 @@ describe('ModelExtractor', () => {
     expect(containerNodesMap.get('ordering-unittests')?.isTest).toBe(true);
   });
 
-  it('rolls up C# files by layer, skips boilerplate, and types API containers', () => {
+  it('rolls up C# files by layer, skips boilerplate, types API containers, and links dependencies', () => {
     const extractor = new ModelExtractor('blueprint/eshop');
-    const { componentNodesMap, containerNodesMap, componentDependencies } = extractor.extractGraph([
-      {
-        filePath: 'src/Ordering.API/Application/Commands/CreateOrderCommand.cs',
-        relativePath: 'src/Ordering.API/Application/Commands/CreateOrderCommand.cs',
-        baseName: 'CreateOrderCommand',
-        isTestFile: false,
-        imports: [{ moduleSpecifier: 'eShop.Ordering.Domain' }],
-        newExpressions: [],
-        callExpressions: [],
-      },
-      {
-        filePath: 'src/Ordering.API/Application/Commands/CancelOrderCommand.cs',
-        relativePath: 'src/Ordering.API/Application/Commands/CancelOrderCommand.cs',
-        baseName: 'CancelOrderCommand',
-        isTestFile: false,
-        imports: [],
-        newExpressions: [],
-        callExpressions: [],
-      },
-      {
-        filePath: 'src/Ordering.API/Apis/OrdersApi.cs',
-        relativePath: 'src/Ordering.API/Apis/OrdersApi.cs',
-        baseName: 'OrdersApi',
-        isTestFile: false,
-        imports: [{ moduleSpecifier: 'Microsoft.AspNetCore.Http' }],
-        newExpressions: [],
-        callExpressions: [],
-      },
-      {
-        filePath: 'src/Ordering.API/GlobalUsings.cs',
-        relativePath: 'src/Ordering.API/GlobalUsings.cs',
-        baseName: 'GlobalUsings',
-        isTestFile: false,
-        imports: [{ moduleSpecifier: 'Microsoft.EntityFrameworkCore' }],
-        newExpressions: [],
-        callExpressions: [],
-      },
-      {
-        filePath: 'src/Ordering.API/Infrastructure/OrderingContextSeed.cs',
-        relativePath: 'src/Ordering.API/Infrastructure/OrderingContextSeed.cs',
-        baseName: 'OrderingContextSeed',
-        isTestFile: false,
-        imports: [],
-        newExpressions: [{ className: 'DbContext' }],
-        callExpressions: [],
-      },
-    ]);
+    const { componentNodesMap, containerNodesMap, componentDependencies, containerDependencies } =
+      extractor.extractGraph(
+        [
+          {
+            filePath: 'src/Ordering.API/Application/Commands/CreateOrderCommand.cs',
+            relativePath: 'src/Ordering.API/Application/Commands/CreateOrderCommand.cs',
+            baseName: 'CreateOrderCommand',
+            isTestFile: false,
+            imports: [{ moduleSpecifier: 'eShop.Ordering.Domain.Aggregates' }],
+            newExpressions: [],
+            callExpressions: [],
+            namespaces: ['eShop.Ordering.API.Application.Commands'],
+          },
+          {
+            filePath: 'src/Ordering.API/Application/Commands/CancelOrderCommand.cs',
+            relativePath: 'src/Ordering.API/Application/Commands/CancelOrderCommand.cs',
+            baseName: 'CancelOrderCommand',
+            isTestFile: false,
+            imports: [],
+            newExpressions: [],
+            callExpressions: [],
+          },
+          {
+            filePath: 'src/Ordering.API/Apis/OrdersApi.cs',
+            relativePath: 'src/Ordering.API/Apis/OrdersApi.cs',
+            baseName: 'OrdersApi',
+            isTestFile: false,
+            imports: [{ moduleSpecifier: 'Microsoft.AspNetCore.Http' }],
+            newExpressions: [],
+            callExpressions: [],
+            namespaces: ['eShop.Ordering.API.Apis'],
+          },
+          {
+            filePath: 'src/Ordering.API/GlobalUsings.cs',
+            relativePath: 'src/Ordering.API/GlobalUsings.cs',
+            baseName: 'GlobalUsings',
+            isTestFile: false,
+            imports: [{ moduleSpecifier: 'Microsoft.EntityFrameworkCore' }],
+            newExpressions: [],
+            callExpressions: [],
+          },
+          {
+            filePath: 'src/Ordering.API/Infrastructure/OrderingContextSeed.cs',
+            relativePath: 'src/Ordering.API/Infrastructure/OrderingContextSeed.cs',
+            baseName: 'OrderingContextSeed',
+            isTestFile: false,
+            imports: [],
+            newExpressions: [{ className: 'DbContext' }],
+            callExpressions: [],
+          },
+          {
+            filePath: 'src/Ordering.Domain/Aggregates/Order.cs',
+            relativePath: 'src/Ordering.Domain/Aggregates/Order.cs',
+            baseName: 'Order',
+            isTestFile: false,
+            imports: [],
+            newExpressions: [],
+            callExpressions: [],
+            namespaces: ['eShop.Ordering.Domain.Aggregates'],
+          },
+        ],
+        [
+          {
+            relativePath: 'src/Ordering.API/Ordering.API.csproj',
+            content: `
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="..\\Ordering.Domain\\Ordering.Domain.csproj" />
+  </ItemGroup>
+</Project>`,
+          },
+        ]
+      );
 
     expect(componentNodesMap.has(componentMapKey('ordering-api', 'application'))).toBe(true);
     expect(componentNodesMap.get(componentMapKey('ordering-api', 'application'))?.name).toBe(
@@ -247,6 +273,47 @@ describe('ModelExtractor', () => {
     expect(componentNodesMap.has(componentMapKey('ordering-api', 'globalusings'))).toBe(false);
     expect(componentNodesMap.get(componentMapKey('ordering-api', 'apis'))?.type).toBe('rest-api');
     expect(containerNodesMap.get('ordering-api')?.type).toBe('rest-api');
-    expect(componentDependencies).toEqual([]);
+    expect(containerNodesMap.has('ordering-domain')).toBe(true);
+
+    expect(
+      componentDependencies.some(
+        d =>
+          d.from.includes('/ordering-api/application') &&
+          d.to.includes('/ordering-domain/aggregates')
+      )
+    ).toBe(true);
+
+    expect(
+      containerDependencies.some(
+        d =>
+          d.from.endsWith('/ordering-api') &&
+          d.to.endsWith('/ordering-domain') &&
+          d.type === 'inter-container'
+      )
+    ).toBe(true);
+  });
+
+  it('creates container nodes and edges from csproj references without source files', () => {
+    const extractor = new ModelExtractor('blueprint/eshop');
+    const { containerNodesMap, containerDependencies } = extractor.extractGraph(
+      [],
+      [
+        {
+          relativePath: 'src/WebApp/WebApp.csproj',
+          content: `
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="..\\Basket.API\\Basket.API.csproj" />
+    <ProjectReference Include="..\\Catalog.API\\Catalog.API.csproj" />
+  </ItemGroup>
+</Project>`,
+        },
+      ]
+    );
+
+    expect(containerNodesMap.has('webapp')).toBe(true);
+    expect(containerNodesMap.has('basket-api')).toBe(true);
+    expect(containerNodesMap.has('catalog-api')).toBe(true);
+    expect(containerDependencies).toHaveLength(2);
   });
 });

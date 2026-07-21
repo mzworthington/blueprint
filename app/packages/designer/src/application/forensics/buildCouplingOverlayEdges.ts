@@ -25,7 +25,7 @@ export function buildCouplingOverlayEdges(
     const target = byId.get(ref.targetId);
     if (!source || !target) return [];
 
-    const handles = getClosestHandles(source, target);
+    const handles = getClosestHandles(source, target, nodes);
     return [
       {
         id: `${COUPLING_EDGE_PREFIX}${ref.sourceId}-${ref.targetId}`,

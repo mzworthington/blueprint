@@ -3,6 +3,11 @@ level: component
 metaData:
   entityRef: blueprint/eshop/catalog-functionaltests
   name: Catalog.FunctionalTests Service Components
+  source:
+    remoteUrl: https://github.com/dotnet/eShop
+    defaultBranch: main
+    scannedAtCommit: 9b4f9434f46fdc5c1a6e9e936af2868340cdbc48
+    scanRoot: .
 nodes:
   - entityRef: blueprint/eshop/catalog-functionaltests/catalogapifixture
     type: rest-api
@@ -13,8 +18,6 @@ nodes:
       containerId: catalog-functionaltests
       technology: ASP.NET Core Controller / Minimal API
       classification: api-marker
-    x: 40
-    y: 40
   - entityRef: blueprint/eshop/catalog-functionaltests/catalogapitests
     type: rest-api
     name: CatalogApiTests
@@ -24,6 +27,19 @@ nodes:
       containerId: catalog-functionaltests
       technology: ASP.NET Core Controller / Minimal API
       classification: api-marker
-    x: 400
-    y: 40
-dependencies: []
+  - entityRef: blueprint/eshop/catalog-api/model
+    type: rest-api
+    name: Model Layer (External)
+    external: true
+    properties:
+      filepath: src/Catalog.API/Model/CatalogServices.cs
+      containerId: catalog-api
+      technology: ASP.NET Core Controller / Minimal API
+      classification: api-marker
+    x: 280
+    y: 100
+dependencies:
+  - from: blueprint/eshop/catalog-functionaltests/catalogapitests
+    to: blueprint/eshop/catalog-api/model
+    type: direct-call
+    description: Calls module / service

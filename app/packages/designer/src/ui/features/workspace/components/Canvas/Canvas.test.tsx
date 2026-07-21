@@ -283,7 +283,8 @@ describe('Canvas Component', () => {
 
     render(<Canvas />);
 
-    expect(screen.getByText('System:')).toBeInTheDocument();
+    fireEvent.click(screen.getByLabelText('More actions'));
+    expect(screen.getByText('System')).toBeInTheDocument();
     expect(screen.getByRole('combobox', { name: 'Active system' })).toBeInTheDocument();
     expect(screen.getByText('System 1')).toBeInTheDocument();
     expect(screen.getByText('System 2')).toBeInTheDocument();
@@ -308,6 +309,7 @@ describe('Canvas Component', () => {
 
     render(<Canvas />);
 
+    fireEvent.click(screen.getByLabelText('More actions'));
     fireEvent.change(screen.getByRole('combobox', { name: 'Active system' }), {
       target: { value: 'sys2.yaml' },
     });
@@ -321,7 +323,7 @@ describe('Canvas Component', () => {
 
     render(<Canvas />);
 
-    fireEvent.click(screen.getByLabelText('Open menu'));
+    fireEvent.click(screen.getByLabelText('More actions'));
     fireEvent.click(screen.getByTitle('Open a local directory workspace'));
 
     await waitFor(() => {

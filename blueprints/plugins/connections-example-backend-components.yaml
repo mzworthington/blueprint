@@ -9,95 +9,19 @@ metaData:
     scannedAtCommit: 88690199d13ee94c3285f1ee219ae4339056c133
     scanRoot: .
 nodes:
-  - entityRef: blueprint/plugins/connections-example-backend/module
-    type: background-worker
-    name: module Service
-    isTest: false
-    properties:
-      filepath: plugins/connections-example-backend-module-gitlab/src/module.ts
-      containerId: connections-example-backend
-      technology: TypeScript Domain Service
-      classification: default
-    x: 428
-    y: 384
-    forensics:
-      complexity: 3
-      loc: 66
-      sloc: 43
-      churn: 1
-      churnByWeek:
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 1
-        - 0
-      authorCount: 1
-      topAuthorPercent: 1
-      authors:
-        - email: poldsberg@gmail.com
-          commits: 1
-      hotspotScore: 0
-      sinceDays: 90
-  - entityRef: blueprint/plugins/connections-example-backend/module-test
-    type: background-worker
-    name: module.test Service
-    isTest: true
-    properties:
-      filepath: plugins/connections-example-backend-module-gitlab/src/module.test.ts
-      containerId: connections-example-backend
-      technology: TypeScript Domain Service
-      classification: default
-    x: 428
-    y: 64
-    forensics:
-      complexity: 1
-      loc: 188
-      sloc: 159
-      churn: 1
-      churnByWeek:
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 1
-        - 0
-      authorCount: 1
-      topAuthorPercent: 1
-      authors:
-        - email: poldsberg@gmail.com
-          commits: 1
-      hotspotScore: 0
-      sinceDays: 90
   - entityRef: blueprint/plugins/connections-example-backend/index
     type: background-worker
     name: index Service
     isTest: false
     properties:
-      filepath: plugins/connections-example-backend-module-gitlab/src/index.ts
+      filepath: plugins/connections-example-backend/dev/index.ts
       containerId: connections-example-backend
       technology: TypeScript Domain Service
       classification: default
-    x: 48
-    y: 64
     forensics:
       complexity: 1
-      loc: 17
-      sloc: 1
+      loc: 64
+      sloc: 27
       churn: 1
       churnByWeek:
         - 0
@@ -129,8 +53,6 @@ nodes:
       containerId: connections-example-backend
       technology: REST Controller / Router
       classification: api-marker
-    x: 808
-    y: 384
     forensics:
       complexity: 11
       loc: 85
@@ -168,8 +90,6 @@ nodes:
       containerId: connections-example-backend
       technology: TypeScript Domain Service
       classification: default
-    x: 808
-    y: 64
     forensics:
       complexity: 1
       loc: 61
@@ -205,8 +125,6 @@ nodes:
       containerId: connections-example-backend
       technology: TypeScript Domain Service
       classification: default
-    x: 1188
-    y: 64
     forensics:
       complexity: 1
       loc: 17
@@ -242,8 +160,8 @@ nodes:
       containerId: events-backend
       technology: TypeScript Domain Service
       classification: default
-    x: 428
-    y: 704
+    x: 280
+    y: 100
   - entityRef: blueprint/plugins/catalog-react/testutils
     type: background-worker
     name: testUtils Service (External)
@@ -253,13 +171,9 @@ nodes:
       containerId: catalog-react
       technology: TypeScript Domain Service
       classification: default
-    x: 48
-    y: 384
+    x: 460
+    y: 100
 dependencies:
-  - from: blueprint/plugins/connections-example-backend/module
-    to: blueprint/plugins/events-backend/errors
-    type: direct-call
-    description: Calls module / service
   - from: blueprint/plugins/connections-example-backend/index
     to: blueprint/plugins/catalog-react/testutils
     type: direct-call
