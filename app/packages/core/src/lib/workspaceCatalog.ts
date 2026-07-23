@@ -24,6 +24,7 @@ export function buildWorkspaceCatalog(
   const entries: WorkspaceCatalogEntry[] = files.map(({ path, schema }) => {
     const entityRef = getSchemaEntityRef(schema, workspaceName);
     const nodeEntityRefs = schema.nodes
+      .filter(n => !n.external)
       .map(n => n.entityRef)
       .filter((ref): ref is string => typeof ref === 'string' && ref.length > 0);
     return {
@@ -51,4 +52,21 @@ export function buildWorkspaceCatalog(
     }
     return entry;
   });
+}
+
+/**
+ * Resolve the diagram that canonically owns an entity in the workspace stack.
+ * Returns the diagram entry when `entityRef` is the diagram identity, or the
+ * first diagram that lists the ref as a native node.
+ */
+export function resolveEntityHome(
+  catalog: WorkspaceCatalogEntry[],
+  entityRef: string
+): WorkspaceCatalogEntry | undefined {
+  if (!entityRef) return undefined;
+
+  const ownDiagram = catalog.find(entry => entry.entityRef === entityRef);
+  if (ownDiagram) return ownDiagram;
+
+  return catalog.find(entry => entry.nodeEntityRefs.includes(entityRef));
 }

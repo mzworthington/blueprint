@@ -5,6 +5,7 @@ import type { NodeType, PropertyMap, C4Level } from '@blueprint/core';
 import { slugify, getSchemaEntityRef } from '@blueprint/core';
 import { NODE_TYPES } from './nodeTypes';
 import { IdentitySection } from './IdentitySection';
+import { GoToEntityButton } from '../GoToEntityButton';
 import { PropertiesSection } from './PropertiesSection';
 import { ForensicsSection } from './ForensicsSection';
 import { ConnectionsSection } from './ConnectionsSection';
@@ -237,6 +238,19 @@ export const PropertyPanel: React.FC = () => {
                 updateNode(selectedNode?.entityRef || '', { external: checked })
               }
             />
+          ) : null}
+
+          {isNode && selectedNode?.external && selectedNode.entityRef ? (
+            <div className="flex items-center justify-between rounded-lg border border-cyan-900/40 bg-cyan-950/20 px-3 py-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-cyan-400/90">
+                Canonical entity
+              </span>
+              <GoToEntityButton
+                entityRef={selectedNode.entityRef}
+                label="Go to"
+                className="flex items-center gap-1.5 text-[10px] font-mono font-semibold text-cyan-300 hover:text-cyan-200 cursor-pointer"
+              />
+            </div>
           ) : null}
 
           <WorkspaceDisplayControls

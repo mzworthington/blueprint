@@ -3,13 +3,14 @@ import { useLocation, useRoute } from 'wouter';
 import { useBlueprintStore } from '../../../../application/store/store';
 import { guessBundledPathForEntityRef } from '../../../../application/store/states/diagramState/bundledBlueprintLoader';
 import { SANDBOX_RELOAD_IN_FLIGHT } from '../../../../application/store/diagramLoadSession';
-import { getSchemaEntityRef } from '@blueprint/core';
+import { getSchemaEntityRef, resolveEntityHome } from '@blueprint/core';
 
 /**
  * Synchronises the browser URL with the active diagram.
  *
  * Responsibilities:
  *  - Reads the URL slug (entityRef) and selects the matching diagram system.
+ *  - Node-level URLs (`/workspace/<node-entityRef>`) load the owning diagram and select the node.
  *  - On store changes (active diagram switched), pushes the new path to URL.
  *  - Handles root paths by selecting the highest-level diagram (usually context).
  *  - Leaves bare `/workspace` alone while the startup chooser is open.
@@ -19,6 +20,8 @@ export function useUrlSync(): void {
     schema,
     loadedSystems,
     selectSystem,
+    selectNode,
+    selectedNodeId,
     currentFilePath,
     workspaceName,
     workspaceCatalog,
@@ -55,25 +58,40 @@ export function useUrlSync(): void {
         const dRef = getSchemaEntityRef(sys.schema, isWorkspaceOpen ? workspaceName : undefined);
         return dRef === entityRef;
       });
+    }
 
-      if (!foundSystem) {
-        const catalogEntry = workspaceCatalog.find(entry => entry.entityRef === entityRef);
-        const path = catalogEntry?.path ?? guessBundledPathForEntityRef(entityRef);
-        if (path) {
-          if (systemSelectInFlight !== path) {
-            void selectSystem(path);
-          }
-          lastSyncedLocationRef.current = location;
-          return;
+    const home = entityRef ? resolveEntityHome(workspaceCatalog, entityRef) : undefined;
+    const isNodeTarget = !!(home && entityRef && home.entityRef !== entityRef);
+
+    if (!foundSystem && entityRef) {
+      const catalogEntry = workspaceCatalog.find(entry => entry.entityRef === entityRef);
+      const path = home?.path ?? catalogEntry?.path ?? guessBundledPathForEntityRef(entityRef);
+      if (path) {
+        if (systemSelectInFlight !== path) {
+          void selectSystem(path).then(() => {
+            if (isNodeTarget && entityRef) selectNode(entityRef);
+          });
+        } else if (isNodeTarget && entityRef) {
+          selectNode(entityRef);
         }
+        lastSyncedLocationRef.current = location;
+        return;
       }
     }
 
     if (foundSystem) {
       if (foundSystem.path !== currentFilePath) {
         if (systemSelectInFlight !== foundSystem.path) {
-          void selectSystem(foundSystem.path);
+          void selectSystem(foundSystem.path).then(() => {
+            if (isNodeTarget && entityRef) selectNode(entityRef);
+          });
         }
+        lastSyncedLocationRef.current = location;
+        return;
+      }
+
+      if (isNodeTarget && entityRef) {
+        if (selectedNodeId !== entityRef) selectNode(entityRef);
         lastSyncedLocationRef.current = location;
         return;
       }
@@ -82,10 +100,10 @@ export function useUrlSync(): void {
         schema,
         isWorkspaceOpen ? workspaceName : undefined
       );
-      const expectedPath = `/workspace/${currentEntityRef}`;
-      if (location !== expectedPath) {
-        setLocation(expectedPath, { replace: true });
-        lastSyncedLocationRef.current = expectedPath;
+      const diagramPath = `/workspace/${currentEntityRef}`;
+      if (location !== diagramPath) {
+        setLocation(diagramPath, { replace: true });
+        lastSyncedLocationRef.current = diagramPath;
       } else {
         lastSyncedLocationRef.current = location;
       }
@@ -98,6 +116,8 @@ export function useUrlSync(): void {
     loadedSystems,
     workspaceCatalog,
     selectSystem,
+    selectNode,
+    selectedNodeId,
     setLocation,
     match,
     params,

@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { BlueprintNode } from './BlueprintNode';
 import { useBlueprintStore } from '../../../../../application/store/store';
@@ -189,6 +189,85 @@ describe('BlueprintNode Component', () => {
     expect(screen.getByText('(External)')).toBeInTheDocument();
     const card = container.querySelector('.bg-cyan-950');
     expect(card).toBeTruthy();
+  });
+
+  it('shows Go to entity button for external nodes present elsewhere in the workspace', () => {
+    useBlueprintStore.setState({
+      workspaceCatalog: [
+        {
+          path: 'containers.yaml',
+          name: 'Billing Containers',
+          level: 'container',
+          entityRef: 'billing',
+          nodeEntityRefs: ['billing/api'],
+        },
+      ],
+    });
+
+    const props = {
+      ...defaultProps,
+      data: {
+        ...defaultProps.data,
+        entityRef: 'billing/api',
+        external: true,
+      },
+    };
+
+    render(<BlueprintNode {...props} />);
+    expect(screen.getByRole('button', { name: /go to entity in workspace/i })).toBeInTheDocument();
+  });
+
+  it('hides Go to entity button when external node is not in the workspace catalog', () => {
+    useBlueprintStore.setState({ workspaceCatalog: [] });
+
+    const props = {
+      ...defaultProps,
+      data: {
+        ...defaultProps.data,
+        entityRef: 'unknown/api',
+        external: true,
+      },
+    };
+
+    render(<BlueprintNode {...props} />);
+    expect(
+      screen.queryByRole('button', { name: /go to entity in workspace/i })
+    ).not.toBeInTheDocument();
+  });
+
+  it('navigates to canonical entity when Go to entity is clicked', async () => {
+    const selectSystem = vi.fn().mockResolvedValue(undefined);
+    useBlueprintStore.setState({
+      currentFilePath: 'context.yaml',
+      workspaceCatalog: [
+        {
+          path: 'containers.yaml',
+          name: 'Billing Containers',
+          level: 'container',
+          entityRef: 'billing',
+          nodeEntityRefs: ['billing/api'],
+        },
+      ],
+      selectSystem,
+    });
+
+    const props = {
+      ...defaultProps,
+      data: {
+        ...defaultProps.data,
+        entityRef: 'billing/api',
+        external: true,
+      },
+    };
+
+    render(<BlueprintNode {...props} />);
+    fireEvent.click(screen.getByRole('button', { name: /go to entity in workspace/i }));
+
+    await waitFor(() => {
+      expect(mockSetLocation).toHaveBeenCalledWith('/workspace/billing/api');
+      expect(selectSystem).toHaveBeenCalledWith('containers.yaml');
+      expect(useBlueprintStore.getState().selectedNodeId).toBe('billing/api');
+    });
   });
 
   it('shows Zoom indicator when node has a sub-diagram link in loadedSystems', () => {

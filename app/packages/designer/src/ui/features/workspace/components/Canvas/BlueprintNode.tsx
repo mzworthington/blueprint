@@ -22,6 +22,7 @@ import { guessBundledPathForEntityRef } from '../../../../../application/store/s
 import type { ComponentNodeData } from '../../../../../application/store/store';
 import { evaluateForensicsConcern } from '../../../../../application/forensics/concern';
 import { useHasSubDiagram } from './SubDiagramRefsContext';
+import { GoToEntityButton } from '../GoToEntityButton';
 
 type CustomNode = Node<ComponentNodeData, 'blueprintNode'>;
 
@@ -356,6 +357,8 @@ export const BlueprintNode = memo(({ id, data, selected }: NodeProps<CustomNode>
                 <span>Zoom</span>
               </button>
             ) : null}
+
+            {data.external && entityRef ? <GoToEntityButton entityRef={entityRef} /> : null}
           </div>
         </div>
       )}
