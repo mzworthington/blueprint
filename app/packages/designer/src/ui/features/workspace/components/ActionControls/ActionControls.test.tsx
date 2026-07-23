@@ -4,12 +4,14 @@ import {
   ToolbarEditActions,
   ToolbarOverflowMenu,
   ToolbarPendingChangesButton,
+  ToolbarDisplayButton,
   ToolbarShortcutsButton,
 } from './ActionControls';
 import { useBlueprintStore } from '../../../../../application/store/store';
 
 const toolbarActions = (
   <div className="flex items-center gap-1.5">
+    <ToolbarDisplayButton />
     <ToolbarShortcutsButton />
     <ToolbarPendingChangesButton />
     <ToolbarEditActions />
@@ -54,6 +56,12 @@ describe('ActionControls Component', () => {
       setLayoutEngine: vi.fn(),
       loadedSystems: [],
     });
+  });
+
+  it('opens workspace display settings from the toolbar', () => {
+    render(<ToolbarDisplayButton />);
+    fireEvent.click(screen.getByTestId('toolbar-display-settings'));
+    expect(useBlueprintStore.getState().isDisplaySettingsOpen).toBe(true);
   });
 
   it('shows pending changes button only when hasPendingChanges is true', () => {

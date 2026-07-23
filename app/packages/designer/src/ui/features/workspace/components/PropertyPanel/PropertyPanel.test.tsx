@@ -276,46 +276,4 @@ describe('PropertyPanel UI Component', () => {
     fireEvent.click(screen.getByTestId('toggle-show-coupling'));
     expect(useBlueprintStore.getState().showCoupling).toBe(true);
   });
-
-  it('toggles risk heatmap from workspace display controls', () => {
-    useBlueprintStore.setState({ selectedNodeId: null, showHotspotHeatmap: false });
-    render(<PropertyPanel />);
-
-    expect(screen.getByTestId('workspace-display-controls')).toBeInTheDocument();
-    fireEvent.click(screen.getByTestId('toggle-show-hotspot-heatmap'));
-    expect(useBlueprintStore.getState().showHotspotHeatmap).toBe(true);
-  });
-
-  it('toggles lite canvas from workspace display controls', () => {
-    useBlueprintStore.setState({ selectedNodeId: null, liteCanvas: false });
-    render(<PropertyPanel />);
-
-    fireEvent.click(screen.getByTestId('toggle-lite-canvas'));
-    expect(useBlueprintStore.getState().liteCanvas).toBe(true);
-  });
-
-  it('keeps risk heatmap toggle available while a node is selected', () => {
-    const { initSchema } = useBlueprintStore.getState();
-    initSchema({
-      name: 'Heat Panel',
-      version: '1.0.0',
-      level: 'code',
-      nodes: [
-        {
-          entityRef: 'comp-a',
-          type: 'component',
-          name: 'A',
-          x: 0,
-          y: 0,
-        },
-      ],
-      dependencies: [],
-    });
-
-    useBlueprintStore.setState({ selectedNodeId: 'comp-a', showHotspotHeatmap: false });
-    render(<PropertyPanel />);
-
-    fireEvent.click(screen.getByTestId('toggle-show-hotspot-heatmap'));
-    expect(useBlueprintStore.getState().showHotspotHeatmap).toBe(true);
-  });
 });

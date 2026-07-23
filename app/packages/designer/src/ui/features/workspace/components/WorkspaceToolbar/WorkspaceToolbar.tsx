@@ -5,6 +5,7 @@ import {
   ToolbarEditActions,
   ToolbarOverflowMenu,
   ToolbarPendingChangesButton,
+  ToolbarDisplayButton,
   ToolbarShortcutsButton,
 } from '../ActionControls/ActionControls';
 import { LayoutEngineControls } from '../LayoutEngineControls/LayoutEngineControls';
@@ -24,6 +25,7 @@ export const WorkspaceToolbar: React.FC = () => {
 
         <div className="flex items-center gap-1.5 shrink-0 justify-end">
           <LayoutEngineControls />
+          <ToolbarDisplayButton />
           <ToolbarShortcutsButton />
           <ToolbarPendingChangesButton />
           <ToolbarEditActions />

@@ -14,6 +14,8 @@ interface WorkspaceDisplayControlsProps {
   onToggleLiteCanvas: () => void;
   counts: ForensicsDisplayMetrics;
   countsScopedToNode: boolean;
+  className?: string;
+  showHeader?: boolean;
 }
 
 function DisplaySwitch({
@@ -80,23 +82,34 @@ export const WorkspaceDisplayControls: React.FC<WorkspaceDisplayControlsProps> =
   onToggleLiteCanvas,
   counts,
   countsScopedToNode,
+  className,
+  showHeader = true,
 }) => (
   <div
-    className="border-t border-slate-900 pt-4 space-y-3"
+    className={className ?? 'border-t border-slate-900 pt-4 space-y-3'}
     data-testid="workspace-display-controls"
   >
-    <div className="flex items-center justify-between gap-2">
-      <h4 className="text-[10px] font-bold font-mono text-brand-400 uppercase tracking-wider">
-        Workspace display
-      </h4>
+    {showHeader ? (
+      <div className="flex items-center justify-between gap-2">
+        <h4 className="text-[10px] font-bold font-mono text-brand-400 uppercase tracking-wider">
+          Workspace display
+        </h4>
+        <span
+          className="font-mono text-[10px] text-slate-500 tabular-nums"
+          data-testid="workspace-display-summary"
+        >
+          {counts.externals} ext · {counts.tests} tests · {counts.dependencies} deps
+          {countsScopedToNode ? ' · node' : ''}
+        </span>
+      </div>
+    ) : (
       <span
-        className="font-mono text-[10px] text-slate-500 tabular-nums"
+        className="block font-mono text-[10px] text-slate-500 tabular-nums"
         data-testid="workspace-display-summary"
       >
         {counts.externals} ext · {counts.tests} tests · {counts.dependencies} deps
-        {countsScopedToNode ? ' · node' : ''}
       </span>
-    </div>
+    )}
     <DisplaySwitch
       label="Show Test Components"
       count={counts.tests}

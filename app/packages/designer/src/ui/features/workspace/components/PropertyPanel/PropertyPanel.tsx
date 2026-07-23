@@ -12,13 +12,11 @@ import { ConnectionsSection } from './ConnectionsSection';
 import { ComponentCatalog } from './ComponentCatalog';
 import { ExternalDependenciesSection } from './ExternalDependenciesSection';
 import { SelectedDependencySection } from './SelectedDependencySection';
-import { WorkspaceDisplayControls } from './WorkspaceDisplayControls';
 import { ValidationSection } from './ValidationSection';
 import {
   resolveCouplingEdges,
   findNodeIdByFilepath,
 } from '../../../../../application/forensics/resolveCouplingEdges';
-import { countSchemaForensicsMetrics } from '../../../../../application/forensics/countForensicsMetrics';
 import { formatAppVersionLabel } from '../../../../../infrastructure/pwa/buildId';
 import {
   buildForensicsTrendDashboard,
@@ -42,18 +40,8 @@ export const PropertyPanel: React.FC = () => {
     selectEdge,
     updateDependency,
     deleteDependency,
-    showTests,
-    toggleShowTests,
-    showExternals,
-    toggleShowExternals,
-    showSelectedDependenciesOnly,
-    toggleShowSelectedDependenciesOnly,
     showCoupling,
     toggleShowCoupling,
-    showHotspotHeatmap,
-    toggleShowHotspotHeatmap,
-    liteCanvas,
-    toggleLiteCanvas,
     rightCollapsed,
     toggleRightCollapsed,
     workspaceName,
@@ -164,11 +152,6 @@ export const PropertyPanel: React.FC = () => {
     e => e.source === selectedNodeId || e.target === selectedNodeId
   );
 
-  const displayCounts = countSchemaForensicsMetrics(
-    schema,
-    isNode ? selectedNode?.entityRef : null
-  );
-
   const forensicsTrendDashboard = useMemo(() => {
     if (!selectedNode?.forensics) return undefined;
     const descendants = collectDescendantForensics(
@@ -252,21 +235,6 @@ export const PropertyPanel: React.FC = () => {
               />
             </div>
           ) : null}
-
-          <WorkspaceDisplayControls
-            showTests={showTests}
-            onToggleShowTests={toggleShowTests}
-            showExternals={showExternals}
-            onToggleShowExternals={toggleShowExternals}
-            showSelectedDependenciesOnly={showSelectedDependenciesOnly}
-            onToggleShowSelectedDependenciesOnly={toggleShowSelectedDependenciesOnly}
-            showHotspotHeatmap={showHotspotHeatmap}
-            onToggleShowHotspotHeatmap={toggleShowHotspotHeatmap}
-            liteCanvas={liteCanvas}
-            onToggleLiteCanvas={toggleLiteCanvas}
-            counts={displayCounts}
-            countsScopedToNode={isNode}
-          />
 
           {isEdge && selectedEdge ? (
             <SelectedDependencySection

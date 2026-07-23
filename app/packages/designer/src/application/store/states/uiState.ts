@@ -38,6 +38,7 @@ export interface UiState {
   isStartupOpen: boolean;
   isCompareOpen: boolean;
   isShortcutsOpen: boolean;
+  isDisplaySettingsOpen: boolean;
   isSourceCodeOpen: boolean;
   sourceCodeFilepath: string | null;
   notification: ToastNotification | null;
@@ -62,6 +63,7 @@ export interface UiState {
   setIsStartupOpen: (open: boolean) => void;
   setIsCompareOpen: (open: boolean) => void;
   setIsShortcutsOpen: (open: boolean) => void;
+  setIsDisplaySettingsOpen: (open: boolean) => void;
   openSourceCodeDialog: (filepath: string) => void;
   closeSourceCodeDialog: () => void;
   setNotification: (notification: ToastNotification | null) => void;
@@ -82,7 +84,7 @@ export const createUiState = (
   liteCanvas: false,
   layoutEngine: null,
   leftCollapsed: true,
-  rightCollapsed: false,
+  rightCollapsed: true,
   showDesignSystem: false,
   isDiffOpen: false,
   isImportMermaidOpen: false,
@@ -90,6 +92,7 @@ export const createUiState = (
   isStartupOpen: true,
   isCompareOpen: false,
   isShortcutsOpen: false,
+  isDisplaySettingsOpen: false,
   isSourceCodeOpen: false,
   sourceCodeFilepath: null,
   notification: null,
@@ -114,6 +117,7 @@ export const createUiState = (
   setIsStartupOpen: open => set({ isStartupOpen: open }),
   setIsCompareOpen: open => set({ isCompareOpen: open }),
   setIsShortcutsOpen: open => set({ isShortcutsOpen: open }),
+  setIsDisplaySettingsOpen: open => set({ isDisplaySettingsOpen: open }),
   openSourceCodeDialog: filepath => set({ isSourceCodeOpen: true, sourceCodeFilepath: filepath }),
   closeSourceCodeDialog: () => set({ isSourceCodeOpen: false, sourceCodeFilepath: null }),
   setNotification: notification => set({ notification }),

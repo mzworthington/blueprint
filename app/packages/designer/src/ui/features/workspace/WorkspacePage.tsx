@@ -13,6 +13,7 @@ import { ImportIacDialog } from './components/ImportIacDialog/ImportIacDialog';
 import { StartupWorkspaceDialog } from './components/StartupWorkspaceDialog/StartupWorkspaceDialog';
 import { CompareDialog } from './components/CompareDialog/CompareDialog';
 import { KeyboardShortcutsDialog } from './components/KeyboardShortcutsDialog/KeyboardShortcutsDialog';
+import { WorkspaceDisplayDialog } from './components/WorkspaceDisplayDialog/WorkspaceDisplayDialog';
 import { WorkspaceSourceCodeDialog } from './components/SourceCodeDialog/WorkspaceSourceCodeDialog';
 import { useUrlSync } from './hooks/useUrlSync';
 import { useKeyboardNavigation } from './hooks/useKeyboardNavigation';
@@ -40,6 +41,8 @@ export const WorkspacePage: React.FC = () => {
     setIsCompareOpen,
     isShortcutsOpen,
     setIsShortcutsOpen,
+    isDisplaySettingsOpen,
+    setIsDisplaySettingsOpen,
     openWorkspaceDirectory,
     resetToEmptyWorkspace,
     loadBundledSandbox,
@@ -140,6 +143,10 @@ export const WorkspacePage: React.FC = () => {
       />
       <CompareDialog isOpen={isCompareOpen} onClose={() => setIsCompareOpen(false)} />
       <KeyboardShortcutsDialog isOpen={isShortcutsOpen} onClose={() => setIsShortcutsOpen(false)} />
+      <WorkspaceDisplayDialog
+        isOpen={isDisplaySettingsOpen}
+        onClose={() => setIsDisplaySettingsOpen(false)}
+      />
       <WorkspaceSourceCodeDialog />
     </ReactFlowProvider>
   );

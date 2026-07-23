@@ -43,23 +43,25 @@ test.describe('Blueprint E2E Journeys', () => {
     const leftPanel = page.getByTestId('left-panel');
     const rightPanel = page.getByTestId('right-panel');
 
+    await expect(leftPanel).toHaveClass(/w-0/);
+    await expect(rightPanel).toHaveClass(/w-0/);
+
     await leftPanelButton.click();
     await expect(leftPanel).not.toHaveClass(/w-0/);
     await rightPanelButton.click();
-    await expect(rightPanel).toHaveClass(/w-0/);
+    await expect(rightPanel).not.toHaveClass(/w-0/);
     await page.screenshot({ path: '../../../docs/screenshots/1-panels-expanded.png' });
 
     await leftPanelButton.click();
     await expect(leftPanel).toHaveClass(/w-0/);
     await rightPanelButton.click();
-    await expect(rightPanel).not.toHaveClass(/w-0/);
+    await expect(rightPanel).toHaveClass(/w-0/);
     await page.screenshot({ path: '../../../docs/screenshots/2-panels-collapsed.png' });
   });
 
   test('Drill-down and zoom-out smoke', async ({ page }) => {
     test.setTimeout(90_000);
     await loadSandbox(page);
-    await page.locator('button[aria-label="Toggle Right Panel"]').click();
 
     const rootSlug = await workspaceSlug(page);
     expect(rootSlug.length).toBeGreaterThan(0);
@@ -121,11 +123,8 @@ test.describe('Blueprint E2E Journeys', () => {
   test('Workspace display controls render', async ({ page }) => {
     await loadSandbox(page);
 
-    const leftPanel = page.getByTestId('left-panel');
-    if (await leftPanel.evaluate(el => el.className.includes('w-0'))) {
-      await page.locator('button[aria-label="Toggle Left Panel"]').click();
-    }
-
+    await page.getByTestId('toolbar-display-settings').click();
+    await expect(page.getByTestId('workspace-display-dialog')).toBeVisible();
     await expect(page.getByTestId('workspace-display-controls')).toBeVisible();
     await expect(page.getByTestId('toggle-show-externals')).toBeVisible();
     await page.screenshot({ path: '../../../docs/screenshots/8-workspace-display.png' });
@@ -148,7 +147,7 @@ test.describe('Blueprint E2E Journeys', () => {
     await loadSandbox(page);
 
     await expect(page.getByLabel('Open diagram location menu')).toBeVisible();
-    await page.getByLabel('Close Properties Panel').click();
+    await expect(page.getByRole('button', { name: 'Open Properties Panel' })).toBeVisible();
 
     const schemaChip = page.getByRole('button', { name: 'Open Schema Explorer' });
     await expect(schemaChip).toBeVisible();
