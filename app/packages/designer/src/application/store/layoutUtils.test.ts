@@ -7,6 +7,7 @@ import {
   rebuildSchemaFromCanvas,
   getAbsoluteNodePosition,
   shouldAutoLayoutOnLoad,
+  getClosestHandles,
 } from './layoutUtils.ts';
 import type { SystemNode } from '@blueprint/core';
 
@@ -213,5 +214,36 @@ describe('mapDomainDepsToRFEdges', () => {
     expect(edges).toHaveLength(1);
     expect(edges[0]?.id).toBe(mapDomainDepToRFEdge(dep).id);
     expect(edges[0]?.data?.description).toBe('once');
+  });
+});
+
+describe('getClosestHandles', () => {
+  const node = (id: string, x: number, y: number) =>
+    ({
+      id,
+      type: 'blueprintNode',
+      position: { x, y },
+      data: { name: id, type: 'microservice', properties: {} },
+    }) as ReturnType<typeof mapDomainNodeToRFNode>;
+
+  it('defaults to TB handles when the target is below the source', () => {
+    expect(getClosestHandles(node('a', 0, 0), node('b', 400, 0))).toEqual({
+      sourceHandle: 'bottom-source',
+      targetHandle: 'top-target',
+    });
+  });
+
+  it('uses top-to-bottom handles when the target is above the source', () => {
+    expect(getClosestHandles(node('a', 0, 200), node('b', 0, 0))).toEqual({
+      sourceHandle: 'top-source',
+      targetHandle: 'bottom-target',
+    });
+  });
+
+  it('supports LR routing when requested', () => {
+    expect(getClosestHandles(node('a', 0, 0), node('b', 400, 0), undefined, 'LR')).toEqual({
+      sourceHandle: 'right-source',
+      targetHandle: 'left-target',
+    });
   });
 });

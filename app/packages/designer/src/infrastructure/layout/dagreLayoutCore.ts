@@ -12,7 +12,6 @@ export function computeDagrePositions(
   const g = new dagre.graphlib.Graph();
   g.setGraph({
     rankdir: 'TB',
-    align: 'UL',
     ranker: 'tight-tree',
     ...DAGRE_SPACING,
   });

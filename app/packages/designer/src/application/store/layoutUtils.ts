@@ -379,10 +379,16 @@ export const mapDomainDepsToRFEdges = (deps: SystemDependency[]): BlueprintRFEdg
   return edges;
 };
 
+export type LayoutDirection = 'TB' | 'LR';
+
+/** Default dependency edge routing: top-to-bottom (caller below callee connects downward). */
+export const DEFAULT_LAYOUT_DIRECTION: LayoutDirection = 'TB';
+
 export const getClosestHandles = (
   sourceNode: BlueprintRFNode,
   targetNode: BlueprintRFNode,
-  allNodes?: BlueprintRFNode[]
+  allNodes?: BlueprintRFNode[],
+  direction: LayoutDirection = DEFAULT_LAYOUT_DIRECTION
 ): { sourceHandle: string; targetHandle: string } => {
   const nodeById = new Map((allNodes ?? [sourceNode, targetNode]).map(n => [n.id, n]));
   const sourcePos = getAbsoluteNodePosition(sourceNode, nodeById);
@@ -406,19 +412,24 @@ export const getClosestHandles = (
   const dx = cxB - cxA;
   const dy = cyB - cyA;
 
+  if (direction === 'TB') {
+    if (dy >= 0) {
+      return { sourceHandle: 'bottom-source', targetHandle: 'top-target' };
+    }
+    return { sourceHandle: 'top-source', targetHandle: 'bottom-target' };
+  }
+
   if (Math.abs(dx) > Math.abs(dy)) {
     if (dx > 0) {
       return { sourceHandle: 'right-source', targetHandle: 'left-target' };
-    } else {
-      return { sourceHandle: 'left-source', targetHandle: 'right-target' };
     }
-  } else {
-    if (dy > 0) {
-      return { sourceHandle: 'bottom-source', targetHandle: 'top-target' };
-    } else {
-      return { sourceHandle: 'top-source', targetHandle: 'bottom-target' };
-    }
+    return { sourceHandle: 'left-source', targetHandle: 'right-target' };
   }
+
+  if (dy > 0) {
+    return { sourceHandle: 'bottom-source', targetHandle: 'top-target' };
+  }
+  return { sourceHandle: 'top-source', targetHandle: 'bottom-target' };
 };
 
 export const rebuildSchemaFromCanvas = (
