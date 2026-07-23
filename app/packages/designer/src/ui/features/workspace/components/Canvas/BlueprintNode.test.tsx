@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { BlueprintNode } from './BlueprintNode';
 import { useBlueprintStore } from '../../../../../application/store/store';
-import { SubDiagramRefsContext } from './SubDiagramRefsContext';
+import { SubDiagramRefsContext, ChildDiagramExternalsCountContext } from './SubDiagramRefsContext';
 
 const mockSetLocation = vi.fn();
 vi.mock('wouter', () => ({
@@ -26,6 +26,7 @@ vi.mock('@xyflow/react', () => {
 
 describe('BlueprintNode Component', () => {
   beforeEach(() => {
+    mockSetLocation.mockClear();
     const { initSchema } = useBlueprintStore.getState();
     initSchema({
       name: 'Test Schema',
@@ -236,9 +237,7 @@ describe('BlueprintNode Component', () => {
   });
 
   it('navigates to canonical entity when Go to entity is clicked', async () => {
-    const selectSystem = vi.fn().mockResolvedValue(undefined);
     useBlueprintStore.setState({
-      currentFilePath: 'context.yaml',
       workspaceCatalog: [
         {
           path: 'containers.yaml',
@@ -248,7 +247,6 @@ describe('BlueprintNode Component', () => {
           nodeEntityRefs: ['billing/api'],
         },
       ],
-      selectSystem,
     });
 
     const props = {
@@ -265,8 +263,6 @@ describe('BlueprintNode Component', () => {
 
     await waitFor(() => {
       expect(mockSetLocation).toHaveBeenCalledWith('/workspace/billing/api');
-      expect(selectSystem).toHaveBeenCalledWith('containers.yaml');
-      expect(useBlueprintStore.getState().selectedNodeId).toBe('billing/api');
     });
   });
 
@@ -299,6 +295,79 @@ describe('BlueprintNode Component', () => {
     fireEvent.click(screen.getByRole('button', { name: /zoom/i }));
 
     expect(mockSetLocation).toHaveBeenCalledWith('/workspace/default/test-node-1');
+  });
+
+  it('shows Externals button when child diagram has external nodes', () => {
+    const props = {
+      ...defaultProps,
+      data: { ...defaultProps.data, entityRef: 'default/test-node-1' },
+    };
+
+    render(
+      <SubDiagramRefsContext.Provider value={new Set(['default/test-node-1'])}>
+        <ChildDiagramExternalsCountContext.Provider value={new Map([['default/test-node-1', 2]])}>
+          <BlueprintNode {...props} />
+        </ChildDiagramExternalsCountContext.Provider>
+      </SubDiagramRefsContext.Provider>
+    );
+
+    expect(screen.getByTestId('view-child-externals-button')).toHaveTextContent('Externals (2)');
+  });
+
+  it('toggles child externals overlay on the canvas when Externals button is clicked', async () => {
+    useBlueprintStore.setState({
+      currentFilePath: 'context.yaml',
+      workspaceCatalog: [
+        {
+          path: 'containers.yaml',
+          name: 'Child Containers',
+          level: 'container',
+          entityRef: 'default/test-node-1',
+          nodeEntityRefs: ['default/test-node-1/ext'],
+        },
+      ],
+      loadedSystems: [
+        {
+          path: 'containers.yaml',
+          name: 'Child Containers',
+          schema: {
+            name: 'Child Containers',
+            version: '1.0.0',
+            level: 'container',
+            entityRef: 'default/test-node-1',
+            nodes: [
+              {
+                entityRef: 'default/test-node-1/ext',
+                type: 'microservice',
+                name: 'External API',
+                external: true,
+              },
+            ],
+            dependencies: [],
+          },
+        },
+      ],
+      childExternalsParentRef: null,
+    });
+
+    const props = {
+      ...defaultProps,
+      data: { ...defaultProps.data, entityRef: 'default/test-node-1' },
+    };
+
+    render(
+      <SubDiagramRefsContext.Provider value={new Set(['default/test-node-1'])}>
+        <ChildDiagramExternalsCountContext.Provider value={new Map([['default/test-node-1', 1]])}>
+          <BlueprintNode {...props} />
+        </ChildDiagramExternalsCountContext.Provider>
+      </SubDiagramRefsContext.Provider>
+    );
+
+    fireEvent.click(screen.getByTestId('view-child-externals-button'));
+
+    await waitFor(() => {
+      expect(useBlueprintStore.getState().childExternalsParentRef).toBe('default/test-node-1');
+    });
   });
 
   it('shows a Code button when the node has a filepath and opens the source modal', () => {

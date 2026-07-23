@@ -276,4 +276,46 @@ describe('PropertyPanel UI Component', () => {
     fireEvent.click(screen.getByTestId('toggle-show-coupling'));
     expect(useBlueprintStore.getState().showCoupling).toBe(true);
   });
+
+  it('shows child level externals when selected node has a child diagram with externals', () => {
+    useBlueprintStore.setState({
+      selectedNodeId: 'gateway-api',
+      workspaceCatalog: [
+        {
+          path: 'containers.yaml',
+          name: 'Gateway Containers',
+          level: 'container',
+          entityRef: 'cloud-infrastructure-workspace/gateway-api',
+          nodeEntityRefs: ['cloud-infrastructure-workspace/gateway-api/legacy'],
+        },
+      ],
+      loadedSystems: [
+        {
+          path: 'containers.yaml',
+          name: 'Gateway Containers',
+          schema: {
+            name: 'Gateway Containers',
+            version: '1.0.0',
+            level: 'container',
+            entityRef: 'cloud-infrastructure-workspace/gateway-api',
+            nodes: [
+              {
+                entityRef: 'cloud-infrastructure-workspace/gateway-api/legacy',
+                type: 'microservice',
+                name: 'Legacy API',
+                external: true,
+              },
+            ],
+            dependencies: [],
+          },
+        },
+      ],
+    });
+
+    render(<PropertyPanel />);
+
+    expect(screen.getByTestId('child-level-externals-section')).toBeInTheDocument();
+    expect(screen.getByTestId('open-child-externals-dialog')).toBeInTheDocument();
+    expect(screen.getByText(/Externals \(1\)/)).toBeInTheDocument();
+  });
 });

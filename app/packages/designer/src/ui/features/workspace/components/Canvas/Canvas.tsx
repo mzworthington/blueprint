@@ -47,7 +47,7 @@ import {
 } from '../../../../../application/store/diagramLoadSession';
 import { yieldToUi } from '../../../../../application/store/yieldToUi';
 import { DiagramLoadingOverlay } from './DiagramLoadingOverlay';
-import { SubDiagramRefsContext } from './SubDiagramRefsContext';
+import { SubDiagramRefsContext, ChildDiagramExternalsCountContext } from './SubDiagramRefsContext';
 
 export const Canvas: React.FC = () => {
   const [, setLocation] = useLocation();
@@ -143,6 +143,18 @@ export const Canvas: React.FC = () => {
     }
     return refs;
   }, [workspaceCatalog]);
+
+  const childDiagramExternalsCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const entry of workspaceCatalog) {
+      const system = loadedSystems.find(s => s.path === entry.path);
+      const externalCount = system?.schema.nodes.filter(node => node.external).length ?? 0;
+      if (externalCount > 0) {
+        counts.set(entry.entityRef, externalCount);
+      }
+    }
+    return counts;
+  }, [workspaceCatalog, loadedSystems]);
 
   const parentSystem = useMemo(() => {
     const parentEntityRef = workspaceCatalog.find(e => e.path === currentFilePath)?.parentEntityRef;
@@ -261,7 +273,8 @@ export const Canvas: React.FC = () => {
     const focused = filterCouplingFocusNodes(baseNodes, selectedNodeId, showCoupling);
     const withCoupling = applyCouplingHighlights(focused, selectedNodeId, showCoupling);
     const withBoundary = applyRefactorBoundaryHighlights(withCoupling, guidedRefactorEntityRefs);
-    return applyHotspotHeatmap(withBoundary, showHotspotHeatmap);
+    const withHeatmap = applyHotspotHeatmap(withBoundary, showHotspotHeatmap);
+    return withHeatmap;
   }, [
     filteredNodes,
     selectedNodeId,
@@ -290,7 +303,9 @@ export const Canvas: React.FC = () => {
       });
     }
     const couplingEdges = buildCouplingOverlayEdges(selectedNodeId, filteredNodes, showCoupling);
-    if (showCoupling && couplingEdges.length > 0) return couplingEdges;
+    if (showCoupling && couplingEdges.length > 0) {
+      return couplingEdges;
+    }
 
     const visibleNodeIds = new Set(displayNodes.map(n => n.id));
     let next = filteredEdges.filter(
@@ -365,193 +380,189 @@ export const Canvas: React.FC = () => {
   );
 
   return (
-    <div
-      className="flex-1 h-full relative"
-      onClick={() => {
-        selectNode(null);
-        selectEdge(null);
-      }}
-    >
+    <div className="flex-1 h-full relative">
       <SubDiagramRefsContext.Provider value={subDiagramRefs}>
-        <ReactFlow
-          nodes={displayNodes}
-          edges={displayEdges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-          onNodeClick={(event, node) => {
-            event.stopPropagation();
-            selectNode(node.id);
-          }}
-          onEdgeClick={(event, edge) => {
-            event.stopPropagation();
-            selectEdge(edge.id);
-          }}
-          onPaneClick={() => {
-            selectNode(null);
-            selectEdge(null);
-          }}
-          onNodeDragStart={() => recordHistory()}
-          onNodeDoubleClick={(_, node) => {
-            const entityRef = node.data?.entityRef as string | undefined;
-            const hasSub = entityRef && subDiagramRefs.has(entityRef);
-            if (!hasSub || !entityRef) return;
-            setLocation(`/workspace/${entityRef}`);
-            const path =
-              workspaceCatalog.find(entry => entry.entityRef === entityRef)?.path ??
-              loadedSystems.find(
-                sys =>
-                  getSchemaEntityRef(sys.schema, isWorkspaceOpen ? workspaceName : undefined) ===
-                  entityRef
-              )?.path;
-            if (path) void selectSystem(path);
-          }}
-          onDragOver={onDragOver}
-          onDrop={onDrop}
-          nodeTypes={nodeTypes}
-          edgesFocusable
-          elementsSelectable
-          onlyRenderVisibleElements
-          minZoom={0.05}
-          maxZoom={4}
-          fitView
-          className="h-full"
-        >
-          {!liteCanvas && (
-            <Background variant={BackgroundVariant.Dots} gap={24} size={1} color="#334155" />
-          )}
-          <Controls position="top-right" />
-
-          {parentSystem && (
-            <Panel position="top-left" className="m-4">
-              <button
-                type="button"
-                onClick={e => {
-                  e.stopPropagation();
-                  zoomOutToParent();
-                }}
-                className="flex items-center gap-1.5 bg-slate-950/90 border border-slate-800 hover:border-brand-500/40 hover:bg-slate-900 text-slate-200 hover:text-brand-300 px-3 py-1.5 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md text-xs font-semibold transition cursor-pointer"
-                title="Zoom out to parent diagram (Esc)"
-                data-testid="zoom-out-button"
-              >
-                <ZoomOut className="w-3.5 h-3.5" />
-                <span>Zoom out</span>
-                <kbd className="hidden sm:inline ml-1 text-[9px] font-mono text-slate-300 bg-slate-900 border border-slate-700 rounded px-1 py-0.5">
-                  Esc
-                </kbd>
-              </button>
-            </Panel>
-          )}
-
-          <Panel
-            position="bottom-center"
-            style={{ zIndex: 100 }}
-            className="mb-[max(0.75rem,env(safe-area-inset-bottom,0px))] sm:mb-[max(1rem,env(safe-area-inset-bottom,0px))] !w-[calc(100%-1.5rem)] sm:!w-auto sm:!max-w-[min(56rem,calc(100%-1.5rem))] overflow-visible bg-slate-950/90 border border-slate-900 px-3.5 py-2 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md pointer-events-auto"
+        <ChildDiagramExternalsCountContext.Provider value={childDiagramExternalsCounts}>
+          <ReactFlow
+            nodes={displayNodes}
+            edges={displayEdges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            onNodeClick={(event, node) => {
+              event.stopPropagation();
+              selectNode(node.id);
+            }}
+            onEdgeClick={(event, edge) => {
+              event.stopPropagation();
+              selectEdge(edge.id);
+            }}
+            onPaneClick={() => {
+              selectNode(null);
+              selectEdge(null);
+            }}
+            onNodeDragStart={() => recordHistory()}
+            onNodeDoubleClick={(_, node) => {
+              const entityRef = node.data?.entityRef as string | undefined;
+              const hasSub = entityRef && subDiagramRefs.has(entityRef);
+              if (!hasSub || !entityRef) return;
+              setLocation(`/workspace/${entityRef}`);
+              const path =
+                workspaceCatalog.find(entry => entry.entityRef === entityRef)?.path ??
+                loadedSystems.find(
+                  sys =>
+                    getSchemaEntityRef(sys.schema, isWorkspaceOpen ? workspaceName : undefined) ===
+                    entityRef
+                )?.path;
+              if (path) void selectSystem(path);
+            }}
+            onDragOver={onDragOver}
+            onDrop={onDrop}
+            nodeTypes={nodeTypes}
+            edgesFocusable
+            elementsSelectable
+            onlyRenderVisibleElements
+            minZoom={0.05}
+            maxZoom={4}
+            fitView
+            className="h-full"
           >
-            <WorkspaceToolbar />
-          </Panel>
+            {!liteCanvas && (
+              <Background variant={BackgroundVariant.Dots} gap={24} size={1} color="#334155" />
+            )}
+            <Controls position="top-right" />
 
-          {!liteCanvas && (
-            <div className="hidden md:block">
-              <MiniMap
-                position="bottom-left"
-                bgColor="#0f172a"
-                nodeColor={n => {
-                  if (showHotspotHeatmap && n.type === 'blueprintNode') {
-                    const heatColor = hotspotHeatmapMinimapColor(
-                      typeof n.data?.hotspotHeat === 'number' ? n.data.hotspotHeat : 0
-                    );
-                    if (heatColor) return heatColor;
-                  }
-                  if (n.type === 'blueprintNode') {
-                    if (n.data?.type === 'relational-database') return '#06b6d4';
-                    if (n.data?.type === 'event-broker') return '#a855f7';
-                    if (n.data?.type === 'grpc-service') return '#3b82f6';
-                    if (n.data?.type === 'serverless-function') return '#eab308';
-                    if (n.data?.type === 'rest-api') return '#10b981';
-                    if (n.data?.type === 'cache-store') return '#f97316';
-                  }
-                  return '#1e293b';
-                }}
-                maskColor="rgba(15, 23, 42, 0.6)"
-                className="border border-slate-800 rounded-lg overflow-hidden"
-                style={{ width: 120, height: 90 }}
-              />
-            </div>
-          )}
-
-          {lastError && (
-            <Panel position="top-center" className="m-4 max-w-md w-full animate-bounce-short">
-              <div className="flex items-start gap-3 bg-red-950/90 border border-red-900/50 px-4 py-3 rounded-xl shadow-2xl shadow-red-950/40 backdrop-blur-md text-red-200 text-xs">
-                <AlertTriangle className="w-5 h-5 shrink-0 text-red-400 mt-0.5" />
-                <div className="flex-1">
-                  <h5 className="font-bold text-red-300 mb-0.5">Schema Import Failed</h5>
-                  <p className="leading-relaxed whitespace-pre-wrap">{lastError}</p>
-                </div>
+            {parentSystem && (
+              <Panel position="top-left" className="m-4">
                 <button
-                  onClick={clearError}
-                  className="text-red-400 hover:text-red-200 transition text-[10px] font-bold uppercase tracking-wider ml-2 shrink-0 self-center border border-red-900/40 hover:border-red-900/80 rounded px-1.5 py-0.5 bg-red-950/60"
+                  type="button"
+                  onClick={e => {
+                    e.stopPropagation();
+                    zoomOutToParent();
+                  }}
+                  className="flex items-center gap-1.5 bg-slate-950/90 border border-slate-800 hover:border-brand-500/40 hover:bg-slate-900 text-slate-200 hover:text-brand-300 px-3 py-1.5 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md text-xs font-semibold transition cursor-pointer"
+                  title="Zoom out to parent diagram (Esc)"
+                  data-testid="zoom-out-button"
                 >
-                  Dismiss
+                  <ZoomOut className="w-3.5 h-3.5" />
+                  <span>Zoom out</span>
+                  <kbd className="hidden sm:inline ml-1 text-[9px] font-mono text-slate-300 bg-slate-900 border border-slate-700 rounded px-1 py-0.5">
+                    Esc
+                  </kbd>
                 </button>
-              </div>
-            </Panel>
-          )}
+              </Panel>
+            )}
 
-          {notification && (
-            <Panel position="top-center" className="m-4 max-w-md w-full animate-slide-in z-50">
-              <div
-                className={`flex items-start gap-3 border px-4 py-3 rounded-xl shadow-2xl backdrop-blur-md text-xs transition-all duration-300 ${
-                  notification.type === 'success'
-                    ? 'bg-emerald-950/90 border-emerald-500/30 text-emerald-200'
-                    : notification.type === 'info'
-                      ? 'bg-cyan-950/90 border-cyan-900/50 text-cyan-200'
-                      : notification.type === 'warning'
-                        ? 'bg-amber-950/90 border-amber-900/50 text-amber-200'
-                        : 'bg-red-950/90 border-red-900/50 text-red-200'
-                }`}
-              >
-                {notification.type === 'success' && (
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                )}
-                {notification.type === 'info' && (
-                  <Info className="w-5 h-5 text-cyan-450 shrink-0 mt-0.5" />
-                )}
-                {notification.type === 'warning' && (
-                  <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
-                )}
-                {notification.type === 'error' && (
-                  <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
-                )}
-                <div className="flex-1">
-                  {notification.title && (
-                    <h5
-                      className={`font-bold mb-0.5 ${
-                        notification.type === 'success'
-                          ? 'text-emerald-300'
-                          : notification.type === 'info'
-                            ? 'text-cyan-300'
-                            : notification.type === 'warning'
-                              ? 'text-amber-300'
-                              : 'text-red-300'
-                      }`}
-                    >
-                      {notification.title}
-                    </h5>
+            <Panel
+              position="bottom-center"
+              style={{ zIndex: 100 }}
+              className="mb-[max(0.75rem,env(safe-area-inset-bottom,0px))] sm:mb-[max(1rem,env(safe-area-inset-bottom,0px))] !w-[calc(100%-1.5rem)] sm:!w-auto sm:!max-w-[min(56rem,calc(100%-1.5rem))] overflow-visible bg-slate-950/90 border border-slate-900 px-3.5 py-2 rounded-xl shadow-lg shadow-black/40 backdrop-blur-md pointer-events-auto"
+            >
+              <WorkspaceToolbar />
+            </Panel>
+
+            {!liteCanvas && (
+              <div className="hidden md:block">
+                <MiniMap
+                  position="bottom-left"
+                  bgColor="#0f172a"
+                  nodeColor={n => {
+                    if (showHotspotHeatmap && n.type === 'blueprintNode') {
+                      const heatColor = hotspotHeatmapMinimapColor(
+                        typeof n.data?.hotspotHeat === 'number' ? n.data.hotspotHeat : 0
+                      );
+                      if (heatColor) return heatColor;
+                    }
+                    if (n.type === 'blueprintNode') {
+                      if (n.data?.type === 'relational-database') return '#06b6d4';
+                      if (n.data?.type === 'event-broker') return '#a855f7';
+                      if (n.data?.type === 'grpc-service') return '#3b82f6';
+                      if (n.data?.type === 'serverless-function') return '#eab308';
+                      if (n.data?.type === 'rest-api') return '#10b981';
+                      if (n.data?.type === 'cache-store') return '#f97316';
+                    }
+                    return '#1e293b';
+                  }}
+                  maskColor="rgba(15, 23, 42, 0.6)"
+                  className="border border-slate-800 rounded-lg overflow-hidden"
+                  style={{ width: 120, height: 90 }}
+                />
+              </div>
+            )}
+
+            {lastError && (
+              <Panel position="top-center" className="m-4 max-w-md w-full animate-bounce-short">
+                <div className="flex items-start gap-3 bg-red-950/90 border border-red-900/50 px-4 py-3 rounded-xl shadow-2xl shadow-red-950/40 backdrop-blur-md text-red-200 text-xs">
+                  <AlertTriangle className="w-5 h-5 shrink-0 text-red-400 mt-0.5" />
+                  <div className="flex-1">
+                    <h5 className="font-bold text-red-300 mb-0.5">Schema Import Failed</h5>
+                    <p className="leading-relaxed whitespace-pre-wrap">{lastError}</p>
+                  </div>
+                  <button
+                    onClick={clearError}
+                    className="text-red-400 hover:text-red-200 transition text-[10px] font-bold uppercase tracking-wider ml-2 shrink-0 self-center border border-red-900/40 hover:border-red-900/80 rounded px-1.5 py-0.5 bg-red-950/60"
+                  >
+                    Dismiss
+                  </button>
+                </div>
+              </Panel>
+            )}
+
+            {notification && (
+              <Panel position="top-center" className="m-4 max-w-md w-full animate-slide-in z-50">
+                <div
+                  className={`flex items-start gap-3 border px-4 py-3 rounded-xl shadow-2xl backdrop-blur-md text-xs transition-all duration-300 ${
+                    notification.type === 'success'
+                      ? 'bg-emerald-950/90 border-emerald-500/30 text-emerald-200'
+                      : notification.type === 'info'
+                        ? 'bg-cyan-950/90 border-cyan-900/50 text-cyan-200'
+                        : notification.type === 'warning'
+                          ? 'bg-amber-950/90 border-amber-900/50 text-amber-200'
+                          : 'bg-red-950/90 border-red-900/50 text-red-200'
+                  }`}
+                >
+                  {notification.type === 'success' && (
+                    <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
                   )}
-                  <p className="leading-relaxed">{notification.message}</p>
+                  {notification.type === 'info' && (
+                    <Info className="w-5 h-5 text-cyan-450 shrink-0 mt-0.5" />
+                  )}
+                  {notification.type === 'warning' && (
+                    <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+                  )}
+                  {notification.type === 'error' && (
+                    <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+                  )}
+                  <div className="flex-1">
+                    {notification.title && (
+                      <h5
+                        className={`font-bold mb-0.5 ${
+                          notification.type === 'success'
+                            ? 'text-emerald-300'
+                            : notification.type === 'info'
+                              ? 'text-cyan-300'
+                              : notification.type === 'warning'
+                                ? 'text-amber-300'
+                                : 'text-red-300'
+                        }`}
+                      >
+                        {notification.title}
+                      </h5>
+                    )}
+                    <p className="leading-relaxed">{notification.message}</p>
+                  </div>
+                  <button
+                    onClick={() => setNotification(null)}
+                    className="text-slate-450 hover:text-slate-200 transition shrink-0 p-0.5 rounded hover:bg-white/10"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
                 </div>
-                <button
-                  onClick={() => setNotification(null)}
-                  className="text-slate-450 hover:text-slate-200 transition shrink-0 p-0.5 rounded hover:bg-white/10"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-            </Panel>
-          )}
-          <DiagramLoadingOverlay />
-        </ReactFlow>
+              </Panel>
+            )}
+            <DiagramLoadingOverlay />
+          </ReactFlow>
+        </ChildDiagramExternalsCountContext.Provider>
       </SubDiagramRefsContext.Provider>
     </div>
   );

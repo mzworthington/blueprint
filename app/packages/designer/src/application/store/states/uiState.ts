@@ -39,6 +39,8 @@ export interface UiState {
   isCompareOpen: boolean;
   isShortcutsOpen: boolean;
   isDisplaySettingsOpen: boolean;
+  /** Parent node entityRef when viewing child-level externals without leaving the diagram. */
+  childExternalsParentRef: string | null;
   isSourceCodeOpen: boolean;
   sourceCodeFilepath: string | null;
   notification: ToastNotification | null;
@@ -48,6 +50,7 @@ export interface UiState {
   diagramLoadCount: number;
   toggleShowTests: () => void;
   toggleShowExternals: () => void;
+  setShowExternals: (show: boolean) => void;
   toggleShowSelectedDependenciesOnly: () => void;
   toggleShowCoupling: () => void;
   setShowCoupling: (show: boolean) => void;
@@ -64,6 +67,8 @@ export interface UiState {
   setIsCompareOpen: (open: boolean) => void;
   setIsShortcutsOpen: (open: boolean) => void;
   setIsDisplaySettingsOpen: (open: boolean) => void;
+  openChildLevelExternals: (parentEntityRef: string) => void;
+  closeChildLevelExternals: () => void;
   openSourceCodeDialog: (filepath: string) => void;
   closeSourceCodeDialog: () => void;
   setNotification: (notification: ToastNotification | null) => void;
@@ -93,6 +98,7 @@ export const createUiState = (
   isCompareOpen: false,
   isShortcutsOpen: false,
   isDisplaySettingsOpen: false,
+  childExternalsParentRef: null,
   isSourceCodeOpen: false,
   sourceCodeFilepath: null,
   notification: null,
@@ -101,6 +107,7 @@ export const createUiState = (
   diagramLoadCount: 0,
   toggleShowTests: () => set(state => ({ showTests: !state.showTests })),
   toggleShowExternals: () => set(state => ({ showExternals: !state.showExternals })),
+  setShowExternals: show => set({ showExternals: show }),
   toggleShowSelectedDependenciesOnly: () =>
     set(state => ({ showSelectedDependenciesOnly: !state.showSelectedDependenciesOnly })),
   toggleShowCoupling: () => set(state => ({ showCoupling: !state.showCoupling })),
@@ -118,6 +125,8 @@ export const createUiState = (
   setIsCompareOpen: open => set({ isCompareOpen: open }),
   setIsShortcutsOpen: open => set({ isShortcutsOpen: open }),
   setIsDisplaySettingsOpen: open => set({ isDisplaySettingsOpen: open }),
+  openChildLevelExternals: parentEntityRef => set({ childExternalsParentRef: parentEntityRef }),
+  closeChildLevelExternals: () => set({ childExternalsParentRef: null }),
   openSourceCodeDialog: filepath => set({ isSourceCodeOpen: true, sourceCodeFilepath: filepath }),
   closeSourceCodeDialog: () => set({ isSourceCodeOpen: false, sourceCodeFilepath: null }),
   setNotification: notification => set({ notification }),

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { ExternalLink } from 'lucide-react';
 import { useLocation } from 'wouter';
 import { resolveEntityHome } from '@blueprint/core';
@@ -10,6 +10,7 @@ interface GoToEntityButtonProps {
   className?: string;
   label?: string;
   testId?: string;
+  onNavigate?: () => void;
 }
 
 export const GoToEntityButton: React.FC<GoToEntityButtonProps> = ({
@@ -17,18 +18,12 @@ export const GoToEntityButton: React.FC<GoToEntityButtonProps> = ({
   className,
   label = 'Entity',
   testId = 'go-to-entity-button',
+  onNavigate,
 }) => {
   const [, setLocation] = useLocation();
   const workspaceCatalog = useBlueprintStore(state => state.workspaceCatalog);
-  const currentFilePath = useBlueprintStore(state => state.currentFilePath);
-  const selectSystem = useBlueprintStore(state => state.selectSystem);
-  const selectNode = useBlueprintStore(state => state.selectNode);
 
-  const home = useMemo(
-    () => resolveEntityHome(workspaceCatalog, entityRef),
-    [workspaceCatalog, entityRef]
-  );
-
+  const home = resolveEntityHome(workspaceCatalog, entityRef);
   if (!home) return null;
 
   return (
@@ -37,13 +32,11 @@ export const GoToEntityButton: React.FC<GoToEntityButtonProps> = ({
       data-testid={testId}
       onClick={e => {
         e.stopPropagation();
-        void navigateToWorkspaceEntity(entityRef, {
+        const ok = navigateToWorkspaceEntity(entityRef, {
           workspaceCatalog,
-          currentFilePath,
           setLocation,
-          selectSystem,
-          selectNode,
         });
+        if (ok) onNavigate?.();
       }}
       className={
         className ??

@@ -1,5 +1,14 @@
-import type { C4Level, SystemSchema } from '../models/schema';
+import type { C4Level, NodeType, SystemSchema } from '../models/schema';
 import { getSchemaEntityRef } from './entityRef';
+
+export type LoadedSystemSchemaRef = { path: string; schema: SystemSchema };
+
+/** External proxy node materialized on a child diagram one level below a parent node. */
+export type ChildDiagramExternal = {
+  entityRef: string;
+  name: string;
+  type: NodeType;
+};
 
 /** Lightweight navigation metadata for a workspace diagram file. */
 export type WorkspaceCatalogEntry = {
@@ -69,4 +78,40 @@ export function resolveEntityHome(
   if (ownDiagram) return ownDiagram;
 
   return catalog.find(entry => entry.nodeEntityRefs.includes(entityRef));
+}
+
+/**
+ * Resolve the diagram one level below `parentEntityRef`.
+ * Child diagrams use `schema.entityRef === parentNode.entityRef`.
+ */
+export function resolveChildDiagramEntry(
+  catalog: WorkspaceCatalogEntry[],
+  parentEntityRef: string
+): WorkspaceCatalogEntry | undefined {
+  if (!parentEntityRef) return undefined;
+  return catalog.find(entry => entry.entityRef === parentEntityRef);
+}
+
+/** External nodes on the child diagram for a parent canvas node, when that child exists. */
+export function listChildDiagramExternals(
+  catalog: WorkspaceCatalogEntry[],
+  loadedSystems: LoadedSystemSchemaRef[],
+  parentEntityRef: string
+): ChildDiagramExternal[] {
+  const child = resolveChildDiagramEntry(catalog, parentEntityRef);
+  if (!child) return [];
+
+  const system = loadedSystems.find(s => s.path === child.path);
+  if (!system) return [];
+
+  return system.schema.nodes
+    .filter(
+      (node): node is typeof node & { entityRef: string } => !!node.external && !!node.entityRef
+    )
+    .map(node => ({
+      entityRef: node.entityRef,
+      name: node.name,
+      type: node.type,
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 }

@@ -44,6 +44,8 @@ vi.mock('@xyflow/react', () => {
     },
     useReactFlow: () => ({
       fitView: vi.fn(),
+      getInternalNode: () => undefined,
+      screenToFlowPosition: (pos: { x: number; y: number }) => pos,
     }),
   };
 });

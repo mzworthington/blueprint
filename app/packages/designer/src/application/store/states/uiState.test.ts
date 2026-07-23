@@ -49,6 +49,14 @@ describe('uiState Actions & State Management', () => {
     expect(useBlueprintStore.getState().showExternals).toBe(true);
   });
 
+  it('should set showExternals via setShowExternals action', () => {
+    const store = useBlueprintStore.getState();
+    store.setShowExternals(false);
+    expect(useBlueprintStore.getState().showExternals).toBe(false);
+    store.setShowExternals(true);
+    expect(useBlueprintStore.getState().showExternals).toBe(true);
+  });
+
   it('should toggle showSelectedDependenciesOnly via toggleShowSelectedDependenciesOnly', () => {
     const store = useBlueprintStore.getState();
     expect(store.showSelectedDependenciesOnly).toBe(true);
@@ -143,5 +151,16 @@ describe('uiState Actions & State Management', () => {
 
     store.setFocusedCyclePath(null);
     expect(useBlueprintStore.getState().focusedCyclePath).toBe(null);
+  });
+
+  it('opens child level externals modal without leaving the diagram', () => {
+    const store = useBlueprintStore.getState();
+    store.openChildLevelExternals('billing/system');
+
+    const state = useBlueprintStore.getState();
+    expect(state.childExternalsParentRef).toBe('billing/system');
+
+    store.closeChildLevelExternals();
+    expect(useBlueprintStore.getState().childExternalsParentRef).toBeNull();
   });
 });

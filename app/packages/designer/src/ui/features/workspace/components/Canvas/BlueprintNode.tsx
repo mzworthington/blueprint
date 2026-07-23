@@ -21,8 +21,9 @@ import { useBlueprintStore } from '../../../../../application/store/store';
 import { guessBundledPathForEntityRef } from '../../../../../application/store/states/diagramState/bundledBlueprintLoader';
 import type { ComponentNodeData } from '../../../../../application/store/store';
 import { evaluateForensicsConcern } from '../../../../../application/forensics/concern';
-import { useHasSubDiagram } from './SubDiagramRefsContext';
+import { useHasSubDiagram, useChildDiagramExternalsCount } from './SubDiagramRefsContext';
 import { GoToEntityButton } from '../GoToEntityButton';
+import { ViewChildExternalsButton } from '../ViewChildExternalsButton';
 
 type CustomNode = Node<ComponentNodeData, 'blueprintNode'>;
 
@@ -192,6 +193,7 @@ export const BlueprintNode = memo(({ id, data, selected }: NodeProps<CustomNode>
   const liteCanvas = useBlueprintStore(state => state.liteCanvas);
   const entityRef = data.entityRef;
   const hasSubDiagram = useHasSubDiagram(entityRef);
+  const childExternalsCount = useChildDiagramExternalsCount(entityRef);
   const sourceFilepath =
     typeof data.properties?.filepath === 'string' ? data.properties.filepath : undefined;
   const updateNodeInternals = useUpdateNodeInternals();
@@ -356,6 +358,13 @@ export const BlueprintNode = memo(({ id, data, selected }: NodeProps<CustomNode>
                 <ZoomIn className="w-2.5 h-2.5" />
                 <span>Zoom</span>
               </button>
+            ) : null}
+
+            {hasSubDiagram && entityRef && childExternalsCount > 0 ? (
+              <ViewChildExternalsButton
+                parentEntityRef={entityRef}
+                externalsCount={childExternalsCount}
+              />
             ) : null}
 
             {data.external && entityRef ? <GoToEntityButton entityRef={entityRef} /> : null}

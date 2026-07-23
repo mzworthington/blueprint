@@ -11,6 +11,7 @@ import { getSchemaEntityRef, resolveEntityHome } from '@blueprint/core';
  * Responsibilities:
  *  - Reads the URL slug (entityRef) and selects the matching diagram system.
  *  - Node-level URLs (`/workspace/<node-entityRef>`) load the owning diagram and select the node.
+ *  - Canvas / panel selection updates the URL without fighting the current deep link.
  *  - On store changes (active diagram switched), pushes the new path to URL.
  *  - Handles root paths by selecting the highest-level diagram (usually context).
  *  - Leaves bare `/workspace` alone while the startup chooser is open.
@@ -32,7 +33,8 @@ export function useUrlSync(): void {
   const [location, setLocation] = useLocation();
   const [match, params] = useRoute('/workspace/*');
 
-  const lastSyncedLocationRef = useRef<string | null>(null);
+  const prevLocationRef = useRef<string | null>(null);
+  const prevSelectedNodeIdRef = useRef<string | null | undefined>(undefined);
   const systemSelectInFlight = useBlueprintStore(s => s.systemSelectInFlight);
   const diagramLoadCount = useBlueprintStore(s => s.diagramLoadCount);
 
@@ -43,11 +45,43 @@ export function useUrlSync(): void {
 
     if (diagramLoadCount > 0 || systemSelectInFlight === SANDBOX_RELOAD_IN_FLIGHT) return;
 
+    const locationChanged = prevLocationRef.current !== location;
+    const selectionChanged = prevSelectedNodeIdRef.current !== selectedNodeId;
+    const isInitialSync = prevLocationRef.current === null;
+    prevLocationRef.current = location;
+    prevSelectedNodeIdRef.current = selectedNodeId;
+
     const entityRef = params?.['*']?.replace(/\/$/, '');
     const isWorkspaceRoot = location === '/workspace' || location === '/workspace/';
 
     // Keep bare /workspace stable until the user picks sandbox / folder / Mermaid.
     if (isWorkspaceRoot && isStartupOpen) return;
+
+    const diagramEntityRef = getSchemaEntityRef(
+      schema,
+      isWorkspaceOpen ? workspaceName : undefined
+    );
+
+    // User changed selection on the canvas or property panel — reflect it in the URL.
+    if (selectionChanged && !locationChanged && !isInitialSync) {
+      const targetPath = selectedNodeId
+        ? `/workspace/${selectedNodeId}`
+        : `/workspace/${diagramEntityRef}`;
+      if (location !== targetPath) {
+        setLocation(targetPath, { replace: true });
+      }
+      return;
+    }
+
+    if (!locationChanged && !isInitialSync) return;
+
+    const home = entityRef ? resolveEntityHome(workspaceCatalog, entityRef) : undefined;
+    const isNodeTarget = !!(home && entityRef && home.entityRef !== entityRef);
+
+    if (isNodeTarget && home && home.path === currentFilePath) {
+      selectNode(entityRef);
+      return;
+    }
 
     let foundSystem: (typeof loadedSystems)[0] | undefined;
 
@@ -60,9 +94,6 @@ export function useUrlSync(): void {
       });
     }
 
-    const home = entityRef ? resolveEntityHome(workspaceCatalog, entityRef) : undefined;
-    const isNodeTarget = !!(home && entityRef && home.entityRef !== entityRef);
-
     if (!foundSystem && entityRef) {
       const catalogEntry = workspaceCatalog.find(entry => entry.entityRef === entityRef);
       const path = home?.path ?? catalogEntry?.path ?? guessBundledPathForEntityRef(entityRef);
@@ -74,7 +105,6 @@ export function useUrlSync(): void {
         } else if (isNodeTarget && entityRef) {
           selectNode(entityRef);
         }
-        lastSyncedLocationRef.current = location;
         return;
       }
     }
@@ -86,26 +116,17 @@ export function useUrlSync(): void {
             if (isNodeTarget && entityRef) selectNode(entityRef);
           });
         }
-        lastSyncedLocationRef.current = location;
         return;
       }
 
       if (isNodeTarget && entityRef) {
-        if (selectedNodeId !== entityRef) selectNode(entityRef);
-        lastSyncedLocationRef.current = location;
+        selectNode(entityRef);
         return;
       }
 
-      const currentEntityRef = getSchemaEntityRef(
-        schema,
-        isWorkspaceOpen ? workspaceName : undefined
-      );
-      const diagramPath = `/workspace/${currentEntityRef}`;
+      const diagramPath = `/workspace/${diagramEntityRef}`;
       if (location !== diagramPath) {
         setLocation(diagramPath, { replace: true });
-        lastSyncedLocationRef.current = diagramPath;
-      } else {
-        lastSyncedLocationRef.current = location;
       }
     }
   }, [

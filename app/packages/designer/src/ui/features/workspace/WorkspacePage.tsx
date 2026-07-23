@@ -14,6 +14,7 @@ import { StartupWorkspaceDialog } from './components/StartupWorkspaceDialog/Star
 import { CompareDialog } from './components/CompareDialog/CompareDialog';
 import { KeyboardShortcutsDialog } from './components/KeyboardShortcutsDialog/KeyboardShortcutsDialog';
 import { WorkspaceDisplayDialog } from './components/WorkspaceDisplayDialog/WorkspaceDisplayDialog';
+import { ChildLevelExternalsDialog } from './components/ChildLevelExternalsDialog/ChildLevelExternalsDialog';
 import { WorkspaceSourceCodeDialog } from './components/SourceCodeDialog/WorkspaceSourceCodeDialog';
 import { useUrlSync } from './hooks/useUrlSync';
 import { useKeyboardNavigation } from './hooks/useKeyboardNavigation';
@@ -147,6 +148,7 @@ export const WorkspacePage: React.FC = () => {
         isOpen={isDisplaySettingsOpen}
         onClose={() => setIsDisplaySettingsOpen(false)}
       />
+      <ChildLevelExternalsDialog />
       <WorkspaceSourceCodeDialog />
     </ReactFlowProvider>
   );

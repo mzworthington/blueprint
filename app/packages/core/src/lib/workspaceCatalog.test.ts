@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { buildWorkspaceCatalog, resolveEntityHome } from './workspaceCatalog';
+import {
+  buildWorkspaceCatalog,
+  listChildDiagramExternals,
+  resolveChildDiagramEntry,
+  resolveEntityHome,
+} from './workspaceCatalog';
 import type { SystemSchema } from '../models/schema';
 
 describe('workspaceCatalog', () => {
@@ -88,6 +93,70 @@ describe('workspaceCatalog', () => {
       expect(resolveEntityHome(proxyCatalog, 'blueprint/plugins/techdocs-react/api')?.path).toBe(
         'plugins/techdocs-react-components.yaml'
       );
+    });
+  });
+
+  describe('resolveChildDiagramEntry', () => {
+    const context: SystemSchema = {
+      name: 'Context',
+      version: '1.0.0',
+      level: 'context',
+      nodes: [{ entityRef: 'billing', type: 'software-system', name: 'Billing' }],
+      dependencies: [],
+    };
+    const containers: SystemSchema = {
+      name: 'Billing Containers',
+      version: '1.0.0',
+      level: 'container',
+      entityRef: 'billing',
+      nodes: [
+        { entityRef: 'billing/api', type: 'microservice', name: 'API' },
+        {
+          entityRef: 'billing/legacy',
+          type: 'microservice',
+          name: 'Legacy (External)',
+          external: true,
+        },
+      ],
+      dependencies: [],
+    };
+    const catalog = buildWorkspaceCatalog([
+      { path: 'context.yaml', schema: context },
+      { path: 'containers.yaml', schema: containers },
+    ]);
+    const loadedSystems = [
+      { path: 'context.yaml', schema: context },
+      { path: 'containers.yaml', schema: containers },
+    ];
+
+    it('returns the child diagram entry for a parent node entityRef', () => {
+      expect(resolveChildDiagramEntry(catalog, 'billing')?.path).toBe('containers.yaml');
+    });
+
+    it('returns undefined when no child diagram exists', () => {
+      expect(resolveChildDiagramEntry(catalog, 'missing')).toBeUndefined();
+    });
+
+    it('lists external nodes on the child diagram', () => {
+      expect(listChildDiagramExternals(catalog, loadedSystems, 'billing')).toEqual([
+        {
+          entityRef: 'billing/legacy',
+          name: 'Legacy (External)',
+          type: 'microservice',
+        },
+      ]);
+    });
+
+    it('returns an empty list when the child diagram has no externals', () => {
+      const emptyChild: SystemSchema = {
+        ...containers,
+        nodes: [{ entityRef: 'billing/api', type: 'microservice', name: 'API' }],
+      };
+      const systems = [
+        { path: 'context.yaml', schema: context },
+        { path: 'containers.yaml', schema: emptyChild },
+      ];
+      expect(listChildDiagramExternals(catalog, systems, 'billing')).toEqual([]);
     });
   });
 });

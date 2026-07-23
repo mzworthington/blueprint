@@ -2,7 +2,12 @@ import React, { useState, useMemo, useCallback } from 'react';
 import { Trash2 } from 'lucide-react';
 import { useBlueprintStore } from '../../../../../application/store/store';
 import type { NodeType, PropertyMap, C4Level } from '@blueprint/core';
-import { slugify, getSchemaEntityRef } from '@blueprint/core';
+import {
+  slugify,
+  getSchemaEntityRef,
+  resolveChildDiagramEntry,
+  listChildDiagramExternals,
+} from '@blueprint/core';
 import { NODE_TYPES } from './nodeTypes';
 import { IdentitySection } from './IdentitySection';
 import { GoToEntityButton } from '../GoToEntityButton';
@@ -13,6 +18,7 @@ import { ComponentCatalog } from './ComponentCatalog';
 import { ExternalDependenciesSection } from './ExternalDependenciesSection';
 import { SelectedDependencySection } from './SelectedDependencySection';
 import { ValidationSection } from './ValidationSection';
+import { ViewChildExternalsButton } from '../ViewChildExternalsButton';
 import {
   resolveCouplingEdges,
   findNodeIdByFilepath,
@@ -46,6 +52,7 @@ export const PropertyPanel: React.FC = () => {
     toggleRightCollapsed,
     workspaceName,
     loadedSystems,
+    workspaceCatalog,
   } = useBlueprintStore();
 
   const selectedRFNode = nodes.find(
@@ -161,6 +168,17 @@ export const PropertyPanel: React.FC = () => {
     );
     return buildForensicsTrendDashboard(selectedNode.forensics, descendants, schema.level);
   }, [loadedSystems, selectedNode, schema.level]);
+
+  const childDiagramEntry = useMemo(() => {
+    if (!selectedNode?.entityRef) return undefined;
+    return resolveChildDiagramEntry(workspaceCatalog, selectedNode.entityRef);
+  }, [workspaceCatalog, selectedNode?.entityRef]);
+
+  const childExternalsCount = useMemo(() => {
+    if (!selectedNode?.entityRef) return 0;
+    return listChildDiagramExternals(workspaceCatalog, loadedSystems, selectedNode.entityRef)
+      .length;
+  }, [workspaceCatalog, loadedSystems, selectedNode?.entityRef]);
 
   return (
     <div
@@ -279,6 +297,20 @@ export const PropertyPanel: React.FC = () => {
                 onUpdateDependency={updateDependency}
                 onDeleteDependency={deleteDependency}
               />
+
+              {childDiagramEntry && selectedNode.entityRef && childExternalsCount > 0 ? (
+                <div
+                  className="border-t border-slate-900 pt-4"
+                  data-testid="child-level-externals-section"
+                >
+                  <ViewChildExternalsButton
+                    parentEntityRef={selectedNode.entityRef}
+                    externalsCount={childExternalsCount}
+                    testId="open-child-externals-dialog"
+                    className="w-full flex items-center justify-center gap-2 px-3 py-2 text-xs font-semibold text-cyan-300 hover:text-cyan-200 border border-cyan-900/40 hover:border-cyan-700/60 bg-cyan-950/20 hover:bg-cyan-950/40 rounded-lg transition cursor-pointer"
+                  />
+                </div>
+              ) : null}
 
               <div className="border-t border-slate-900 pt-4">
                 <button
