@@ -340,6 +340,13 @@ export const BlueprintNode = memo(({ id, data, selected }: NodeProps<CustomNode>
               </button>
             ) : null}
 
+            {hasSubDiagram && entityRef && childExternalsCount > 0 ? (
+              <ViewChildExternalsButton
+                parentEntityRef={entityRef}
+                externalsCount={childExternalsCount}
+              />
+            ) : null}
+
             {hasSubDiagram ? (
               <button
                 type="button"
@@ -358,13 +365,6 @@ export const BlueprintNode = memo(({ id, data, selected }: NodeProps<CustomNode>
                 <ZoomIn className="w-2.5 h-2.5" />
                 <span>Zoom</span>
               </button>
-            ) : null}
-
-            {hasSubDiagram && entityRef && childExternalsCount > 0 ? (
-              <ViewChildExternalsButton
-                parentEntityRef={entityRef}
-                externalsCount={childExternalsCount}
-              />
             ) : null}
 
             {data.external && entityRef ? <GoToEntityButton entityRef={entityRef} /> : null}
