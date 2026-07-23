@@ -1,34 +1,27 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
-const CANVAS_NODE = '.react-flow__node';
-const DIAGRAM_LOADING_OVERLAY = '[role="status"][aria-busy="true"]';
+const DIAGRAM_LOADING = '[role="status"][aria-busy="true"]';
 
-/** Wait until diagram layout / load overlay is dismissed. */
-export async function waitForDiagramIdle(page: Page, timeout = 60_000): Promise<void> {
-  await expect(page.locator(DIAGRAM_LOADING_OVERLAY)).toBeHidden({ timeout });
+export async function waitForDiagramIdle(page: Page) {
+  await expect(page.locator(DIAGRAM_LOADING)).toBeHidden({ timeout: 60_000 });
 }
 
-/** Wait until the React Flow canvas has at least one node on screen. */
-export async function expectCanvasReady(page: Page, timeout = 30_000): Promise<Locator> {
-  await waitForDiagramIdle(page, timeout);
-  const nodes = page.locator(CANVAS_NODE);
-  await expect(nodes.first()).toBeVisible({ timeout });
-  await expect.poll(async () => nodes.count(), { timeout }).toBeGreaterThan(0);
+export async function expectCanvasReady(page: Page): Promise<Locator> {
+  await waitForDiagramIdle(page);
+  const nodes = page.locator('.react-flow__node');
+  await expect(nodes.first()).toBeVisible({ timeout: 30_000 });
   return nodes;
 }
 
-export function zoomableNodes(page: Page): Locator {
-  return page.locator(CANVAS_NODE).filter({ has: page.getByRole('button', { name: 'Zoom' }) });
-}
+export async function drillIntoFirstZoomable(page: Page, nodeName = 'EShop System') {
+  await expectCanvasReady(page);
 
-/** Drill into a child diagram via the node's Zoom button (stable vs dblclick on overlapping nodes). */
-export async function drillIntoFirstZoomable(page: Page): Promise<void> {
-  await waitForDiagramIdle(page);
-  const node = zoomableNodes(page).filter({ hasText: 'EShop System' }).first();
-  const fallback = zoomableNodes(page).first();
-  const target = (await node.count()) > 0 ? node : fallback;
-  await expect(target).toBeVisible({ timeout: 30_000 });
-  await target.getByRole('button', { name: 'Zoom' }).click();
-  await waitForDiagramIdle(page);
+  const named = page.getByRole('button', { name: `Zoom into ${nodeName}` });
+  const button = (await named.count()) > 0 ? named : page.getByTestId('zoom-in-button').first();
+
+  await expect(async () => {
+    await button.click();
+  }).toPass({ timeout: 30_000 });
+
   await expectCanvasReady(page);
 }

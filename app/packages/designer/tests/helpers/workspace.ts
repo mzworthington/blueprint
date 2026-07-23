@@ -12,7 +12,3 @@ export async function loadSandbox(page: Page, path = '/workspace/blueprint') {
 export async function workspaceSlug(page: Page): Promise<string> {
   return page.locator('#workspace-slug-input').inputValue();
 }
-
-export async function blurFocusedElement(page: Page) {
-  await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
-}
