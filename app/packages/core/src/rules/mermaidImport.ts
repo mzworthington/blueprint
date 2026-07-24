@@ -22,6 +22,7 @@ interface ParsedNode {
   name: string;
   type: NodeType;
   external?: boolean;
+  parentGroupId?: string;
 }
 
 interface ParsedEdge {
@@ -217,6 +218,60 @@ function stripFlowchartLabelDecorations(rawName: string): { name: string; extern
   return { name, external };
 }
 
+function parseSubgraphLine(line: string): { id: string; title: string } | null {
+  const trimmed = line.trim();
+  if (!/^subgraph\b/i.test(trimmed)) return null;
+
+  const idAndBracket = trimmed.match(/^subgraph\s+(\w+)\s*\[["']?([^"'\]]+)["']?\]\s*$/i);
+  if (idAndBracket) {
+    return { id: idAndBracket[1], title: idAndBracket[2].trim() };
+  }
+
+  const bracketOnly = trimmed.match(/^subgraph\s+\[["']?([^"'\]]+)["']?\]\s*$/i);
+  if (bracketOnly) {
+    const title = bracketOnly[1].trim();
+    return { id: slugify(title), title };
+  }
+
+  const idBracketTitle = trimmed.match(/^subgraph\s+(\S+)\s+\[([^\]]+)\]\s*$/i);
+  if (idBracketTitle) {
+    const title = idBracketTitle[2].trim().replace(/^["']|["']$/g, '');
+    return { id: idBracketTitle[1], title };
+  }
+
+  const rest = trimmed.replace(/^subgraph\s+/i, '').trim();
+  if (!rest) return null;
+  const quoted = rest.match(/^["'](.+)["']$/);
+  const title = quoted ? quoted[1] : rest;
+  return { id: slugify(title), title };
+}
+
+function registerParsedNode(
+  nodeMap: Map<string, ParsedNode>,
+  node: ParsedNode,
+  parentGroupId?: string
+) {
+  const incoming = parentGroupId ? { ...node, parentGroupId } : node;
+  const existing = nodeMap.get(incoming.id);
+  if (!existing) {
+    nodeMap.set(incoming.id, incoming);
+    return;
+  }
+
+  const incomingIsPlaceholder = incoming.name === incoming.id;
+  const existingIsPlaceholder = existing.name === existing.id;
+
+  nodeMap.set(incoming.id, {
+    ...existing,
+    ...incoming,
+    name: incomingIsPlaceholder && !existingIsPlaceholder ? existing.name : incoming.name,
+    type:
+      incoming.type === 'group' ? 'group' : incomingIsPlaceholder ? existing.type : incoming.type,
+    external: incoming.external ?? existing.external,
+    parentGroupId: incoming.parentGroupId ?? existing.parentGroupId,
+  });
+}
+
 function parseFlowchartNode(line: string, defaultType: NodeType): ParsedNode | null {
   const patterns: Array<{ regex: RegExp; shape: string }> = [
     { regex: /^(\w+)\[\["([^"]*)"\]\]/, shape: 'subroutine' },
@@ -295,35 +350,67 @@ function parseFlowchart(source: string, options: MermaidImportOptions): MermaidP
   const cleaned = stripComments(source);
   const defaultType = defaultTypeForLevel(options.targetLevel, options.defaultNodeType);
 
-  if (/\bsubgraph\b/i.test(cleaned)) {
-    warnings.push('Subgraph blocks are flattened into a single diagram (grouping not preserved).');
-  }
-
   const nodeMap = new Map<string, ParsedNode>();
   const edges: ParsedEdge[] = [];
+  const subgraphStack: string[] = [];
+
+  const currentParentGroupId = () =>
+    subgraphStack.length > 0 ? subgraphStack[subgraphStack.length - 1] : undefined;
 
   for (const rawLine of cleaned.split('\n')) {
     const line = rawLine.trim();
     if (!line) continue;
 
+    if (/^end\b/i.test(line)) {
+      if (subgraphStack.length > 0) {
+        subgraphStack.pop();
+      }
+      continue;
+    }
+
+    const subgraph = parseSubgraphLine(line);
+    if (subgraph) {
+      if (subgraphStack.length > 0) {
+        warnings.push('Nested subgraphs are flattened (one level of grouping supported).');
+      }
+      const groupId = slugify(subgraph.id);
+      registerParsedNode(
+        nodeMap,
+        { id: groupId, name: subgraph.title, type: 'group' },
+        currentParentGroupId()
+      );
+      subgraphStack.push(groupId);
+      continue;
+    }
+
     const edge = parseFlowchartEdge(line);
     if (edge) {
       edges.push(edge);
       for (const n of extractNodesFromEdgeLine(line, defaultType)) {
-        if (!nodeMap.has(n.id)) nodeMap.set(n.id, n);
+        if (!nodeMap.has(n.id)) {
+          registerParsedNode(nodeMap, n, currentParentGroupId());
+        }
       }
       if (!nodeMap.has(edge.from)) {
-        nodeMap.set(edge.from, { id: edge.from, name: edge.from, type: defaultType });
+        registerParsedNode(
+          nodeMap,
+          { id: edge.from, name: edge.from, type: defaultType },
+          currentParentGroupId()
+        );
       }
       if (!nodeMap.has(edge.to)) {
-        nodeMap.set(edge.to, { id: edge.to, name: edge.to, type: defaultType });
+        registerParsedNode(
+          nodeMap,
+          { id: edge.to, name: edge.to, type: defaultType },
+          currentParentGroupId()
+        );
       }
       continue;
     }
 
     const node = parseFlowchartNode(line, defaultType);
     if (node) {
-      nodeMap.set(node.id, node);
+      registerParsedNode(nodeMap, node, currentParentGroupId());
     }
   }
 
@@ -339,6 +426,7 @@ function parseFlowchart(source: string, options: MermaidImportOptions): MermaidP
       type: n.type,
       name: n.name,
       external: n.external,
+      ...(n.parentGroupId ? { parentEntityRef: n.parentGroupId } : {}),
     })),
     dependencies: edges
       .filter(e => nodeIds.has(e.from) && nodeIds.has(e.to))

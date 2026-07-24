@@ -65,7 +65,7 @@ describe('parseMermaidToSchema — flowchart', () => {
     });
   });
 
-  it('warns when subgraph blocks are flattened', () => {
+  it('parses subgraph blocks into group nodes with parentEntityRef', () => {
     const mermaid = `graph TD
     subgraph Driving [Driving UI]
       Canvas[Canvas.tsx]
@@ -74,8 +74,19 @@ describe('parseMermaidToSchema — flowchart', () => {
 
     const result = parseMermaidToSchema(mermaid, { targetLevel: 'container' });
 
-    expect(result.warnings.some(w => w.toLowerCase().includes('subgraph'))).toBe(true);
-    expect(result.schema.nodes.length).toBeGreaterThanOrEqual(2);
+    expect(result.warnings.some(w => w.toLowerCase().includes('flattened'))).toBe(false);
+    expect(result.schema.nodes.find(n => n.entityRef === 'driving')).toMatchObject({
+      type: 'group',
+      name: 'Driving UI',
+    });
+    expect(result.schema.nodes.find(n => n.entityRef === 'canvas')).toMatchObject({
+      name: 'Canvas.tsx',
+      parentEntityRef: 'driving',
+    });
+    expect(result.schema.nodes.find(n => n.entityRef === 'store')).toMatchObject({
+      name: 'Store',
+    });
+    expect(result.schema.nodes.find(n => n.entityRef === 'store')?.parentEntityRef).toBeUndefined();
   });
 
   it('defaults component type at component level', () => {

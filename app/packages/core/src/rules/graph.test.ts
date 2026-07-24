@@ -335,6 +335,36 @@ nodes:
     expect(mermaidContent).toContain('node_Gateway --> |"Query"| node_DB');
   });
 
+  it('serializes group children into subgraph blocks', () => {
+    const schema: SystemSchema = {
+      name: 'Demo Context',
+      version: '1.0.0',
+      level: 'context',
+      nodes: [
+        { entityRef: 'demo/user', type: 'person', name: 'User' },
+        { entityRef: 'demo/hub', type: 'group', name: 'Product Hub' },
+        {
+          entityRef: 'demo/api',
+          type: 'software-system',
+          name: 'API',
+          parentEntityRef: 'demo/hub',
+        },
+      ],
+      dependencies: [
+        { from: 'demo/user', to: 'demo/hub', type: 'direct-call', description: 'Uses' },
+      ],
+    };
+
+    const mermaid = serializeSchemaToMermaid(schema);
+    expect(mermaid).toContain('subgraph node_demo_hub["Product Hub"]');
+    expect(mermaid).toContain('node_demo_api["API"]');
+    expect(mermaid).toContain('node_demo_user --> |"Uses"| node_demo_hub');
+
+    const imported = parseSchemaFromYaml(serializeSchemaToYaml(schema));
+    const reExported = serializeSchemaToMermaid(imported);
+    expect(reExported).toContain('subgraph node_demo_hub["Product Hub"]');
+  });
+
   it('should accept container node type from CLI-generated schemas', () => {
     const yamlContent = `
 name: Generated System
